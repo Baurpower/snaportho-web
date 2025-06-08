@@ -1,5 +1,5 @@
 // app/layout.tsx
-import "@/globals.css";              // Tailwind imports
+import "./globals.css";            // Tailwind imports
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
