@@ -1,41 +1,25 @@
-// src/app/learn/update-password/page.tsx
-
 "use client";
 export const dynamic = "force-dynamic";
 
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 
 export default function UpdatePasswordPage() {
   const router = useRouter();
-  const [token, setToken] = useState<string | null>(null);
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
-
-  // grab token from URL on mount
-  useEffect(() => {
-    const t = new URLSearchParams(window.location.search).get("access_token");
-    if (!t) {
-      router.replace("/learn/signin");
-    } else {
-      setToken(t);
-    }
-  }, [router]);
-
-  if (!token) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
 
-    const { error } = await supabase.auth.updateUser({ password: 'new_password' })
-
+    // Supabase will have set the session via the verify link.
+    const { error } = await supabase.auth.updateUser({ password });
     if (error) {
       setMessage(error.message);
     } else {
-      setMessage("Password updated! Redirecting…");
+      setMessage("Password updated! Redirecting to Learn…");
       setTimeout(() => router.replace("/learn"), 2000);
     }
   };
