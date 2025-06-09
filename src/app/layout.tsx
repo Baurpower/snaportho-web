@@ -6,7 +6,10 @@ import Footer from "../components/Footer";
 
 export const metadata = {
   title: "SnapOrtho",
-  description: "Orthopaedic learning, anytime, anywhere",
+  description: "Memorize, Master, Excel in Orthopaedics",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
