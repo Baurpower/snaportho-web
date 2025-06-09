@@ -16,7 +16,7 @@ export default function SignInPage() {
   // If already signed in, go straight to Learn Home
   if (user) {
     console.log("Already signed in, redirecting to Learn Home:", user.email);
-    router.replace("/learn/home");
+    router.replace("/learn");
     return null;
   }
 
@@ -32,7 +32,7 @@ export default function SignInPage() {
         setErrorMsg(error.message);
       } else {
         console.log("SignIn successful, redirecting to Learn Home");
-        router.replace("/learn/home");
+        router.replace("/learn");
       }
     } catch (err) {
       console.error("Unexpected error during signIn:", err);
