@@ -13,15 +13,21 @@ export default function PasswordResetPage() {
     e.preventDefault();
     setMessage(null);
 
-    // Exactly the docs call:
-    const { error } = await supabase.auth.resetPasswordForEmail('valid.email@supabase.io', {
-  redirectTo: 'http://snap-orth.com/update-password',
-});
+    console.log("Attempting password reset for:", email);
+    try {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/learn/update-password`,
+      });
+      console.log("resetPasswordForEmail response:", { data, error });
 
-    if (error) {
-      setMessage(error.message);
-    } else {
-      setMessage("Check your email for the reset link.");
+      if (error) {
+        setMessage(error.message);
+      } else {
+        setMessage("Check your email for the reset link.");
+      }
+    } catch (err) {
+      console.error("Unexpected error during password reset:", err);
+      setMessage("An unexpected error occurred. See console for details.");
     }
   };
 
