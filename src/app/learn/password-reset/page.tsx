@@ -1,13 +1,11 @@
 // src/app/learn/password-reset/page.tsx
 "use client";
+export const dynamic = "force-dynamic";
 
 import { useState } from "react";
-import Link from "next/link";
-import { useAuth } from "../../../context/AuthContext";
-
+import { supabase } from "../../../lib/supabaseClient";
 
 export default function PasswordResetPage() {
-  const { resetPassword } = useAuth();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
 
@@ -15,20 +13,15 @@ export default function PasswordResetPage() {
     e.preventDefault();
     setMessage(null);
 
-    // Build a full URL for where your user should land
-    const redirectTo = `${window.location.origin}/account/update-password`;
-
-    console.log("Initiating reset to:", email, "redirectTo:", redirectTo);
-
-    const { data, error } = await resetPassword(email, { redirectTo });
-    console.log("resetPasswordForEmail response:", { data, error });
+    // Exactly the docs call:
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/learn/update-password`,
+    });
 
     if (error) {
       setMessage(error.message);
     } else {
-      setMessage(
-        "If that address exists, you’ll receive an email with a reset link."
-      );
+      setMessage("Check your email for the reset link.");
     }
   };
 
@@ -37,9 +30,11 @@ export default function PasswordResetPage() {
       <h2 className="text-2xl font-semibold mb-4 text-center text-navy">
         Reset Password
       </h2>
+
       {message && (
         <p className="mb-4 text-center text-sm text-midnight/70">{message}</p>
       )}
+
       <form onSubmit={handleReset} className="space-y-4">
         <input
           type="email"

@@ -17,8 +17,8 @@ import type {
   AuthResponse,
 } from "@supabase/supabase-js";
 
-// Types for a password‐reset call: data can be {} or null
-type ResetResponse = { data: {} | null; error: AuthError | null };
+// `data` may be any object or null
+type ResetResponse = { data: object | null; error: AuthError | null };
 
 interface AuthContextType {
   user: User | null;
