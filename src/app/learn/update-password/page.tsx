@@ -30,7 +30,7 @@ export default function UpdatePasswordPage() {
     e.preventDefault();
     setMessage(null);
 
-    const { error } = await supabase.auth.updateUser({ password });
+    const { error } = await supabase.auth.updateUser({ password: 'new_password' })
 
     if (error) {
       setMessage(error.message);

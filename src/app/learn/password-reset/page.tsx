@@ -14,9 +14,9 @@ export default function PasswordResetPage() {
     setMessage(null);
 
     // Exactly the docs call:
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/learn/update-password`,
-    });
+    const { error } = await supabase.auth.resetPasswordForEmail('valid.email@supabase.io', {
+  redirectTo: 'http://snap-orth.com/update-password',
+});
 
     if (error) {
       setMessage(error.message);
