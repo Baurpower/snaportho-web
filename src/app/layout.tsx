@@ -21,7 +21,7 @@ export default function RootLayout({
           <Nav />
 
           {/* full-width main with horizontal padding */}
-          <main className="flex-1 w-full px-6 py-8">{children}</main>
+          <main className="flex-1 w-full">{children}</main>
 
           <Footer />
         </ClientProvider>
