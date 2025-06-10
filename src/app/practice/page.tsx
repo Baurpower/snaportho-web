@@ -9,7 +9,7 @@ export default function PracticePage() {
       <Nav />
 
       {/* HERO */}
-      <header className="bg-white shadow py-12">
+      <header className="bg-white shadow py-22">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h1 className="text-4xl font-extrabold mb-4 text-navy">
             Practice

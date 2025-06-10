@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
 
       {/* Policy Content */}
       <section className="max-w-4xl mx-auto text-left space-y-12 text-lg text-gray-700 leading-relaxed">
-        {/* Introduction */}
+        {/* Our Values */}
         <div className="space-y-4">
           <h2 className="text-2xl font-semibold text-[#333]">Introduction</h2>
           <p>

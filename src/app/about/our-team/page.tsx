@@ -47,25 +47,25 @@ export default function OurTeamPage() {
     {
       name: "Alexander Baur",
       title: "Founder, CEO, Developer",
-      image: "/team/alexander-baur.jpg",
+      image: "/team/alexbaurheadshot.jpg",
       linkedIn: "",
     },
     {
       name: "Bradford Baur",
       title: "Chief Operating Officer (COO)",
-      image: "/team/bradford-baur.jpg",
+      image: "/team/bradbaurheadshot.jpeg",
       linkedIn: "",
     },
     {
       name: "Austin Nguyen, MD",
       title: "Senior Division Manager, Developer",
-      image: "/team/austin-nguyen.jpg",
+      image: "/team/austinheadshot.jpg",
       linkedIn: "",
     },
     {
       name: "Rebecca Baur",
       title: "Chief Marketing Officer (CMO)",
-      image: "/team/rebecca-baur.jpg",
+      image: "/team/beccaheadshot.jpg",
       linkedIn: "",
     },
   ];
