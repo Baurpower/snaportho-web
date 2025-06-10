@@ -81,18 +81,18 @@ export default function LearnPage() {
       {/* Modules Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
         <Link
-          href="/learn/module/1"
+          href="/learn/modules/trauma"
           className="block p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
         >
-          <h3 className="text-xl font-semibold mb-1">Module 1: Basics</h3>
-          <p className="text-sm text-midnight/70">Get started with core concepts.</p>
+          <h3 className="text-xl font-semibold mb-1">Module 1: Trauma</h3>
+          <p className="text-sm text-midnight/70">Get started with orthopaedic trauma.</p>
         </Link>
         <Link
-          href="/learn/module/2"
+          href="/learn/modules/oncology"
           className="block p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
         >
-          <h3 className="text-xl font-semibold mb-1">Module 2: Advanced</h3>
-          <p className="text-sm text-midnight/70">Deep dive into advanced topics.</p>
+          <h3 className="text-xl font-semibold mb-1">Module 2: Oncology</h3>
+          <p className="text-sm text-midnight/70">Review oncology before board exams.</p>
         </Link>
       </div>
     </main>
