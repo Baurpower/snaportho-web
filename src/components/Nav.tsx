@@ -52,13 +52,26 @@ export default function Nav() {
             {open && (
               <div
                 className="absolute right-0 mt-2 w-44 bg-white text-navy rounded-md border border-gray-200 shadow-lg z-10"
-                onMouseLeave={() => setOpen(false)} // Optional: close when leaving the dropdown
+                onMouseLeave={() => setOpen(false)}
               >
+                {/* Link to Learn Home */}
+                <Link
+                  href="/learn"
+                  className="block px-4 py-2 text-[#597498] hover:bg-sky-50 transition whitespace-nowrap font-semibold"
+                  onClick={() => setOpen(false)} // Close dropdown on click
+                >
+                  Learn Home
+                </Link>
+
+                <div className="border-t border-gray-200 my-1"></div>
+
+                {/* Module Links */}
                 {modules.map((m) => (
                   <Link
                     key={m.href}
                     href={m.href}
                     className="block px-4 py-2 text-[#597498] hover:bg-sky-50 transition whitespace-nowrap"
+                    onClick={() => setOpen(false)} // Close dropdown on click
                   >
                     {m.title}
                   </Link>
