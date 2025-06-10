@@ -1,8 +1,40 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { supabase } from "@/lib/supabaseClient"; // adjust path if needed!
 
 export default function TraumaModulePage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        // Not signed in → redirect
+        router.replace("/learn");
+      } else {
+        // Signed in → show page
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-[#f9f7f4] text-navy">
+        <p className="text-lg">Loading Trauma Module...</p>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[#f9f7f4] text-navy px-6 sm:px-10 lg:px-24 py-12 space-y-8">
       {/* Hero */}
@@ -11,7 +43,9 @@ export default function TraumaModulePage() {
           Trauma Module
         </h1>
         <p className="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
-          Welcome to our first SnapOrtho module. Trauma forms the <strong>bedrock</strong> of orthopedic training — understanding how to classify, manage, and treat injuries is essential for every orthopedic surgeon.
+          Welcome to our first SnapOrtho module. Trauma forms the{" "}
+          <strong>bedrock</strong> of orthopedic training — understanding how to classify,
+          manage, and treat injuries is essential for every orthopedic surgeon.
         </p>
       </section>
 
@@ -19,7 +53,8 @@ export default function TraumaModulePage() {
       <section className="max-w-5xl mx-auto text-center">
         <h2 className="text-3xl font-semibold text-[#444]">Animations In Progress 🚀</h2>
         <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-          We are actively building out fully animated visual content for this module. Our goal is to help you <strong>visually master</strong> complex fracture patterns, fixation principles, and classifications — all through intuitive, modern animations.
+          We are actively building out fully animated visual content for this module. Our goal is to help you{" "}
+          <strong>visually master</strong> complex fracture patterns, fixation principles, and classifications — all through intuitive, modern animations.
         </p>
         <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
           You’ll see this content <strong>grow and evolve</strong> rapidly — stay tuned!

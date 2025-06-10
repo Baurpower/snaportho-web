@@ -1,8 +1,40 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { supabase } from "@/lib/supabaseClient"; // adjust path if needed!
 
 export default function OncologyModulePage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        // Not signed in → redirect
+        router.replace("/learn");
+      } else {
+        // Signed in → show page
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-[#f9f7f4] text-navy">
+        <p className="text-lg">Loading Oncology Module...</p>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[#f9f7f4] text-navy px-6 sm:px-10 lg:px-24 py-12 space-y-12">
       {/* Hero */}
@@ -11,7 +43,8 @@ export default function OncologyModulePage() {
           Oncology Module
         </h1>
         <p className="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
-          We’re incredibly excited to bring you our Orthopaedic Oncology module — built to help you efficiently <strong>master the high-yield concepts</strong> most commonly tested on the <strong>OITE</strong> and <strong>Orthopaedic Boards</strong>.
+          We’re incredibly excited to bring you our Orthopaedic Oncology module — built to help you efficiently{" "}
+          <strong>master the high-yield concepts</strong> most commonly tested on the <strong>OITE</strong> and <strong>Orthopaedic Boards</strong>.
         </p>
       </section>
 
@@ -19,7 +52,9 @@ export default function OncologyModulePage() {
       <section className="max-w-5xl mx-auto text-center space-y-6">
         <h2 className="text-3xl font-semibold text-[#444]">Optimized for Memorization 🎓</h2>
         <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-          This module will be designed as your go-to resource for <strong>visual mnemonics</strong>, <strong>high-yield review</strong>, and <strong>board-relevant patterns</strong> — not just another text-heavy reference.
+          This module will be designed as your go-to resource for{" "}
+          <strong>visual mnemonics</strong>, <strong>high-yield review</strong>, and{" "}
+          <strong>board-relevant patterns</strong> — not just another text-heavy reference.
         </p>
         <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
           Our animations and tools will help you retain complex tumor characteristics, staging systems, and treatment principles — for both clinical use and exam success.
@@ -31,15 +66,14 @@ export default function OncologyModulePage() {
 
       {/* Updates Section */}
       <section className="max-w-5xl mx-auto text-center space-y-6">
-  <h2 className="text-3xl font-semibold text-[#444]">Development Timeline 📅</h2>
-  <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-    Our Oncology Module is in the <strong>early stages of development</strong> and will follow the launch of our Trauma Module. We are taking extra time to ensure this module meets the highest standards for accuracy, clarity, and visual design.
-  </p>
-  <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-    <strong>Updates to follow.</strong> We’ll share progress milestones and sneak previews as development advances.
-  </p>
-</section>
-
+        <h2 className="text-3xl font-semibold text-[#444]">Development Timeline 📅</h2>
+        <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+          Our Oncology Module is in the <strong>early stages of development</strong> and will follow the launch of our Trauma Module. We are taking extra time to ensure this module meets the highest standards for accuracy, clarity, and visual design.
+        </p>
+        <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+          <strong>Updates to follow.</strong> We’ll share progress milestones and sneak previews as development advances.
+        </p>
+      </section>
 
       {/* Divider */}
       <div className="h-px bg-gray-200 max-w-5xl mx-auto"></div>

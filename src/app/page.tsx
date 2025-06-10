@@ -6,7 +6,7 @@ import Nav   from "../components/Nav";
 const features = [
   { icon: "🖼️", title: "Image-based learning", desc: "High-resolution X-rays with pinpoint annotations." },
   { icon: "⏱️", title: "Spaced repetition",    desc: "Proven Anki-style intervals to cement knowledge." },
-  { icon: "👩‍⚕️", title: "Expert-curated",       desc: "Content vetted by fellowship-trained surgeons." },
+  { icon: "👩‍⚕️", title: "Expert-curated",       desc: "Curated by surgeons, for surgeons in training." },
 ];
 
 export default function HomePage() {
