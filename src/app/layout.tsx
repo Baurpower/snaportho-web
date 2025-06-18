@@ -8,9 +8,15 @@ export const metadata = {
   title: "SnapOrtho",
   description: "Memorize, Master, Excel in Orthopaedics",
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32" },
+      { url: "/favicon-16x16.png", sizes: "16x16" },
+      { url: "/apple-touch-icon.png", sizes: "180x180" },
+    ],
   },
 };
+
 
 export default function RootLayout({
   children,
