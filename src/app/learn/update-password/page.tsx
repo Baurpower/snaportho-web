@@ -15,35 +15,39 @@ export default function UpdatePasswordPage() {
 
  useEffect(() => {
   (async () => {
-    /* ---------- 1. IMPLICIT flow -------------------------------------- */
+    /* ---------- 1. Implicit flow  (#access_token …) ------------------- */
     const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    const at = hashParams.get("access_token");
-    const rt = hashParams.get("refresh_token");
+    const access_token  = hashParams.get("access_token");
+    const refresh_token = hashParams.get("refresh_token");
 
-    if (at && rt) {
-      const { error } = await supabase.auth.setSession({ access_token: at, refresh_token: rt });
+    if (access_token && refresh_token) {
+      const { error } = await supabase.auth.setSession({ access_token, refresh_token });
       if (error) setMessage(error.message);
       setReady(true);
       return;
     }
 
-    /* ---------- 2. PKCE flow ------------------------------------------ */
+    /* ---------- 2. PKCE flow  (?code=…  or  ?token=…) ------------------ */
     const searchParams = new URLSearchParams(window.location.search);
-    const code = searchParams.get("code");
+    const authCode = searchParams.get("code")            // OAuth / magic-link
+                  ?? searchParams.get("token");          // Email recovery link
 
-    if (code) {
-      // v1.35+ and all v2.x expose this helper
-      const { error } = await supabase.auth.exchangeCodeForSession(code);
-      if (error) setMessage(error.message);
+    if (authCode) {
+      const { error } = await supabase.auth.exchangeCodeForSession(authCode);
+      if (error) {
+        console.error("Code-exchange failed:", error.message);
+        setMessage("Could not log in from the e-mail link.");
+      }
       setReady(true);
       return;
     }
 
     /* ---------- 3. Nothing found -------------------------------------- */
-    setMessage("Missing credentials from the reset link.");
+    setMessage("Missing credentials in the e-mail link.");
     setReady(true);
   })();
 }, []);
+
 
 
 
