@@ -13,28 +13,38 @@ export default function UpdatePasswordPage() {
   const [submitting, setSubmitting] = useState(false);
   const [ready, setReady]           = useState(false); // wait for session
 
-  useEffect(() => {
-  const hash = window.location.hash.substring(1); // Remove leading "#"
-  const params = new URLSearchParams(hash);
+ useEffect(() => {
+  (async () => {
+    /* ---------- 1. IMPLICIT flow -------------------------------------- */
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    const at = hashParams.get("access_token");
+    const rt = hashParams.get("refresh_token");
 
-  const access_token = params.get("access_token");
-  const refresh_token = params.get("refresh_token");
+    if (at && rt) {
+      const { error } = await supabase.auth.setSession({ access_token: at, refresh_token: rt });
+      if (error) setMessage(error.message);
+      setReady(true);
+      return;
+    }
 
-  if (access_token && refresh_token) {
-    supabase.auth
-      .setSession({ access_token, refresh_token })
-      .then(({ error }) => {
-        if (error) {
-          console.error("Session recovery failed:", error.message);
-          setMessage("Could not recover session. The link may be invalid.");
-        }
-        setReady(true);
-      });
-  } else {
+    /* ---------- 2. PKCE flow ------------------------------------------ */
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code");
+
+    if (code) {
+      // v1.35+ and all v2.x expose this helper
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+      if (error) setMessage(error.message);
+      setReady(true);
+      return;
+    }
+
+    /* ---------- 3. Nothing found -------------------------------------- */
     setMessage("Missing credentials from the reset link.");
     setReady(true);
-  }
+  })();
 }, []);
+
 
 
   const handleSubmit = async (e: React.FormEvent) => {
