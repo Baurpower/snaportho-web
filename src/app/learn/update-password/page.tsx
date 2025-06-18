@@ -1,17 +1,41 @@
-// src/app/learn/update-password/page.tsx
 "use client";
 export const dynamic = "force-dynamic";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabaseClient";
 
 export default function UpdatePasswordPage() {
   const router = useRouter();
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [message, setMessage] = useState<string | null>(null);
+  const [password, setPassword]     = useState("");
+  const [confirm, setConfirm]       = useState("");
+  const [message, setMessage]       = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [ready, setReady]           = useState(false); // wait for session
+
+  useEffect(() => {
+  const hash = window.location.hash.substring(1); // Remove leading "#"
+  const params = new URLSearchParams(hash);
+
+  const access_token = params.get("access_token");
+  const refresh_token = params.get("refresh_token");
+
+  if (access_token && refresh_token) {
+    supabase.auth
+      .setSession({ access_token, refresh_token })
+      .then(({ error }) => {
+        if (error) {
+          console.error("Session recovery failed:", error.message);
+          setMessage("Could not recover session. The link may be invalid.");
+        }
+        setReady(true);
+      });
+  } else {
+    setMessage("Missing credentials from the reset link.");
+    setReady(true);
+  }
+}, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,10 +57,18 @@ export default function UpdatePasswordPage() {
     if (error) {
       setMessage(error.message);
     } else {
-      setMessage("Password updated! Redirecting to Learn…");
+      setMessage("✅ Password updated! Redirecting to Learn…");
       setTimeout(() => router.replace("/learn"), 2000);
     }
   };
+
+  if (!ready) {
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <p className="text-midnight/70">Verifying session…</p>
+      </main>
+    );
+  }
 
   return (
     <main className="max-w-md mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg">
