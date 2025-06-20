@@ -8,9 +8,10 @@ import { useEffect } from "react";
 
 declare global {
   interface Window {
-    twq?: (...args: any[]) => void;
+    twq?: (type: "config" | "event", id: string, params?: Record<string, unknown>) => void;
   }
 }
+
 const TW_EVENT_ID = "tw-q0hm1-q0h07";
 
 export default function LearnPage() {
@@ -22,10 +23,9 @@ export default function LearnPage() {
   if (!user || sessionStorage.getItem("twqFired")) return;
 
   const fireConversion = () => {
-    // @ts-ignore
     if (typeof window.twq === "function") {
   window.twq("event", TW_EVENT_ID, {
-  status: null // You can replace this with "completed" or other string
+  status: "completed"
 });
       sessionStorage.setItem("twqFired", "true");
       return true;
