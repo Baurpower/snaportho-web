@@ -4,10 +4,43 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
+
+declare global {
+  interface Window {
+    twq?: (...args: any[]) => void;
+  }
+}
+const TW_EVENT_ID = "tw-q0hm1-q0h07";
 
 export default function LearnPage() {
   const { user, signOut } = useAuth();
   const router = useRouter();
+
+    // 🔔 Fire the conversion when a user object appears
+  useEffect(() => {
+  if (!user || sessionStorage.getItem("twqFired")) return;
+
+  const fireConversion = () => {
+    // @ts-ignore
+    if (typeof window.twq === "function") {
+  window.twq("event", TW_EVENT_ID, {
+  status: null // You can replace this with "completed" or other string
+});
+      sessionStorage.setItem("twqFired", "true");
+      return true;
+    }
+    return false;
+  };
+
+  if (!fireConversion()) {
+    const poll = setInterval(() => {
+      if (fireConversion()) clearInterval(poll);
+    }, 300);
+    setTimeout(() => clearInterval(poll), 3000);
+  }
+}, [user]);
+     
 
   // Redirect to signin if not logged in
   if (!user) {
