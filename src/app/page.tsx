@@ -54,8 +54,8 @@ export default function HomePage() {
           <Image
             src="/snaportho-logo.png"
             alt="SnapOrtho Logo"
-            width={96}
-            height={96}
+            width={150}
+            height={150}
             className="mx-auto mb-4"
             priority
           />
@@ -101,7 +101,19 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+
+          {/* Call to Action */}
+          <div className="mt-12 text-center">
+            <Link
+              href="/fundraising"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-green-100 text-green-800 font-semibold text-base hover:bg-green-200 transition-all shadow-sm hover:shadow-md"
+            >
+              <span className="text-xl">🌱</span> Support SnapOrtho
+            </Link>
+          </div>
+
         </section>
+
       </div>
     </div>
   );
