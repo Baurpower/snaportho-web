@@ -2,22 +2,25 @@
 
 import { useState } from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/navigation';
 
 const tiers = [
   { label: '🥉 Bronze', amount: 500 },
-  { label: '🥈 Silver', amount: 2000 },
-  { label: '🥇 Gold', amount: 5000 },
-  { label: '💎 Platinum', amount: 10000 },
+  { label: '🥈 Silver', amount: 5000 },
+  { label: '🥇 Gold', amount: 10000 },
+  { label: '💎 Platinum', amount: 50000 },
 ];
 
 export default function DonationForm() {
   const stripe = useStripe();
   const elements = useElements();
+  const router = useRouter();
 
-  const [amount, setAmount] = useState(1500); // default = $15
+  const [amount, setAmount] = useState(1500);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [joinCircle, setJoinCircle] = useState(true);
   const [loading, setLoading] = useState(false);
   const [selectedTier, setSelectedTier] = useState<number | null>(null);
 
@@ -29,33 +32,53 @@ export default function DonationForm() {
   const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = Number(e.target.value) * 100;
     setAmount(val);
-    setSelectedTier(null); // clear tier selection if custom typed
+    setSelectedTier(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch('/api/create-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount, name, email, message }),
-    });
+    try {
+      const res = await fetch('/api/create-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount, name, email, message }),
+      });
 
-    const { clientSecret } = await res.json();
+      const { clientSecret } = await res.json();
 
-    const { error } = await stripe!.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements!.getElement(CardElement)!,
-        billing_details: { name, email },
-      },
-    });
+      const { error, paymentIntent } = await stripe!.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements!.getElement(CardElement)!,
+          billing_details: { name, email },
+        },
+      });
 
-    if (error) {
-      alert(error.message);
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      await fetch('https://api.snap-ortho.com/log-donation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          amount,
+          stripe_id: paymentIntent.id,
+          join_circle: joinCircle,
+        }),
+      });
+
+      router.push(`/fundraising/thankyou?amount=${amount}`);
+    } catch (err) {
+      const e = err as Error;
+      console.error('Donation failed:', e.message);
+      alert(`Error: ${e.message || 'Unknown error. Please try again.'}`);
+    } finally {
       setLoading(false);
-    } else {
-      window.location.href = '/fundraising?thankyou=1';
     }
   };
 
@@ -88,34 +111,54 @@ export default function DonationForm() {
         className="w-full border rounded-lg px-4 py-2"
       />
 
-      {/* Preset Tiers */}
-      <div className="flex flex-wrap gap-3">
-        {tiers.map((tier) => (
-          <button
-            key={tier.amount}
-            type="button"
-            onClick={() => handleTierClick(tier.amount)}
-            className={`px-4 py-2 rounded-full border font-medium transition ${
-              selectedTier === tier.amount
-                ? 'bg-sky text-white border-sky'
-                : 'bg-white text-midnight border-sky/40 hover:border-sky'
-            }`}
-          >
-            {tier.label} – ${tier.amount / 100}
-          </button>
-        ))}
+      {/* Tier Selector */}
+      <div className="space-y-2">
+        <label className="block text-sm font-semibold text-midnight">Select a tier:</label>
+        <div className="flex flex-wrap gap-3">
+          {tiers.map((tier) => (
+            <button
+              key={tier.amount}
+              type="button"
+              onClick={() => handleTierClick(tier.amount)}
+              className={`px-4 py-2 rounded-full border font-medium transition ${
+                selectedTier === tier.amount
+                  ? 'bg-sky text-white border-sky'
+                  : 'bg-white text-midnight border-sky/40 hover:border-sky'
+              }`}
+            >
+              {tier.label} – ${tier.amount / 100}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Custom input */}
-      <input
-        type="number"
-        min={1}
-        value={amount / 100}
-        onChange={handleCustomAmountChange}
-        className="w-full border rounded-lg px-4 py-2"
-        placeholder="Enter custom amount"
-        required
-      />
+      {/* Custom Amount */}
+      <div>
+        <label className="block text-sm font-semibold text-midnight mt-4">Or enter custom amount ($):</label>
+        <input
+          type="number"
+          min={1}
+          value={amount / 100}
+          onChange={handleCustomAmountChange}
+          className="w-full border rounded-lg px-4 py-2 mt-1"
+          placeholder="Enter custom amount"
+          required
+        />
+      </div>
+
+      {/* Join Donor Circle */}
+      <div className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          id="join-circle"
+          checked={joinCircle}
+          onChange={() => setJoinCircle(!joinCircle)}
+          className="w-4 h-4"
+        />
+        <label htmlFor="join-circle" className="text-sm text-midnight">
+          Join the SnapOrtho Donor Circle (early updates + test invites)
+        </label>
+      </div>
 
       <CardElement className="p-4 border rounded-lg" />
 

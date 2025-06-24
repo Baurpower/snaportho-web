@@ -3,7 +3,10 @@
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
-const DonationForm = dynamic(() => import('./donationformwrapper'), { ssr: false });
+const DonationForm = dynamic(
+  () => import('./donationformwrapper'),
+  { ssr: false }
+);
 
 export default function FundPage() {
   return (
