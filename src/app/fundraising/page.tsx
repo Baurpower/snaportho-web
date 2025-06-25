@@ -15,7 +15,7 @@ export default function FundPage() {
 
         {/* ── Page Title Intro ───────────────────────────── */}
         <section className="text-center space-y-4">
-          <h1 className="text-5xl font-extrabold text-navy">Support the SnapOrtho Movement</h1>
+          <h1 className="text-5xl font-extrabold text-navy">Support SnapOrtho</h1>
           <p className="text-lg text-midnight/80 max-w-2xl mx-auto">
             We&apos;re scaling fast, adding new modules monthly, and building tools that real medical students use daily. Be a part of the growth.
           </p>
