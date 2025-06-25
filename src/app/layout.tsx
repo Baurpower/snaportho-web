@@ -7,8 +7,23 @@ import Footer from "../components/Footer";
 import Script from "next/script"; // ← add
 
 export const metadata = {
-  title: "SnapOrtho",
+  title: {
+    default: "SnapOrtho",
+    template: "%s | SnapOrtho",
+  },
   description: "Memorize, Master, Excel in Orthopaedics",
+  keywords: [
+    "SnapOrtho",
+    "orthopaedic education",
+    "fracture conference",
+    "medical student resources",
+    "support medical education",
+    "practice x-ray reading",
+    "ortho away rotations",
+    "fracture classification",
+    "orthopaedic trauma",
+    "orthopaedic xrays"
+  ],
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -17,7 +32,30 @@ export const metadata = {
       { url: "/apple-touch-icon.png", sizes: "180x180" },
     ],
   },
+  openGraph: {
+    title: "SnapOrtho",
+    description: "Master fracture classification and management.",
+    url: "https://snap-ortho.com",
+    siteName: "SnapOrtho",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "SnapOrtho App Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SnapOrtho",
+    description: "Your orthopaedic study companion.",
+    images: ["/og-image.png"],
+  },
 };
+
 
 export default function RootLayout({
   children,
