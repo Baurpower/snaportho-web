@@ -34,7 +34,7 @@ export const metadata = {
   },
   openGraph: {
     title: "SnapOrtho",
-    description: "Master fracture classification and management.",
+    description: "All-in-One Orthopaedic Resources for Medical Students and Residents",
     url: "https://snap-ortho.com",
     siteName: "SnapOrtho",
     images: [
@@ -51,7 +51,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "SnapOrtho",
-    description: "Your orthopaedic study companion.",
+    description: "Your orthopaedic study resource.",
     images: ["/og-image.png"],
   },
 };
