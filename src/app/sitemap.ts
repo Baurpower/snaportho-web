@@ -8,8 +8,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/`, lastModified: new Date() },
     { url: `${base}/learn`, lastModified: new Date() },
     { url: `${base}/practice`, lastModified: new Date() },
-    { url: `${base}/fund`, lastModified: new Date() },
-    { url: `${base}/signup`, lastModified: new Date() },
+    { url: `${base}/fundraising`, lastModified: new Date() },
+    { url: `${base}/about`, lastModified: new Date() },
     // Add more pages if needed
   ]
 }
