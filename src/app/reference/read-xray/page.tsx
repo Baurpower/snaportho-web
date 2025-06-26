@@ -10,7 +10,7 @@ export const metadata = {
       'Simple 5-step format for fast, clear fracture dictations. Perfect for med-students and residents.',
     images: [
       {
-        url: 'https://snap-ortho.com/og-image-readxray.png',
+        url: 'https://snap-ortho.com/og-image-reference-readxray.png',
         width: 1200,
         height: 630,
         alt: 'SnapOrtho – Read X-Ray Page OG Image',
@@ -24,6 +24,9 @@ export const metadata = {
     'dictation template',
     'radiograph interpretation',
     'SnapOrtho learn',
+    'Read Xrays',
+    'How to Read Xrays',
+    'How to Read Ortho Xrays'
   ],
 };
 

@@ -55,15 +55,38 @@ export default function ReadXrayPage() {
   const [showDefinitions, setShowDefinitions] = useState(false);
   const [showImg, setShowImg] = useState<Record<string, boolean>>({});
 
-  const descriptorInfo: Record<string, { def: string; img?: string }> = {
-    displaced: { def: 'Fragments are separated. Include % + direction.', img: '/images/descriptors/displacement.png' },
-    shortened: { def: 'Bone overlap → length loss (e.g., 5 mm).', img: '' },
-    angulated: { def: 'Give apex dir + degrees (e.g., 20° dorsal).', img: '/images/descriptors/angulation.jpg' },
-    'intra-articular': { def: 'Into joint – note step-off (e.g., 2 mm).', img: '' },
-    comminuted: { def: '≥ 3 fragments – high-energy.', img: '' },
-    open: { def: 'Skin breached – add Gustilo grade.', img: '' },
-    incomplete: { def: 'Doesn’t cross both cortices.' },
-  };
+  const descriptorInfo: Record<string, { def: string; details?: string; img?: string }> = {
+  displaced: {
+    def: 'Fracture displacement refers to the extent to which bone fragments have shifted from their normal anatomical alignment.',
+    details: 'Describe by percentage of separation (e.g., 50% displaced) and direction of displacement (e.g., anterior, lateral, radial).',
+    img: '/images/descriptors/displacement.png',
+  },
+  shortened: {
+    def: 'Bone fragments overlap, leading to an overall loss of length.',
+    details: 'Often described by the amount of shortening (e.g., 5 mm or 1 cm).',
+  },
+  angulated: {
+    def: 'Fracture angulation refers to the angle formed between bone fragments when they are no longer aligned in a straight axis.',
+    details: 'Typically described by apex direction and angle (e.g., 20° dorsal angulation).',
+    img: '/images/descriptors/angulation.jpg',
+  },
+  'intra-articular': {
+    def: 'The fracture line extends into the joint space.',
+    details: 'Note step-off or gap (e.g., 2 mm step-off).',
+  },
+  comminuted: {
+    def: 'The fracture involves three or more bone fragments.',
+    details: 'Usually indicates high-energy trauma.',
+  },
+  open: {
+    def: 'The fracture is associated with a skin wound communicating with the fracture site.',
+    details: 'Classified using the Gustilo-Anderson system (e.g., Gustilo II).',
+  },
+  incomplete: {
+    def: 'The fracture does not extend through both cortices of the bone.',
+  },
+};
+
   const descriptorKeys = Object.keys(descriptorInfo);
 
   /*───────── Sentence preview ─────────*/
@@ -82,11 +105,20 @@ export default function ReadXrayPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] text-[#1A1C2C] font-sans">
       <header className="pt-28 pb-16 px-6 text-center">
-        <h1 className="text-4xl font-bold">Read Any Ortho X-Ray in 5 Steps</h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-[#4d5159]">
-          Guided, clinically focused template—<span className="italic">zero fluff</span>, maximum clarity.
-        </p>
-      </header>
+  <h1 className="text-4xl font-bold text-midnight">
+    Read Any Ortho X-Ray in 5 Steps
+  </h1>
+
+  <div className="mt-6 space-y-2 max-w-2xl mx-auto">
+    <p className="text-xl font-semibold text-midnight">
+      Master ortho X-rays with a guided, clinically focused template.
+    </p>
+    <p className="text-lg text-midnight">
+      Use our interactive model to learn by doing.
+    </p>
+  </div>
+</header>
+
 
       <section className="px-6 sm:px-8 max-w-2xl mx-auto space-y-10 pb-24">
         {/* Step 1 */}
@@ -208,33 +240,46 @@ export default function ReadXrayPage() {
           </button>
 
           {showDefinitions && (
-            <div className="mt-6 space-y-6 border-t pt-6">
-              <h4 className="text-lg font-semibold">Descriptor Definitions</h4>
-              {descriptorKeys.map((k) => (
-                <div key={k} className="rounded border border-[#e2e0d7] bg-white/70 px-4 py-3 shadow-sm">
-                  <div className="flex justify-between">
-                    <span className="font-medium capitalize">{k}</span>
-                    {descriptorInfo[k].img && (
-                      <button
-                        onClick={() => setShowImg((p) => ({ ...p, [k]: !p[k] }))}
-                        className="text-xs text-teal-700 underline"
-                      >
-                        {showImg[k] ? 'Hide' : 'Show example'}
-                      </button>
-                    )}
-                  </div>
-                  <p className="mt-1 text-sm">{descriptorInfo[k].def}</p>
-                  {descriptorInfo[k].img && showImg[k] && (
-                    <img
-                      src={descriptorInfo[k].img}
-                      alt={`${k} example`}
-                      className="mt-3 w-full max-w-sm rounded border"
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
+  <div className="mt-6 space-y-6 border-t pt-6">
+    <h4 className="text-lg font-semibold">Descriptor Definitions</h4>
+    {descriptorKeys.map((k) => (
+      <div
+        key={k}
+        className="rounded border border-[#e2e0d7] bg-white/70 px-4 py-3 shadow-sm space-y-2"
+      >
+        <div className="flex justify-between items-center">
+          <span className="font-medium capitalize text-[#1A1C2C]">{k}</span>
+          {descriptorInfo[k].img && (
+            <button
+              onClick={() => setShowImg((p) => ({ ...p, [k]: !p[k] }))}
+              className="text-xs text-teal-700 underline"
+            >
+              {showImg[k] ? 'Hide example' : 'Show example'}
+            </button>
           )}
+        </div>
+
+        {/* Definition and details */}
+        <div className="text-sm text-[#333] space-y-1">
+          <p className="font-medium">{descriptorInfo[k].def}</p>
+          {descriptorInfo[k].details && (
+            <p className="italic text-[#555]">{descriptorInfo[k].details}</p>
+          )}
+        </div>
+
+        {/* Optional image */}
+        {descriptorInfo[k].img && showImg[k] && (
+          <img
+            src={descriptorInfo[k].img}
+            alt={`${k} example`}
+            className="mt-3 w-full max-w-sm rounded border"
+          />
+        )}
+      </div>
+    ))}
+  </div>
+)}
+
         </StepCard>
 
         {/* Step 5 */}
