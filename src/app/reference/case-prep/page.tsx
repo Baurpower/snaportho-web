@@ -1,11 +1,11 @@
-import XrayPageClient from './xraypageclient';
+import CaseprepPageClient from './casepreppageclient';
 
 export const metadata = {
-  title: 'How to Read an Ortho X-Ray',
+  title: 'Case Prep',
   description:
-    'A no-fluff, step-by-step template for fracture conference or dictation—learn the views, location, key descriptors, and finish in a single polished sentence.',
+    'Quickly prepare for cases!',
   openGraph: {
-    title: 'How to Read an Ortho X-Ray',
+    title: 'Case Prep',
     description:
       'Simple 5-step format for fast, clear fracture dictations. Perfect for med-students and residents.',
     images: [
@@ -31,5 +31,5 @@ export const metadata = {
 };
 
 export default function LearnPage() {
-  return <XrayPageClient />;
+  return <CaseprepPageClient />;
 }

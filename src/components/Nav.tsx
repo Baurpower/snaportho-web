@@ -112,6 +112,13 @@ export default function Nav() {
                 >
                   Read X-Rays
                 </Link>
+                <Link
+                  href="/reference/case-prep"
+                  className="block px-4 py-2 text-[#597498] hover:bg-sky-50 transition whitespace-nowrap"
+                  onClick={() => setOpenRef(false)}
+                >
+                  Case Prep
+                </Link>
               </div>
             )}
           </div>
