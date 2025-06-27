@@ -1,18 +1,13 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import dynamic from 'next/dynamic';
-import remarkGfm from 'remark-gfm';
 import {
-  ClipboardDocumentIcon,
-  CheckIcon,
   MagnifyingGlassCircleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
 import { getCasePrepResponse } from '@/lib/api';
 
-const Markdown = dynamic(() => import('react-markdown').then((m) => m.default), { ssr: false });
 
 interface CasePrepPayload {
   pimpQuestions: string[];
@@ -172,24 +167,6 @@ function ToggleItem({ raw }: { raw: string }) {
   );
 }
 
-
-function CopyBtn({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false);
-
-  return (
-    <button
-      onClick={async () => {
-        await navigator.clipboard.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1500);
-      }}
-      className="inline-flex items-center gap-2 rounded-md border border-teal-500 px-3 py-2 text-sm text-teal-700 shadow-sm hover:bg-teal-50"
-    >
-      {copied ? <CheckIcon className="h-4 w-4" /> : <ClipboardDocumentIcon className="h-4 w-4" />}
-      {copied ? 'Copied' : 'Copy'}
-    </button>
-  );
-}
 
 function LoadingOverlay() {
   return (
