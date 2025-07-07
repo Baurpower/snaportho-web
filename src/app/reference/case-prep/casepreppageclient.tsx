@@ -47,12 +47,30 @@ export default function CasePrepPage() {
     <main className="min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] text-[#1A1C2C]">
       {loading && <LoadingOverlay />}
 
-      <header className="px-6 pt-24 pb-14 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-midnight">Ortho&nbsp;Case-Prep Helper</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-midnight">
-          Paste a case description → get pearls, anatomy, and questions.
-        </p>
-      </header>
+      <header className="relative px-6 pt-24 pb-14 text-center">
+  <div className="mx-auto flex flex-col items-center justify-center space-y-4">
+    <div className="flex items-center space-x-4">
+      <img
+        src="/brologo.png"
+        alt="Bro Logo"
+        className="h-16 w-16 sm:h-20 sm:w-20 rounded-full"
+      />
+      <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-midnight">
+        Meet <span className="text-teal-600">Bro</span>
+      </h1>
+    </div>
+
+    <p className="max-w-xl text-lg text-gray-800">
+      Prepare for ortho cases faster and smarter
+    </p>
+
+    <p className="max-w-xl text-base text-gray-600">
+      Get the key anatomy and high-yield questions you need before you scrub.
+    </p>
+  </div>
+</header>
+
+
 
       <section className="mx-auto max-w-2xl space-y-10 px-6 pb-24 sm:px-8">
         <Card title="Describe Your Case">
