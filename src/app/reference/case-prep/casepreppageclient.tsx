@@ -7,7 +7,7 @@ import {
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
 import { getCasePrepResponse } from '@/lib/api';
-import branch from 'branch-sdk'; // Make sure this is at the top
+
 
 interface CasePrepPayload {
   pimpQuestions: string[];
@@ -37,7 +37,8 @@ async function handleSubmit() {
     const parsed = await getCasePrepResponse(prompt);
     setData(parsed);
 
-    // 🔥 Track Branch custom event
+    // Dynamically import branch and log event (only in browser)
+    const branch = (await import('branch-sdk')).default;
     branch.logEvent('CasePrep Prompt Entered', {
       prompt_text: prompt,
       timestamp: new Date().toISOString(),
