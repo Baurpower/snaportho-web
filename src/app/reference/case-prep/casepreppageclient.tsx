@@ -7,6 +7,7 @@ import {
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
 import { getCasePrepResponse } from '@/lib/api';
+import branch from 'branch-sdk'; // Make sure this is at the top
 
 interface CasePrepPayload {
   pimpQuestions: string[];
@@ -23,30 +24,39 @@ export default function CasePrepPage() {
   const [userFeedback, setUserFeedback] = useState('');
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
-  async function handleSubmit() {
-    try {
-      setLoading(true);
-      setData(null);
-      setWasHelpful(null);
-      setUserFeedback('');
-      setFeedbackSubmitted(false);
 
-      const parsed = await getCasePrepResponse(prompt);
-      setData(parsed);
 
-      setTimeout(() => {
-        summaryRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } catch (error) {
-      console.error('❌ CasePrep Error', error);
-      setData({
-        pimpQuestions: [],
-        otherUsefulFacts: ['❌ Error fetching data. Please try again.'],
-      });
-    } finally {
-      setLoading(false);
-    }
+async function handleSubmit() {
+  try {
+    setLoading(true);
+    setData(null);
+    setWasHelpful(null);
+    setUserFeedback('');
+    setFeedbackSubmitted(false);
+
+    const parsed = await getCasePrepResponse(prompt);
+    setData(parsed);
+
+    // 🔥 Track Branch custom event
+    branch.logEvent('CasePrep Prompt Entered', {
+      prompt_text: prompt,
+      timestamp: new Date().toISOString(),
+    });
+
+    setTimeout(() => {
+      summaryRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  } catch (error) {
+    console.error('❌ CasePrep Error', error);
+    setData({
+      pimpQuestions: [],
+      otherUsefulFacts: ['❌ Error fetching data. Please try again.'],
+    });
+  } finally {
+    setLoading(false);
   }
+}
+
 
   async function submitFeedback() {
     try {

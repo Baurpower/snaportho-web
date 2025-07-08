@@ -1,16 +1,16 @@
 import CaseprepPageClient from './casepreppageclient';
 
 export const metadata = {
-  title: 'Case Prep',
+  title: 'Ortho BroBot: Prep for Cases Faster',
   description:
     'Quickly prepare for cases!',
   openGraph: {
-    title: 'Case Prep',
+    title: 'Ortho BroBot: Prep for Cases Faster',
     description:
-      'Simple 5-step format for fast, clear fracture dictations. Perfect for med-students and residents.',
+      'Ortho BroBot highlights the most relevant questions to know before your case.',
     images: [
       {
-        url: 'https://snap-ortho.com/og-image-reference-readxray.png',
+        url: 'https://snap-ortho.com/og-image-reference-caseprep.png',
         width: 1200,
         height: 630,
         alt: 'SnapOrtho – Read X-Ray Page OG Image',
@@ -19,14 +19,14 @@ export const metadata = {
     type: 'article',
   },
   keywords: [
-    'orthopaedic x-ray',
-    'fracture conference',
-    'dictation template',
-    'radiograph interpretation',
-    'SnapOrtho learn',
-    'Read Xrays',
-    'How to Read Xrays',
-    'How to Read Ortho Xrays'
+    'orthopaedic rotations',
+    'OR prep',
+    'case prep',
+    'Learn orthopaedics',
+    'SnapOrtho reference',
+    'Prepare faster',
+    'ortho',
+    'medical student'
   ],
 };
 
