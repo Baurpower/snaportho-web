@@ -54,16 +54,17 @@ export default function CasePrepPage() {
       setFeedbackSubmitted(true);
 
       await fetch('https://api.snap-ortho.com/case-prep-log', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          prompt,
-          response: data,
-          wasHelpful,
-          userFeedback,
-          timestamp: new Date().toISOString(),
-        }),
-      });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    prompt,
+    responseJSON: JSON.stringify(data), // ← Fix: stringify this
+    wasHelpful,
+    userFeedback,
+    timestamp: new Date().toISOString(),
+  }),
+});
+
     } catch (err) {
       console.error('❌ Feedback submission failed:', err);
     }
