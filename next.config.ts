@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  webpack(config) {
+    config.externals.push({ fs: 'commonjs fs', path: 'commonjs path' })
+    return config
+  },
+}
 
-export default nextConfig;
+export default nextConfig
