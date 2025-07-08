@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
             value: 'bro.snap-ortho.com',
           },
         ],
-        destination: 'https://snap-ortho.com/reference/caseprep',
+        destination: 'https://snap-ortho.com/reference/case-prep',
         permanent: true,
       },
     ];
