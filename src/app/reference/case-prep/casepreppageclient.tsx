@@ -8,7 +8,6 @@ import {
 } from '@heroicons/react/24/outline';
 import { getCasePrepResponse } from '@/lib/api';
 
-
 interface CasePrepPayload {
   pimpQuestions: string[];
   otherUsefulFacts: string[];
@@ -20,15 +19,21 @@ export default function CasePrepPage() {
   const [loading, setLoading] = useState(false);
   const summaryRef = useRef<HTMLDivElement | null>(null);
 
+  const [wasHelpful, setWasHelpful] = useState<boolean | null>(null);
+  const [userFeedback, setUserFeedback] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+
   async function handleSubmit() {
     try {
       setLoading(true);
       setData(null);
+      setWasHelpful(null);
+      setUserFeedback('');
+      setFeedbackSubmitted(false);
 
       const parsed = await getCasePrepResponse(prompt);
       setData(parsed);
 
-      // Auto-scroll to summary
       setTimeout(() => {
         summaryRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
@@ -43,34 +48,52 @@ export default function CasePrepPage() {
     }
   }
 
+  async function submitFeedback() {
+    try {
+      if (!data) return;
+      setFeedbackSubmitted(true);
+
+      await fetch('https://api.snap-ortho.com/case-prep-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt,
+          response: data,
+          wasHelpful,
+          userFeedback,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+    } catch (err) {
+      console.error('❌ Feedback submission failed:', err);
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] text-[#1A1C2C]">
       {loading && <LoadingOverlay />}
 
       <header className="relative px-6 pt-24 pb-14 text-center">
-  <div className="mx-auto flex flex-col items-center justify-center space-y-4">
-    <div className="flex items-center space-x-4">
-      <img
-        src="/brologo.png"
-        alt="Bro Logo"
-        className="h-16 w-16 sm:h-20 sm:w-20 rounded-full"
-      />
-      <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-midnight">
-        Meet <span className="text-teal-600">Bro</span>
-      </h1>
-    </div>
+        <div className="mx-auto flex flex-col items-center justify-center space-y-4">
+          <div className="flex items-center space-x-4">
+            <img
+              src="/brologo.png"
+              alt="Bro Logo"
+              className="h-16 w-16 sm:h-20 sm:w-20 rounded-full"
+            />
+            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-midnight">
+              Meet <span className="text-teal-600">Bro</span>
+            </h1>
+          </div>
 
-    <p className="max-w-xl text-lg text-gray-800">
-      Prepare for ortho cases faster and smarter
-    </p>
-
-    <p className="max-w-xl text-base text-gray-600">
-      Get the key anatomy and high-yield questions you need before you scrub.
-    </p>
-  </div>
-</header>
-
-
+          <p className="max-w-xl text-lg text-gray-800">
+            Prepare for ortho cases faster and smarter
+          </p>
+          <p className="max-w-xl text-base text-gray-600">
+            Get the key anatomy and high-yield questions you need before you scrub.
+          </p>
+        </div>
+      </header>
 
       <section className="mx-auto max-w-2xl space-y-10 px-6 pb-24 sm:px-8">
         <Card title="Describe Your Case">
@@ -96,6 +119,50 @@ export default function CasePrepPage() {
               <Section label="Common Pimp Questions" bullets={data.pimpQuestions} />
               <Section label="Other Useful Facts" bullets={data.otherUsefulFacts} />
             </Card>
+
+            <div className="mt-6 space-y-4">
+              <h3 className="text-lg font-medium text-gray-700">Was this helpful?</h3>
+              <div className="flex space-x-4">
+                <button
+                  className={`px-4 py-2 rounded-md ${
+                    wasHelpful === true
+                      ? 'bg-green-500 text-white'
+                      : 'bg-gray-200 text-gray-800'
+                  }`}
+                  onClick={() => setWasHelpful(true)}
+                >
+                  Yes
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-md ${
+                    wasHelpful === false
+                      ? 'bg-red-500 text-white'
+                      : 'bg-gray-200 text-gray-800'
+                  }`}
+                  onClick={() => setWasHelpful(false)}
+                >
+                  No
+                </button>
+              </div>
+
+              {wasHelpful === false && (
+                <textarea
+                  rows={3}
+                  className="w-full mt-4 p-3 rounded-md border border-gray-300 shadow-sm focus:ring-2 focus:ring-red-400"
+                  placeholder="Let us know how we can improve this response..."
+                  value={userFeedback}
+                  onChange={(e) => setUserFeedback(e.target.value)}
+                />
+              )}
+
+              <button
+                onClick={submitFeedback}
+                className="mt-2 inline-flex items-center justify-center rounded-md bg-teal-600 px-4 py-2 text-white shadow hover:bg-teal-700 disabled:opacity-40"
+                disabled={wasHelpful === null || feedbackSubmitted}
+              >
+                {feedbackSubmitted ? 'Thanks for your feedback!' : 'Submit Feedback'}
+              </button>
+            </div>
           </div>
         )}
       </section>
@@ -154,7 +221,6 @@ function Section({ label, bullets }: { label: string; bullets: string[] }) {
   );
 }
 
-
 function ToggleItem({ raw }: { raw: string }) {
   const [show, setShow] = useState(false);
 
@@ -184,7 +250,6 @@ function ToggleItem({ raw }: { raw: string }) {
     </li>
   );
 }
-
 
 function LoadingOverlay() {
   return (
