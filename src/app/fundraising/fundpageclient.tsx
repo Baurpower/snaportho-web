@@ -21,20 +21,27 @@ export default function FundPage() {
         </section>
 
         {/* Top Donors Banner */}
-        <div className="relative bg-gradient-to-r from-sky-100 via-white to-blue-100 p-4 sm:p-6 pt-8 rounded-3xl border border-sky/20 shadow-xl">
-          <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-sky px-4 py-1 text-white text-sm font-semibold rounded-full shadow-md z-10">
-            🌟 Top Donors
-          </div>
+<div className="relative bg-gradient-to-r from-sky-100 via-white to-blue-100 p-4 sm:p-6 pt-8 rounded-3xl border border-sky/20 shadow-xl">
+  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-sky px-4 py-1 text-white text-sm font-semibold rounded-full shadow-md z-10">
+    🌟 Top Donors
+  </div>
 
-          <div className="flex flex-wrap justify-center items-center gap-4 pt-4 font-semibold text-midnight">
-            <div className="bg-white/70 backdrop-blur-md rounded-xl py-3 px-4 shadow-inner ring-1 ring-sky/10">
-              Kregg B — <span className="text-sky-dark">$300</span>
-            </div>
-          </div>
+  <div className="flex flex-wrap justify-center items-center gap-4 pt-4 font-semibold text-midnight">
+    <div className="bg-white/70 backdrop-blur-md rounded-xl py-3 px-4 shadow-inner ring-1 ring-sky/10">
+      Kregg B — <span className="text-sky-dark">$300</span>
+    </div>
+    <div className="bg-white/70 backdrop-blur-md rounded-xl py-3 px-4 shadow-inner ring-1 ring-sky/10">
+      Oliver S — <span className="text-sky-dark">$50</span>
+    </div>
+    <div className="bg-white/70 backdrop-blur-md rounded-xl py-3 px-4 shadow-inner ring-1 ring-sky/10">
+      Jack S — <span className="text-sky-dark">$5</span>
+    </div>
+  </div>
 
-          <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-sky/10 rounded-full blur-2xl z-0" />
-          <div className="absolute -top-6 -left-6 w-28 h-28 bg-blue-200/20 rounded-full blur-2xl z-0" />
-        </div>
+  <div className="absolute -bottom-6 -right-6 w-40 h-40 bg-sky/10 rounded-full blur-2xl z-0" />
+  <div className="absolute -top-6 -left-6 w-28 h-28 bg-blue-200/20 rounded-full blur-2xl z-0" />
+</div>
+
 
         {/* Hero / Social Proof */}
         <section className="relative isolate grid gap-10 place-items-center text-center bg-gradient-to-br from-sky-50 to-cream p-8 rounded-3xl shadow-md">
@@ -42,12 +49,12 @@ export default function FundPage() {
             <Badge>🚀 2025 Snapshot</Badge>
 
             <h2 className="text-4xl sm:text-5xl font-extrabold text-navy leading-tight">
-              300+ Learners ▶ Growing Every Week
+              500+ Learners ▶ Growing Every Week
             </h2>
 
             <ul className="grid grid-cols-2 sm:grid-cols-4 gap-y-4 gap-x-6 text-left max-w-md mx-auto">
-              <Stat value="300+" label="Downloads" />
-              <Stat value="50+" label="Active Accounts" />
+              <Stat value="500+" label="Downloads" />
+              <Stat value="150+" label="Active Accounts" />
               <Stat value="20+" label="Daily Learners" />
               <Stat value="5/5" label="App Rating" />
             </ul>
@@ -77,6 +84,7 @@ export default function FundPage() {
             <TimelineItem year="April 2025" title="Team Expansion" desc="MyOrtho Solutions was formed and Dr. Austin Nguyen joined the team." />
             <TimelineItem year="May 2025" title="Practice Released" desc="Our flagship “Practice” feature went live to boost fracture conference prep." />
             <TimelineItem year="June 2025" title="Learn Drops" desc="SnapOrtho Learn launched with our first animated video. More releasing monthly." />
+            <TimelineItem year="July 2025" title="Meet BroBot" desc="BroBot beta launched to help prepare for cases." />
           </ol>
         </section>
 
