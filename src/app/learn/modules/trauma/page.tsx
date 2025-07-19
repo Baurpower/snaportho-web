@@ -5,13 +5,24 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 
+type Video = {
+  id: string;
+  title: string;
+  description: string;
+  youtubeURL: string;
+  category: string;
+  isPreview: boolean;
+};
+
 export default function TraumaModulePage() {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
   const videoRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const checkAuthAndFetch = async () => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -19,11 +30,20 @@ export default function TraumaModulePage() {
       if (!session) {
         router.replace("/learn");
       } else {
-        setLoading(false);
+        try {
+          const res = await fetch("https://api.snap-ortho.com/video-access");
+          if (!res.ok) throw new Error("Failed to fetch videos");
+          const data: Video[] = await res.json();
+          setVideos(data.filter((v) => v.isPreview));
+        } catch (err: any) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
-    checkAuth();
+    checkAuthAndFetch();
   }, [router]);
 
   const scrollToVideo = () => {
@@ -38,9 +58,17 @@ export default function TraumaModulePage() {
     );
   }
 
+  if (error) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-[#f9f7f4] text-red-600">
+        <p className="text-lg">{error}</p>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[#f9f7f4] text-navy px-6 sm:px-10 lg:px-24 py-12 space-y-16">
-      {/* 🧠 Welcome */}
+      {/* Welcome Section */}
       <section className="bg-white border border-gray-200 rounded-xl shadow-lg py-16 px-8 max-w-5xl mx-auto text-center space-y-6">
         <h1 className="text-5xl font-bold text-[#444]">Welcome to the Trauma Module</h1>
         <p className="text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
@@ -54,7 +82,7 @@ export default function TraumaModulePage() {
         </button>
       </section>
 
-      {/* 🚧 Coming Soon */}
+      {/* Animations Coming Soon */}
       <section className="max-w-5xl mx-auto text-center space-y-4">
         <h2 className="text-3xl font-semibold text-[#444]">Animations In Progress 🚀</h2>
         <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
@@ -68,7 +96,7 @@ export default function TraumaModulePage() {
       {/* Divider */}
       <div className="h-px bg-gray-200 max-w-5xl mx-auto"></div>
 
-      {/* 🔍 Sneak Peek */}
+      {/* Sneak Peek Section */}
       <section className="max-w-5xl mx-auto text-center space-y-8">
         <h2 className="text-3xl font-semibold text-[#444]">What You’ll Learn 👇</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -79,11 +107,11 @@ export default function TraumaModulePage() {
             },
             {
               title: "Management Principles",
-              text: "Clear steps for evaluating and treating trauma patients.",
+              text: "Clear steps for determining management.",
             },
             {
-              title: "Fixation Techniques",
-              text: "See modern surgical techniques animated clearly.",
+              title: "Other Tested Concepts",
+              text: "Our videos include the high-yield commonly tested concepts.",
             },
           ].map(({ title, text }) => (
             <div
@@ -97,23 +125,29 @@ export default function TraumaModulePage() {
         </div>
       </section>
 
-      {/* 📺 Embedded Video — Now at Bottom */}
-      <section
-        ref={videoRef}
-        className="bg-white border border-gray-200 rounded-xl shadow-lg py-12 px-6 sm:px-12 max-w-6xl mx-auto text-center"
-      >
-        <h2 className="text-4xl font-semibold text-[#444] mb-8">
-          First Learn Video: Distal Radius Fractures
-        </h2>
-        <div className="w-full" style={{ aspectRatio: "16 / 9" }}>
-          <iframe
-            className="w-full h-full rounded-xl shadow-md"
-            src="https://www.youtube.com/embed/nSqiWf5Z-B0?si=YSovj45MZZWmrz7z"
-            title="SnapOrtho Trauma Learn Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
+      {/* Video Section */}
+      <section ref={videoRef} className="space-y-12 max-w-6xl mx-auto">
+        {videos.map((video) => {
+          const youtubeID = new URL(video.youtubeURL).searchParams.get("v") || video.youtubeURL.split("/").pop();
+          return (
+            <div
+              key={video.id}
+              className="bg-white border border-gray-200 rounded-xl shadow-lg py-12 px-6 sm:px-12 text-center"
+            >
+              <h2 className="text-4xl font-semibold text-[#444] mb-8">{video.title}</h2>
+              <p className="text-md text-gray-600 max-w-3xl mx-auto mb-4">{video.description}</p>
+              <div className="w-full" style={{ aspectRatio: "16 / 9" }}>
+                <iframe
+                  className="w-full h-full rounded-xl shadow-md"
+                  src={`https://www.youtube.com/embed/${youtubeID}`}
+                  title={video.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          );
+        })}
       </section>
 
       {/* CTA */}
