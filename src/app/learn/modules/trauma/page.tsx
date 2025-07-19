@@ -35,9 +35,14 @@ export default function TraumaModulePage() {
           if (!res.ok) throw new Error("Failed to fetch videos");
           const data: Video[] = await res.json();
           setVideos(data.filter((v) => v.isPreview));
-        } catch (err: any) {
-          setError(err.message);
-        } finally {
+        } catch (err: unknown) {
+  if (err instanceof Error) {
+    setError(err.message);
+  } else {
+    setError("An unexpected error occurred");
+  }
+}
+ finally {
           setLoading(false);
         }
       }
