@@ -84,12 +84,12 @@ export default function SignInPage() {
       </form>
 
       <div className="mt-4 flex justify-between text-sm">
-        <Link href="/learn/password-reset" className="text-sky hover:underline">
+        <Link href="/auth/password-reset" className="text-sky hover:underline">
           Forgot Password?
         </Link>
         <span>
           Don’t have an account?{" "}
-          <Link href="/learn/signup" className="text-sky hover:underline">
+          <Link href="/auth/signup" className="text-sky hover:underline">
             Sign Up
           </Link>
         </span>
