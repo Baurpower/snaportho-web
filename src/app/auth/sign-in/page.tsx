@@ -89,7 +89,7 @@ export default function SignInPage() {
         </Link>
         <span>
           Don’t have an account?{" "}
-          <Link href="/auth/signup" className="text-sky hover:underline">
+          <Link href="/auth/sign-up" className="text-sky hover:underline">
             Sign Up
           </Link>
         </span>

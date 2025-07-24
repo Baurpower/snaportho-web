@@ -107,7 +107,7 @@ export default function SignUpPage() {
 
       <p className="mt-4 text-center text-sm text-midnight/70">
         Already have an account?{" "}
-        <a href="/auth/signin" className="text-sky hover:underline">
+        <a href="/auth/sign-in" className="text-sky hover:underline">
           Sign In
         </a>
       </p>
