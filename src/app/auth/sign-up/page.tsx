@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -13,7 +13,7 @@ export default function SignUpPage() {
   const { signUp, user } = useAuth();
   const router = useRouter();
 
-  // Optional: auto-redirect if confirmed user returns
+  // If already signed in, redirect to profile
   useEffect(() => {
     if (user) {
       router.replace("/onboarding/profile");
@@ -23,9 +23,23 @@ export default function SignUpPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setAttempted(true);
+    setMessage(null);
+
     const response = await signUp(email, password);
+
     if (response.error) {
-      setMessage(response.error.message);
+      const errMsg = response.error.message.toLowerCase();
+      if (
+        errMsg.includes("already registered") ||
+        errMsg.includes("duplicate") ||
+        errMsg.includes("user already exists")
+      ) {
+        setMessage(
+          "An account with that email already exists. Please sign in or reset your password."
+        );
+      } else {
+        setMessage(response.error.message);
+      }
     } else {
       setMessage(
         "Success! Please check your email to confirm your account. After confirming, you'll complete your profile to get started."
@@ -43,7 +57,7 @@ export default function SignUpPage() {
         <p className="mb-4 text-center text-sm text-midnight/70">{message}</p>
       )}
 
-      {attempted && (
+      {attempted && !message?.includes("Success!") && (
         <div className="mb-4 text-center">
           <button
             onClick={handleSubmit}
@@ -87,7 +101,8 @@ export default function SignUpPage() {
       </p>
 
       <p className="mt-6 text-center text-xs text-midnight/60">
-        After signing up, check your email to confirm your account. Once confirmed, you’ll complete a quick profile so we can personalize your learning experience.
+        After signing up, check your email to confirm your account. Once confirmed,
+        you’ll complete a quick profile so we can personalize your learning experience.
       </p>
     </div>
   );
