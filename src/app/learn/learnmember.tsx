@@ -29,16 +29,17 @@ export default function LearnMember() {
   }, [user]);
 
   return (
-    <main className="max-w-4xl mx-auto px-6 pt-24 pb-16 relative">
+    <main className="max-w-4xl mx-auto px-6 pt-24 pb-16">
       {/* Popup */}
       {showPopup && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full space-y-4 text-center">
             <h2 className="text-xl font-semibold text-navy">
               New Feature: User Profiles
             </h2>
             <p className="text-midnight/80">
-              We’ve added personalized profiles! Set yours up now to get the best SnapOrtho experience.
+              We’ve added personalized profiles! Set yours up now to get the best
+              SnapOrtho experience.
             </p>
             <Link
               href="/profile-settings"
@@ -68,11 +69,13 @@ export default function LearnMember() {
           Welcome to SnapOrtho’s Learning Library
         </h2>
         <p className="text-base md:text-lg text-midnight/80 leading-relaxed">
-          We’re building a comprehensive library of high-quality orthopaedics video tutorials, designed to take you from basics all the way to mastery.
+          We’re building a comprehensive library of high-quality orthopaedics video
+          tutorials, designed to take you from basics all the way to mastery.
         </p>
         <p className="text-base md:text-lg text-midnight/80 leading-relaxed">
-          We’re kicking things off with our first series on <strong>Trauma</strong>.
-          Stay tuned as we add more subspecialties, cases, and expert walkthroughs!
+          We’re kicking things off with our first series on{' '}
+          <strong>Trauma</strong>. Stay tuned as we add more subspecialties, cases,
+          and expert walkthroughs!
         </p>
       </section>
 
@@ -83,14 +86,18 @@ export default function LearnMember() {
           className="block p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
         >
           <h3 className="text-xl font-semibold mb-1">Module 1: Trauma</h3>
-          <p className="text-sm text-midnight/70">Get started with orthopaedic trauma.</p>
+          <p className="text-sm text-midnight/70">
+            Get started with orthopaedic trauma.
+          </p>
         </Link>
         <Link
           href="/learn/modules/oncology"
           className="block p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
         >
           <h3 className="text-xl font-semibold mb-1">Module 2: Oncology</h3>
-          <p className="text-sm text-midnight/70">Review oncology before board exams.</p>
+          <p className="text-sm text-midnight/70">
+            Review oncology before board exams.
+          </p>
         </Link>
       </div>
     </main>
