@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import AccountDropdown from '@/components/accountdropdown'; // ✅ Add this import
 
 type Video = {
   id: string;
@@ -54,8 +55,13 @@ export default function TraumaModuleClient() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] text-[#1A1C2C] px-4 py-12 max-w-5xl mx-auto space-y-10">
-      <section className="text-center space-y-4">
+      {/* Header with AccountDropdown */}
+      <div className="flex justify-between items-center">
         <h1 className="text-4xl font-extrabold tracking-tight">Trauma Module</h1>
+        <AccountDropdown />
+      </div>
+
+      <section className="text-center space-y-4">
         <p className="text-gray-700 max-w-xl mx-auto">
           Dive into fracture classification, management principles, and visual-first ortho learning.
         </p>

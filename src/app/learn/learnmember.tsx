@@ -1,94 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { useAuth } from '../../context/AuthContext';
-import { useEffect, useRef, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient'; // this is the pre-configured client
+import AccountDropdown from '@/components/accountdropdown';
 
 export default function LearnMember() {
-  const { user } = useAuth();
-
-  const [fullName, setFullName] = useState<string | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  // Fetch full_name from user_profiles table
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (!user?.id) return;
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('full_name')
-        .eq('user_id', user.id)
-        .single();
-
-      if (error) {
-        console.error('Error fetching profile:', error);
-      } else {
-        setFullName(data.full_name);
-      }
-    };
-
-    fetchUserProfile();
-  }, [user]);
-
-  // Close dropdown if clicked outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   return (
     <main className="max-w-4xl mx-auto px-6 pt-24 pb-16">
       {/* Header */}
       <div className="flex justify-between items-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-navy">Learn Home</h1>
-
-        {/* Account Dropdown */}
-        <div className="relative" ref={menuRef}>
-          <button
-            onClick={() => setMenuOpen((prev) => !prev)}
-            className="text-sm px-4 py-2 bg-sky text-white rounded-full hover:bg-sky/90 transition"
-          >
-            Account
-          </button>
-
-          {menuOpen && (
-            <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-xl overflow-hidden z-10 border border-slate-200">
-              <div className="px-4 py-3 text-sm text-midnight/80">
-                {fullName ? (
-                  <p className="font-medium text-navy">Signed in as {fullName}</p>
-                ) : (
-                  <p className="italic text-gray-500">Loading profile...</p>
-                )}
-              </div>
-              <hr className="border-slate-200" />
-              <Link
-                href="/learn/settings"
-                className="block px-4 py-2 text-sm hover:bg-slate-100 text-midnight/90"
-              >
-                Profile Settings
-              </Link>
-              <Link
-                href="/auth/update-password"
-                className="block px-4 py-2 text-sm hover:bg-slate-100 text-midnight/90"
-              >
-                Update Password
-              </Link>
-              <Link
-                href="/auth/delete-account"
-                className="block px-4 py-2 text-sm hover:bg-slate-100 text-red-600"
-              >
-                Delete Account
-              </Link>
-            </div>
-          )}
-        </div>
+        <AccountDropdown />
       </div>
 
       {/* Intro */}
@@ -97,8 +18,7 @@ export default function LearnMember() {
           Welcome to SnapOrtho’s Learning Library
         </h2>
         <p className="text-base md:text-lg text-midnight/80 leading-relaxed">
-          We’re building a comprehensive library of high-quality orthopaedics video
-          tutorials, designed to take you from basics all the way to mastery.
+          We’re building a comprehensive library of high-quality orthopaedics video tutorials, designed to take you from basics all the way to mastery.
         </p>
         <p className="text-base md:text-lg text-midnight/80 leading-relaxed">
           We’re kicking things off with our first series on <strong>Trauma</strong>.
