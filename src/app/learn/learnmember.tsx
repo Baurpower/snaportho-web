@@ -1,11 +1,61 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/lib/supabaseClient';
 import AccountDropdown from '@/components/accountdropdown';
 
 export default function LearnMember() {
+  const { user } = useAuth();
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const checkUserProfile = async () => {
+      if (!user?.id) return;
+
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (!data && !error) {
+        setShowPopup(true);
+      }
+    };
+
+    checkUserProfile();
+  }, [user]);
+
   return (
-    <main className="max-w-4xl mx-auto px-6 pt-24 pb-16">
+    <main className="max-w-4xl mx-auto px-6 pt-24 pb-16 relative">
+      {/* Popup */}
+      {showPopup && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full space-y-4 text-center">
+            <h2 className="text-xl font-semibold text-navy">
+              New Feature: User Profiles
+            </h2>
+            <p className="text-midnight/80">
+              We’ve added personalized profiles! Set yours up now to get the best SnapOrtho experience.
+            </p>
+            <Link
+              href="/profile-settings"
+              className="inline-block px-6 py-2 bg-sky text-white rounded-full font-semibold hover:bg-sky/90 transition"
+            >
+              Create My Profile
+            </Link>
+            <button
+              className="block w-full text-sm text-midnight/60 mt-2 hover:underline"
+              onClick={() => setShowPopup(false)}
+            >
+              Maybe later
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex justify-between items-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-navy">Learn Home</h1>

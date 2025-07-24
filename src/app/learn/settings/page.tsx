@@ -20,34 +20,35 @@ export default function LearnProfileSettingsPage() {
 
   if (!user) {
     return (
-      <p className="p-6 text-center text-midnight/80">
-        Please sign in to view your Learn profile.
-      </p>
+      <main className="max-w-2xl mx-auto px-6 py-12">
+        <p className="text-center text-midnight/80">
+          Please sign in to view your Learn profile.
+        </p>
+      </main>
     );
   }
 
   if (loading) {
     return (
-      <p className="p-6 text-center text-midnight/80">Loading profile...</p>
+      <main className="max-w-2xl mx-auto px-6 py-12">
+        <p className="text-center text-midnight/80">Loading profile...</p>
+      </main>
     );
   }
 
   return (
-    <main className="max-w-2xl mx-auto px-6 py-12 space-y-10">
-      <h1 className="text-3xl font-bold text-navy mb-4">My Account</h1>
+    <main className="max-w-2xl mx-auto px-6 py-12">
+      <h1 className="text-3xl font-bold text-navy mb-8 text-center">My Account</h1>
 
       {!editing ? (
-        <div className="space-y-6">
-          <div>
-            <p className="text-sm text-gray-500">Full Name</p>
-            <p className="text-lg font-medium">{profile.full_name || '—'}</p>
-          </div>
-          <div>
-            <p className="text-sm text-gray-500">Email</p>
-            <p className="text-lg font-medium">{user.email}</p>
-          </div>
+        <div className="bg-white rounded-2xl shadow-md p-6 space-y-6 border border-slate-200">
+          <ProfileSection label="Full Name" value={profile.full_name} />
+          <ProfileSection label="Email" value={user.email ?? '—'} />
+          <ProfileSection label="Country" value={profile.country} />
+          <ProfileSection label="Institution" value={profile.institution} />
+          <ProfileSection label="Training Level" value={profile.training_level} />
 
-          <div className="grid gap-4">
+          <div className="grid gap-4 pt-6">
             <button
               onClick={() => setEditing(true)}
               className="w-full py-2 bg-sky text-white rounded-full font-medium hover:bg-sky/90 transition"
@@ -89,5 +90,16 @@ export default function LearnProfileSettingsPage() {
         </div>
       )}
     </main>
+  );
+}
+
+function ProfileSection({ label, value }: { label: string; value?: string | null }) {
+  if (!value) return null;
+
+  return (
+    <div>
+      <p className="text-sm text-gray-500">{label}</p>
+      <p className="text-base font-medium">{value}</p>
+    </div>
   );
 }

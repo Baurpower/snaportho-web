@@ -154,17 +154,22 @@ export default function ProfileForm({
 
   const inputClass =
     'w-full p-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-sky focus:outline-none';
-  const labelClass = 'block text-sm font-medium text-midnight/80';
+
 
   return (
-    <div className="space-y-8">
+  <div className="space-y-10">
+    <div className="space-y-2">
       <h1 className="text-3xl font-bold text-navy">
         {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
       </h1>
+      <p className="text-midnight/70 text-sm">
+        This information helps us personalize your experience.
+      </p>
+    </div>
 
-      <div className="space-y-6">
-        <div>
-          <label className={labelClass}>Full Name</label>
+    <div className="space-y-8">
+      <div className="grid gap-6">
+        <FormField label="Full Name">
           <input
             type="text"
             placeholder="Full Name"
@@ -172,15 +177,13 @@ export default function ProfileForm({
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
           />
-        </div>
+        </FormField>
 
-        <div>
-          <label className={labelClass}>Country</label>
+        <FormField label="Country">
           <CountrySelect value={userCountry} onChange={setCountry} />
-        </div>
+        </FormField>
 
-        <div>
-          <label className={labelClass}>City</label>
+        <FormField label="City">
           <input
             type="text"
             placeholder="City"
@@ -188,10 +191,9 @@ export default function ProfileForm({
             value={userCity}
             onChange={(e) => setCity(e.target.value)}
           />
-        </div>
+        </FormField>
 
-        <div>
-          <label className={labelClass}>Training Level</label>
+        <FormField label="Training Level">
           <select
             value={trainingLevel}
             onChange={(e) => setTrainingLevel(e.target.value)}
@@ -204,10 +206,9 @@ export default function ProfileForm({
               </option>
             ))}
           </select>
-        </div>
+        </FormField>
 
-        <div>
-          <label className={labelClass}>Current Institution</label>
+        <FormField label="Current Institution">
           <input
             type="text"
             placeholder="Institution"
@@ -215,10 +216,9 @@ export default function ProfileForm({
             value={userInstitution}
             onChange={(e) => setInstitution(e.target.value)}
           />
-        </div>
+        </FormField>
 
-        <div>
-          <label className={labelClass}>Subspecialty Interest</label>
+        <FormField label="Subspecialty Interest">
           <input
             type="text"
             placeholder="Subspecialty"
@@ -226,25 +226,30 @@ export default function ProfileForm({
             value={subspecialty}
             onChange={(e) => setSubspecialty(e.target.value)}
           />
-        </div>
+        </FormField>
 
-        <label className="flex items-center gap-3 mt-2 text-sm font-medium text-midnight/80">
+        <div className="flex items-start gap-3 pt-2">
           <input
             type="checkbox"
             checked={receiveEmails}
             onChange={(e) => setReceiveEmails(e.target.checked)}
-            className="w-4 h-4"
+            className="mt-1 w-4 h-4"
           />
-          Receive occasional email updates
-        </label>
+          <label className="text-sm font-medium text-midnight/80 leading-snug">
+            Receive occasional email updates about new content and features
+          </label>
+        </div>
       </div>
 
       {trainingHistory.length > 0 && mode === 'onboarding' && (
-        <div className="space-y-4">
+        <div className="space-y-5">
           <h2 className="text-xl font-semibold text-navy">Training History</h2>
           {trainingHistory.map((t, index) => (
-            <div key={index} className="border p-4 rounded-lg space-y-2 bg-white">
-              <label className={labelClass}>{t.label}</label>
+            <div
+              key={index}
+              className="border border-gray-200 bg-white p-5 rounded-xl space-y-3"
+            >
+              <p className="text-sm font-medium text-midnight/70">{t.label}</p>
               <input
                 type="text"
                 placeholder={`${t.label} Name`}
@@ -267,12 +272,30 @@ export default function ProfileForm({
         </div>
       )}
 
-      <button
-        onClick={handleSubmit}
-        className="w-full py-3 bg-sky text-white rounded-full font-semibold hover:bg-sky/90 transition"
-      >
-        {mode === 'update' ? 'Save Changes' : 'Complete Onboarding'}
-      </button>
+      <div className="pt-4">
+        <button
+          onClick={handleSubmit}
+          className="w-full py-3 bg-sky text-white rounded-full font-semibold hover:bg-sky/90 transition"
+        >
+          {mode === 'update' ? 'Save Changes' : 'Complete Onboarding'}
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+function FormField({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label className="block text-sm font-medium text-midnight/80 mb-1">{label}</label>
+      {children}
     </div>
   );
+}
 }
