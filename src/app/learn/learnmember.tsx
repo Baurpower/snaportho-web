@@ -42,7 +42,7 @@ export default function LearnMember() {
               SnapOrtho experience.
             </p>
             <Link
-              href="/profile-settings"
+              href="/learn/settings"
               className="inline-block px-6 py-2 bg-sky text-white rounded-full font-semibold hover:bg-sky/90 transition"
             >
               Create My Profile
