@@ -38,7 +38,8 @@ export default function LearnProfileSettingsPage() {
 
   return (
     <main className="max-w-2xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold text-navy mb-8 text-center">My Account</h1>
+      <h1 className="pt-8 text-3xl font-bold text-navy mb-8 text-center"> My Account
+</h1>
 
       {!editing ? (
         <div className="bg-white rounded-2xl shadow-md p-6 space-y-6 border border-slate-200">

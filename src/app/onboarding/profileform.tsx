@@ -175,7 +175,7 @@ export default function ProfileForm({
   return (
     <div className="space-y-10">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-navy">
+        <h1 className="pt-8 text-3xl font-bold text-navy">
           {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
         </h1>
         <p className="text-midnight/70 text-sm">
