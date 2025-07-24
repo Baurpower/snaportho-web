@@ -159,8 +159,9 @@ export default function ProfileForm({
   return (
     <div className="space-y-8">
       <h1 className="text-3xl font-bold text-navy">
-        {mode === 'update' ? 'Update Your Profile' : 'Set Up Your Profile'}
-      </h1>
+  {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
+</h1>
+
 
       <div className="space-y-6">
         <div>
