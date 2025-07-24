@@ -1,4 +1,3 @@
-// src/app/learn/signup/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -6,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../../../context/AuthContext";
 
 export default function SignUpPage() {
-  // Hooks always first
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
@@ -15,10 +13,10 @@ export default function SignUpPage() {
   const { signUp, user } = useAuth();
   const router = useRouter();
 
-  // Redirect if already signed in
+  // Optional: auto-redirect if confirmed user returns
   useEffect(() => {
     if (user) {
-      router.replace("/learn");
+      router.replace("/onboarding/profile");
     }
   }, [user, router]);
 
@@ -29,18 +27,22 @@ export default function SignUpPage() {
     if (response.error) {
       setMessage(response.error.message);
     } else {
-      setMessage("Check your email to confirm your account!");
+      setMessage(
+        "Success! Please check your email to confirm your account. After confirming, you'll complete your profile to get started."
+      );
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg">
       <h2 className="text-2xl font-semibold mb-4 text-center text-navy">
-        Sign Up
+        Create Your SnapOrtho Account
       </h2>
+
       {message && (
         <p className="mb-4 text-center text-sm text-midnight/70">{message}</p>
       )}
+
       {attempted && (
         <div className="mb-4 text-center">
           <button
@@ -51,6 +53,7 @@ export default function SignUpPage() {
           </button>
         </div>
       )}
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
@@ -75,11 +78,16 @@ export default function SignUpPage() {
           Create Account
         </button>
       </form>
-      <p className="mt-4 text-center text-sm">
-        Already have one?{" "}
+
+      <p className="mt-4 text-center text-sm text-midnight/70">
+        Already have an account?{" "}
         <a href="/learn/signin" className="text-sky hover:underline">
           Sign In
         </a>
+      </p>
+
+      <p className="mt-6 text-center text-xs text-midnight/60">
+        After signing up, check your email to confirm your account. Once confirmed, you’ll complete a quick profile so we can personalize your learning experience.
       </p>
     </div>
   );

@@ -1,8 +1,9 @@
-import LearnPageClient from './learnpageclient';
+import LearnPageWrapper from './learnpagewrapper';
 
 export const metadata = {
   title: 'Learn | SnapOrtho',
-  description: 'Built for busy med students—SnapOrtho Learn transforms ortho topics into quick, visual lessons that stick',
+  description:
+    'Built for busy med students—SnapOrtho Learn transforms ortho topics into quick, visual lessons that stick',
   keywords: [
     'orthopaedics',
     'education',
@@ -41,5 +42,5 @@ export const metadata = {
 };
 
 export default function LearnPage() {
-  return <LearnPageClient />;
+  return <LearnPageWrapper />;
 }

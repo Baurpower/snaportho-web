@@ -21,7 +21,7 @@ export default function HomePage() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
           <div className="bg-white rounded-3xl shadow-2xl p-8 sm:p-10 max-w-xl w-full text-center relative animate-fade-in-down">
             <h2 className="text-3xl sm:text-4xl font-bold text-navy mb-4">
-              📣 Our First Learn Video is Live!
+              📣 Our Second Learn Video on IT fractures is Live!
             </h2>
             <p className="text-base sm:text-lg text-midnight/80 mb-6">
               Dive into trauma training with our new animated video on distal radius fractures.
