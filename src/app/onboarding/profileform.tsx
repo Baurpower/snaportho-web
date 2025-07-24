@@ -8,11 +8,12 @@ import CountrySelect from './countryselect';
 
 export interface UserProfile {
   full_name?: string;
+  email?: string;
   country?: string;
   city?: string;
   training_level?: string;
   institution?: string;
-  receive_emails?: boolean; // ✅ updated key
+  receive_emails?: boolean;
   subspecialty_interest?: string;
   [key: string]: unknown;
 }
@@ -44,26 +45,41 @@ export default function ProfileForm({
 
   const {
     full_name = '',
+    email: initialEmail = '',
     country = '',
     city = '',
     training_level = '',
     institution = '',
-    receive_emails = true, // ✅ updated key
+    receive_emails = true,
     subspecialty_interest = '',
   } = initialValues;
 
   const [fullName, setFullName] = useState(full_name);
+  const [email, setEmail] = useState(initialEmail);
   const [userCountry, setCountry] = useState(country);
   const [userCity, setCity] = useState(city);
   const [trainingLevel, setTrainingLevel] = useState(training_level);
   const [userInstitution, setInstitution] = useState(institution);
-  const [receiveEmails, setReceiveEmails] = useState(receive_emails); // ✅ updated key
+  const [receiveEmails, setReceiveEmails] = useState(receive_emails);
   const [subspecialty, setSubspecialty] = useState(subspecialty_interest);
-
   const [trainingHistory, setTrainingHistory] = useState<
     { label: string; institution: string; graduation_date: string }[]
   >([]);
 
+  // Autofill email from Supabase Auth
+  useEffect(() => {
+    const fetchEmail = async () => {
+      if (!email) {
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (user && user.email) {
+          setEmail(user.email);
+        }
+      }
+    };
+    fetchEmail();
+  }, []);
+
+  // Update training history fields based on training level
   useEffect(() => {
     let fields: string[] = [];
 
@@ -73,7 +89,7 @@ export default function ProfileForm({
       fields = ['Medical School'];
     } else if (trainingLevel === 'MD/DO Resident') {
       fields = ['Medical School', 'Residency'];
-    } else if (trainingLevel === 'MD/DO Attending' || trainingLevel === 'MD/DO Fellow') {
+    } else if (['MD/DO Attending', 'MD/DO Fellow'].includes(trainingLevel)) {
       fields = ['Medical School', 'Residency', 'Fellowship'];
     } else if (['PA Student', 'PA-C'].includes(trainingLevel)) {
       fields = ['PA Program'];
@@ -110,12 +126,13 @@ export default function ProfileForm({
 
     const { error: profileError } = await supabase.from('user_profiles').upsert({
       user_id: user.id,
+      email,
       full_name: fullName,
       country: userCountry,
       city: userCity,
       training_level: trainingLevel,
       institution: userInstitution,
-      receive_emails: receiveEmails, // ✅ fixed key
+      receive_emails: receiveEmails,
       subspecialty_interest: subspecialty,
     });
 
@@ -155,134 +172,144 @@ export default function ProfileForm({
   const inputClass =
     'w-full p-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-sky focus:outline-none';
 
-
   return (
-  <div className="space-y-10">
-    <div className="space-y-2">
-      <h1 className="text-3xl font-bold text-navy">
-        {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
-      </h1>
-      <p className="text-midnight/70 text-sm">
-        This information helps us personalize your experience.
-      </p>
-    </div>
-
-    <div className="space-y-8">
-      <div className="grid gap-6">
-        <FormField label="Full Name">
-          <input
-            type="text"
-            placeholder="Full Name"
-            className={inputClass}
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-        </FormField>
-
-        <FormField label="Country">
-          <CountrySelect value={userCountry} onChange={setCountry} />
-        </FormField>
-
-        <FormField label="City">
-          <input
-            type="text"
-            placeholder="City"
-            className={inputClass}
-            value={userCity}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </FormField>
-
-        <FormField label="Training Level">
-          <select
-            value={trainingLevel}
-            onChange={(e) => setTrainingLevel(e.target.value)}
-            className={inputClass}
-          >
-            <option value="">Select your training level</option>
-            {trainingLevels.map((level) => (
-              <option key={level} value={level}>
-                {level}
-              </option>
-            ))}
-          </select>
-        </FormField>
-
-        <FormField label="Current Institution">
-          <input
-            type="text"
-            placeholder="Institution"
-            className={inputClass}
-            value={userInstitution}
-            onChange={(e) => setInstitution(e.target.value)}
-          />
-        </FormField>
-
-        <FormField label="Subspecialty Interest">
-          <input
-            type="text"
-            placeholder="Subspecialty"
-            className={inputClass}
-            value={subspecialty}
-            onChange={(e) => setSubspecialty(e.target.value)}
-          />
-        </FormField>
-
-        <div className="flex items-start gap-3 pt-2">
-          <input
-            type="checkbox"
-            checked={receiveEmails}
-            onChange={(e) => setReceiveEmails(e.target.checked)}
-            className="mt-1 w-4 h-4"
-          />
-          <label className="text-sm font-medium text-midnight/80 leading-snug">
-            Receive occasional email updates about new content and features
-          </label>
-        </div>
+    <div className="space-y-10">
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold text-navy">
+          {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
+        </h1>
+        <p className="text-midnight/70 text-sm">
+          This information helps us personalize your experience.
+        </p>
       </div>
 
-      {trainingHistory.length > 0 && mode === 'onboarding' && (
-        <div className="space-y-5">
-          <h2 className="text-xl font-semibold text-navy">Training History</h2>
-          {trainingHistory.map((t, index) => (
-            <div
-              key={index}
-              className="border border-gray-200 bg-white p-5 rounded-xl space-y-3"
+      <div className="space-y-8">
+        <div className="grid gap-6">
+          <FormField label="Full Name">
+            <input
+              type="text"
+              placeholder="Full Name"
+              className={inputClass}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+          </FormField>
+
+          <FormField label="Preferred Email">
+            <input
+              type="email"
+              placeholder="you@example.com"
+              className={inputClass}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormField>
+
+          <FormField label="Country">
+            <CountrySelect value={userCountry} onChange={setCountry} />
+          </FormField>
+
+          <FormField label="City">
+            <input
+              type="text"
+              placeholder="City"
+              className={inputClass}
+              value={userCity}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </FormField>
+
+          <FormField label="Training Level">
+            <select
+              value={trainingLevel}
+              onChange={(e) => setTrainingLevel(e.target.value)}
+              className={inputClass}
             >
-              <p className="text-sm font-medium text-midnight/70">{t.label}</p>
-              <input
-                type="text"
-                placeholder={`${t.label} Name`}
-                className={inputClass}
-                value={t.institution}
-                onChange={(e) =>
-                  updateTrainingField(index, 'institution', e.target.value)
-                }
-              />
-              <input
-                type="date"
-                className={inputClass}
-                value={t.graduation_date}
-                onChange={(e) =>
-                  updateTrainingField(index, 'graduation_date', e.target.value)
-                }
-              />
-            </div>
-          ))}
-        </div>
-      )}
+              <option value="">Select your training level</option>
+              {trainingLevels.map((level) => (
+                <option key={level} value={level}>
+                  {level}
+                </option>
+              ))}
+            </select>
+          </FormField>
 
-      <div className="pt-4">
-        <button
-          onClick={handleSubmit}
-          className="w-full py-3 bg-sky text-white rounded-full font-semibold hover:bg-sky/90 transition"
-        >
-          {mode === 'update' ? 'Save Changes' : 'Complete Onboarding'}
-        </button>
+          <FormField label="Current Institution">
+            <input
+              type="text"
+              placeholder="Institution"
+              className={inputClass}
+              value={userInstitution}
+              onChange={(e) => setInstitution(e.target.value)}
+            />
+          </FormField>
+
+          <FormField label="Subspecialty Interest">
+            <input
+              type="text"
+              placeholder="Subspecialty"
+              className={inputClass}
+              value={subspecialty}
+              onChange={(e) => setSubspecialty(e.target.value)}
+            />
+          </FormField>
+
+          <div className="flex items-start gap-3 pt-2">
+            <input
+              type="checkbox"
+              checked={receiveEmails}
+              onChange={(e) => setReceiveEmails(e.target.checked)}
+              className="mt-1 w-4 h-4"
+            />
+            <label className="text-sm font-medium text-midnight/80 leading-snug">
+              Receive occasional email updates about new content and features
+            </label>
+          </div>
+        </div>
+
+        {trainingHistory.length > 0 && mode === 'onboarding' && (
+          <div className="space-y-5">
+            <h2 className="text-xl font-semibold text-navy">Training History</h2>
+            {trainingHistory.map((t, index) => (
+              <div
+                key={index}
+                className="border border-gray-200 bg-white p-5 rounded-xl space-y-3"
+              >
+                <p className="text-sm font-medium text-midnight/70">{t.label}</p>
+                <input
+                  type="text"
+                  placeholder={`${t.label} Name`}
+                  className={inputClass}
+                  value={t.institution}
+                  onChange={(e) =>
+                    updateTrainingField(index, 'institution', e.target.value)
+                  }
+                />
+                <input
+                  type="date"
+                  className={inputClass}
+                  value={t.graduation_date}
+                  onChange={(e) =>
+                    updateTrainingField(index, 'graduation_date', e.target.value)
+                  }
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="pt-4">
+          <button
+            onClick={handleSubmit}
+            className="w-full py-3 bg-sky text-white rounded-full font-semibold hover:bg-sky/90 transition"
+          >
+            {mode === 'update' ? 'Save Changes' : 'Complete Onboarding'}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+}
 
 function FormField({
   label,
@@ -297,5 +324,4 @@ function FormField({
       {children}
     </div>
   );
-}
 }
