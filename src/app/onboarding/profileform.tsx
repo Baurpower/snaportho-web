@@ -12,7 +12,7 @@ export interface UserProfile {
   city?: string;
   training_level?: string;
   institution?: string;
-  receive_email?: boolean;
+  receive_emails?: boolean; // ✅ updated key
   subspecialty_interest?: string;
   [key: string]: unknown;
 }
@@ -48,7 +48,7 @@ export default function ProfileForm({
     city = '',
     training_level = '',
     institution = '',
-    receive_email = true, // Default to true (auto-checked)
+    receive_emails = true, // ✅ updated key
     subspecialty_interest = '',
   } = initialValues;
 
@@ -57,7 +57,7 @@ export default function ProfileForm({
   const [userCity, setCity] = useState(city);
   const [trainingLevel, setTrainingLevel] = useState(training_level);
   const [userInstitution, setInstitution] = useState(institution);
-  const [receiveEmails, setReceiveEmails] = useState(receive_email);
+  const [receiveEmails, setReceiveEmails] = useState(receive_emails); // ✅ updated key
   const [subspecialty, setSubspecialty] = useState(subspecialty_interest);
 
   const [trainingHistory, setTrainingHistory] = useState<
@@ -115,7 +115,7 @@ export default function ProfileForm({
       city: userCity,
       training_level: trainingLevel,
       institution: userInstitution,
-      receive_email: receiveEmails,
+      receive_emails: receiveEmails, // ✅ fixed key
       subspecialty_interest: subspecialty,
     });
 
@@ -159,9 +159,8 @@ export default function ProfileForm({
   return (
     <div className="space-y-8">
       <h1 className="text-3xl font-bold text-navy">
-  {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
-</h1>
-
+        {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
+      </h1>
 
       <div className="space-y-6">
         <div>
