@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
+import CountrySelect from './countryselect';
 
 export interface UserProfile {
   full_name?: string;
@@ -25,6 +26,7 @@ const trainingLevels = [
   'PA-C',
   'NP',
   'MD/DO Student',
+  'MD/DO Graduate',
   'MD/DO Resident',
   'MD/DO Fellow',
   'MD/DO Attending',
@@ -46,7 +48,7 @@ export default function ProfileForm({
     city = '',
     training_level = '',
     institution = '',
-    receive_email = false,
+    receive_email = true, // Default to true (auto-checked)
     subspecialty_interest = '',
   } = initialValues;
 
@@ -150,69 +152,88 @@ export default function ProfileForm({
     router.push(mode === 'update' ? '/learn' : '/onboarding/complete');
   };
 
+  const inputClass =
+    'w-full p-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-sky focus:outline-none';
+  const labelClass = 'block text-sm font-medium text-midnight/80';
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <h1 className="text-3xl font-bold text-navy">
         {mode === 'update' ? 'Update Your Profile' : 'Set Up Your Profile'}
       </h1>
 
-      <div className="space-y-4">
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="w-full p-2 border rounded"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Country"
-          className="w-full p-2 border rounded"
-          value={userCountry}
-          onChange={(e) => setCountry(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="City"
-          className="w-full p-2 border rounded"
-          value={userCity}
-          onChange={(e) => setCity(e.target.value)}
-        />
+      <div className="space-y-6">
+        <div>
+          <label className={labelClass}>Full Name</label>
+          <input
+            type="text"
+            placeholder="Full Name"
+            className={inputClass}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+        </div>
 
-        <select
-          value={trainingLevel}
-          onChange={(e) => setTrainingLevel(e.target.value)}
-          className="w-full p-2 border rounded bg-white"
-        >
-          <option value="">Select your training level</option>
-          {trainingLevels.map((level) => (
-            <option key={level} value={level}>
-              {level}
-            </option>
-          ))}
-        </select>
+        <div>
+          <label className={labelClass}>Country</label>
+          <CountrySelect value={userCountry} onChange={setCountry} />
+        </div>
 
-        <input
-          type="text"
-          placeholder="Current Institution"
-          className="w-full p-2 border rounded"
-          value={userInstitution}
-          onChange={(e) => setInstitution(e.target.value)}
-        />
+        <div>
+          <label className={labelClass}>City</label>
+          <input
+            type="text"
+            placeholder="City"
+            className={inputClass}
+            value={userCity}
+            onChange={(e) => setCity(e.target.value)}
+          />
+        </div>
 
-        <input
-          type="text"
-          placeholder="Subspecialty Interest"
-          className="w-full p-2 border rounded"
-          value={subspecialty}
-          onChange={(e) => setSubspecialty(e.target.value)}
-        />
+        <div>
+          <label className={labelClass}>Training Level</label>
+          <select
+            value={trainingLevel}
+            onChange={(e) => setTrainingLevel(e.target.value)}
+            className={inputClass}
+          >
+            <option value="">Select your training level</option>
+            {trainingLevels.map((level) => (
+              <option key={level} value={level}>
+                {level}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        <label className="flex items-center gap-2">
+        <div>
+          <label className={labelClass}>Current Institution</label>
+          <input
+            type="text"
+            placeholder="Institution"
+            className={inputClass}
+            value={userInstitution}
+            onChange={(e) => setInstitution(e.target.value)}
+          />
+        </div>
+
+        <div>
+          <label className={labelClass}>Subspecialty Interest</label>
+          <input
+            type="text"
+            placeholder="Subspecialty"
+            className={inputClass}
+            value={subspecialty}
+            onChange={(e) => setSubspecialty(e.target.value)}
+          />
+        </div>
+
+        <label className="flex items-center gap-3 mt-2 text-sm font-medium text-midnight/80">
           <input
             type="checkbox"
             checked={receiveEmails}
             onChange={(e) => setReceiveEmails(e.target.checked)}
+            className="w-4 h-4"
           />
           Receive occasional email updates
         </label>
@@ -222,14 +243,12 @@ export default function ProfileForm({
         <div className="space-y-4">
           <h2 className="text-xl font-semibold text-navy">Training History</h2>
           {trainingHistory.map((t, index) => (
-            <div key={index} className="border p-4 rounded space-y-2">
-              <label className="block text-sm font-medium text-midnight/80">
-                {t.label}
-              </label>
+            <div key={index} className="border p-4 rounded-lg space-y-2 bg-white">
+              <label className={labelClass}>{t.label}</label>
               <input
                 type="text"
                 placeholder={`${t.label} Name`}
-                className="w-full p-2 border rounded"
+                className={inputClass}
                 value={t.institution}
                 onChange={(e) =>
                   updateTrainingField(index, 'institution', e.target.value)
@@ -237,7 +256,7 @@ export default function ProfileForm({
               />
               <input
                 type="date"
-                className="w-full p-2 border rounded"
+                className={inputClass}
                 value={t.graduation_date}
                 onChange={(e) =>
                   updateTrainingField(index, 'graduation_date', e.target.value)
