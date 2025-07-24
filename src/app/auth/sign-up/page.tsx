@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../../context/AuthContext";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ export default function SignUpPage() {
   const { signUp, user } = useAuth();
   const router = useRouter();
 
-  // If already signed in, redirect to profile
+  // If already signed in, go straight to profile
   useEffect(() => {
     if (user) {
       router.replace("/onboarding/profile");
@@ -25,21 +26,32 @@ export default function SignUpPage() {
     setAttempted(true);
     setMessage(null);
 
+    // 1. quick check in user_profiles
+    const { data: existing, error: fetchErr } = await supabase
+      .from("user_profiles")
+      .select("user_id")
+      .eq("email", email)
+      .limit(1);
+
+    if (fetchErr) {
+      console.error("Lookup error:", fetchErr);
+      setMessage("Something went wrong. Please try again.");
+      return;
+    }
+
+    if (existing && existing.length > 0) {
+      setMessage(
+        "An account with that email already exists. Please sign in or reset your password."
+      );
+      return;
+    }
+
+    // 2. otherwise, attempt to sign up
     const response = await signUp(email, password);
 
     if (response.error) {
-      const errMsg = response.error.message.toLowerCase();
-      if (
-        errMsg.includes("already registered") ||
-        errMsg.includes("duplicate") ||
-        errMsg.includes("user already exists")
-      ) {
-        setMessage(
-          "An account with that email already exists. Please sign in or reset your password."
-        );
-      } else {
-        setMessage(response.error.message);
-      }
+      // fall back to raw error message
+      setMessage(response.error.message);
     } else {
       setMessage(
         "Success! Please check your email to confirm your account. After confirming, you'll complete your profile to get started."
@@ -57,7 +69,7 @@ export default function SignUpPage() {
         <p className="mb-4 text-center text-sm text-midnight/70">{message}</p>
       )}
 
-      {attempted && !message?.includes("Success!") && (
+      {attempted && !message?.startsWith("Success") && (
         <div className="mb-4 text-center">
           <button
             onClick={handleSubmit}
