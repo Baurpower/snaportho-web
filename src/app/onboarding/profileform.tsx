@@ -70,14 +70,14 @@ export default function ProfileForm({
   useEffect(() => {
     const fetchEmail = async () => {
       if (!email) {
-        const { data: { user }, error } = await supabase.auth.getUser();
-        if (user && user.email) {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user?.email) {
           setEmail(user.email);
         }
       }
     };
     fetchEmail();
-  }, []);
+  }, [email]); // include email so that the hook rule is satisfied
 
   // Update training history fields based on training level
   useEffect(() => {
