@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
 import CountrySelect from './countryselect';
@@ -22,6 +23,7 @@ export interface UserProfile {
   institution?: string;
   receive_emails?: boolean;
   subspecialty_interest?: string;
+  // you can still pass in initialValues.training_history, but we’ll overwrite it in update mode
   training_history?: TrainingEntry[];
   [key: string]: unknown;
 }
@@ -50,6 +52,9 @@ export default function ProfileForm({
   mode?: 'onboarding' | 'update';
 }) {
   const router = useRouter();
+  const { user } = useAuth();
+
+  // Destructure profile basics
   const {
     full_name = '',
     email: initialEmail = '',
@@ -59,9 +64,9 @@ export default function ProfileForm({
     institution = '',
     receive_emails = true,
     subspecialty_interest = '',
-    training_history = [],
   } = initialValues;
 
+  // Form state
   const [fullName, setFullName] = useState(full_name);
   const [email, setEmail] = useState(initialEmail);
   const [userCountry, setCountry] = useState(country);
@@ -71,14 +76,10 @@ export default function ProfileForm({
   const [receiveEmails, setReceiveEmails] = useState(receive_emails);
   const [subspecialty, setSubspecialty] = useState(subspecialty_interest);
 
-  const [trainingHistory, setTrainingHistory] = useState<TrainingEntry[]>(
-    () =>
-      mode === 'update' && training_history.length > 0
-        ? training_history.map((t) => ({ ...t }))
-        : []
-  );
+  // Training history rows
+  const [trainingHistory, setTrainingHistory] = useState<TrainingEntry[]>([]);
 
-  // Autofill email
+  // 1) Autofill email from Supabase
   useEffect(() => {
     if (!email) {
       supabase.auth.getUser().then(({ data: { user } }) => {
@@ -87,10 +88,34 @@ export default function ProfileForm({
     }
   }, [email]);
 
-  // Generate rows only in onboarding
+  // 2) In update mode: fetch saved history
+  useEffect(() => {
+    if (mode === 'update' && user?.id) {
+      supabase
+       .from('user_training_history')
+       .select('id, role, institution, graduation_date')
+        .eq('user_id', user.id)
+        .then(({ data, error }) => {
+          if (error) {
+            console.error('Failed to load training history', error);
+          } else if (data) {
+            // map `role` → `label`
+            setTrainingHistory(
+              data.map((row) => ({
+                id: row.id,
+                 label: (row as any).role, // role column → label prop
+                institution: row.institution,
+                graduation_date: row.graduation_date,
+              }))
+            );
+          }
+        });
+    }
+  }, [mode, user?.id]);
+
+  // 3) In onboarding mode: generate default rows when level changes
   useEffect(() => {
     if (mode !== 'onboarding') return;
-
     let labels: string[] = [];
     if (['RN', 'NP', 'NP Student'].includes(trainingLevel)) {
       labels = ['Nursing School'];
@@ -98,14 +123,13 @@ export default function ProfileForm({
       labels = ['Medical School'];
     } else if (trainingLevel === 'MD/DO Resident') {
       labels = ['Medical School', 'Residency'];
-    } else if (['MD/DO Attending', 'MD/DO Fellow'].includes(trainingLevel)) {
+    } else if (['MD/DO Fellow', 'MD/DO Attending'].includes(trainingLevel)) {
       labels = ['Medical School', 'Residency', 'Fellowship'];
     } else if (['PA Student', 'PA-C'].includes(trainingLevel)) {
       labels = ['PA Program'];
     } else if (trainingLevel === 'Premed Student') {
       labels = ['Undergraduate Program'];
     }
-
     setTrainingHistory(
       labels.map((label) => ({
         label,
@@ -115,33 +139,49 @@ export default function ProfileForm({
     );
   }, [mode, trainingLevel]);
 
+  // Helpers to modify rows
   const updateTrainingField = (
-    index: number,
-    field: 'institution' | 'graduation_date',
+    idx: number,
+    field: keyof TrainingEntry,
     value: string
   ) => {
     setTrainingHistory((prev) => {
       const copy = [...prev];
-      copy[index] = { ...copy[index], [field]: value };
+      copy[idx] = { ...copy[idx], [field]: value };
       return copy;
     });
   };
+  const addCustom = () =>
+    setTrainingHistory((prev) => [
+      ...prev,
+      { label: '', institution: '', graduation_date: '' },
+    ]);
+  const addResidency = () =>
+    setTrainingHistory((prev) => [
+      ...prev,
+      { label: 'Residency', institution: '', graduation_date: '' },
+    ]);
+  const addFellowship = () =>
+    setTrainingHistory((prev) => [
+      ...prev,
+      { label: 'Fellowship', institution: '', graduation_date: '' },
+    ]);
 
+  // Submit handler
   const handleSubmit = async () => {
     const {
-      data: { user },
+      data: { user: u },
       error: userErr,
     } = await supabase.auth.getUser();
-    if (!user || userErr) {
-      alert('You must be logged in.');
-      return;
+    if (!u || userErr) {
+      return alert('You must be logged in.');
     }
 
-    // 1) upsert main profile
-    const { error: profileError } = await supabase
+    // Upsert profile
+    const { error: profErr } = await supabase
       .from('user_profiles')
       .upsert({
-        user_id: user.id,
+        user_id: u.id,
         email,
         full_name: fullName,
         country: userCountry,
@@ -151,31 +191,29 @@ export default function ProfileForm({
         receive_emails: receiveEmails,
         subspecialty_interest: subspecialty,
       });
-    if (profileError) {
-      console.error(profileError);
-      alert('Failed to save profile');
-      return;
+    if (profErr) {
+      console.error(profErr);
+      return alert('Failed to save profile.');
     }
 
-    // 2) upsert training history rows
+    // Prepare valid training entries
     const valid = trainingHistory.filter(
-      (t) => t.institution && t.graduation_date
+      (t) => t.label && t.institution && t.graduation_date
     );
     if (valid.length) {
       const payload = valid.map((t) => ({
         id: t.id ?? uuidv4(),
-        user_id: user.id,
-        institution: t.institution,
+        user_id: u.id,
         role: t.label,
+        institution: t.institution,
         graduation_date: t.graduation_date,
       }));
       const { error: histErr } = await supabase
         .from('user_training_history')
-        .upsert(payload);  // default PK conflict resolution
+        .upsert(payload);
       if (histErr) {
         console.error(histErr);
-        alert('Failed to save training history');
-        return;
+        return alert('Failed to save training history.');
       }
     }
 
@@ -189,9 +227,7 @@ export default function ProfileForm({
     <div className="space-y-10">
       <div className="space-y-2">
         <h1 className="pt-8 text-3xl font-bold text-navy">
-          {mode === 'onboarding'
-            ? 'Set Up Your Profile'
-            : 'Update Your Profile'}
+          {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
         </h1>
         <p className="text-midnight/70 text-sm">
           This information helps us personalize your experience.
@@ -199,8 +235,8 @@ export default function ProfileForm({
       </div>
 
       <div className="space-y-8">
+        {/* Personal Info */}
         <div className="grid gap-6">
-          {/* Personal fields… */}
           <FormField label="Full Name">
             <input
               type="text"
@@ -248,6 +284,34 @@ export default function ProfileForm({
                 </option>
               ))}
             </select>
+
+            <div className="mt-2 flex flex-wrap gap-3 text-sm">
+              <button
+                type="button"
+                onClick={addCustom}
+                className="text-sky hover:underline"
+              >
+                + Add Schooling
+              </button>
+              {trainingLevel === 'MD/DO Resident' && (
+                <button
+                  type="button"
+                  onClick={addResidency}
+                  className="text-sky hover:underline"
+                >
+                  + Add Residency
+                </button>
+              )}
+              {['MD/DO Fellow', 'MD/DO Attending'].includes(trainingLevel) && (
+                <button
+                  type="button"
+                  onClick={addFellowship}
+                  className="text-sky hover:underline"
+                >
+                  + Add Fellowship
+                </button>
+              )}
+            </div>
           </FormField>
 
           <FormField label="Current Institution">
@@ -283,36 +347,47 @@ export default function ProfileForm({
           </div>
         </div>
 
+        {/* Training History */}
         {trainingHistory.length > 0 && (
           <div className="space-y-5">
-            <h2 className="text-xl font-semibold text-navy">
-              Training History
-            </h2>
-            {trainingHistory.map((t, i) => (
+            <h2 className="text-xl font-semibold text-navy">Training History</h2>
+            {trainingHistory.map((t, idx) => (
               <div
-                key={i}
+                key={idx}
                 className="border border-gray-200 bg-white p-5 rounded-xl space-y-3"
               >
-                <p className="text-sm font-medium text-midnight/70">
-                  {t.label}
-                </p>
-                <input
-                  type="text"
-                  placeholder={`${t.label} Name`}
-                  className={inputClass}
-                  value={t.institution}
-                  onChange={(e) =>
-                    updateTrainingField(i, 'institution', e.target.value)
-                  }
-                />
-                <input
-                  type="date"
-                  className={inputClass}
-                  value={t.graduation_date}
-                  onChange={(e) =>
-                    updateTrainingField(i, 'graduation_date', e.target.value)
-                  }
-                />
+                <FormField label="Label">
+                  <input
+                    type="text"
+                    placeholder="e.g. Medical School"
+                    className={inputClass}
+                    value={t.label}
+                    onChange={(e) => updateTrainingField(idx, 'label', e.target.value)}
+                  />
+                </FormField>
+
+                <FormField label="Institution">
+                  <input
+                    type="text"
+                    placeholder={`${t.label || 'Institution'} Name`}
+                    className={inputClass}
+                    value={t.institution}
+                    onChange={(e) =>
+                      updateTrainingField(idx, 'institution', e.target.value)
+                    }
+                  />
+                </FormField>
+
+                <FormField label="Graduation Date">
+                  <input
+                    type="date"
+                    className={inputClass}
+                    value={t.graduation_date}
+                    onChange={(e) =>
+                      updateTrainingField(idx, 'graduation_date', e.target.value)
+                    }
+                  />
+                </FormField>
               </div>
             ))}
           </div>
