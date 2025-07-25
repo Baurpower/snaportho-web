@@ -23,7 +23,6 @@ export interface UserProfile {
   institution?: string;
   receive_emails?: boolean;
   subspecialty_interest?: string;
-  // you can still pass in initialValues.training_history, but we’ll overwrite it in update mode
   training_history?: TrainingEntry[];
   [key: string]: unknown;
 }
@@ -88,39 +87,38 @@ export default function ProfileForm({
     }
   }, [email]);
 
-// 2) In update mode: fetch saved history
-useEffect(() => {
-  if (mode === 'update' && user?.id) {
-    supabase
-      .from('user_training_history')
-      .select('id, role, institution, graduation_date')
-      .eq('user_id', user.id)
-      .then((res) => {
-        if (res.error) {
-          console.error('Failed to load training history', res.error);
-          return;
-        }
-        // explicitly type the returned rows
-        const rows = res.data as Array<{
-          id: string;
-          role: string;
-          institution: string;
-          graduation_date: string;
-        }> | null;
+  // 2) In update mode: fetch saved history
+  useEffect(() => {
+    if (mode === 'update' && user?.id) {
+      supabase
+        .from('user_training_history')
+        .select('id, role, institution, graduation_date')
+        .eq('user_id', user.id)
+        .then((res) => {
+          if (res.error) {
+            console.error('Failed to load training history', res.error);
+            return;
+          }
+          const rows = res.data as Array<{
+            id: string;
+            role: string;
+            institution: string;
+            graduation_date: string;
+          }> | null;
 
-        if (rows) {
-          setTrainingHistory(
-            rows.map((row) => ({
-              id: row.id,
-              label: row.role,              // no more any
-              institution: row.institution,
-              graduation_date: row.graduation_date,
-            }))
-          );
-        }
-      });
-  }
-}, [mode, user?.id]);
+          if (rows) {
+            setTrainingHistory(
+              rows.map((row) => ({
+                id: row.id,
+                label: row.role,
+                institution: row.institution,
+                graduation_date: row.graduation_date,
+              }))
+            );
+          }
+        });
+    }
+  }, [mode, user?.id]);
 
   // 3) In onboarding mode: generate default rows when level changes
   useEffect(() => {
@@ -160,24 +158,15 @@ useEffect(() => {
       return copy;
     });
   };
-  const addCustom = () =>
+  const addEntry = () =>
     setTrainingHistory((prev) => [
       ...prev,
       { label: '', institution: '', graduation_date: '' },
     ]);
-  const addResidency = () =>
-    setTrainingHistory((prev) => [
-      ...prev,
-      { label: 'Residency', institution: '', graduation_date: '' },
-    ]);
-  const addFellowship = () =>
-    setTrainingHistory((prev) => [
-      ...prev,
-      { label: 'Fellowship', institution: '', graduation_date: '' },
-    ]);
 
   // Submit handler
   const handleSubmit = async () => {
+    // ensure logged in
     const {
       data: { user: u },
       error: userErr,
@@ -234,6 +223,7 @@ useEffect(() => {
 
   return (
     <div className="space-y-10">
+      {/* Header */}
       <div className="space-y-2">
         <h1 className="pt-8 text-3xl font-bold text-navy">
           {mode === 'onboarding' ? 'Set Up Your Profile' : 'Update Your Profile'}
@@ -243,6 +233,7 @@ useEffect(() => {
         </p>
       </div>
 
+      {/* Form */}
       <div className="space-y-8">
         {/* Personal Info */}
         <div className="grid gap-6">
@@ -293,34 +284,6 @@ useEffect(() => {
                 </option>
               ))}
             </select>
-
-            <div className="mt-2 flex flex-wrap gap-3 text-sm">
-              <button
-                type="button"
-                onClick={addCustom}
-                className="text-sky hover:underline"
-              >
-                + Add Schooling
-              </button>
-              {trainingLevel === 'MD/DO Resident' && (
-                <button
-                  type="button"
-                  onClick={addResidency}
-                  className="text-sky hover:underline"
-                >
-                  + Add Residency
-                </button>
-              )}
-              {['MD/DO Fellow', 'MD/DO Attending'].includes(trainingLevel) && (
-                <button
-                  type="button"
-                  onClick={addFellowship}
-                  className="text-sky hover:underline"
-                >
-                  + Add Fellowship
-                </button>
-              )}
-            </div>
           </FormField>
 
           <FormField label="Current Institution">
@@ -357,51 +320,60 @@ useEffect(() => {
         </div>
 
         {/* Training History */}
-        {trainingHistory.length > 0 && (
-          <div className="space-y-5">
+        <div className="space-y-5">
+          <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold text-navy">Training History</h2>
-            {trainingHistory.map((t, idx) => (
-              <div
-                key={idx}
-                className="border border-gray-200 bg-white p-5 rounded-xl space-y-3"
-              >
-                <FormField label="Label">
-                  <input
-                    type="text"
-                    placeholder="e.g. Medical School"
-                    className={inputClass}
-                    value={t.label}
-                    onChange={(e) => updateTrainingField(idx, 'label', e.target.value)}
-                  />
-                </FormField>
-
-                <FormField label="Institution">
-                  <input
-                    type="text"
-                    placeholder={`${t.label || 'Institution'} Name`}
-                    className={inputClass}
-                    value={t.institution}
-                    onChange={(e) =>
-                      updateTrainingField(idx, 'institution', e.target.value)
-                    }
-                  />
-                </FormField>
-
-                <FormField label="Graduation Date">
-                  <input
-                    type="date"
-                    className={inputClass}
-                    value={t.graduation_date}
-                    onChange={(e) =>
-                      updateTrainingField(idx, 'graduation_date', e.target.value)
-                    }
-                  />
-                </FormField>
-              </div>
-            ))}
+            <button
+              type="button"
+              onClick={addEntry}
+              className="text-sky hover:underline text-sm"
+            >
+              + Add Entry
+            </button>
           </div>
-        )}
 
+          {trainingHistory.map((t, idx) => (
+            <div
+              key={idx}
+              className="border border-gray-200 bg-white p-5 rounded-xl space-y-3"
+            >
+              <FormField label="Label">
+                <input
+                  type="text"
+                  placeholder="e.g. Medical School"
+                  className={inputClass}
+                  value={t.label}
+                  onChange={(e) => updateTrainingField(idx, 'label', e.target.value)}
+                />
+              </FormField>
+
+              <FormField label="Institution">
+                <input
+                  type="text"
+                  placeholder={`${t.label || 'Institution'} Name`}
+                  className={inputClass}
+                  value={t.institution}
+                  onChange={(e) =>
+                    updateTrainingField(idx, 'institution', e.target.value)
+                  }
+                />
+              </FormField>
+
+              <FormField label="Graduation Date">
+                <input
+                  type="date"
+                  className={inputClass}
+                  value={t.graduation_date}
+                  onChange={(e) =>
+                    updateTrainingField(idx, 'graduation_date', e.target.value)
+                  }
+                />
+              </FormField>
+            </div>
+          ))}
+        </div>
+
+        {/* Submit */}
         <div className="pt-4">
           <button
             onClick={handleSubmit}
