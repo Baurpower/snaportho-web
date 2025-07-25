@@ -4,43 +4,39 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '../../../context/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 
-interface Props {
-  redirectTo: string;
-}
-
-export default function SignUpClient({ redirectTo }: Props) {
+export default function SignUpClient() {
   const router = useRouter();
-  const { signUp, user } = useAuth();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState<string | null>(null);
 
-  // If already signed in, redirect
+  const CALLBACK_URL = 'https://snap-ortho.com/auth/callback';
+
+  // If they’re already logged in, go to the profile page
   useEffect(() => {
-    if (user) router.replace(redirectTo);
-  }, [user, redirectTo, router]);
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) router.replace('/onboarding/profile');
+    });
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
 
-    // check existing
-    const { data: existing, error: fetchErr } = await supabase
+    // 1) Prevent duplicate profiles
+    const { data: existing, error: lookupErr } = await supabase
       .from('user_profiles')
       .select('user_id')
       .eq('email', email)
       .limit(1);
 
-    if (fetchErr) {
-      console.error('Lookup error:', fetchErr);
+    if (lookupErr) {
+      console.error('Lookup error:', lookupErr);
       setMessage('Something went wrong. Please try again.');
       return;
     }
-
     if (existing?.length) {
       setMessage(
         'An account with that email already exists. Please sign in or reset your password.'
@@ -48,10 +44,21 @@ export default function SignUpClient({ redirectTo }: Props) {
       return;
     }
 
-    // sign up
-    const { error } = await signUp(email, password);
-    if (error) setMessage(error.message);
-    else router.replace(redirectTo);
+    // 2) Single‑arg signUp with options.emailRedirectTo
+    const { error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: CALLBACK_URL },
+    });
+
+    if (signUpError) {
+      console.error('Sign‑up error:', signUpError);
+      setMessage(signUpError.message);
+    } else {
+      setMessage(
+        '✅ Check your inbox for a confirmation link to finish creating your account.'
+      );
+    }
   };
 
   return (
@@ -73,6 +80,7 @@ export default function SignUpClient({ redirectTo }: Props) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <input
           type="password"
           required
@@ -81,6 +89,7 @@ export default function SignUpClient({ redirectTo }: Props) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+
         <button
           type="submit"
           className="w-full py-2 bg-sky text-white rounded-full font-medium hover:bg-sky/90 transition"
@@ -94,7 +103,7 @@ export default function SignUpClient({ redirectTo }: Props) {
         <Link
           href={{
             pathname: '/auth/sign-in',
-            query: { redirectTo },
+            query: { redirectTo: CALLBACK_URL },
           }}
           className="text-sky hover:underline"
         >

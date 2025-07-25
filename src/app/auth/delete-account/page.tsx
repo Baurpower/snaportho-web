@@ -1,50 +1,58 @@
-"use client";
+// src/app/auth/delete-account/page.tsx
+'use client';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { supabase } from "../../../lib/supabaseClient";
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
+
+interface DeleteResponse {
+  success?: boolean;
+  error?: string;
+}
 
 export default function DeleteAccountPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [msg, setMsg] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    setErrorMsg(null);
+    setLoading(true);
+    setMsg(null);
 
     try {
-      // 1. Sign in
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+      const res = await fetch('/api/delete-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       });
-      if (signInError) throw signInError;
 
-      // 2. Refresh session
-      const { error: refreshError } = await supabase.auth.refreshSession();
-      if (refreshError) throw refreshError;
+      let data: DeleteResponse;
+      try {
+        data = (await res.json()) as DeleteResponse;
+      } catch {
+        throw new Error(`Server returned status ${res.status}`);
+      }
 
-      // 3. Delete user via RPC
-      const { error: rpcError } = await supabase.rpc("delete_user");
-      if (rpcError) throw rpcError;
+      if (!res.ok) {
+        throw new Error(data.error ?? `Server returned status ${res.status}`);
+      }
 
-      // 4. Sign out
+      // Sign out of Supabase so client session is cleared
       await supabase.auth.signOut();
 
-      // 5. Confirm deletion
-      setSuccess(true);
-      setTimeout(() => router.replace("/learn"), 3000);
-    } catch (error) {
-      const err = error instanceof Error ? error : new Error("Unknown error");
-      console.error("Account deletion error:", err);
-      setErrorMsg(err.message);
+      // Notify, then redirect
+      setMsg('✅ Account deleted and signed out. Redirecting…');
+      setTimeout(() => router.replace('/learn'), 2000);
+    } catch (rawError: unknown) {
+      // Narrow error to Error if possible
+      const err = rawError instanceof Error ? rawError : new Error('Unknown error');
+      console.error('Account deletion error:', err);
+      setMsg(err.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -54,49 +62,37 @@ export default function DeleteAccountPage() {
         Delete Account
       </h2>
 
-      {success ? (
-        <p className="text-green-600 text-center">
-          Your account has been deleted. Redirecting to Learn...
+      {msg && (
+        <p className={`text-center ${loading ? 'text-gray-700' : 'text-red-600'}`}>
+          {msg}
         </p>
-      ) : (
-        <>
-          <p className="mb-4 text-center text-gray-700">
-            Enter your email and password to permanently delete your account.
-          </p>
-
-          {errorMsg && (
-            <div className="mb-4 text-sm text-red-600 text-center">
-              {errorMsg}
-            </div>
-          )}
-
-          <form onSubmit={handleDelete} className="space-y-4">
-            <input
-              type="email"
-              required
-              placeholder="Email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-red-400"
-            />
-            <input
-              type="password"
-              required
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-red-400"
-            />
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-2 bg-red-600 text-white rounded-full font-medium hover:bg-red-700 transition"
-            >
-              {isLoading ? "Deleting..." : "Delete My Account"}
-            </button>
-          </form>
-        </>
       )}
+
+      <form onSubmit={handleDelete} className="space-y-4">
+        <input
+          type="email"
+          required
+          placeholder="Email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-red-400"
+        />
+        <input
+          type="password"
+          required
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-red-400"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-2 bg-red-600 text-white rounded-full font-medium hover:bg-red-700 transition"
+        >
+          {loading ? 'Deleting…' : 'Delete My Account'}
+        </button>
+      </form>
     </div>
   );
 }

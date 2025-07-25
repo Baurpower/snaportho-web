@@ -23,16 +23,21 @@ export default function OnboardingCompletePage() {
           Thanks for completing your profile. SnapOrtho is ready to help you learn smarter, faster,
           and with more confidence.
         </p>
-        <p className="text-midnight/70 text-sm">
-          You’ll be redirected shortly. If not, click below to begin learning.
-        </p>
-        <Link
-          href="/learn"
-          className="inline-block px-6 py-3 bg-sky text-white rounded-full font-medium hover:bg-sky/90 transition"
-        >
-          Go to Learn Home
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link
+            href="/learn"
+            className="flex-1 inline-block px-6 py-3 bg-sky text-white rounded-full font-medium hover:bg-sky/90 transition"
+          >
+            Learn Home
+          </Link>
+          <Link
+            href="/brobot"
+            className="flex-1 inline-block px-6 py-3 bg-teal-600 text-white rounded-full font-medium hover:bg-teal-600/90 transition"
+          >
+            BroBot
+          </Link>
+        </div>
       </div>
     </main>
-  );
+);
 }
