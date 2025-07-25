@@ -88,30 +88,39 @@ export default function ProfileForm({
     }
   }, [email]);
 
-  // 2) In update mode: fetch saved history
-  useEffect(() => {
-    if (mode === 'update' && user?.id) {
-      supabase
-       .from('user_training_history')
-       .select('id, role, institution, graduation_date')
-        .eq('user_id', user.id)
-        .then(({ data, error }) => {
-          if (error) {
-            console.error('Failed to load training history', error);
-          } else if (data) {
-            // map `role` → `label`
-            setTrainingHistory(
-              data.map((row) => ({
-                id: row.id,
-                 label: (row as any).role, // role column → label prop
-                institution: row.institution,
-                graduation_date: row.graduation_date,
-              }))
-            );
-          }
-        });
-    }
-  }, [mode, user?.id]);
+// 2) In update mode: fetch saved history
+useEffect(() => {
+  if (mode === 'update' && user?.id) {
+    supabase
+      .from('user_training_history')
+      .select('id, role, institution, graduation_date')
+      .eq('user_id', user.id)
+      .then((res) => {
+        if (res.error) {
+          console.error('Failed to load training history', res.error);
+          return;
+        }
+        // explicitly type the returned rows
+        const rows = res.data as Array<{
+          id: string;
+          role: string;
+          institution: string;
+          graduation_date: string;
+        }> | null;
+
+        if (rows) {
+          setTrainingHistory(
+            rows.map((row) => ({
+              id: row.id,
+              label: row.role,              // no more any
+              institution: row.institution,
+              graduation_date: row.graduation_date,
+            }))
+          );
+        }
+      });
+  }
+}, [mode, user?.id]);
 
   // 3) In onboarding mode: generate default rows when level changes
   useEffect(() => {
