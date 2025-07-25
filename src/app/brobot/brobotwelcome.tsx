@@ -9,7 +9,7 @@ export default function BroBotWelcome() {
   const router = useRouter();
   const { user } = useAuth();
 
-  // If they’re already signed in, go to /brobot
+  // If already signed in elsewhere in the app, go straight to BroBot
   useEffect(() => {
     if (user) {
       router.replace('/brobot');
@@ -17,16 +17,14 @@ export default function BroBotWelcome() {
   }, [user, router]);
 
   const handleLogin = () => {
-    router.push('/auth/sign-in?redirectTo=/brobot');
+    router.push(`/auth/sign-in?redirectTo=/brobot`);
   };
 
   const handleSignUp = () => {
-    router.push('/auth/sign-up?redirectTo=/brobot');
+    router.push(`/auth/sign-up?redirectTo=/brobot`);
   };
 
-  // Guests go into the free BroBot experience
   const handleGuest = () => {
-    localStorage.setItem('brobotGuestClicked', 'true');
     router.push('/brobot/basic');
   };
 
@@ -35,8 +33,8 @@ export default function BroBotWelcome() {
       <div className="max-w-md bg-white p-8 rounded-2xl shadow-lg text-center space-y-6">
         <h1 className="text-3xl font-bold">Welcome to BroBot</h1>
         <p className="text-gray-700">
-          Log in or sign up to save your sessions and unlock member features,
-          or continue as a guest.
+          Log in or sign up to save your sessions and get personalized features,
+          or continue as a guest without an account.
         </p>
 
         <div className="flex flex-col space-y-3">
@@ -67,7 +65,7 @@ export default function BroBotWelcome() {
           {user && (
             <button
               onClick={() => router.push('/brobot')}
-              className="w-full px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition"
+              className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
             >
               Continue to BroBot
             </button>
