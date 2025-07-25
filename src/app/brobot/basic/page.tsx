@@ -1,22 +1,23 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import Link from 'next/link';
 import {
   MagnifyingGlassCircleIcon,
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
-import { getCasePrepResponse } from '@/lib/api';
+import { getBroBotResponse } from '@/lib/api';
 
 
-interface CasePrepPayload {
+interface BroBotPayload {
   pimpQuestions: string[];
   otherUsefulFacts: string[];
 }
 
-export default function CasePrepPage() {
+export default function BroBotBasic() {
   const [prompt, setPrompt] = useState('');
-  const [data, setData] = useState<CasePrepPayload | null>(null);
+  const [data, setData] = useState<BroBotPayload | null>(null);
   const [loading, setLoading] = useState(false);
   const summaryRef = useRef<HTMLDivElement | null>(null);
 
@@ -24,40 +25,37 @@ export default function CasePrepPage() {
   const [userFeedback, setUserFeedback] = useState('');
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
+  async function handleSubmit() {
+    try {
+      setLoading(true);
+      setData(null);
+      setWasHelpful(null);
+      setUserFeedback('');
+      setFeedbackSubmitted(false);
 
+      const parsed = await getBroBotResponse(prompt);
+      setData(parsed);
 
-async function handleSubmit() {
-  try {
-    setLoading(true);
-    setData(null);
-    setWasHelpful(null);
-    setUserFeedback('');
-    setFeedbackSubmitted(false);
+      // Dynamically import branch and log event (only in browser)
+      const branch = (await import('branch-sdk')).default;
+      branch.logEvent('BroBot Prompt Entered', {
+        prompt_text: prompt,
+        timestamp: new Date().toISOString(),
+      });
 
-    const parsed = await getCasePrepResponse(prompt);
-    setData(parsed);
-
-    // Dynamically import branch and log event (only in browser)
-    const branch = (await import('branch-sdk')).default;
-    branch.logEvent('CasePrep Prompt Entered', {
-      prompt_text: prompt,
-      timestamp: new Date().toISOString(),
-    });
-
-    setTimeout(() => {
-      summaryRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-  } catch (error) {
-    console.error('❌ CasePrep Error', error);
-    setData({
-      pimpQuestions: [],
-      otherUsefulFacts: ['❌ Error fetching data. Please try again.'],
-    });
-  } finally {
-    setLoading(false);
+      setTimeout(() => {
+        summaryRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } catch (error) {
+      console.error('❌ BroBot Error', error);
+      setData({
+        pimpQuestions: [],
+        otherUsefulFacts: ['❌ Error fetching data. Please try again.'],
+      });
+    } finally {
+      setLoading(false);
+    }
   }
-}
-
 
   async function submitFeedback() {
     try {
@@ -65,27 +63,36 @@ async function handleSubmit() {
       setFeedbackSubmitted(true);
 
       await fetch('https://api.snap-ortho.com/case-prep-log', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    prompt,
-    responseJSON: JSON.stringify(data), // ← Fix: stringify this
-    wasHelpful,
-    userFeedback,
-    timestamp: new Date().toISOString(),
-  }),
-});
-
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prompt,
+          responseJSON: JSON.stringify(data),
+          wasHelpful,
+          userFeedback,
+          timestamp: new Date().toISOString(),
+        }),
+      });
     } catch (err) {
       console.error('❌ Feedback submission failed:', err);
     }
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] text-[#1A1C2C]">
+    <main className="relative min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] text-[#1A1C2C]">
       {loading && <LoadingOverlay />}
 
-      <header className="relative px-6 pt-24 pb-14 text-center">
+     {/* Sign Up Button */}
+<div className="absolute top-24 right-6">
+  <Link
+    href="/auth/sign-up?from=brobot"
+    className="inline-block rounded-full bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-teal-700"
+  >
+    Sign Up
+  </Link>
+</div>
+
+      <header className="px-6 pt-24 pb-14 text-center">
         <div className="mx-auto flex flex-col items-center justify-center space-y-4">
           <div className="flex items-center space-x-4">
             <img

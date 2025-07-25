@@ -15,17 +15,17 @@ export default function LearnNonMember() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            href="/auth/sign-in"
-            className="flex-1 py-2 bg-sky text-white rounded-full font-medium hover:bg-sky/90 transition"
-          >
-            Sign In
-          </Link>
+  href="/auth/sign-in?redirectTo=/learn"
+  className="flex-1 py-2 bg-sky text-white rounded-full font-medium hover:bg-sky/90 transition"
+>
+  Sign In
+</Link>
           <Link
-            href="/auth/sign-up"
-            className="flex-1 py-2 border-2 border-sky text-sky rounded-full font-medium hover:bg-sky/10 transition"
-          >
-            Sign Up
-          </Link>
+  href="/auth/sign-up?redirectTo=/learn"
+  className="flex-1 py-2 border-2 border-sky text-sky rounded-full font-medium hover:bg-sky/10 transition"
+>
+  Sign Up
+</Link>
         </div>
       </div>
     </main>

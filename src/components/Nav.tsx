@@ -36,6 +36,14 @@ export default function Nav() {
             Home
           </Link>
 
+           <Link
+            href="/brobot"
+            className="block hover:text-blue-300 transition py-2 md:py-0"
+            onClick={() => setMenuOpen(false)}
+          >
+            BroBot
+          </Link>
+
           {/* Learn Dropdown */}
           <div className="relative">
             <button
@@ -107,16 +115,6 @@ export default function Nav() {
                   }}
                 >
                   Read X-Rays
-                </Link>
-                <Link
-                  href="/reference/case-prep"
-                  className="block px-4 py-2 hover:bg-sky-50"
-                  onClick={() => {
-                    setOpenRef(false);
-                    setMenuOpen(false);
-                  }}
-                >
-                  Case Prep
                 </Link>
               </div>
             )}

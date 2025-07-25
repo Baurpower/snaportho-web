@@ -1,5 +1,5 @@
 // src/types/caseprep.ts
-export interface CasePrepPayload {
+export interface BroBotPayload {
   pimpQuestions: string[];
   otherUsefulFacts: string[];
 }

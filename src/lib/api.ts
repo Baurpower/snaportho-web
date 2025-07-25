@@ -1,5 +1,5 @@
 /* ─── src/lib/api.ts ────────────────────────────────────────── */
-import type { CasePrepPayload } from '@/types/caseprep';
+import type { BroBotPayload } from '@/types/caseprep';
 
 const BASE = process.env.NEXT_PUBLIC_CASEPREP_API;
 
@@ -7,14 +7,14 @@ if (!BASE) {
   throw new Error('❌ NEXT_PUBLIC_CASEPREP_API is not defined in .env');
 }
 
-console.log('[CasePrep] API base:', BASE);
+console.log('[BroBot] API base:', BASE);
 
 
 /** POST the user prompt → receive structured JSON */
-export async function getCasePrepResponse(
+export async function getBroBotResponse(
   prompt: string,
   signal?: AbortSignal
-): Promise<CasePrepPayload> {
+): Promise<BroBotPayload> {
   const ctrl = new AbortController();
   const id = setTimeout(() => ctrl.abort(), 40_000);
 
@@ -36,14 +36,14 @@ export async function getCasePrepResponse(
       throw new Error('Invalid response: missing "pimpQuestions"');
     }
 
-    const parsed: CasePrepPayload = {
+    const parsed: BroBotPayload = {
       pimpQuestions: json.pimpQuestions,
       otherUsefulFacts: json.otherUsefulFacts ?? [],
     };
 
     return parsed;
   } catch (e) {
-    console.error('[CasePrep API Error]', e);
+    console.error('[BroBot API Error]', e);
     throw e;
   } finally {
     clearTimeout(id);

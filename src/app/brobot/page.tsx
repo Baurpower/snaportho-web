@@ -1,4 +1,4 @@
-import CaseprepPageClient from './casepreppageclient';
+import BroBotPageWrapper from './brobotpagewrapper';
 
 export const metadata = {
   title: 'Ortho BroBot: Prep for Cases Faster',
@@ -31,5 +31,5 @@ export const metadata = {
 };
 
 export default function LearnPage() {
-  return <CaseprepPageClient />;
+  return <BroBotPageWrapper />;
 }
