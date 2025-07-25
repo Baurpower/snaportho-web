@@ -78,7 +78,10 @@ export default function SignInClient({ redirectTo }: Props) {
         <span>
           Don’t have an account?{' '}
           <Link
-            href={`/auth/sign-up?redirectTo=${encodeURIComponent(redirectTo)}`}
+            href={{
+              pathname: '/auth/sign-up',
+              query: { redirectTo },
+            }}
             className="text-sky hover:underline"
           >
             Sign Up

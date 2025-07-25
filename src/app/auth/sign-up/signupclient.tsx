@@ -92,7 +92,10 @@ export default function SignUpClient({ redirectTo }: Props) {
       <p className="mt-4 text-center text-sm text-midnight/70">
         Already have an account?{' '}
         <Link
-          href={`/auth/sign-in?redirectTo=${encodeURIComponent(redirectTo)}`}
+          href={{
+            pathname: '/auth/sign-in',
+            query: { redirectTo },
+          }}
           className="text-sky hover:underline"
         >
           Sign In
