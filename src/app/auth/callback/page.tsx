@@ -1,6 +1,3 @@
-// src/app/auth/callback/page.tsx
-import CallbackClient from './callbackclient';
+export const dynamic = 'force-dynamic';
 
-export default function AuthCallbackPage() {
-  return <CallbackClient />;
-}
+export { default } from './callbackclient';

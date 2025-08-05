@@ -1,47 +1,57 @@
-// src/app/auth/callback/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
-export default function AuthCallbackPage() {
+export default function AuthCallbackClient() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function finalizeSignIn() {
-      // Supabase Auth Helpers will already have picked up
-      // the access_token & set the cookie/localStorage for you.
-      const {
-        data: { session },
-        error: sessionErr,
-      } = await supabase.auth.getSession();
+      const authCode = searchParams?.get('code');
 
-      if (sessionErr) {
-        console.error('Error fetching session:', sessionErr);
-        setError('Authentication failed. Please sign in again.');
+      if (!authCode) {
+        setError('Missing auth code.');
         setLoading(false);
         return;
       }
 
-      if (session) {
-        // Signed in! Send them into onboarding
-        router.replace('/onboarding');
-      } else {
-        // No session—send back to sign‑in
-        router.replace('/auth/sign-in');
+      const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(authCode);
+
+      if (exchangeError) {
+        console.error('Session exchange failed:', exchangeError.message);
+        setError('Authentication failed. Please try again.');
+        setLoading(false);
+        return;
       }
+
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
+      if (sessionError || !session) {
+        console.error('No session found after exchange:', sessionError);
+        setError('Session not found. Please sign in again.');
+        setLoading(false);
+        return;
+      }
+
+      router.replace('/onboarding');
     }
 
     finalizeSignIn();
-  }, [router]);
+  }, [router, searchParams]);
 
   if (loading && !error) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <p>Finalizing your sign‑in…</p>
+        <p>Finalizing your sign-in…</p>
       </div>
     );
   }
