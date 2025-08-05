@@ -13,7 +13,7 @@ export default function AuthCallbackClient() {
 
   useEffect(() => {
     async function finalizeSignIn() {
-      const authCode = searchParams?.get('code');
+      const authCode = searchParams?.get('token'); 
 
       if (!authCode) {
         setError('Missing auth code.');
