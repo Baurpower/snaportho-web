@@ -10,35 +10,49 @@ export async function GET(request: NextRequest) {
   const type       = url.searchParams.get('type') as EmailOtpType | null
   const nextPage   = url.searchParams.get('next') ?? '/onboarding'
 
-  // If missing or invalid, send them to your fallback (e.g. /learn)
   if (!token_hash || !type) {
-    return NextResponse.redirect('/learn', 307)
+    return new Response(null, {
+      status: 307,
+      headers: { Location: '/learn' }
+    })
   }
 
-  // Verify the OTP
   const supabase = await createClient()
   const { data, error } = await supabase.auth.verifyOtp({ type, token_hash })
 
   if (error || !data.session) {
-    return NextResponse.redirect('/learn', 307)
+    return new Response(null, {
+      status: 307,
+      headers: { Location: '/learn' }
+    })
   }
 
-  // Build our 3xx response with two Set-Cookie headers
-  const res = NextResponse.redirect(nextPage, 307)
+  // build headers object all at once
+  const headers = new Headers({
+    Location: nextPage,
+  })
 
-  res.headers.append(
+  const cookieOpts = {
+    path: '/',
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax' as const,
+    domain: '.snap-ortho.com',    // ← so it works on both www and non‐www
+    // maxAge: data.session.expires_in   // optional
+  }
+
+  headers.append(
     'Set-Cookie',
-    serialize('sb-access-token', data.session.access_token, {
-      path: '/', httpOnly: true, secure: true, sameSite: 'lax',
-      // optionally: maxAge: data.session.expires_in
-    })
+    serialize('sb-access-token', data.session.access_token, cookieOpts)
   )
-  res.headers.append(
+  headers.append(
     'Set-Cookie',
-    serialize('sb-refresh-token', data.session.refresh_token, {
-      path: '/', httpOnly: true, secure: true, sameSite: 'lax',
-    })
+    serialize('sb-refresh-token', data.session.refresh_token, cookieOpts)
   )
 
-  return res
+  // return a single 307 with cookies + Location
+  return new Response(null, {
+    status: 307,
+    headers
+  })
 }
