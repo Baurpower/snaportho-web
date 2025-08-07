@@ -1,4 +1,4 @@
-// src/app/auth/confirm/route.ts
+// src/app/api/auth/confirm/route.ts
 import { NextRequest } from 'next/server'
 import { serialize }  from 'cookie'
 import { createClient } from '@/utils/supabase/server'
@@ -25,30 +25,18 @@ export async function GET(request: NextRequest) {
   const headers = new Headers()
   headers.append(
     'Set-Cookie',
-    serialize('sb-access-token',  data.session.access_token,  { path: '/', httpOnly: true })
+    serialize('sb-access-token', data.session.access_token, {
+      path: '/', httpOnly: true, secure: true, sameSite: 'lax',
+    })
   )
   headers.append(
-  'Set-Cookie',
-  serialize('sb-access-token', data.session.access_token, {
-    path: '/',
-    httpOnly: true,
-    secure: true,       // only send over HTTPS
-    sameSite: 'lax',    // recommended for auth cookies
-  })
-)
+    'Set-Cookie',
+    serialize('sb-refresh-token', data.session.refresh_token, {
+      path: '/', httpOnly: true, secure: true, sameSite: 'lax',
+    })
+  )
+  headers.append('Content-Type', 'text/html')
 
-headers.append(
-  'Set-Cookie',
-  serialize('sb-refresh-token', data.session.refresh_token, {
-    path: '/',
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-  })
-)
-
-
-  // Return a minimal HTML page that runs a real window.location.replace
   const html = `<!DOCTYPE html>
 <html>
   <head><meta charset="utf-8"><title>Confirming…</title></head>
