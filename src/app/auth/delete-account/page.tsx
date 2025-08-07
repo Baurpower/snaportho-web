@@ -3,10 +3,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabaseClient';
+import { useAuth } from '@/context/AuthContext';
 
 export default function DeleteAccountPage() {
   const router = useRouter();
+  const { signOut } = useAuth();              // <- pull in the context signOut
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
   const [msg, setMsg]           = useState<string | null>(null);
@@ -25,20 +26,22 @@ export default function DeleteAccountPage() {
       });
 
       if (!res.ok) {
-        // try parse an error message, otherwise throw generic
         const { error } = (await res.json().catch(() => ({}))) as { error?: string };
         throw new Error(error ?? `Server returned status ${res.status}`);
       }
 
-      // Always attempt to sign out
-      try {
-        await supabase.auth.signOut();
-      } catch (signOutErr) {
-        console.warn('supabase.auth.signOut failed (already signed out?):', signOutErr);
+      // Use the context signOut, which also clears user state immediately
+      const { error: signOutError } = await signOut();
+      if (signOutError) {
+        console.warn('Error signing out after delete:', signOutError);
       }
 
       setMsg('✅ Account deleted and signed out. Redirecting to home…');
-      router.replace('/');
+      // Give the user a moment to read the message
+      setTimeout(() => {
+        router.replace('/');
+      }, 1500);
+
     } catch (err: unknown) {
       const e = err instanceof Error ? err : new Error('Unknown error');
       console.error('Account deletion error:', e);
