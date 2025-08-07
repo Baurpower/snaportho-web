@@ -16,7 +16,7 @@ export default function AccountDropdown() {
   // New logout handler
   const handleLogout = async () => {
     await signOut();           // clear session & context user
-    router.replace('/sign-in');  // navigate to login page
+    router.replace('auth/sign-in');  // navigate to login page
   };
 
   useEffect(() => {
