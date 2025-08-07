@@ -9,22 +9,30 @@ export async function GET(request: NextRequest) {
     const token_hash = url.searchParams.get('token_hash')
     const type       = url.searchParams.get('type') as EmailOtpType | null
 
-    // If missing params, just bail back to sign-in (or wherever)
     if (!token_hash || !type) {
-      return NextResponse.redirect('/auth/sign-in', { status: 307 })
+      // absolute redirect back to sign-in
+      return NextResponse.redirect(
+        new URL('/auth/sign-in?redirectTo=/onboarding', request.url),
+        307
+      )
     }
 
-    // Verify the OTP
     const supabase = await createClient()
     const { data, error } = await supabase.auth.verifyOtp({ type, token_hash })
 
-    // On failure, bounce to some public page
     if (error || !data.session) {
-      return NextResponse.redirect('/learn', { status: 307 })
+      // absolute redirect on failure
+      return NextResponse.redirect(
+        new URL('/auth/sign-in?redirectTo=/onboarding', request.url),
+        307
+      )
     }
 
-    // On success: set the cookies and redirect to onboarding
-    const res = NextResponse.redirect('/learn', { status: 307 })
+    // success → set cookies + redirect
+    const res = NextResponse.redirect(
+      new URL('/onboarding', request.url),
+      307
+    )
 
     const cookieOpts = {
       path:     '/',
