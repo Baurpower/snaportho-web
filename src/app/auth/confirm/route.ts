@@ -28,10 +28,25 @@ export async function GET(request: NextRequest) {
     serialize('sb-access-token',  data.session.access_token,  { path: '/', httpOnly: true })
   )
   headers.append(
-    'Set-Cookie',
-    serialize('sb-refresh-token', data.session.refresh_token, { path: '/', httpOnly: true })
-  )
-  headers.append('Content-Type', 'text/html')
+  'Set-Cookie',
+  serialize('sb-access-token', data.session.access_token, {
+    path: '/',
+    httpOnly: true,
+    secure: true,       // only send over HTTPS
+    sameSite: 'lax',    // recommended for auth cookies
+  })
+)
+
+headers.append(
+  'Set-Cookie',
+  serialize('sb-refresh-token', data.session.refresh_token, {
+    path: '/',
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+  })
+)
+
 
   // Return a minimal HTML page that runs a real window.location.replace
   const html = `<!DOCTYPE html>
