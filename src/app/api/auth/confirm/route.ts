@@ -8,37 +8,43 @@ export async function GET(request: NextRequest) {
     const url        = new URL(request.url)
     const token_hash = url.searchParams.get('token_hash')
     const type       = url.searchParams.get('type') as EmailOtpType | null
-    const nextPage   = url.searchParams.get('next') ?? '/onboarding'
 
+    // If missing params, just bail back to sign-in (or wherever)
     if (!token_hash || !type) {
-      return NextResponse.redirect('/learn', 307)
+      return NextResponse.redirect('/auth/sign-in', { status: 307 })
     }
 
+    // Verify the OTP
     const supabase = await createClient()
     const { data, error } = await supabase.auth.verifyOtp({ type, token_hash })
 
+    // On failure, bounce to some public page
     if (error || !data.session) {
-      return NextResponse.redirect('/learn', 307)
+      return NextResponse.redirect('/learn', { status: 307 })
     }
 
-    const res = NextResponse.redirect(nextPage, 307)
+    // On success: set the cookies and redirect to onboarding
+    const res = NextResponse.redirect('/onboarding', { status: 307 })
+
     const cookieOpts = {
-      path:       '/',
-      httpOnly:   true,
-      secure:     true,
-      sameSite:   'lax' as const,
-      domain:     '.snap-ortho.com',
-      // maxAge: data.session.expires_in,
+      path:     '/',
+      httpOnly: true,
+      secure:   process.env.NODE_ENV === 'production',
+      sameSite: 'lax' as const,
+      domain:   '.snap-ortho.com',
     }
 
     res.cookies.set('sb-access-token',  data.session.access_token,  cookieOpts)
     res.cookies.set('sb-refresh-token', data.session.refresh_token, cookieOpts)
+
     return res
 
   } catch (err: unknown) {
-    // Narrow the unknown to string or Error for logging
-    const message = err instanceof Error ? err.stack ?? err.message : String(err)
-    console.error('Error in /api/auth/confirm:', message)
-    return new Response('Internal Server Error', { status: 500 })
+    const message = err instanceof Error ? (err.stack ?? err.message) : String(err)
+    console.error('❌ /api/auth/confirm error:', message)
+    return new Response(`Internal Server Error\n\n${message}`, {
+      status: 500,
+      headers: { 'content-type': 'text/plain' }
+    })
   }
 }
