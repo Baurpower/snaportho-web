@@ -2,19 +2,17 @@
 import { redirect }                    from 'next/navigation'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies }                     from 'next/headers'
-import OnboardingFormClient from '@/components/onboardingformclient'
+import OnboardingFormClient            from '@/components/onboardingformclient'
 
 export default async function OnboardingPage() {
-  // 1) Create a cookie-aware Supabase client
+  // 1) Create a Supabase client that reads cookies
   const supabase = createServerComponentClient({ cookies })
 
-  // 2) Fetch current session
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  // 2) Re-validate and fetch the user (safer than getSession())
+  const { data: { user }, error } = await supabase.auth.getUser()
 
   // 3) If not signed in, send them to sign-in (with redirect back here)
-  if (!session) {
+  if (error || !user) {
     redirect(`/auth/sign-in?redirectTo=/onboarding`)
   }
 
