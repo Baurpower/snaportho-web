@@ -12,7 +12,7 @@ export default function SignUpClient() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState<string | null>(null);
 
-  const CALLBACK_URL = 'https://snap-ortho.com/auth/callback';
+  const CALLBACK_URL = 'https://snap-ortho.com/auth/confirm';
 
   // If they’re already logged in, go to the profile page
   useEffect(() => {

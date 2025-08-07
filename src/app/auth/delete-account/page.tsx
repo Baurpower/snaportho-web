@@ -5,59 +5,48 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 
-interface DeleteResponse {
-  success?: boolean;
-  error?: string;
-}
-
 export default function DeleteAccountPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
+  const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
-  const [msg, setMsg] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [msg, setMsg]           = useState<string | null>(null);
+  const [loading, setLoading]   = useState(false);
 
   const handleDelete = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setLoading(true);
-  setMsg(null);
+    e.preventDefault();
+    setLoading(true);
+    setMsg(null);
 
-  try {
-    const res = await fetch('/api/delete-user', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-
-    let data: DeleteResponse;
     try {
-      data = (await res.json()) as DeleteResponse;
-    } catch {
-      throw new Error(`Server returned status ${res.status}`);
+      const res = await fetch('/api/delete-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!res.ok) {
+        // try parse an error message, otherwise throw generic
+        const { error } = (await res.json().catch(() => ({}))) as { error?: string };
+        throw new Error(error ?? `Server returned status ${res.status}`);
+      }
+
+      // Always attempt to sign out
+      try {
+        await supabase.auth.signOut();
+      } catch (signOutErr) {
+        console.warn('supabase.auth.signOut failed (already signed out?):', signOutErr);
+      }
+
+      setMsg('✅ Account deleted and signed out. Redirecting to home…');
+      router.replace('/');
+    } catch (err: unknown) {
+      const e = err instanceof Error ? err : new Error('Unknown error');
+      console.error('Account deletion error:', e);
+      setMsg(e.message);
+    } finally {
+      setLoading(false);
     }
-
-    if (!res.ok) {
-      throw new Error(data.error ?? `Server returned status ${res.status}`);
-    }
-
-    // ✅ Always attempt to clear the session — even if user was deleted already
-    try {
-      await supabase.auth.signOut();
-    } catch (signOutErr) {
-      console.warn('supabase.auth.signOut failed (probably already deleted):', signOutErr);
-    }
-
-    setMsg('✅ Account deleted and signed out. Redirecting…');
-    setTimeout(() => router.replace('/learn'), 2000);
-  } catch (rawError: unknown) {
-    const err = rawError instanceof Error ? rawError : new Error('Unknown error');
-    console.error('Account deletion error:', err);
-    setMsg(err.message);
-  } finally {
-    setLoading(false);
-  }
-}
-
+  };
 
   return (
     <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg">
