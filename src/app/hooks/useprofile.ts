@@ -1,7 +1,7 @@
 // hooks/useProfile.ts
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { UserProfile } from '@/app/onboarding/profileform';
+import { UserProfile } from '@/components/profileform';
 
 // Define a fallback/default user profile shape
 const defaultProfile: UserProfile = {

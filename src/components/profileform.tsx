@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 import { v4 as uuidv4 } from 'uuid';
-import CountrySelect from './countryselect';
+import CountrySelect from '../app/onboarding/countryselect';
 
 export interface TrainingEntry {
   id?: string;

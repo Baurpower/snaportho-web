@@ -3,7 +3,7 @@
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useProfile } from '../../hooks/useprofile';
-import ProfileForm from '@/app/onboarding/profileform';
+import ProfileForm from '@/components/profileform';
 import { useState } from 'react';
 import Link from 'next/link';
 
