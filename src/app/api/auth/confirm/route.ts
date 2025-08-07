@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     }
 
     // On success: set the cookies and redirect to onboarding
-    const res = NextResponse.redirect('/onboarding', { status: 307 })
+    const res = NextResponse.redirect('/learn', { status: 307 })
 
     const cookieOpts = {
       path:     '/',
