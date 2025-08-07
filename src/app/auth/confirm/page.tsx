@@ -1,21 +1,14 @@
-// src/app/auth/confirm/page.tsx
-'use client'
+import { Suspense } from 'react'
+import ConfirmClient from './confirmclient'
 
-import { useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
-
-export default function ConfirmClient() {
-  // Grab the raw query string (non-null)
-  const params = useSearchParams()!.toString()
-
-  useEffect(() => {
-    // Hard‐navigate the browser to your API route so cookies stick
-    window.location.replace(`/api/auth/confirm?${params}`)
-  }, [params])
-
+export default function Page() {
   return (
-    <div className="flex h-screen items-center justify-center">
-      <p className="text-gray-700">Confirming your email…</p>
-    </div>
+    <Suspense fallback={
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-gray-700">Loading confirmation...</p>
+      </div>
+    }>
+      <ConfirmClient />
+    </Suspense>
   )
 }
