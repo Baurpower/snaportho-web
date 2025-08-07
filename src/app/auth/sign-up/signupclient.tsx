@@ -1,31 +1,20 @@
-// src/app/auth/sign‑up/SignUpClient.tsx
+// src/app/auth/sign-up/SignUpClient.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function SignUpClient() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
+  const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState<string | null>(null);
-
-  const CALLBACK_URL = 'https://snap-ortho.com/auth/confirm';
-
-  // If they’re already logged in, go to the profile page
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      if (data.session) router.replace('/onboarding/profile');
-    });
-  }, [router]);
+  const [message, setMessage]   = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
 
-    // 1) Prevent duplicate profiles
+    // Optional: prevent duplicate profiles
     const { data: existing, error: lookupErr } = await supabase
       .from('user_profiles')
       .select('user_id')
@@ -44,15 +33,14 @@ export default function SignUpClient() {
       return;
     }
 
-    // 2) Single‑arg signUp with options.emailRedirectTo
+    // Trigger Supabase magic-link email
     const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: CALLBACK_URL },
     });
 
     if (signUpError) {
-      console.error('Sign‑up error:', signUpError);
+      console.error('Sign-up error:', signUpError);
       setMessage(signUpError.message);
     } else {
       setMessage(
@@ -68,26 +56,28 @@ export default function SignUpClient() {
       </h2>
 
       {message && (
-        <p className="mb-4 text-center text-sm text-midnight/70">{message}</p>
+        <p className="mb-4 text-center text-sm text-midnight/70">
+          {message}
+        </p>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
           required
-          placeholder="Email address"
-          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-sky"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email address"
+          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-sky"
         />
 
         <input
           type="password"
           required
-          placeholder="Create password"
-          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-sky"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          placeholder="Create password"
+          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-sky"
         />
 
         <button
@@ -100,13 +90,7 @@ export default function SignUpClient() {
 
       <p className="mt-4 text-center text-sm text-midnight/70">
         Already have an account?{' '}
-        <Link
-          href={{
-            pathname: '/auth/sign-in',
-            query: { redirectTo: CALLBACK_URL },
-          }}
-          className="text-sky hover:underline"
-        >
+        <Link href="/auth/sign-in" className="text-sky hover:underline">
           Sign In
         </Link>
       </p>
