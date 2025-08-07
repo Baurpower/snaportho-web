@@ -57,7 +57,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const resetPassword = (email: string, options?: { redirectTo?: string }) =>
     supabase.auth.resetPasswordForEmail(email, options);
 
-  const signOut = () => supabase.auth.signOut();
+  const signOut = async () => {
+    // 1) Tell Supabase to clear tokens
+    const { error } = await supabase.auth.signOut();
+    // 2) Immediately clear our `user` state so UI updates right away
+    setUser(null);
+    return { error };
+  };
 
   return (
     <AuthContext.Provider

@@ -2,14 +2,22 @@
 
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function AccountDropdown() {
+  const router = useRouter();
   const { user, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [fullName, setFullName] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  // New logout handler
+  const handleLogout = async () => {
+    await signOut();           // clear session & context user
+    router.replace('/login');  // navigate to login page
+  };
 
   useEffect(() => {
     const fetchName = async () => {
@@ -65,7 +73,8 @@ export default function AccountDropdown() {
             Profile
           </Link>
           <button
-            onClick={signOut}
+            type="button"
+            onClick={handleLogout}
             className="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 text-red-600"
           >
             Log Out
