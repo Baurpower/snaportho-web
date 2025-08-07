@@ -6,29 +6,28 @@ import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 export async function GET(request: NextRequest) {
   const url = new URL(request.url)
   const token_hash = url.searchParams.get('token_hash')
-  const raw = url.searchParams.get('redirectTo') ?? '/'
-  const redirectTo = raw.startsWith('/') ? raw : '/'
 
   // Must have token_hash, otherwise bounce to sign-in
   if (!token_hash) {
     return NextResponse.redirect(
-      new URL(`/auth/sign-in?redirectTo=${encodeURIComponent(redirectTo)}`, url),
+      new URL(`/auth/sign-in?redirectTo=/onboarding`, url),
       303
     )
   }
 
   const supabase = createRouteHandlerClient({ cookies })
 
-  // For signup confirmation, type = 'signup' and no email param is required
+  // Signup confirmation only
   const { data, error } = await supabase.auth.verifyOtp({
     type: 'signup',
     token_hash
   })
 
-  const dest =
-    error || !data?.session
-      ? `/auth/sign-in?redirectTo=${encodeURIComponent(redirectTo)}`
-      : redirectTo
+  // If verification worked → go to /onboarding
+  // If it failed → send to sign-in with redirect back to /onboarding
+  const dest = error || !data?.session
+    ? `/auth/sign-in?redirectTo=/onboarding`
+    : `/onboarding`
 
   return NextResponse.redirect(new URL(dest, url), 303)
 }
