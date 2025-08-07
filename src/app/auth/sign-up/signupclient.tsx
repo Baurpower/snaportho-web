@@ -6,15 +6,22 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function SignUpClient() {
-  const [email, setEmail]       = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage]   = useState<string | null>(null);
+  const [email, setEmail]                 = useState('');
+  const [password, setPassword]           = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage]             = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
 
-    // Optional: prevent duplicate profiles
+    // 1) Validate passwords match
+    if (password !== confirmPassword) {
+      setMessage("Passwords don’t match.");
+      return;
+    }
+
+    // 2) Optional: prevent duplicate profiles
     const { data: existing, error: lookupErr } = await supabase
       .from('user_profiles')
       .select('user_id')
@@ -33,7 +40,7 @@ export default function SignUpClient() {
       return;
     }
 
-    // Trigger Supabase magic-link email
+    // 3) Trigger Supabase magic-link email
     const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
@@ -56,9 +63,7 @@ export default function SignUpClient() {
       </h2>
 
       {message && (
-        <p className="mb-4 text-center text-sm text-midnight/70">
-          {message}
-        </p>
+        <p className="mb-4 text-center text-sm text-midnight/70">{message}</p>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -77,6 +82,15 @@ export default function SignUpClient() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Create password"
+          className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-sky"
+        />
+
+        <input
+          type="password"
+          required
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Confirm password"
           className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-sky"
         />
 
