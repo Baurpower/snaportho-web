@@ -1,14 +1,23 @@
 // src/app/onboarding/page.tsx
-import { redirect } from 'next/navigation'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+'use client'
+
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { useAuth } from '@/context/AuthContext'
 import OnboardingFormClient from '@/components/onboardingformclient'
 
-export default async function OnboardingPage() {
-  const { data: { session } } = await createServerComponentClient({ cookies })
-    .auth.getSession()
+export default function OnboardingPage() {
+  const { user } = useAuth()
+  const router = useRouter()
 
-  if (!session) redirect('/auth/sign-in')
+  useEffect(() => {
+    if (!user) {
+      router.replace('/auth/sign-in?redirectTo=/onboarding')
+    }
+  }, [user, router])
+
+  // Don’t flash the form while redirecting
+  if (!user) return null
 
   return (
     <main className="max-w-2xl mx-auto py-12 px-4">
