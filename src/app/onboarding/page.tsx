@@ -2,13 +2,7 @@
 import { redirect }                    from 'next/navigation'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies }                     from 'next/headers'
-import dynamic                         from 'next/dynamic'
-
-// Load your client-only wrapper for the form
-const OnboardingFormClient = dynamic(
-  () => import('@/components/onboardingformclient'),
-  { ssr: false }
-)
+import OnboardingFormClient from '@/components/onboardingformclient'
 
 export default async function OnboardingPage() {
   // 1) Create a cookie-aware Supabase client
