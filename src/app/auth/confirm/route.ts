@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const url        = new URL(request.url)
   const token_hash = url.searchParams.get('token_hash')
   const type       = url.searchParams.get('type') as EmailOtpType | null
-  const nextPage   = url.searchParams.get('next') ?? '/'
+  const nextPage   = url.searchParams.get('next') ?? '/onboarding'
 
   // missing params -> error
   if (!token_hash || !type) {
