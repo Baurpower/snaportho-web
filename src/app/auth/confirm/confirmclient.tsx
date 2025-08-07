@@ -7,7 +7,7 @@ export default function ConfirmClient() {
   const params = useSearchParams()!.toString()
 
   useEffect(() => {
-    window.location.replace(`/api/auth/confirm?${params}`)
+    window.location.href = `/api/auth/confirm?${params}`
   }, [params])
 
   return (

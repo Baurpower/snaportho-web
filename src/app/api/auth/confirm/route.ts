@@ -11,14 +11,14 @@ export async function GET(request: NextRequest) {
   const nextPage   = url.searchParams.get('next') ?? '/onboarding'
 
   if (!token_hash || !type) {
-    return Response.redirect(new URL('/error', request.url))
+    return Response.redirect(new URL('/learn', request.url))
   }
 
   const supabase = await createClient()
   const { data, error } = await supabase.auth.verifyOtp({ type, token_hash })
 
   if (error || !data.session) {
-    return Response.redirect(new URL('/error', request.url))
+    return Response.redirect(new URL('/learn', request.url))
   }
 
   // Build headers: 2 Set-Cookie + content-type
