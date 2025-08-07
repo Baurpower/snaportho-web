@@ -9,14 +9,13 @@ export default async function OnboardingPage() {
   const { data: { session } } = await supabase.auth.getSession()
 
   if (!session) {
-    // no session cookie → kick back to sign-in
-    redirect('/auth/sign-in')
+    // kick unauthenticated users back to sign-in, then return here
+    redirect('/auth/sign-in?redirectTo=/onboarding')
   }
 
-  // session exists → render the form
   return (
     <main className="max-w-2xl mx-auto py-12 px-4">
-      <OnboardingFormClient mode="onboarding" />
+      <OnboardingFormClient />
     </main>
   )
 }
