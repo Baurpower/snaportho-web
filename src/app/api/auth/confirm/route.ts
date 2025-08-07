@@ -1,5 +1,5 @@
 // src/app/api/auth/confirm/route.ts
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { serialize }  from 'cookie'
 import { createClient } from '@/utils/supabase/server'
 import type { EmailOtpType } from '@supabase/supabase-js'
@@ -10,44 +10,35 @@ export async function GET(request: NextRequest) {
   const type       = url.searchParams.get('type') as EmailOtpType | null
   const nextPage   = url.searchParams.get('next') ?? '/onboarding'
 
+  // If missing or invalid, send them to your fallback (e.g. /learn)
   if (!token_hash || !type) {
-    return Response.redirect(new URL('/learn', request.url))
+    return NextResponse.redirect('/learn', 307)
   }
 
+  // Verify the OTP
   const supabase = await createClient()
   const { data, error } = await supabase.auth.verifyOtp({ type, token_hash })
 
   if (error || !data.session) {
-    return Response.redirect(new URL('/learn', request.url))
+    return NextResponse.redirect('/learn', 307)
   }
 
-  // Build headers: 2 Set-Cookie + content-type
-  const headers = new Headers()
-  headers.append(
+  // Build our 3xx response with two Set-Cookie headers
+  const res = NextResponse.redirect(nextPage, 307)
+
+  res.headers.append(
     'Set-Cookie',
     serialize('sb-access-token', data.session.access_token, {
       path: '/', httpOnly: true, secure: true, sameSite: 'lax',
+      // optionally: maxAge: data.session.expires_in
     })
   )
-  headers.append(
+  res.headers.append(
     'Set-Cookie',
     serialize('sb-refresh-token', data.session.refresh_token, {
       path: '/', httpOnly: true, secure: true, sameSite: 'lax',
     })
   )
-  headers.append('Content-Type', 'text/html')
 
-  const html = `<!DOCTYPE html>
-<html>
-  <head><meta charset="utf-8"><title>Confirming…</title></head>
-  <body>
-    <p style="font-family:sans-serif;padding:1rem;">Confirming your email…</p>
-    <script>
-      // Full browser navigation (so cookies stick) to your next page
-      window.location.replace(${JSON.stringify(nextPage)});
-    </script>
-  </body>
-</html>`
-
-  return new Response(html, { status: 200, headers })
+  return res
 }
