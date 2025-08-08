@@ -35,24 +35,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    // 1️⃣ Load the current user on mount
-    const loadUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      if (!error) setUser(data.user ?? null);
-    };
-    loadUser();
+  const loadUser = async () => {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (!error) setUser(user ?? null);
+  };
 
-    // 2️⃣ Listen for auth state changes (login, logout, token refresh)
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event: AuthChangeEvent, session: Session | null) => {
-        setUser(session?.user ?? null);
-      }
-    );
+  // Run immediately on mount
+  loadUser();
 
-    return () => {
-      listener.subscription.unsubscribe();
-    };
-  }, []);
+  // Listen for any auth state changes (login, logout, token refresh)
+  const { data: subscription } = supabase.auth.onAuthStateChange(
+    (_event, session) => {
+      setUser(session?.user ?? null);
+    }
+  );
+
+  return () => {
+    subscription.subscription.unsubscribe();
+  };
+}, []);
+
 
   const signIn = (email: string, password: string) =>
     supabase.auth.signInWithPassword({ email, password });
