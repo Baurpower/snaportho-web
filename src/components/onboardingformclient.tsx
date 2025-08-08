@@ -2,25 +2,19 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import type { Session, User } from '@supabase/supabase-js'
+import type { Session } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabaseClient'
 import ProfileForm from './profileform'
 
-type Props = {
-  // We still accept it, but we won't trust it for tokens.
-  initialSession: Session | null
-}
+type Props = { initialSession: Session | null }
 
 // --- helpers ---------------------------------------------------------------
 
-function getProjectRefFromUrl(url: string | undefined): string | null {
+function getProjectRefFromUrl(url?: string): string | null {
   if (!url) return null
-  // https://<ref>.supabase.co
   try {
     const u = new URL(url)
-    const host = u.hostname // e.g. geznczcokbgyb...supabase.co
-    const ref = host.split('.')[0]
-    return ref || null
+    return u.hostname.split('.')[0] || null // <ref>.supabase.co
   } catch {
     return null
   }
@@ -28,138 +22,88 @@ function getProjectRefFromUrl(url: string | undefined): string | null {
 
 function readCookie(name: string): string | null {
   const all = typeof document !== 'undefined' ? document.cookie : ''
-  const parts = all.split('; ').map(s => s.trim())
-  const hit = parts.find(p => p.startsWith(`${name}=`))
-  if (!hit) return null
-  return decodeURIComponent(hit.substring(name.length + 1))
-}
-
-function summarizeSession(sess: Session | null) {
-  if (!sess) return null
-  return {
-    userId: sess.user.id,
-    email: sess.user.email,
-    expiresAt: sess.expires_at,
-  }
+  const hit = all.split('; ').find(p => p.startsWith(`${name}=`))
+  return hit ? decodeURIComponent(hit.slice(name.length + 1)) : null
 }
 
 // --- component -------------------------------------------------------------
 
 export default function OnboardingFormClient({ initialSession }: Props) {
   const [ready, setReady] = useState(false)
-  const [user, setUser] = useState<User | null>(null)
-  const [err, setErr] = useState<string | null>(null)
-  const [debug, setDebug] = useState<Record<string, unknown>>({ mounted: false })
 
   const projectRef = useMemo(
     () => getProjectRefFromUrl(process.env.NEXT_PUBLIC_SUPABASE_URL),
     []
   )
-  const cookieName = projectRef ? `sb-${projectRef}-auth-token` : null
+  const baseCookie = projectRef ? `sb-${projectRef}-auth-token` : null
 
   useEffect(() => {
     let unsubscribe: (() => void) | undefined
 
     ;(async () => {
-      setDebug(d => ({
-        ...d,
-        mounted: true,
-        projectRef,
-        cookieName,
-        initialSession: summarizeSession(initialSession),
-      }))
-
-      try {
-        // 1) Pull real tokens from the helper cookie
-        if (!cookieName) {
-          setErr('Supabase project ref not found')
-          return
-        }
-        const raw = readCookie(cookieName)
-        if (!raw) {
-          setErr('Auth cookie missing')
-          return
-        }
-
-        // Cookie format: ["<access_token>","<refresh_token>",null,null,null]
-        let parsed: unknown
-        try {
-          parsed = JSON.parse(raw)
-        } catch {
-          setErr('Auth cookie unreadable')
-          return
-        }
-        const arr = Array.isArray(parsed) ? parsed : []
-        const access_token = typeof arr[0] === 'string' ? arr[0] : ''
-        const refresh_token = typeof arr[1] === 'string' ? arr[1] : ''
-
-        setDebug(d => ({
-          ...d,
-          accessLen: access_token?.length ?? 0,
-          refreshLen: refresh_token?.length ?? 0,
-        }))
-
-        if (!access_token || !refresh_token) {
-          setErr('Auth tokens missing from cookie')
-          return
-        }
-
-        // 2) Hydrate supabase-js in the browser with those tokens
-        const { error: setSessionError, data: setData } = await supabase.auth.setSession({
-          access_token,
-          refresh_token,
-        })
-        if (setSessionError) {
-          console.warn('[onboarding] setSession error', setSessionError)
-          setErr(setSessionError.message)
-          return
-        }
-        setDebug(d => ({ ...d, setSessionOK: true, setDataPresent: !!setData?.session }))
-
-        // 3) Verify with a fresh read
-        const { data: after } = await supabase.auth.getSession()
-        setDebug(d => ({ ...d, sessionAfterSet: summarizeSession(after.session) }))
-
-        const { data: ures } = await supabase.auth.getUser()
-        setUser(ures?.user ?? null)
-
-        // 4) Keep in sync for refresh/changes
-        const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
-          setDebug(d => ({ ...d, lastAuthEvent: event, lastSession: summarizeSession(session) }))
-          setUser(session?.user ?? null)
-        })
-        unsubscribe = () => listener.subscription.unsubscribe()
-      } catch (e: unknown) {
-        console.error('[onboarding] hydration failed', e)
-        setErr(e instanceof Error ? e.message : 'unknown error')
-      } finally {
-        setReady(true)
+      // If we can’t determine the cookie name, bounce to sign-in
+      if (!baseCookie) {
+        window.location.replace('/auth/sign-in?redirectTo=/onboarding')
+        return
       }
+
+      // Read main helper cookie (array payload)
+      const raw = readCookie(baseCookie)
+      if (!raw) {
+        window.location.replace('/auth/sign-in?redirectTo=/onboarding')
+        return
+      }
+
+      // Cookie format: ["<access_token>","<refresh_token or shortKey>",null,null,null]
+      let arr: unknown
+      try {
+        arr = JSON.parse(raw)
+      } catch {
+        window.location.replace('/auth/sign-in?redirectTo=/onboarding')
+        return
+      }
+
+      const tuple = Array.isArray(arr) ? arr : []
+      const access0 = typeof tuple[0] === 'string' ? tuple[0] : ''
+      let refresh1 = typeof tuple[1] === 'string' ? tuple[1] : ''
+
+      // If second entry is a short key, the real refresh token lives in a secondary cookie
+      if (refresh1 && refresh1.length < 80) {
+        const secondaryName = `${baseCookie}.${refresh1}`
+        const secondaryVal = readCookie(secondaryName)
+        if (secondaryVal) refresh1 = secondaryVal
+      }
+
+      if (!access0 || !refresh1) {
+        window.location.replace('/auth/sign-in?redirectTo=/onboarding')
+        return
+      }
+
+      // Hydrate supabase-js with the tokens
+      const { error: setSessionError } = await supabase.auth.setSession({
+        access_token: access0,
+        refresh_token: refresh1,
+      })
+
+      if (setSessionError) {
+        window.location.replace('/auth/sign-in?redirectTo=/onboarding')
+        return
+      }
+
+      // Keep in sync for future refreshes
+      const { data: listener } = supabase.auth.onAuthStateChange(() => {})
+      unsubscribe = () => listener.subscription.unsubscribe()
+
+      setReady(true)
     })()
 
     return () => {
-      try {
-        unsubscribe?.()
-      } catch {}
+      try { unsubscribe?.() } catch {}
     }
-  }, [cookieName, initialSession, projectRef])
+  }, [baseCookie, initialSession, projectRef])
 
-  // Don’t render anything until hydrated (prevents false “not logged in”)
+  // Don’t render until hydrated
   if (!ready) return null
 
-  // Show a small debug panel (remove later if you want)
-  return (
-    <div className="space-y-6">
-      <div className="p-4 bg-amber-50 border border-amber-200 rounded">
-        <div><strong>User:</strong> {user ? `${user.id} · ${user.email}` : 'null'}</div>
-        {err && <div className="text-red-600"><strong>Error:</strong> {err}</div>}
-        <pre className="mt-2 whitespace-pre-wrap break-words text-xs">
-          {JSON.stringify(debug, null, 2)}
-        </pre>
-      </div>
-
-      {/* Your actual onboarding form */}
-      <ProfileForm mode="onboarding" />
-    </div>
-  )
+  return <ProfileForm mode="onboarding" />
 }
