@@ -18,18 +18,20 @@ export async function GET(request: NextRequest) {
   }
 
   const supabase = createRouteHandlerClient({ cookies })
-
-  // 1) Verify the OTP
   const { data, error } = await supabase.auth.verifyOtp({ type, token_hash })
 
-  // 2) If Supabase returned a session, set it via the helper
+  const res = NextResponse.redirect(new URL(redirectTo, url), 303)
+
   if (!error && data?.session) {
     await supabase.auth.setSession({
       access_token: data.session.access_token,
       refresh_token: data.session.refresh_token,
     })
+    // remove legacy/raw cookies so only the helper cookie remains
+    res.cookies.delete('sb-access-token')
+    res.cookies.delete('sb-refresh-token')
+    // (or use the force-expire version above)
   }
 
-  // 3) Always hand off to onboarding; it will server-check the session
-  return NextResponse.redirect(new URL(redirectTo, url), 303)
+  return res
 }
