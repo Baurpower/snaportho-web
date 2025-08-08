@@ -1,7 +1,7 @@
 // src/app/onboarding/page.tsx
 import { redirect } from 'next/navigation'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import OnboardingFormClient from '@/components/onboardingformclient'
 
 export default async function OnboardingPage() {
@@ -9,7 +9,7 @@ export default async function OnboardingPage() {
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    redirect(`/auth/sign-in?redirectTo=/onboarding`)
+    redirect('/auth/sign-in?redirectTo=/onboarding')
   }
 
   return (
