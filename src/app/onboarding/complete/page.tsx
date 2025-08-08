@@ -1,17 +1,45 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+
+const IOS_SCHEME_URL = 'snaportho://auth/learn';
+const ANDROID_SCHEME_URL = 'snaportho://';
+const IOS_STORE = 'https://apps.apple.com/app/id1234567890';
+const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=com.snaportho.app';
+
+function isIOS() {
+  if (typeof navigator === 'undefined') return false;
+  return /iPad|iPhone|iPod/.test(navigator.userAgent);
+}
+
+function openInApp() {
+  const schemeUrl = isIOS() ? IOS_SCHEME_URL : ANDROID_SCHEME_URL;
+  const storeUrl = isIOS() ? IOS_STORE : ANDROID_STORE;
+
+  const now = Date.now();
+
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.src = schemeUrl;
+  document.body.appendChild(iframe);
+
+  setTimeout(() => {
+    const elapsed = Date.now() - now;
+    if (elapsed < 1500) {
+      window.location.href = storeUrl;
+    }
+    try { document.body.removeChild(iframe); } catch {}
+  }, 1000);
+}
 
 export default function OnboardingCompletePage() {
   const router = useRouter();
 
-  // Optional: auto-redirect to Learn after delay
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push('/learn');
-    }, 4000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, [router]);
 
@@ -23,21 +51,34 @@ export default function OnboardingCompletePage() {
           Thanks for completing your profile. SnapOrtho is ready to help you learn smarter, faster,
           and with more confidence.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/learn"
-            className="flex-1 inline-block px-6 py-3 bg-sky text-white rounded-full font-medium hover:bg-sky/90 transition"
+
+        <button
+          type="button"
+          onClick={openInApp}
+          className="w-full px-8 py-4 text-lg bg-sky text-white rounded-full font-semibold hover:bg-sky/90 transition shadow-lg"
+        >
+          Continue to App
+        </button>
+        <p className="text-xs text-midnight/60">
+          Don’t have the app? We’ll send you to the store if it’s not installed.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+          <button
+            onClick={() => router.push('/learn')}
+            className="flex-1 px-6 py-3 bg-sky text-white rounded-full font-medium hover:bg-sky/90 transition"
           >
             Learn Home
-          </Link>
-          <Link
-            href="/brobot"
-            className="flex-1 inline-block px-6 py-3 bg-teal-600 text-white rounded-full font-medium hover:bg-teal-600/90 transition"
+          </button>
+
+          <button
+            onClick={() => router.push('/brobot')}
+            className="flex-1 px-6 py-3 bg-teal-600 text-white rounded-full font-medium hover:bg-teal-600/90 transition"
           >
             BroBot
-          </Link>
+          </button>
         </div>
       </div>
     </main>
-);
+  );
 }
