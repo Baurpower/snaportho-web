@@ -10,32 +10,30 @@ export async function GET(request: NextRequest) {
   const type = url.searchParams.get('type') as EmailOtpType | null
   const redirectTo = url.searchParams.get('redirectTo') ?? '/'
 
-  // Missing params → go to sign-in
   if (!token_hash || !type) {
-    return NextResponse.redirect(
-      new URL(`/auth/sign-in?redirectTo=${redirectTo}`, url),
-      303
-    )
+    return NextResponse.redirect(new URL(`/auth/sign-in?redirectTo=${redirectTo}`, url))
   }
 
   const supabase = createRouteHandlerClient({ cookies })
-  const { data } = await supabase.auth.verifyOtp({ type, token_hash })
 
-  // Prepare redirect response
-  const response = NextResponse.redirect(new URL(redirectTo, url), 303)
+  const { error } = await supabase.auth.verifyOtp({
+    type,
+    token_hash,
+  })
 
-  if (data?.session) {
-    response.cookies.set('sb-access-token', data.session.access_token, {
-      path: '/',
-      httpOnly: true,
-      secure: true,
-    })
-    response.cookies.set('sb-refresh-token', data.session.refresh_token, {
-      path: '/',
-      httpOnly: true,
-      secure: true,
-    })
+  if (error) {
+    console.error('verifyOtp error:', error)
+    return NextResponse.redirect(new URL('/auth/error', url))
   }
 
-  return response
+  // Overwrite cookies to ensure we have the right session
+  const { data: sessionData } = await supabase.auth.getSession()
+
+  if (!sessionData.session) {
+    console.error('No session returned after verifyOtp')
+    return NextResponse.redirect(new URL('/auth/error', url))
+  }
+
+  // Redirect to onboarding
+  return NextResponse.redirect(new URL(redirectTo, url))
 }
