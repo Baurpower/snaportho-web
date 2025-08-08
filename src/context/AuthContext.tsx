@@ -9,9 +9,7 @@ import {
 } from "react";
 import { supabase } from "../lib/supabaseClient";
 import type {
-  Session,
   User,
-  AuthChangeEvent,
   AuthError,
   AuthResponse,
 } from "@supabase/supabase-js";
