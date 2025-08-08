@@ -1,8 +1,17 @@
-// src/lib/supabaseClient.ts
-import { createClient } from "@supabase/supabase-js";
+// src/lib/supabaseClient.js
+import { createClient } from '@supabase/supabase-js'
 
-export const supabase = createClient(
-  // replace these with your actual project values
-  "https://geznczcokbgybsseipjg.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdlem5jemNva2JneWJzc2VpcGpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkzMTQyMzQsImV4cCI6MjA2NDg5MDIzNH0.lUx0_kkp9zrqq9rZq6JIRogveyeUSOJ7P87wJUxv9P0"
-);
+const url  = process.env.NEXT_PUBLIC_SUPABASE_URL
+const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+if (!url || !anon) {
+  throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY')
+}
+
+export const supabase = createClient(url, anon, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+  },
+})

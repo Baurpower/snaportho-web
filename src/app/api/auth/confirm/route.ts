@@ -11,10 +11,7 @@ export async function GET(request: NextRequest) {
   const redirectTo = url.searchParams.get('redirectTo') ?? '/onboarding'
 
   if (!token_hash || !type) {
-    return NextResponse.redirect(
-      new URL('/auth/sign-in?redirectTo=/onboarding', url),
-      303
-    )
+    return NextResponse.redirect(new URL('/auth/sign-in?redirectTo=/onboarding', url), 303)
   }
 
   const supabase = createRouteHandlerClient({ cookies })
@@ -23,14 +20,15 @@ export async function GET(request: NextRequest) {
   const res = NextResponse.redirect(new URL(redirectTo, url), 303)
 
   if (!error && data?.session) {
+    // Persist the session using the helper → writes sb-<ref>-auth-token
     await supabase.auth.setSession({
       access_token: data.session.access_token,
       refresh_token: data.session.refresh_token,
     })
-    // remove legacy/raw cookies so only the helper cookie remains
+
+    // Remove legacy/raw cookies if present so there’s only ONE source of truth
     res.cookies.delete('sb-access-token')
     res.cookies.delete('sb-refresh-token')
-    // (or use the force-expire version above)
   }
 
   return res

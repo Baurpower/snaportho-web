@@ -14,7 +14,7 @@ export default async function OnboardingPage() {
     redirect('/auth/sign-in?redirectTo=/onboarding')
   }
 
-  // 👇 pass the server session down
+  // Pass the session down so the browser client can hydrate
   return (
     <main className="max-w-2xl mx-auto py-12 px-4">
       <OnboardingFormClient initialSession={session} />

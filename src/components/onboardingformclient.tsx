@@ -1,27 +1,41 @@
 // src/components/onboardingformclient.tsx
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabaseClient'
 
 type Props = { initialSession: Session }
 
 export default function OnboardingFormClient({ initialSession }: Props) {
+  const [ready, setReady] = useState(false)
+
   useEffect(() => {
-    if (!initialSession) return
-    supabase.auth
-      .setSession({
+    let unsubscribe = () => {}
+
+    ;(async () => {
+      // Hydrate the browser client so supabase-js has tokens locally
+      await supabase.auth.setSession({
         access_token: initialSession.access_token,
         refresh_token: initialSession.refresh_token,
       })
-      .catch(() => {})
+
+      // Keep local auth state in sync (even if tokens refresh)
+      const { data } = supabase.auth.onAuthStateChange(() => {})
+      unsubscribe = () => data.subscription.unsubscribe()
+
+      setReady(true)
+    })()
+
+    return () => unsubscribe()
   }, [initialSession])
 
-  // ⬇️ return your actual form UI here (whatever you had before)
+  // Don’t render until the client is hydrated
+  if (!ready) return null
+
   return (
     <form>
-      {/* ...your onboarding fields and submit button... */}
+      {/* your onboarding fields + submit */}
     </form>
   )
 }
