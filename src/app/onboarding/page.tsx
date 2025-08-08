@@ -1,27 +1,22 @@
 // src/app/onboarding/page.tsx
-'use client'
+export const dynamic = 'force-dynamic'; // ⬅ Disable Vercel cache
 
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import { useAuth } from '@/context/AuthContext'
-import OnboardingFormClient from '@/components/onboardingformclient'
+import { redirect } from 'next/navigation';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import OnboardingFormClient from '@/components/onboardingformclient';
 
-export default function OnboardingPage() {
-  const { user } = useAuth()
-  const router = useRouter()
+export default async function OnboardingPage() {
+  const supabase = createServerComponentClient({ cookies });
+  const { data: { user } } = await supabase.auth.getUser();
 
-  useEffect(() => {
-    if (!user) {
-      router.replace('/auth/sign-in?redirectTo=/onboarding')
-    }
-  }, [user, router])
-
-  // Don’t flash the form while redirecting
-  if (!user) return null
+  if (!user) {
+    redirect('/auth/sign-in?redirectTo=/onboarding');
+  }
 
   return (
     <main className="max-w-2xl mx-auto py-12 px-4">
       <OnboardingFormClient />
     </main>
-  )
+  );
 }
