@@ -1,4 +1,3 @@
-// src/context/AuthContext.tsx
 "use client";
 
 import {
@@ -17,7 +16,6 @@ import type {
   AuthResponse,
 } from "@supabase/supabase-js";
 
-// `data` may be any object or null
 type ResetResponse = { data: object | null; error: AuthError | null };
 
 interface AuthContextType {
@@ -37,15 +35,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null);
-    });
+    // 1️⃣ Load the current user on mount
+    const loadUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (!error) setUser(data.user ?? null);
+    };
+    loadUser();
+
+    // 2️⃣ Listen for auth state changes (login, logout, token refresh)
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event: AuthChangeEvent, session: Session | null) => {
         setUser(session?.user ?? null);
       }
     );
-    return () => listener.subscription.unsubscribe();
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = (email: string, password: string) =>
@@ -58,9 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.resetPasswordForEmail(email, options);
 
   const signOut = async () => {
-    // 1) Tell Supabase to clear tokens
     const { error } = await supabase.auth.signOut();
-    // 2) Immediately clear our `user` state so UI updates right away
     setUser(null);
     return { error };
   };
