@@ -2,13 +2,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import type { EmailOtpType } from '@supabase/supabase-js'
 
 export async function GET(request: NextRequest) {
   const url = new URL(request.url)
   const token_hash = url.searchParams.get('token_hash')
+  const type = url.searchParams.get('type') as EmailOtpType | null
 
-  // No token_hash? → go to sign-in, redirecting back to onboarding after login
-  if (!token_hash) {
+  // Missing params → straight to sign-in with redirect back to onboarding
+  if (!token_hash || !type) {
     return NextResponse.redirect(
       new URL('/auth/sign-in?redirectTo=/onboarding', url),
       303
@@ -17,17 +19,12 @@ export async function GET(request: NextRequest) {
 
   const supabase = createRouteHandlerClient({ cookies })
 
-  // This route only handles signup confirmations
-  const { data, error } = await supabase.auth.verifyOtp({
-    type: 'signup',
-    token_hash
+  // Just verify the OTP — no need to store the return values
+  await supabase.auth.verifyOtp({
+    type,
+    token_hash,
   })
 
-  // Success → onboarding, Fail → sign-in (with redirect back to onboarding)
-  const destination =
-    error || !data?.session
-      ? '/auth/sign-in?redirectTo=/onboarding'
-      : '/onboarding'
-
-  return NextResponse.redirect(new URL(destination, url), 303)
+  // Always send to onboarding; it will handle the auth check
+  return NextResponse.redirect(new URL('/onboarding', url), 303)
 }
