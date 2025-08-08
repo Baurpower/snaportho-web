@@ -1,10 +1,27 @@
+// src/components/onboardingformclient.tsx
 'use client'
 
-import dynamic from 'next/dynamic'
+import { useEffect } from 'react'
+import type { Session } from '@supabase/supabase-js'
+import { supabase } from '@/lib/supabaseClient'
 
-// Dynamically import your real form UI (so it can use hooks, etc)
-const ProfileForm = dynamic(() => import('./profileform'), { ssr: false })
+type Props = { initialSession: Session }
 
-export default function OnboardingFormClient() {
-  return <ProfileForm mode="onboarding" />
+export default function OnboardingFormClient({ initialSession }: Props) {
+  useEffect(() => {
+    if (!initialSession) return
+    supabase.auth
+      .setSession({
+        access_token: initialSession.access_token,
+        refresh_token: initialSession.refresh_token,
+      })
+      .catch(() => {})
+  }, [initialSession])
+
+  // ⬇️ return your actual form UI here (whatever you had before)
+  return (
+    <form>
+      {/* ...your onboarding fields and submit button... */}
+    </form>
+  )
 }
