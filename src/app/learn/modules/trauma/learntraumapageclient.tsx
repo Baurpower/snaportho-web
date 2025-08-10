@@ -56,7 +56,7 @@ export default function TraumaModuleClient() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] text-[#1A1C2C] px-4 py-12 max-w-5xl mx-auto space-y-10">
       {/* Header with AccountDropdown */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center pt-24">
         <h1 className="text-4xl font-extrabold tracking-tight">Trauma Module</h1>
         <AccountDropdown />
       </div>
