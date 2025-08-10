@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-const IOS_SCHEME_URL = 'snaportho://auth/learn';
+const IOS_SCHEME_URL = 'snaportho://auth/login';
 const ANDROID_SCHEME_URL = 'snaportho://';
 const IOS_STORE = 'https://apps.apple.com/app/id1234567890';
 const ANDROID_STORE = 'https://play.google.com/store/apps/details?id=com.snaportho.app';
