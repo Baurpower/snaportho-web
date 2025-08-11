@@ -21,11 +21,11 @@ export default function HomePage() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
           <div className="bg-white rounded-3xl shadow-2xl p-8 sm:p-10 max-w-xl w-full text-center relative animate-fade-in-down">
             <h2 className="text-3xl sm:text-4xl font-bold text-navy mb-4">
-              📣 Our Second Learn Video on IT fractures is Live!
+              📣 Our Trauma Learn Module is Live!
             </h2>
             <p className="text-base sm:text-lg text-midnight/80 mb-6">
-              Dive into trauma training with our new animated video on distal radius fractures.
-              Built for visual learners and future orthopaedic leaders.
+              Dive into trauma training with our new animated video on open fractures.
+              Built to learn complex ortho concepts faster.
             </p>
             <Link
               href="/learn/modules/trauma"
@@ -73,10 +73,10 @@ export default function HomePage() {
               Learn
             </Link>
             <Link
-              href="/practice"
+              href="/brobot"
               className="px-6 md:px-8 py-2 md:py-3 border-2 border-sky text-sky rounded-full hover:bg-sky/10 transition"
             >
-              Practice
+              BroBot
             </Link>
           </div>
         </div>
