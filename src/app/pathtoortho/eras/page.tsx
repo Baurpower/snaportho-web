@@ -449,7 +449,7 @@ export default function ERASPage() {
                 transition={{ duration: 0.6 }}
                 className="text-4xl sm:text-5xl font-bold tracking-tight text-[#444]"
               >
-                Guide to <span className="text-[#597498]">ERAS</span> Ortho Applications{" "}.
+                Guide to <span className="text-[#597498]">ERAS</span> Ortho Applications{" "}
               </motion.h1>
               <p className="mt-4 text-gray-600 leading-relaxed">
                 Your orthopaedic residency application hub—dates, requirements,
