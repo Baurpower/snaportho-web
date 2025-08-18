@@ -288,12 +288,10 @@ const TIMELINE = [
 
 const ERAS_SECTIONS = [
   {
-    title: "Meaningful Experiences",
-    icon: <Stars className="h-5 w-5" />,
+    title: "Headshot",
+    icon: <GraduationCap className="h-5 w-5" />,
     points: [
-      "10 entries (≤ 750 chars) + 3 Most Meaningful (+300 each).",
-      "Select entries that complement PS/LORs; mix ortho + non-ortho.",
-      "Draft early because you may get busy with aways.",
+      "Professional headshot (school photo day works)."
     ],
   },
   {
@@ -302,6 +300,14 @@ const ERAS_SECTIONS = [
     points: [
       "Use multiple reviewers (ortho mentor + non-ortho reader).",
       "Share PS + CV with letter writers early.",
+    ],
+  },
+  {
+    title: "Letters of Recommendation",
+    icon: <ShieldCheck className="h-5 w-5" />,
+    points: [
+      "Request by Aug 1 → arrival by Sept 1; follow up kindly.",
+      "Use eSLOR when supported; traditional LORs OK.",
     ],
   },
   {
@@ -314,11 +320,12 @@ const ERAS_SECTIONS = [
     ],
   },
   {
-    title: "Letters of Recommendation",
-    icon: <ShieldCheck className="h-5 w-5" />,
+    title: "Meaningful Experiences",
+    icon: <Stars className="h-5 w-5" />,
     points: [
-      "Request by Aug 1 → arrival by Sept 1; follow up kindly.",
-      "Use eSLOR when supported; traditional LORs OK.",
+      "10 entries (≤ 750 chars) + 3 Most Meaningful (+300 each).",
+      "Select entries that complement PS/LORs; mix ortho + non-ortho.",
+      "Draft early because you may get busy with aways.",
     ],
   },
   {
@@ -328,14 +335,7 @@ const ERAS_SECTIONS = [
       "Be strategic—signal ~30 strong-fit programs.",
       "Reserve a few for reaches with real ties.",
     ],
-  },
-  {
-    title: "Headshot",
-    icon: <GraduationCap className="h-5 w-5" />,
-    points: [
-      "Professional headshot (school photo day works)."
-    ],
-  },
+  }
 ];
 
 const COSTING = [
@@ -359,7 +359,7 @@ const CHECKLIST_DEFAULTS = [
 
 const SELECTION_MD = [
   "Target programs at/above your historical metric range.",
-  "Confirm case mix aligns with goals; check logs + resident pages.",
+  "Ask about each program’s strengths and weaknesses, including case volume, subspecialty exposure, and fellowship match outcomes.",
   "Prioritize mentorship pipelines + research support.",
   "Use signals for fit/geography; avoid over-dilution on long shots.",
   "Choose aways that complement strengths; secure home + away LORs.",
