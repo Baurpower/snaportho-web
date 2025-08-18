@@ -41,9 +41,15 @@ function Card({
     </div>
   );
 }
-function CardHeader({ children, className = "" }: any) {
+type CardSectionProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+function CardHeader({ children, className = "" }: CardSectionProps) {
   return <div className={"p-6 " + className}>{children}</div>;
 }
+
 function CardTitle({
   children,
   className = "",
@@ -53,9 +59,11 @@ function CardTitle({
 }) {
   return <h3 className={"text-base font-semibold text-[#333] " + className}>{children}</h3>;
 }
-function CardContent({ children, className = "" }: any) {
+
+function CardContent({ children, className = "" }: CardSectionProps) {
   return <div className={"px-6 pb-6 " + className}>{children}</div>;
 }
+
 
 function Button({
   children,
@@ -211,10 +219,10 @@ function parseHumanDate(input: string): Date | null {
   const s = input.trim().toLowerCase();
 
   // e.g. "Sept 3, 2025" / "September 24, 2025" / "Aug 1, 2025"
-  const full = /^([a-z]+)\s+(\d{1,2}),\s*(\d{4})$/i.exec(input);
+  const full = /^([a-z]+)\s+(\d{1,2}),\s*(\d{4})$/.exec(s);
   if (full) {
     const [, mon, dayStr, yrStr] = full;
-    const m = MONTH_IDX[mon.toLowerCase()];
+    const m = MONTH_IDX[mon];
     if (m == null) return null;
     const d = Number(dayStr);
     const y = Number(yrStr);
@@ -222,20 +230,20 @@ function parseHumanDate(input: string): Date | null {
   }
 
   // e.g. "Early June" / "Mid June" / "Late June"
-  const approx = /^(early|mid|late)\s+([a-z]+)$/i.exec(input);
+  const approx = /^(early|mid|late)\s+([a-z]+)$/.exec(s);
   if (approx) {
     const [, when, mon] = approx;
-    const m = MONTH_IDX[mon.toLowerCase()];
+    const m = MONTH_IDX[mon];
     if (m == null) return null;
-    const day = when.toLowerCase() === "early" ? 5 : when.toLowerCase() === "mid" ? 15 : 25;
+    const day = when === "early" ? 5 : when === "mid" ? 15 : 25;
     return new Date(ERAS_YEAR, m, day, 9, 0, 0);
   }
 
   // Fallback: single "Month Year" → use mid-month
-  const monthYear = /^([a-z]+)\s+(\d{4})$/i.exec(input);
+  const monthYear = /^([a-z]+)\s+(\d{4})$/.exec(s);
   if (monthYear) {
     const [, mon, yrStr] = monthYear;
-    const m = MONTH_IDX[mon.toLowerCase()];
+    const m = MONTH_IDX[mon];
     if (m == null) return null;
     const y = Number(yrStr);
     return new Date(y, m, 15, 9, 0, 0);
@@ -243,6 +251,7 @@ function parseHumanDate(input: string): Date | null {
 
   return null;
 }
+
 
 function getNextTimelineItem<T extends { date: string; label: string }>(
   items: T[],
