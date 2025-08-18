@@ -339,8 +339,8 @@ const ERAS_SECTIONS = [
 ];
 
 const COSTING = [
-  { label: "Apply to 30 signaled programs", est: "~$500" },
-  { label: "Each additional application after 30", est: "~$25 ea" },
+  { label: "Apply to 30 signaled programs", est: "$330+ additional fees" },
+  { label: "Each additional application after 30", est: "$30 ea" },
 ];
 
 const CHECKLIST_DEFAULTS = [
