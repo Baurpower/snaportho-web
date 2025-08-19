@@ -774,7 +774,7 @@ export default function ERASPage() {
       <details className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
         <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
           <span className="text-sm font-medium text-[#333]">
-            When should I request letters of recommendation?
+            How should I request letters of recommendation?
           </span>
           {/* Use ArrowRight you already import and rotate on open */}
           <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
@@ -796,7 +796,7 @@ export default function ERASPage() {
           <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
         </summary>
         <div className="mt-3 text-sm text-gray-600">
-          Ask any faculty that will write you a <span className="font-medium">strong letter</span>. You can submit 4 letters but you can use different letters at different programs. This can be helpful since ortho is a small community and your chance of getting an interview will be way higher if the program knows your letter writer.
+          Ask faculty who can write a <span className="font-medium">strong letter</span>. You may upload up to four letters and assign different ones to different programs. In a small field like orthopaedics, letters from known mentors can significantly improve your chances of getting an interview.
         </div>
       </details>
 
@@ -836,7 +836,7 @@ export default function ERASPage() {
           <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
         </summary>
         <div className="mt-3 text-sm text-gray-600">
-          There are 2 distinct sections in the ERAS application. Research can be described in the <span className="font-medium">experience section </span>
+          There are 2 distinct sections in the ERAS application where you can describe research. Research can be described in the <span className="font-medium">experience section </span>
            and the <span className="font-medium">publication section </span>. The publication section is where all your research items will go such as peer-reviewed articles (accepted and submitted), poster presentations, and podium presentations.
         </div>
       </details>
