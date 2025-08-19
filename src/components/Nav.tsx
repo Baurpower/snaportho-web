@@ -8,6 +8,7 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLearn, setOpenLearn] = useState(false);
   const [openRef, setOpenRef] = useState(false);
+  const [openPath, setOpenPath] = useState(false); // ✅ separate state
 
   const modules = [
     { title: 'Trauma', href: '/learn/modules/trauma' },
@@ -17,12 +18,19 @@ export default function Nav() {
   return (
     <nav className="fixed inset-x-0 top-0 z-50 shadow-sm bg-[#597498] text-white">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="text-xl font-semibold tracking-tight hover:text-blue-300 transition">
+        <Link
+          href="/"
+          className="text-xl font-semibold tracking-tight hover:text-blue-300 transition"
+        >
           SnapOrtho
         </Link>
 
+        {/* Mobile toggle button */}
         <div className="md:hidden">
-          <button onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
             {menuOpen ? (
               <XMarkIcon className="h-6 w-6" />
             ) : (
@@ -31,12 +39,21 @@ export default function Nav() {
           </button>
         </div>
 
-        <div className={`md:flex gap-8 font-medium capitalize ${menuOpen ? 'block mt-4' : 'hidden'} md:mt-0 md:items-center`}>
-          <Link href="/" className="block hover:text-blue-300 transition py-2 md:py-0">
+        {/* Nav links */}
+        <div
+          className={`md:flex gap-8 font-medium capitalize ${
+            menuOpen ? 'block mt-4' : 'hidden'
+          } md:mt-0 md:items-center`}
+        >
+          <Link
+            href="/"
+            className="block hover:text-blue-300 transition py-2 md:py-0"
+            onClick={() => setMenuOpen(false)}
+          >
             Home
           </Link>
 
-           <Link
+          <Link
             href="/brobot"
             className="block hover:text-blue-300 transition py-2 md:py-0"
             onClick={() => setMenuOpen(false)}
@@ -50,12 +67,25 @@ export default function Nav() {
               onClick={() => {
                 setOpenLearn((prev) => !prev);
                 setOpenRef(false);
+                setOpenPath(false);
               }}
               className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
             >
               Learn
-              <svg className={`w-4 h-4 transform transition-transform ${openLearn ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              <svg
+                className={`w-4 h-4 transform transition-transform ${
+                  openLearn ? 'rotate-180' : ''
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
 
@@ -95,12 +125,25 @@ export default function Nav() {
               onClick={() => {
                 setOpenRef((prev) => !prev);
                 setOpenLearn(false);
+                setOpenPath(false);
               }}
               className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
             >
               Reference
-              <svg className={`w-4 h-4 transform transition-transform ${openRef ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              <svg
+                className={`w-4 h-4 transform transition-transform ${
+                  openRef ? 'rotate-180' : ''
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
 
@@ -120,13 +163,49 @@ export default function Nav() {
             )}
           </div>
 
-          <Link
-            href="/practice"
-            className="block hover:text-blue-300 transition py-2 md:py-0"
-            onClick={() => setMenuOpen(false)}
-          >
-            Practice
-          </Link>
+          {/* Path to Ortho Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => {
+                setOpenPath((prev) => !prev);
+                setOpenLearn(false);
+                setOpenRef(false);
+              }}
+              className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+            >
+              Path to Ortho
+              <svg
+                className={`w-4 h-4 transform transition-transform ${
+                  openPath ? 'rotate-180' : ''
+                }`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {openPath && (
+              <div className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-48 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10">
+                <Link
+                  href="/pathtoortho/eras"
+                  className="block px-4 py-2 hover:bg-sky-50"
+                  onClick={() => {
+                    setOpenPath(false);
+                    setMenuOpen(false);
+                  }}
+                >
+                  ERAS Application
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>

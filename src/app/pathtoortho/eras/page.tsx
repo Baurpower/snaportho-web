@@ -16,6 +16,7 @@ import {
   Sparkles,
   Stars,
 } from "lucide-react";
+import type React from "react";
 
 // ---------- Local UI primitives (cream/white rounded cards, no external UI deps) ----------
 function Container({ children }: { children: React.ReactNode }) {
@@ -306,7 +307,9 @@ const ERAS_SECTIONS = [
     title: "Letters of Recommendation",
     icon: <ShieldCheck className="h-5 w-5" />,
     points: [
+      "LoR are the most important part of your application.",
       "Request by Aug 1 → arrival by Sept 1; follow up kindly.",
+      "Get 3-4 letters from orthopaedic surgeons you work with, 1 research letter is good too but would not have multiple research letters since they cannot comment on you clinically.",
       "Use eSLOR when supported; traditional LORs OK.",
     ],
   },
@@ -332,7 +335,7 @@ const ERAS_SECTIONS = [
     title: "Program Selection & Signaling",
     icon: <MapPin className="h-5 w-5" />,
     points: [
-      "Be strategic—signal ~30 strong-fit programs.",
+      "Be strategic—signal 30 strong-fit programs.",
       "Reserve a few for reaches with real ties.",
     ],
   }
@@ -748,7 +751,119 @@ export default function ERASPage() {
             </Card>
           </div>
         </Container>
-      </section>
+        </section>
+
+{/* FAQ */}
+<section id="faq" className="py-14">
+  <Container>
+    <div className="mb-6">
+      <div className="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
+        FAQ
+      </div>
+      <h2 className="text-3xl font-semibold text-[#444] tracking-tight">
+        Common ERAS questions
+      </h2>
+      <p className="mt-2 text-sm text-gray-600">
+        Quick answers to the questions applicants ask most. Open each item to learn more.
+      </p>
+    </div>
+
+    <div className="space-y-3">
+      {/* Item */}
+      <details className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <span className="text-sm font-medium text-[#333]">
+            When should I request letters of recommendation?
+          </span>
+          {/* Use ArrowRight you already import and rotate on open */}
+          <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
+        </summary>
+        <div className="mt-3 text-sm text-gray-600">
+          Ask by <span className="font-medium">early August</span> to give writers time to submit
+          by early September. Waive your right to view the letters and provide your CV + personal
+          statement so they can write specifically to your strengths.
+        </div>
+      </details>
+
+      {/* Item */}
+      <details className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <span className="text-sm font-medium text-[#333]">
+            How many programs should I apply to?
+          </span>
+          <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
+        </summary>
+        <div className="mt-3 text-sm text-gray-600">
+          You should apply to <span className="font-medium">30 programs</span> that you signaled. You should only apply to a program without a signal if they do not participate in signaling.
+        </div>
+      </details>
+
+      {/* Item */}
+      <details className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <span className="text-sm font-medium text-[#333]">
+            Do programs see where else I signaled or applied?
+          </span>
+          <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
+        </summary>
+        <div className="mt-3 text-sm text-gray-600">
+          Programs know only whether <span className="font-medium">you signaled them</span>.
+          They do not see your full list of signals or other applications.
+        </div>
+      </details>
+
+      {/* Item */}
+      <details className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <span className="text-sm font-medium text-[#333]">
+            What is the difference between a research experience and a research item?
+          </span>
+          <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
+        </summary>
+        <div className="mt-3 text-sm text-gray-600">
+          There are 2 distinct sections in the ERAS application. Research can be described in the <span className="font-medium">experience section </span>
+           and the publication section. The publication section is where all your peer-reviewed articles, poster presentations, podium presentations, and other research items will go.
+        </div>
+      </details>
+
+      {/* Item */}
+      <details className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <span className="text-sm font-medium text-[#333]">
+            How do I address a gap, low score, or other red flag?
+          </span>
+          <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
+        </summary>
+        <div className="mt-3 text-sm text-gray-600">
+          Be concise and factual: acknowledge the issue, state what changed,
+          and highlight objective improvements (clinical performance, research output,
+          new responsibilities). Keep the focus on <span className="font-medium">growth and current readiness</span>.
+        </div>
+      </details>
+
+      {/* Item */}
+      <details className="group rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <span className="text-sm font-medium text-[#333]">
+            Can I update ERAS after I submit?
+          </span>
+          <ArrowRight className="h-4 w-4 text-gray-400 transition-transform group-open:rotate-90" />
+        </summary>
+        <div className="mt-3 text-sm text-gray-600">
+          Some sections allow limited updates; many are locked once submitted.
+          If you have a meaningful new publication, award, or rotation, you can
+          <span className="font-medium"> notify programs</span> by email or during interview day.
+        </div>
+      </details>
+
+    
+    </div>
+
+    {/* Tiny helper note */}
+    <Link href="/contact" className="underline">Contact us</Link>
+  </Container>
+</section>
+
 
       <footer className="border-t border-gray-200/80 bg-[#f9f7f4] py-10">
   <Container>
