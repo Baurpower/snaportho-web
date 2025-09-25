@@ -387,7 +387,7 @@ export default function AwayRotationsPage() {
                 Excelling on <span className="text-[#597498]">Away Rotations</span>
               </motion.h1>
               <p className="mt-4 text-gray-600 leading-relaxed">
-                How to earn strong letters, impress the team, and evaluate program fit — with VSLO prep and on-service habits.
+                Prepare with intention, be yourself, and get the most from every month.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Button size="sm" variant="outline">
