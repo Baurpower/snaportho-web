@@ -163,49 +163,54 @@ export default function Nav() {
             )}
           </div>
 
-          {/* Path to Ortho Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => {
-                setOpenPath((prev) => !prev);
-                setOpenLearn(false);
-                setOpenRef(false);
-              }}
-              className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
-            >
-              Path to Ortho
-              <svg
-                className={`w-4 h-4 transform transition-transform ${
-                  openPath ? 'rotate-180' : ''
-                }`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
+        {/* Path to Ortho Dropdown */}
+<div className="relative">
+  <button
+    onClick={() => {
+      setOpenPath((prev) => !prev);
+      setOpenLearn(false);
+      setOpenRef(false);
+    }}
+    className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+    aria-haspopup="menu"
+    aria-expanded={openPath}
+    aria-controls="path-to-ortho-menu"
+  >
+    Path to Ortho
+    <svg
+      className={`w-4 h-4 transform transition-transform ${openPath ? "rotate-180" : ""}`}
+      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
 
-            {openPath && (
-              <div className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-48 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10">
-                <Link
-                  href="/pathtoortho/eras"
-                  className="block px-4 py-2 hover:bg-sky-50"
-                  onClick={() => {
-                    setOpenPath(false);
-                    setMenuOpen(false);
-                  }}
-                >
-                  ERAS Application
-                </Link>
-              </div>
-            )}
-          </div>
+  {openPath && (
+    <div
+      id="path-to-ortho-menu"
+      role="menu"
+      className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-56 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10 overflow-hidden"
+    >
+      <Link
+        href="/pathtoortho/eras"
+        className="block px-4 py-2 hover:bg-sky-50"
+        role="menuitem"
+        onClick={() => { setOpenPath(false); setMenuOpen(false); }}
+      >
+        ERAS Application
+      </Link>
+
+      <Link
+        href="/pathtoortho/programs-do"
+        className="block px-4 py-2 hover:bg-sky-50"
+        role="menuitem"
+        onClick={() => { setOpenPath(false); setMenuOpen(false); }}
+      >
+        Historically DO Programs
+      </Link>
+    </div>
+  )}
+</div>
         </div>
       </div>
     </nav>
