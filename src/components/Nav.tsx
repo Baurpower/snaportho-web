@@ -201,6 +201,15 @@ export default function Nav() {
       </Link>
 
       <Link
+        href="/pathtoortho/awayrotations"
+        className="block px-4 py-2 hover:bg-sky-50"
+        role="menuitem"
+        onClick={() => { setOpenPath(false); setMenuOpen(false); }}
+      >
+        Away Rotations
+      </Link>
+
+      <Link
         href="/pathtoortho/programs-do"
         className="block px-4 py-2 hover:bg-sky-50"
         role="menuitem"

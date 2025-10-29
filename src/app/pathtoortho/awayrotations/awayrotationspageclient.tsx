@@ -270,7 +270,8 @@ const SUCCESS = [
     points: [
       "Be curious and observant; look for work that makes residents’ lives easier.",
       "Write everything down; help with lists, notes, supplies, and morning rounds.",
-      "Write down hospital codes early in the rotation.",
+      "Write down hospital access codes (to supply rooms, dictation rooms, etc.) early in the rotation.",
+      "Write down hospital phone numbers (ED, OR, ortho floor, etc.) early in the rotation.",
       "In the OR: learn team workflow, pull up images, prep, and be last to scrub unless told otherwise.",
       "Between cases: track the board, check in, and help turn over rooms.",
     ],
@@ -331,7 +332,11 @@ const STRATEGY_MD = [
 ];
 
 const STRATEGY_DO = [
-  "Favor historically DO-inclusive programs and prior AOA sites with DOs on roster.",
+  {
+    text: "Favor historically DO-inclusive programs and prior AOA sites with DOs on roster.",
+    // ⬇️ Change href to your page route
+    sublink: { href: "./programs-do", label: "See our DO-friendly programs list" },
+  },
   "Some programs interview mostly/only rotators — choose aways where a strong month can convert.",
   "Culture and program fit may outweigh raw metrics; pick where you can match.",
   "Some residents will let rotators stay with them. These are great opportunities.",
@@ -595,12 +600,33 @@ export default function AwayRotationsPage() {
         ]}
       />
       <div className="mt-6 grid gap-3 text-sm text-gray-600">
-        {(tab === "md" ? STRATEGY_MD : STRATEGY_DO).map((s, i) => (
-          <div key={i} className="rounded-xl border border-gray-200 bg-white p-3">
-            {s}
-          </div>
-        ))}
+  {(tab === "md" ? STRATEGY_MD : STRATEGY_DO).map((item, i) => {
+    const isString = typeof item === "string";
+    return (
+      <div key={i} className="rounded-xl border border-gray-200 bg-white p-3">
+        {isString ? (
+          <>{item}</>
+        ) : (
+          <>
+            <div>{item.text}</div>
+            {item.sublink && (
+              <div className="mt-1">
+                <Link
+                  href={item.sublink.href}
+                  className="inline-flex items-center text-xs font-medium text-[#597498] hover:underline"
+                >
+                  {item.sublink.label ?? "Learn more"}
+                  <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </div>
+            )}
+          </>
+        )}
       </div>
+    );
+  })}
+</div>
+
     </div>
 
     {/* Keep coordinator tips; remove the old Quick-fit card */}
