@@ -723,7 +723,7 @@ export default function AwayRotationsPage() {
             <p className="max-w-3xl text-gray-700 text-sm sm:text-base leading-relaxed">
               Crafted by <span className="font-semibold text-[#444]">the SnapOrtho team</span> — wishing you an awesome month and a great match.
             </p>
-            <p className="text-sm text-gray-500">Be humble, work hard, be yourself. 🩺</p>
+            <p className="text-sm text-gray-500">Stay humble, work hard, be yourself. 🩺</p>
           </div>
         </Container>
       </footer>

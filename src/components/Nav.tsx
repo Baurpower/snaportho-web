@@ -8,7 +8,7 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLearn, setOpenLearn] = useState(false);
   const [openRef, setOpenRef] = useState(false);
-  const [openPath, setOpenPath] = useState(false); // ✅ separate state
+  const [openPath, setOpenPath] = useState(false);
 
   const modules = [
     { title: 'Trauma', href: '/learn/modules/trauma' },
@@ -21,6 +21,12 @@ export default function Nav() {
         <Link
           href="/"
           className="text-xl font-semibold tracking-tight hover:text-blue-300 transition"
+          onClick={() => {
+            setMenuOpen(false);
+            setOpenLearn(false);
+            setOpenRef(false);
+            setOpenPath(false);
+          }}
         >
           SnapOrtho
         </Link>
@@ -28,14 +34,11 @@ export default function Nav() {
         {/* Mobile toggle button */}
         <div className="md:hidden">
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => setMenuOpen((v) => !v)}
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
           >
-            {menuOpen ? (
-              <XMarkIcon className="h-6 w-6" />
-            ) : (
-              <Bars3Icon className="h-6 w-6" />
-            )}
+            {menuOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
           </button>
         </div>
 
@@ -48,7 +51,12 @@ export default function Nav() {
           <Link
             href="/"
             className="block hover:text-blue-300 transition py-2 md:py-0"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              setMenuOpen(false);
+              setOpenLearn(false);
+              setOpenRef(false);
+              setOpenPath(false);
+            }}
           >
             Home
           </Link>
@@ -56,7 +64,12 @@ export default function Nav() {
           <Link
             href="/brobot"
             className="block hover:text-blue-300 transition py-2 md:py-0"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              setMenuOpen(false);
+              setOpenLearn(false);
+              setOpenRef(false);
+              setOpenPath(false);
+            }}
           >
             BroBot
           </Link>
@@ -70,6 +83,9 @@ export default function Nav() {
                 setOpenPath(false);
               }}
               className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+              aria-haspopup="menu"
+              aria-expanded={openLearn}
+              aria-controls="learn-menu"
             >
               Learn
               <svg
@@ -80,20 +96,20 @@ export default function Nav() {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
 
             {openLearn && (
-              <div className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-44 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10">
+              <div
+                id="learn-menu"
+                role="menu"
+                className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-44 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10"
+              >
                 <Link
                   href="/learn"
                   className="block px-4 py-2 hover:bg-sky-50 font-semibold"
+                  role="menuitem"
                   onClick={() => {
                     setOpenLearn(false);
                     setMenuOpen(false);
@@ -107,6 +123,7 @@ export default function Nav() {
                     key={m.href}
                     href={m.href}
                     className="block px-4 py-2 hover:bg-sky-50"
+                    role="menuitem"
                     onClick={() => {
                       setOpenLearn(false);
                       setMenuOpen(false);
@@ -128,6 +145,9 @@ export default function Nav() {
                 setOpenPath(false);
               }}
               className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+              aria-haspopup="menu"
+              aria-expanded={openRef}
+              aria-controls="reference-menu"
             >
               Reference
               <svg
@@ -138,20 +158,20 @@ export default function Nav() {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
 
             {openRef && (
-              <div className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-48 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10">
+              <div
+                id="reference-menu"
+                role="menu"
+                className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-48 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10"
+              >
                 <Link
                   href="/reference/read-xray"
                   className="block px-4 py-2 hover:bg-sky-50"
+                  role="menuitem"
                   onClick={() => {
                     setOpenRef(false);
                     setMenuOpen(false);
@@ -163,63 +183,89 @@ export default function Nav() {
             )}
           </div>
 
-        {/* Path to Ortho Dropdown */}
-<div className="relative">
-  <button
-    onClick={() => {
-      setOpenPath((prev) => !prev);
-      setOpenLearn(false);
-      setOpenRef(false);
-    }}
-    className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
-    aria-haspopup="menu"
-    aria-expanded={openPath}
-    aria-controls="path-to-ortho-menu"
-  >
-    Path to Ortho
-    <svg
-      className={`w-4 h-4 transform transition-transform ${openPath ? "rotate-180" : ""}`}
-      fill="none" stroke="currentColor" viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-    </svg>
-  </button>
+          {/* Path to Ortho Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => {
+                setOpenPath((prev) => !prev);
+                setOpenLearn(false);
+                setOpenRef(false);
+              }}
+              className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+              aria-haspopup="menu"
+              aria-expanded={openPath}
+              aria-controls="path-to-ortho-menu"
+            >
+              Path to Ortho
+              <svg
+                className={`w-4 h-4 transform transition-transform ${openPath ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
-  {openPath && (
-    <div
-      id="path-to-ortho-menu"
-      role="menu"
-      className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-56 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10 overflow-hidden"
-    >
-      <Link
-        href="/pathtoortho/eras"
-        className="block px-4 py-2 hover:bg-sky-50"
-        role="menuitem"
-        onClick={() => { setOpenPath(false); setMenuOpen(false); }}
-      >
-        ERAS Application
-      </Link>
+            {openPath && (
+              <div
+                id="path-to-ortho-menu"
+                role="menu"
+                className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-56 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10 overflow-hidden"
+              >
+                {/* Path to Ortho Home */}
+                <Link
+                  href="/pathtoortho"
+                  className="block px-4 py-2 hover:bg-sky-50 font-semibold"
+                  role="menuitem"
+                  onClick={() => {
+                    setOpenPath(false);
+                    setMenuOpen(false);
+                  }}
+                >
+                  Path to Ortho Home
+                </Link>
 
-      <Link
-        href="/pathtoortho/awayrotations"
-        className="block px-4 py-2 hover:bg-sky-50"
-        role="menuitem"
-        onClick={() => { setOpenPath(false); setMenuOpen(false); }}
-      >
-        Away Rotations
-      </Link>
+                <div className="border-t border-gray-200 my-1" />
 
-      <Link
-        href="/pathtoortho/programs-do"
-        className="block px-4 py-2 hover:bg-sky-50"
-        role="menuitem"
-        onClick={() => { setOpenPath(false); setMenuOpen(false); }}
-      >
-        Historically DO Programs
-      </Link>
-    </div>
-  )}
-</div>
+                <Link
+                  href="/pathtoortho/away-rotations"
+                  className="block px-4 py-2 hover:bg-sky-50"
+                  role="menuitem"
+                  onClick={() => {
+                    setOpenPath(false);
+                    setMenuOpen(false);
+                  }}
+                >
+                  Away Rotations
+                </Link>
+
+                <Link
+                  href="/pathtoortho/eras"
+                  className="block px-4 py-2 hover:bg-sky-50"
+                  role="menuitem"
+                  onClick={() => {
+                    setOpenPath(false);
+                    setMenuOpen(false);
+                  }}
+                >
+                  ERAS Application
+                </Link>
+
+                <Link
+                  href="/historically-do-programs"
+                  className="block px-4 py-2 hover:bg-sky-50"
+                  role="menuitem"
+                  onClick={() => {
+                    setOpenPath(false);
+                    setMenuOpen(false);
+                  }}
+                >
+                  Historically DO Programs
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>
