@@ -229,7 +229,7 @@ export default function Nav() {
                 <div className="border-t border-gray-200 my-1" />
 
                 <Link
-                  href="/pathtoortho/away-rotations"
+                  href="/pathtoortho/awayrotations"
                   className="block px-4 py-2 hover:bg-sky-50"
                   role="menuitem"
                   onClick={() => {
@@ -253,7 +253,7 @@ export default function Nav() {
                 </Link>
 
                 <Link
-                  href="/historically-do-programs"
+                  href="/pathtoortho/programs-do"
                   className="block px-4 py-2 hover:bg-sky-50"
                   role="menuitem"
                   onClick={() => {

@@ -1,7 +1,7 @@
 import DoProgramsPageClient from "./doprogramspageclient";
 
 export const metadata = {
-  title: "DO Ortho Programs | SnapOrtho",
+  title: "DO Ortho Programs",
   description: "A Database to Help Choose Audition Rotations as a DO",
   keywords: [
     "orthopaedics",
@@ -17,7 +17,7 @@ export const metadata = {
     "historically DO",
   ],
   openGraph: {
-    title: "DO Ortho Programs | SnapOrtho",
+    title: "DO Ortho Programs",
     description: "How to Choose Audition Rotations as a DO: Database of Historically DO-Friendly Programs",
     url: "https://snap-ortho.com/pathtoortho/programs-do",
     siteName: "SnapOrtho",
