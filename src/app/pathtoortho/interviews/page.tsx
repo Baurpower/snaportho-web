@@ -3,7 +3,7 @@ import InterviewsPageClient from './interviewspageclient';
 export const metadata = {
   title: 'Ortho Residency Interviews',
   description:
-    'A practical guide to surviving Universal Offer Day and crushing your orthopaedic surgery interviews.',
+    'A practical guide to understanding Universal Offer Day and crushing your orthopaedic surgery interviews.',
   keywords: [
     'orthopaedics',
     'orthopaedic surgery',
