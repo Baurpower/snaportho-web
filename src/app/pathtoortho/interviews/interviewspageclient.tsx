@@ -180,29 +180,26 @@ type InterviewQuestion = {
 };
 
 const QUESTION_LIBRARY: InterviewQuestion[] = [
-  // Basic
+// Basic
   {
     id: 1,
     category: "basic",
     label: "Why Orthopaedics?",
-    prompt:
-      "Tell me why you chose orthopaedic surgery.",
+    prompt: "Tell me why you chose orthopaedic surgery.",
     hint: "Be concise. Do not repeat your personal statement.",
   },
   {
     id: 2,
     category: "basic",
     label: "Why Our Program?",
-    prompt:
-      "Why are you interested in our program specifically?",
+    prompt: "Why are you interested in our program specifically?",
     hint: "Tie your goals to their strengths: culture, case mix, mentorship, location, or resident life.",
   },
   {
     id: 3,
     category: "basic",
     label: "10-Year Vision",
-    prompt:
-      "Where do you see yourself 10 years from now in your career and life?",
+    prompt: "Where do you see yourself 10 years from now in your career and life?",
     hint: "",
   },
   {
@@ -213,6 +210,8 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
       "What would you say is your greatest strength, and what is your biggest weakness?",
     hint: "Include examples of your greatest strength. Show how you are working on improving your weakness.",
   },
+
+
   // Behavioral
   {
     id: 5,
@@ -227,7 +226,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     category: "behavioral",
     label: "Difficult Team Dynamics",
     prompt:
-      "Describe a time you worked with a difficult team member. How did you handle it, and what was the outcome?",
+      "Describe a time you worked with a difficult team member on a rotation, research, or clinical team. How did you handle it, and what was the outcome?",
     hint: "Avoid character attacks. Focus on communication, shared goals, and professionalism.",
   },
   {
@@ -238,50 +237,129 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
       "Tell me about a time you faced an ethical dilemma in clinical rotations. How did you navigate it?",
     hint: "Clarify the conflict, who was affected, and how you protected patient safety and integrity.",
   },
-  // Research
+
+
+  // Behavioral – Teamwork & Professionalism
   {
     id: 8,
-    category: "research",
-    label: "Flagship Project",
+    category: "behavioral",
+    label: "Working Under Pressure",
     prompt:
-      "Tell me about ______ research item. Walk me through the question, methods, your role, and what you found.",
-    hint: "Be accurate and concise.",
+      "Tell me about a time you worked effectively under pressure.",
+    hint: "",
   },
   {
     id: 9,
+    category: "behavioral",
+    label: "Asked to Do Something You Disagreed With",
+    prompt:
+      "Sometimes we’re asked to do something in patient care or on a team that we don’t think is right. Tell me about a time this happened to you. What did you do, and what happened?",
+    hint: "Focus on advocating for the patient, seeking guidance, and maintaining professionalism.",
+  },
+  {
+    id: 10,
+    category: "behavioral",
+    label: "Witnessing Unprofessional Behavior",
+    prompt:
+      "Give me an example of a time you saw behavior in the clinical or academic setting that you thought was inappropriate. What did you do, and what happened?",
+    hint: "Emphasize patient safety, integrity, and using appropriate channels (supervisors, reporting structures).",
+  },
+  {
+    id: 11,
+    category: "behavioral",
+    label: "Mistakes",
+    prompt:
+      "Tell me about a time you made a mistake and had to tell a resident or attending.",
+    hint: "",
+  },
+  {
+    id: 12,
+    category: "behavioral",
+    label: "Unresolved Conflict",
+    prompt:
+      "Not every conflict can be resolved. Tell me about a conflict in training or teamwork that you couldn’t fully resolve. What did you try, and what happened?",
+    hint: "Show maturity, boundaries, and focus on maintaining safe, professional care despite disagreement.",
+  },
+  {
+    id: 13,
+    category: "behavioral",
+    label: "Preventing Conflict",
+    prompt:
+      "Sometimes the best way to handle conflict is to prevent it. Tell me about something you did on a team to prevent a conflict from happening.",
+    hint: "Think about clear expectations, early communication, and setting up roles or plans ahead of time.",
+  },
+  {
+    id: 14,
+    category: "behavioral",
+    label: "Underperformance",
+    prompt:
+      "Tell me about a time when you were disappointed in your performance.",
+    hint: "",
+  },
+  {
+    id: 15,
+    category: "behavioral",
+    label: "Removing Obstacles for the Team",
+    prompt:
+      "There are many obstacles that can prevent a team from accomplishing its goals. Describe a time you helped remove obstacles so your team could achieve a goal.",
+    hint: "Discuss concrete barriers (scheduling, communication gaps, missing data, disorganized workflow) and how you addressed them.",
+  },
+  {
+    id: 16,
+    category: "behavioral",
+    label: "Encouraging Team Contributions",
+    prompt:
+      "Tell me how you would you deal with a resident who wasn’t doing his share of the work.",
+    hint: "Show that you notice others, invite input, and create a safe environment for contribution.",
+  },
+  {
+    id: 17,
+    category: "behavioral",
+    label: "Encouraging Team Contributions",
+    prompt:
+      "Tell me about a patient you had trouble dealing with.",
+    hint: "",
+  },
+
+
+  // Research
+  {
+    id: 18,
+    category: "research",
+    label: "Flagship Project",
+    prompt:
+      "Tell me about ______ research item. Walk me through the objective, methods, your role, and what you found.",
+    hint: "Be accurate and concise.",
+  },
+  {
+    id: 19,
     category: "research",
     label: "Limitations & Next Steps",
     prompt:
       "For one of your research items, what were the biggest limitations, and what would you do next to improve the study?",
     hint: "Be honest and concrete. Show that you understand study design and can think forward.",
   },
-  {
-    id: 10,
-    category: "research",
-    label: "Stats & Interpretation",
-    prompt:
-      "Explain one key result from your work to a non-orthopaedic audience. What did you actually prove or show?",
-    hint: "Avoid jargon. Translate p-values and odds ratios into plain language and clinical takeaways.",
-  },
+
+
   // Ortho knowledge / workflow
   {
-    id: 11,
+    id: 20,
     category: "ortho",
     label: "Fracture Conference Question",
     prompt:
       "A 72-year-old falls and sustains an intertrochanteric femur fracture. Walk me through your assessment, initial management, and operative plan.",
-    hint: "Think ATLS, pain control, traction vs not, implants, and post-op plan.",
+    hint: "",
   },
   {
-    id: 12,
+    id: 21,
     category: "ortho",
     label: "Consult Workflow",
     prompt:
-      "You are on call and receive three pages at once: open tibia fracture, suspected compartment syndrome, and a distal radius fracture in the ED. How do you prioritize and manage your time?",
+      "You are on call and receive three pages at once: an open tibia fracture, suspected compartment syndrome, and a distal radius fracture in the ED. How do you prioritize and manage your time?",
     hint: "Prioritize limb- and life-threatening issues. Show triage, communication, and delegation.",
   },
   {
-    id: 13,
+    id: 22,
     category: "ortho",
     label: "Complication Discussion",
     prompt:
@@ -787,7 +865,95 @@ export default function InterviewsPage() {
         </Container>
       </section>
 
-      <Separator />
+
+            {/* 1.5 Interview objective – your core pillars */}
+      <section id="pillars" className="pt-2 pb-14 sm:pt-4">
+        <Container>
+          <div className="mb-6 max-w-3xl">
+            <div className="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
+              Big picture
+            </div>
+            <h2 className="text-3xl font-semibold text-[#444] tracking-tight">
+              What interviews are really about
+            </h2>
+            <p className="mt-2 text-sm text-gray-600">
+              Programs are trying to figure out who you are as a teammate and future
+              surgeon. Your goal is to walk out of every room knowing that, if they
+              remember nothing else, they remember a few core things that define you.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-[minmax(0,1.4fr),minmax(0,1.3fr)]">
+            <Card>
+              <CardHeader>
+                <CardTitle>Your 3–5 defining pillars</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm text-gray-600">
+                <p>
+                  Before interview season, decide on{" "}
+                  <span className="font-semibold">three to five “pillars”</span> that
+                  capture who you are. These should be qualities, values, or experiences that you want
+                  every program to know about you.
+                </p>
+                <p className="text-xs uppercase tracking-wide text-gray-500 mt-3">
+                  Examples of strong pillars
+                </p>
+                <ul className="mt-1 space-y-1 text-sm">
+                  <li>• Relentless work ethic backed by concrete examples.</li>
+                  <li>• Genuine team-first mentality and history of lifting others up.</li>
+                  <li>• Commitment to mentorship and teaching others on the team.</li>
+                  <li>• Resilience after setbacks (board exam, rotation, or life event).</li>
+                  <li>• Deep commitment to service and putting patients first.</li>
+                </ul>
+                <p className="mt-3 text-xs text-gray-500">
+                  These should feel specific to you, not generic adjectives pulled from a
+                  CV.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>How to use your pillars in interviews</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2 text-sm text-gray-600">
+                <ol className="space-y-1 list-decimal list-inside">
+                  <li>
+                    Attach a <span className="font-semibold">real story</span> to each
+                    pillar (rotation, research, sports, life).
+                  </li>
+                  <li>
+                    When you get a question, ask yourself:{" "}
+                    <span className="italic">“Which pillar can I show here?”</span>
+                  </li>
+                  <li>
+                    Use structures like STAR so your story is focused and easy to
+                    remember.
+                  </li>
+                  <li>
+                    Tie the pillar back to{" "}
+                    <span className="font-semibold">how you’ll show up as a resident</span>{" "}
+                    on their team.
+                  </li>
+                  <li>
+                    After each interview, do a quick debrief:{" "}
+                    <span className="italic">
+                      “Did they clearly see my 3–5 pillars?”
+                    </span>
+                  </li>
+                </ol>
+                <p className="mt-3 text-xs text-gray-500">
+                  Over time, these stories become your foundation — flexible enough to
+                  answer many different questions, but consistent enough that programs get
+                  a clear picture of who you are.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </Container>
+      </section>
+
+    <Separator />
 
       {/* 2. Practice section – ONLY the tool has id="practice" */}
       <section id="practice" className="relative py-16 sm:py-20">
@@ -815,9 +981,6 @@ export default function InterviewsPage() {
       <section id="timeline" className="py-14">
         <Container>
           <div className="mb-6">
-            <div className="mb-2 text-xs font-medium tracking-wider text-gray-500 uppercase">
-              Big picture
-            </div>
             <h2 className="text-3xl font-semibold text-[#444] tracking-tight">
               Interview season timeline
             </h2>
