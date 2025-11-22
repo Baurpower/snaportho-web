@@ -160,6 +160,28 @@ export default function PathToOrthoPage() {
                 </CardContent>
               </Card>
             </Link>
+            {/* Module 3: Interviews */}
+<Link href="/pathtoortho/interviews" className="block">
+  <Card className="transition-transform hover:-translate-y-0.5 hover:shadow-md">
+    <CardHeader className="pb-3">
+      <CardTitle className="flex items-center gap-2">
+        <FileText className="h-5 w-5" style={{ color: COLORS.accent }} />
+        Module 3: Interviews
+        <span
+          className="ml-2 inline-flex items-center rounded-md border px-1.5 py-0.5 text-[10px] font-semibold"
+          style={{ borderColor: COLORS.border, color: COLORS.accent }}
+        >
+          New
+        </span>
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="pt-0">
+      Everything you need to succeed on interview day — behavioral questions,
+      ortho knowledge pearls, timelines, and a full practice interview tool with timers.
+    </CardContent>
+  </Card>
+</Link>
+
           </div>
         </Container>
       </Section>

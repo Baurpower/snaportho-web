@@ -251,6 +251,18 @@ export default function Nav() {
                 >
                   ERAS Application
                 </Link>
+                
+                  <Link
+                  href="/pathtoortho/interviews"
+                  className="block px-4 py-2 hover:bg-sky-50"
+                  role="menuitem"
+                  onClick={() => {
+                    setOpenPath(false);
+                    setMenuOpen(false);
+                  }}
+                >
+                  Interviews
+                </Link>
 
                 <Link
                   href="/pathtoortho/programs-do"

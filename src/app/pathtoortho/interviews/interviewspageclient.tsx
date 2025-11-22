@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import jsPDF from "jspdf";
 import {
   AlertCircle,
   ArrowRight,
@@ -210,11 +211,19 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
       "What would you say is your greatest strength, and what is your biggest weakness?",
     hint: "Include examples of your greatest strength. Show how you are working on improving your weakness.",
   },
+  {
+    id: 5,
+    category: "basic",
+    label: "Favorite Bone",
+    prompt:
+      "What is your favorite bone? Why?",
+    hint: "",
+  },
 
 
   // Behavioral
   {
-    id: 5,
+    id: 6,
     category: "behavioral",
     label: "Failure / Setback",
     prompt:
@@ -222,7 +231,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Use a structured story (STAR). Show insight, ownership, and how you changed your behavior.",
   },
   {
-    id: 6,
+    id: 7,
     category: "behavioral",
     label: "Difficult Team Dynamics",
     prompt:
@@ -230,7 +239,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Avoid character attacks. Focus on communication, shared goals, and professionalism.",
   },
   {
-    id: 7,
+    id: 8,
     category: "behavioral",
     label: "Ethical Dilemma",
     prompt:
@@ -241,7 +250,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
 
   // Behavioral – Teamwork & Professionalism
   {
-    id: 8,
+    id: 9,
     category: "behavioral",
     label: "Working Under Pressure",
     prompt:
@@ -249,7 +258,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "",
   },
   {
-    id: 9,
+    id: 10,
     category: "behavioral",
     label: "Asked to Do Something You Disagreed With",
     prompt:
@@ -257,7 +266,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Focus on advocating for the patient, seeking guidance, and maintaining professionalism.",
   },
   {
-    id: 10,
+    id: 11,
     category: "behavioral",
     label: "Witnessing Unprofessional Behavior",
     prompt:
@@ -265,7 +274,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Emphasize patient safety, integrity, and using appropriate channels (supervisors, reporting structures).",
   },
   {
-    id: 11,
+    id: 12,
     category: "behavioral",
     label: "Mistakes",
     prompt:
@@ -273,7 +282,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "",
   },
   {
-    id: 12,
+    id: 13,
     category: "behavioral",
     label: "Unresolved Conflict",
     prompt:
@@ -281,7 +290,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Show maturity, boundaries, and focus on maintaining safe, professional care despite disagreement.",
   },
   {
-    id: 13,
+    id: 14,
     category: "behavioral",
     label: "Preventing Conflict",
     prompt:
@@ -289,7 +298,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Think about clear expectations, early communication, and setting up roles or plans ahead of time.",
   },
   {
-    id: 14,
+    id: 15,
     category: "behavioral",
     label: "Underperformance",
     prompt:
@@ -297,7 +306,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "",
   },
   {
-    id: 15,
+    id: 16,
     category: "behavioral",
     label: "Removing Obstacles for the Team",
     prompt:
@@ -305,7 +314,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Discuss concrete barriers (scheduling, communication gaps, missing data, disorganized workflow) and how you addressed them.",
   },
   {
-    id: 16,
+    id: 17,
     category: "behavioral",
     label: "Encouraging Team Contributions",
     prompt:
@@ -313,7 +322,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Show that you notice others, invite input, and create a safe environment for contribution.",
   },
   {
-    id: 17,
+    id: 18,
     category: "behavioral",
     label: "Encouraging Team Contributions",
     prompt:
@@ -324,7 +333,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
 
   // Research
   {
-    id: 18,
+    id: 19,
     category: "research",
     label: "Flagship Project",
     prompt:
@@ -332,7 +341,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Be accurate and concise.",
   },
   {
-    id: 19,
+    id: 20,
     category: "research",
     label: "Limitations & Next Steps",
     prompt:
@@ -343,7 +352,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
 
   // Ortho knowledge / workflow
   {
-    id: 20,
+    id: 21,
     category: "ortho",
     label: "Fracture Conference Question",
     prompt:
@@ -351,7 +360,7 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "",
   },
   {
-    id: 21,
+    id: 22,
     category: "ortho",
     label: "Consult Workflow",
     prompt:
@@ -359,12 +368,36 @@ const QUESTION_LIBRARY: InterviewQuestion[] = [
     hint: "Prioritize limb- and life-threatening issues. Show triage, communication, and delegation.",
   },
   {
-    id: 22,
+    id: 23,
     category: "ortho",
     label: "Complication Discussion",
     prompt:
       "How would you explain a common complication (for example, infection or nonunion) to a patient and their family?",
     hint: "Keep it calm, honest, and structured. Focus on what it means and what you’ll do about it.",
+  },
+  {
+    id: 24,
+    category: "ortho",
+    label: "Anatomy",
+    prompt:
+      "Draw a pelvis.",
+    hint: "",
+  },
+  {
+    id: 25,
+    category: "ortho",
+    label: "Anatomy",
+    prompt:
+      "Draw your favorite bone.",
+    hint: "",
+  },
+  {
+    id: 26,
+    category: "ortho",
+    label: "Knot Tying",
+    prompt:
+      "What is your favorite knot?",
+    hint: "",
   },
 ];
 
@@ -397,6 +430,29 @@ function PracticeInterview() {
   const [isRunning, setIsRunning] = useState(false);
   const [current, setCurrent] = useState<InterviewQuestion>(() =>
     getRandomQuestion("all")
+  );
+
+  // 🔹 Precompute counts + current pool of questions
+  const questionsByCategory = useMemo(() => {
+    const base: Record<InterviewCategory | "all", number> = {
+      all: QUESTION_LIBRARY.length,
+      basic: 0,
+      behavioral: 0,
+      research: 0,
+      ortho: 0,
+    };
+    QUESTION_LIBRARY.forEach((q) => {
+      base[q.category] += 1;
+    });
+    return base;
+  }, []);
+
+  const questionsForCurrentCategory = useMemo(
+    () =>
+      category === "all"
+        ? QUESTION_LIBRARY
+        : QUESTION_LIBRARY.filter((q) => q.category === category),
+    [category]
   );
 
   useEffect(() => {
@@ -440,6 +496,57 @@ function PracticeInterview() {
     setIsRunning(false);
   };
 
+  const handleDownloadPdf = () => {
+    const doc = new jsPDF();
+    const marginLeft = 14;
+    let y = 20;
+
+    doc.setFontSize(16);
+    doc.text("Orthopaedic Interview Questions", marginLeft, y);
+    y += 8;
+
+    doc.setFontSize(11);
+    const title =
+      category === "all"
+        ? "All categories"
+        : `Category: ${categoryLabelMap[category]}`;
+    doc.text(title, marginLeft, y);
+    y += 10;
+
+    questionsForCurrentCategory.forEach((q, index) => {
+      const header = `${index + 1}. [${categoryChipMap[q.category]}] ${
+        q.label
+      }`;
+      const promptLines = doc.splitTextToSize(q.prompt, 180);
+
+      // page break if needed
+      if (y + 10 + promptLines.length * 6 > 280) {
+        doc.addPage();
+        y = 20;
+      }
+
+      doc.setFont("helvetica", "bold");
+      doc.text(header, marginLeft, y);
+      y += 6;
+
+      doc.setFont("helvetica", "normal");
+      doc.text(promptLines, marginLeft, y);
+      y += promptLines.length * 6;
+
+      if (q.hint) {
+        const hintLines = doc.splitTextToSize(`Hint: ${q.hint}`, 180);
+        doc.setFontSize(10);
+        doc.text(hintLines, marginLeft, y);
+        doc.setFontSize(11);
+        y += hintLines.length * 6;
+      }
+
+      y += 4;
+    });
+
+    doc.save("ortho-interview-questions.pdf");
+  };
+
   const categoryLabelMap: Record<InterviewCategory | "all", string> = {
     all: "All categories",
     basic: "Basic questions",
@@ -467,7 +574,7 @@ function PracticeInterview() {
       </CardHeader>
 
       <CardContent className="space-y-5">
-        {/* Category selector */}
+        {/* Category selector + counts + PDF */}
         <div className="space-y-2">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-medium uppercase tracking-wide text-gray-500">
@@ -477,6 +584,7 @@ function PracticeInterview() {
               {categoryLabelMap[category]}
             </span>
           </div>
+
           <Tabs
             value={category}
             onValueChange={(v) => {
@@ -488,16 +596,47 @@ function PracticeInterview() {
               setIsRunning(false);
             }}
             options={[
-              { value: "all", label: "All" },
-              { value: "basic", label: "Basic" },
-              { value: "behavioral", label: "Behavioral" },
-              { value: "research", label: "Research" },
-              { value: "ortho", label: "Ortho knowledge" },
+              {
+                value: "all",
+                label: `All (${questionsByCategory.all})`,
+              },
+              {
+                value: "basic",
+                label: `Basic (${questionsByCategory.basic})`,
+              },
+              {
+                value: "behavioral",
+                label: `Behavioral (${questionsByCategory.behavioral})`,
+              },
+              {
+                value: "research",
+                label: `Research (${questionsByCategory.research})`,
+              },
+              {
+                value: "ortho",
+                label: `Ortho knowledge (${questionsByCategory.ortho})`,
+              },
             ]}
           />
+
+          <div className="mt-2 flex flex-col gap-2 text-[11px] text-gray-500 sm:flex-row sm:items-center sm:justify-between">
+            <span>
+              {questionsByCategory[category]} questions in this view ·{" "}
+              {QUESTION_LIBRARY.length} total in the bank
+            </span>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handleDownloadPdf}
+              className="inline-flex items-center gap-1"
+            >
+              <FileText className="h-3 w-3" />
+              Download questions (PDF)
+            </Button>
+          </div>
         </div>
 
-        {/* Question display */}
+        {/* Question display + NEXT QUESTION BUTTON MOVED HERE */}
         <div className="rounded-2xl border border-gray-200 bg-[#fbfaf8] p-4 sm:p-5">
           <div className="mb-2 flex flex-wrap items-center gap-2">
             <Badge variant="secondary">
@@ -505,35 +644,59 @@ function PracticeInterview() {
               <span className="ml-1">{current.label}</span>
             </Badge>
             <Badge variant="primary">
-              {current.category === "basic" && <GraduationCap className="mr-1 h-3 w-3" />}
+              {current.category === "basic" && (
+                <GraduationCap className="mr-1 h-3 w-3" />
+              )}
               {current.category === "behavioral" && (
                 <MessagesSquare className="mr-1 h-3 w-3" />
               )}
-              {current.category === "research" && <FileSearch className="mr-1 h-3 w-3" />}
-              {current.category === "ortho" && <Bone className="mr-1 h-3 w-3" />}
+              {current.category === "research" && (
+                <FileSearch className="mr-1 h-3 w-3" />
+              )}
+              {current.category === "ortho" && (
+                <Bone className="mr-1 h-3 w-3" />
+              )}
               {categoryChipMap[current.category]}
             </Badge>
           </div>
-          <p className="text-sm text-[#1f2937] leading-relaxed">{current.prompt}</p>
+          <p className="text-sm text-[#1f2937] leading-relaxed">
+            {current.prompt}
+          </p>
           {current.hint && (
             <p className="mt-3 text-xs text-gray-600">
-              <span className="font-medium text-[#333]">Hint:</span> {current.hint}
+              <span className="font-medium text-[#333]">Hint:</span>{" "}
+              {current.hint}
             </p>
           )}
+
+          {/* 🔹 Next question button moved close to the prompt */}
+          <div className="mt-4 flex justify-end">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handleNewQuestion}
+              className="min-w-[140px] justify-center"
+            >
+              <ArrowRight className="h-4 w-4" />
+              New question
+            </Button>
+          </div>
         </div>
 
-        {/* Timer + controls */}
+        {/* Timer + controls (no more New question button here) */}
         <div className="grid gap-4 sm:grid-cols-[minmax(0,1.5fr),minmax(0,1fr)] sm:items-center">
           <div className="space-y-3">
             <div className="flex items-center justify-between text-xs text-gray-600">
               <span className="font-medium text-[#333]">Answer timer</span>
-              <span className="tabular-nums">{formatSeconds(remaining)}</span>
+              <span className="tabular-nums">
+                {formatSeconds(remaining)}
+              </span>
             </div>
             <Progress value={progress} />
             <p className="text-xs text-gray-500">
               Aim for a clear, structured answer in{" "}
-              <span className="font-medium">60–120 seconds</span>. Practice pausing instead
-              of rambling when you hit your main points.
+              <span className="font-medium">60–120 seconds</span>. Practice
+              pausing instead of rambling when you hit your main points.
             </p>
           </div>
 
@@ -565,19 +728,12 @@ function PracticeInterview() {
                 <RotateCw className="h-4 w-4" />
                 Reset
               </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={handleNewQuestion}
-                className="min-w-[140px] justify-center"
-              >
-                <ArrowRight className="h-4 w-4" />
-                New question
-              </Button>
             </div>
 
             <div className="flex items-center gap-2 text-xs text-gray-600">
-              <span className="font-medium text-[#333]">Answer length:</span>
+              <span className="font-medium text-[#333]">
+                Answer length:
+              </span>
               <div className="flex gap-1">
                 {[60, 90, 120].map((val) => (
                   <button
@@ -600,13 +756,14 @@ function PracticeInterview() {
         </div>
 
         <p className="text-xs text-gray-500">
-          Pro tip: Record yourself on your phone, then replay once to spot filler words,
-          pacing issues, and places to tighten your story.
+          Pro tip: Record yourself on your phone, then replay once to spot
+          filler words, pacing issues, and places to tighten your story.
         </p>
       </CardContent>
     </Card>
   );
 }
+
 
 function QuoteIcon() {
   return (
@@ -1026,7 +1183,8 @@ export default function InterviewsPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 text-xs text-gray-600">
-                <p>• 12 PM EST: invites roll out.</p>
+                <p>• When? Mid-Nov (11/17 for 2026 cycle)</p>
+                <p>• 12 PM EST: Invites begin to be released.</p>
                 <p>• Afternoon: You start to realize you may not be getting interviews at some of your programs.</p>
                 <p>• Evening: debrief, let yourself feel things, then refocus on what you have!</p>
               </CardContent>
