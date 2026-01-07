@@ -10,10 +10,42 @@ import {
 import { getBroBotResponse } from '@/lib/api';
 
 
+type ApproachSelection = {
+  selected: { id: string; rationale: string }[];
+  notes?: string;
+};
+
+type AnatomyQuizQuestion = {
+  approach_id: string;
+  q: string;
+  answer: string;
+  tag?: string;
+  difficulty?: number;
+};
+
+type HighYieldStructure = {
+  name: string;
+  type: string;
+  why_high_yield?: string;
+  when_in_case?: string;
+  approach_ids?: string[];
+};
+
+interface AnatomyPayload {
+  approachSelection?: ApproachSelection;
+  anatomyQuiz?: { questions: AnatomyQuizQuestion[] };
+  highYieldAnatomy?: {
+    structures?: HighYieldStructure[];
+    must_not_miss?: string[];
+  };
+}
+
 interface BroBotPayload {
   pimpQuestions: string[];
   otherUsefulFacts: string[];
+  anatomy?: AnatomyPayload | null;
 }
+
 
 export default function BroBotBasic() {
   const [prompt, setPrompt] = useState('');
@@ -34,6 +66,8 @@ export default function BroBotBasic() {
       setFeedbackSubmitted(false);
 
       const parsed = await getBroBotResponse(prompt);
+      console.log('✅ parsed response:', parsed);
+      console.log('✅ anatomy:', parsed?.anatomy);
       setData(parsed);
 
       // Dynamically import branch and log event (only in browser)
@@ -137,7 +171,35 @@ export default function BroBotBasic() {
             <Card title="Prep Summary">
               <Section label="Common Pimp Questions" bullets={data.pimpQuestions} />
               <Section label="Other Useful Facts" bullets={data.otherUsefulFacts} />
+              
             </Card>
+            {data.anatomy && (
+  <Card title="Anatomy">
+    {data.anatomy.approachSelection?.selected?.length ? (
+  <ApproachQuiz
+    approaches={data.anatomy.approachSelection.selected}
+  />
+) : null}
+
+
+    {data.anatomy.anatomyQuiz?.questions?.length ? (
+      <Section
+        label="Anatomy Quiz"
+        bullets={data.anatomy.anatomyQuiz.questions.map(
+          (q) => `Q: ${q.q} A: ${q.answer}`
+        )}
+      />
+    ) : null}
+    {data.anatomy.highYieldAnatomy?.structures?.length ? (
+  <Section
+    label="High-Yield Structures: Identification & Function"
+    bullets={data.anatomy.highYieldAnatomy.structures.map(
+      (s) => `${s.name} — ${s.why_high_yield}`
+    )}
+  />
+) : null}
+  </Card>
+)}
 
             <div className="mt-6 space-y-4">
               <h3 className="text-lg font-medium text-gray-700">Was this helpful?</h3>
@@ -201,10 +263,25 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
   );
 }
 
-function Section({ label, bullets }: { label: string; bullets: string[] }) {
-  const [collapsed, setCollapsed] = useState(false);
+function Section({
+  label,
+  bullets,
+  defaultCollapsed = false,
+  forceQA = false,
+}: {
+  label: string;
+  bullets: string[];
+  defaultCollapsed?: boolean;
+  forceQA?: boolean;
+}) {
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
   const isOpen = !collapsed;
-  const isPimp = label.toLowerCase().includes('pimp');
+
+  // pimp + quiz should use ToggleItem formatting
+  const isQA =
+    forceQA ||
+    label.toLowerCase().includes('pimp') ||
+    label.toLowerCase().includes('quiz');
 
   return (
     <div className="space-y-2">
@@ -213,22 +290,28 @@ function Section({ label, bullets }: { label: string; bullets: string[] }) {
         className="flex w-full items-center justify-between rounded-md bg-teal-100 px-4 py-2 text-left text-base font-semibold text-teal-900"
       >
         <span>{label}</span>
-        {isOpen ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+        {isOpen ? (
+          <ChevronUpIcon className="h-5 w-5" />
+        ) : (
+          <ChevronDownIcon className="h-5 w-5" />
+        )}
       </button>
 
       {isOpen && (
         <ul className="space-y-3 pl-1">
           {bullets.length > 0 ? (
-            isPimp
-              ? bullets.map((b, i) => <ToggleItem key={i} raw={b} />)
-              : bullets.map((b, i) => (
-                  <li
-                    key={i}
-                    className="rounded-md border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm"
-                  >
-                    {b}
-                  </li>
-                ))
+            isQA ? (
+              bullets.map((b, i) => <ToggleItem key={i} raw={b} />)
+            ) : (
+              bullets.map((b, i) => (
+                <li
+                  key={i}
+                  className="rounded-md border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm"
+                >
+                  {b}
+                </li>
+              ))
+            )
           ) : (
             <li className="rounded bg-yellow-50 px-3 py-2 text-sm text-yellow-900">
               Nothing found.
@@ -239,6 +322,7 @@ function Section({ label, bullets }: { label: string; bullets: string[] }) {
     </div>
   );
 }
+
 
 function ToggleItem({ raw }: { raw: string }) {
   const [show, setShow] = useState(false);
@@ -281,4 +365,84 @@ function LoadingOverlay() {
       </p>
     </div>
   );
+}
+
+function ApproachQuiz({
+  approaches,
+}: {
+  approaches: { id: string; rationale: string }[];
+}) {
+  // whole section closed by default
+  const [collapsed, setCollapsed] = useState(true);
+  const isOpen = !collapsed;
+
+  return (
+    <div className="space-y-2">
+      <button
+        onClick={() => setCollapsed((p) => !p)}
+        className="flex w-full items-center justify-between rounded-md bg-teal-100 px-4 py-2 text-left text-base font-semibold text-teal-900"
+      >
+        <span>Recommended Approaches</span>
+        {isOpen ? (
+          <ChevronUpIcon className="h-5 w-5" />
+        ) : (
+          <ChevronDownIcon className="h-5 w-5" />
+        )}
+      </button>
+
+      {isOpen && (
+        <ul className="space-y-3 pl-1">
+          {approaches.map((a) => (
+            <ApproachItem
+              key={a.id}
+              name={formatApproachName(a.id)}
+              description={a.rationale}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function ApproachItem({
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+}) {
+  const [show, setShow] = useState(false);
+
+  return (
+    <li className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm">
+      <div className="flex items-center justify-between gap-3">
+        <span className="font-medium text-gray-800 truncate">{name}</span>
+
+        <button
+          onClick={() => setShow((s) => !s)}
+          className="ml-2 shrink-0 text-sm text-teal-600 hover:underline"
+        >
+          {show ? 'Hide' : 'Show'}
+        </button>
+      </div>
+
+      {show && (
+        <p className="mt-2 rounded bg-teal-50 px-3 py-2 text-teal-900 shadow-inner">
+          {description}
+        </p>
+      )}
+    </li>
+  );
+}
+
+
+function formatApproachName(id: string) {
+  // "approach_wrist_volar_distal_henry" -> "Wrist volar distal Henry"
+  return id
+    .replace(/^approach_/, '')
+    .replace(/_/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 }

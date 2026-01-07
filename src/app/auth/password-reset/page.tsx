@@ -16,7 +16,7 @@ export default function PasswordResetPage() {
     console.log("Attempting password reset for:", email);
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'https://snap-ortho.com/learn/update-password',
+        redirectTo: `${window.location.origin}/auth/update-password`,
       });
       console.log("resetPasswordForEmail response:", { data, error });
 

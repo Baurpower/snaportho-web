@@ -37,11 +37,12 @@ export async function getBroBotResponse(
     }
 
     const parsed: BroBotPayload = {
-      pimpQuestions: json.pimpQuestions,
-      otherUsefulFacts: json.otherUsefulFacts ?? [],
-    };
+  pimpQuestions: json.pimpQuestions ?? [],
+  otherUsefulFacts: json.otherUsefulFacts ?? [],
+  anatomy: json.anatomy ?? null,
+};
 
-    return parsed;
+return parsed;
   } catch (e) {
     console.error('[BroBot API Error]', e);
     throw e;

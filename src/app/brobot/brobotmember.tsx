@@ -15,17 +15,48 @@ import Nav from '@/components/Nav';
 import AccountDropdown from '@/components/accountdropdown';
 
 
-const BROBOT_VERSION = 1.0;
+const BROBOT_VERSION = 2.0;
+
+type ApproachSelection = {
+  selected: { id: string; confidence: number; rationale: string }[];
+  notes?: string;
+};
+
+type AnatomyQuizQuestion = {
+  approach_id: string;
+  q: string;
+  answer: string;
+  tag?: string;
+  difficulty?: number;
+};
+
+type HighYieldStructure = {
+  name: string;
+  type: string;
+  why_high_yield?: string;
+  when_in_case?: string;
+  approach_ids?: string[];
+};
+
+interface AnatomyPayload {
+  approachSelection?: ApproachSelection;
+  anatomyQuiz?: { questions: AnatomyQuizQuestion[] };
+  highYieldAnatomy?: {
+    structures?: HighYieldStructure[];
+    must_not_miss?: string[];
+  };
+}
 
 interface BroBotPayload {
   pimpQuestions: string[];
   otherUsefulFacts: string[];
+  anatomy?: AnatomyPayload | null;
 }
 
 interface SessionRow {
   response_id: number;
   question: string;
-  answer: string;
+  answer: BroBotPayload;
   created_at: string;
 }
 
@@ -98,8 +129,8 @@ export default function BroBotMember() {
         .limit(1)
         .single();
 
-      if (existing) {
-        setData(JSON.parse(existing.answer));
+      if (existing?.answer) {
+        setData(existing.answer as BroBotPayload);
       } else {
         // Call API
         const start = Date.now();
@@ -113,7 +144,7 @@ export default function BroBotMember() {
           .insert({
             user_id:        user.id,
             question:       prompt,
-            answer:         JSON.stringify(parsed),
+            answer: parsed,
             latency,
             brobot_version: BROBOT_VERSION,
           });
@@ -180,7 +211,7 @@ export default function BroBotMember() {
                 className="w-full text-left px-4 py-2 hover:bg-gray-100"
                 onClick={() => {
                   setPrompt(s.question);
-                  try { setData(JSON.parse(s.answer)); } catch { setData(null); }
+                  setData(s.answer);
                   setMenuOpen(false);
                   setTimeout(() => summaryRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
                 }}
@@ -228,6 +259,32 @@ export default function BroBotMember() {
               <Section label="Common Pimp Questions" bullets={data.pimpQuestions} />
               <Section label="Other Useful Facts" bullets={data.otherUsefulFacts} />
             </Card>
+            {data.anatomy && (
+  <Card title="Anatomy">
+    {data.anatomy.approachSelection?.selected?.length ? (
+      <ApproachQuiz approaches={data.anatomy.approachSelection.selected} />
+    ) : null}
+
+    {data.anatomy.anatomyQuiz?.questions?.length ? (
+      <Section
+        label="Anatomy Quiz"
+        bullets={data.anatomy.anatomyQuiz.questions.map(
+          (q) => `Q: ${q.q} A: ${q.answer}`
+        )}
+      />
+    ) : null}
+
+    {data.anatomy.highYieldAnatomy?.structures?.length ? (
+  <Section
+    label="High-Yield Structures: Identification & Function"
+    bullets={data.anatomy.highYieldAnatomy.structures.map(
+      (s) => `${s.name} — ${s.why_high_yield}`
+    )}
+  />
+) : null}
+  </Card>
+)}
+
             <FeedbackSection
               wasHelpful={wasHelpful}
               setWasHelpful={setWasHelpful}
@@ -409,4 +466,83 @@ function FeedbackSection({
       </button>
     </div>
   );
+}
+function ApproachQuiz({
+  approaches,
+}: {
+  approaches: { id: string; rationale: string }[];
+}) {
+  // whole section closed by default
+  const [collapsed, setCollapsed] = useState(true);
+  const isOpen = !collapsed;
+
+  return (
+    <div className="space-y-2">
+      <button
+        onClick={() => setCollapsed((p) => !p)}
+        className="flex w-full items-center justify-between rounded-md bg-teal-100 px-4 py-2 text-left text-base font-semibold text-teal-900"
+      >
+        <span>Recommended Approaches</span>
+        {isOpen ? (
+          <ChevronUpIcon className="h-5 w-5" />
+        ) : (
+          <ChevronDownIcon className="h-5 w-5" />
+        )}
+      </button>
+
+      {isOpen && (
+        <ul className="space-y-3 pl-1">
+          {approaches.map((a) => (
+            <ApproachItem
+              key={a.id}
+              name={formatApproachName(a.id)}
+              description={a.rationale}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function ApproachItem({
+  name,
+  description,
+}: {
+  name: string;
+  description: string;
+}) {
+  const [show, setShow] = useState(false);
+
+  return (
+    <li className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm">
+      <div className="flex items-center justify-between gap-3">
+        <span className="font-medium text-gray-800 truncate">{name}</span>
+
+        <button
+          onClick={() => setShow((s) => !s)}
+          className="ml-2 shrink-0 text-sm text-teal-600 hover:underline"
+        >
+          {show ? 'Hide' : 'Show'}
+        </button>
+      </div>
+
+      {show && (
+        <p className="mt-2 rounded bg-teal-50 px-3 py-2 text-teal-900 shadow-inner">
+          {description}
+        </p>
+      )}
+    </li>
+  );
+}
+
+
+function formatApproachName(id: string) {
+  // "approach_wrist_volar_distal_henry" -> "Wrist volar distal Henry"
+  return id
+    .replace(/^approach_/, '')
+    .replace(/_/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
 }
