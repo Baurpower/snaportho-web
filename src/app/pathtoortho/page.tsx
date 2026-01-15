@@ -188,30 +188,53 @@ export default function PathToOrthoPage() {
 
       <Divider />
 
-      {/* Extra resources */}
-      <Section>
-        <Container>
-          <SectionHeading eyebrow="Helpful Resource" title="Historically DO‑Inclusive Programs" subtitle="Quickly find programs with a track record of DO residents and faculty." />
+    {/* Extra resources */}
+<Section>
+  <Container>
+    <SectionHeading
+      eyebrow="Helpful Resources"
+      title="Planning Your Path to Orthopaedics"
+      subtitle="Key tools to help you strengthen your application and choose the right programs."
+    />
 
-          <div className="grid gap-6 sm:max-w-xl">
-            <Link href="/pathtoortho/programs-do" className="block">
-              <Card className="transition-transform hover:-translate-y-0.5 hover:shadow-md">
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5" style={{ color: COLORS.accent }} />
-                    Historically DO Programs (Database)
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  Filterable list of orthopaedic residencies with DOs on the roster or prior AOA affiliation. Great for building a target list.
-                </CardContent>
-              </Card>
-            </Link>
-          </div>
-        </Container>
-      </Section>
+    <div className="grid gap-6 md:grid-cols-2">
+      
+      {/* Research Fellowship (first) */}
+      <Link href="/pathtoortho/research-fellowship" className="block">
+        <Card className="h-full transition-transform hover:-translate-y-0.5 hover:shadow-md">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="h-5 w-5" style={{ color: COLORS.accent }} />
+              Orthopaedic Research Fellowship
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0 text-sm leading-relaxed text-muted-foreground">
+            Learn what an orthopaedic research fellowship actually looks like, who should consider one, and how to choose the right program. Whether you are unmatched, trying to strengthen your application, or planning ahead, this guide shows you how to turn a research year into publications, mentorship, and a more competitive match profile.
+          </CardContent>
+        </Card>
+      </Link>
 
-      <Divider />
+      {/* DO-Inclusive Programs */}
+      <Link href="/pathtoortho/programs-do" className="block">
+        <Card className="h-full transition-transform hover:-translate-y-0.5 hover:shadow-md">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="h-5 w-5" style={{ color: COLORS.accent }} />
+              Historically DO Programs
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="pt-0 text-sm leading-relaxed text-muted-foreground">
+            A filterable database of orthopaedic residencies with a track record of DO residents or AOA affiliation. Use this to build a realistic, targeted program list.
+          </CardContent>
+        </Card>
+      </Link>
+
+    </div>
+  </Container>
+</Section>
+
+<Divider />
+
 
       {/* Curated by */}
       <Section>

@@ -481,7 +481,64 @@ export default function ResearchYearPage() {
         </CardContent>
       </Card>
     </div>
+    {/* Fellow Insight Callout */}
+<div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div className="max-w-2xl">
+      <h3 className="flex items-center gap-2 text-base font-semibold text-gray-900">
+        <Users className="h-4 w-4 text-[#597498]" />
+        Talk to people who have done a research fellowship
+      </h3>
+      <p className="mt-1 text-sm text-gray-600">
+        This is the highest-yield step before committing a year of your career. Former fellows can tell you what the
+        day-to-day is really like, how mentorship works, and whether a research year sounds right for you.
+      </p>
+    </div>
+
+    <div className="flex shrink-0 items-center gap-2">
+      <div className="rounded-full bg-[#597498]/10 px-3 py-1 text-xs font-medium text-[#597498]">
+        Highest-yield due diligence
+      </div>
+    </div>
+  </div>
+
+  <div className="mt-5 grid gap-4 sm:grid-cols-2">
+    {[
+      {
+        q: "Would you do it again?",
+        a: "Did the research fellowship help you match? What were the biggest benefits, and what were the biggest downsides?"
+      },
+      {
+        q: "Why did you choose to do a research fellowship?",
+        a: "What did your application look like at the time? Did you have strong orthopaedic connections? Was research a gap you needed to fix, or were you genuinely interested in pursuing research long term?"
+      },
+      {
+        q: "How did your view of research change?",
+        a: "Did you end up enjoying it more, or did it confirm it isn’t your thing?"
+      },
+      {
+        q: "What was your day-to-day workflow?",
+        a: "How many projects did you juggle, and what did a typical week look like?"
+      },
+      
+    ].map((item) => (
+      <div key={item.q} className="rounded-xl border border-gray-100 bg-gray-50 p-4">
+        <p className="text-sm font-medium text-gray-900">{item.q}</p>
+        <p className="mt-1 text-sm text-gray-600">{item.a}</p>
+      </div>
+    ))}
+  </div>
+
+  <div className="mt-5 rounded-xl border border-[#597498]/20 bg-[#597498]/5 p-4">
+    <p className="text-sm text-gray-700">
+      <span className="font-medium text-gray-900">Bottom line:</span> You should understand the real pros and cons
+      before committing to a year. A fellowship can be a massive accelerator, but only when you truly buy into the year and are productive.
+    </p>
+  </div>
+</div>
+
   </Container>
+  
 </section>
 
 
@@ -608,26 +665,52 @@ export default function ResearchYearPage() {
                   programs recruit earlier or fill informally.
                 </p>
 
-                <div className="rounded-xl border border-gray-200 bg-[#fbfaf8] p-4">
-  <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-    #1 place to look
+                <div className="rounded-xl border border-gray-200 bg-[#fbfaf8] p-4 space-y-4">
+  
+  {/* Top resource */}
+  <div className="space-y-1">
+    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+      #1 place to look
+    </p>
+    <p className="text-sm text-gray-700">
+      <a
+        href="https://www.orthogate.org/forums/medical-student-research-fellowship"
+        target="_blank"
+        rel="noreferrer"
+        className="font-medium text-[#333] underline decoration-gray-300 underline-offset-4 hover:decoration-[#597498]"
+      >
+        OrthoGate: Medical Student Research Fellowship Forum
+      </a>
+    </p>
+  </div>
+
+  {/* Divider */}
+  <div className="h-px w-full bg-gray-200" />
+
+  {/* Other resources */}
+  <div className="space-y-1">
+    <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+      Other places to look
+    </p>
+    <p className="text-sm text-gray-700">
+      <a
+        href="https://www.msosortho.com/research-year-positions"
+        target="_blank"
+        rel="noreferrer"
+        className="font-medium text-[#333] underline decoration-gray-300 underline-offset-4 hover:decoration-[#597498]"
+      >
+        MSOS: Research Year Positions
+      </a>
+    </p>
+  </div>
+
+  {/* Footer note */}
+  <p className="pt-1 text-xs text-gray-500">
+    Keep your own list of deadlines and contacts as you browse postings.
   </p>
 
-  <p className="mt-1 text-sm text-gray-700">
-    <a
-      href="https://www.orthogate.org/forums/medical-student-research-fellowship"
-      target="_blank"
-      rel="noreferrer"
-      className="font-medium text-[#333] underline decoration-gray-300 underline-offset-4 hover:decoration-[#597498]"
-    >
-      OrthoGate: Medical Student Research Fellowship forum
-    </a>
-  </p>
-
-  <p className="mt-2 text-xs text-gray-500">
-    Keep your own list of deadlines + contacts as you browse postings.
-  </p>
 </div>
+
 
 
                 <p>
@@ -638,22 +721,24 @@ export default function ResearchYearPage() {
             </Card>
 
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BadgeCheck className="h-4 w-4 text-[#597498]" />
-                  How to apply intelligently
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2 text-sm text-gray-600">
-                <p>• Involve your orthopaedic mentors early.</p>
-                <p>• Ask mentors: “Which places actually match their fellows?”</p>
-                <p>• Clarify: who is your boss, and what is the institution’s support?</p>
-                <p className="text-xs text-gray-500 pt-2">
-                  Your goal isn’t “a research year.” Your goal is a year with a high probability
-                  of real output and real advocacy.
-                </p>
-              </CardContent>
-            </Card>
+  <CardHeader>
+    <CardTitle className="flex items-center gap-2">
+      <BadgeCheck className="h-4 w-4 text-[#597498]" />
+      How to apply intelligently
+    </CardTitle>
+  </CardHeader>
+  <CardContent className="space-y-2 text-sm text-gray-600">
+    <p>• Talk to current and former research fellows before you commit.</p>
+    <p>• Ask them how the workflow actually runs day-to-day.</p>
+    <p>• Find out how involved the attending is and how closely they work with residents.</p>
+    <p>• Ask where past fellows matched and how productive the year really was.</p>
+    <p>• Use your mentors to help you get connected early.</p>
+
+    <p className="text-xs text-gray-500 pt-2">
+      A research year only works if the mentorship, expectations, and advocacy are real. Fellows who have lived it are the best way to know whether a program actually delivers.
+    </p>
+  </CardContent>
+</Card>
           </div>
 
           <div className="mt-8">
