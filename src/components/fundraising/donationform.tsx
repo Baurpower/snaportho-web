@@ -20,7 +20,6 @@ export default function DonationForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [joinCircle, setJoinCircle] = useState(true);
   const [loading, setLoading] = useState(false);
   const [selectedTier, setSelectedTier] = useState<number | null>(null);
 
@@ -68,7 +67,7 @@ export default function DonationForm() {
           message,
           amount,
           stripe_id: paymentIntent.id,
-          join_circle: joinCircle,
+          join_circle: false,
         }),
       });
 
@@ -144,20 +143,6 @@ export default function DonationForm() {
           placeholder="Enter custom amount"
           required
         />
-      </div>
-
-      {/* Join Donor Circle */}
-      <div className="flex items-center space-x-2">
-        <input
-          type="checkbox"
-          id="join-circle"
-          checked={joinCircle}
-          onChange={() => setJoinCircle(!joinCircle)}
-          className="w-4 h-4"
-        />
-        <label htmlFor="join-circle" className="text-sm text-midnight">
-          Join the SnapOrtho Donor Circle (early updates + test invites)
-        </label>
       </div>
 
       <CardElement className="p-4 border rounded-lg" />
