@@ -189,7 +189,6 @@ export default function FundPage() {
             <ul className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 gap-x-6 text-left max-w-2xl mx-auto">
               <Stat value="1500+" label="Downloads" />
               <Stat value="900+" label="Active Accounts" />
-              <Stat value="20+" label="Daily Learners" />
               <Stat value="5/5" label="App Rating" />
             </ul>
 
