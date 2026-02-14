@@ -11,6 +11,8 @@ export default function FundPage() {
   // NRMP Match Day 2026 is Fri, March 20, 2026 (results released at 12:00 p.m. ET).
   const matchMomentET = '2026-03-20T12:00:00-04:00';
 
+  const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate?campaign_id=X4TU2R59GH3X6';
+
   // ===== Manual totals (edit these anytime) =====
   const GOAL = 1000;
 
@@ -132,7 +134,6 @@ export default function FundPage() {
     </div>
   </div>
 
-  {/* single CTA row */}
  {/* single CTA row */}
 <div className="mt-7 flex flex-col sm:flex-row items-center justify-between gap-4">
   {/* Left: Donate + trust text */}
@@ -186,11 +187,11 @@ export default function FundPage() {
               </p>
             </div>
 
-            <ul className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 gap-x-6 text-left max-w-2xl mx-auto">
-              <Stat value="1500+" label="Downloads" />
-              <Stat value="900+" label="Active Accounts" />
-              <Stat value="5/5" label="App Rating" />
-            </ul>
+            <ul className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center max-w-3xl mx-auto">
+  <Stat value="1500+" label="Downloads" />
+  <Stat value="900+" label="Active Accounts" />
+  <Stat value="5/5" label="App Rating" />
+</ul>
 
             <div className="flex justify-center gap-1" aria-label="5 star rating">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -214,7 +215,7 @@ export default function FundPage() {
           <span className="absolute -top-12 -left-16 w-60 h-60 bg-sky/20 blur-3xl rounded-full -z-10" />
         </section>
 
-        {/* Impact (anchor for CTA) */}
+        
         {/* Impact (anchor for CTA) */}
 <section
   id="impact"
@@ -302,7 +303,72 @@ export default function FundPage() {
           <div className="bg-white border border-midnight/10 shadow-xl p-6 md:p-8 rounded-2xl">
             <DonationForm />
           </div>
+          {/* PayPal option (premium) */}
+<div className="relative overflow-hidden rounded-3xl border border-midnight/10 bg-white shadow-sm">
+  {/* premium background */}
+  <div className="absolute inset-0 bg-gradient-to-br from-sky-50/70 via-white to-blue-50/60" />
+  <div className="absolute -top-20 -right-24 h-72 w-72 rounded-full bg-sky/20 blur-3xl" />
+  <div className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-blue-200/20 blur-3xl" />
+  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-midnight/10 to-transparent" />
+
+  <div className="relative p-6 md:p-7">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+      {/* Left copy */}
+      <div className="text-left">
+        <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-midnight/70 ring-1 ring-midnight/10">
+          <span className="h-2 w-2 rounded-full bg-sky" />
+          Alternative checkout
+        </div>
+
+        <div className="mt-3 text-xl sm:text-2xl font-extrabold text-navy tracking-tight">
+          Donate via PayPal
+        </div>
+
+        <p className="mt-1 text-sm text-midnight/70 max-w-xl leading-relaxed">
+          Prefer PayPal? Support the same campaign in a secure PayPal checkout. Opens in a new tab.
+        </p>
+
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-midnight/55">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 ring-1 ring-midnight/10">
+            Fast checkout
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 ring-1 ring-midnight/10">
+            No account required (PayPal supports cards)
+          </span>
+        </div>
+      </div>
+
+      {/* Right CTA */}
+      <div className="flex items-center justify-start md:justify-end">
+        <a
+          href={PAYPAL_DONATE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group relative inline-flex items-center justify-center rounded-full px-7 py-3.5 font-semibold text-white shadow-lg transition hover:-translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-sky/40"
+        >
+          {/* button background */}
+          <span className="absolute inset-0 rounded-full bg-gradient-to-r from-navy via-sky-dark to-blue-600" />
+          {/* glossy highlight */}
+          <span className="absolute -inset-px rounded-full opacity-0 group-hover:opacity-100 transition opacity-100">
+            <span className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/20 to-white/0" />
+          </span>
+          {/* subtle ring */}
+          <span className="absolute inset-0 rounded-full ring-1 ring-white/15" />
+
+          <span className="relative flex items-center gap-2">
+            <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 ring-1 ring-white/15">
+              <span className="text-lg">🅿️</span>
+            </span>
+            <span>Donate with PayPal</span>
+            <span aria-hidden className="opacity-90">→</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
         </section>
+        
 
         {/* Footer */}
         <footer className="text-center text-sm text-midnight/50 pt-12 border-t border-midnight/10">

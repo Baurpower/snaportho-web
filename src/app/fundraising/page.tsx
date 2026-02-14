@@ -12,6 +12,8 @@ export const metadata = {
     'support medical education',
     'future of orthopaedics',
     'medical student resources',
+    'nrmp match',
+    'ortho residency',
   ],
   openGraph: {
     title: 'Fundraising | SnapOrtho',
@@ -20,7 +22,7 @@ export const metadata = {
     siteName: 'SnapOrtho',
     images: [
       {
-        url: 'https://snap-ortho.com/og-image-fundraising.png',
+        url: 'https://snap-ortho.com/og-image-countdowntomatch.png',
         width: 1200,
         height: 630,
         alt: 'SnapOrtho Fundraising OG Image',
@@ -33,7 +35,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'SnapOrtho',
     description: 'Support the future of orthopaedic learning with SnapOrtho',
-    images: ['https://snap-ortho.com/og-image-fundraising.png'],
+    images: ['https://snap-ortho.com/og-image-countdowntomatch.png'],
   },
 };
 
