@@ -23,7 +23,7 @@ export const metadata = {
     siteName: "SnapOrtho",
     images: [
       {
-        url: "https://snap-ortho.com/og-image-find-projects.png",
+        url: "https://snap-ortho.com/og-image-find-ortho-research.png",
         width: 1200,
         height: 630,
         alt: "SnapOrtho Find Ortho Research OG Image",
@@ -37,7 +37,7 @@ export const metadata = {
     title: "Find Ortho Research | SnapOrtho",
     description:
       "Where to look, who to contact, and how to pitch a small project mentors say yes to.",
-    images: ["https://snap-ortho.com/og-image-find-projects.png"],
+    images: ["https://snap-ortho.com/og-image-find-ortho-research.png"],
   },
 };
 
