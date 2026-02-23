@@ -4,6 +4,9 @@ export const metadata = {
   title: "Research 101 | SnapOrtho",
   description:
     "A strategic guide to orthopaedic research for medical students: why it matters, when to start, how to find projects, and how to excel.",
+    alternates: {
+    canonical: "/research",
+  },
   keywords: [
     "orthopaedics",
     "SnapOrtho",
@@ -17,7 +20,7 @@ export const metadata = {
     "database study",
   ],
   openGraph: {
-    title: "Research 101 | SnapOrtho",
+    title: "Research 101",
     description:
       "Your roadmap to orthopaedic research: build momentum, find mentors, and execute.",
     url: "https://snap-ortho.com/research",
@@ -35,7 +38,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Research 101 | SnapOrtho",
+    title: "Research 101",
     description:
       "Why research matters, when to start, how to find projects, and how to excel.",
     images: ["https://snap-ortho.com/og-image-research-101.png"],

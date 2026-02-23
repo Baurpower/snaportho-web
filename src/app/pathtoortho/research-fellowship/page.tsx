@@ -4,6 +4,9 @@ export const metadata = {
   title: "Ortho Research Year",
   description:
     "A practical guide to orthopaedic research fellowships: what a research year is, who should do one, where to go, and how to apply.",
+     alternates: {
+    canonical: "/pathtoortho/research-fellowship",
+  },
   keywords: [
     "orthopaedics",
     "orthopaedic surgery",

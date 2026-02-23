@@ -3,6 +3,9 @@ import DoProgramsPageClient from "./doprogramspageclient";
 export const metadata = {
   title: "DO Ortho Programs",
   description: "A Database to Help Choose Audition Rotations as a DO",
+   alternates: {
+    canonical: "/pathtoortho/programs-do",
+  },
   keywords: [
     "orthopaedics",
     "education",

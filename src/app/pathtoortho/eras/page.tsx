@@ -1,8 +1,11 @@
 import ERASPageClient from './eraspageclient';
 
 export const metadata = {
-  title: 'ERAS Applications | SnapOrtho',
+  title: 'ERAS Applications',
   description: 'Our guide to ortho ERAS applications',
+   alternates: {
+    canonical: "/pathtoortho/eras",
+  },
   keywords: [
     'orthopaedics',
     'education',
@@ -14,7 +17,7 @@ export const metadata = {
     'medical student resources',
   ],
   openGraph: {
-    title: 'ERAS Applications | SnapOrtho',
+    title: 'ERAS Applications',
     description: 'Everything you need to know about ortho ERAS applications.',
     url: 'https://snap-ortho.com/pathtoortho/eras',
     siteName: 'SnapOrtho',

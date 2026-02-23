@@ -1,8 +1,11 @@
 import AwayRotationsPageClient from "./awayrotationspageclient";
 
 export const metadata = {
-  title: "Away Rotations | SnapOrtho",
+  title: "Away Rotations",
   description: "How to excel on orthopaedic away rotations: VSLO timing, on-service habits, LOR strategy, and what to bring.",
+  alternates: {
+    canonical: "/pathtoortho/awayrotations",
+  },
   keywords: [
     "orthopaedics",
     "education",
@@ -14,7 +17,7 @@ export const metadata = {
     "medical student resources",
   ],
   openGraph: {
-    title: "Away Rotations | SnapOrtho",
+    title: "Away Rotations",
     description: "Your guide to excelling on orthopaedic away rotations.",
     url: "https://snap-ortho.com/pathtoortho/awayrotations",
     siteName: "SnapOrtho",

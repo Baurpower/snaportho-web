@@ -1,9 +1,12 @@
 import FindProjectsPageClient from "./findprojectspageclient";
 
 export const metadata = {
-  title: "Find Ortho Research | SnapOrtho",
+  title: "Find Ortho Research",
   description:
     "How to find orthopaedic research projects: where to look, how to pick mentors, how to pitch, and outreach templates.",
+    alternates: {
+    canonical: "/research/find-projects",
+  },
   keywords: [
     "orthopaedics",
     "SnapOrtho",
@@ -16,7 +19,7 @@ export const metadata = {
     "residency applications",
   ],
   openGraph: {
-    title: "Find Ortho Research | SnapOrtho",
+    title: "Find Ortho Research",
     description:
       "A practical guide to finding orthopaedic research: initiative framework, mentor selection, and a copy/paste pitch.",
     url: "https://snap-ortho.com/research/find-projects",
@@ -34,7 +37,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Find Ortho Research | SnapOrtho",
+    title: "Find Ortho Research",
     description:
       "Where to look, who to contact, and how to pitch a small project mentors say yes to.",
     images: ["https://snap-ortho.com/og-image-find-ortho-research.png"],
