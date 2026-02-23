@@ -1,12 +1,14 @@
 // src/app/layout.tsx
 import "./globals.css";
+import type { Metadata } from "next";
+import Script from "next/script";
+
 import Nav from "../components/Nav";
 import ClientProvider from "../components/ClientProvider";
 import Footer from "../components/Footer";
 
-import Script from "next/script"; // ← add
-
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL("https://snap-ortho.com"), // ✅ enables proper canonical generation
   title: {
     default: "SnapOrtho",
     template: "%s | SnapOrtho",
@@ -22,7 +24,7 @@ export const metadata = {
     "ortho away rotations",
     "fracture classification",
     "orthopaedic trauma",
-    "orthopaedic xrays"
+    "orthopaedic xrays",
   ],
   icons: {
     icon: [
@@ -34,7 +36,8 @@ export const metadata = {
   },
   openGraph: {
     title: "SnapOrtho",
-    description: "All-in-One Orthopaedic Resources for Medical Students and Residents",
+    description:
+      "All-in-One Orthopaedic Resources for Medical Students and Residents",
     url: "https://snap-ortho.com",
     siteName: "SnapOrtho",
     images: [
@@ -56,6 +59,7 @@ export const metadata = {
   },
 };
 
+const BRANCH_KEY = process.env.NEXT_PUBLIC_BRANCH_KEY ?? "";
 
 export default function RootLayout({
   children,
@@ -64,37 +68,44 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* ① Load Branch script early */}
-      <Script
-        src="https://cdn.branch.io/branch-latest.min.js"
-        strategy="beforeInteractive"
-      />
+      <head>
+        {/* ✅ Scripts must be in <head> or <body>, not directly under <html> */}
+        <Script
+          src="https://cdn.branch.io/branch-latest.min.js"
+          strategy="beforeInteractive"
+        />
 
-      {/* ② Run branch.init after script is ready */}
-      <Script id="branch-init" strategy="afterInteractive">
-        {`
-          if (window.branch) {
-            branch.init(
-              '${process.env.NEXT_PUBLIC_BRANCH_KEY}',
-              function(err, data) {
-                if (err) {
-                  console.error('Branch init failed:', err);
-                } else {
-                  console.log('Branch initialized:', data);
-                }
+        {/* ✅ inline init; avoids referencing process.env inside the string */}
+        <Script id="branch-init" strategy="afterInteractive">
+          {`
+            (function() {
+              if (!window.branch) return;
+
+              var key = ${JSON.stringify(BRANCH_KEY)};
+              if (!key) {
+                console.warn("Branch key missing: NEXT_PUBLIC_BRANCH_KEY");
+                return;
               }
-            );
-          }
-        `}
-      </Script>
+
+              window.branch.init(key, function(err, data) {
+                if (err) {
+                  console.error("Branch init failed:", err);
+                } else {
+                  console.log("Branch initialized:", data);
+                }
+              });
+            })();
+          `}
+        </Script>
+
+        {/* Optional but recommended: helps avoid duplicate URL issues */}
+        {/* Next will automatically generate canonical tags once metadataBase exists */}
+      </head>
 
       <body className="flex flex-col min-h-screen bg-cream text-midnight">
         <ClientProvider>
           <Nav />
-
-          {/* full-width main with horizontal padding */}
           <main className="flex-1 w-full">{children}</main>
-
           <Footer />
         </ClientProvider>
       </body>

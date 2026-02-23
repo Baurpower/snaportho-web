@@ -16,7 +16,7 @@ export const metadata = {
   openGraph: {
     title: "Away Rotations | SnapOrtho",
     description: "Your guide to excelling on orthopaedic away rotations.",
-    url: "https://snap-ortho.com/pathtoortho/away-rotations",
+    url: "https://snap-ortho.com/pathtoortho/awayrotations",
     siteName: "SnapOrtho",
     images: [
       {
