@@ -17,7 +17,7 @@ export default function FundPage() {
   const GOAL = 1000;
 
   // Paste your running totals here (Stripe dashboard + PayPal total)
-  const STRIPE_TOTAL = 0; // <-- update manually
+  const STRIPE_TOTAL = 5; // <-- update manually
   const PAYPAL_TOTAL = 0;  // <-- update manually
 
   const raised = STRIPE_TOTAL + PAYPAL_TOTAL;
