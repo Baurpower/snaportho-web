@@ -40,7 +40,7 @@ function isDynamic(route: string) {
   return route.includes("[") || route.includes("]");
 }
 function isProbablyPrivate(route: string) {
-  const BLOCKED_PREFIXES = ["/onboarding", "/learn/settings", "/fundraising/thankyou", "/account"];
+  const BLOCKED_PREFIXES = ["/onboarding", "/auth", "/learn/settings", "/fundraising/thankyou", "/account"];
   return BLOCKED_PREFIXES.some((p) => route === p || route.startsWith(`${p}/`));
 }
 
@@ -64,6 +64,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "app/**/page.{ts,tsx,js,jsx,md,mdx}",
     "src/app/**/page.{ts,tsx,js,jsx,md,mdx}",
     "!**/api/**",
+    "!app/auth/**",
+    "!src/app/auth/**", 
     ...excludedGroupGlobs,
   ]);
 
