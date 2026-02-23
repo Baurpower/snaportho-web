@@ -6,9 +6,26 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 
 const DonationForm = dynamic(() => import('./donationformwrapper'), { ssr: false });
+type Donation = {
+  name: string;          // "Alex B." or "Anonymous"
+  amount: number;        // 25
+  dateISO: string;       // "2026-02-23" or "2026-02-23T14:22:00-05:00"
+  via?: 'Stripe' | 'PayPal' | 'Other';
+  note?: string;         // optional short note
+  highlight?: boolean;   // optional: pin as “featured”
+};
+
+const DONATIONS: Donation[] = [
+  
+  { name: 'Susan', amount: 5, dateISO: '2026-02-23', via: 'Stripe' },
+  { name: 'Dan', amount: 5, dateISO: '2026-02-23', via: 'Stripe' },
+
+
+];
+
 
 export default function FundPage() {
-  // NRMP Match Day 2026 is Fri, March 20, 2026 (results released at 12:00 p.m. ET).
+  // NRMP Match Day 2026 is Fri, March 20, 2026 (results released at 12:00 p.m. ET)
   const matchMomentET = '2026-03-20T12:00:00-04:00';
 
   const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate?campaign_id=X4TU2R59GH3X6';
@@ -24,8 +41,20 @@ export default function FundPage() {
   const pct = Math.max(0, Math.min(1, raised / GOAL));
   const remaining = Math.max(0, GOAL - raised);
 
+  
   const money = (n: number) =>
     n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  const topDonations = React.useMemo(() => {
+  return [...DONATIONS]
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 5);
+}, []);
+
+const recentDonations = React.useMemo(() => {
+  return [...DONATIONS]
+    .sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime())
+    .slice(0, 6);
+}, []);
   const t = useCountdown(matchMomentET);
   return (
     <main className="bg-cream min-h-screen font-sans text-midnight">
@@ -70,6 +99,8 @@ export default function FundPage() {
 </div>
     </div>
   </div>
+
+
 
   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-7">
     {/* Left: progress */}
@@ -151,6 +182,10 @@ export default function FundPage() {
   </div>
 </div>
 
+  {/* Donations (Top + Recent) */}
+<div className="mt-4">
+  <DonationsPanel top={topDonations} recent={recentDonations} money={money} compact />
+</div>
 
 
 
@@ -488,6 +523,182 @@ function CountdownInline({ targetISO }: { targetISO: string }) {
         </>
       )}
     </div>
+  );
+}
+
+function DonationsPanel({
+  top,
+  recent,
+  money,
+  compact = false,
+}: {
+  top: Donation[];
+  recent: Donation[];
+  money: (n: number) => string;
+  compact?: boolean;
+}) {
+  const fmt = (iso: string) => {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  };
+
+  return (
+    <div className="relative overflow-hidden rounded-3xl border border-midnight/10 bg-white/70 backdrop-blur shadow-sm">
+      {/* soft highlight */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-sky-50/40 to-blue-50/40" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-midnight/10 to-transparent" />
+
+      <div className={`relative ${compact ? 'p-4 sm:p-5' : 'p-6 sm:p-7'}`}>
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+          <div className="text-left">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-midnight/70 ring-1 ring-midnight/10">
+              <span className="h-2 w-2 rounded-full bg-sky" />
+              Donations
+            </div>
+            <div className={`${compact ? 'mt-2 text-lg sm:text-xl' : 'mt-3 text-xl sm:text-2xl'} font-extrabold text-navy tracking-tight`}>
+              Thank you to everyone supporting the mission
+            </div>
+            <p className="mt-1 text-sm text-midnight/70 max-w-2xl leading-relaxed">
+              Every contribution helps keep SnapOrtho accessible for the next Match class.
+            </p>
+          </div>
+        </div>
+
+        <div className={`${compact ? 'mt-4' : 'mt-6'} grid grid-cols-1 lg:grid-cols-2 gap-4`}>
+          {/* Top donations */}
+          <DonationCard
+            title="Top donations"
+            subtitle=""
+            emptyText="No donations yet."
+          >
+            {top.map((d, idx) => (
+              <DonationRow
+                key={`${d.name}-${d.amount}-${d.dateISO}-${idx}`}
+                left={
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="truncate font-semibold text-midnight">{d.name}</span>
+                      {idx === 0 && <Pill>Top</Pill>}
+                      {d.via && <Pill subtle>{d.via}</Pill>}
+                    </div>
+                    <div className="mt-0.5 text-xs text-midnight/55">
+                      {fmt(d.dateISO)}
+                      {d.note ? <span className="text-midnight/45"> · {d.note}</span> : null}
+                    </div>
+                  </div>
+                }
+                right={
+                  <div className="text-right font-extrabold text-navy tabular-nums">
+                    {money(d.amount)}
+                  </div>
+                }
+              />
+            ))}
+          </DonationCard>
+
+          {/* Recent donations */}
+          <DonationCard
+            title="Most recent"
+            subtitle=""
+            emptyText="No donations listed yet."
+          >
+            {recent.map((d, idx) => (
+              <DonationRow
+                key={`${d.name}-${d.amount}-${d.dateISO}-recent-${idx}`}
+                left={
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className="truncate font-semibold text-midnight">{d.name}</span>
+                      {d.via && <Pill subtle>{d.via}</Pill>}
+                    </div>
+                    <div className="mt-0.5 text-xs text-midnight/55">
+                      {fmt(d.dateISO)}
+                      {d.note ? <span className="text-midnight/45"> · {d.note}</span> : null}
+                    </div>
+                  </div>
+                }
+                right={
+                  <div className="text-right font-extrabold text-navy tabular-nums">
+                    {money(d.amount)}
+                  </div>
+                }
+              />
+            ))}
+          </DonationCard>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DonationCard({
+  title,
+  subtitle,
+  emptyText,
+  children,
+}: {
+  title: string;
+  subtitle: string;
+  emptyText: string;
+  children: React.ReactNode;
+}) {
+  const hasChildren = React.Children.count(children) > 0;
+
+  return (
+    <div className="rounded-3xl border border-midnight/10 bg-white/70 backdrop-blur p-5 sm:p-6 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div className="text-left">
+          <div className="text-base font-extrabold text-navy">{title}</div>
+          <div className="mt-0.5 text-xs text-midnight/60">{subtitle}</div>
+        </div>
+      </div>
+
+      <div className="mt-4 space-y-3">
+        {hasChildren ? (
+          children
+        ) : (
+          <div className="rounded-2xl border border-midnight/10 bg-white/70 p-4 text-sm text-midnight/65">
+            {emptyText}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DonationRow({
+  left,
+  right,
+}: {
+  left: React.ReactNode;
+  right: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-midnight/10 bg-white/70 px-4 py-3">
+      <div className="min-w-0 flex-1">{left}</div>
+      <div className="flex-shrink-0">{right}</div>
+    </div>
+  );
+}
+
+function Pill({
+  children,
+  subtle,
+}: {
+  children: React.ReactNode;
+  subtle?: boolean;
+}) {
+  return (
+    <span
+      className={
+        subtle
+          ? 'inline-flex items-center rounded-full bg-white/70 px-2 py-0.5 text-[11px] font-semibold text-midnight/60 ring-1 ring-midnight/10'
+          : 'inline-flex items-center rounded-full bg-sky/10 px-2 py-0.5 text-[11px] font-semibold text-sky-dark ring-1 ring-sky/15'
+      }
+    >
+      {children}
+    </span>
   );
 }
 
