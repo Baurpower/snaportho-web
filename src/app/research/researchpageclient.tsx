@@ -33,7 +33,7 @@ const COLORS = {
   text: '#1f2937',
   heading: '#2b2b2b',
   headingSub: '#313131',
-  accent: '#3f6f67',
+  accent: '#005C81',
   accentSoft: 'rgba(63,111,103,0.10)',
   border: 'rgba(148,163,184,0.55)',
   muted: '#6b7280',
@@ -119,7 +119,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
       >
         <span
           className="h-1.5 w-1.5 rounded-full"
-          style={{ background: 'linear-gradient(180deg, rgba(63,111,103,0.9), rgba(89,116,152,0.55))' }}
+          style={{ background: 'linear-gradient(180deg, rgba(0, 92, 129, 0.9), rgba(89,116,152,0.55))' }}
         />
         {children}
       </span>
@@ -146,7 +146,7 @@ function SectionHeading({
           className="absolute left-0 top-2 h-[calc(100%-8px)] w-[3px] rounded-full"
           style={{
             background:
-              'linear-gradient(180deg, rgba(63,111,103,0.75), rgba(89,116,152,0.45), transparent)',
+              'linear-gradient(180deg, rgba(0, 92, 129, 0.9), rgba(89,116,152,0.45), transparent)',
           }}
         />
         <h2
@@ -169,7 +169,7 @@ function SectionHeading({
               className="pointer-events-none absolute -bottom-1 left-0 h-[2px] w-[62%] rounded-full"
               style={{
                 background:
-                  'linear-gradient(90deg, rgba(63,111,103,0.75), rgba(89,116,152,0.40), transparent)',
+                  'linear-gradient(90deg, rgba(0, 92, 129, 0.9), rgba(89,116,152,0.40), transparent)',
               }}
             />
           </span>
@@ -257,7 +257,7 @@ function ScrollProgressBar() {
       style={{
         scaleX,
         background:
-          'linear-gradient(90deg, rgba(63,111,103,0.9), rgba(89,116,152,0.55), rgba(63,111,103,0.35))',
+          'linear-gradient(90deg, rgba(0, 92, 129, 0.9), rgba(89,116,152,0.55), rgba(63,111,103,0.35))',
       }}
     />
   );
@@ -440,7 +440,7 @@ function HeroTitle() {
           <span
             className="relative inline-block"
             style={{
-              background: 'linear-gradient(90deg, rgba(63,111,103,1), rgba(89,116,152,0.85))',
+              background: 'linear-gradient(90deg, rgba(0, 92, 129, 0.9), rgba(89,116,152,0.85))',
               WebkitBackgroundClip: 'text',
               backgroundClip: 'text',
               color: 'transparent',
@@ -454,7 +454,7 @@ function HeroTitle() {
               className="pointer-events-none absolute -bottom-2 left-0 h-[3px] w-full rounded-full"
               style={{
                 background:
-                  'linear-gradient(90deg, rgba(63,111,103,0.75), rgba(89,116,152,0.40), transparent)',
+                  'linear-gradient(90deg, rgba(0, 92, 129, 0.9), rgba(89,116,152,0.40), transparent)',
               }}
             />
             {/* Glow */}
@@ -523,7 +523,7 @@ export default function Research101Page() {
           className="absolute left-[-12%] top-[20%] h-[360px] w-[360px] rounded-full blur-2xl opacity-[0.12]"
           style={{
             background:
-              'conic-gradient(from 120deg, rgba(63,111,103,0.9), rgba(89,116,152,0.55), rgba(63,111,103,0.2))',
+              'conic-gradient(from 120deg, rgba(0, 92, 129, 0.9), rgba(89,116,152,0.55), rgba(63,111,103,0.2))',
           }}
         />
 
