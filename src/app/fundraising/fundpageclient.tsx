@@ -17,8 +17,8 @@ type Donation = {
 
 const DONATIONS: Donation[] = [
   
-  { name: 'Susan', amount: 5, dateISO: '2026-02-23', via: 'Stripe' },
-  { name: 'Dan', amount: 5, dateISO: '2026-02-23', via: 'Stripe' },
+  { name: '', amount: 5, dateISO: '2026-02-23', via: 'Stripe' },
+  { name: '', amount: 5, dateISO: '2026-02-23', via: 'Stripe' },
 
 
 ];
