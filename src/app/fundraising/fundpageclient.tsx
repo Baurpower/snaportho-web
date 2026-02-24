@@ -23,6 +23,39 @@ const DONATIONS: Donation[] = [
 
 ];
 
+function isBlank(s?: string) {
+  return !s || s.trim().length === 0;
+}
+
+// stable hash from donation fields (so the codename doesn't change across renders)
+function hashDonation(d: Donation) {
+  const key = `${d.amount}|${d.dateISO}|${d.via ?? ''}|${d.note ?? ''}`;
+  let h = 2166136261; // FNV-1a base
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+const ADJ = [
+  'Steady','Brave','Kind','Swift','Quiet','Bold','Noble','Bright','Calm','True',
+  'Loyal','Sharp','Humble','Solid','Radiant','Focused','Patient','Clever',
+];
+
+const NOUN = [
+  'Suture','Scalpel','Anvil','Atlas','Ranger','Beacon','Hammer','Pioneer','Falcon',
+  'Comet','Oak','Sparrow','Summit','Forge','Apex','Nimbus','Voyager','Quartz',
+];
+
+// Ex: "Quiet Falcon 318"
+function anonymousCodename(d: Donation) {
+  const h = hashDonation(d);
+  const a = ADJ[h % ADJ.length];
+  const n = NOUN[(h >>> 8) % NOUN.length];
+  const num = 100 + ((h >>> 16) % 900);
+  return `${a} ${n} ${num}`;
+}
 
 export default function FundPage() {
   // NRMP Match Day 2026 is Fri, March 20, 2026 (results released at 12:00 p.m. ET)
@@ -44,17 +77,31 @@ export default function FundPage() {
   
   const money = (n: number) =>
     n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-  const topDonations = React.useMemo(() => {
-  return [...DONATIONS]
-    .sort((a, b) => b.amount - a.amount)
-    .slice(0, 5);
+  const displayDonations = React.useMemo(() => {
+  return DONATIONS.map((d) => ({
+    ...d,
+    name: isBlank(d.name) ? anonymousCodename(d) : d.name.trim(),
+  }));
 }, []);
 
+const topDonations = React.useMemo(() => {
+  return [...displayDonations]
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 5);
+}, [displayDonations]);
+
 const recentDonations = React.useMemo(() => {
-  return [...DONATIONS]
+  return [...displayDonations]
     .sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime())
     .slice(0, 6);
-}, []);
+}, [displayDonations]);
+const totalCount = DONATIONS.length;
+// If you want total amount of listed donations (not Stripe+PayPal manual totals):
+
+const totalListedAmount = React.useMemo(
+  () => DONATIONS.reduce((sum, d) => sum + (Number.isFinite(d.amount) ? d.amount : 0), 0),
+  []
+);
   const t = useCountdown(matchMomentET);
   return (
     <main className="bg-cream min-h-screen font-sans text-midnight">
@@ -184,7 +231,14 @@ const recentDonations = React.useMemo(() => {
 
   {/* Donations (Top + Recent) */}
 <div className="mt-4">
-  <DonationsPanel top={topDonations} recent={recentDonations} money={money} compact />
+  <DonationsPanel
+  top={topDonations}
+  recent={recentDonations}
+  money={money}
+  compact
+  totalAmount={totalListedAmount}        // or totalListedAmount if you prefer
+  totalCount={totalCount}
+/>
 </div>
 
 
@@ -330,7 +384,7 @@ const recentDonations = React.useMemo(() => {
           </div>
 
           <p className="text-midnight/80 max-w-2xl">
-            Every contribution — large or small — helps keep SnapOrtho accessible for the next wave of students heading into the year.
+            Every contribution large or small helps keep SnapOrtho accessible for the next wave of students heading into the year.
             Securely processed via Stripe.
           </p>
 
@@ -530,11 +584,15 @@ function DonationsPanel({
   top,
   recent,
   money,
+  totalAmount,
+  totalCount,
   compact = false,
 }: {
   top: Donation[];
   recent: Donation[];
   money: (n: number) => string;
+  totalAmount?: number;
+  totalCount?: number;
   compact?: boolean;
 }) {
   const fmt = (iso: string) => {
@@ -545,18 +603,41 @@ function DonationsPanel({
 
   return (
     <div className="relative overflow-hidden rounded-3xl border border-midnight/10 bg-white/70 backdrop-blur shadow-sm">
-      {/* soft highlight */}
       <div className="absolute inset-0 bg-gradient-to-br from-white via-sky-50/40 to-blue-50/40" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-midnight/10 to-transparent" />
 
       <div className={`relative ${compact ? 'p-4 sm:p-5' : 'p-6 sm:p-7'}`}>
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
           <div className="text-left">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-midnight/70 ring-1 ring-midnight/10">
-              <span className="h-2 w-2 rounded-full bg-sky" />
-              Donations
+            {/* badge row */}
+            <div className="flex items-center gap-2">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-midnight/70 ring-1 ring-midnight/10">
+                <span className="h-2 w-2 rounded-full bg-sky" />
+                Donations
+              </div>
+
+              {(totalAmount != null || totalCount != null) && (
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-midnight/70 ring-1 ring-midnight/10">
+                  <span className="text-midnight/55">Total</span>
+                  {totalAmount != null && (
+                    <span className="font-extrabold text-navy tabular-nums">
+                      {money(totalAmount)}
+                    </span>
+                  )}
+                  {totalCount != null && (
+                    <span className="text-midnight/55 tabular-nums">
+                      · {totalCount}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
-            <div className={`${compact ? 'mt-2 text-lg sm:text-xl' : 'mt-3 text-xl sm:text-2xl'} font-extrabold text-navy tracking-tight`}>
+
+            <div
+              className={`${
+                compact ? 'mt-2 text-lg sm:text-xl' : 'mt-3 text-xl sm:text-2xl'
+              } font-extrabold text-navy tracking-tight`}
+            >
               Thank you to everyone supporting the mission
             </div>
             <p className="mt-1 text-sm text-midnight/70 max-w-2xl leading-relaxed">
@@ -567,11 +648,7 @@ function DonationsPanel({
 
         <div className={`${compact ? 'mt-4' : 'mt-6'} grid grid-cols-1 lg:grid-cols-2 gap-4`}>
           {/* Top donations */}
-          <DonationCard
-            title="Top donations"
-            subtitle=""
-            emptyText="No donations yet."
-          >
+          <DonationCard title="Top donations" subtitle="" emptyText="No donations yet.">
             {top.map((d, idx) => (
               <DonationRow
                 key={`${d.name}-${d.amount}-${d.dateISO}-${idx}`}
@@ -588,21 +665,13 @@ function DonationsPanel({
                     </div>
                   </div>
                 }
-                right={
-                  <div className="text-right font-extrabold text-navy tabular-nums">
-                    {money(d.amount)}
-                  </div>
-                }
+                right={<div className="text-right font-extrabold text-navy tabular-nums">{money(d.amount)}</div>}
               />
             ))}
           </DonationCard>
 
           {/* Recent donations */}
-          <DonationCard
-            title="Most recent"
-            subtitle=""
-            emptyText="No donations listed yet."
-          >
+          <DonationCard title="Most recent" subtitle="" emptyText="No donations listed yet.">
             {recent.map((d, idx) => (
               <DonationRow
                 key={`${d.name}-${d.amount}-${d.dateISO}-recent-${idx}`}
@@ -618,11 +687,7 @@ function DonationsPanel({
                     </div>
                   </div>
                 }
-                right={
-                  <div className="text-right font-extrabold text-navy tabular-nums">
-                    {money(d.amount)}
-                  </div>
-                }
+                right={<div className="text-right font-extrabold text-navy tabular-nums">{money(d.amount)}</div>}
               />
             ))}
           </DonationCard>
@@ -631,7 +696,6 @@ function DonationsPanel({
     </div>
   );
 }
-
 function DonationCard({
   title,
   subtitle,
