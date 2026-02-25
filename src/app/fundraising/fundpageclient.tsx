@@ -600,11 +600,15 @@ function DonationsPanel({
   totalCount?: number;
   compact?: boolean;
 }) {
+  const [mobileView, setMobileView] = React.useState<'top' | 'recent'>('top');
+
   const fmt = (iso: string) => {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '';
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
+
+  const active = mobileView === 'top' ? top : recent;
 
   return (
     <div className="relative overflow-hidden rounded-3xl border border-midnight/10 bg-white/70 backdrop-blur shadow-sm">
@@ -612,103 +616,130 @@ function DonationsPanel({
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-midnight/10 to-transparent" />
 
       <div className={`relative ${compact ? 'p-4 sm:p-5' : 'p-6 sm:p-7'}`}>
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-          <div className="text-left">
-            {/* badge row */}
-            <div className="flex items-center gap-2">
+        {/* Header */}
+        <div className="text-left">
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-midnight/70 ring-1 ring-midnight/10">
+              <span className="h-2 w-2 rounded-full bg-sky" />
+              Donations
+            </div>
+
+            {(totalAmount != null || totalCount != null) && (
               <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-midnight/70 ring-1 ring-midnight/10">
-                <span className="h-2 w-2 rounded-full bg-sky" />
-                Donations
+                <span className="text-midnight/55">Total</span>
+                {totalAmount != null && (
+                  <span className="font-extrabold text-navy tabular-nums">{money(totalAmount)}</span>
+                )}
+                {totalCount != null && (
+                  <span className="text-midnight/55 tabular-nums">· {totalCount}</span>
+                )}
               </div>
+            )}
+          </div>
 
-              {(totalAmount != null || totalCount != null) && (
-                <div className="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-midnight/70 ring-1 ring-midnight/10">
-                  <span className="text-midnight/55">Total</span>
-                  {totalAmount != null && (
-                    <span className="font-extrabold text-navy tabular-nums">
-                      {money(totalAmount)}
-                    </span>
-                  )}
-                  {totalCount != null && (
-                    <span className="text-midnight/55 tabular-nums">
-                      · {totalCount}
-                    </span>
-                  )}
-                </div>
-              )}
-            </div>
+          <div className={`${compact ? 'mt-2 text-lg sm:text-xl' : 'mt-3 text-xl sm:text-2xl'} font-extrabold text-navy tracking-tight`}>
+            Thank you to everyone supporting the mission
+          </div>
+          <p className="mt-1 text-sm text-midnight/70 max-w-2xl leading-relaxed">
+            Every contribution helps keep SnapOrtho accessible for the next Match class.
+          </p>
+        </div>
 
-            <div
-              className={`${
-                compact ? 'mt-2 text-lg sm:text-xl' : 'mt-3 text-xl sm:text-2xl'
-              } font-extrabold text-navy tracking-tight`}
+        {/* MOBILE: Tabs + single list */}
+        <div className="mt-4 sm:hidden">
+          <div className="flex rounded-2xl bg-white/60 ring-1 ring-midnight/10 p-1">
+            <button
+              type="button"
+              onClick={() => setMobileView('top')}
+              className={`flex-1 rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                mobileView === 'top'
+                  ? 'bg-white text-navy shadow-sm ring-1 ring-midnight/10'
+                  : 'text-midnight/60'
+              }`}
             >
-              Thank you to everyone supporting the mission
-            </div>
-            <p className="mt-1 text-sm text-midnight/70 max-w-2xl leading-relaxed">
-              Every contribution helps keep SnapOrtho accessible for the next Match class.
-            </p>
+              Top
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileView('recent')}
+              className={`flex-1 rounded-xl px-3 py-2 text-sm font-semibold transition ${
+                mobileView === 'recent'
+                  ? 'bg-white text-navy shadow-sm ring-1 ring-midnight/10'
+                  : 'text-midnight/60'
+              }`}
+            >
+              Recent
+            </button>
+          </div>
+
+          <div className="mt-3 rounded-2xl bg-white/70 ring-1 ring-midnight/10 overflow-hidden">
+            {active.length ? (
+              <ul className="divide-y divide-midnight/10">
+                {active.map((d, idx) => (
+                  <DonationRowV2
+                    key={`${mobileView}-${d.name}-${d.amount}-${d.dateISO}-${idx}`}
+                    name={d.name}
+                    amount={money(d.amount)}
+                    date={fmt(d.dateISO)}
+                    via={d.via}
+                    note={d.note}
+                    highlight={mobileView === 'top' && idx === 0}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <div className="p-4 text-sm text-midnight/65">
+                {mobileView === 'top' ? 'No donations yet.' : 'No donations listed yet.'}
+              </div>
+            )}
           </div>
         </div>
 
-        <div className={`${compact ? 'mt-4' : 'mt-6'} grid grid-cols-1 lg:grid-cols-2 gap-4`}>
-          {/* Top donations */}
-          <DonationCard title="Top donations" subtitle="" emptyText="No donations yet.">
-            {top.map((d, idx) => (
-              <DonationRow
-                key={`${d.name}-${d.amount}-${d.dateISO}-${idx}`}
-                left={
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="truncate font-semibold text-midnight">{d.name}</span>
-                      {idx === 0 && <Pill>Top</Pill>}
-                      {d.via && <Pill subtle>{d.via}</Pill>}
-                    </div>
-                    <div className="mt-0.5 text-xs text-midnight/55">
-                      {fmt(d.dateISO)}
-                      {d.note ? <span className="text-midnight/45"> · {d.note}</span> : null}
-                    </div>
-                  </div>
-                }
-                right={<div className="text-right font-extrabold text-navy tabular-nums">{money(d.amount)}</div>}
-              />
-            ))}
+        {/* DESKTOP: two cards side-by-side */}
+        <div className={`${compact ? 'mt-4' : 'mt-6'} hidden sm:grid grid-cols-1 lg:grid-cols-2 gap-4`}>
+          <DonationCard title="Top donations" emptyText="No donations yet.">
+            <ul className="divide-y divide-midnight/10 rounded-2xl bg-white/60 ring-1 ring-midnight/10 overflow-hidden">
+              {top.map((d, idx) => (
+                <DonationRowV2
+                  key={`${d.name}-${d.amount}-${d.dateISO}-${idx}`}
+                  name={d.name}
+                  amount={money(d.amount)}
+                  date={fmt(d.dateISO)}
+                  via={d.via}
+                  note={d.note}
+                  highlight={idx === 0}
+                />
+              ))}
+            </ul>
           </DonationCard>
 
-          {/* Recent donations */}
-          <DonationCard title="Most recent" subtitle="" emptyText="No donations listed yet.">
-            {recent.map((d, idx) => (
-              <DonationRow
-                key={`${d.name}-${d.amount}-${d.dateISO}-recent-${idx}`}
-                left={
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="truncate font-semibold text-midnight">{d.name}</span>
-                      {d.via && <Pill subtle>{d.via}</Pill>}
-                    </div>
-                    <div className="mt-0.5 text-xs text-midnight/55">
-                      {fmt(d.dateISO)}
-                      {d.note ? <span className="text-midnight/45"> · {d.note}</span> : null}
-                    </div>
-                  </div>
-                }
-                right={<div className="text-right font-extrabold text-navy tabular-nums">{money(d.amount)}</div>}
-              />
-            ))}
+          <DonationCard title="Most recent" emptyText="No donations listed yet.">
+            <ul className="divide-y divide-midnight/10 rounded-2xl bg-white/60 ring-1 ring-midnight/10 overflow-hidden">
+              {recent.map((d, idx) => (
+                <DonationRowV2
+                  key={`${d.name}-${d.amount}-${d.dateISO}-recent-${idx}`}
+                  name={d.name}
+                  amount={money(d.amount)}
+                  date={fmt(d.dateISO)}
+                  via={d.via}
+                  note={d.note}
+                />
+              ))}
+            </ul>
           </DonationCard>
         </div>
       </div>
     </div>
   );
 }
+
+
 function DonationCard({
   title,
-  subtitle,
   emptyText,
   children,
 }: {
   title: string;
-  subtitle: string;
   emptyText: string;
   children: React.ReactNode;
 }) {
@@ -716,14 +747,11 @@ function DonationCard({
 
   return (
     <div className="rounded-3xl border border-midnight/10 bg-white/70 backdrop-blur p-5 sm:p-6 shadow-sm">
-      <div className="flex items-start justify-between gap-3">
-        <div className="text-left">
-          <div className="text-base font-extrabold text-navy">{title}</div>
-          <div className="mt-0.5 text-xs text-midnight/60">{subtitle}</div>
-        </div>
+      <div className="text-left">
+        <div className="text-base font-extrabold text-navy">{title}</div>
       </div>
 
-      <div className="mt-4 space-y-3">
+      <div className="mt-4">
         {hasChildren ? (
           children
         ) : (
@@ -735,7 +763,6 @@ function DonationCard({
     </div>
   );
 }
-
 function DonationRow({
   left,
   right,
@@ -748,6 +775,42 @@ function DonationRow({
       <div className="min-w-0 flex-1">{left}</div>
       <div className="flex-shrink-0">{right}</div>
     </div>
+  );
+}
+
+function DonationRowV2({
+  name,
+  amount,
+  date,
+  via,
+  note,
+  highlight,
+}: {
+  name: string;
+  amount: string;
+  date: string;
+  via?: Donation['via'];
+  note?: string;
+  highlight?: boolean;
+}) {
+  return (
+    <li className="px-4 py-3">
+      {/* Line 1: name + amount */}
+      <div className="grid grid-cols-[1fr_auto] items-center gap-3">
+        <div className="min-w-0">
+          <div className="truncate font-semibold text-midnight">{name}</div>
+        </div>
+        <div className="font-extrabold text-navy tabular-nums">{amount}</div>
+      </div>
+
+      {/* Line 2: meta */}
+      <div className="mt-1.5 flex flex-wrap items-center gap-2 text-xs text-midnight/60">
+        {date ? <span className="tabular-nums">{date}</span> : null}
+        {highlight ? <Pill>Top</Pill> : null}
+        {via ? <Pill subtle>{via}</Pill> : null}
+        {note ? <span className="text-midnight/45">· {note}</span> : null}
+      </div>
+    </li>
   );
 }
 
