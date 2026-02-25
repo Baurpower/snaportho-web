@@ -7,54 +7,25 @@ import React from 'react';
 
 const DonationForm = dynamic(() => import('./donationformwrapper'), { ssr: false });
 type Donation = {
-  name: string;          // "Alex B." or "Anonymous"
-  amount: number;        // 25
-  dateISO: string;       // "2026-02-23" or "2026-02-23T14:22:00-05:00"
-  via?: 'Stripe' | 'PayPal' | 'Other';
-  note?: string;         // optional short note
-  highlight?: boolean;   // optional: pin as “featured”
+  name: string;
+  amount: number; // dollars in UI
+  dateISO: string;
+  via?: "Stripe" | "PayPal" | "Other";
+  note?: string;
+  highlight?: boolean;
 };
 
-const DONATIONS: Donation[] = [
-  
-  { name: '', amount: 5, dateISO: '2026-02-23', via: 'Stripe' },
-  { name: '', amount: 5, dateISO: '2026-02-23', via: 'Stripe' },
-
-
-];
+type DonationsApiResponse = {
+  donations: Donation[];
+  totals: {
+    sumCents: number;
+    sumDollars: number;
+    count: number;
+  };
+};
 
 function isBlank(s?: string) {
   return !s || s.trim().length === 0;
-}
-
-// stable hash from donation fields (so the codename doesn't change across renders)
-function hashDonation(d: Donation) {
-  const key = `${d.amount}|${d.dateISO}|${d.via ?? ''}|${d.note ?? ''}`;
-  let h = 2166136261; // FNV-1a base
-  for (let i = 0; i < key.length; i++) {
-    h ^= key.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
-}
-
-const ADJ = [
-  'Steady','Brave','Kind','Swift','Quiet','Bold','Noble','Bright','Calm','True',
-  'Loyal','Sharp','Humble','Solid','Radiant','Focused','Patient','Clever',
-];
-
-const NOUN = [
-  'Suture','Scalpel','Anvil','Atlas','Ranger','Beacon','Hammer','Pioneer','Falcon',
-  'Comet','Oak','Sparrow','Summit','Forge','Apex','Nimbus','Voyager','Quartz',
-];
-
-// Ex: "Quiet Falcon 318"
-function anonymousCodename(d: Donation) {
-  const h = hashDonation(d);
-  const a = ADJ[h % ADJ.length];
-  const n = NOUN[(h >>> 8) % NOUN.length];
-  const num = 100 + ((h >>> 16) % 900);
-  return `${a} ${n} ${num}`;
 }
 
 export default function FundPage() {
@@ -63,46 +34,75 @@ export default function FundPage() {
 
   const PAYPAL_DONATE_URL = 'https://www.paypal.com/donate?campaign_id=X4TU2R59GH3X6';
 
-  // ===== Manual totals (edit these anytime) =====
+  // ===== Totals =====
   const GOAL = 1000;
-
-  // Paste your running totals here (Stripe dashboard + PayPal total)
-  const STRIPE_TOTAL = 10;
   const PAYPAL_TOTAL = 0;
 
-  const raised = STRIPE_TOTAL + PAYPAL_TOTAL;
+  const [donations, setDonations] = React.useState<Donation[]>([]);
+  const [stripeTotals, setStripeTotals] = React.useState({ sumDollars: 0, count: 0 });
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+  try {
+    const res = await fetch('/api/donations?limit=80', { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = (await res.json()) as DonationsApiResponse;
+    if (cancelled) return;
+
+    setDonations(Array.isArray(data.donations) ? data.donations : []);
+    setStripeTotals({
+      sumDollars: Number(data.totals?.sumDollars ?? 0),
+      count: Number(data.totals?.count ?? 0),
+    });
+  } catch (e) {
+    console.error('Failed to load donations:', e);
+    if (!cancelled) {
+      setDonations([]);
+      setStripeTotals({ sumDollars: 0, count: 0 });
+    }
+  }
+}
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const raised = stripeTotals.sumDollars + PAYPAL_TOTAL;
   const pct = Math.max(0, Math.min(1, raised / GOAL));
   const remaining = Math.max(0, GOAL - raised);
 
-  
   const money = (n: number) =>
     n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+  // No codename logic: show API name, fallback to "Anonymous"
   const displayDonations = React.useMemo(() => {
-  return DONATIONS.map((d) => ({
-    ...d,
-    name: isBlank(d.name) ? anonymousCodename(d) : d.name.trim(),
-  }));
-}, []);
+    return donations.map((d) => ({
+      ...d,
+      name: isBlank(d.name) ? 'Anonymous' : d.name.trim(),
+    }));
+  }, [donations]);
 
-const topDonations = React.useMemo(() => {
-  return [...displayDonations]
-    .sort((a, b) => b.amount - a.amount)
-    .slice(0, 5);
-}, [displayDonations]);
+  const topDonations = React.useMemo(() => {
+    return [...displayDonations].sort((a, b) => b.amount - a.amount).slice(0, 5);
+  }, [displayDonations]);
 
-const recentDonations = React.useMemo(() => {
-  return [...displayDonations]
-    .sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime())
-    .slice(0, 6);
-}, [displayDonations]);
-const totalCount = DONATIONS.length;
-// If you want total amount of listed donations (not Stripe+PayPal manual totals):
+  const recentDonations = React.useMemo(() => {
+    return [...displayDonations]
+      .sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime())
+      .slice(0, 6);
+  }, [displayDonations]);
 
-const totalListedAmount = React.useMemo(
-  () => DONATIONS.reduce((sum, d) => sum + (Number.isFinite(d.amount) ? d.amount : 0), 0),
-  []
-);
+  // Panel totals: I recommend showing total raised + count from DB
+  const totalAmount = raised;
+  const totalCount = stripeTotals.count;
+
   const t = useCountdown(matchMomentET);
+
   return (
     <main className="bg-cream min-h-screen font-sans text-midnight pb-28 sm:pb-0">
       <div className="max-w-5xl mx-auto px-4 sm:px-10 py-10 sm:py-14 md:py-20 space-y-8 sm:space-y-10">
@@ -236,7 +236,7 @@ const totalListedAmount = React.useMemo(
   recent={recentDonations}
   money={money}
   compact
-  totalAmount={totalListedAmount}        // or totalListedAmount if you prefer
+  totalAmount={totalAmount} 
   totalCount={totalCount}
 />
 </div>
@@ -763,20 +763,7 @@ function DonationCard({
     </div>
   );
 }
-function DonationRow({
-  left,
-  right,
-}: {
-  left: React.ReactNode;
-  right: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl border border-midnight/10 bg-white/70 px-4 py-3">
-      <div className="min-w-0 flex-1">{left}</div>
-      <div className="flex-shrink-0">{right}</div>
-    </div>
-  );
-}
+
 
 function DonationRowV2({
   name,
