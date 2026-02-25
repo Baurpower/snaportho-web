@@ -49,6 +49,10 @@ export default function DonationForm() {
   const [anonymous, setAnonymous] = useState(false);
   const [anonName, setAnonName] = useState('');
 
+  useEffect(() => {
+  if (anonymous && !anonName) setAnonName(randomCodename());
+}, [anonymous, anonName]);
+
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -371,18 +375,21 @@ export default function DonationForm() {
         </button>
       </div>
 
-      {/* Mobile sticky submit */}
-      <div className="sm:hidden sticky bottom-0 z-20 -mx-6 px-6 pb-[calc(env(safe-area-inset-bottom)+12px)] pt-3 bg-cream/95 backdrop-blur border-t border-midnight/10">
-        <button
-          disabled={!canSubmit}
-          className="w-full rounded-xl bg-green-600 text-white py-3.5 text-base font-semibold shadow-lg disabled:opacity-50"
-        >
-          {loading ? 'Processing…' : `Donate $${(amount / 100).toFixed(2)}`}
-        </button>
-        <div className="mt-1 text-center text-[11px] text-midnight/55">
-          No account needed · Takes ~20 seconds
-        </div>
-      </div>
+      {/* Spacer so the fixed bar never covers inputs */}
+<div className="sm:hidden h-[92px]" />
+
+{/* Mobile fixed submit */}
+<div className="sm:hidden fixed inset-x-0 bottom-0 z-50 border-t border-midnight/10 bg-white/95 backdrop-blur px-4 pt-3 pb-[calc(env(safe-area-inset-bottom)+12px)]">
+  <button
+    disabled={!canSubmit}
+    className="w-full rounded-xl bg-green-600 text-white py-3.5 text-base font-semibold shadow-lg disabled:opacity-50"
+  >
+    {loading ? 'Processing…' : `Donate $${(amount / 100).toFixed(2)}`}
+  </button>
+  <div className="mt-1 text-center text-[11px] text-midnight/55">
+    No account needed · Takes ~20 seconds
+  </div>
+</div>
     </form>
   );
 }
