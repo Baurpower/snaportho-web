@@ -104,8 +104,8 @@ const totalListedAmount = React.useMemo(
 );
   const t = useCountdown(matchMomentET);
   return (
-    <main className="bg-cream min-h-screen font-sans text-midnight">
-      <div className="max-w-5xl mx-auto px-6 sm:px-10 py-14 md:py-20 space-y-10">
+    <main className="bg-cream min-h-screen font-sans text-midnight pb-28 sm:pb-0">
+      <div className="max-w-5xl mx-auto px-4 sm:px-10 py-10 sm:py-14 md:py-20 space-y-8 sm:space-y-10">
        {/* ── Campaign Header ───────────────────────────── */}
 <section className="relative overflow-hidden rounded-[32px] border border-midnight/10 bg-white shadow-[0_30px_80px_-40px_rgba(10,25,41,0.35)]">
   {/* premium glow */}
@@ -377,7 +377,10 @@ const totalListedAmount = React.useMemo(
         </section>
 
         {/* Donation */}
-        <section id="donate" className="scroll-mt-24 md:scroll-mt-28 bg-white p-8 rounded-3xl shadow-md space-y-6">
+        <section
+  id="donate"
+  className="scroll-mt-24 md:scroll-mt-28 bg-white p-5 sm:p-8 rounded-3xl shadow-md space-y-6"
+>
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
             <SectionTitle emoji="💸" text="Donate to the campaign" />
             <CountdownInline targetISO={matchMomentET} />
@@ -389,9 +392,11 @@ const totalListedAmount = React.useMemo(
           </p>
 
           {/* IMPORTANT: Keep Stripe logic untouched — DonationForm stays exactly as-is */}
-          <div className="bg-white border border-midnight/10 shadow-xl p-6 md:p-8 rounded-2xl">
-            <DonationForm />
-          </div>
+          <div className="bg-white border border-midnight/10 shadow-xl rounded-2xl">
+  <div className="p-0 sm:p-6 md:p-8">
+    <DonationForm />
+  </div>
+</div>
           {/* PayPal option (premium) */}
 <div className="relative overflow-hidden rounded-3xl border border-midnight/10 bg-white shadow-sm">
   {/* premium background */}
