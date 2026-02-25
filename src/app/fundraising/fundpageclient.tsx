@@ -36,10 +36,6 @@ type Donation = {
 
 const DonationForm = dynamic(() => import('./donationformwrapper'), { ssr: false });
 
-function isBlank(s?: string) {
-  return !s || s.trim().length === 0;
-}
-
 const CAMPAIGN_YEAR = 2026;
 
 // Parse date in a tolerant way and return a real Date or null
@@ -239,7 +235,7 @@ export default function FundPage() {
       console.log(`[donations:${reqId}] JSON`, {
         donationsLen: rawList.length,
         totals: apiTotals,
-        source: (data as any)?.source,
+        source: data.source,
       });
 
       // Filter after normalization (so dateISO is always best-effort populated)
@@ -273,32 +269,35 @@ export default function FundPage() {
       setDonationsStatus({ state: 'success' });
 
       console.log(`[donations:${reqId}] DONE setState`, nextTotals);
-    } catch (e: any) {
-      const aborted = e?.name === 'AbortError';
-      console.error(`[donations:${reqId}] FAILED`, { aborted, didTimeout, error: e });
+    } catch (e: unknown) {
+  const aborted =
+    e instanceof DOMException ? e.name === 'AbortError'
+    : e instanceof Error ? e.name === 'AbortError'
+    : false;
 
-      // If we timed out and we're still mounted, show an error instead of hanging on "loading"
-      if (mountedRef.current && didTimeout) {
-        setDonationsStatus({
-          state: 'error',
-          message: 'Donations request timed out. Try refreshing.',
-        });
-        return;
-      }
+  console.error(`[donations:${reqId}] FAILED`, { aborted, didTimeout, error: e });
 
-      // Abort caused by unmount/navigation: do nothing
-      if (aborted) {
-        console.warn(`[donations:${reqId}] aborted (likely unmount)`);
-        return;
-      }
+  if (mountedRef.current && didTimeout) {
+    setDonationsStatus({
+      state: 'error',
+      message: 'Donations request timed out. Try refreshing.',
+    });
+    return;
+  }
 
-      // Real error
-      if (mountedRef.current) {
-        setDonations([]);
-        setTotals({ sumDollars: 0, count: 0 });
-        setDonationsStatus({ state: 'error', message: String(e?.message ?? e) });
-      }
-    } finally {
+  if (aborted) {
+    console.warn(`[donations:${reqId}] aborted (likely unmount)`);
+    return;
+  }
+
+  const message = e instanceof Error ? e.message : String(e);
+
+  if (mountedRef.current) {
+    setDonations([]);
+    setTotals({ sumDollars: 0, count: 0 });
+    setDonationsStatus({ state: 'error', message });
+  }
+} finally {
       window.clearTimeout(timeoutId);
       inFlightRef.current = false;
     }
