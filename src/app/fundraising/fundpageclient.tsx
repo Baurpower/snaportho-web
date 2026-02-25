@@ -5,18 +5,19 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
-const DonationForm = dynamic(() => import('./donationformwrapper'), { ssr: false });
-type Donation = {
-  name: string;
-  amount: number; // dollars in UI
-  dateISO: string;
-  via?: "Stripe" | "PayPal" | "Other";
-  note?: string;
-  highlight?: boolean;
+type DonationVia = 'Stripe' | 'PayPal' | 'Other';
+
+type DonationRaw = {
+  amount: number; // API returns dollars (e.g., 5, 50, 3)
+  via: DonationVia;
+  dateISO: string; // ISO string (e.g., 2026-02-25T01:48:27Z)
+  name: string; // may be "" for anonymous
+  note?: string; // optional
 };
 
 type DonationsApiResponse = {
-  donations: Donation[];
+  donations: DonationRaw[];
+  source?: string; // "db:donations" (present in your curl)
   totals: {
     sumCents: number;
     sumDollars: number;
@@ -24,8 +25,106 @@ type DonationsApiResponse = {
   };
 };
 
+type Donation = {
+  name: string;
+  amount: number; // dollars in UI
+  dateISO: string;
+  via?: DonationVia;
+  note?: string;
+  highlight?: boolean;
+};
+
+const DonationForm = dynamic(() => import('./donationformwrapper'), { ssr: false });
+
 function isBlank(s?: string) {
   return !s || s.trim().length === 0;
+}
+
+const CAMPAIGN_YEAR = 2026;
+
+// Parse date in a tolerant way and return a real Date or null
+function parseDonationDate(input: unknown): Date | null {
+  if (!input) return null;
+  const s = String(input).trim();
+  if (!s) return null;
+
+  // If it's already ISO with timezone, Date can handle it
+  // Example: 2026-02-24T14:22:00-05:00
+  let d = new Date(s);
+  if (!Number.isNaN(d.getTime())) return d;
+
+  // Handle "YYYY-MM-DD" explicitly (treat as local date)
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    const [y, m, day] = s.split('-').map(Number);
+    d = new Date(y, (m ?? 1) - 1, day ?? 1);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  // Handle "YYYY-MM-DD HH:mm:ss" (common DB format) -> treat as UTC
+  if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/.test(s)) {
+    const isoish = s.replace(' ', 'T') + 'Z';
+    d = new Date(isoish);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  // Handle "YYYY-MM-DDTHH:mm:ss" without timezone -> treat as UTC
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(s)) {
+    d = new Date(s + 'Z');
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  return null;
+}
+function normalizeName(name: unknown) {
+  const s = String(name ?? '').trim();
+  return s.length ? s : 'Anonymous';
+}
+
+function normalizeDonation(raw: DonationRaw): Donation {
+  const parsed = parseDonationDate(raw.dateISO);
+
+  return {
+    name: normalizeName(raw.name),
+    amount: Number(raw.amount || 0),
+    dateISO: parsed ? String(raw.dateISO) : String(raw.dateISO ?? ''),
+    via: raw.via,
+    note: raw.note,
+  };
+}
+
+
+function isInYear(input: unknown, year: number) {
+  const d = parseDonationDate(input);
+  return !!d && d.getFullYear() === year;
+}
+
+// Sorting helper: stable even when date is invalid
+function donationTimeMs(input: unknown): number {
+  const d = parseDonationDate(input);
+  return d ? d.getTime() : 0;
+}
+
+function getDonationsUrl(limit: number) {
+  const base = 'https://api.snap-ortho.com'; // <-- your Vapor domain
+  return `${base}/donations?limit=${limit}`;
+}
+
+function anySignal(signals: AbortSignal[]) {
+  const controller = new AbortController();
+
+  const onAbort = () => {
+    if (!controller.signal.aborted) controller.abort();
+  };
+
+  for (const s of signals) {
+    if (s.aborted) {
+      onAbort();
+      break;
+    }
+    s.addEventListener('abort', onAbort, { once: true });
+  }
+
+  return controller.signal;
 }
 
 export default function FundPage() {
@@ -39,40 +138,188 @@ export default function FundPage() {
   const PAYPAL_TOTAL = 0;
 
   const [donations, setDonations] = React.useState<Donation[]>([]);
-  const [stripeTotals, setStripeTotals] = React.useState({ sumDollars: 0, count: 0 });
+  const [totals, setTotals] = React.useState({ sumDollars: 0, count: 0 });
 
-  React.useEffect(() => {
-    let cancelled = false;
+  // Optional but helpful for debugging UI freezes:
+  const [donationsStatus, setDonationsStatus] = React.useState<{
+    state: 'idle' | 'loading' | 'success' | 'error';
+    message?: string;
+  }>({ state: 'idle' });
 
-    async function load() {
-  try {
-    const res = await fetch('/api/donations?limit=80', { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const inFlightRef = React.useRef(false);
+  const mountedRef = React.useRef(false);
+  const renderCountRef = React.useRef(0);
 
-    const data = (await res.json()) as DonationsApiResponse;
-    if (cancelled) return;
-
-    setDonations(Array.isArray(data.donations) ? data.donations : []);
-    setStripeTotals({
-      sumDollars: Number(data.totals?.sumDollars ?? 0),
-      count: Number(data.totals?.count ?? 0),
+  renderCountRef.current += 1;
+  if (renderCountRef.current % 10 === 0) {
+    console.log(`[FundPage] render x${renderCountRef.current}`, {
+      donationsLen: donations.length,
+      sumDollars: totals.sumDollars,
+      count: totals.count,
+      status: donationsStatus.state,
     });
-  } catch (e) {
-    console.error('Failed to load donations:', e);
-    if (!cancelled) {
-      setDonations([]);
-      setStripeTotals({ sumDollars: 0, count: 0 });
-    }
   }
-}
 
-    load();
-    return () => {
-      cancelled = true;
-    };
+  const loadDonations = React.useCallback(async (signal?: AbortSignal) => {
+    // Prevent overlapping loads (Strict Mode dev runs effects twice)
+    if (inFlightRef.current) {
+      console.log('[donations] load skipped (in-flight)');
+      return;
+    }
+    inFlightRef.current = true;
+
+    const reqId = Math.random().toString(36).slice(2, 8);
+    const url = getDonationsUrl(80);
+
+    console.log(`[donations:${reqId}] START`, {
+      url,
+      time: new Date().toISOString(),
+      nodeEnv: process.env.NODE_ENV,
+      mounted: mountedRef.current,
+    });
+
+    setDonationsStatus({ state: 'loading' });
+
+    // Timeout guard to prevent hung fetch “freeze”
+    const timeoutMs = 8000;
+    const controller = new AbortController();
+    let didTimeout = false;
+
+    const timeoutId = window.setTimeout(() => {
+      didTimeout = true;
+      console.warn(`[donations:${reqId}] TIMEOUT after ${timeoutMs}ms -> abort`);
+      controller.abort();
+    }, timeoutMs);
+
+    // If caller passes a signal, tie them together
+    const combinedSignal = signal ? anySignal([signal, controller.signal]) : controller.signal;
+
+    try {
+      console.time(`[donations:${reqId}] fetch`);
+
+      let res: Response;
+      try {
+        res = await fetch(url, {
+          cache: 'no-store',
+          signal: combinedSignal,
+        });
+      } finally {
+        console.timeEnd(`[donations:${reqId}] fetch`);
+        window.clearTimeout(timeoutId);
+      }
+
+      console.log(`[donations:${reqId}] RESPONSE`, {
+        ok: res.ok,
+        status: res.status,
+        statusText: res.statusText,
+        contentType: res.headers.get('content-type'),
+        cacheControl: res.headers.get('cache-control'),
+      });
+
+      const contentType = res.headers.get('content-type') || '';
+
+      if (!res.ok) {
+        const errText = await res.text().catch(() => '');
+        throw new Error(`HTTP ${res.status} ${res.statusText} :: ${errText.slice(0, 200)}`);
+      }
+
+      if (!contentType.includes('application/json')) {
+        const errText = await res.text().catch(() => '');
+        throw new Error(`Expected JSON but got ${contentType}. Body: ${errText.slice(0, 200)}`);
+      }
+
+      const data = (await res.json()) as DonationsApiResponse;
+
+      // Defensive guards (avoid runtime explosions if API changes)
+      const rawList: DonationRaw[] = Array.isArray(data?.donations) ? data.donations : [];
+      const apiTotals = data?.totals ?? { sumCents: 0, sumDollars: 0, count: 0 };
+
+      const normalized = rawList.map(normalizeDonation);
+
+      console.log(`[donations:${reqId}] JSON`, {
+        donationsLen: rawList.length,
+        totals: apiTotals,
+        source: (data as any)?.source,
+      });
+
+      // Filter after normalization (so dateISO is always best-effort populated)
+      const yearDonations = normalized.filter((d) => isInYear(d.dateISO, CAMPAIGN_YEAR));
+
+      // Compute UI totals (dollars + count) consistently with state shape
+      const nextTotals = yearDonations.reduce(
+        (acc, d) => {
+          acc.sumDollars += Number(d.amount || 0);
+          acc.count += 1;
+          return acc;
+        },
+        { sumDollars: 0, count: 0 }
+      );
+
+      // Don’t set state if unmounted or aborted
+      if (!mountedRef.current) {
+        console.warn(`[donations:${reqId}] SKIP setState (unmounted)`);
+        return;
+      }
+      if (combinedSignal.aborted) {
+        console.warn(`[donations:${reqId}] SKIP setState (aborted)`);
+        return;
+      }
+
+      setDonations(yearDonations);
+      setTotals({
+        sumDollars: Math.round(nextTotals.sumDollars), // keep integer dollars for your UI formatting
+        count: nextTotals.count,
+      });
+      setDonationsStatus({ state: 'success' });
+
+      console.log(`[donations:${reqId}] DONE setState`, nextTotals);
+    } catch (e: any) {
+      const aborted = e?.name === 'AbortError';
+      console.error(`[donations:${reqId}] FAILED`, { aborted, didTimeout, error: e });
+
+      // If we timed out and we're still mounted, show an error instead of hanging on "loading"
+      if (mountedRef.current && didTimeout) {
+        setDonationsStatus({
+          state: 'error',
+          message: 'Donations request timed out. Try refreshing.',
+        });
+        return;
+      }
+
+      // Abort caused by unmount/navigation: do nothing
+      if (aborted) {
+        console.warn(`[donations:${reqId}] aborted (likely unmount)`);
+        return;
+      }
+
+      // Real error
+      if (mountedRef.current) {
+        setDonations([]);
+        setTotals({ sumDollars: 0, count: 0 });
+        setDonationsStatus({ state: 'error', message: String(e?.message ?? e) });
+      }
+    } finally {
+      window.clearTimeout(timeoutId);
+      inFlightRef.current = false;
+    }
   }, []);
 
-  const raised = stripeTotals.sumDollars + PAYPAL_TOTAL;
+  React.useEffect(() => {
+    mountedRef.current = true;
+
+    const controller = new AbortController();
+    console.log('[donations] effect mount -> load');
+
+    loadDonations(controller.signal);
+
+    return () => {
+      console.log('[donations] effect cleanup -> abort + unmount');
+      mountedRef.current = false;
+      controller.abort();
+    };
+  }, [loadDonations]);
+
+  const raised = totals.sumDollars + PAYPAL_TOTAL;
   const pct = Math.max(0, Math.min(1, raised / GOAL));
   const remaining = Math.max(0, GOAL - raised);
 
@@ -80,12 +327,7 @@ export default function FundPage() {
     n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
 
   // No codename logic: show API name, fallback to "Anonymous"
-  const displayDonations = React.useMemo(() => {
-    return donations.map((d) => ({
-      ...d,
-      name: isBlank(d.name) ? 'Anonymous' : d.name.trim(),
-    }));
-  }, [donations]);
+  const displayDonations = donations;
 
   const topDonations = React.useMemo(() => {
     return [...displayDonations].sort((a, b) => b.amount - a.amount).slice(0, 5);
@@ -93,15 +335,16 @@ export default function FundPage() {
 
   const recentDonations = React.useMemo(() => {
     return [...displayDonations]
-      .sort((a, b) => new Date(b.dateISO).getTime() - new Date(a.dateISO).getTime())
+      .sort((a, b) => donationTimeMs(b.dateISO) - donationTimeMs(a.dateISO))
       .slice(0, 6);
   }, [displayDonations]);
 
-  // Panel totals: I recommend showing total raised + count from DB
+  // Panel totals: show total raised + count from DB-derived totals
   const totalAmount = raised;
-  const totalCount = stripeTotals.count;
+  const totalCount = totals.count;
 
   const t = useCountdown(matchMomentET);
+
 
   return (
     <main className="bg-cream min-h-screen font-sans text-midnight pb-28 sm:pb-0">
@@ -603,8 +846,8 @@ function DonationsPanel({
   const [mobileView, setMobileView] = React.useState<'top' | 'recent'>('top');
 
   const fmt = (iso: string) => {
-    const d = new Date(iso);
-    if (Number.isNaN(d.getTime())) return '';
+    const d = parseDonationDate(iso);
+    if (!d) return '';
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   };
 

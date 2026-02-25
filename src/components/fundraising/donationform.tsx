@@ -31,15 +31,69 @@ function randomCodename() {
   return `${a} ${n} ${twoDigit}`;
 }
 
+/**
+ * Accepts:
+ *  - "25"      -> 2500
+ *  - "25."     -> 2500   (treat as whole dollars while typing)
+ *  - "25.5"    -> 2550
+ *  - "25.50"   -> 2550
+ *  - ".99"     -> 99
+ *  - "0.99"    -> 99
+ * Ignores:
+ *  - currency symbols/commas/spaces
+ * Limits cents to 2 decimals (extra digits are ignored).
+ */
+function dollarsTextToCents(text: string) {
+  const s = text.trim();
+  if (!s) return null;
+
+  // Keep digits and at most one decimal point.
+  // (We allow user to type junk; we sanitize.)
+  let out = '';
+  let seenDot = false;
+  for (const ch of s) {
+    if (ch >= '0' && ch <= '9') out += ch;
+    else if (ch === '.' && !seenDot) {
+      out += '.';
+      seenDot = true;
+    }
+  }
+
+  if (!out) return null;
+
+  // If it's just ".", treat as empty
+  if (out === '.') return null;
+
+  const [dollarsPartRaw, centsPartRaw = ''] = out.split('.');
+  const dollarsPart = dollarsPartRaw === '' ? '0' : dollarsPartRaw; // ".99" => dollars=0
+
+  if (!/^\d+$/.test(dollarsPart)) return null;
+
+  // cents: take up to 2 digits; pad right for single digit
+  const cents2 = centsPartRaw.slice(0, 2);
+  const centsNormalized =
+    cents2.length === 0 ? '00' : cents2.length === 1 ? `${cents2}0` : cents2;
+
+  const dollars = Number(dollarsPart);
+  const cents = Number(centsNormalized);
+
+  if (!Number.isFinite(dollars) || !Number.isFinite(cents)) return null;
+
+  return dollars * 100 + cents;
+}
+
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
 
-function dollarsToCents(input: string) {
-  const normalized = input.replace(/[^\d.]/g, '');
-  const num = Number(normalized);
-  if (!Number.isFinite(num)) return null;
-  return Math.round(num * 100);
+// Format cents back to a nice string for the input on blur.
+// If amount has no cents, show whole dollars: "25"
+// If it has cents, show 2 decimals: "25.50"
+function formatCentsForInput(cents: number) {
+  const dollars = Math.floor(cents / 100);
+  const rem = cents % 100;
+  if (rem === 0) return String(dollars);
+  return `${dollars}.${rem.toString().padStart(2, '0')}`;
 }
 
 export default function DonationForm() {
@@ -48,6 +102,7 @@ export default function DonationForm() {
   const router = useRouter();
 
   const [amount, setAmount] = useState(1500);
+  const [amountText, setAmountText] = useState('15');
   const [billingName, setBillingName] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [anonymous, setAnonymous] = useState(false);
@@ -62,12 +117,14 @@ export default function DonationForm() {
   const [loading, setLoading] = useState(false);
   const [selectedTier, setSelectedTier] = useState<number | null>(null);
 
-  // Track completion per element (since we're splitting fields)
   const [numComplete, setNumComplete] = useState(false);
   const [expComplete, setExpComplete] = useState(false);
   const [cvcComplete, setCvcComplete] = useState(false);
 
   const [errorText, setErrorText] = useState<string | null>(null);
+
+  // inline validation message for custom amount
+  const [amountHint, setAmountHint] = useState<string | null>(null);
 
   const inFlightRef = useRef(false);
   const attemptKeyRef = useRef<string | null>(null);
@@ -91,16 +148,10 @@ export default function DonationForm() {
 
   const handleTierClick = (value: number) => {
     setAmount(value);
+    setAmountText(formatCentsForInput(value)); // supports cents if you ever add tier cents
     setSelectedTier(value);
     setErrorText(null);
-  };
-
-  const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const cents = dollarsToCents(e.target.value);
-    if (cents == null) return;
-    setAmount(clamp(cents, MIN_CENTS, MAX_CENTS));
-    setSelectedTier(null);
-    setErrorText(null);
+    setAmountHint(null);
   };
 
   const cardComplete = numComplete && expComplete && cvcComplete;
@@ -162,7 +213,6 @@ export default function DonationForm() {
       const clientSecret: string | undefined = data?.clientSecret;
       if (!clientSecret) throw new Error('Missing client secret from server.');
 
-      // IMPORTANT: pass CardNumberElement here; Stripe uses the combined card data across elements
       const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: cardNumberEl,
@@ -201,6 +251,7 @@ export default function DonationForm() {
           {errorText}
         </div>
       )}
+
 
       {/* Identity */}
       <section className="rounded-2xl border border-midnight/10 bg-white/70 p-4 sm:p-5">
@@ -292,7 +343,7 @@ export default function DonationForm() {
         )}
       </section>
 
-      {/* Amount */}
+       {/* Amount */}
       <section className="rounded-2xl border border-midnight/10 bg-white/70 p-4 sm:p-5">
         <div className="text-sm font-semibold text-midnight">Amount</div>
 
@@ -316,21 +367,74 @@ export default function DonationForm() {
         </div>
 
         <div className="mt-4">
-          <label className="block text-xs font-semibold text-midnight/70">Custom amount (USD)</label>
-          <div className="mt-2 flex items-center gap-2 rounded-xl border border-midnight/10 bg-white px-4 py-2.5 focus-within:ring-2 focus-within:ring-sky/30">
-            <span className="text-midnight/60 font-semibold">$</span>
+          <label className="block text-xs font-semibold text-midnight/70">
+            Custom amount (USD)
+          </label>
+
+          <div className="mt-2 flex items-center gap-2 rounded-xl border border-midnight/10 bg-white px-4 py-3 focus-within:ring-2 focus-within:ring-sky/30">
+            <span className="text-midnight/60 font-semibold select-none">$</span>
+
             <input
-              type="number"
-              min={1}
-              step="0.01"
-              value={(amount / 100).toFixed(2)}
-              onChange={handleCustomAmountChange}
-              className="w-full bg-transparent text-base outline-none"
-              placeholder="25.00"
+              type="text"
+              value={amountText}
+              onChange={(e) => {
+                // allow digits + optional decimal
+                const raw = e.target.value.replace(/[^0-9.]/g, '');
+                // prevent multiple dots while typing
+                const safe =
+                  raw.indexOf('.') === -1
+                    ? raw
+                    : raw.slice(0, raw.indexOf('.') + 1) + raw.slice(raw.indexOf('.') + 1).replace(/\./g, '');
+
+                setAmountText(safe);
+                setSelectedTier(null);
+                setErrorText(null);
+
+                const cents = dollarsTextToCents(safe);
+                if (cents == null) {
+                  setAmountHint(null);
+                  return;
+                }
+                if (cents < MIN_CENTS) setAmountHint('Minimum is $1.');
+                else if (cents > MAX_CENTS) setAmountHint('Maximum is $5,000.');
+                else setAmountHint(null);
+
+                // IMPORTANT: still do not setAmount() here
+              }}
+              onBlur={() => {
+                const cents = dollarsTextToCents(amountText);
+
+                if (cents == null) {
+                  setAmountText(formatCentsForInput(amount));
+                  setAmountHint(null);
+                  return;
+                }
+
+                const clamped = clamp(cents, MIN_CENTS, MAX_CENTS);
+                setAmount(clamped);
+                setAmountText(formatCentsForInput(clamped));
+
+                if (cents < MIN_CENTS) setAmountHint('Minimum is $1. Updated to $1.');
+                else if (cents > MAX_CENTS) setAmountHint('Maximum is $5,000. Updated to $5,000.');
+                else setAmountHint(null);
+              }}
               inputMode="decimal"
+              placeholder="25"
+              className="w-full bg-transparent text-base outline-none tabular-nums"
+              aria-label="Donation amount in dollars"
+              aria-describedby="amount-help amount-hint"
             />
           </div>
-          <div className="mt-2 text-[11px] text-midnight/55">Min $1 · Max $5,000</div>
+
+          <div id="amount-help" className="mt-2 text-[11px] text-midnight/55">
+            Min $1 · Max $5,000
+          </div>
+
+          {amountHint && (
+            <div id="amount-hint" className="mt-1 text-[11px] font-medium text-amber-700">
+              {amountHint}
+            </div>
+          )}
         </div>
       </section>
 
@@ -361,7 +465,7 @@ export default function DonationForm() {
           </div>
         </div>
 
-        {/* Exp + CVC (mobile-friendly) */}
+        {/* Exp + CVC */}
         <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="block text-xs font-semibold text-midnight/70">Expiration</label>
@@ -387,7 +491,7 @@ export default function DonationForm() {
         <div className="mt-2 text-xs text-midnight/60">Secure checkout via Stripe.</div>
       </section>
 
-      {/* Single submit button (mobile + desktop) */}
+      {/* Single submit button */}
       <button
         disabled={!canSubmit}
         className="w-full rounded-xl bg-green-600 text-white py-3.5 text-base font-semibold disabled:opacity-50"
