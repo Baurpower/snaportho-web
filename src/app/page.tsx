@@ -5,6 +5,29 @@ import Image from "next/image";
 import Link from "next/link";
 import Nav from "../components/Nav"; // adjust path if needed
 import SmartDeepLink from "../components/smartdeeplink";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  description:
+    "SnapOrtho is a free, all-in-one orthopaedics learning platform for students and residents: image-first learning, spaced repetition, case prep, and quick reference.",
+  alternates: { canonical: "https://snap-ortho.com/" },
+  openGraph: {
+    title: "SnapOrtho",
+    description:
+      "Free, image-first ortho learning with spaced repetition + case prep. Built for students and residents.",
+    url: "https://snap-ortho.com/",
+    siteName: "SnapOrtho",
+    images: [{ url: "/og-home.png", width: 1200, height: 630, alt: "SnapOrtho" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SnapOrtho",
+    description:
+      "Free, image-first ortho learning with spaced repetition + case prep.",
+    images: ["/og-home.png"],
+  },
+};
 
 
 type SectionLink = { label: string; href: string };
