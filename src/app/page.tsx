@@ -3,12 +3,10 @@ import type { Metadata } from "next";
 import HomePageClient from "./homepageclient";
 
 export const metadata: Metadata = {
-  title: "SnapOrtho",
   description:
     "Free orthopaedic education for medical students and residents — master fracture conference, prep cases smarter, and build confidence in orthopaedics.",
   alternates: { canonical: "https://snap-ortho.com/" },
   openGraph: {
-    title: "SnapOrtho",
     description:
       "Free orthopaedic education for medical students and residents — master fracture conference, prep cases smarter, and build confidence in orthopaedics.",
     url: "https://snap-ortho.com/",
@@ -18,7 +16,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SnapOrtho",
     description:
       "Free orthopaedic education for medical students and residents — master fracture conference, prep cases smarter, and build confidence in orthopaedics.",
     images: ["/og-home.png"],
