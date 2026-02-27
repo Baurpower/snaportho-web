@@ -551,7 +551,7 @@ const portfolioSections: PortfolioSection[] = [
     icon: "👣",
     title: "Path to Ortho",
     subtitle:
-      "Mentorship and strategy for the Match—timelines, milestones, and the hidden curriculum.",
+      "Mentorship and strategy for the Match.",
     bullets: [
       "What matters most at each stage",
       "How to build a competitive application",
@@ -573,12 +573,13 @@ const portfolioSections: PortfolioSection[] = [
     icon: "🧪",
     title: "Research 101",
     subtitle:
-      "Learn the real workflow: idea → IRB → analysis → manuscript → submission, with practical templates and guidance.",
+      "Learn the basics of orthopaedic research with practical modules and guidance.",
     bullets: [
-      "Pick a project that actually finishes",
-      "Avoid common IRB + methods pitfalls",
-      "Write stronger abstracts/manuscripts",
       "Build a research CV efficiently",
+      "How to find ortho research projects",
+      "Avoid common pitfalls",
+      "Learn what it takes to be a strong research student",
+      
     ],
     primaryCta: { label: "Explore Research 101", href: "/research" },
     secondaryCta: { label: "Research Playbook", href: "/research/playbook" },
@@ -594,7 +595,7 @@ const portfolioSections: PortfolioSection[] = [
     icon: "📌",
     title: "Reference",
     subtitle:
-      "Fast refreshers for common ortho concepts—built for quick reference.",
+      "Quick reference for common ortho concepts.",
     bullets: [
       "Quick, clean, and practical",
       "Important concepts for ortho rotations",
@@ -636,17 +637,16 @@ export default function HomePage() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
           <div className="bg-white rounded-3xl shadow-2xl p-8 sm:p-10 max-w-xl w-full text-center relative animate-fade-in-down">
             <h2 className="text-3xl sm:text-4xl font-bold text-navy mb-4">
-              📣 Our Trauma Learn Module is Live!
+              📣 Contribute to the Countdown to Match Fundraiser!
             </h2>
             <p className="text-base sm:text-lg text-midnight/80 mb-6">
-              Dive into trauma training with our new animated video on open fractures.
-              Built to learn complex ortho concepts faster.
+              Support the next generation of orthopaedic surgeons by donating to our fundraiser. Every donation, big or small, makes a difference!
             </p>
             <Link
-              href="/learn/modules/trauma"
+              href="/fundraising"
               className="inline-block bg-sky text-white text-lg font-medium px-6 py-3 rounded-full hover:bg-sky/90 transition"
             >
-              ▶️ Watch the Trauma Module
+              🙏 Donate
             </Link>
             <button
               onClick={() => setShowPopup(false)}
