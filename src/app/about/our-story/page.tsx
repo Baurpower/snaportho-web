@@ -37,11 +37,11 @@ export default function OurStoryPage() {
           Our Mission
         </h2>
         <p>
-          Moving forward, our goal is simple: to provide a <strong>high-yield, easy-to-use</strong> resource for anyone learning orthopaedics — from students to residents to lifelong learners.
+          Provide a <strong>high-yield, easy-to-use</strong> resource for anyone pursuing orthopaedics.
         </p>
 
         <p>
-          We aim to help you <strong>quickly learn, practice, and master</strong> the concepts that matter most, so you can focus your time on clinical growth and patient care.
+          We aim to help you <strong>quickly learn</strong> the concepts that matter most, and understand every step of the process to excel in orthopaedics.
         </p>
       </section>
 
