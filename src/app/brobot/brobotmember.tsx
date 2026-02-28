@@ -331,7 +331,9 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 function Section({ label, bullets }: { label: string; bullets: string[] }) {
   const [collapsed, setCollapsed] = useState(false);
   const isOpen = !collapsed;
-  const isPimp = label.toLowerCase().includes('pimp');
+
+  const lower = label.toLowerCase();
+  const isQA = lower.includes('pimp') || lower.includes('quiz'); // ✅ add quiz
 
   return (
     <div className="space-y-2">
@@ -346,8 +348,8 @@ function Section({ label, bullets }: { label: string; bullets: string[] }) {
       {isOpen && (
         <ul className="space-y-3 pl-1">
           {bullets.length > 0 ? (
-            isPimp
-              ? bullets.map((b, i) => <ToggleItem key={i} raw={b} />)
+            isQA
+              ? bullets.map((b, i) => <ToggleItem key={i} raw={b} />) // ✅ same toggle UI
               : bullets.map((b, i) => (
                   <li
                     key={i}
