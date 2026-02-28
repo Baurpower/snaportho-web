@@ -542,9 +542,9 @@ const portfolioSections: PortfolioSection[] = [
       "Practice deciding best management",
       "Everything you need to excel in fracture conference!",
     ],
-    primaryCta: { label: "Only available in our App", href: "snaportho://" },
+    primaryCta: { label: "Only available in our App", href: "snaportho://home" },
     deepLinks: [
-      { label: "Practice in our App", href: "snaportho://" },
+      { label: "Practice in our App", href: "snaportho://home" },
     ],
   },
   {
@@ -877,7 +877,7 @@ export default function HomePage() {
           {/* CTA row */}
           <div className="mt-6 flex flex-wrap gap-3">
             <SmartDeepLink
-  deepLink="snaportho://"
+  deepLink="snaportho://home"
   className="px-6 py-3 rounded-full bg-white text-navy font-semibold hover:bg-white/90 transition shadow-sm hover:shadow-md"
 >
   Download Free
