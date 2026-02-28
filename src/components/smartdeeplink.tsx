@@ -2,16 +2,16 @@
 
 import React from 'react';
 
-const APP_STORE_URL = "https://apps.apple.com/app/id6742800145";
-const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.snaportho.app";
-const DESKTOP_URL = "/mobile-app";
+const APP_STORE_URL = 'https://apps.apple.com/app/id6742800145';
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.snaportho.app';
+const DESKTOP_URL = '/mobile-app';
 
-type Props = {
-  deepLink: string;              // e.g. "snaportho://practice"
+type Props = React.PropsWithChildren<{
+  deepLink: string;              // e.g. snaportho://brobot
   className?: string;
-  children: React.ReactNode;
-  fallbackDelayMs?: number;      // how long to wait before falling back
-};
+  fallbackUrl?: string;          // optional override (otherwise store URL chosen by platform)
+  fallbackDelayMs?: number;      // default ~1200ms
+}>;
 
 function getPlatform() {
   const ua = typeof navigator !== 'undefined' ? navigator.userAgent : '';
@@ -20,15 +20,15 @@ function getPlatform() {
 
   const isAndroid = /Android/i.test(ua);
 
-  // iOS detection (covers most iPhones/iPads)
+  // iOS detection (covers iPhone/iPad/iPod)
   const isIOS = /iPhone|iPad|iPod/i.test(ua);
 
-  // iPadOS 13+ sometimes reports as "MacIntel" but has touch points
+  // iPadOS 13+ can report as MacIntel but has touch
   const isIPadOS = platform === 'MacIntel' && maxTouchPoints > 1;
 
   const isAppleMobile = isIOS || isIPadOS;
 
-  // Desktop = not Android and not AppleMobile
+  // Desktop = not Android and not Apple mobile
   const isDesktop = !isAndroid && !isAppleMobile;
 
   return { isAndroid, isAppleMobile, isDesktop };
@@ -38,44 +38,75 @@ export default function SmartDeepLink({
   deepLink,
   className,
   children,
-  fallbackDelayMs = 900,
+  fallbackUrl,
+  fallbackDelayMs = 1200,
 }: Props) {
   const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
 
     const { isAndroid, isDesktop } = getPlatform();
 
-    // On desktop: don’t try custom scheme, send to your landing page (or store)
+    // Desktop: don't try custom scheme; send to landing page
     if (isDesktop) {
-      window.location.href = DESKTOP_URL || APP_STORE_URL;
+      window.location.href = DESKTOP_URL;
       return;
     }
 
-    // Mobile fallback store URL
-    const storeUrl = isAndroid ? PLAY_STORE_URL : APP_STORE_URL;
+    // Choose store URL by platform (unless overridden)
+    const storeUrl = fallbackUrl ?? (isAndroid ? PLAY_STORE_URL : APP_STORE_URL);
 
-    // Mobile: try deep link, then fallback if not installed
-    const start = Date.now();
     let didHide = false;
+    const start = Date.now();
 
-    const onVisibility = () => {
-      if (document.visibilityState === 'hidden') didHide = true;
+    const cleanup = () => {
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('pagehide', onHide);
+      window.removeEventListener('blur', onBlur);
     };
 
-    document.addEventListener('visibilitychange', onVisibility);
+    const onVis = () => {
+      if (document.visibilityState === 'hidden') {
+        didHide = true;
+        cleanup();
+      }
+    };
 
-    // Attempt open
+    const onHide = () => {
+      didHide = true;
+      cleanup();
+    };
+
+    const onBlur = () => {
+      didHide = true;
+      cleanup();
+    };
+
+    // If the app opens, Safari typically becomes hidden / pagehide / blur
+    document.addEventListener('visibilitychange', onVis, { passive: true });
+    window.addEventListener('pagehide', onHide, { passive: true });
+    window.addEventListener('blur', onBlur, { passive: true });
+
+    const timer = window.setTimeout(() => {
+      cleanup();
+
+      // ✅ If we actually backgrounded, assume app opened; don't fallback
+      if (didHide) return;
+
+      // ✅ Guard against ultra-fast weirdness
+      if (Date.now() - start < 600) return;
+
+      window.location.href = storeUrl;
+    }, fallbackDelayMs);
+
+    // Try to open the app
     window.location.href = deepLink;
 
-    // Fallback to store if it didn't open
-    window.setTimeout(() => {
-      document.removeEventListener('visibilitychange', onVisibility);
-
-      const elapsed = Date.now() - start;
-      if (!didHide && elapsed >= 250) {
-        window.location.href = storeUrl;
-      }
-    }, fallbackDelayMs);
+    // Safety: if page is going away, clear timer
+    window.addEventListener(
+      'pagehide',
+      () => window.clearTimeout(timer),
+      { once: true }
+    );
   };
 
   return (

@@ -87,35 +87,34 @@ function clampIndex(i: number, n: number) {
   return ((i % n) + n) % n;
 }
 
-function PortfolioCarousel({
-  sections,
-  intervalMs = 5000,
-}: {
-  sections: PortfolioSection[];
-  intervalMs?: number;
-}) {
+function PortfolioCarousel({ sections, intervalMs = 5000 }: { sections: PortfolioSection[]; intervalMs?: number }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  // Stop auto-rotate permanently after first user interaction
   const hasInteractedRef = useRef(false);
 
   const count = sections.length;
   const current = sections[clampIndex(active, count)];
   const styles = accentStyles(current?.accent ?? "navy");
 
-  // ---- Auto-rotate (only if user has NOT interacted)
+  // ✅ detect touch device (mobile/tablet)
+  const isTouchDevice =
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
+  // ---- Auto-rotate (desktop only, and only if user has NOT interacted)
   useEffect(() => {
     if (count <= 1) return;
     if (paused) return;
     if (hasInteractedRef.current) return;
+    if (isTouchDevice) return; // ✅ disable autoplay on mobile
 
     const id = window.setInterval(() => {
       setActive((a) => clampIndex(a + 1, count));
     }, intervalMs);
 
     return () => window.clearInterval(id);
-  }, [paused, count, intervalMs]);
+  }, [paused, count, intervalMs, isTouchDevice]);
 
   const markInteracted = () => {
     hasInteractedRef.current = true;
@@ -543,9 +542,9 @@ const portfolioSections: PortfolioSection[] = [
       "Practice deciding best management",
       "Everything you need to excel in fracture conference!",
     ],
-    primaryCta: { label: "Only available in our App", href: "snaportho://practice" },
+    primaryCta: { label: "Only available in our App", href: "snaportho://" },
     deepLinks: [
-      { label: "Practice in our App", href: "snaportho://practice" },
+      { label: "Practice in our App", href: "snaportho://" },
     ],
   },
   {
