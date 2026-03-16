@@ -649,17 +649,18 @@ const recommendation = useMemo(() => {
               First — take a breath.
             </h2>
             <div className="mt-6 max-w-4xl space-y-5 text-base leading-8 text-slate-700">
+              
               <p>
                 If you&apos;re here, I&apos;m sorry. There is truly nothing I can say that will remove the emotions and feelings you&apos;re having right now.
+              </p>
+              <p>
+                I will never forget the moment I found out I didn&apos;t match. I was in my apartment, and I had just opened the email. The wave of emotions that hit me was unlike anything I had ever experienced before.
               </p>
               <p>
                 Just know that loved ones, time, and future success will help alleviate some of the pain.
               </p>
               <p>
                 The decisions you make this week can have huge ramifications for the rest of your life. Try not to let emotion guide you or stun you into inaction.
-              </p>
-              <p>
-                Unfortunately, speed matters this week. You cannot just sit in the sadness and do nothing, because later that may become its own regret.
               </p>
               <p>
                 Let&apos;s walk through this clearly, honestly, and strategically.
@@ -1447,7 +1448,7 @@ onToggle={() =>
                                 <ArrowRight className="h-4 w-4" />
                               </a>
                               <a
-                                href="/research-positions"
+                                href="/pathtoortho/research-fellowship"
                                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
                               >
                                 Research Position Guide
@@ -1544,7 +1545,7 @@ onToggle={() =>
       </a>
 
       <a
-        href="/research-positions"
+        href="/pathtoortho/research-fellowship"
         className="group border-b border-slate-200 p-6 transition hover:bg-sky-50/50 md:border-b-0 md:border-r"
       >
         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700 transition group-hover:bg-sky-600 group-hover:text-white">

@@ -231,7 +231,6 @@ const STRATEGY_CARDS = [
 const RULES = [
   "Applicants and their representatives cannot initiate contact with a program until the program has received the application and reaches out first.",
   "Applicants cannot share, post, or make publicly available the List of Unfilled Programs.",
-  "Applicants do not submit a rank list or preference list during SOAP.",
   "Offers accepted during SOAP are binding under the NRMP Match Participation Agreement.",
 ];
 
@@ -254,13 +253,6 @@ const SERVICES = [
   },
 ];
 
-const PITFALLS = [
-  "Panic-applying without checking eligibility.",
-  "Breaking NRMP communication rules by contacting programs first.",
-  "Ignoring phone calls or email during SOAP.",
-  "Waiting too long to decide during an offer round.",
-  "Assuming an expired offer will return in a later round.",
-];
 
 const FAQS = [
   {
@@ -557,20 +549,6 @@ export default function SOAPPage() {
                 {RULES.map((rule, i) => (
                   <div key={i} className="rounded-xl border border-gray-200 bg-white p-3">
                     {rule}
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Common pitfalls</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-sm text-gray-600">
-                {PITFALLS.map((pitfall, i) => (
-                  <div key={i} className="flex items-start gap-3 rounded-xl border border-gray-200 bg-white p-3">
-                    <Badge variant="warning" className="shrink-0">{i + 1}</Badge>
-                    <span>{pitfall}</span>
                   </div>
                 ))}
               </CardContent>
