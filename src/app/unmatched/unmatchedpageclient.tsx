@@ -472,7 +472,7 @@ export default function UnmatchedPage() {
   const [awaysChoice, setAwaysChoice] = useState<AnswerValue | undefined>();
   const [enjoyResearch, setEnjoyResearch] = useState<AnswerValue | undefined>();
   const [startResidencyChoice, setStartResidencyChoice] = useState<AnswerValue | undefined>();
-  const [openReflections, setOpenReflections] = useState<string[]>(["mentorship"]);
+  const [openReflections, setOpenReflections] = useState<string[]>([]);
 
     const completedCount = useMemo(() => {
     const values = [
@@ -1455,7 +1455,7 @@ onToggle={() =>
                                 <ArrowRight className="h-4 w-4" />
                               </a>
                               <a
-                                href="/contact"
+                                href="/unmatched/contact"
                                 className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
                               >
                                 Talk to Alex
@@ -1544,30 +1544,43 @@ onToggle={() =>
         </div>
       </a>
 
+  <div className="group border-b border-slate-200 p-6 transition hover:bg-sky-50/50 md:border-b-0 md:border-r">
+  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700 transition group-hover:bg-sky-600 group-hover:text-white">
+    <Lightbulb className="h-6 w-6" />
+  </div>
+
+  <h3 className="mt-5 text-2xl font-bold tracking-tight text-slate-900">
+    Research Fellowships
+  </h3>
+
+  <p className="mt-3 text-sm leading-7 text-slate-600">
+    Learn what a research year looks like and where to actually find open orthopaedic research fellowship positions.
+  </p>
+
+  <div className="mt-6 flex flex-col gap-3">
+
+    <a
+      href="/pathtoortho/research-fellowship"
+      className="inline-flex items-center gap-2 text-sm font-semibold text-sky-800"
+    >
+      SnapOrtho Research Fellowship Guide
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </a>
+
+    <a
+      href="https://www.orthogate.org/forums/medical-student-research-fellowship"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900"
+    >
+      Browse open research positions on OrthoGate
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </a>
+
+  </div>
+</div>
       <a
-        href="/pathtoortho/research-fellowship"
-        className="group border-b border-slate-200 p-6 transition hover:bg-sky-50/50 md:border-b-0 md:border-r"
-      >
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-sky-700 transition group-hover:bg-sky-600 group-hover:text-white">
-          <Lightbulb className="h-6 w-6" />
-        </div>
-
-        <h3 className="mt-5 text-2xl font-bold tracking-tight text-slate-900">
-          Research Fellowships
-        </h3>
-
-        <p className="mt-3 text-sm leading-7 text-slate-600">
-          For applicants leaning toward a research year and looking for positions, mentorship opportunities, and a more flexible reapplication path.
-        </p>
-
-        <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-sky-800">
-          Explore research fellowships
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </div>
-      </a>
-
-      <a
-        href="/references"
+        href="/unmatched/references"
         className="group p-6 transition hover:bg-slate-50"
       >
         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 transition group-hover:bg-slate-900 group-hover:text-white">
