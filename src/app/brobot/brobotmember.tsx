@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, FormEvent } from 'react';
+import React, { useState, useRef, useEffect, useMemo, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   MagnifyingGlassCircleIcon,
@@ -8,11 +8,12 @@ import {
   ChevronDownIcon,
   Bars3Icon,
 } from '@heroicons/react/24/outline';
-import { getBroBotResponse } from '@/lib/api';
-import { supabase } from '@/lib/supabaseClient';
+import { getBroBotResponse } from '@/lib/types/api';
+import { createClient } from '@/utils/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import Nav from '@/components/Nav';
 import AccountDropdown from '@/components/accountdropdown';
+
 
 
 const BROBOT_VERSION = 2.0;
@@ -63,6 +64,7 @@ interface SessionRow {
 export default function BroBotMember() {
   const router = useRouter();
   const { user } = useAuth();
+  const supabase = useMemo(() => createClient(), []);
 
   // Redirect guests
   useEffect(() => {

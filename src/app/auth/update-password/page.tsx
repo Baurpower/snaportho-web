@@ -1,55 +1,100 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../../lib/supabaseClient";
+import { createClient } from "@/utils/supabase/client";
 
 export default function UpdatePasswordPage() {
   const router = useRouter();
-  const [password, setPassword]     = useState("");
-  const [confirm, setConfirm]       = useState("");
-  const [message, setMessage]       = useState<string | null>(null);
+  const supabase = useMemo(() => createClient(), []);
+
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [message, setMessage] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [ready, setReady]           = useState(false); // wait for session
+  const [ready, setReady] = useState(false);
 
- useEffect(() => {
-  (async () => {
-    /* ---------- 1. Implicit flow  (#access_token …) ------------------- */
-    const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    const access_token  = hashParams.get("access_token");
-    const refresh_token = hashParams.get("refresh_token");
+  useEffect(() => {
+    let isMounted = true;
 
-    if (access_token && refresh_token) {
-      const { error } = await supabase.auth.setSession({ access_token, refresh_token });
-      if (error) setMessage(error.message);
-      setReady(true);
-      return;
-    }
+    const prepareRecoverySession = async () => {
+      try {
+        const searchParams = new URLSearchParams(window.location.search);
+        const hashParams = new URLSearchParams(window.location.hash.slice(1));
 
-    /* ---------- 2. PKCE flow  (?code=…  or  ?token=…) ------------------ */
-    const searchParams = new URLSearchParams(window.location.search);
-    const authCode = searchParams.get("code")            // OAuth / magic-link
-                  ?? searchParams.get("token");          // Email recovery link
+        // Preferred SSR / PKCE flow: ?code=...
+        const code = searchParams.get("code");
 
-    if (authCode) {
-      const { error } = await supabase.auth.exchangeCodeForSession(authCode);
-      if (error) {
-        console.error("Code-exchange failed:", error.message);
-        setMessage("Could not log in from the e-mail link.");
+        if (code) {
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+          if (!isMounted) return;
+
+          if (error) {
+            console.error("Code exchange failed:", error.message);
+            setMessage("Could not verify your reset link. Please request a new one.");
+          } else {
+            // Clean URL after successful exchange
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
+
+          setReady(true);
+          return;
+        }
+
+        // Fallback for older implicit-style links: #access_token=...&refresh_token=...
+        const access_token = hashParams.get("access_token");
+        const refresh_token = hashParams.get("refresh_token");
+
+        if (access_token && refresh_token) {
+          const { error } = await supabase.auth.setSession({
+            access_token,
+            refresh_token,
+          });
+
+          if (!isMounted) return;
+
+          if (error) {
+            console.error("Session setup failed:", error.message);
+            setMessage("Could not verify your reset link. Please request a new one.");
+          } else {
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
+
+          setReady(true);
+          return;
+        }
+
+        // If a recovery session already exists, allow password update
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (!isMounted) return;
+
+        if (session) {
+          setReady(true);
+          return;
+        }
+
+        setMessage("Missing or expired recovery credentials in the email link.");
+        setReady(true);
+      } catch (err) {
+        console.error(err);
+        if (isMounted) {
+          setMessage("Something went wrong while verifying your reset link.");
+          setReady(true);
+        }
       }
-      setReady(true);
-      return;
-    }
+    };
 
-    /* ---------- 3. Nothing found -------------------------------------- */
-    setMessage("Missing credentials in the e-mail link.");
-    setReady(true);
-  })();
-}, []);
+    prepareRecoverySession();
 
-
-
+    return () => {
+      isMounted = false;
+    };
+  }, [supabase]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,21 +104,26 @@ export default function UpdatePasswordPage() {
       setMessage("Password must be at least 6 characters.");
       return;
     }
+
     if (password !== confirm) {
       setMessage("Passwords do not match.");
       return;
     }
 
     setSubmitting(true);
+
     const { error } = await supabase.auth.updateUser({ password });
+
     setSubmitting(false);
 
     if (error) {
       setMessage(error.message);
-    } else {
-      setMessage("✅ Password updated! Redirecting to Learn…");
-      setTimeout(() => router.replace("/learn"), 2000);
+      return;
     }
+
+    setMessage("✅ Password updated! Redirecting...");
+    router.refresh();
+    setTimeout(() => router.replace("/learn"), 1200);
   };
 
   if (!ready) {

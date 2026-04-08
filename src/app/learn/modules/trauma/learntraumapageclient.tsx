@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabaseClient';
-import AccountDropdown from '@/components/accountdropdown'; // ✅ Add this import
+import { useAuth } from '@/context/AuthContext';
+import AccountDropdown from '@/components/accountdropdown';
 
 type Video = {
   id: string;
@@ -16,32 +16,36 @@ type Video = {
 
 export default function TraumaModuleClient() {
   const router = useRouter();
+  const { user } = useAuth();
+
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchVideos = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        router.replace('/learn');
-        return;
-      }
+    if (user === null) {
+      router.replace('/learn');
+      return;
+    }
 
+    const fetchVideos = async () => {
       try {
         const res = await fetch('https://api.snap-ortho.com/video-access');
         if (!res.ok) throw new Error('Failed to fetch videos');
+
         const data: Video[] = await res.json();
         setVideos(data.filter((v) => v.category === 'Trauma'));
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+        setError(
+          err instanceof Error ? err.message : 'An unexpected error occurred'
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchVideos();
-  }, [router]);
+  }, [user, router]);
 
   if (loading) return <LoadingOverlay />;
 
@@ -55,7 +59,6 @@ export default function TraumaModuleClient() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] text-[#1A1C2C] px-4 py-12 max-w-5xl mx-auto space-y-10">
-      {/* Header with AccountDropdown */}
       <div className="flex justify-between items-center pt-12">
         <h1 className="text-4xl font-extrabold tracking-tight">Trauma Module</h1>
         <AccountDropdown />
@@ -69,9 +72,16 @@ export default function TraumaModuleClient() {
 
       <section className="space-y-10">
         {videos.map((video) => {
-          const youtubeID =
-            new URL(video.youtubeURL).searchParams.get('v') ||
-            video.youtubeURL.split('/').pop();
+          let youtubeID = '';
+
+          try {
+            youtubeID =
+              new URL(video.youtubeURL).searchParams.get('v') ||
+              video.youtubeURL.split('/').pop() ||
+              '';
+          } catch {
+            youtubeID = '';
+          }
 
           return (
             <div
@@ -80,14 +90,21 @@ export default function TraumaModuleClient() {
             >
               <h2 className="text-2xl font-semibold">{video.title}</h2>
               <p className="text-gray-600">{video.description}</p>
+
               <div className="aspect-video">
-                <iframe
-                  className="w-full h-full rounded-xl"
-                  src={`https://www.youtube.com/embed/${youtubeID}`}
-                  title={video.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+                {youtubeID ? (
+                  <iframe
+                    className="w-full h-full rounded-xl"
+                    src={`https://www.youtube.com/embed/${youtubeID}`}
+                    title={video.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <div className="w-full h-full rounded-xl bg-gray-100 flex items-center justify-center text-gray-500">
+                    Video unavailable
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -101,8 +118,12 @@ function LoadingOverlay() {
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
       <div className="mb-6 h-14 w-14 animate-spin rounded-full border-4 border-t-4 border-gray-200 border-t-teal-600" />
-      <h3 className="text-2xl font-bold text-teal-700 tracking-tight">Loading Trauma Module</h3>
-      <p className="mt-2 text-sm text-gray-600">Fetching videos and verifying access...</p>
+      <h3 className="text-2xl font-bold text-teal-700 tracking-tight">
+        Loading Trauma Module
+      </h3>
+      <p className="mt-2 text-sm text-gray-600">
+        Fetching videos and verifying access...
+      </p>
     </div>
   );
 }

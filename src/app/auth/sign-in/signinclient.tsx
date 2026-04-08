@@ -24,15 +24,18 @@ export default function SignInClient({ redirectTo }: Props) {
   }, [user, redirectTo, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMsg(null);
-    const { error } = await signIn(email, password);
-    if (error) {
-      setErrorMsg(error.message);
-    } else {
-      router.replace(redirectTo);
-    }
-  };
+  e.preventDefault();
+  setErrorMsg(null);
+
+  const { error } = await signIn(email, password);
+
+  if (error) {
+    setErrorMsg(error.message);
+  } else {
+    router.refresh();
+    router.replace(redirectTo);
+  }
+};
 
   return (
     <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg">

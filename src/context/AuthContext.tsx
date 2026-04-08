@@ -4,10 +4,11 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useState,
-  ReactNode,
+  type ReactNode,
 } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { createClient } from "@/utils/supabase/client";
 import type {
   User,
   AuthError,
@@ -30,29 +31,38 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const supabase = useMemo(() => createClient(), []);
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-  const loadUser = async () => {
-    const { data: { user }, error } = await supabase.auth.getUser();
-    if (!error) setUser(user ?? null);
-  };
+    let isMounted = true;
 
-  // Run immediately on mount
-  loadUser();
+    const loadUser = async () => {
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
 
-  // Listen for any auth state changes (login, logout, token refresh)
-  const { data: subscription } = supabase.auth.onAuthStateChange(
-    (_event, session) => {
-      setUser(session?.user ?? null);
-    }
-  );
+      if (!error && isMounted) {
+        setUser(user ?? null);
+      }
+    };
 
-  return () => {
-    subscription.subscription.unsubscribe();
-  };
-}, []);
+    loadUser();
 
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (isMounted) {
+        setUser(session?.user ?? null);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
 
   const signIn = (email: string, password: string) =>
     supabase.auth.signInWithPassword({ email, password });
@@ -60,12 +70,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signUp = (email: string, password: string) =>
     supabase.auth.signUp({ email, password });
 
-  const resetPassword = (email: string, options?: { redirectTo?: string }) =>
-    supabase.auth.resetPasswordForEmail(email, options);
+  const resetPassword = (
+    email: string,
+    options?: { redirectTo?: string }
+  ) => supabase.auth.resetPasswordForEmail(email, options);
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    setUser(null);
+    if (!error) setUser(null);
     return { error };
   };
 

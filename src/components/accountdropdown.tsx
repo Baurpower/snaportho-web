@@ -3,39 +3,54 @@
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { createClient } from '@/utils/supabase/client';
 
 export default function AccountDropdown() {
   const router = useRouter();
   const { user, signOut } = useAuth();
+  const supabase = useMemo(() => createClient(), []);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [fullName, setFullName] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // New logout handler
   const handleLogout = async () => {
-    await signOut();           // clear session & context user
-    router.replace('auth/sign-in');  // navigate to login page
+    await signOut();
+    router.replace('/auth/sign-in');
   };
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchName = async () => {
-      if (!user?.id) return;
+      if (!user?.id) {
+        if (isMounted) setFullName(null);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('user_profiles')
         .select('full_name')
         .eq('user_id', user.id)
-        .single();
+        .maybeSingle();
+
+      if (!isMounted) return;
 
       if (error) {
         console.error('Error fetching full_name:', error);
+        setFullName(null);
       } else {
         setFullName(data?.full_name || null);
       }
     };
+
     fetchName();
-  }, [user]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user, supabase]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -43,6 +58,7 @@ export default function AccountDropdown() {
         setMenuOpen(false);
       }
     };
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -65,13 +81,16 @@ export default function AccountDropdown() {
               Signed in as {fullName ?? user.email}
             </p>
           </div>
+
           <hr className="border-slate-200" />
+
           <Link
             href="/learn/settings"
             className="block px-4 py-2 text-sm hover:bg-slate-100 text-midnight/90"
           >
             Profile
           </Link>
+
           <button
             type="button"
             onClick={handleLogout}

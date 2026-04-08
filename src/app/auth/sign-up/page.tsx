@@ -1,7 +1,10 @@
-// src/app/auth/sign‑up/page.tsx
-
-import SignUpClient from './signupclient';
+import { Suspense } from "react";
+import SignUpClient from "./signupclient";
 
 export default function SignUpPage() {
-  return <SignUpClient />;
+  return (
+    <Suspense fallback={<div className="max-w-md mx-auto mt-16 p-6">Loading...</div>}>
+      <SignUpClient />
+    </Suspense>
+  );
 }

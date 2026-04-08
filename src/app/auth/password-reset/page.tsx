@@ -3,7 +3,9 @@
 export const dynamic = "force-dynamic";
 
 import { useState } from "react";
-import { supabase } from "../../../lib/supabaseClient";
+import { createClient } from '@/utils/supabase/client';
+
+const supabase = createClient();
 
 export default function PasswordResetPage() {
   const [email, setEmail] = useState("");

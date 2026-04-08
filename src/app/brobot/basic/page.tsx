@@ -7,7 +7,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
-import { getBroBotResponse } from '@/lib/api';
+import { getBroBotResponse } from '@/lib/types/api';
 
 
 type ApproachSelection = {

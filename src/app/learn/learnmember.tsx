@@ -1,16 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@/utils/supabase/client';
 import AccountDropdown from '@/components/accountdropdown';
 
 export default function LearnMember() {
   const { user } = useAuth();
+  const supabase = useMemo(() => createClient(), []);
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     const checkUserProfile = async () => {
       if (!user?.id) return;
 
@@ -20,17 +23,27 @@ export default function LearnMember() {
         .eq('user_id', user.id)
         .maybeSingle();
 
-      if (!data && !error) {
+      if (!isMounted) return;
+
+      if (error) {
+        console.error('Error checking user profile:', error);
+        return;
+      }
+
+      if (!data) {
         setShowPopup(true);
       }
     };
 
     checkUserProfile();
-  }, [user]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user, supabase]);
 
   return (
     <main className="max-w-4xl mx-auto px-6 pt-24 pb-16">
-      {/* Popup */}
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full space-y-4 text-center">
@@ -57,13 +70,11 @@ export default function LearnMember() {
         </div>
       )}
 
-      {/* Header */}
       <div className="flex justify-between items-center mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-navy">Learn Home</h1>
         <AccountDropdown />
       </div>
 
-      {/* Intro */}
       <section className="bg-white p-8 md:p-10 rounded-2xl shadow-lg space-y-6">
         <h2 className="text-2xl md:text-3xl font-semibold text-navy">
           Welcome to SnapOrtho’s Learning Library
@@ -73,13 +84,11 @@ export default function LearnMember() {
           tutorials, designed to take you from basics all the way to mastery.
         </p>
         <p className="text-base md:text-lg text-midnight/80 leading-relaxed">
-          We’re kicking things off with our first series on{' '}
-          <strong>Trauma</strong>. Stay tuned as we add more subspecialties, cases,
-          and expert walkthroughs!
+          We’re kicking things off with our first series on <strong>Trauma</strong>.
+          Stay tuned as we add more subspecialties, cases, and expert walkthroughs!
         </p>
       </section>
 
-      {/* Modules */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
         <Link
           href="/learn/modules/trauma"
@@ -90,6 +99,7 @@ export default function LearnMember() {
             Get started with orthopaedic trauma.
           </p>
         </Link>
+
         <Link
           href="/learn/modules/oncology"
           className="block p-6 bg-white rounded-2xl shadow hover:shadow-lg transition"
