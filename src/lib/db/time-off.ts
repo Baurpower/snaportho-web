@@ -99,6 +99,7 @@ function enumerateDates(startDate: string, endDate: string) {
 
 type RawDayRow = {
   event_id: string;
+  membership_id: string | null;
   off_date: string;
   event_type: string;
   source_kind: string;
@@ -138,12 +139,13 @@ export async function getProgramTimeOffMonth(params: {
     .from("availability_event_days")
     .select(`
       event_id,
+      membership_id,
       off_date,
       event_type,
       source_kind,
       constraint_level,
       is_weekend,
-      availability_events:event_id (
+      availability_events (
         id,
         membership_id,
         start_date,
@@ -155,7 +157,7 @@ export async function getProgramTimeOffMonth(params: {
         approval_status,
         using_pto
       ),
-      program_memberships:membership_id (
+      program_memberships (
         id,
         user_id,
         role,
@@ -169,8 +171,24 @@ export async function getProgramTimeOffMonth(params: {
     .order("off_date", { ascending: true });
 
   if (error) {
+    console.error("getProgramTimeOffMonth query error", {
+      programId,
+      monthStart,
+      monthEnd,
+      myMembershipId,
+      error,
+    });
     throw new Error(`Failed to load time-off month: ${error.message}`);
   }
+
+  console.log("getProgramTimeOffMonth raw result", {
+    programId,
+    monthStart,
+    monthEnd,
+    myMembershipId,
+    rowCount: (data ?? []).length,
+    firstRow: (data ?? [])[0] ?? null,
+  });
 
   const rows = (data ?? []) as unknown as RawDayRow[];
   const byEventId = new Map<string, TimeOffItem>();
@@ -179,14 +197,36 @@ export async function getProgramTimeOffMonth(params: {
     const event = row.availability_events;
     const membership = row.program_memberships;
 
-    if (!event) continue;
+    console.log("getProgramTimeOffMonth row", {
+      event_id: row.event_id,
+      membership_id: row.membership_id,
+      off_date: row.off_date,
+      event_type: row.event_type,
+      availability_events: event,
+      program_memberships: membership,
+      mineCheck: {
+        myMembershipId,
+        membershipIdFromJoin: membership?.id ?? null,
+        membershipIdFromEvent: event?.membership_id ?? null,
+        membershipIdFromDayRow: row.membership_id ?? null,
+      },
+    });
+
+    if (!event) {
+      console.warn("Skipping time-off row because availability_events is null", {
+        event_id: row.event_id,
+        off_date: row.off_date,
+        row,
+      });
+      continue;
+    }
 
     const approvalStatus = normalizeApprovalStatus(event.approval_status);
 
     if (!byEventId.has(row.event_id)) {
-      byEventId.set(row.event_id, {
+      const item: TimeOffItem = {
         id: event.id,
-        membershipId: membership?.id ?? event.membership_id ?? null,
+        membershipId: membership?.id ?? event.membership_id ?? row.membership_id ?? null,
         residentName: membership?.display_name ?? "Unknown Resident",
         trainingLevel: membership?.role ?? null,
         classYear: membership?.grad_year ?? null,
@@ -202,17 +242,28 @@ export async function getProgramTimeOffMonth(params: {
         approved: approvalStatusToBoolean(approvalStatus),
         isMine:
           !!myMembershipId &&
-          (membership?.id === myMembershipId ||
-            event.membership_id === myMembershipId),
-      });
+          ((membership?.id ?? null) === myMembershipId ||
+            (event.membership_id ?? null) === myMembershipId ||
+            (row.membership_id ?? null) === myMembershipId),
+      };
+
+      console.log("Mapped time-off item", item);
+      byEventId.set(row.event_id, item);
     }
   }
+
+  const items = Array.from(byEventId.values());
+
+  console.log("getProgramTimeOffMonth final items", {
+    count: items.length,
+    items,
+  });
 
   return {
     monthStart,
     monthEnd,
     myMembershipId,
-    items: Array.from(byEventId.values()),
+    items,
   };
 }
 
@@ -235,6 +286,22 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     approvalStatus = "requested",
   } = input;
 
+  console.log("createTimeOffEvent input", {
+    programId,
+    membershipId,
+    createdByUserId,
+    eventType,
+    usingPto,
+    sourceKind,
+    constraintLevel,
+    title,
+    notes,
+    location,
+    startDate,
+    endDate,
+    approvalStatus,
+  });
+
   const { data: event, error: eventError } = await supabase
     .from("availability_events")
     .insert({
@@ -256,10 +323,16 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     .single();
 
   if (eventError || !event) {
+    console.error("createTimeOffEvent availability_events insert error", {
+      eventError,
+      event,
+    });
     throw new Error(
       `Failed to create time-off event: ${eventError?.message ?? "Unknown error"}`
     );
   }
+
+  console.log("createTimeOffEvent created availability_event", event);
 
   const dayRows = enumerateDates(startDate, endDate).map((day) => ({
     event_id: event.id,
@@ -272,13 +345,21 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     is_weekend: day.is_weekend,
   }));
 
+  console.log("createTimeOffEvent dayRows", dayRows);
+
   const { error: daysError } = await supabase
     .from("availability_event_days")
     .insert(dayRows);
 
   if (daysError) {
+    console.error("createTimeOffEvent availability_event_days insert error", {
+      daysError,
+      dayRows,
+    });
     throw new Error(`Failed to create time-off day rows: ${daysError.message}`);
   }
+
+  console.log("createTimeOffEvent success", { id: event.id });
 
   return { id: event.id };
 }

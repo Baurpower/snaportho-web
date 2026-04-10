@@ -25,6 +25,7 @@ import {
   type UserCalendarEvent,
   type RotationTimelineEvent,
 } from "@/components/workspace/monthsscheduleview";
+import type { TimeOffItem } from "@/lib/db/time-off";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -176,6 +177,23 @@ type MonthlyCoverageResponse = {
       endDate: string;
     }>;
   }>;
+};
+
+type ProgramCallItem = {
+  id: string;
+  membershipId: string | null;
+  residentName: string;
+  trainingLevel: string | null;
+  classYear: number | null;
+  userId: string | null;
+  callType: string | null;
+  callDate: string | null;
+  startDatetime: string | null;
+  endDatetime: string | null;
+  site: string | null;
+  isHomeCall: boolean | null;
+  notes: string | null;
+  isMine: boolean;
 };
 
 type AheadMonth = {
@@ -363,6 +381,50 @@ function buildMonthEvents(data: MonthLiteResponse | null): UserCalendarEvent[] {
     }
     return a.title.localeCompare(b.title);
   });
+}
+
+function getTodayDateKey() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function getUserScheduleLabelForDay(
+  day:
+    | {
+        dayCategory: "OR" | "Clinic" | "Custom" | null;
+        primaryLabel: string | null;
+        customTitle: string | null;
+      }
+    | null
+    | undefined
+) {
+  if (!day) return "Not planned";
+  if (day.dayCategory === "OR") return "OR";
+  if (day.dayCategory === "Clinic") return "Clinic";
+  if (day.dayCategory === "Custom") {
+    return day.customTitle?.trim() || day.primaryLabel?.trim() || "Custom";
+  }
+  return "Not planned";
+}
+
+function formatTodayCallSummary(calls: ProgramCallItem[]) {
+  if (calls.length === 0) return "No call assigned today";
+
+  const primary = calls.find((call) => call.callType === "Primary");
+  const backup = calls.find((call) => call.callType === "Backup");
+
+  const primaryLabel = primary
+    ? `Primary: ${primary.isMine ? "Me" : primary.residentName}`
+    : "Primary: —";
+
+  const backupLabel = backup
+    ? `Backup: ${backup.isMine ? "Me" : backup.residentName}`
+    : "Backup: —";
+
+  return `${primaryLabel} · ${backupLabel}`;
 }
 
 function StatCard({
@@ -635,6 +697,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
   const [monthLoading, setMonthLoading] = useState(false);
   const [rotationLoading, setRotationLoading] = useState(false);
   const [coverageLoading, setCoverageLoading] = useState(false);
+  const [todayCallsLoading, setTodayCallsLoading] = useState(false);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -642,6 +705,10 @@ export default function SnapOrthoWorkspaceHomeDraft() {
   const [aheadStartOffset, setAheadStartOffset] = useState(0);
   const [activeMonthIndex, setActiveMonthIndex] = useState(0);
   const [isPlanningWeek, setIsPlanningWeek] = useState(false);
+
+  const [programCallsByMonthKey, setProgramCallsByMonthKey] = useState<
+    Record<string, ProgramCallItem[]>
+  >({});
 
   const aheadMonths = useMemo(
     () => buildAheadMonths(3, aheadStartOffset),
@@ -659,6 +726,8 @@ export default function SnapOrthoWorkspaceHomeDraft() {
   const [coverageByMonth, setCoverageByMonth] = useState<
     Record<string, MonthlyCoverageResponse | null>
   >({});
+
+  const [timeOffByMonthKey, setTimeOffByMonthKey] = useState<Record<string, TimeOffItem[]>>({});
 
   const visibleWeekRange = useMemo(
     () => getWeekRangeFromOffset(weekOffset),
@@ -932,6 +1001,204 @@ export default function SnapOrthoWorkspaceHomeDraft() {
     };
   }, [viewMode, aheadMonths]);
 
+    useEffect(() => {
+  let cancelled = false;
+
+  async function loadTimeOff() {
+    if (viewMode !== "ahead") return;
+
+    try {
+      const monthsToFetch = aheadMonths.filter((month) => {
+        const key = `${month.year}-${month.monthIndex}`;
+        return !(key in timeOffByMonthKey);
+      });
+
+      if (monthsToFetch.length === 0) return;
+
+      const results = await Promise.all(
+        monthsToFetch.map(async (month) => {
+          const key = `${month.year}-${month.monthIndex}`;
+          const { monthStart, monthEnd } = getMonthRange(month.year, month.monthIndex);
+
+          const response = await fetch(
+            `/api/program/time-off/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
+            {
+              credentials: "include",
+              cache: "no-store",
+            }
+          );
+
+          const payload = await response.json().catch(() => null);
+
+          if (!response.ok) {
+            throw new Error(
+              payload?.error ?? `Failed to load time-off for ${month.label}`
+            );
+          }
+
+          // Only keep the logged-in user's approved time-off
+          const myItems = (payload?.items ?? []).filter(
+            (item: { isMine: boolean; approvalStatus: string | null }) =>
+              item.isMine && item.approvalStatus === "approved"
+          );
+
+          return { key, items: myItems };
+        })
+      );
+
+      if (!cancelled) {
+        setTimeOffByMonthKey((prev) => {
+          const next = { ...prev };
+          for (const result of results) {
+            next[result.key] = result.items;
+          }
+          return next;
+        });
+      }
+    } catch (err) {
+      if (!cancelled) {
+        setError(
+          err instanceof Error ? err.message : "Failed to load time-off"
+        );
+      }
+    }
+  }
+
+  loadTimeOff();
+
+  return () => {
+    cancelled = true;
+  };
+}, [viewMode, aheadMonths, timeOffByMonthKey]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadProgramCalls() {
+      if (viewMode !== "ahead") return;
+
+      try {
+        const monthsToFetch = aheadMonths.filter((month) => {
+          const key = `${month.year}-${month.monthIndex}`;
+          return !(key in programCallsByMonthKey);
+        });
+
+        if (monthsToFetch.length === 0) return;
+
+        const results = await Promise.all(
+          monthsToFetch.map(async (month) => {
+            const key = `${month.year}-${month.monthIndex}`;
+            const { monthStart, monthEnd } = getMonthRange(month.year, month.monthIndex);
+
+            const response = await fetch(
+              `/api/program/calls/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
+              {
+                credentials: "include",
+                cache: "no-store",
+              }
+            );
+
+            const payload = await response.json().catch(() => null);
+
+            if (!response.ok) {
+              throw new Error(
+                payload?.error ?? `Failed to load program calls for ${month.label}`
+              );
+            }
+
+            return {
+              key,
+              calls: Array.isArray(payload?.calls)
+                ? (payload.calls as ProgramCallItem[])
+                : [],
+            };
+          })
+        );
+
+        if (!cancelled) {
+          setProgramCallsByMonthKey((prev) => {
+            const next = { ...prev };
+            for (const result of results) {
+              next[result.key] = result.calls;
+            }
+            return next;
+          });
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err instanceof Error ? err.message : "Failed to load monthly program calls"
+          );
+        }
+      }
+    }
+
+    loadProgramCalls();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [viewMode, aheadMonths, programCallsByMonthKey]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadTodayMonthProgramCalls() {
+      try {
+        const now = new Date();
+        const monthKey = `${now.getFullYear()}-${now.getMonth()}`;
+
+        if (programCallsByMonthKey[monthKey]) return;
+
+        setTodayCallsLoading(true);
+
+        const { monthStart, monthEnd } = getMonthRange(
+          now.getFullYear(),
+          now.getMonth()
+        );
+
+        const response = await fetch(
+          `/api/program/calls/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
+          {
+            credentials: "include",
+            cache: "no-store",
+          }
+        );
+
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          throw new Error(payload?.error ?? "Failed to load today's program calls");
+        }
+
+        if (!cancelled) {
+          setProgramCallsByMonthKey((prev) => ({
+            ...prev,
+            [monthKey]: Array.isArray(payload?.calls)
+              ? (payload.calls as ProgramCallItem[])
+              : [],
+          }));
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(
+            err instanceof Error ? err.message : "Failed to load today's program calls"
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setTodayCallsLoading(false);
+        }
+      }
+    }
+
+    loadTodayMonthProgramCalls();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [programCallsByMonthKey]);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -1020,6 +1287,30 @@ export default function SnapOrthoWorkspaceHomeDraft() {
     return `${aheadMonths[0].label} – ${aheadMonths[aheadMonths.length - 1].label}`;
   }, [aheadMonths]);
 
+  const todayKey = useMemo(() => getTodayDateKey(), []);
+
+  const todayWeekDay = useMemo(() => {
+    return weekData?.days.find((day) => day.date === todayKey) ?? null;
+  }, [weekData, todayKey]);
+
+  const todayMonthKey = useMemo(() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${now.getMonth()}`;
+  }, []);
+
+  const todayProgramCalls = useMemo(() => {
+    const monthCalls = programCallsByMonthKey[todayMonthKey] ?? [];
+    return monthCalls.filter((call) => call.callDate === todayKey);
+  }, [programCallsByMonthKey, todayMonthKey, todayKey]);
+
+  const todayScheduleLabel = useMemo(() => {
+    return getUserScheduleLabelForDay(todayWeekDay);
+  }, [todayWeekDay]);
+
+  const todayCallSummary = useMemo(() => {
+    return formatTodayCallSummary(todayProgramCalls);
+  }, [todayProgramCalls]);
+
   return (
     <main className="min-h-[calc(100vh-64px)] bg-gradient-to-b from-slate-950 via-slate-900 to-slate-100 text-slate-900">
       <section className="relative overflow-hidden px-4 pb-8 pt-8 sm:px-6 md:px-8 md:pb-10 md:pt-10 xl:px-10">
@@ -1079,10 +1370,10 @@ export default function SnapOrthoWorkspaceHomeDraft() {
                 />
 
                 <StatCard
-                  title="Schedule View"
-                  value={viewMode === "week" ? "Current Week" : "3 Months"}
-                  subtitle={viewMode === "week" ? weekHeaderLabel : aheadHeaderLabel}
-                  loading={false}
+                  title="Today"
+                  value={todayScheduleLabel}
+                  subtitle={todayCallSummary}
+                  loading={weekLoading || todayCallsLoading}
                 />
               </div>
             </div>
@@ -1187,10 +1478,14 @@ export default function SnapOrthoWorkspaceHomeDraft() {
                     months={aheadMonths}
                     monthDataByKey={monthEventsByKey}
                     rotationTimelineEvents={rotationTimelineEvents}
+                    programCallsByMonthKey={programCallsByMonthKey}
+                    timeOffByMonthKey={timeOffByMonthKey}
                     loading={monthLoading}
                     rotationLoading={rotationLoading}
                     onPrevious={() => setAheadStartOffset((prev) => prev - 1)}
                     onNext={() => setAheadStartOffset((prev) => prev + 1)}
+                    currentMembershipId={summary?.membership?.id ?? null}
+                    currentDisplayName={summary?.membership?.displayName ?? null}
                   />
                 )}
               </div>

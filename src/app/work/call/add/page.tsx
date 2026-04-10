@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { PhoneCall, UserRound, Users } from "lucide-react";
+import { PhoneCall, UserRound, Users, ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 import AddIndividualCall from "@/components/workspace/call/addindividualcall";
 import AddProgramCall from "@/components/workspace/call/addprogramcall";
 
@@ -42,6 +43,7 @@ function ModeToggle({
 
 export default function AddCallPage() {
   const [mode, setMode] = useState<AddMode>("individual");
+  const router = useRouter();
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-100 text-slate-900">
@@ -70,6 +72,16 @@ export default function AddCallPage() {
                   Choose between a fast individual entry workflow or a full
                   program upload.
                 </p>
+
+                {/* ── Back button ── */}
+                <button
+                  type="button"
+                  onClick={() => router.back()}
+                  className="group mt-5 inline-flex items-center gap-2.5 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-black/20 ring-1 ring-white/20 backdrop-blur transition-all hover:bg-white/15 hover:ring-white/30"
+                >
+                  <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+                  Back to Call
+                </button>
               </div>
 
               <div className="w-full xl:w-auto">

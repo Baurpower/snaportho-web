@@ -18,20 +18,21 @@ export type ApprovalStatus = "requested" | "approved" | "denied";
 export type TimeOffItem = {
   id: string;
   membershipId: string | null;
-  residentName: string;
-  trainingLevel: string | null;
-  classYear: number | null;
-  userId: string | null;
-  type: TimeOffType;
+  type: "personal" | "conference";
   usingPto: boolean;
   startDate: string | null;
   endDate: string | null;
   title: string | null;
   location: string | null;
   notes: string | null;
-  approvalStatus?: ApprovalStatus | null;
+  approvalStatus?: "requested" | "approved" | "denied" | null;
   approved?: boolean | null;
   isMine: boolean;
+
+  residentName?: string;
+  trainingLevel?: string | null;
+  classYear?: number | null;
+  userId?: string | null;
 };
 
 function getTimeOffTone(item: TimeOffItem) {

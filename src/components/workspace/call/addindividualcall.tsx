@@ -16,6 +16,16 @@ import {
 
 type CallTypeOption = "Primary" | "Backup";
 
+type ExistingCall = {
+  id: string;
+  date: string;
+  callType: CallTypeOption;
+  site: string | null;
+  isHomeCall: boolean;
+  notes: string | null;
+  membershipId: string | null;
+};
+
 function monthLabel(year: number, monthIndex: number) {
   return new Date(year, monthIndex, 1).toLocaleDateString("en-US", {
     month: "long",
@@ -84,6 +94,16 @@ function buildCalendarWeeksSunday(year: number, monthIndex: number) {
   return weeks;
 }
 
+function getMonthBoundsLocal(year: number, monthIndex: number) {
+  const start = new Date(year, monthIndex, 1);
+  const end = new Date(year, monthIndex + 1, 0);
+
+  return {
+    monthStart: toDateKey(start),
+    monthEnd: toDateKey(end),
+  };
+}
+
 function getCallTypeStyles(callType: CallTypeOption) {
   if (callType === "Primary") {
     return {
@@ -144,12 +164,14 @@ export default function AddIndividualCall() {
   });
 
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
+  const [existingCalls, setExistingCalls] = useState<ExistingCall[]>([]);
   const [callType, setCallType] = useState<CallTypeOption>("Primary");
   const [site, setSite] = useState("");
   const [isHomeCall, setIsHomeCall] = useState(false);
   const [notes, setNotes] = useState("");
 
   const [saving, setSaving] = useState(false);
+  const [loadingExistingCalls, setLoadingExistingCalls] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -170,7 +192,65 @@ export default function AddIndividualCall() {
     [visibleMonth.year, visibleMonth.monthIndex]
   );
 
+  const { monthStart, monthEnd } = useMemo(
+    () => getMonthBoundsLocal(visibleMonth.year, visibleMonth.monthIndex),
+    [visibleMonth.year, visibleMonth.monthIndex]
+  );
+
   const todayKey = toDateKey(new Date());
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadExistingCalls() {
+      try {
+        setLoadingExistingCalls(true);
+        setLocalError(null);
+
+        const response = await fetch(
+          `/api/me/calls?monthStart=${encodeURIComponent(
+            monthStart
+          )}&monthEnd=${encodeURIComponent(monthEnd)}`,
+          {
+            method: "GET",
+            credentials: "include",
+            cache: "no-store",
+          }
+        );
+
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          throw new Error(
+            payload?.error ?? "Failed to load personal call schedule"
+          );
+        }
+
+        if (!cancelled) {
+          setExistingCalls(Array.isArray(payload?.calls) ? payload.calls : []);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setExistingCalls([]);
+          setLocalError(
+            error instanceof Error
+              ? error.message
+              : "Failed to load personal call schedule"
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingExistingCalls(false);
+        }
+      }
+    }
+
+    loadExistingCalls();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [monthStart, monthEnd]);
 
   useEffect(() => {
     if (!showSuccessModal) return;
@@ -181,7 +261,7 @@ export default function AddIndividualCall() {
       setRedirectCountdown((prev) => {
         if (prev <= 1) {
           window.clearInterval(interval);
-          router.push("/workspace/call");
+          router.push("/work/call");
           return 0;
         }
         return prev - 1;
@@ -238,6 +318,28 @@ export default function AddIndividualCall() {
       if (!response.ok) {
         throw new Error(payload?.error ?? "Failed to save call days");
       }
+
+      setExistingCalls((prev) => {
+        const withoutOverlaps = prev.filter(
+          (call) => !datesToSave.includes(call.date)
+        );
+
+        const newCalls: ExistingCall[] = datesToSave.map((date, index) => ({
+          id:
+            payload?.calls?.[index]?.id ??
+            `${date}-${callType}-${Math.random().toString(36).slice(2, 8)}`,
+          date,
+          callType,
+          site: siteValue,
+          isHomeCall,
+          notes: notesValue,
+          membershipId: payload?.calls?.[index]?.membershipId ?? null,
+        }));
+
+        return [...withoutOverlaps, ...newCalls].sort((a, b) =>
+          a.date.localeCompare(b.date)
+        );
+      });
 
       setLastSavedSummary({
         dates: datesToSave,
@@ -348,6 +450,12 @@ export default function AddIndividualCall() {
           </div>
 
           <div className="px-3 pb-4 pt-3 md:px-4">
+            {loadingExistingCalls ? (
+              <div className="mb-4 rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
+                Loading your saved call schedule...
+              </div>
+            ) : null}
+
             <div className="mb-2 grid grid-cols-7 gap-1.5">
               {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
                 <div
@@ -372,6 +480,15 @@ export default function AddIndividualCall() {
                     const isToday = key === todayKey;
                     const isSelected = selectedDates.includes(key);
 
+                    const existingCall = existingCalls.find(
+                      (call) => call.date === key
+                    );
+                    const isPersisted = !!existingCall;
+                    const persistedType = existingCall?.callType ?? null;
+                    const persistedStyles = persistedType
+                      ? getCallTypeStyles(persistedType)
+                      : null;
+
                     return (
                       <button
                         key={key}
@@ -383,7 +500,11 @@ export default function AddIndividualCall() {
                             ? "border-slate-200 bg-white hover:border-slate-300"
                             : "border-transparent bg-slate-50/60",
                           isToday && inMonth ? "ring-2 ring-slate-900/10" : "",
-                          isSelected ? callTypeStyles.selectedDay : "",
+                          isSelected
+                            ? callTypeStyles.selectedDay
+                            : isPersisted && persistedStyles
+                            ? persistedStyles.selectedDay
+                            : "",
                         ].join(" ")}
                       >
                         <div className="flex items-start justify-between gap-2">
@@ -402,6 +523,12 @@ export default function AddIndividualCall() {
                             >
                               <Check className="h-3.5 w-3.5" />
                             </span>
+                          ) : isPersisted && persistedStyles ? (
+                            <span
+                              className={`inline-flex h-6 w-6 items-center justify-center rounded-full shadow-sm ${persistedStyles.selectedIcon}`}
+                            >
+                              <PhoneCall className="h-3.5 w-3.5" />
+                            </span>
                           ) : null}
                         </div>
 
@@ -412,6 +539,15 @@ export default function AddIndividualCall() {
                             >
                               <PhoneCall className="h-3 w-3" />
                               {callType}
+                            </div>
+                          </div>
+                        ) : isPersisted && persistedStyles && persistedType ? (
+                          <div className="mt-5">
+                            <div
+                              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] ${persistedStyles.selectedBadge}`}
+                            >
+                              <PhoneCall className="h-3 w-3" />
+                              {persistedType}
                             </div>
                           </div>
                         ) : null}
@@ -442,7 +578,9 @@ export default function AddIndividualCall() {
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {selectedDates.length === 0 ? (
-                <span className="text-sm text-slate-500">Tap calendar days to begin.</span>
+                <span className="text-sm text-slate-500">
+                  Tap calendar days to begin.
+                </span>
               ) : (
                 selectedDates.map((date) => (
                   <span
@@ -502,7 +640,9 @@ export default function AddIndividualCall() {
                 <div className="flex items-center gap-2">
                   <Home className="h-4 w-4 text-slate-700" />
                   <div>
-                    <p className="text-sm font-semibold text-slate-700">Home call</p>
+                    <p className="text-sm font-semibold text-slate-700">
+                      Home call
+                    </p>
                     <p className="mt-1 text-xs text-slate-500">
                       Toggle for at-home call coverage
                     </p>
@@ -551,9 +691,11 @@ export default function AddIndividualCall() {
             <p className="mt-2 text-sm text-slate-600">
               {selectedDates.length === 0
                 ? "No dates selected yet."
-                : `${selectedDates.length} day${selectedDates.length === 1 ? "" : "s"} • ${callType} • ${
-                    site.trim() || "No site"
-                  } • ${isHomeCall ? "Home call" : "In-house call"}`}
+                : `${selectedDates.length} day${
+                    selectedDates.length === 1 ? "" : "s"
+                  } • ${callType} • ${site.trim() || "No site"} • ${
+                    isHomeCall ? "Home call" : "In-house call"
+                  }`}
             </p>
           </div>
 
@@ -639,7 +781,9 @@ export default function AddIndividualCall() {
                 <div className="grid gap-3 md:grid-cols-2">
                   <div>
                     <p className="font-semibold text-slate-900">Call type</p>
-                    <p className="mt-1 text-slate-600">{lastSavedSummary.callType}</p>
+                    <p className="mt-1 text-slate-600">
+                      {lastSavedSummary.callType}
+                    </p>
                   </div>
 
                   <div>
@@ -668,7 +812,9 @@ export default function AddIndividualCall() {
 
             <div className="mt-6 rounded-[1rem] border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
               Returning to Call Hub in{" "}
-              <span className="font-bold text-slate-950">{redirectCountdown}</span>{" "}
+              <span className="font-bold text-slate-950">
+                {redirectCountdown}
+              </span>{" "}
               second{redirectCountdown === 1 ? "" : "s"}.
             </div>
 
@@ -683,7 +829,7 @@ export default function AddIndividualCall() {
 
               <button
                 type="button"
-                onClick={() => router.push("/workspace/call")}
+                onClick={() => router.push("/work/call")}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
               >
                 Go to Call Hub

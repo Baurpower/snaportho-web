@@ -276,71 +276,77 @@ export function WeekScheduleView({
                   isToday ? "ring-2 ring-slate-900/10" : ""
                 }`}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] opacity-70">
-                      {day.dayKey}
-                    </p>
-                    <p className="mt-1 text-lg font-bold">
-                      {formatShortDate(day.date)}
+                <div className="flex h-full flex-col">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] opacity-70">
+                        {day.dayKey}
+                      </p>
+                      <p className="mt-1 text-lg font-bold">
+                        {formatShortDate(day.date)}
+                      </p>
+                    </div>
+
+                    <div className="flex min-h-[56px] flex-col items-end gap-2">
+                      {day.hasCall ? (
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-sm">
+                          <Phone className="h-3.5 w-3.5" />
+                          {day.callLabel ?? "Call"}
+                        </div>
+                      ) : (
+                        <div className="h-[34px]" />
+                      )}
+
+                      {day.dayCategory ? (
+                        <div
+                          className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] ${tone.badge}`}
+                        >
+                          {tone.icon}
+                          {secondaryLabel}
+                        </div>
+                      ) : (
+                        <div className="h-[34px]" />
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mt-8 min-h-[72px]">
+                    <p className="line-clamp-2 text-xl font-bold tracking-tight">
+                      {title}
                     </p>
                   </div>
 
-                  <div className="flex flex-col items-end gap-2">
-                    {day.hasCall ? (
-                      <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-sm">
-                        <Phone className="h-3.5 w-3.5" />
-                        {day.callLabel ?? "Call"}
+                  <div className="mt-4 min-h-[56px] space-y-2">
+                    {day.location ? (
+                      <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-black/10 px-3 py-1.5 text-xs font-semibold">
+                        <MapPin className="h-3.5 w-3.5 shrink-0" />
+                        <span className="truncate">{day.location}</span>
                       </div>
                     ) : null}
 
-                    {day.dayCategory ? (
+                    {day.attending ? (
+                      <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-black/10 px-3 py-1.5 text-xs font-semibold">
+                        <UserRound className="h-3.5 w-3.5 shrink-0" />
+                        <span className="truncate">{day.attending}</span>
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div className="mt-auto pt-5">
+                    {day.rotationPill ? (
                       <div
-                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] ${tone.badge}`}
+                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold ${getRotationPillClasses(
+                          day.rotationColor
+                        )}`}
                       >
-                        {tone.icon}
-                        {secondaryLabel}
+                        <Clock3 className="h-3.5 w-3.5" />
+                        {day.rotationPill}
                       </div>
-                    ) : null}
+                    ) : (
+                      <div className="h-[34px]" />
+                    )}
                   </div>
                 </div>
-
-                <div className="mt-8">
-                  <p className="text-xl font-bold tracking-tight">{title}</p>
-
-                  <p className="mt-3 text-sm font-medium opacity-75">
-                    {secondaryLabel}
-                  </p>
-                </div>
-
-                <div className="mt-5 space-y-2">
-                  {day.location ? (
-                    <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-black/10 px-3 py-1.5 text-xs font-semibold">
-                      <MapPin className="h-3.5 w-3.5 shrink-0" />
-                      <span className="truncate">{day.location}</span>
-                    </div>
-                  ) : null}
-
-                  {day.attending ? (
-                    <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-black/10 px-3 py-1.5 text-xs font-semibold">
-                      <UserRound className="h-3.5 w-3.5 shrink-0" />
-                      <span className="truncate">{day.attending}</span>
-                    </div>
-                  ) : null}
-                </div>
-
-                {day.rotationPill ? (
-                  <div className="mt-6">
-                    <div
-                      className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold ${getRotationPillClasses(
-                        day.rotationColor
-                      )}`}
-                    >
-                      <Clock3 className="h-3.5 w-3.5" />
-                      {day.rotationPill}
-                    </div>
-                  </div>
-                ) : null}
               </button>
             );
           })}
