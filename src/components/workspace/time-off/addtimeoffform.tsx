@@ -15,11 +15,76 @@ import {
   StickyNote,
   UserRound,
   X,
+  Bell,
 } from "lucide-react";
 
 type TimeOffType = "personal" | "conference";
 type ConstraintLevel = "hard" | "soft" | "informational";
 type ApprovalStatus = "requested" | "approved" | "denied";
+
+type MonthContextResponse = {
+  monthStart: string;
+  monthEnd: string;
+  membership: {
+    id: string;
+    rosterId?: string | null;
+    displayName: string | null;
+    gradYear?: number | null;
+    pgyYear?: number | null;
+    trainingLevel: string | null;
+  } | null;
+  rotations: Array<{
+    id: string;
+    startDate: string | null;
+    endDate: string | null;
+    title: string;
+    color: string | null;
+    siteLabel?: string | null;
+    teamLabel?: string | null;
+    notes?: string | null;
+  }>;
+  calls: Array<{
+    id: string;
+    title: string | null;
+    date: string | null;
+    callType: string | null;
+    startDatetime: string | null;
+    endDatetime: string | null;
+    site: string | null;
+    isHomeCall: boolean | null;
+    notes: string | null;
+  }>;
+  events: Array<{
+    id: string;
+    title: string | null;
+    date: string | null;
+    category: string | null;
+    startTime?: string | null;
+    endTime?: string | null;
+    isAllDay?: boolean | null;
+    location?: string | null;
+    description?: string | null;
+    attending?: string | null;
+  }>;
+  timeOff: Array<{
+    id: string;
+    membershipId: string | null;
+    residentName?: string | null;
+    trainingLevel?: string | null;
+    classYear?: number | null;
+    userId?: string | null;
+    type: TimeOffType | null;
+    usingPto: boolean;
+    startDate: string | null;
+    endDate: string | null;
+    title: string | null;
+    location: string | null;
+    notes: string | null;
+    approvalStatus: ApprovalStatus | null;
+    approved: boolean | null;
+    isMine: boolean;
+  }>;
+};
 
 function monthLabel(year: number, monthIndex: number) {
   return new Date(year, monthIndex, 1).toLocaleDateString("en-US", {
@@ -118,6 +183,16 @@ function getSortedRange(a: string, b: string) {
     : { startDate: b, endDate: a };
 }
 
+function getMonthRange(year: number, monthIndex: number) {
+  const start = new Date(Date.UTC(year, monthIndex, 1));
+  const end = new Date(Date.UTC(year, monthIndex + 1, 0));
+
+  return {
+    monthStart: start.toISOString().slice(0, 10),
+    monthEnd: end.toISOString().slice(0, 10),
+  };
+}
+
 function getTimeOffStyles(type: TimeOffType) {
   if (type === "conference") {
     return {
@@ -214,6 +289,12 @@ export default function AddTimeOffPage() {
     sourceKind: string;
   } | null>(null);
 
+  const [monthContext, setMonthContext] = useState<MonthContextResponse | null>(
+    null
+  );
+  const [monthContextLoading, setMonthContextLoading] = useState(false);
+  const [monthContextError, setMonthContextError] = useState<string | null>(null);
+
   const typeStyles = getTimeOffStyles(timeOffType);
   const AccentIcon = typeStyles.accentIcon;
 
@@ -246,6 +327,111 @@ export default function AddTimeOffPage() {
 
     return getSortedRange(selectedStartDate, selectedEndDate);
   }, [selectedStartDate, selectedEndDate]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadMonthContext() {
+      try {
+        setMonthContextLoading(true);
+        setMonthContextError(null);
+
+        const { monthStart, monthEnd } = getMonthRange(
+          visibleMonth.year,
+          visibleMonth.monthIndex
+        );
+
+        const response = await fetch(
+          `/api/me/month-lite?monthStart=${monthStart}&monthEnd=${monthEnd}`,
+          {
+            credentials: "include",
+            cache: "no-store",
+          }
+        );
+
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          throw new Error(payload?.error ?? "Failed to load month context");
+        }
+
+        if (!cancelled) {
+          setMonthContext(payload as MonthContextResponse);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          setMonthContextError(
+            error instanceof Error ? error.message : "Failed to load month context"
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setMonthContextLoading(false);
+        }
+      }
+    }
+
+    loadMonthContext();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [visibleMonth.year, visibleMonth.monthIndex]);
+
+  const myCallDateSet = useMemo(() => {
+    const set = new Set<string>();
+    for (const call of monthContext?.calls ?? []) {
+      if (call.date) set.add(call.date);
+    }
+    return set;
+  }, [monthContext]);
+
+  const myExistingTimeOffDateSet = useMemo(() => {
+    const set = new Set<string>();
+    for (const item of monthContext?.timeOff ?? []) {
+      if (!item.startDate || !item.endDate) continue;
+      for (const dateKey of enumerateDateKeys(item.startDate, item.endDate)) {
+        set.add(dateKey);
+      }
+    }
+    return set;
+  }, [monthContext]);
+
+  const myRotationDateMap = useMemo(() => {
+    const map = new Map<string, { title: string; color: string | null }>();
+
+    for (const rotation of monthContext?.rotations ?? []) {
+      if (!rotation.startDate || !rotation.endDate) continue;
+
+      for (const dateKey of enumerateDateKeys(rotation.startDate, rotation.endDate)) {
+        if (!map.has(dateKey)) {
+          map.set(dateKey, {
+            title: rotation.title,
+            color: rotation.color ?? null,
+          });
+        }
+      }
+    }
+
+    return map;
+  }, [monthContext]);
+
+  const selectedConflictDates = useMemo(() => {
+    return selectedDateKeys.filter((dateKey) => myCallDateSet.has(dateKey));
+  }, [selectedDateKeys, myCallDateSet]);
+
+  const monthCallCount = useMemo(
+    () => (monthContext?.calls ?? []).filter((call) => !!call.date).length,
+    [monthContext]
+  );
+
+  const currentRotationLabel = useMemo(() => {
+    const todayRotation = myRotationDateMap.get(todayKey);
+    if (todayRotation) return todayRotation.title;
+
+    const firstRotation = monthContext?.rotations?.[0];
+    return firstRotation?.title ?? null;
+  }, [myRotationDateMap, todayKey, monthContext]);
 
   useEffect(() => {
     if (!showSuccessModal) return;
@@ -302,6 +488,13 @@ export default function AddTimeOffPage() {
 
       if (!selectionSummary) {
         setLocalError("Select at least one date for your time off.");
+        return;
+      }
+
+      if (selectedConflictDates.length > 0) {
+        setLocalError(
+          "One or more selected dates already have call assigned. Clear those dates or reassign the call before saving time off."
+        );
         return;
       }
 
@@ -475,18 +668,30 @@ export default function AddTimeOffPage() {
                     const isToday = key === todayKey;
                     const isSelected = selectedDateKeys.includes(key);
 
+                    const hasExistingCall = myCallDateSet.has(key);
+                    const hasExistingTimeOff = myExistingTimeOffDateSet.has(key);
+                    const rotationForDay = myRotationDateMap.get(key) ?? null;
+                    const selectedHasConflict = isSelected && hasExistingCall;
+
                     return (
                       <button
                         key={key}
                         type="button"
                         onClick={() => inMonth && handleDateClick(key)}
                         className={[
-                          "min-h-[88px] rounded-[1.35rem] border p-2.5 text-left transition",
+                          "min-h-[116px] rounded-[1.45rem] border p-3 text-left transition",
                           inMonth
-                            ? "border-slate-200 bg-white hover:border-slate-300"
+                            ? "bg-white hover:border-slate-300"
                             : "border-transparent bg-slate-50/60",
                           isToday && inMonth ? "ring-2 ring-slate-900/10" : "",
                           isSelected ? typeStyles.selectedDay : "",
+                          selectedHasConflict
+                            ? "border-amber-400 ring-2 ring-amber-200"
+  : hasExistingCall && inMonth
+  ? "border-rose-400 bg-rose-50/40"
+  : hasExistingTimeOff && inMonth
+  ? "border-emerald-300"
+  : "border-slate-200"
                         ].join(" ")}
                       >
                         <div className="flex items-start justify-between gap-2">
@@ -508,16 +713,40 @@ export default function AddTimeOffPage() {
                           ) : null}
                         </div>
 
-                        {isSelected ? (
-                          <div className="mt-5">
+                        <div className="mt-2.5 flex min-h-[56px] flex-col justify-start gap-2">
+                          {hasExistingCall ? (
+  <div
+    className={`inline-flex w-fit items-center gap-2 rounded-full px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] ${
+      selectedHasConflict
+        ? "bg-amber-500 text-white"
+        : "bg-rose-600 text-white shadow-sm"
+    }`}
+  >
+    <Bell className="h-3.5 w-3.5" />
+    {selectedHasConflict ? "Call conflict" : "Call"}
+  </div>
+) : null}
+
+                          {rotationForDay ? (
+                            <div className="truncate rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.08em] text-slate-700">
+                              {rotationForDay.title}
+                            </div>
+                          ) : null}
+
+                          {!hasExistingCall && isSelected ? (
                             <div
-                              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] ${typeStyles.selectedBadge}`}
+                              className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] ${typeStyles.selectedBadge}`}
                             >
                               <AccentIcon className="h-3 w-3" />
                               {typeStyles.label}
                             </div>
-                          </div>
-                        ) : null}
+                          ) : !hasExistingCall && hasExistingTimeOff ? (
+                            <div className="inline-flex w-fit items-center gap-1.5 rounded-full bg-emerald-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-white">
+                              <PlaneTakeoff className="h-3 w-3" />
+                              Existing off
+                            </div>
+                          ) : null}
+                        </div>
                       </button>
                     );
                   })}
@@ -569,6 +798,49 @@ export default function AddTimeOffPage() {
                 </div>
               )}
             </div>
+          </div>
+
+          <div className="mt-5 rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3">
+            <p className="text-sm font-semibold text-slate-900">Visible month context</p>
+
+            {monthContextLoading ? (
+              <p className="mt-2 text-sm text-slate-500">Loading month details...</p>
+            ) : monthContextError ? (
+              <p className="mt-2 text-sm text-rose-600">{monthContextError}</p>
+            ) : (
+              <div className="mt-3 grid gap-3">
+<div className="rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3">
+  <div className="flex items-center gap-2">
+    <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-rose-600 text-white">
+      <Bell className="h-4.5 w-4.5" />
+    </div>
+    <div>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-rose-700">
+        Calls this month
+      </p>
+      <p className="text-lg font-bold text-rose-950">
+        {monthCallCount}
+      </p>
+    </div>
+  </div>
+</div>
+
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+                    Rotation
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {currentRotationLabel ? (
+                      <span className="rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
+                        {currentRotationLabel}
+                      </span>
+                    ) : (
+                      <span className="text-sm text-slate-500">No visible rotation</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="mt-5">
@@ -674,19 +946,19 @@ export default function AddTimeOffPage() {
 
               <div className="mt-3 flex flex-wrap gap-2">
                 <ChipButton
-                  label="Hard"
-                  active={constraintLevel === "hard"}
-                  activeClassName="bg-rose-600 text-white shadow-sm"
-                  inactiveClassName="bg-rose-50 text-rose-900 hover:bg-rose-100"
-                  onClick={() => setConstraintLevel("hard")}
-                />
+  label="Hard"
+  active={constraintLevel === "hard"}
+  activeClassName="bg-blue-200 text-blue-900 shadow-sm"
+  inactiveClassName="bg-blue-50 text-blue-800 hover:bg-blue-100"
+  onClick={() => setConstraintLevel("hard")}
+/>
                 <ChipButton
-                  label="Soft"
-                  active={constraintLevel === "soft"}
-                  activeClassName="bg-slate-900 text-white shadow-sm"
-                  inactiveClassName="bg-slate-100 text-slate-900 hover:bg-slate-200"
-                  onClick={() => setConstraintLevel("soft")}
-                />
+  label="Soft"
+  active={constraintLevel === "soft"}
+  activeClassName="bg-pink-200 text-pink-900 shadow-sm"
+  inactiveClassName="bg-pink-50 text-pink-700 hover:bg-pink-100"
+  onClick={() => setConstraintLevel("soft")}
+/>
                 <ChipButton
                   label="Info"
                   active={constraintLevel === "informational"}
@@ -732,6 +1004,23 @@ export default function AddTimeOffPage() {
                   } • Requested`}
             </p>
           </div>
+
+          {selectedConflictDates.length > 0 ? (
+            <div className="mt-4 rounded-[1rem] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+              You selected {selectedConflictDates.length} day
+              {selectedConflictDates.length === 1 ? "" : "s"} that already have call assigned:
+              <div className="mt-2 flex flex-wrap gap-2">
+                {selectedConflictDates.map((dateKey) => (
+                  <span
+                    key={dateKey}
+                    className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-amber-800 ring-1 ring-amber-200"
+                  >
+                    {formatShortDate(dateKey)}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
 
           {localError ? (
             <div className="mt-4 rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">

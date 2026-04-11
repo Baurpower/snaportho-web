@@ -14,7 +14,8 @@ import {
   UserRound,
   MapPin,
   BadgeCheck,
-  Palmtree,
+  PlaneTakeoff,
+  AlertTriangle,
 } from "lucide-react";
 import DayDetailsModal from "@/components/workspace/shared/daydetailsmodal";
 import type { TimeOffItem } from "@/lib/db/time-off";
@@ -605,33 +606,40 @@ function MonthCard({
                 const myCallLevel = getDayCallLevel(myCallEvents);
                 const myDayTimeOff = inMonth ? (timeOffByDate.get(key) ?? []) : [];
                 const hasTimeOff = myDayTimeOff.length > 0;
+                const hasConflict = hasMyCall && hasTimeOff;
 
                 const dayBorderClass = !inMonth
-                  ? "border-transparent"
-                  : isToday
-                  ? "border-rose-500"
-                  : hasMyCall
-                  ? "border-sky-400"
-                  : hasTimeOff
-                  ? "border-emerald-300"
-                  : tone.border;
+  ? "border-transparent"
+  : isToday
+  ? "border-rose-500"
+  : hasConflict
+  ? "border-amber-400"
+  : hasMyCall
+  ? "border-sky-400"
+  : hasTimeOff
+  ? "border-emerald-300"
+  : tone.border;
 
-                const dayRingClass = inMonth && isToday
-                  ? "ring-2 ring-rose-300 ring-offset-1 shadow-[0_0_0_3px_rgba(244,63,94,0.12)]"
-                  : hasMyCall
-                  ? "ring-1 ring-sky-300 shadow-[inset_0_0_0_1px_rgba(14,165,233,0.08)]"
-                  : hasTimeOff
-                  ? "ring-1 ring-emerald-200 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.08)]"
-                  : "";
+const dayRingClass = inMonth && isToday
+  ? "ring-2 ring-rose-300 ring-offset-1 shadow-[0_0_0_3px_rgba(244,63,94,0.12)]"
+  : hasConflict
+  ? "ring-2 ring-amber-300 ring-offset-1 shadow-[0_0_0_3px_rgba(251,191,36,0.14)]"
+  : hasMyCall
+  ? "ring-1 ring-sky-300 shadow-[inset_0_0_0_1px_rgba(14,165,233,0.08)]"
+  : hasTimeOff
+  ? "ring-1 ring-emerald-200 shadow-[inset_0_0_0_1px_rgba(16,185,129,0.08)]"
+  : "";
 
-                const dayBgClass = inMonth
-                  ? hasTimeOff && !hasMyCall
-                    ? "bg-emerald-50/80"
-                    : tone.bg
-                  : "bg-slate-50/70";
+const dayBgClass = inMonth
+  ? hasConflict
+    ? "bg-amber-50/90"
+    : hasTimeOff && !hasMyCall
+    ? "bg-emerald-50/80"
+    : tone.bg
+  : "bg-slate-50/70";
 
                 const baseClasses = [
-                  "relative h-[108px] overflow-hidden rounded-[1.05rem] border p-2.5 transition-all",
+                  "relative h-[112px] overflow-hidden rounded-[1.05rem] border p-2.5 transition-all",
                   dayBgClass,
                   dayBorderClass,
                   dayRingClass,
@@ -644,78 +652,112 @@ function MonthCard({
 
                 return (
                   <button
-                    key={key}
-                    type="button"
-                    disabled={!inMonth}
-                    onClick={() =>
-                      inMonth
-                        ? onOpenDay({
-                            dateKey: key,
-                            monthLabel: month.label,
-                            events: dayEvents,
-                            programCalls: dayProgramCalls,
-                            rotationOverlaps: rotationOverlapsByDate.get(key) ?? [],
-                            myTimeOff: myDayTimeOff,
-                          })
-                        : undefined
-                    }
-                    className={baseClasses.join(" ")}
-                  >
-                    {inMonth ? (
-                      <div
-                        className={[
-                          "pointer-events-none absolute inset-x-0 bottom-0 h-1.5",
-                          hasTimeOff && !hasMyCall
-                            ? "bg-emerald-400"
-                            : dayCategory
-                            ? tone.strip
-                            : "bg-slate-200",
-                        ].join(" ")}
-                      />
-                    ) : null}
+  key={key}
+  type="button"
+  disabled={!inMonth}
+  onClick={() =>
+    inMonth
+      ? onOpenDay({
+          dateKey: key,
+          monthLabel: month.label,
+          events: dayEvents,
+          programCalls: dayProgramCalls,
+          rotationOverlaps: rotationOverlapsByDate.get(key) ?? [],
+          myTimeOff: myDayTimeOff,
+        })
+      : undefined
+  }
+  className={baseClasses.join(" ")}
+>
+  {inMonth ? (
+    <div
+      className={[
+        "pointer-events-none absolute inset-x-0 bottom-0 h-1.5",
+        hasConflict
+          ? "bg-amber-400"
+          : hasTimeOff && !hasMyCall
+          ? "bg-emerald-400"
+          : dayCategory
+          ? tone.strip
+          : "bg-slate-200",
+      ].join(" ")}
+    />
+  ) : null}
 
-                    <div className="relative z-10 flex h-full flex-col">
-                      <div className="flex justify-between">
-                        <span
-                          className={[
-                            "inline-flex h-8 min-w-[30px] items-center justify-center rounded-full px-1.5 text-xs font-bold transition-colors",
-                            getDateCircleClasses(dayCategory, isToday, inMonth),
-                          ].join(" ")}
-                        >
-                          {date.getDate()}
-                        </span>
-                      </div>
+  <div className="relative z-10 flex h-full flex-col">
+    <div className="flex justify-between">
+      <span
+        className={[
+          "inline-flex h-8 min-w-[30px] items-center justify-center rounded-full px-1.5 text-xs font-bold transition-colors",
+          getDateCircleClasses(dayCategory, isToday, inMonth),
+        ].join(" ")}
+      >
+        {date.getDate()}
+      </span>
+    </div>
 
-                      <div className="flex flex-1 items-center justify-center pb-6 pt-1">
-                        {hasMyCall && myCallLevel ? (
-                          <div
-                            className={["flex items-center justify-center", myCallLevel === 1 ? "text-sky-700" : "text-sky-600"].join(" ")}
-                            title={myCallLevel === 1 ? "My primary call" : "My backup call"}
-                          >
-                            {myCallLevel === 1 ? <Bell className="h-8 w-8" /> : <Slice className="h-8 w-8" />}
-                          </div>
-                        ) : hasTimeOff ? (
-                          <div className="flex items-center justify-center text-emerald-600" title="My time-off">
-                            <Palmtree className="h-8 w-8" />
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
+    <div className="flex flex-1 items-center justify-center pb-8 pt-2">
+  {hasConflict ? (
+    <div
+      className="flex items-center justify-center text-amber-600"
+      title="Issue: call and time-off"
+    >
+      <AlertTriangle className="h-6 w-6" />
+    </div>
+  ) : hasMyCall && myCallLevel ? (
+    <div
+      className={[
+        "flex items-center justify-center",
+        myCallLevel === 1 ? "text-sky-700" : "text-sky-600",
+      ].join(" ")}
+      title={myCallLevel === 1 ? "My primary call" : "My backup call"}
+    >
+      {myCallLevel === 1 ? (
+        <Bell className="h-6 w-6" />
+      ) : (
+        <Slice className="h-6 w-6" />
+      )}
+    </div>
+  ) : hasTimeOff ? (
+    <div
+      className="flex items-center justify-center text-emerald-600"
+      title="My time-off"
+    >
+      <PlaneTakeoff className="h-6 w-6" />
+    </div>
+  ) : null}
+</div>
+  </div>
 
-                    {inMonth && dayCategory && !hasTimeOff ? (
-                      <div className="absolute inset-x-1.5 bottom-2 z-10 flex justify-center">
-                        <span className={["inline-flex rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]", tone.chip].join(" ")}>
-                          {dayCategory === "or" ? "OR" : dayCategory === "clinic" ? "Clinic" : "Custom"}
-                        </span>
-                      </div>
-                    ) : inMonth && hasTimeOff ? (
-                      <div className="absolute inset-x-1.5 bottom-2 z-10 flex justify-center">
-                        <span className="inline-flex rounded-full bg-emerald-600 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white">
-                          Time-Off
-                        </span>
-                      </div>
-                    ) : null}
-                  </button>
+  {inMonth && hasConflict ? (
+  <div className="absolute inset-x-1 bottom-1.5 z-10 flex justify-center">
+    <span className="inline-flex items-center gap-1 rounded-full bg-amber-500 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em] text-white">
+      Issue
+    </span>
+  </div>
+) : inMonth && dayCategory && !hasTimeOff ? (
+  <div className="absolute inset-x-1 bottom-1.5 z-10 flex justify-center">
+    <span
+      className={[
+        "inline-flex rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em]",
+        tone.chip,
+      ].join(" ")}
+    >
+      {dayCategory === "or"
+        ? "OR"
+        : dayCategory === "clinic"
+        ? "Clinic"
+        : "Custom"}
+    </span>
+  </div>
+) : inMonth && hasTimeOff ? (
+  <div className="absolute inset-x-1 bottom-1.5 z-10 flex justify-center">
+    <span className="inline-flex rounded-full bg-emerald-600 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em] text-white">
+      Off
+    </span>
+  </div>
+) : null}
+</button>
                 );
               })}
             </div>
@@ -738,8 +780,12 @@ function Legend() {
         My backup call
       </div>
       <div className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
-        <Palmtree className="h-4 w-4 text-emerald-600" />
+        <PlaneTakeoff className="h-4 w-4 text-emerald-600" />
         My time-off
+      </div>
+      <div className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
+        <AlertTriangle className="h-4 w-4 text-amber-500" />
+        Call conflict
       </div>
       <div className="h-4 w-px bg-slate-200" />
       <div className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
@@ -780,6 +826,11 @@ export function MonthsScheduleView({
   const backupCall = useMemo(() => getSingleProgramCallByRole(selectedDay?.programCalls ?? [], "Backup"), [selectedDay]);
   const scheduleEvents = useMemo(() => selectedDay?.events ?? [], [selectedDay]);
   const dayType = useMemo(() => getDayCategory(scheduleEvents), [scheduleEvents]);
+  const hasSelectedDayConflict = useMemo(() => {
+  if (!selectedDay) return false;
+  const myCalls = selectedDay.programCalls.filter((call) => call.isMine);
+  return myCalls.length > 0 && selectedDay.myTimeOff.length > 0;
+}, [selectedDay]);
 
   return (
     <>
@@ -855,138 +906,218 @@ export function MonthsScheduleView({
       </div>
 
       <DayDetailsModal
-        open={!!selectedDay}
-        onClose={() => setSelectedDay(null)}
-        title="Day details"
-        subtitle={selectedDay ? selectedDay.monthLabel : undefined}
-        dateLabel={selectedDay ? formatLongDate(selectedDay.dateKey) : "—"}
-      >
-        {() =>
-          selectedDay ? (
-            <div className="space-y-5">
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-700">
-                  <CalendarDays className="h-4 w-4" />
-                  {selectedDay.dateKey}
-                </div>
-                {dayType ? (
-                  <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] ${getDayTypeBadgeClasses(dayType)}`}>
-                    <BadgeCheck className="h-4 w-4" />
-                    {dayType === "or" ? "OR Day" : dayType === "clinic" ? "Clinic Day" : "Custom Day"}
-                  </div>
-                ) : null}
-                {selectedDay.myTimeOff.length > 0 ? (
-                  <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-emerald-700">
-                    <Palmtree className="h-4 w-4" />
-                    Time-Off
-                  </div>
-                ) : null}
+  open={!!selectedDay}
+  onClose={() => setSelectedDay(null)}
+  title="Day details"
+  subtitle={selectedDay ? selectedDay.monthLabel : undefined}
+  dateLabel={selectedDay ? formatLongDate(selectedDay.dateKey) : "—"}
+>
+  {() =>
+    selectedDay ? (
+      <div className="space-y-5">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-700">
+            <CalendarDays className="h-4 w-4" />
+            {selectedDay.dateKey}
+          </div>
+
+          {dayType ? (
+            <div
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] ${getDayTypeBadgeClasses(
+                dayType
+              )}`}
+            >
+              <BadgeCheck className="h-4 w-4" />
+              {dayType === "or"
+                ? "OR Day"
+                : dayType === "clinic"
+                ? "Clinic Day"
+                : "Custom Day"}
+            </div>
+          ) : null}
+
+          {selectedDay.myTimeOff.length > 0 ? (
+            <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-emerald-700">
+              <PlaneTakeoff className="h-4 w-4" />
+              Off
+            </div>
+          ) : null}
+
+          {hasSelectedDayConflict ? (
+            <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-amber-700">
+              Issue
+            </div>
+          ) : null}
+        </div>
+
+        {hasSelectedDayConflict ? (
+          <div className="rounded-[1.35rem] border border-amber-200 bg-amber-50 p-4">
+            <div className="flex items-start gap-3">
+              <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white">
+                <AlertTriangle className="h-5 w-5" />
               </div>
-
-              {/* Time-off detail card */}
-              {selectedDay.myTimeOff.length > 0 ? (
-                <div className="rounded-[1.35rem] border border-emerald-200 bg-emerald-50 p-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white">
-                      <Palmtree className="h-4 w-4" />
-                    </div>
-                    <p className="text-sm font-bold text-emerald-900">My Time-Off</p>
-                  </div>
-                  <div className="space-y-2">
-                    {selectedDay.myTimeOff.map((item) => (
-                      <div key={item.id} className="rounded-xl border border-emerald-200 bg-white px-3 py-2.5">
-                        <p className="text-sm font-semibold capitalize text-emerald-900">
-  {item.type ?? "Time-off"}
-</p>
-{item.notes ? (
-  <p className="mt-0.5 text-xs text-emerald-600">{item.notes}</p>
-) : null}
-                        <p className="mt-1 text-xs text-emerald-500">
-  {item.startDate && item.endDate
-    ? formatShortRange(item.startDate, item.endDate)
-    : "—"}
-</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : null}
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <CallAssignmentCard role="Primary" call={primaryCall} />
-                <CallAssignmentCard role="Backup" call={backupCall} />
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <DetailField
-                  label="Rotation coverage"
-                  icon={<Clock3 className="h-4 w-4" />}
-                  value={
-                    selectedDay.rotationOverlaps.length > 0 ? (
-                      <div className="space-y-2">
-                        {selectedDay.rotationOverlaps.map((rotation) => (
-                          <div key={rotation.id} className="text-sm">
-                            <div className="font-semibold text-slate-900">{rotation.title}</div>
-                            <div className="mt-1 text-xs text-slate-500">{formatShortRange(rotation.startDate, rotation.endDate)}</div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      "No overlapping rotation"
-                    )
-                  }
-                />
-                <DetailField
-                  label="Day type"
-                  icon={<Stethoscope className="h-4 w-4" />}
-                  value={dayType ? (dayType === "or" ? "OR" : dayType === "clinic" ? "Clinic" : "Custom") : "No event category"}
-                />
-              </div>
-
-              <div className="rounded-[1.5rem] border border-slate-200 bg-white">
-                <div className="border-b border-slate-200 px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <ClipboardList className="h-4 w-4 text-slate-500" />
-                    <p className="text-sm font-bold text-slate-900">Schedule details</p>
-                  </div>
-                </div>
-                <div className="space-y-3 px-4 py-4">
-                  {scheduleEvents.length === 0 ? (
-                    <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
-                      No OR, clinic, or custom events for this day.
-                    </div>
-                  ) : (
-                    scheduleEvents.map((event) => (
-                      <div key={event.id} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
-                        <p className="text-sm font-semibold text-slate-900">{event.title ?? "Event"}</p>
-                        <div className="mt-3 grid gap-2 md:grid-cols-2">
-                          <div className="flex items-center gap-2 text-xs text-slate-500">
-                            <Stethoscope className="h-3.5 w-3.5" />
-                            <span><span className="font-semibold text-slate-700">Category:</span> {event.category ?? "—"}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-slate-500">
-                            <MapPin className="h-3.5 w-3.5" />
-                            <span><span className="font-semibold text-slate-700">Location:</span> {event.location ?? "—"}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-slate-500">
-                            <UserRound className="h-3.5 w-3.5" />
-                            <span><span className="font-semibold text-slate-700">Attending:</span> {event.attending ?? "—"}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-slate-500">
-                            <CalendarDays className="h-3.5 w-3.5" />
-                            <span><span className="font-semibold text-slate-700">Date:</span> {event.startDate}</span>
-                          </div>
-                        </div>
-                        {event.notes ? <p className="mt-3 text-xs text-slate-500">{event.notes}</p> : null}
-                      </div>
-                    ))
-                  )}
-                </div>
+              <div>
+                <p className="text-sm font-bold text-amber-900">
+                  Call and time-off conflict
+                </p>
+                <p className="mt-1 text-sm text-amber-800">
+                  You are marked off on this day but also assigned call. This likely
+                  needs reassignment or schedule review.
+                </p>
               </div>
             </div>
-          ) : null
-        }
-      </DayDetailsModal>
+          </div>
+        ) : null}
+
+        {selectedDay.myTimeOff.length > 0 ? (
+          <div className="rounded-[1.35rem] border border-emerald-200 bg-emerald-50 p-4">
+            <div className="mb-3 flex items-center gap-2">
+              <div className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-600 text-white">
+                <PlaneTakeoff className="h-4 w-4" />
+              </div>
+              <p className="text-sm font-bold text-emerald-900">My Time-Off</p>
+            </div>
+            <div className="space-y-2">
+              {selectedDay.myTimeOff.map((item) => (
+                <div
+                  key={item.id}
+                  className="rounded-xl border border-emerald-200 bg-white px-3 py-2.5"
+                >
+                  <p className="text-sm font-semibold capitalize text-emerald-900">
+                    {item.type ?? "Time-off"}
+                  </p>
+                  {item.notes ? (
+                    <p className="mt-0.5 text-xs text-emerald-600">
+                      {item.notes}
+                    </p>
+                  ) : null}
+                  <p className="mt-1 text-xs text-emerald-500">
+                    {item.startDate && item.endDate
+                      ? formatShortRange(item.startDate, item.endDate)
+                      : "—"}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <CallAssignmentCard role="Primary" call={primaryCall} />
+          <CallAssignmentCard role="Backup" call={backupCall} />
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <DetailField
+            label="Rotation coverage"
+            icon={<Clock3 className="h-4 w-4" />}
+            value={
+              selectedDay.rotationOverlaps.length > 0 ? (
+                <div className="space-y-2">
+                  {selectedDay.rotationOverlaps.map((rotation) => (
+                    <div key={rotation.id} className="text-sm">
+                      <div className="font-semibold text-slate-900">
+                        {rotation.title}
+                      </div>
+                      <div className="mt-1 text-xs text-slate-500">
+                        {formatShortRange(rotation.startDate, rotation.endDate)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                "No overlapping rotation"
+              )
+            }
+          />
+          <DetailField
+            label="Day type"
+            icon={<Stethoscope className="h-4 w-4" />}
+            value={
+              dayType
+                ? dayType === "or"
+                  ? "OR"
+                  : dayType === "clinic"
+                  ? "Clinic"
+                  : "Custom"
+                : "No event category"
+            }
+          />
+        </div>
+
+        <div className="rounded-[1.5rem] border border-slate-200 bg-white">
+          <div className="border-b border-slate-200 px-4 py-3">
+            <div className="flex items-center gap-2">
+              <ClipboardList className="h-4 w-4 text-slate-500" />
+              <p className="text-sm font-bold text-slate-900">
+                Schedule details
+              </p>
+            </div>
+          </div>
+          <div className="space-y-3 px-4 py-4">
+            {scheduleEvents.length === 0 ? (
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-500">
+                No OR, clinic, or custom events for this day.
+              </div>
+            ) : (
+              scheduleEvents.map((event) => (
+                <div
+                  key={event.id}
+                  className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3"
+                >
+                  <p className="text-sm font-semibold text-slate-900">
+                    {event.title ?? "Event"}
+                  </p>
+                  <div className="mt-3 grid gap-2 md:grid-cols-2">
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <Stethoscope className="h-3.5 w-3.5" />
+                      <span>
+                        <span className="font-semibold text-slate-700">
+                          Category:
+                        </span>{" "}
+                        {event.category ?? "—"}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <MapPin className="h-3.5 w-3.5" />
+                      <span>
+                        <span className="font-semibold text-slate-700">
+                          Location:
+                        </span>{" "}
+                        {event.location ?? "—"}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <UserRound className="h-3.5 w-3.5" />
+                      <span>
+                        <span className="font-semibold text-slate-700">
+                          Attending:
+                        </span>{" "}
+                        {event.attending ?? "—"}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <CalendarDays className="h-3.5 w-3.5" />
+                      <span>
+                        <span className="font-semibold text-slate-700">
+                          Date:
+                        </span>{" "}
+                        {event.startDate}
+                      </span>
+                    </div>
+                  </div>
+                  {event.notes ? (
+                    <p className="mt-3 text-xs text-slate-500">{event.notes}</p>
+                  ) : null}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    ) : null
+  }
+</DayDetailsModal>
     </>
   );
 }

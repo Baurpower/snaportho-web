@@ -1,162 +1,163 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/utils/supabase/server'
-import {
-  deleteScheduleEvent,
-  updateScheduleEvent,
-} from '@/lib/db/schedule-events'
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/utils/supabase/server";
 
-type UpdateBody = {
-  title?: string
-  category?: 'or' | 'clinic' | 'custom'
-  date?: string
-  eventDate?: string
-  isAllDay?: boolean
-  startTime?: string | null
-  endTime?: string | null
-  location?: string | null
-  description?: string | null
-  attending?: string | null
-  selected?: boolean
-}
+type RouteContext = {
+  params: Promise<{
+    eventId: string;
+  }>;
+};
 
 function isValidDateString(value: unknown): value is string {
-  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)
+  return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
 function isValidTimeString(value: unknown): value is string {
-  return typeof value === 'string' && /^\d{2}:\d{2}$/.test(value)
+  return typeof value === "string" && /^\d{2}:\d{2}$/.test(value);
 }
 
-export async function PATCH(
-  request: NextRequest,
-  context: { params: Promise<{ eventId: string }> }
-) {
+export async function PATCH(request: NextRequest, context: RouteContext) {
   try {
-    const { eventId } = await context.params
+    const { eventId } = await context.params;
 
     if (!eventId) {
-      return NextResponse.json({ error: 'eventId is required' }, { status: 400 })
+      return NextResponse.json({ error: "Missing event id" }, { status: 400 });
     }
 
-    const supabase = await createClient()
+    const body = await request.json().catch(() => null);
+
+    const title = typeof body?.title === "string" ? body.title.trim() : "";
+    const category = body?.category;
+    const eventDate = body?.eventDate;
+    const isAllDay = Boolean(body?.isAllDay);
+    const startTime = body?.startTime;
+    const endTime = body?.endTime;
+    const location =
+      typeof body?.location === "string" && body.location.trim().length > 0
+        ? body.location.trim()
+        : null;
+    const attending =
+      typeof body?.attending === "string" && body.attending.trim().length > 0
+        ? body.attending.trim()
+        : null;
+    const description =
+      typeof body?.description === "string" && body.description.trim().length > 0
+        ? body.description.trim()
+        : null;
+
+    if (!title) {
+      return NextResponse.json({ error: "Title is required" }, { status: 400 });
+    }
+
+    if (!["or", "clinic", "custom"].includes(category)) {
+      return NextResponse.json({ error: "Invalid category" }, { status: 400 });
+    }
+
+    if (!isValidDateString(eventDate)) {
+      return NextResponse.json({ error: "Invalid event date" }, { status: 400 });
+    }
+
+    if (!isAllDay) {
+      if (!isValidTimeString(startTime) || !isValidTimeString(endTime)) {
+        return NextResponse.json({ error: "Invalid start or end time" }, { status: 400 });
+      }
+    }
+
+    const supabase = await createClient();
 
     const {
       data: { user },
       error: authError,
-    } = await supabase.auth.getUser()
+    } = await supabase.auth.getUser();
 
     if (authError) {
       return NextResponse.json(
         { error: `Authentication failed: ${authError.message}` },
         { status: 401 }
-      )
+      );
     }
 
     if (!user) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const body = (await request.json()) as UpdateBody
+    const { data, error } = await supabase
+      .from("schedule_events")
+      .update({
+        title,
+        category,
+        event_date: eventDate,
+        is_all_day: isAllDay,
+        start_time: isAllDay ? null : startTime,
+        end_time: isAllDay ? null : endTime,
+        location,
+        attending,
+        description,
+      })
+      .eq("id", eventId)
+      .eq("user_id", user.id)
+      .select()
+      .single();
 
-    const normalizedDate = body.eventDate ?? body.date
-
-    if (body.category && !['or', 'clinic', 'custom'].includes(body.category)) {
+    if (error) {
       return NextResponse.json(
-        { error: 'category must be one of: or, clinic, custom' },
+        { error: error.message || "Failed to update event" },
         { status: 400 }
-      )
+      );
     }
 
-    if (normalizedDate && !isValidDateString(normalizedDate)) {
-      return NextResponse.json(
-        { error: 'date must be YYYY-MM-DD' },
-        { status: 400 }
-      )
-    }
-
-    if (body.startTime && !isValidTimeString(body.startTime)) {
-      return NextResponse.json(
-        { error: 'startTime must be HH:MM' },
-        { status: 400 }
-      )
-    }
-
-    if (body.endTime && !isValidTimeString(body.endTime)) {
-      return NextResponse.json(
-        { error: 'endTime must be HH:MM' },
-        { status: 400 }
-      )
-    }
-
-    if (body.selected === false) {
-      await deleteScheduleEvent(eventId, user.id)
-      return NextResponse.json({ success: true, deleted: true }, { status: 200 })
-    }
-
-    const updated = await updateScheduleEvent({
-      eventId,
-      userId: user.id,
-      title: typeof body.title === 'string' ? body.title.trim() : undefined,
-      category: body.category,
-      date: normalizedDate,
-      isAllDay: body.isAllDay,
-      startTime: body.isAllDay ? null : body.startTime,
-      endTime: body.isAllDay ? null : body.endTime,
-      location:
-        body.location === undefined ? undefined : (body.location?.trim() || null),
-      description:
-        body.description === undefined
-          ? undefined
-          : (body.description?.trim() || null),
-      attending:
-        body.attending === undefined ? undefined : (body.attending?.trim() || null),
-    })
-
-    return NextResponse.json({ event: updated }, { status: 200 })
+    return NextResponse.json({ event: data }, { status: 200 });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : 'Unexpected server error'
+      error instanceof Error ? error.message : "Unexpected server error";
 
-    return NextResponse.json({ error: message }, { status: 500 })
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
-export async function DELETE(
-  _request: NextRequest,
-  context: { params: Promise<{ eventId: string }> }
-) {
+export async function DELETE(_request: NextRequest, context: RouteContext) {
   try {
-    const { eventId } = await context.params
+    const { eventId } = await context.params;
 
     if (!eventId) {
-      return NextResponse.json({ error: 'eventId is required' }, { status: 400 })
+      return NextResponse.json({ error: "Missing event id" }, { status: 400 });
     }
 
-    const supabase = await createClient()
+    const supabase = await createClient();
 
     const {
       data: { user },
       error: authError,
-    } = await supabase.auth.getUser()
+    } = await supabase.auth.getUser();
 
     if (authError) {
       return NextResponse.json(
         { error: `Authentication failed: ${authError.message}` },
         { status: 401 }
-      )
+      );
     }
 
     if (!user) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    await deleteScheduleEvent(eventId, user.id)
+    const { error } = await supabase
+      .from("schedule_events")
+      .delete()
+      .eq("id", eventId)
+      .eq("user_id", user.id);
 
-    return NextResponse.json({ success: true }, { status: 200 })
+    if (error) {
+      return NextResponse.json(
+        { error: error.message || "Failed to delete event" },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : 'Unexpected server error'
+      error instanceof Error ? error.message : "Unexpected server error";
 
-    return NextResponse.json({ error: message }, { status: 500 })
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

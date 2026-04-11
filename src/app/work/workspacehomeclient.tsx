@@ -124,13 +124,26 @@ type MonthLiteResponse = {
     id: string;
     title: string | null;
     date: string | null;
+    callType?: string | null;
+    startDatetime?: string | null;
+    endDatetime?: string | null;
+    site?: string | null;
+    isHomeCall?: boolean | null;
+    notes?: string | null;
   }>;
   events: Array<{
     id: string;
     title: string | null;
     date: string | null;
     category: string | null;
+    startTime?: string | null;
+    endTime?: string | null;
+    isAllDay?: boolean | null;
+    location?: string | null;
+    description?: string | null;
+    attending?: string | null;
   }>;
+  timeOff: TimeOffItem[];
 };
 
 type RotationTimelineResponse = {
@@ -201,6 +214,10 @@ type AheadMonth = {
   monthIndex: number;
   label: string;
 };
+
+function getMonthKey(input: { year: number; monthIndex: number }) {
+  return `${input.year}-${input.monthIndex}`;
+}
 
 function formatShortDate(dateString: string | null | undefined) {
   if (!dateString) return "—";
@@ -351,6 +368,9 @@ function buildMonthEvents(data: MonthLiteResponse | null): UserCalendarEvent[] {
         endDate: item.date!,
         color: "slate",
         kind: "call",
+        category: item.callType ?? null,
+        location: item.site ?? null,
+        notes: item.notes ?? null,
       })
     );
 
@@ -370,6 +390,9 @@ function buildMonthEvents(data: MonthLiteResponse | null): UserCalendarEvent[] {
             : "violet",
         kind: "event",
         category: item.category ?? null,
+        location: item.location ?? null,
+        attending: item.attending ?? null,
+        notes: item.description ?? null,
       })
     );
 
@@ -518,9 +541,7 @@ function RotationsPanel({
   coverageLoading: boolean;
 }) {
   const activeMonth = months[activeMonthIndex] ?? null;
-  const activeKey = activeMonth
-    ? `${activeMonth.year}-${activeMonth.monthIndex}`
-    : "";
+  const activeKey = activeMonth ? getMonthKey(activeMonth) : "";
   const coverage = activeKey ? coverageByMonth[activeKey] ?? null : null;
 
   const groupedRotations = useMemo(() => {
@@ -598,7 +619,7 @@ function RotationsPanel({
         <div className="mt-5 flex flex-wrap gap-2">
           {months.map((month, index) => (
             <button
-              key={`${month.year}-${month.monthIndex}`}
+              key={getMonthKey(month)}
               type="button"
               onClick={() => setActiveMonthIndex(index)}
               className={`rounded-full px-3.5 py-2 text-sm font-semibold transition ${
@@ -727,7 +748,9 @@ export default function SnapOrthoWorkspaceHomeDraft() {
     Record<string, MonthlyCoverageResponse | null>
   >({});
 
-  const [timeOffByMonthKey, setTimeOffByMonthKey] = useState<Record<string, TimeOffItem[]>>({});
+  const [timeOffByMonthKey, setTimeOffByMonthKey] = useState<
+    Record<string, TimeOffItem[]>
+  >({});
 
   const visibleWeekRange = useMemo(
     () => getWeekRangeFromOffset(weekOffset),
@@ -752,7 +775,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
     const mapped: Record<string, UserCalendarEvent[]> = {};
 
     for (const month of aheadMonths) {
-      const key = `${month.year}-${month.monthIndex}`;
+      const key = getMonthKey(month);
       mapped[key] = buildMonthEvents(monthDataByKey[key] ?? null);
     }
 
@@ -881,7 +904,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
         setMonthLoading(true);
 
         const monthsToFetch = aheadMonths.filter((month) => {
-          const key = `${month.year}-${month.monthIndex}`;
+          const key = getMonthKey(month);
           return !(key in monthDataByKey);
         });
 
@@ -889,7 +912,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
 
         const results = await Promise.all(
           monthsToFetch.map(async (month) => {
-            const key = `${month.year}-${month.monthIndex}`;
+            const key = getMonthKey(month);
             const { monthStart, monthEnd } = getMonthRange(month.year, month.monthIndex);
 
             const response = await fetch(
@@ -900,13 +923,19 @@ export default function SnapOrthoWorkspaceHomeDraft() {
               }
             );
 
+            const payload = await response.json().catch(() => null);
+
             if (!response.ok) {
-              const payload = await response.json().catch(() => null);
               throw new Error(payload?.error ?? `Failed to load month ${month.label}`);
             }
 
-            const data: MonthLiteResponse = await response.json();
-            return { key, data };
+            const data = payload as MonthLiteResponse;
+
+            return {
+              key,
+              data,
+              timeOff: Array.isArray(data.timeOff) ? data.timeOff : [],
+            };
           })
         );
 
@@ -915,6 +944,14 @@ export default function SnapOrthoWorkspaceHomeDraft() {
             const next = { ...prev };
             for (const result of results) {
               next[result.key] = result.data;
+            }
+            return next;
+          });
+
+          setTimeOffByMonthKey((prev) => {
+            const next = { ...prev };
+            for (const result of results) {
+              next[result.key] = result.timeOff;
             }
             return next;
           });
@@ -1001,76 +1038,6 @@ export default function SnapOrthoWorkspaceHomeDraft() {
     };
   }, [viewMode, aheadMonths]);
 
-    useEffect(() => {
-  let cancelled = false;
-
-  async function loadTimeOff() {
-    if (viewMode !== "ahead") return;
-
-    try {
-      const monthsToFetch = aheadMonths.filter((month) => {
-        const key = `${month.year}-${month.monthIndex}`;
-        return !(key in timeOffByMonthKey);
-      });
-
-      if (monthsToFetch.length === 0) return;
-
-      const results = await Promise.all(
-        monthsToFetch.map(async (month) => {
-          const key = `${month.year}-${month.monthIndex}`;
-          const { monthStart, monthEnd } = getMonthRange(month.year, month.monthIndex);
-
-          const response = await fetch(
-            `/api/program/time-off/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
-            {
-              credentials: "include",
-              cache: "no-store",
-            }
-          );
-
-          const payload = await response.json().catch(() => null);
-
-          if (!response.ok) {
-            throw new Error(
-              payload?.error ?? `Failed to load time-off for ${month.label}`
-            );
-          }
-
-          // Only keep the logged-in user's approved time-off
-          const myItems = (payload?.items ?? []).filter(
-            (item: { isMine: boolean; approvalStatus: string | null }) =>
-              item.isMine && item.approvalStatus === "approved"
-          );
-
-          return { key, items: myItems };
-        })
-      );
-
-      if (!cancelled) {
-        setTimeOffByMonthKey((prev) => {
-          const next = { ...prev };
-          for (const result of results) {
-            next[result.key] = result.items;
-          }
-          return next;
-        });
-      }
-    } catch (err) {
-      if (!cancelled) {
-        setError(
-          err instanceof Error ? err.message : "Failed to load time-off"
-        );
-      }
-    }
-  }
-
-  loadTimeOff();
-
-  return () => {
-    cancelled = true;
-  };
-}, [viewMode, aheadMonths, timeOffByMonthKey]);
-
   useEffect(() => {
     let cancelled = false;
 
@@ -1079,7 +1046,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
 
       try {
         const monthsToFetch = aheadMonths.filter((month) => {
-          const key = `${month.year}-${month.monthIndex}`;
+          const key = getMonthKey(month);
           return !(key in programCallsByMonthKey);
         });
 
@@ -1087,7 +1054,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
 
         const results = await Promise.all(
           monthsToFetch.map(async (month) => {
-            const key = `${month.year}-${month.monthIndex}`;
+            const key = getMonthKey(month);
             const { monthStart, monthEnd } = getMonthRange(month.year, month.monthIndex);
 
             const response = await fetch(
@@ -1206,7 +1173,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
       const activeMonth = aheadMonths[activeMonthIndex];
       if (!activeMonth) return;
 
-      const key = `${activeMonth.year}-${activeMonth.monthIndex}`;
+      const key = getMonthKey(activeMonth);
 
       if (coverageByMonth[key]) return;
 

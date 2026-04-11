@@ -10,6 +10,22 @@ function isValidDateString(value: string | null): value is string {
   return !!value && /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
+type RotationRangeItem = Awaited<
+  ReturnType<typeof getRotationAssignmentsForMemberInRange>
+>[number];
+
+type CallRangeItem = Awaited<
+  ReturnType<typeof getCallAssignmentsForMembershipInRange>
+>[number];
+
+type ScheduleEventItem = Awaited<
+  ReturnType<typeof getScheduleEventsForUserInRange>
+>[number];
+
+type ProgramTimeOffItem = Awaited<
+  ReturnType<typeof getProgramTimeOffMonth>
+>["items"][number];
+
 function normalizeRotationRow(
   rotation:
     | {
@@ -52,10 +68,100 @@ function getPgyFromGradYear(
   return pgy;
 }
 
+function buildEmptyResponse(monthStart: string, monthEnd: string) {
+  return {
+    monthStart,
+    monthEnd,
+    membership: null,
+    rotations: [],
+    calls: [],
+    events: [],
+    timeOff: [],
+  };
+}
+
+function mapRotationItem(item: RotationRangeItem) {
+  const rotation = normalizeRotationRow(item.rotations);
+
+  return {
+    id: item.id,
+    startDate: item.start_date ?? null,
+    endDate: item.end_date ?? null,
+    title:
+      rotation?.short_name ??
+      rotation?.name ??
+      item.team_label ??
+      item.site_label ??
+      "Rotation",
+    color: rotation?.color ?? null,
+    siteLabel: item.site_label ?? null,
+    teamLabel: item.team_label ?? null,
+    notes: item.notes ?? null,
+    rotation: rotation
+      ? {
+          id: rotation.id ?? null,
+          name: rotation.name ?? null,
+          shortName: rotation.short_name ?? null,
+          category: rotation.category ?? null,
+          color: rotation.color ?? null,
+        }
+      : null,
+  };
+}
+
+function mapCallItem(item: CallRangeItem) {
+  return {
+    id: item.id,
+    title: item.call_type ?? item.site ?? "Call",
+    date: item.call_date ?? item.start_datetime?.slice(0, 10) ?? null,
+    callType: item.call_type ?? null,
+    startDatetime: item.start_datetime ?? null,
+    endDatetime: item.end_datetime ?? null,
+    site: item.site ?? null,
+    isHomeCall: item.is_home_call ?? null,
+    notes: item.notes ?? null,
+  };
+}
+
+function mapEventItem(item: ScheduleEventItem) {
+  return {
+    id: item.id,
+    title: item.title ?? item.category ?? "Event",
+    date: item.event_date ?? null,
+    category: item.category ?? null,
+    startTime: item.start_time ?? null,
+    endTime: item.end_time ?? null,
+    isAllDay: item.is_all_day ?? null,
+    location: item.location ?? null,
+    description: item.description ?? null,
+    attending: item.attending ?? null,
+  };
+}
+
+function mapTimeOffItem(item: ProgramTimeOffItem) {
+  return {
+    id: item.id,
+    membershipId: item.membershipId ?? null,
+    residentName: item.residentName ?? null,
+    trainingLevel: item.trainingLevel ?? null,
+    classYear: item.classYear ?? null,
+    userId: item.userId ?? null,
+    type: item.type ?? null,
+    usingPto: item.usingPto ?? false,
+    startDate: item.startDate ?? null,
+    endDate: item.endDate ?? null,
+    title: item.title ?? null,
+    location: item.location ?? null,
+    notes: item.notes ?? null,
+    approvalStatus: item.approvalStatus ?? null,
+    approved: item.approved ?? null,
+    isMine: !!item.isMine,
+  };
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-
     const monthStart = searchParams.get("monthStart");
     const monthEnd = searchParams.get("monthEnd");
 
@@ -96,18 +202,9 @@ export async function GET(request: NextRequest) {
     const membership = await getActiveMembershipForUser(user.id);
 
     if (!membership) {
-      return NextResponse.json(
-        {
-          monthStart,
-          monthEnd,
-          membership: null,
-          rotations: [],
-          calls: [],
-          events: [],
-          timeOff: [],
-        },
-        { status: 200 }
-      );
+      return NextResponse.json(buildEmptyResponse(monthStart, monthEnd), {
+        status: 200,
+      });
     }
 
     const derivedPgyYear = getPgyFromGradYear(membership.grad_year ?? null);
@@ -139,13 +236,13 @@ export async function GET(request: NextRequest) {
             monthStart,
             monthEnd,
             myMembershipId: membership.id,
-            items: [],
+            items: [] as ProgramTimeOffItem[],
           }),
     ]);
 
-    const myTimeOff = (timeOffPayload.items ?? []).filter(
-      (item) => item.isMine || item.membershipId === membership.id
-    );
+    const myTimeOff = (timeOffPayload.items ?? []).filter((item) => {
+      return item.isMine || item.membershipId === membership.id;
+    });
 
     return NextResponse.json(
       {
@@ -159,79 +256,10 @@ export async function GET(request: NextRequest) {
           pgyYear: derivedPgyYear,
           trainingLevel: derivedTrainingLevel,
         },
-
-        rotations: rotations.map((item) => {
-          const rotation = normalizeRotationRow(item.rotations);
-
-          return {
-            id: item.id,
-            startDate: item.start_date,
-            endDate: item.end_date,
-            title:
-              rotation?.short_name ??
-              rotation?.name ??
-              item.team_label ??
-              item.site_label ??
-              "Rotation",
-            color: rotation?.color ?? null,
-            siteLabel: item.site_label ?? null,
-            teamLabel: item.team_label ?? null,
-            notes: item.notes ?? null,
-            rotation: rotation
-              ? {
-                  id: rotation.id ?? null,
-                  name: rotation.name ?? null,
-                  shortName: rotation.short_name ?? null,
-                  category: rotation.category ?? null,
-                  color: rotation.color ?? null,
-                }
-              : null,
-          };
-        }),
-
-        calls: calls.map((item) => ({
-          id: item.id,
-          title: item.call_type ?? item.site ?? "Call",
-          date: item.call_date ?? item.start_datetime?.slice(0, 10) ?? null,
-          callType: item.call_type ?? null,
-          startDatetime: item.start_datetime ?? null,
-          endDatetime: item.end_datetime ?? null,
-          site: item.site ?? null,
-          isHomeCall: item.is_home_call ?? null,
-          notes: item.notes ?? null,
-        })),
-
-        events: events.map((item) => ({
-          id: item.id,
-          title: item.title ?? item.category ?? "Event",
-          date: item.event_date ?? null,
-          category: item.category ?? null,
-          startTime: item.start_time ?? null,
-          endTime: item.end_time ?? null,
-          isAllDay: item.is_all_day ?? null,
-          location: item.location ?? null,
-          description: item.description ?? null,
-          attending: item.attending ?? null,
-        })),
-
-        timeOff: myTimeOff.map((item) => ({
-          id: item.id,
-          membershipId: item.membershipId,
-          residentName: item.residentName,
-          trainingLevel: item.trainingLevel,
-          classYear: item.classYear,
-          userId: item.userId,
-          type: item.type,
-          usingPto: item.usingPto,
-          startDate: item.startDate,
-          endDate: item.endDate,
-          title: item.title,
-          location: item.location,
-          notes: item.notes,
-          approvalStatus: item.approvalStatus,
-          approved: item.approved ?? null,
-          isMine: item.isMine,
-        })),
+        rotations: (rotations ?? []).map(mapRotationItem),
+        calls: (calls ?? []).map(mapCallItem),
+        events: (events ?? []).map(mapEventItem),
+        timeOff: myTimeOff.map(mapTimeOffItem),
       },
       { status: 200 }
     );
