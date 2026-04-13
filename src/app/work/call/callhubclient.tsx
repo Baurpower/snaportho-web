@@ -3,37 +3,26 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
-  CalendarDays,
+  CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  PencilLine,
   PhoneCall,
   Plus,
   UserRound,
+  X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import DayDetailsModal from "@/components/workspace/shared/daydetailsmodal";
 import CallDayDetailsContent from "@/components/workspace/call/calldaydetailscontent";
+import CallMonthCalendar, {
+  type ProgramCallItem,
+} from "@/components/workspace/call/callmonthcalendar";
+import EditCallMonthCalendar from "@/components/workspace/call/editcallmonthcalendar";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
-};
-
-type ProgramCallItem = {
-  id: string;
-  membershipId: string | null;
-  residentName: string;
-  trainingLevel: string | null;
-  classYear: number | null;
-  userId: string | null;
-  callType: string | null;
-  callDate: string | null;
-  startDatetime: string | null;
-  endDatetime: string | null;
-  site: string | null;
-  isHomeCall: boolean | null;
-  notes: string | null;
-  isMine: boolean;
 };
 
 type ProgramCallsMonthResponse = {
@@ -42,6 +31,17 @@ type ProgramCallsMonthResponse = {
   myMembershipId: string | null;
   calls: ProgramCallItem[];
 };
+
+type ResidentOption = {
+  membershipId: string;
+  residentName: string;
+  trainingLevel: string | null;
+};
+
+type SuccessModalState = {
+  title: string;
+  message: string;
+} | null;
 
 function monthLabel(year: number, monthIndex: number) {
   return new Date(year, monthIndex, 1).toLocaleDateString("en-US", {
@@ -55,53 +55,6 @@ function toDateKey(date: Date) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
-}
-
-function startOfWeekSunday(date: Date) {
-  const copy = new Date(date);
-  copy.setHours(0, 0, 0, 0);
-  copy.setDate(copy.getDate() - copy.getDay());
-  return copy;
-}
-
-function addDays(date: Date, days: number) {
-  const copy = new Date(date);
-  copy.setDate(copy.getDate() + days);
-  return copy;
-}
-
-function startOfMonth(year: number, monthIndex: number) {
-  return new Date(year, monthIndex, 1);
-}
-
-function endOfMonth(year: number, monthIndex: number) {
-  return new Date(year, monthIndex + 1, 0);
-}
-
-function buildCalendarWeeksSunday(year: number, monthIndex: number) {
-  const monthStart = startOfMonth(year, monthIndex);
-  const monthEnd = endOfMonth(year, monthIndex);
-
-  const gridStart = startOfWeekSunday(monthStart);
-  const gridEnd = addDays(startOfWeekSunday(monthEnd), 6);
-
-  const weeks: Date[][] = [];
-  let cursor = new Date(gridStart);
-
-  while (cursor <= gridEnd) {
-    const week: Date[] = [];
-    for (let i = 0; i < 7; i += 1) {
-      week.push(new Date(cursor));
-      cursor = addDays(cursor, 1);
-    }
-    weeks.push(week);
-  }
-
-  return weeks;
-}
-
-function isSameMonth(date: Date, year: number, monthIndex: number) {
-  return date.getFullYear() === year && date.getMonth() === monthIndex;
 }
 
 function getMonthRange(year: number, monthIndex: number) {
@@ -132,6 +85,10 @@ function formatLongDate(dateString: string | null | undefined) {
   });
 }
 
+function isEditableQuickCall(call: ProgramCallItem) {
+  return !call.startDatetime && !call.endDatetime && !!call.callDate;
+}
+
 function StatCard({
   title,
   value,
@@ -142,236 +99,14 @@ function StatCard({
   subtitle: string;
 }) {
   return (
-    <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+    <div className="rounded-[1.25rem] border border-slate-200 bg-white p-4 shadow-sm">
+      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
         {title}
       </p>
-      <p className="mt-3 text-2xl font-black tracking-tight text-slate-950">
+      <p className="mt-2 text-xl font-black tracking-tight text-slate-950 md:text-2xl">
         {value}
       </p>
-      <p className="mt-2 text-sm text-slate-600">{subtitle}</p>
-    </div>
-  );
-}
-
-function getCallTone(call: ProgramCallItem) {
-  if (call.isMine) {
-    return {
-      card: "border-sky-300 bg-sky-50",
-      chip: "bg-sky-600 text-white",
-      text: "text-sky-950",
-    };
-  }
-
-  if (call.isHomeCall) {
-    return {
-      card: "border-violet-200 bg-violet-50",
-      chip: "bg-violet-600 text-white",
-      text: "text-violet-950",
-    };
-  }
-
-  return {
-    card: "border-slate-200 bg-slate-50",
-    chip: "bg-slate-900 text-white",
-    text: "text-slate-900",
-  };
-}
-
-function CallMonthCalendar({
-  year,
-  monthIndex,
-  calls,
-  loading,
-  onSelectDate,
-}: {
-  year: number;
-  monthIndex: number;
-  calls: ProgramCallItem[];
-  loading?: boolean;
-  onSelectDate?: (dateKey: string) => void;
-}) {
-  const weeks = useMemo(
-    () => buildCalendarWeeksSunday(year, monthIndex),
-    [year, monthIndex]
-  );
-
-  const todayKey = toDateKey(new Date());
-
-  const callsByDate = useMemo(() => {
-    const map = new Map<string, ProgramCallItem[]>();
-
-    for (const call of calls) {
-      if (!call.callDate) continue;
-      const existing = map.get(call.callDate) ?? [];
-      existing.push(call);
-      map.set(call.callDate, existing);
-    }
-
-    for (const [key, value] of map.entries()) {
-      value.sort((a, b) => {
-        if (a.isMine !== b.isMine) return a.isMine ? -1 : 1;
-        return a.residentName.localeCompare(b.residentName);
-      });
-      map.set(key, value);
-    }
-
-    return map;
-  }, [calls]);
-
-  if (loading) {
-    return (
-      <div className="rounded-[2rem] border border-slate-200 bg-white p-6 text-sm text-slate-500 shadow-xl">
-        Loading program call...
-      </div>
-    );
-  }
-
-  return (
-    <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
-      <div className="border-b border-slate-200 px-5 py-5 md:px-6">
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-50 text-sky-700">
-            <CalendarDays className="h-5 w-5" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-950">
-              Program Call Calendar
-            </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Your call is highlighted first, with the rest of the program visible in the same day.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-3 pb-4 pt-3 md:px-4">
-        <div className="mb-2 grid grid-cols-7 gap-1.5">
-          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-            <div
-              key={day}
-              className="py-1 text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400"
-            >
-              {day}
-            </div>
-          ))}
-        </div>
-
-        <div className="space-y-1.5">
-          {weeks.map((week, weekIndex) => (
-            <div
-              key={`week-${weekIndex}`}
-              className="grid grid-cols-7 gap-1.5"
-            >
-              {week.map((date) => {
-                const key = toDateKey(date);
-                const inMonth = isSameMonth(date, year, monthIndex);
-                const isToday = key === todayKey;
-                const dayCalls = callsByDate.get(key) ?? [];
-                const myCalls = dayCalls.filter((call) => call.isMine);
-                const otherCalls = dayCalls.filter((call) => !call.isMine);
-
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => inMonth && onSelectDate?.(key)}
-                    className={[
-                      "min-h-[180px] rounded-[1.35rem] border p-2.5 text-left transition",
-                      inMonth
-                        ? "border-slate-200 bg-white hover:border-slate-300"
-                        : "border-transparent bg-slate-50/60",
-                      isToday && inMonth ? "ring-2 ring-sky-300" : "",
-                    ].join(" ")}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <span
-                        className={[
-                          "text-xs font-semibold",
-                          inMonth ? "text-slate-700" : "text-slate-300",
-                        ].join(" ")}
-                      >
-                        {date.getDate()}
-                      </span>
-
-                      {dayCalls.length > 0 && inMonth ? (
-                        <div className="inline-flex items-center gap-1 rounded-full bg-slate-900 px-2 py-1 text-[10px] font-bold text-white shadow-sm">
-                          <PhoneCall className="h-3 w-3" />
-                          {dayCalls.length}
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <div className="mt-3 space-y-1.5">
-                      {myCalls.map((call) => {
-                        const tone = getCallTone(call);
-
-                        return (
-                          <div
-                            key={call.id}
-                            className={`rounded-xl border px-2.5 py-2 shadow-sm ${tone.card}`}
-                            title={`${call.residentName} • ${call.callType ?? "Call"} • ${call.site ?? "No site"}`}
-                          >
-                            <div className="flex items-start justify-between gap-2">
-                              <div className="min-w-0">
-                                <p className={`truncate text-[11px] font-bold ${tone.text}`}>
-                                  {call.residentName}
-                                </p>
-                                <p className="truncate text-[10px] text-slate-500">
-                                  {call.callType ?? "Call"}
-                                </p>
-                              </div>
-
-                              <span className={`shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] ${tone.chip}`}>
-                                Mine
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      })}
-
-                      {otherCalls.slice(0, 4).map((call) => {
-                        const tone = getCallTone(call);
-
-                        return (
-                          <div
-                            key={call.id}
-                            className={`rounded-xl border px-2.5 py-2 ${tone.card}`}
-                            title={`${call.residentName} • ${call.callType ?? "Call"} • ${call.site ?? "No site"}`}
-                          >
-                            <div className="flex items-start justify-between gap-2">
-                              <div className="min-w-0">
-                                <p className={`truncate text-[11px] font-semibold ${tone.text}`}>
-                                  {call.residentName}
-                                </p>
-                                <p className="truncate text-[10px] text-slate-500">
-                                  {call.callType ?? "Call"}
-                                </p>
-                              </div>
-
-                              {call.trainingLevel ? (
-                                <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-500 ring-1 ring-slate-200">
-                                  {call.trainingLevel}
-                                </span>
-                              ) : null}
-                            </div>
-                          </div>
-                        );
-                      })}
-
-                      {otherCalls.length > 4 ? (
-                        <div className="px-1 text-[10px] font-semibold text-slate-400">
-                          +{otherCalls.length - 4} more
-                        </div>
-                      ) : null}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          ))}
-        </div>
-      </div>
+      <p className="mt-1.5 text-xs text-slate-600 md:text-sm">{subtitle}</p>
     </div>
   );
 }
@@ -387,6 +122,9 @@ export default function CallHubPage() {
   const [data, setData] = useState<ProgramCallsMonthResponse | null>(null);
   const [selectedDateKey, setSelectedDateKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [editingCalendar, setEditingCalendar] = useState(false);
+  const [successModal, setSuccessModal] = useState<SuccessModalState>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const { monthStart, monthEnd } = useMemo(
@@ -462,6 +200,10 @@ export default function CallHubPage() {
     return map;
   }, [calls]);
 
+  const callsById = useMemo(() => {
+    return new Map(calls.map((call) => [call.id, call]));
+  }, [calls]);
+
   const selectedDayCalls = selectedDateKey
     ? callsByDate.get(selectedDateKey) ?? []
     : [];
@@ -476,34 +218,246 @@ export default function CallHubPage() {
   const totalCallDays = calls.length;
   const myCallDays = myCalls.length;
 
+  const residentOptions = useMemo(() => {
+    const map = new Map<string, ResidentOption>();
+
+    for (const call of calls) {
+      if (!call.membershipId) continue;
+      if (map.has(call.membershipId)) continue;
+
+      map.set(call.membershipId, {
+        membershipId: call.membershipId,
+        residentName: call.residentName,
+        trainingLevel: call.trainingLevel,
+      });
+    }
+
+    return Array.from(map.values()).sort((a, b) =>
+      a.residentName.localeCompare(b.residentName)
+    );
+  }, [calls]);
+
+  async function refreshMonth() {
+    const response = await fetch(
+      `/api/program/calls/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
+      {
+        credentials: "include",
+        cache: "no-store",
+      }
+    );
+
+    const payload = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      throw new Error(payload?.error ?? "Failed to refresh program call");
+    }
+
+    setData(payload);
+  }
+
+  async function patchCall(
+    callId: string,
+    body: {
+      programMembershipId?: string;
+      callType?: string;
+      callDate?: string | null;
+      startDatetime?: string | null;
+      endDatetime?: string | null;
+      site?: string | null;
+      isHomeCall?: boolean;
+      notes?: string | null;
+    }
+  ) {
+    const response = await fetch(`/api/program/calls/${callId}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    const payload = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      throw new Error(payload?.error ?? "Failed to update call");
+    }
+
+    return payload;
+  }
+
+  async function deleteCall(callId: string) {
+    const response = await fetch(`/api/program/calls/${callId}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    const payload = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      throw new Error(payload?.error ?? "Failed to delete call");
+    }
+
+    return payload;
+  }
+
+  async function swapCalls(firstCallId: string, secondCallId: string) {
+    const response = await fetch("/api/program/calls/swap", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstCallId,
+        secondCallId,
+      }),
+    });
+
+    const payload = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      throw new Error(payload?.error ?? "Failed to swap calls");
+    }
+
+    return payload;
+  }
+
+  function finishSuccessfulEdit(title: string, message: string) {
+    setEditingCalendar(false);
+    setSuccessModal({ title, message });
+  }
+
+  async function handleSwitch(payload: {
+    callId: string;
+    fromMembershipId: string | null;
+    toMembershipId: string;
+  }) {
+    try {
+      setActionError(null);
+
+      const selectedCall = callsById.get(payload.callId);
+      if (!selectedCall) {
+        throw new Error("Selected call could not be found.");
+      }
+
+      if (!isEditableQuickCall(selectedCall)) {
+        throw new Error("This call cannot be quick-edited from this view.");
+      }
+
+      const targetResident = residentOptions.find(
+        (resident) => resident.membershipId === payload.toMembershipId
+      );
+
+      if (!targetResident) {
+        throw new Error("Target resident could not be found.");
+      }
+
+      await patchCall(payload.callId, {
+        programMembershipId: payload.toMembershipId,
+      });
+
+      await refreshMonth();
+
+      finishSuccessfulEdit(
+        "Call switched",
+        `${selectedCall.callType ?? "Call"} on ${formatShortDate(
+          selectedCall.callDate
+        )} was reassigned from ${selectedCall.residentName} to ${targetResident.residentName}.`
+      );
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "Failed to switch call.");
+      throw err;
+    }
+  }
+
+  async function handleSwap(payload: {
+    firstCallId: string;
+    secondCallId: string;
+  }) {
+    try {
+      setActionError(null);
+
+      const firstCall = callsById.get(payload.firstCallId);
+      const secondCall = callsById.get(payload.secondCallId);
+
+      if (!firstCall || !secondCall) {
+        throw new Error("One or both selected calls could not be found.");
+      }
+
+      if (!isEditableQuickCall(firstCall) || !isEditableQuickCall(secondCall)) {
+        throw new Error("One or both calls cannot be quick-edited from this view.");
+      }
+
+      await swapCalls(payload.firstCallId, payload.secondCallId);
+      await refreshMonth();
+
+      finishSuccessfulEdit(
+        "Calls swapped",
+        `${firstCall.residentName} and ${secondCall.residentName} were swapped successfully.`
+      );
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "Failed to swap calls.");
+      throw err;
+    }
+  }
+
+  async function handleDelete(payload: { callId: string }) {
+    try {
+      setActionError(null);
+
+      const selectedCall = callsById.get(payload.callId);
+      if (!selectedCall) {
+        throw new Error("Selected call could not be found.");
+      }
+
+      if (!isEditableQuickCall(selectedCall)) {
+        throw new Error("This call cannot be quick-deleted from this view.");
+      }
+
+      await deleteCall(payload.callId);
+      await refreshMonth();
+
+      finishSuccessfulEdit(
+        "Call deleted",
+        `${selectedCall.callType ?? "Call"} for ${selectedCall.residentName} on ${formatShortDate(
+          selectedCall.callDate
+        )} was removed.`
+      );
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "Failed to delete call.");
+      throw err;
+    }
+  }
+
   return (
     <>
       <main className="min-w-0 text-slate-900">
-        <section className="relative overflow-hidden px-6 pb-8 pt-10 md:px-10 md:pb-10 md:pt-12">
+        <section className="relative overflow-hidden px-5 pb-5 pt-6 md:px-8 md:pb-6 md:pt-8">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.12),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_16%)]" />
 
-          <div className="relative mx-auto max-w-7xl">
+          <div className="relative mx-auto max-w-[1600px]">
             <motion.div
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur md:p-8"
+              className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur md:p-6"
             >
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-4">
                 <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-sky-200">
-                    <PhoneCall className="h-4 w-4" />
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-200">
+                    <PhoneCall className="h-3.5 w-3.5" />
                     SnapOrtho
                   </div>
-                  <h1 className="mt-5 text-4xl font-black tracking-tight text-white md:text-6xl">
+                  <h1 className="mt-3 text-3xl font-black tracking-tight text-white md:text-5xl">
                     Call Hub
                   </h1>
-                  <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300 md:text-base">
                     A single place to see program-wide call, with your own call emphasized first.
                   </p>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-3">
+                <div className="grid gap-3 md:grid-cols-3">
                   <StatCard
                     title="Visible Month"
                     value={monthLabel(visibleMonth.year, visibleMonth.monthIndex)}
@@ -529,11 +483,17 @@ export default function CallHubPage() {
           </div>
         </section>
 
-        <section className="px-6 pb-14 md:px-10 md:pb-16">
-          <div className="mx-auto max-w-7xl space-y-6">
+        <section className="px-5 pb-8 md:px-8 md:pb-10">
+          <div className="mx-auto max-w-[1600px] space-y-4">
             {error ? (
               <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
                 {error}
+              </div>
+            ) : null}
+
+            {actionError ? (
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
+                {actionError}
               </div>
             ) : null}
 
@@ -541,9 +501,9 @@ export default function CallHubPage() {
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-xl md:p-6"
+              className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-xl md:p-5"
             >
-              <div className="mb-6 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+              <div className="mb-4 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
@@ -556,19 +516,19 @@ export default function CallHubPage() {
                         };
                       })
                     }
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50"
                   >
-                    <ChevronLeft className="h-5 w-5" />
+                    <ChevronLeft className="h-4 w-4" />
                   </button>
 
                   <div>
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
                       Call Schedule
                     </p>
-                    <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950 md:text-3xl">
+                    <h2 className="mt-1.5 text-xl font-bold tracking-tight text-slate-950 md:text-2xl">
                       {monthLabel(visibleMonth.year, visibleMonth.monthIndex)}
                     </h2>
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-0.5 text-xs text-slate-500 md:text-sm">
                       Program-wide monthly call view
                     </p>
                   </div>
@@ -584,60 +544,144 @@ export default function CallHubPage() {
                         };
                       })
                     }
-                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50"
                   >
-                    <ChevronRight className="h-5 w-5" />
+                    <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => router.push("/work/call/add")}
-                  className="inline-flex items-center gap-2 self-start rounded-full border border-sky-200 bg-sky-50 px-4 py-2.5 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
-                >
-                  <Plus className="h-4 w-4" />
-                  Add Call
-                </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingCalendar((prev) => !prev);
+                      setActionError(null);
+                    }}
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${
+                      editingCalendar
+                        ? "border border-amber-300 bg-amber-100 text-amber-900 hover:bg-amber-200"
+                        : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                    }`}
+                  >
+                    <PencilLine className="h-4 w-4" />
+                    {editingCalendar ? "Exit Edit" : "Edit"}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => router.push("/work/call/add")}
+                    className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add Call
+                  </button>
+                </div>
               </div>
 
-              <div className="mb-5 flex flex-wrap items-center gap-3 rounded-full border border-slate-200 bg-slate-50 px-4 py-3">
-                <div className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
+              <div className="mb-4 flex flex-wrap items-center gap-3 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5">
+                <div className="inline-flex items-center gap-2 text-[11px] font-semibold text-slate-600">
                   <span className="h-2.5 w-2.5 rounded-full bg-sky-500" />
                   My call emphasized
                 </div>
                 <div className="h-4 w-px bg-slate-200" />
-                <div className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
+                <div className="inline-flex items-center gap-2 text-[11px] font-semibold text-slate-600">
                   <span className="h-2.5 w-2.5 rounded-full bg-violet-500" />
                   Home call tone
                 </div>
                 <div className="h-4 w-px bg-slate-200" />
-                <div className="inline-flex items-center gap-2 text-xs font-semibold text-slate-600">
+                <div className="inline-flex items-center gap-2 text-[11px] font-semibold text-slate-600">
                   <UserRound className="h-3.5 w-3.5" />
                   Entire program visible
                 </div>
+                {editingCalendar ? (
+                  <>
+                    <div className="h-4 w-px bg-slate-200" />
+                    <div className="inline-flex items-center gap-2 text-[11px] font-semibold text-amber-700">
+                      <PencilLine className="h-3.5 w-3.5" />
+                      Quick edit mode active
+                    </div>
+                  </>
+                ) : null}
               </div>
 
-              <CallMonthCalendar
-                year={visibleMonth.year}
-                monthIndex={visibleMonth.monthIndex}
-                calls={calls}
-                loading={loading}
-                onSelectDate={setSelectedDateKey}
-              />
+              {editingCalendar ? (
+                <EditCallMonthCalendar
+                  year={visibleMonth.year}
+                  monthIndex={visibleMonth.monthIndex}
+                  calls={calls}
+                  loading={loading}
+                  residents={residentOptions}
+                  onCancel={() => setEditingCalendar(false)}
+                  onSwitch={handleSwitch}
+                  onSwap={handleSwap}
+                  onDelete={handleDelete}
+                />
+              ) : (
+                <CallMonthCalendar
+                  year={visibleMonth.year}
+                  monthIndex={visibleMonth.monthIndex}
+                  calls={calls}
+                  loading={loading}
+                  onSelectDate={setSelectedDateKey}
+                />
+              )}
             </motion.div>
           </div>
         </section>
       </main>
 
       <DayDetailsModal
-  open={!!selectedDateKey}
-  onClose={() => setSelectedDateKey(null)}
-  title="Call Day Details"
-  subtitle="Full call assignments visible for this selected day."
-  dateLabel={formatLongDate(selectedDateKey)}
->
-  {() => <CallDayDetailsContent calls={selectedDayCalls} />}
-</DayDetailsModal>
+        open={!!selectedDateKey && !editingCalendar}
+        onClose={() => setSelectedDateKey(null)}
+        title="Call Day Details"
+        subtitle="Full call assignments visible for this selected day."
+        dateLabel={formatLongDate(selectedDateKey)}
+      >
+        {() => <CallDayDetailsContent calls={selectedDayCalls} />}
+      </DayDetailsModal>
+
+      {successModal ? (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/45 p-4">
+          <div className="w-full max-w-md rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-2xl">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-start gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+                  <CheckCircle2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                    Update complete
+                  </p>
+                  <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-950">
+                    {successModal.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                    {successModal.message}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setSuccessModal(null)}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 transition hover:bg-slate-50"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setSuccessModal(null)}
+                className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+              >
+                Back to calendar
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

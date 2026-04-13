@@ -104,7 +104,9 @@ export async function getMySummary(userId: string): Promise<MySummaryResponse> {
     getNextCallForMembership(membership.id, nowIso),
   ])
 
-  const program = membership.programs?.[0] ?? null
+  const program = Array.isArray(membership.programs)
+  ? membership.programs[0] ?? null
+  : membership.programs ?? null
   const gradYear = membership.grad_year ?? null
   const pgyYear = getPgyFromGradYear(gradYear)
   const trainingLevel = pgyYear ? `PGY-${pgyYear}` : null

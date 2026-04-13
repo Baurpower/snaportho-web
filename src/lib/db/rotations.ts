@@ -297,3 +297,136 @@ export async function getLightweightRotationAssignmentsForMemberInRange(
     toLightweightRotationAssignment
   )
 }
+
+type ProgramMembershipRelation = {
+  id: string
+  display_name: string | null
+  grad_year: number | null
+  role: string | null
+  user_id: string | null
+  roster_id?: string | null
+  program_id?: string | null
+}
+
+type RawProgramRotationAssignmentRow = {
+  id: string
+  program_membership_id: string | null
+  roster_id: string | null
+  start_date: string | null
+  end_date: string | null
+  site_label: string | null
+  team_label: string | null
+  notes: string | null
+  program_memberships: ProgramMembershipRelation | ProgramMembershipRelation[] | null
+  rotations: RotationRelation | RotationRelation[] | null
+}
+
+export type ProgramRotationAssignment = {
+  id: string
+  membershipId: string | null
+  rosterId: string | null
+  memberName: string | null
+  gradYear: number | null
+  role: string | null
+  userId: string | null
+  startDate: string | null
+  endDate: string | null
+  siteLabel: string | null
+  teamLabel: string | null
+  notes: string | null
+  rotation: {
+    id: string
+    name: string | null
+    short_name: string | null
+    category: string | null
+    color: string | null
+  } | null
+}
+
+function normalizeProgramMembership(
+  membership: ProgramMembershipRelation | ProgramMembershipRelation[] | null
+): ProgramMembershipRelation | null {
+  if (!membership) return null
+  if (Array.isArray(membership)) return membership[0] ?? null
+  return membership
+}
+
+function toProgramRotationAssignment(
+  row: RawProgramRotationAssignmentRow
+): ProgramRotationAssignment {
+  const membership = normalizeProgramMembership(row.program_memberships)
+  const rotation = normalizeRotation(row.rotations)
+
+  return {
+    id: row.id,
+    membershipId: row.program_membership_id,
+    rosterId: row.roster_id,
+    memberName: membership?.display_name ?? null,
+    gradYear: membership?.grad_year ?? null,
+    role: membership?.role ?? null,
+    userId: membership?.user_id ?? null,
+    startDate: row.start_date,
+    endDate: row.end_date,
+    siteLabel: row.site_label,
+    teamLabel: row.team_label,
+    notes: row.notes,
+    rotation: rotation
+      ? {
+          id: rotation.id,
+          name: rotation.name ?? null,
+          short_name: rotation.short_name ?? null,
+          category: rotation.category ?? null,
+          color: rotation.color ?? null,
+        }
+      : null,
+  }
+}
+
+export async function getProgramRotationAssignmentsInRange(
+  programId: string,
+  rangeStart: string,
+  rangeEnd: string
+): Promise<ProgramRotationAssignment[]> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('rotation_assignments')
+    .select(`
+      id,
+      program_membership_id,
+      roster_id,
+      start_date,
+      end_date,
+      site_label,
+      team_label,
+      notes,
+      program_memberships!inner (
+        id,
+        display_name,
+        grad_year,
+        role,
+        user_id,
+        roster_id,
+        program_id
+      ),
+      rotations (
+        id,
+        name,
+        short_name,
+        category,
+        color
+      )
+    `)
+    .eq('program_memberships.program_id', programId)
+    .lte('start_date', rangeEnd)
+    .gte('end_date', rangeStart)
+    .order('start_date', { ascending: true })
+
+  if (error) {
+    throw new Error(`Failed to fetch program rotation assignments: ${error.message}`)
+  }
+
+  return ((data ?? []) as unknown as RawProgramRotationAssignmentRow[]).map(
+    toProgramRotationAssignment
+  )
+}
