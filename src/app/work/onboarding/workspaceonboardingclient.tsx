@@ -447,7 +447,10 @@ function RequestProgramModal({
 export default function WorkspaceOnboardingClient({ redirectTo }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const inviteToken = searchParams?.get("inviteToken")?.trim() || null;
+  const inviteToken =
+  searchParams?.get("inviteToken")?.trim() ||
+  searchParams?.get("token")?.trim() ||
+  null;
 
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [initialError, setInitialError] = useState<string | null>(null);

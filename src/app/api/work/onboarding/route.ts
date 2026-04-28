@@ -344,7 +344,7 @@ export async function POST(req: Request) {
     const body = (await req.json()) as PostBody;
 
     const fullName = body.profile?.fullName?.trim() ?? "";
-    const email = body.profile?.email?.trim() ?? user.email ?? "";
+    const email = body.profile?.email?.trim() || user.email || "";
     const inputPgyYear = normalizeNullableNumber(body.profile?.pgyYear);
     const inputGradYear = normalizeNullableNumber(body.profile?.gradYear);
     const programMode = body.programMode;
