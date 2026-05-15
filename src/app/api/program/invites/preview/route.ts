@@ -4,7 +4,7 @@ import { hashInviteToken } from "@/lib/invites";
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.nextUrl.searchParams.get("token");
+    const token = req.nextUrl.searchParams.get("token")?.trim();
 
     if (!token) {
       return NextResponse.json({ error: "Missing token" }, { status: 400 });
@@ -28,7 +28,9 @@ export async function GET(req: NextRequest) {
           last_name,
           full_name,
           grad_year,
-          email
+          email,
+          claimed_by_user_id,
+          claimed_at
         ),
         programs (
           id,
@@ -36,7 +38,8 @@ export async function GET(req: NextRequest) {
           institution_name,
           city,
           state,
-          timezone
+          timezone,
+          is_active
         )
       `)
       .eq("token_hash", tokenHash)
@@ -70,27 +73,53 @@ export async function GET(req: NextRequest) {
       ? data.programs[0]
       : data.programs;
 
+    if (!roster) {
+      return NextResponse.json(
+        { error: "Invite roster record not found" },
+        { status: 404 }
+      );
+    }
+
+    if (!program) {
+      return NextResponse.json(
+        { error: "Invite program record not found" },
+        { status: 404 }
+      );
+    }
+
+    if (!program.is_active) {
+      return NextResponse.json(
+        { error: "This program is no longer active" },
+        { status: 410 }
+      );
+    }
+
+    if (roster.claimed_by_user_id || roster.claimed_at) {
+      return NextResponse.json(
+        { error: "This roster spot has already been claimed" },
+        { status: 410 }
+      );
+    }
+
     return NextResponse.json({
       ok: true,
       invite: {
         inviteId: data.id,
         rosterId: data.roster_id,
         programId: data.program_id,
-        fullName: roster?.full_name ?? null,
-        firstName: roster?.first_name ?? null,
-        lastName: roster?.last_name ?? null,
-        gradYear: roster?.grad_year ?? null,
-        email: roster?.email ?? null,
-        program: program
-          ? {
-              id: program.id,
-              name: program.name,
-              institutionName: program.institution_name,
-              city: program.city,
-              state: program.state,
-              timezone: program.timezone,
-            }
-          : null,
+        fullName: roster.full_name ?? null,
+        firstName: roster.first_name ?? null,
+        lastName: roster.last_name ?? null,
+        gradYear: roster.grad_year ?? null,
+        email: roster.email ?? null,
+        program: {
+          id: program.id,
+          name: program.name,
+          institutionName: program.institution_name,
+          city: program.city ?? null,
+          state: program.state ?? null,
+          timezone: program.timezone ?? null,
+        },
       },
     });
   } catch (error) {

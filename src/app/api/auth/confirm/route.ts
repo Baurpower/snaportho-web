@@ -8,7 +8,7 @@ function getRedirectTarget(url: URL): string {
   return (
     url.searchParams.get("redirect_to") ||
     url.searchParams.get("redirectTo") ||
-    "/onboarding"
+    "/work"
   );
 }
 
@@ -31,6 +31,24 @@ function buildAppRedirect(
   return appURL;
 }
 
+function buildSafeWebRedirect(redirectTo: string, origin: string): string {
+  if (redirectTo.startsWith("http")) {
+    const parsed = new URL(redirectTo);
+
+    if (parsed.origin !== origin) {
+      return new URL("/work", origin).toString();
+    }
+
+    return parsed.toString();
+  }
+
+  if (!redirectTo.startsWith("/")) {
+    return new URL("/work", origin).toString();
+  }
+
+  return new URL(redirectTo, origin).toString();
+}
+
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
 
@@ -38,23 +56,20 @@ export async function GET(request: NextRequest) {
   const type = (url.searchParams.get("type") as EmailOtpType) || "signup";
   const redirectTo = getRedirectTarget(url);
 
+  const fallbackRedirect = new URL(
+    `/auth/sign-in?redirectTo=${encodeURIComponent(redirectTo || "/work")}`,
+    url.origin
+  );
+
   if (!token_hash) {
-    return NextResponse.redirect(
-      new URL("/auth/sign-in?redirectTo=/onboarding", url.origin),
-      303
-    );
+    return NextResponse.redirect(fallbackRedirect, 303);
   }
 
-  // Native app flow:
-  // Do NOT verify on the server.
-  // Forward token_hash + type to the app so the app can verify it itself.
   if (isNativeAppRedirect(redirectTo)) {
     const appRedirectURL = buildAppRedirect(redirectTo, token_hash, type);
     return NextResponse.redirect(appRedirectURL, 303);
   }
 
-  // Web flow:
-  // Verify OTP on the server and set browser session cookies.
   const supabase = createRouteHandlerClient({ cookies });
 
   const { data, error } = await supabase.auth.verifyOtp({
@@ -63,10 +78,7 @@ export async function GET(request: NextRequest) {
   });
 
   if (error || !data?.session) {
-    return NextResponse.redirect(
-      new URL("/auth/sign-in?redirectTo=/onboarding", url.origin),
-      303
-    );
+    return NextResponse.redirect(fallbackRedirect, 303);
   }
 
   await supabase.auth.setSession({
@@ -74,14 +86,7 @@ export async function GET(request: NextRequest) {
     refresh_token: data.session.refresh_token,
   });
 
-  const finalRedirect = redirectTo.startsWith("http")
-    ? redirectTo
-    : new URL(redirectTo, url.origin).toString();
+  const finalRedirect = buildSafeWebRedirect(redirectTo, url.origin);
 
-  const res = NextResponse.redirect(finalRedirect, 303);
-
-  res.cookies.delete("sb-access-token");
-  res.cookies.delete("sb-refresh-token");
-
-  return res;
+  return NextResponse.redirect(finalRedirect, 303);
 }

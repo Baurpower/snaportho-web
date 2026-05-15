@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { syncGoogleCalendarAfterCallChange } from "@/lib/google/syncCallCalendarAfterChange";
 
 type RouteContext = {
   params: Promise<{
@@ -127,7 +128,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
         : body.endDatetime;
 
     const nextSite =
-      body?.site === undefined ? existingCall.site : normalizeNullableString(body.site);
+      body?.site === undefined
+        ? existingCall.site
+        : normalizeNullableString(body.site);
 
     const nextIsHomeCall =
       body?.isHomeCall === undefined
@@ -219,6 +222,12 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       throw new Error(`Failed updating call row: ${updateError.message}`);
     }
 
+    try {
+      await syncGoogleCalendarAfterCallChange(user.id);
+    } catch (syncError) {
+      console.error("Google sync after call update failed:", syncError);
+    }
+
     return NextResponse.json(
       {
         success: true,
@@ -291,6 +300,12 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
 
     if (deleteError) {
       throw new Error(`Failed deleting call row: ${deleteError.message}`);
+    }
+
+    try {
+      await syncGoogleCalendarAfterCallChange(user.id);
+    } catch (syncError) {
+      console.error("Google sync after call delete failed:", syncError);
     }
 
     return NextResponse.json(

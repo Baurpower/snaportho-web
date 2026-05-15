@@ -9,21 +9,34 @@ export default function SignUpClient() {
   const supabase = useMemo(() => createClient(), []);
   const searchParams = useSearchParams();
 
-  const redirectTo = searchParams?.get("redirectTo") || "/";
-  const confirmationRedirectTo = `/api/auth/confirm?redirectTo=${encodeURIComponent(redirectTo)}`;
+  const rawRedirectTo = searchParams?.get("redirectTo");
+
+  const redirectTo =
+    rawRedirectTo && rawRedirectTo.startsWith("/")
+      ? rawRedirectTo
+      : "/work";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
     setMessage(null);
 
+    const trimmedEmail = email.trim();
+
     if (password !== confirmPassword) {
-      setMessage("Passwords don’t match.");
+      setMessage("Passwords do not match.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setMessage("Password must be at least 6 characters.");
       return;
     }
 
@@ -31,30 +44,38 @@ export default function SignUpClient() {
 
     try {
       const origin =
-        typeof window !== "undefined" ? window.location.origin : "";
+        typeof window !== "undefined"
+          ? window.location.origin
+          : "";
 
-      const { error: signUpError } = await supabase.auth.signUp({
-        email,
+      const emailRedirectTo =
+        `${origin}/api/auth/confirm` +
+        `?redirectTo=${encodeURIComponent(redirectTo)}`;
+
+      const { error } = await supabase.auth.signUp({
+        email: trimmedEmail,
         password,
         options: {
-          emailRedirectTo: `${origin}${confirmationRedirectTo}`,
+          emailRedirectTo,
         },
       });
 
-      if (signUpError) {
-        setMessage(signUpError.message);
-      } else {
-        setMessage(
-          "✅ Check your inbox for a confirmation link to finish creating your account."
-        );
+      if (error) {
+        setMessage(error.message);
+        return;
       }
+
+      setMessage(
+        "✅ Check your inbox and click the confirmation link to finish creating your account."
+      );
     } catch (err) {
       console.error("Sign-up error:", err);
+
       setMessage("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg">
@@ -62,14 +83,17 @@ export default function SignUpClient() {
         Create Your SnapOrtho Account
       </h2>
 
-      {message && (
-        <p className="mb-4 text-center text-sm text-midnight/70">{message}</p>
-      )}
+      {message ? (
+        <p className="mb-4 text-center text-sm text-midnight/70">
+          {message}
+        </p>
+      ) : null}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="email"
           required
+          autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email address"
@@ -79,6 +103,7 @@ export default function SignUpClient() {
         <input
           type="password"
           required
+          autoComplete="new-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Create password"
@@ -88,6 +113,7 @@ export default function SignUpClient() {
         <input
           type="password"
           required
+          autoComplete="new-password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm password"

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { syncGoogleCalendarAfterCallChange } from "@/lib/google/syncCallCalendarAfterChange";
 
 type CallAssignmentRow = {
   id: string;
@@ -225,9 +226,16 @@ export async function POST(request: NextRequest) {
       throw new Error(`Failed finalizing swap: ${finalizeFirstError.message}`);
     }
 
+        try {
+      await syncGoogleCalendarAfterCallChange(user.id);
+    } catch (syncError) {
+      console.error("Google sync after call swap failed:", syncError);
+    }
+
     return NextResponse.json(
       {
         success: true,
+        syncedToGoogle: true,
         swapped: {
           firstCallId,
           secondCallId,

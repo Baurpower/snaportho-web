@@ -298,73 +298,86 @@ export async function getLightweightRotationAssignmentsForMemberInRange(
   )
 }
 
-type ProgramMembershipRelation = {
-  id: string
-  display_name: string | null
-  grad_year: number | null
-  role: string | null
-  user_id: string | null
-  roster_id?: string | null
-  program_id?: string | null
-}
+type ProgramRosterRelation = {
+  id: string;
+  full_name: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  grad_year: number | null;
+  role: string | null;
+  claimed_by_user_id: string | null;
+  program_membership_id: string | null;
+  program_id?: string | null;
+};
 
 type RawProgramRotationAssignmentRow = {
-  id: string
-  program_membership_id: string | null
-  roster_id: string | null
-  start_date: string | null
-  end_date: string | null
-  site_label: string | null
-  team_label: string | null
-  notes: string | null
-  program_memberships: ProgramMembershipRelation | ProgramMembershipRelation[] | null
-  rotations: RotationRelation | RotationRelation[] | null
-}
+  id: string;
+  program_membership_id: string | null;
+  roster_id: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  site_label: string | null;
+  team_label: string | null;
+  notes: string | null;
+  program_roster: ProgramRosterRelation | ProgramRosterRelation[] | null;
+  rotations: RotationRelation | RotationRelation[] | null;
+};
 
 export type ProgramRotationAssignment = {
-  id: string
-  membershipId: string | null
-  rosterId: string | null
-  memberName: string | null
-  gradYear: number | null
-  role: string | null
-  userId: string | null
-  startDate: string | null
-  endDate: string | null
-  siteLabel: string | null
-  teamLabel: string | null
-  notes: string | null
+  id: string;
+  membershipId: string | null;
+  rosterId: string | null;
+  memberName: string | null;
+  gradYear: number | null;
+  role: string | null;
+  userId: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  siteLabel: string | null;
+  teamLabel: string | null;
+  notes: string | null;
   rotation: {
-    id: string
-    name: string | null
-    short_name: string | null
-    category: string | null
-    color: string | null
-  } | null
+    id: string;
+    name: string | null;
+    short_name: string | null;
+    category: string | null;
+    color: string | null;
+  } | null;
+};
+
+function normalizeProgramRoster(
+  roster: ProgramRosterRelation | ProgramRosterRelation[] | null
+): ProgramRosterRelation | null {
+  if (!roster) return null;
+  if (Array.isArray(roster)) return roster[0] ?? null;
+  return roster;
 }
 
-function normalizeProgramMembership(
-  membership: ProgramMembershipRelation | ProgramMembershipRelation[] | null
-): ProgramMembershipRelation | null {
-  if (!membership) return null
-  if (Array.isArray(membership)) return membership[0] ?? null
-  return membership
+function getRosterDisplayName(roster: ProgramRosterRelation | null): string | null {
+  if (roster?.full_name?.trim()) return roster.full_name.trim();
+
+  const fallbackName = [roster?.first_name, roster?.last_name]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
+
+  return fallbackName || null;
 }
 
 function toProgramRotationAssignment(
   row: RawProgramRotationAssignmentRow
 ): ProgramRotationAssignment {
-  const membership = normalizeProgramMembership(row.program_memberships)
-  const rotation = normalizeRotation(row.rotations)
+  const roster = normalizeProgramRoster(row.program_roster);
+  const rotation = normalizeRotation(row.rotations);
 
   return {
     id: row.id,
-    membershipId: row.program_membership_id,
-    rosterId: row.roster_id,
-    memberName: membership?.display_name ?? null,
-    gradYear: membership?.grad_year ?? null,
-    role: membership?.role ?? null,
-    userId: membership?.user_id ?? null,
+    membershipId: roster?.program_membership_id ?? row.program_membership_id ?? null,
+    rosterId: roster?.id ?? row.roster_id ?? null,
+    memberName: getRosterDisplayName(roster),
+    gradYear: roster?.grad_year ?? null,
+    role: roster?.role ?? null,
+    userId: roster?.claimed_by_user_id ?? null,
     startDate: row.start_date,
     endDate: row.end_date,
     siteLabel: row.site_label,
@@ -379,7 +392,7 @@ function toProgramRotationAssignment(
           color: rotation.color ?? null,
         }
       : null,
-  }
+  };
 }
 
 export async function getProgramRotationAssignmentsInRange(
@@ -387,10 +400,10 @@ export async function getProgramRotationAssignmentsInRange(
   rangeStart: string,
   rangeEnd: string
 ): Promise<ProgramRotationAssignment[]> {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from('rotation_assignments')
+    .from("rotation_assignments")
     .select(`
       id,
       program_membership_id,
@@ -400,13 +413,15 @@ export async function getProgramRotationAssignmentsInRange(
       site_label,
       team_label,
       notes,
-      program_memberships!inner (
+      program_roster (
         id,
-        display_name,
+        full_name,
+        first_name,
+        last_name,
         grad_year,
         role,
-        user_id,
-        roster_id,
+        claimed_by_user_id,
+        program_membership_id,
         program_id
       ),
       rotations (
@@ -417,16 +432,16 @@ export async function getProgramRotationAssignmentsInRange(
         color
       )
     `)
-    .eq('program_memberships.program_id', programId)
-    .lte('start_date', rangeEnd)
-    .gte('end_date', rangeStart)
-    .order('start_date', { ascending: true })
+    .eq("program_id", programId)
+    .lte("start_date", rangeEnd)
+    .gte("end_date", rangeStart)
+    .order("start_date", { ascending: true });
 
   if (error) {
-    throw new Error(`Failed to fetch program rotation assignments: ${error.message}`)
+    throw new Error(`Failed to fetch program rotation assignments: ${error.message}`);
   }
 
   return ((data ?? []) as unknown as RawProgramRotationAssignmentRow[]).map(
     toProgramRotationAssignment
-  )
+  );
 }

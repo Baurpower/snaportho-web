@@ -15,13 +15,6 @@ type PostBody = {
   programMode?: ProgramMode;
   selectedProgramId?: string | null;
   inviteToken?: string | null;
-  requestedProgram?: {
-    name?: string | null;
-    institution?: string | null;
-    city?: string | null;
-    state?: string | null;
-    notes?: string | null;
-  };
 };
 
 type InvitePreview = {
@@ -39,6 +32,8 @@ type InvitePreview = {
         full_name: string | null;
         grad_year: number | null;
         email: string | null;
+        claimed_by_user_id?: string | null;
+        program_membership_id?: string | null;
       }
     | {
         id: string;
@@ -47,6 +42,8 @@ type InvitePreview = {
         full_name: string | null;
         grad_year: number | null;
         email: string | null;
+        claimed_by_user_id?: string | null;
+        program_membership_id?: string | null;
       }[]
     | null;
   programs:
@@ -115,7 +112,9 @@ async function loadInviteByToken(token: string) {
         last_name,
         full_name,
         grad_year,
-        email
+        email,
+        claimed_by_user_id,
+        program_membership_id
       ),
       programs (
         id,
@@ -134,14 +133,8 @@ async function loadInviteByToken(token: string) {
 
   const invite = data as InvitePreview;
 
-  if (invite.revoked_at) {
-    throw new Error("Invite has been revoked.");
-  }
-
-  if (invite.claimed_at) {
-    throw new Error("Invite has already been claimed.");
-  }
-
+  if (invite.revoked_at) throw new Error("Invite has been revoked.");
+  if (invite.claimed_at) throw new Error("Invite has already been claimed.");
   if (invite.expires_at && new Date(invite.expires_at) <= new Date()) {
     throw new Error("Invite has expired.");
   }
@@ -169,6 +162,7 @@ async function loadInviteByToken(token: string) {
 export async function GET(req: NextRequest) {
   try {
     const supabase = await createClient();
+    const adminSupabase = createAdminClient();
 
     const {
       data: { user },
@@ -176,14 +170,21 @@ export async function GET(req: NextRequest) {
     } = await supabase.auth.getUser();
 
     if (authError) {
-      return NextResponse.json({ error: authError.message }, { status: 500 });
+      return NextResponse.json(
+        { error: authError.message },
+        { status: 500 }
+      );
     }
 
     if (!user) {
-      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Not authenticated" },
+        { status: 401 }
+      );
     }
 
-    const inviteToken = req.nextUrl.searchParams.get("inviteToken")?.trim() ?? null;
+    const inviteToken =
+      req.nextUrl.searchParams.get("inviteToken")?.trim() ?? null;
 
     const [
       { data: profile, error: profileError },
@@ -191,39 +192,78 @@ export async function GET(req: NextRequest) {
       { data: membership, error: membershipError },
       { data: programs, error: programsError },
     ] = await Promise.all([
-      supabase
+      adminSupabase
         .from("user_profiles")
         .select(
-          "full_name, email, training_level, institution, city, pgy_year, grad_year, is_profile_complete"
+          `
+          full_name,
+          email,
+          training_level,
+          institution,
+          city,
+          pgy_year,
+          grad_year,
+          is_profile_complete
+        `
         )
         .eq("user_id", user.id)
         .maybeSingle(),
 
-      supabase
+      adminSupabase
         .from("workspace_user_state")
-        .select("user_id, onboarding_completed, first_entered_at, last_entered_at")
+        .select(
+          `
+          user_id,
+          onboarding_completed,
+          first_entered_at,
+          last_entered_at
+        `
+        )
         .eq("user_id", user.id)
         .maybeSingle(),
 
-      supabase
+      adminSupabase
         .from("program_memberships")
-        .select("id, program_id, roster_id, role, grad_year, display_name, is_active, created_at")
+        .select(
+          `
+          id,
+          program_id,
+          role,
+          grad_year,
+          display_name,
+          is_active,
+          created_at
+        `
+        )
         .eq("user_id", user.id)
         .eq("is_active", true)
         .order("created_at", { ascending: false })
         .limit(1)
         .maybeSingle(),
 
-      supabase
+      adminSupabase
         .from("programs")
-        .select("id, name, institution_name, city, state, timezone, is_active")
+        .select(
+          `
+          id,
+          name,
+          institution_name,
+          city,
+          state,
+          timezone,
+          is_active
+        `
+        )
         .eq("is_active", true)
         .order("state", { ascending: true })
         .order("name", { ascending: true }),
     ]);
 
     if (profileError) {
-      return NextResponse.json({ error: profileError.message }, { status: 500 });
+      return NextResponse.json(
+        { error: profileError.message },
+        { status: 500 }
+      );
     }
 
     if (workspaceStateError) {
@@ -241,8 +281,54 @@ export async function GET(req: NextRequest) {
     }
 
     if (programsError) {
-      return NextResponse.json({ error: programsError.message }, { status: 500 });
+      return NextResponse.json(
+        { error: programsError.message },
+        { status: 500 }
+      );
     }
+
+    let linkedRoster: {
+      id: string;
+      program_id: string;
+      program_membership_id: string | null;
+      claimed_by_user_id: string | null;
+      claimed_at: string | null;
+    } | null = null;
+
+    if (membership?.id) {
+      const { data: rosterLink, error: rosterLinkError } =
+        await adminSupabase
+          .from("program_roster")
+          .select(
+            `
+            id,
+            program_id,
+            program_membership_id,
+            claimed_by_user_id,
+            claimed_at
+          `
+          )
+          .eq("program_membership_id", membership.id)
+          .eq("program_id", membership.program_id)
+          .eq("claimed_by_user_id", user.id)
+          .maybeSingle();
+
+      if (rosterLinkError) {
+        return NextResponse.json(
+          { error: rosterLinkError.message },
+          { status: 500 }
+        );
+      }
+
+      linkedRoster = rosterLink;
+    }
+
+    const realOnboardingCompleted =
+      !!membership?.id &&
+      !!linkedRoster?.id &&
+      linkedRoster.program_membership_id === membership.id &&
+      linkedRoster.program_id === membership.program_id &&
+      linkedRoster.claimed_by_user_id === user.id;
 
     let inviteContext: null | {
       inviteToken: string;
@@ -284,23 +370,48 @@ export async function GET(req: NextRequest) {
       };
     }
 
-    const resolvedGradYear = profile?.grad_year ?? membership?.grad_year ?? null;
+    const resolvedGradYear =
+      profile?.grad_year ?? membership?.grad_year ?? null;
+
     const resolvedPgyYear =
-      profile?.pgy_year ?? derivePgyYearFromGradYear(resolvedGradYear);
+      profile?.pgy_year ??
+      derivePgyYearFromGradYear(resolvedGradYear);
+
     const resolvedTrainingLevel =
-      profile?.training_level ?? deriveTrainingLevel(resolvedPgyYear);
+      profile?.training_level ??
+      deriveTrainingLevel(resolvedPgyYear);
 
     return NextResponse.json({
       profile: {
-        fullName: profile?.full_name ?? user.user_metadata?.full_name ?? null,
-        email: profile?.email ?? user.email ?? null,
+        fullName:
+          profile?.full_name ??
+          inviteContext?.rosterFullName ??
+          user.user_metadata?.full_name ??
+          null,
+
+        email:
+          profile?.email ??
+          inviteContext?.rosterEmail ??
+          user.email ??
+          null,
+
         trainingLevel: resolvedTrainingLevel,
+
         institution: profile?.institution ?? null,
+
         city: profile?.city ?? null,
+
         pgyYear: resolvedPgyYear,
-        gradYear: resolvedGradYear,
-        isProfileComplete: profile?.is_profile_complete ?? false,
+
+        gradYear:
+          resolvedGradYear ??
+          inviteContext?.rosterGradYear ??
+          null,
+
+        isProfileComplete:
+          profile?.is_profile_complete ?? false,
       },
+
       programs: (programs ?? []).map((program) => ({
         id: program.id,
         name: program.name,
@@ -309,17 +420,41 @@ export async function GET(req: NextRequest) {
         state: program.state ?? null,
         timezone: program.timezone ?? null,
       })),
+
       existingWorkspaceState: {
-        onboardingCompleted: workspaceState?.onboarding_completed ?? false,
-        selectedProgramId: membership?.program_id ?? null,
-        membershipId: membership?.id ?? null,
+        onboardingCompleted: realOnboardingCompleted,
+
+        selectedProgramId:
+          inviteContext?.programId ??
+          membership?.program_id ??
+          null,
+
+        membershipId:
+          realOnboardingCompleted
+            ? membership?.id ?? null
+            : null,
+
+        rosterId:
+          realOnboardingCompleted
+            ? linkedRoster?.id ?? null
+            : null,
+
+        storedOnboardingCompleted:
+          workspaceState?.onboarding_completed ?? false,
       },
+
       inviteContext,
     });
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Unexpected server error";
-    return NextResponse.json({ error: message }, { status: 500 });
+      error instanceof Error
+        ? error.message
+        : "Unexpected server error";
+
+    return NextResponse.json(
+      { error: message },
+      { status: 500 }
+    );
   }
 }
 
@@ -352,65 +487,50 @@ export async function POST(req: Request) {
     const inviteToken = body.inviteToken?.trim() ?? null;
 
     if (fullName.length < 2) {
-      return NextResponse.json(
-        { error: "Full name is required." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Full name is required." }, { status: 400 });
     }
 
     if (email.length < 3) {
-      return NextResponse.json(
-        { error: "Email is required." },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Email is required." }, { status: 400 });
     }
 
-    if (programMode !== "select" && programMode !== "request") {
-      return NextResponse.json(
-        { error: "Invalid program mode." },
-        { status: 400 }
-      );
-    }
-
-    if (programMode === "request") {
-      return NextResponse.json(
-        { error: "Program requests are not configured yet." },
-        { status: 400 }
-      );
+    if (programMode !== "select") {
+      return NextResponse.json({ error: "Invalid program mode." }, { status: 400 });
     }
 
     if (!selectedProgramId) {
+      return NextResponse.json({ error: "Please select a program." }, { status: 400 });
+    }
+
+    if (!inviteToken) {
       return NextResponse.json(
-        { error: "Please select a program." },
+        {
+          error:
+            "Workspace access requires a program invite. Please use your invite link or request access from your program administrator.",
+        },
+        { status: 403 }
+      );
+    }
+
+    const inviteContext = await loadInviteByToken(inviteToken);
+
+    if (inviteContext.programId !== selectedProgramId) {
+      return NextResponse.json(
+        { error: "Selected program does not match this invite." },
         { status: 400 }
       );
     }
 
-    let inviteContext: Awaited<ReturnType<typeof loadInviteByToken>> | null = null;
-
-    if (inviteToken) {
-      inviteContext = await loadInviteByToken(inviteToken);
-
-      if (inviteContext.programId !== selectedProgramId) {
-        return NextResponse.json(
-          { error: "Selected program does not match this invite." },
-          { status: 400 }
-        );
-      }
-    }
-
-    const { data: selectedProgram, error: selectedProgramError } = await supabase
-      .from("programs")
-      .select("id, name, institution_name, city, state, timezone, is_active")
-      .eq("id", selectedProgramId)
-      .eq("is_active", true)
-      .maybeSingle();
+    const { data: selectedProgram, error: selectedProgramError } =
+      await adminSupabase
+        .from("programs")
+        .select("id, name, institution_name, city, state, timezone, is_active")
+        .eq("id", selectedProgramId)
+        .eq("is_active", true)
+        .maybeSingle();
 
     if (selectedProgramError) {
-      return NextResponse.json(
-        { error: selectedProgramError.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: selectedProgramError.message }, { status: 500 });
     }
 
     if (!selectedProgram) {
@@ -420,24 +540,47 @@ export async function POST(req: Request) {
       );
     }
 
-    const { data: existingProfile, error: existingProfileError } = await supabase
-      .from("user_profiles")
-      .select(
-        "user_id, training_level, institution, city, country, subspecialty_interest, receive_emails, pgy_year, grad_year"
-      )
-      .eq("user_id", user.id)
+    const { data: rosterClaim, error: rosterClaimError } = await adminSupabase
+      .from("program_roster")
+      .select("id, program_id, claimed_by_user_id, program_membership_id")
+      .eq("id", inviteContext.rosterId)
+      .eq("program_id", inviteContext.programId)
       .maybeSingle();
 
-    if (existingProfileError) {
+    if (rosterClaimError) {
+      return NextResponse.json({ error: rosterClaimError.message }, { status: 500 });
+    }
+
+    if (!rosterClaim) {
+      return NextResponse.json({ error: "Roster record not found." }, { status: 404 });
+    }
+
+    if (
+      rosterClaim.claimed_by_user_id &&
+      rosterClaim.claimed_by_user_id !== user.id
+    ) {
       return NextResponse.json(
-        { error: existingProfileError.message },
-        { status: 500 }
+        { error: "This roster spot has already been claimed by another account." },
+        { status: 409 }
       );
+    }
+
+    const { data: existingProfile, error: existingProfileError } =
+      await adminSupabase
+        .from("user_profiles")
+        .select(
+          "user_id, training_level, institution, city, country, subspecialty_interest, receive_emails, pgy_year, grad_year"
+        )
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+    if (existingProfileError) {
+      return NextResponse.json({ error: existingProfileError.message }, { status: 500 });
     }
 
     const resolvedGradYear =
       inputGradYear ??
-      inviteContext?.roster.grad_year ??
+      inviteContext.roster.grad_year ??
       existingProfile?.grad_year ??
       null;
 
@@ -452,7 +595,10 @@ export async function POST(req: Request) {
       existingProfile?.training_level ??
       null;
 
-    const { error: profileUpsertError } = await supabase
+    const now = new Date().toISOString();
+    const today = now.slice(0, 10);
+
+    const { error: profileUpsertError } = await adminSupabase
       .from("user_profiles")
       .upsert(
         {
@@ -461,12 +607,11 @@ export async function POST(req: Request) {
           email,
           training_level: resolvedTrainingLevel,
           institution:
-            selectedProgram.institution_name ??
-            existingProfile?.institution ??
-            null,
+            selectedProgram.institution_name ?? existingProfile?.institution ?? null,
           city: selectedProgram.city ?? existingProfile?.city ?? null,
           country: existingProfile?.country ?? null,
-          subspecialty_interest: existingProfile?.subspecialty_interest ?? null,
+          subspecialty_interest:
+            existingProfile?.subspecialty_interest ?? null,
           receive_emails: existingProfile?.receive_emails ?? null,
           is_profile_complete: true,
           pgy_year: resolvedPgyYear,
@@ -476,248 +621,210 @@ export async function POST(req: Request) {
       );
 
     if (profileUpsertError) {
-      return NextResponse.json(
-        { error: profileUpsertError.message },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: profileUpsertError.message }, { status: 500 });
     }
 
-    let membershipId: string | null = null;
+    let membershipId: string | null = rosterClaim.program_membership_id ?? null;
 
-    if (inviteContext) {
-      const { data: rosterMembership, error: rosterMembershipError } =
+    if (membershipId) {
+      const { data: existingLinkedMembership, error: linkedMembershipError } =
         await adminSupabase
           .from("program_memberships")
-          .select("id, user_id")
-          .eq("program_id", inviteContext.programId)
-          .eq("roster_id", inviteContext.rosterId)
+          .select("id, user_id, program_id")
+          .eq("id", membershipId)
           .maybeSingle();
 
-      if (rosterMembershipError) {
+      if (linkedMembershipError) {
+        return NextResponse.json({ error: linkedMembershipError.message }, { status: 500 });
+      }
+
+      if (
+        existingLinkedMembership?.user_id &&
+        existingLinkedMembership.user_id !== user.id
+      ) {
         return NextResponse.json(
-          { error: rosterMembershipError.message },
-          { status: 500 }
+          { error: "This roster spot is already linked to another account." },
+          { status: 409 }
         );
       }
 
-      const membershipPayload = {
-        program_id: inviteContext.programId,
-        roster_id: inviteContext.rosterId,
-        user_id: user.id,
-        role: "resident",
-        grad_year: resolvedGradYear ?? inviteContext.roster.grad_year ?? null,
-        display_name: fullName,
-        is_active: true,
-        updated_at: new Date().toISOString(),
-      };
-
-      if (rosterMembership) {
-        const { error: membershipUpdateError } = await adminSupabase
-          .from("program_memberships")
-          .update(membershipPayload)
-          .eq("id", rosterMembership.id);
-
-        if (membershipUpdateError) {
-          return NextResponse.json(
-            { error: membershipUpdateError.message },
-            { status: 500 }
-          );
-        }
-
-        membershipId = rosterMembership.id;
-      } else {
-        const { data: insertedMembership, error: membershipInsertError } =
-          await adminSupabase
-            .from("program_memberships")
-            .insert({
-              ...membershipPayload,
-              start_date: new Date().toISOString().slice(0, 10),
-              created_at: new Date().toISOString(),
-            })
-            .select("id")
-            .single();
-
-        if (membershipInsertError) {
-          return NextResponse.json(
-            { error: membershipInsertError.message },
-            { status: 500 }
-          );
-        }
-
-        membershipId = insertedMembership.id;
-      }
-            if (!membershipId) {
-        return NextResponse.json(
-          { error: "Failed to resolve membership for invite claim." },
-          { status: 500 }
-        );
-      }
-
-      const { error: backfillAssignmentsError } = await adminSupabase
-  .from("rotation_assignments")
-  .update({
-    program_membership_id: membershipId,
-    updated_at: new Date().toISOString(),
-  })
-  .eq("program_id", inviteContext.programId)
-  .eq("roster_id", inviteContext.rosterId)
-  .is("program_membership_id", null);
-
-      if (backfillAssignmentsError) {
-        return NextResponse.json(
-          { error: backfillAssignmentsError.message },
-          { status: 500 }
-        );
-      }
-
-      const { error: claimInviteError } = await adminSupabase
-        .from("program_invites")
+      const { error: updateLinkedMembershipError } = await adminSupabase
+        .from("program_memberships")
         .update({
-          claimed_at: new Date().toISOString(),
+          user_id: user.id,
+          program_id: inviteContext.programId,
+          role: "resident",
+          grad_year: resolvedGradYear ?? inviteContext.roster.grad_year ?? null,
+          display_name: fullName,
+          is_active: true,
+          start_date: today,
+          updated_at: now,
         })
-        .eq("id", inviteContext.inviteId);
+        .eq("id", membershipId);
 
-      if (claimInviteError) {
+      if (updateLinkedMembershipError) {
         return NextResponse.json(
-          { error: claimInviteError.message },
-          { status: 500 }
-        );
-      }
-
-      const { error: claimRosterError } = await adminSupabase
-        .from("program_roster")
-        .update({
-          claimed_by_user_id: user.id,
-          claimed_at: new Date().toISOString(),
-        })
-        .eq("id", inviteContext.rosterId);
-
-      if (claimRosterError) {
-        return NextResponse.json(
-          { error: claimRosterError.message },
+          { error: updateLinkedMembershipError.message },
           { status: 500 }
         );
       }
     } else {
-      const { data: existingMembership, error: existingMembershipError } =
-        await supabase
+      const { data: existingUserMembership, error: existingUserMembershipError } =
+        await adminSupabase
           .from("program_memberships")
-          .select("id, program_id")
+          .select("id")
           .eq("user_id", user.id)
+          .eq("program_id", inviteContext.programId)
           .eq("is_active", true)
           .order("created_at", { ascending: false })
           .limit(1)
           .maybeSingle();
 
-      if (existingMembershipError) {
+      if (existingUserMembershipError) {
         return NextResponse.json(
-          { error: existingMembershipError.message },
+          { error: existingUserMembershipError.message },
           { status: 500 }
         );
       }
 
-      if (existingMembership) {
-        const { error: membershipUpdateError } = await supabase
+      if (existingUserMembership) {
+        membershipId = existingUserMembership.id;
+
+        const { error: updateMembershipError } = await adminSupabase
           .from("program_memberships")
           .update({
-            program_id: selectedProgramId,
-            grad_year: resolvedGradYear,
+            role: "resident",
+            grad_year: resolvedGradYear ?? inviteContext.roster.grad_year ?? null,
             display_name: fullName,
             is_active: true,
-            updated_at: new Date().toISOString(),
+            updated_at: now,
           })
-          .eq("id", existingMembership.id);
+          .eq("id", membershipId);
 
-        if (membershipUpdateError) {
-          return NextResponse.json(
-            { error: membershipUpdateError.message },
-            { status: 500 }
-          );
+        if (updateMembershipError) {
+          return NextResponse.json({ error: updateMembershipError.message }, { status: 500 });
         }
-
-        membershipId = existingMembership.id;
       } else {
-        const { data: insertedMembership, error: membershipInsertError } =
-          await supabase
+        const { data: insertedMembership, error: insertMembershipError } =
+          await adminSupabase
             .from("program_memberships")
             .insert({
-              program_id: selectedProgramId,
+              program_id: inviteContext.programId,
               user_id: user.id,
               role: "resident",
-              grad_year: resolvedGradYear,
+              grad_year: resolvedGradYear ?? inviteContext.roster.grad_year ?? null,
               display_name: fullName,
               is_active: true,
-              start_date: new Date().toISOString().slice(0, 10),
+              start_date: today,
+              created_at: now,
+              updated_at: now,
             })
             .select("id")
             .single();
 
-        if (membershipInsertError) {
-          return NextResponse.json(
-            { error: membershipInsertError.message },
-            { status: 500 }
-          );
+        if (insertMembershipError) {
+          return NextResponse.json({ error: insertMembershipError.message }, { status: 500 });
         }
 
         membershipId = insertedMembership.id;
       }
     }
 
-    const now = new Date().toISOString();
-
-    const { data: existingWorkspaceState, error: workspaceStateLookupError } =
-      await supabase
-        .from("workspace_user_state")
-        .select("user_id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-
-    if (workspaceStateLookupError) {
+    if (!membershipId) {
       return NextResponse.json(
-        { error: workspaceStateLookupError.message },
+        { error: "Failed to create program membership." },
         { status: 500 }
       );
     }
 
-    if (existingWorkspaceState) {
-      const { error: workspaceUpdateError } = await supabase
-        .from("workspace_user_state")
-        .update({
-          onboarding_completed: true,
-          last_entered_at: now,
-          updated_at: now,
-        })
-        .eq("user_id", user.id);
+    const { error: claimRosterError } = await adminSupabase
+      .from("program_roster")
+      .update({
+        program_membership_id: membershipId,
+        claimed_by_user_id: user.id,
+        claimed_at: now,
+        updated_at: now,
+      })
+      .eq("id", inviteContext.rosterId)
+      .eq("program_id", inviteContext.programId);
 
-      if (workspaceUpdateError) {
-        return NextResponse.json(
-          { error: workspaceUpdateError.message },
-          { status: 500 }
-        );
-      }
-    } else {
-      const { error: workspaceInsertError } = await supabase
+    if (claimRosterError) {
+      return NextResponse.json({ error: claimRosterError.message }, { status: 500 });
+    }
+
+    const { error: backfillRotationsError } = await adminSupabase
+      .from("rotation_assignments")
+      .update({
+        program_membership_id: membershipId,
+        updated_at: now,
+      })
+      .eq("program_id", inviteContext.programId)
+      .eq("roster_id", inviteContext.rosterId);
+
+    if (backfillRotationsError) {
+      return NextResponse.json({ error: backfillRotationsError.message }, { status: 500 });
+    }
+
+    const { error: backfillCallsError } = await adminSupabase
+  .from("call_assignments")
+  .update({
+    program_membership_id: membershipId,
+    updated_at: now,
+  })
+  .eq("program_id", inviteContext.programId)
+  .eq("roster_id", inviteContext.rosterId);
+
+if (backfillCallsError) {
+  return NextResponse.json(
+    { error: backfillCallsError.message },
+    { status: 500 }
+  );
+}
+
+    const { error: claimInviteError } = await adminSupabase
+      .from("program_invites")
+      .update({
+        claimed_at: now,
+      })
+      .eq("id", inviteContext.inviteId);
+
+    if (claimInviteError) {
+      return NextResponse.json({ error: claimInviteError.message }, { status: 500 });
+    }
+
+    const { data: existingWorkspaceState, error: workspaceLookupError } =
+      await adminSupabase
         .from("workspace_user_state")
-        .insert({
+        .select("user_id, first_entered_at")
+        .eq("user_id", user.id)
+        .maybeSingle();
+
+    if (workspaceLookupError) {
+      return NextResponse.json({ error: workspaceLookupError.message }, { status: 500 });
+    }
+
+    const { error: workspaceUpsertError } = await adminSupabase
+      .from("workspace_user_state")
+      .upsert(
+        {
           user_id: user.id,
           onboarding_completed: true,
-          first_entered_at: now,
+          first_entered_at: existingWorkspaceState?.first_entered_at ?? now,
           last_entered_at: now,
           updated_at: now,
-        });
+        },
+        { onConflict: "user_id" }
+      );
 
-      if (workspaceInsertError) {
-        return NextResponse.json(
-          { error: workspaceInsertError.message },
-          { status: 500 }
-        );
-      }
+    if (workspaceUpsertError) {
+      return NextResponse.json({ error: workspaceUpsertError.message }, { status: 500 });
     }
 
     return NextResponse.json({
       ok: true,
       selectedProgramId,
       membershipId,
+      rosterId: inviteContext.rosterId,
       selectedProgram: {
         id: selectedProgram.id,
         name: selectedProgram.name,
@@ -726,7 +833,7 @@ export async function POST(req: Request) {
         state: selectedProgram.state ?? null,
         timezone: selectedProgram.timezone ?? null,
       },
-      inviteClaimed: !!inviteContext,
+      inviteClaimed: true,
     });
   } catch (error) {
     const message =

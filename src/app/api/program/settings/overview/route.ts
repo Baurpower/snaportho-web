@@ -3,14 +3,15 @@ import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/db/memberships";
 import { getProgramRotationAssignmentsInRange } from "@/lib/db/rotations";
 
-type ProgramMemberRow = {
+type ProgramRosterRow = {
   id: string;
-  display_name: string | null;
+  full_name: string | null;
+  first_name: string | null;
+  last_name: string | null;
   grad_year: number | null;
   role: string | null;
-  user_id: string | null;
-  roster_id: string | null;
-  is_active: boolean | null;
+  program_membership_id: string | null;
+  claimed_by_user_id: string | null;
 };
 
 type RotationCatalogRow = {
@@ -129,20 +130,20 @@ export async function GET(request: NextRequest) {
           .maybeSingle(),
 
         supabase
-          .from("program_memberships")
-          .select(`
-            id,
-            display_name,
-            grad_year,
-            role,
-            user_id,
-            roster_id,
-            is_active
-          `)
-          .eq("program_id", activeMembership.program_id)
-          .eq("is_active", true)
-          .order("grad_year", { ascending: true, nullsFirst: false })
-          .order("display_name", { ascending: true }),
+  .from("program_roster")
+  .select(`
+    id,
+    full_name,
+    first_name,
+    last_name,
+    grad_year,
+    role,
+    program_membership_id,
+    claimed_by_user_id
+  `)
+  .eq("program_id", activeMembership.program_id)
+  .order("grad_year", { ascending: true, nullsFirst: false })
+  .order("last_name", { ascending: true }),
 
         supabase
           .from("rotations")
@@ -181,21 +182,26 @@ export async function GET(request: NextRequest) {
 
     const programRow = (programResult.data ?? null) as ProgramRow | null;
 
-    const members = ((membersResult.data ?? []) as ProgramMemberRow[]).map((row) => {
-      const pgyYear = getPgyFromGradYear(row.grad_year ?? null);
+    const members = ((membersResult.data ?? []) as ProgramRosterRow[]).map((row) => {
+  const pgyYear = getPgyFromGradYear(row.grad_year ?? null);
 
-      return {
-        membershipId: row.id,
-        rosterId: row.roster_id ?? null,
-        displayName: row.display_name ?? "Unknown",
-        gradYear: row.grad_year ?? null,
-        pgyYear,
-        trainingLevel: pgyYear ? `PGY-${pgyYear}` : null,
-        role: row.role ?? null,
-        userId: row.user_id ?? null,
-        isActive: row.is_active ?? null,
-      };
-    });
+  const fallbackName = [row.first_name, row.last_name]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
+
+  return {
+    membershipId: row.program_membership_id ?? null,
+    rosterId: row.id,
+    displayName: row.full_name ?? (fallbackName || "Unknown"),
+    gradYear: row.grad_year ?? null,
+    pgyYear,
+    trainingLevel: pgyYear ? `PGY-${pgyYear}` : null,
+    role: row.role ?? null,
+    userId: row.claimed_by_user_id ?? null,
+    isActive: true,
+  };
+});
 
     const rotations = ((rotationsResult.data ?? []) as RotationCatalogRow[]).map((row) => ({
       id: row.id,

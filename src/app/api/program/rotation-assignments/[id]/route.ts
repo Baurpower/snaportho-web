@@ -30,16 +30,20 @@ function normalizeNullableString(value: unknown): string | null | undefined {
   return trimmed === "" ? null : trimmed;
 }
 
-async function getAssignmentForProgram(
-  assignmentId: string,
-  programId: string
-) {
+function normalizeRelation<T>(value: T | T[] | null | undefined): T | null {
+  if (!value) return null;
+  if (Array.isArray(value)) return value[0] ?? null;
+  return value;
+}
+
+async function getAssignmentForProgram(assignmentId: string, programId: string) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("rotation_assignments")
     .select(`
       id,
+      program_id,
       program_membership_id,
       roster_id,
       rotation_id,
@@ -48,13 +52,16 @@ async function getAssignmentForProgram(
       site_label,
       team_label,
       notes,
-      program_memberships!inner (
+      program_roster!inner (
         id,
         program_id,
-        display_name,
+        full_name,
+        first_name,
+        last_name,
         grad_year,
         role,
-        user_id
+        program_membership_id,
+        claimed_by_user_id
       ),
       rotations (
         id,
@@ -65,7 +72,7 @@ async function getAssignmentForProgram(
       )
     `)
     .eq("id", assignmentId)
-    .eq("program_memberships.program_id", programId)
+    .eq("program_id", programId)
     .maybeSingle();
 
   if (error) {
@@ -75,21 +82,58 @@ async function getAssignmentForProgram(
   return data;
 }
 
-async function ensureMembershipInProgram(
+async function ensureRosterByMembershipInProgram(
   membershipId: string,
   programId: string
 ) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from("program_memberships")
-    .select("id, program_id, roster_id")
-    .eq("id", membershipId)
+    .from("program_roster")
+    .select(`
+      id,
+      program_id,
+      full_name,
+      first_name,
+      last_name,
+      grad_year,
+      role,
+      program_membership_id,
+      claimed_by_user_id
+    `)
+    .eq("program_membership_id", membershipId)
     .eq("program_id", programId)
     .maybeSingle();
 
   if (error) {
-    throw new Error(`Failed to validate membership: ${error.message}`);
+    throw new Error(`Failed to validate roster: ${error.message}`);
+  }
+
+  return data;
+}
+
+async function ensureRosterInProgram(rosterId: string, programId: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("program_roster")
+    .select(`
+      id,
+      program_id,
+      full_name,
+      first_name,
+      last_name,
+      grad_year,
+      role,
+      program_membership_id,
+      claimed_by_user_id
+    `)
+    .eq("id", rosterId)
+    .eq("program_id", programId)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Failed to validate roster: ${error.message}`);
   }
 
   return data;
@@ -155,6 +199,9 @@ export async function GET(_request: NextRequest, context: RouteContext) {
       );
     }
 
+    const roster = normalizeRelation(assignment.program_roster);
+    const rotation = normalizeRelation(assignment.rotations);
+
     return NextResponse.json(
       {
         assignment: {
@@ -167,12 +214,8 @@ export async function GET(_request: NextRequest, context: RouteContext) {
           siteLabel: assignment.site_label ?? null,
           teamLabel: assignment.team_label ?? null,
           notes: assignment.notes ?? null,
-          member: Array.isArray(assignment.program_memberships)
-            ? assignment.program_memberships[0] ?? null
-            : assignment.program_memberships ?? null,
-          rotation: Array.isArray(assignment.rotations)
-            ? assignment.rotations[0] ?? null
-            : assignment.rotations ?? null,
+          member: roster,
+          rotation,
         },
       },
       { status: 200 }
@@ -259,24 +302,44 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
         );
       }
 
-      const membership = await ensureMembershipInProgram(
+      const roster = await ensureRosterByMembershipInProgram(
         membershipId,
         activeMembership.program_id
       );
 
-      if (!membership) {
+      if (!roster) {
         return NextResponse.json(
-          { error: "membershipId does not belong to this program." },
+          { error: "membershipId does not map to a roster record in this program." },
           { status: 400 }
         );
       }
 
-      updates.program_membership_id = membership.id;
-      updates.roster_id = membership.roster_id ?? null;
+      updates.roster_id = roster.id;
+      updates.program_membership_id = roster.program_membership_id ?? null;
     }
 
     if (rosterId !== undefined && membershipId === undefined) {
-      updates.roster_id = rosterId;
+      if (rosterId === null) {
+        return NextResponse.json(
+          { error: "rosterId cannot be null." },
+          { status: 400 }
+        );
+      }
+
+      const roster = await ensureRosterInProgram(
+        rosterId,
+        activeMembership.program_id
+      );
+
+      if (!roster) {
+        return NextResponse.json(
+          { error: "rosterId does not belong to this program." },
+          { status: 400 }
+        );
+      }
+
+      updates.roster_id = roster.id;
+      updates.program_membership_id = roster.program_membership_id ?? null;
     }
 
     if (rotationId !== undefined) {
@@ -309,6 +372,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
           { status: 400 }
         );
       }
+
       updates.start_date = body.startDate;
     }
 
@@ -319,6 +383,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
           { status: 400 }
         );
       }
+
       updates.end_date = body.endDate;
     }
 

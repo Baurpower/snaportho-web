@@ -4,6 +4,7 @@ import { getActiveMembershipForUser } from "@/lib/db/memberships";
 
 type PostBody = {
   membershipId?: string | null;
+  rosterId?: string | null;
   rotationId?: string | null;
   startDate?: string | null;
   endDate?: string | null;
@@ -25,21 +26,56 @@ function normalizeNullableString(value: unknown): string | null | undefined {
   return trimmed === "" ? null : trimmed;
 }
 
-async function ensureMembershipInProgram(
+async function ensureRosterByMembershipInProgram(
   membershipId: string,
   programId: string
 ) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from("program_memberships")
-    .select("id, program_id, roster_id, display_name, grad_year, role, user_id")
-    .eq("id", membershipId)
+    .from("program_roster")
+    .select(`
+      id,
+      program_id,
+      full_name,
+      first_name,
+      last_name,
+      grad_year,
+      role,
+      program_membership_id
+    `)
+    .eq("program_membership_id", membershipId)
     .eq("program_id", programId)
     .maybeSingle();
 
   if (error) {
-    throw new Error(`Failed to validate membership: ${error.message}`);
+    throw new Error(`Failed to validate roster: ${error.message}`);
+  }
+
+  return data;
+}
+
+async function ensureRosterInProgram(rosterId: string, programId: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("program_roster")
+    .select(`
+      id,
+      program_id,
+      full_name,
+      first_name,
+      last_name,
+      grad_year,
+      role,
+      program_membership_id
+    `)
+    .eq("id", rosterId)
+    .eq("program_id", programId)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Failed to validate roster: ${error.message}`);
   }
 
   return data;
@@ -60,6 +96,19 @@ async function ensureRotationInProgram(rotationId: string, programId: string) {
   }
 
   return data;
+}
+
+function getRosterDisplayName(roster: {
+  full_name: string | null;
+  first_name: string | null;
+  last_name: string | null;
+}) {
+  const fallbackName = [roster.first_name, roster.last_name]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
+
+  return roster.full_name ?? (fallbackName || null);
 }
 
 export async function POST(request: NextRequest) {
@@ -98,14 +147,15 @@ export async function POST(request: NextRequest) {
     }
 
     const membershipId = normalizeNullableString(body.membershipId);
+    const rosterId = normalizeNullableString(body.rosterId);
     const rotationId = normalizeNullableString(body.rotationId);
     const siteLabel = normalizeNullableString(body.siteLabel);
     const teamLabel = normalizeNullableString(body.teamLabel);
     const notes = normalizeNullableString(body.notes);
 
-    if (!membershipId) {
+    if (!rosterId && !membershipId) {
       return NextResponse.json(
-        { error: "membershipId is required." },
+        { error: "rosterId or membershipId is required." },
         { status: 400 }
       );
     }
@@ -131,14 +181,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const membership = await ensureMembershipInProgram(
-      membershipId,
-      activeMembership.program_id
-    );
+    const roster = rosterId
+      ? await ensureRosterInProgram(rosterId, activeMembership.program_id)
+      : membershipId
+      ? await ensureRosterByMembershipInProgram(
+          membershipId,
+          activeMembership.program_id
+        )
+      : null;
 
-    if (!membership) {
+    if (!roster) {
       return NextResponse.json(
-        { error: "membershipId does not belong to this program." },
+        { error: "Resident roster record does not belong to this program." },
         { status: 400 }
       );
     }
@@ -156,17 +210,17 @@ export async function POST(request: NextRequest) {
     }
 
     const insertPayload = {
-  program_id: activeMembership.program_id,
-  program_membership_id: membership.id,
-  roster_id: membership.roster_id ?? null,
-  rotation_id: rotation.id,
-  start_date: body.startDate,
-  end_date: body.endDate,
-  site_label: siteLabel ?? null,
-  team_label: teamLabel ?? null,
-  notes: notes ?? null,
-  created_by: user.id,
-};
+      program_id: activeMembership.program_id,
+      roster_id: roster.id,
+      program_membership_id: roster.program_membership_id ?? null,
+      rotation_id: rotation.id,
+      start_date: body.startDate,
+      end_date: body.endDate,
+      site_label: siteLabel ?? null,
+      team_label: teamLabel ?? null,
+      notes: notes ?? null,
+      created_by: user.id,
+    };
 
     const { data: inserted, error: insertError } = await supabase
       .from("rotation_assignments")
@@ -197,10 +251,10 @@ export async function POST(request: NextRequest) {
           id: inserted.id,
           membershipId: inserted.program_membership_id ?? null,
           rosterId: inserted.roster_id ?? null,
-          memberName: membership.display_name ?? null,
-          gradYear: membership.grad_year ?? null,
-          role: membership.role ?? null,
-          userId: membership.user_id ?? null,
+          memberName: getRosterDisplayName(roster),
+          gradYear: roster.grad_year ?? null,
+          role: roster.role ?? null,
+          userId: null,
           startDate: inserted.start_date ?? null,
           endDate: inserted.end_date ?? null,
           siteLabel: inserted.site_label ?? null,
