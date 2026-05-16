@@ -330,7 +330,7 @@ function sanitizeCallTypeArray(
 ): CallTypeOption[] {
   if (!Array.isArray(value)) return fallback;
 
-  const cleaned = Array.from(
+  return Array.from(
     new Set(
       value.filter(
         (item): item is CallTypeOption =>
@@ -338,8 +338,6 @@ function sanitizeCallTypeArray(
       )
     )
   );
-
-  return cleaned.length > 0 ? cleaned : fallback;
 }
 
 export function sanitizeRuleConfig(
@@ -458,13 +456,6 @@ export function validateRuleDraft(rule: RuleDraft): string[] {
       rule.config.restrictedPgyYears.length === 0
     ) {
       errors.push("At least one restricted PGY year is required.");
-    }
-
-    if (
-      !Array.isArray(rule.config.allowedCallTypes) ||
-      rule.config.allowedCallTypes.length === 0
-    ) {
-      errors.push("At least one allowed call type is required.");
     }
   }
 

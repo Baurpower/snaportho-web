@@ -17,6 +17,7 @@ import {
   BriefcaseMedical,
   AlertTriangle,
   CheckCircle2,
+  Wand2,
 } from "lucide-react";
 import {
   RULE_DEFINITIONS,
@@ -31,6 +32,9 @@ import {
 type ProgramRulesSheetProps = {
   open: boolean;
   onClose: () => void;
+  onSaved?: () => void | Promise<void>;
+  scheduleSlotMode: ScheduleSlotMode;
+  onScheduleSlotModeChange: (mode: ScheduleSlotMode) => void;
 };
 
 type RuleSetResponse = {
@@ -67,6 +71,29 @@ type ProgramRotationsResponse = {
 };
 
 type ProgramRotationOption = ProgramRotationsResponse["rotations"][number];
+
+type ScheduleSlotMode = "Primary" | "Both";
+
+type AIRuleResponse = {
+  rules: Array<{
+    rule_type: string;
+    name: string;
+    is_hard_rule: boolean;
+    priority: number;
+    scope: Record<string, unknown>;
+    config: Record<string, unknown>;
+    explanation?: string;
+  }>;
+  proposedRuleTypes: Array<{
+    rule_type: string;
+    name: string;
+    scope: Record<string, unknown>;
+    config: Record<string, unknown>;
+    explanation?: string;
+  }>;
+  warnings: string[];
+  unparsedStatements: string[];
+};
 
 function isRuleSetResponse(value: unknown): value is RuleSetResponse {
   return (
@@ -137,6 +164,231 @@ function getRuleIcon(type: RuleType) {
 
 function getRotationDisplayName(rotation: ProgramRotationOption) {
   return rotation.short_name?.trim() || rotation.name?.trim() || "Unnamed rotation";
+}
+
+function mapAIRuleTypeToFrontendType(ruleType: string): RuleType | null {
+  switch (ruleType) {
+    case "minimum_spacing":
+    case "avoid_consecutive_call":
+    case "min_days_between_assignments":
+      return "min_days_between_assignments";
+
+    case "max_monthly_calls":
+    case "max_calls_per_month":
+      return "max_calls_per_month";
+
+    case "max_weekend_calls":
+    case "max_weekends_per_month":
+      return "max_weekends_per_month";
+
+    case "pgy_slot_restriction":
+    case "restrict_call_type_by_pgy":
+      return "restrict_call_type_by_pgy";
+
+    case "weekend_pairing":
+      return "weekend_pairing";
+
+    case "restrict_call_by_rotation":
+      return "restrict_call_by_rotation";
+
+    default:
+      return null;
+  }
+}
+
+type CallPoolCapability = "none" | "primary" | "backup" | "both";
+
+const PGY_YEARS = [1, 2, 3, 4, 5];
+
+function getAllowedCallTypesFromCapability(
+  capability: CallPoolCapability
+): ("Primary" | "Backup")[] {
+  if (capability === "primary") return ["Primary"];
+  if (capability === "backup") return ["Backup"];
+  if (capability === "both") return ["Primary", "Backup"];
+  return [];
+}
+
+function getCapabilityFromAllowedCallTypes(
+  allowedCallTypes: unknown
+): CallPoolCapability {
+  if (!Array.isArray(allowedCallTypes)) return "both";
+
+  const hasPrimary = allowedCallTypes.includes("Primary");
+  const hasBackup = allowedCallTypes.includes("Backup");
+
+  if (hasPrimary && hasBackup) return "both";
+  if (hasPrimary) return "primary";
+  if (hasBackup) return "backup";
+  return "none";
+}
+
+function getPgyCallPoolCapability(
+  rules: RuleDraft[],
+  pgyYear: number
+): CallPoolCapability {
+  const matchingRule = rules.find((rule) => {
+    if (rule.type !== "restrict_call_type_by_pgy") return false;
+
+    const restrictedPgyYears = Array.isArray(rule.config?.restrictedPgyYears)
+      ? rule.config.restrictedPgyYears.map(Number)
+      : [];
+
+    return restrictedPgyYears.includes(pgyYear);
+  });
+
+  if (!matchingRule) return "both";
+
+  return getCapabilityFromAllowedCallTypes(
+    matchingRule.config?.allowedCallTypes
+  );
+}
+
+function removePgyFromCallPoolRules(rules: RuleDraft[], pgyYear: number) {
+  return rules
+    .map((rule) => {
+      if (rule.type !== "restrict_call_type_by_pgy") return rule;
+
+      const restrictedPgyYears = Array.isArray(rule.config?.restrictedPgyYears)
+        ? rule.config.restrictedPgyYears.map(Number)
+        : [];
+
+      if (!restrictedPgyYears.includes(pgyYear)) return rule;
+
+      const nextRestrictedPgyYears = restrictedPgyYears.filter(
+        (year) => year !== pgyYear
+      );
+
+      if (nextRestrictedPgyYears.length === 0) return null;
+
+      return {
+        ...rule,
+        config: sanitizeRuleConfig(rule.type, {
+          ...rule.config,
+          restrictedPgyYears: nextRestrictedPgyYears,
+        }),
+      };
+    })
+    .filter((rule): rule is RuleDraft => Boolean(rule));
+}
+
+function createPgyCallPoolRule(
+  pgyYear: number,
+  capability: CallPoolCapability
+): RuleDraft {
+  const allowedCallTypes = getAllowedCallTypesFromCapability(capability);
+
+  return {
+    id: makeId(),
+    name: `PGY-${pgyYear} call pool`,
+    type: "restrict_call_type_by_pgy",
+    enabled: true,
+    isHardRule: true,
+    config: {
+      restrictedPgyYears: [pgyYear],
+      allowedCallTypes,
+    },
+  };
+}
+function convertAIRuleToDraft(aiRule: AIRuleResponse["rules"][number]): RuleDraft | null {
+  const frontendType = mapAIRuleTypeToFrontendType(aiRule.rule_type);
+  if (!frontendType) return null;
+
+  const scope = aiRule.scope ?? {};
+  const config = aiRule.config ?? {};
+
+  let nextConfig: Record<string, unknown> = { ...config };
+
+  if (frontendType === "min_days_between_assignments") {
+    nextConfig = {
+      minDays:
+        typeof config.minDays === "number"
+          ? config.minDays
+          : typeof config.min_days === "number"
+          ? config.min_days
+          : typeof config.days === "number"
+          ? config.days
+          : 2,
+      excludeAdjacentWeekendPairing:
+        typeof config.excludeAdjacentWeekendPairing === "boolean"
+          ? config.excludeAdjacentWeekendPairing
+          : true,
+    };
+  }
+
+  if (frontendType === "max_calls_per_month") {
+    nextConfig = {
+      maxCalls:
+        typeof config.maxCalls === "number"
+          ? config.maxCalls
+          : typeof config.max_calls === "number"
+          ? config.max_calls
+          : typeof config.maximum === "number"
+          ? config.maximum
+          : 6,
+    };
+  }
+
+  if (frontendType === "max_weekends_per_month") {
+    nextConfig = {
+      maxWeekends:
+        typeof config.maxWeekends === "number"
+          ? config.maxWeekends
+          : typeof config.max_weekends === "number"
+          ? config.max_weekends
+          : typeof config.maximum === "number"
+          ? config.maximum
+          : 2,
+    };
+  }
+
+  if (frontendType === "restrict_call_type_by_pgy") {
+    const pgyYears =
+      Array.isArray(scope.pgyYears)
+        ? scope.pgyYears
+        : Array.isArray(config.pgyYears)
+        ? config.pgyYears
+        : Array.isArray(config.restrictedPgyYears)
+        ? config.restrictedPgyYears
+        : [];
+
+    const slot =
+      typeof scope.slot === "string"
+        ? scope.slot
+        : typeof config.slot === "string"
+        ? config.slot
+        : "Primary";
+
+    nextConfig = {
+      restrictedPgyYears: pgyYears
+        .map((v) => Number(v))
+        .filter((v) => Number.isFinite(v)),
+      allowedCallTypes:
+        slot === "Primary"
+          ? ["Backup"]
+          : slot === "Backup"
+          ? ["Primary"]
+          : ["Backup"],
+    };
+  }
+
+  if (frontendType === "weekend_pairing") {
+    nextConfig = {
+      sameResidentForWeekend:
+        typeof config.sameResidentForWeekend === "boolean"
+          ? config.sameResidentForWeekend
+          : true,
+    };
+  }
+
+  return {
+    id: makeId(),
+    name: aiRule.name || getRuleDefinition(frontendType).label,
+    type: frontendType,
+    enabled: true,
+    isHardRule: Boolean(aiRule.is_hard_rule),
+    config: sanitizeRuleConfig(frontendType, nextConfig),
+  };
 }
 
 function TogglePill({
@@ -263,9 +515,6 @@ function RotationMultiSelect({
           placeholder="Search official program rotations..."
           className="w-full rounded-[0.95rem] border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
         />
-        <p className="mt-1 text-xs text-slate-500">
-          Choose from the official rotations for this program.
-        </p>
       </div>
 
       {selectedRotations.length > 0 ? (
@@ -300,9 +549,7 @@ function RotationMultiSelect({
                   type="button"
                   onClick={() => toggleRotation(rotation.id)}
                   className={`flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition ${
-                    active
-                      ? "bg-sky-50 hover:bg-sky-100"
-                      : "hover:bg-slate-50"
+                    active ? "bg-sky-50 hover:bg-sky-100" : "hover:bg-slate-50"
                   }`}
                 >
                   <div className="min-w-0">
@@ -319,9 +566,7 @@ function RotationMultiSelect({
 
                   <div
                     className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${
-                      active
-                        ? "bg-sky-600 text-white"
-                        : "bg-slate-100 text-slate-600"
+                      active ? "bg-sky-600 text-white" : "bg-slate-100 text-slate-600"
                     }`}
                   >
                     {active ? "Selected" : "Select"}
@@ -331,6 +576,174 @@ function RotationMultiSelect({
             })}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function ScheduleSlotModePicker({
+  value,
+  onChange,
+}: {
+  value: ScheduleSlotMode;
+  onChange: (mode: ScheduleSlotMode) => void;
+}) {
+  const options: Array<{ value: ScheduleSlotMode; label: string; helper: string }> = [
+    { value: "Primary", label: "Primary only", helper: "No backup call" },
+    { value: "Both", label: "Primary + Backup", helper: "Fill both slots" },
+  ];
+
+  return (
+    <div className="rounded-[1.15rem] border border-slate-200 bg-white p-3 shadow-sm">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-bold text-slate-950">Call structure</p>
+          <p className="text-xs text-slate-500">
+            Choose whether this schedule uses backup call.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-1 rounded-full border border-slate-200 bg-slate-50 p-1">
+          {options.map((option) => {
+            const active = value === option.value;
+
+            return (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => onChange(option.value)}
+                className={`rounded-full px-4 py-2 text-center transition ${
+                  active
+                    ? "bg-slate-950 text-white shadow-sm"
+                    : "text-slate-500 hover:bg-white hover:text-slate-800"
+                }`}
+              >
+                <span className="block text-xs font-bold">{option.label}</span>
+                <span
+                  className={`mt-0.5 block text-[10px] font-semibold ${
+                    active ? "text-slate-300" : "text-slate-400"
+                  }`}
+                >
+                  {option.helper}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PgyCallPoolBuilder({
+  rules,
+  onChange,
+  scheduleSlotMode,
+}: {
+  rules: RuleDraft[];
+  onChange: (next: RuleDraft[]) => void;
+  scheduleSlotMode: ScheduleSlotMode;
+}) {
+  function updatePgyCapability(
+  pgyYear: number,
+  capability: CallPoolCapability
+) {
+  const withoutPgy = removePgyFromCallPoolRules(rules, pgyYear);
+
+  if (capability === "both") {
+    onChange(withoutPgy);
+    return;
+  }
+
+  const nextRule = createPgyCallPoolRule(pgyYear, capability);
+  onChange([nextRule, ...withoutPgy]);
+}
+
+  const options: Array<{
+  value: CallPoolCapability;
+  label: string;
+}> =
+  scheduleSlotMode === "Primary"
+    ? [
+        { value: "none", label: "None" },
+        { value: "primary", label: "Primary" },
+      ]
+    : [
+        { value: "none", label: "None" },
+        { value: "primary", label: "Primary" },
+        { value: "backup", label: "Backup" },
+        { value: "both", label: "Both" },
+      ];
+
+  return (
+    <div className="rounded-[1.15rem] border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-bold text-slate-950">Call pool by PGY</p>
+          <p className="text-xs text-slate-500">
+            Select which call types each PGY level can take.
+          </p>
+        </div>
+
+        <span className="mt-2 w-fit rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-600 sm:mt-0">
+          Used for auto-generation
+        </span>
+      </div>
+
+      <div className="mt-4 space-y-2">
+        {PGY_YEARS.map((pgyYear) => {
+          const activeCapability = getPgyCallPoolCapability(rules, pgyYear);
+
+          return (
+            <div
+              key={`pgy-call-pool-${pgyYear}`}
+              className="flex flex-col gap-2 rounded-[0.95rem] border border-slate-200 bg-slate-50 px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <div className="flex items-center gap-2">
+                <span className="rounded-full bg-slate-950 px-2.5 py-1 text-xs font-bold text-white">
+                  PGY-{pgyYear}
+                </span>
+
+                <span className="text-xs text-slate-500">
+                  {activeCapability === "none"
+                    ? "Not in call pool"
+                    : activeCapability === "primary"
+                    ? "Primary call only"
+                    : activeCapability === "backup"
+                    ? "Backup call only"
+                    : "Full call pool"}
+                </span>
+              </div>
+
+              <div
+  className={`grid gap-1 rounded-full border border-slate-200 bg-white p-1 ${
+    scheduleSlotMode === "Primary" ? "grid-cols-2" : "grid-cols-4"
+  }`}
+>
+                {options.map((option) => {
+                  const selected = activeCapability === option.value;
+
+                  return (
+                    <button
+                      key={`${pgyYear}-${option.value}`}
+                      type="button"
+                      onClick={() =>
+                        updatePgyCapability(pgyYear, option.value)
+                      }
+                      className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                        selected
+                          ? "bg-slate-950 text-white shadow-sm"
+                          : "text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -382,7 +795,7 @@ function RuleConfigEditor({
                 Ignore paired Sat/Sun weekends
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                Do not count Saturday/Sunday weekend pairings as spacing violations.
+                Do not count Saturday/Sunday pairings as spacing violations.
               </p>
             </div>
 
@@ -494,10 +907,9 @@ function RuleConfigEditor({
                 restrictedPgyYears: parseNumberArray(e.target.value),
               })
             }
-            placeholder="5"
+            placeholder="1"
             className="w-full rounded-[0.95rem] border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
           />
-          <p className="mt-1 text-xs text-slate-500">Example: 4, 5</p>
         </label>
 
         <div>
@@ -569,21 +981,6 @@ function RuleConfigEditor({
       : [];
     const blockAllCall =
       typeof config.blockAllCall === "boolean" ? config.blockAllCall : true;
-    const restrictedCallTypes = Array.isArray(config.restrictedCallTypes)
-      ? (config.restrictedCallTypes as ("Primary" | "Backup")[])
-      : ["Primary", "Backup"];
-
-    function toggleCallType(callType: "Primary" | "Backup") {
-      const exists = restrictedCallTypes.includes(callType);
-      const next = exists
-        ? restrictedCallTypes.filter((value) => value !== callType)
-        : [...restrictedCallTypes, callType];
-
-      updateConfig({
-        ...config,
-        restrictedCallTypes: next.length > 0 ? next : [callType],
-      });
-    }
 
     return (
       <div className="space-y-4">
@@ -605,7 +1002,7 @@ function RuleConfigEditor({
                 Block all call
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                Residents on these rotations are fully removed from the call pool.
+                Residents on these rotations are removed from the call pool.
               </p>
             </div>
 
@@ -629,30 +1026,6 @@ function RuleConfigEditor({
             </button>
           </div>
         </div>
-
-        {!blockAllCall ? (
-          <div>
-            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
-              Restricted call types
-            </span>
-            <div className="flex flex-wrap gap-2">
-              <TogglePill
-                active={restrictedCallTypes.includes("Primary")}
-                label="Primary"
-                onClick={() => toggleCallType("Primary")}
-                activeClassName="bg-sky-600 text-white"
-                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
-              />
-              <TogglePill
-                active={restrictedCallTypes.includes("Backup")}
-                label="Backup"
-                onClick={() => toggleCallType("Backup")}
-                activeClassName="bg-violet-600 text-white"
-                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
-              />
-            </div>
-          </div>
-        ) : null}
       </div>
     );
   }
@@ -698,7 +1071,6 @@ function RuleCard({
           type="button"
           onClick={onDelete}
           className="rounded-full border border-slate-200 bg-white p-2 text-slate-500 transition hover:bg-slate-50 hover:text-rose-600"
-          aria-label="Delete rule"
         >
           <Trash2 className="h-4 w-4" />
         </button>
@@ -732,19 +1104,14 @@ function RuleCard({
 
       {validationErrors.length > 0 ? (
         <div className="mt-4 rounded-[1rem] border border-amber-200 bg-amber-50 px-4 py-3">
-          <div className="flex items-start gap-2">
-            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-amber-800">
-                This rule needs attention
-              </p>
-              <ul className="mt-1 space-y-1 text-xs text-amber-700">
-                {validationErrors.map((message, index) => (
-                  <li key={`${rule.id}-validation-${index}`}>• {message}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <p className="text-sm font-semibold text-amber-800">
+            This rule needs attention
+          </p>
+          <ul className="mt-1 space-y-1 text-xs text-amber-700">
+            {validationErrors.map((message, index) => (
+              <li key={`${rule.id}-validation-${index}`}>• {message}</li>
+            ))}
+          </ul>
         </div>
       ) : null}
     </div>
@@ -765,6 +1132,9 @@ function toFrontendRule(rule: RulesResponse["rules"][number]): RuleDraft {
 export default function ProgramRulesSheet({
   open,
   onClose,
+  onSaved,
+  scheduleSlotMode,
+  onScheduleSlotModeChange,
 }: ProgramRulesSheetProps) {
   const [rules, setRules] = useState<RuleDraft[]>([]);
   const [selectedType, setSelectedType] =
@@ -774,6 +1144,12 @@ export default function ProgramRulesSheet({
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+
+  const [aiOpen, setAiOpen] = useState(false);
+  const [aiText, setAiText] = useState("");
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
+  const [aiParsed, setAiParsed] = useState<AIRuleResponse | null>(null);
 
   const activeRuleCount = useMemo(
     () => rules.filter((rule) => rule.enabled).length,
@@ -809,27 +1185,19 @@ export default function ProgramRulesSheet({
         setRotationOptions([]);
 
         const [ruleSetResponse, rotationsResponse] = await Promise.all([
-          fetch("/api/program/call-rule-sets", {
-            credentials: "include",
-          }),
-          fetch("/api/program/rotations", {
-            credentials: "include",
-          }),
+          fetch("/api/program/call-rule-sets", { credentials: "include" }),
+          fetch("/api/program/rotations", { credentials: "include" }),
         ]);
 
         const ruleSetPayload: unknown = await ruleSetResponse.json().catch(() => null);
         const rotationsPayload: unknown = await rotationsResponse.json().catch(() => null);
 
         if (!ruleSetResponse.ok) {
-          throw new Error(
-            getErrorMessage(ruleSetPayload, "Failed to load rule sets")
-          );
+          throw new Error(getErrorMessage(ruleSetPayload, "Failed to load rule sets"));
         }
 
         if (!rotationsResponse.ok) {
-          throw new Error(
-            getErrorMessage(rotationsPayload, "Failed to load program rotations")
-          );
+          throw new Error(getErrorMessage(rotationsPayload, "Failed to load program rotations"));
         }
 
         if (!isRuleSetResponse(ruleSetPayload)) {
@@ -854,9 +1222,7 @@ export default function ProgramRulesSheet({
 
         const rulesResponse = await fetch(
           `/api/program/call-rules?ruleSetId=${encodeURIComponent(nextRuleSetId)}`,
-          {
-            credentials: "include",
-          }
+          { credentials: "include" }
         );
 
         const rulesPayload: unknown = await rulesResponse.json().catch(() => null);
@@ -874,17 +1240,13 @@ export default function ProgramRulesSheet({
         setRules(rulesPayload.rules.map(toFrontendRule));
       } catch (error) {
         if (!cancelled) {
-          setLoadError(
-            error instanceof Error ? error.message : "Failed to load rules"
-          );
+          setLoadError(error instanceof Error ? error.message : "Failed to load rules");
           setRules([]);
           setRuleSetId(null);
           setRotationOptions([]);
         }
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setLoading(false);
       }
     }
 
@@ -917,11 +1279,105 @@ export default function ProgramRulesSheet({
     setRules((prev) => prev.filter((rule) => rule.id !== ruleId));
   }
 
+  async function parseAiRule() {
+    try {
+      setAiLoading(true);
+      setAiError(null);
+      setAiParsed(null);
+
+      const response = await fetch("/api/program/call-rules/parse", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: aiText }),
+      });
+
+      const payload = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(getErrorMessage(payload, "Failed to generate rule"));
+      }
+
+    setAiParsed({
+      rules: Array.isArray(payload?.rules) ? payload.rules : [],
+      proposedRuleTypes: Array.isArray(payload?.proposedRuleTypes)
+        ? payload.proposedRuleTypes
+        : [],
+      warnings: Array.isArray(payload?.warnings) ? payload.warnings : [],
+      unparsedStatements: Array.isArray(payload?.unparsedStatements)
+        ? payload.unparsedStatements
+        : [],
+    });
+  } catch (error) {
+    setAiError(error instanceof Error ? error.message : "Failed to generate rule");
+    setAiParsed(null);
+  } finally {
+    setAiLoading(false);
+  }
+}
+
+  function addAiRulesToDraft() {
+    if (!aiParsed) return;
+
+    const converted = aiParsed.rules
+      .map(convertAIRuleToDraft)
+      .filter((rule): rule is RuleDraft => Boolean(rule));
+
+    if (converted.length === 0) {
+      setAiError("No supported rules were generated from that text.");
+      return;
+    }
+
+    setRules((prev) => [...converted, ...prev]);
+    setAiOpen(false);
+    setAiText("");
+    setAiParsed(null);
+    setAiError(null);
+  }
+
+async function submitProposedRuleType() {
+  if (!aiParsed || aiParsed.proposedRuleTypes.length === 0) return;
+
+  try {
+    setAiLoading(true);
+    setAiError(null);
+
+    const response = await fetch("/api/program/call-rules/type-requests", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        originalText: aiText,
+        proposedRuleType: aiParsed.proposedRuleTypes[0],
+      }),
+    });
+
+    const payload = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      throw new Error(getErrorMessage(payload, "Failed to submit rule request"));
+    }
+
+    setAiOpen(false);
+    setAiText("");
+    setAiParsed(null);
+    setAiError(null);
+  } catch (error) {
+    setAiError(
+      error instanceof Error ? error.message : "Failed to submit rule request"
+    );
+  } finally {
+    setAiLoading(false);
+  }
+}
+
   async function handleSaveRules() {
     try {
-      if (!ruleSetId) {
-        throw new Error("No rule set available");
-      }
+      if (!ruleSetId) throw new Error("No rule set available");
 
       const invalidRule = rules.find((rule) => validateRuleDraft(rule).length > 0);
       if (invalidRule) {
@@ -958,57 +1414,34 @@ export default function ProgramRulesSheet({
         throw new Error(getErrorMessage(payload, "Failed to save rules"));
       }
 
-      const refreshedResponse = await fetch(
-        `/api/program/call-rules?ruleSetId=${encodeURIComponent(ruleSetId)}`,
-        {
-          credentials: "include",
-        }
-      );
-
-      const refreshedPayload: unknown = await refreshedResponse
-        .json()
-        .catch(() => null);
-
-      if (!refreshedResponse.ok) {
-        throw new Error(
-          getErrorMessage(refreshedPayload, "Failed to refresh rules")
-        );
-      }
-
-      if (!isRulesResponse(refreshedPayload)) {
-        throw new Error("Invalid refreshed rules response");
-      }
-
-      setRules(refreshedPayload.rules.map(toFrontendRule));
-      onClose();
+      await onSaved?.();
+onClose();
     } catch (error) {
-      setLoadError(
-        error instanceof Error ? error.message : "Failed to save rules"
-      );
+      setLoadError(error instanceof Error ? error.message : "Failed to save rules");
     } finally {
       setSaving(false);
     }
   }
 
   return (
-    <AnimatePresence>
-      {open ? (
-        <>
-          <motion.div
-            className="fixed inset-0 z-[120] bg-slate-950/45 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-          />
+  <AnimatePresence>
+    {open ? (
+      <>
+        <motion.div
+          className="fixed inset-0 z-[120] bg-slate-950/45 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        />
 
-          <motion.div
-            className="fixed right-0 top-0 z-[130] flex h-full w-full max-w-[78rem] flex-col border-l border-slate-200 bg-white shadow-2xl"
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 28, stiffness: 280 }}
-          >
+        <motion.div
+          className="fixed inset-0 z-[130] flex items-center justify-center p-4 md:p-8"
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.18 }}
+        >
+          <div className="flex h-full max-h-[92vh] w-full max-w-[78rem] flex-col overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-2xl">
             <div className="shrink-0 border-b border-slate-200 px-6 py-5 md:px-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -1030,122 +1463,133 @@ export default function ProgramRulesSheet({
                   type="button"
                   onClick={onClose}
                   className="rounded-full border border-slate-200 bg-white p-2 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900"
-                  aria-label="Close rules sheet"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
               <div className="mt-4 grid gap-3 sm:grid-cols-4">
-                <div className="rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                    Active rules
-                  </p>
-                  <p className="mt-2 text-2xl font-black text-slate-950">
-                    {activeRuleCount}
-                  </p>
-                </div>
-
-                <div className="rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                    Hard rules
-                  </p>
-                  <p className="mt-2 text-2xl font-black text-slate-950">
-                    {hardRuleCount}
-                  </p>
-                </div>
-
-                <div className="rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                    Soft rules
-                  </p>
-                  <p className="mt-2 text-2xl font-black text-slate-950">
-                    {softRuleCount}
-                  </p>
-                </div>
-
-                <div className="rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                    Needs review
-                  </p>
-                  <p className="mt-2 text-2xl font-black text-slate-950">
-                    {invalidRuleCount}
-                  </p>
-                </div>
+                {[
+                  ["Active rules", activeRuleCount],
+                  ["Hard rules", hardRuleCount],
+                  ["Soft rules", softRuleCount],
+                  ["Needs review", invalidRuleCount],
+                ].map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3"
+                  >
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                      {label}
+                    </p>
+                    <p className="mt-2 text-2xl font-black text-slate-950">
+                      {value}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 
             <div className="min-h-0 flex-1 overflow-y-auto">
-              <div className="px-6 py-5 md:px-8">
-                {loadError ? (
-                  <div className="mb-4 rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
-                    {loadError}
-                  </div>
-                ) : null}
+  <div className="px-6 py-5 md:px-8">
+    {loadError ? (
+      <div className="mb-4 rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+        {loadError}
+      </div>
+    ) : null}
 
-                <div className="rounded-[1.35rem] border border-slate-200 bg-slate-50 p-4">
-                  <div className="flex items-center gap-2">
-                    <SlidersHorizontal className="h-4 w-4 text-slate-700" />
-                    <p className="text-sm font-semibold text-slate-800">
-                      Add a rule
-                    </p>
-                  </div>
+    <ScheduleSlotModePicker
+  value={scheduleSlotMode}
+  onChange={onScheduleSlotModeChange}
+/>
 
-                  <div className="mt-4 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
-                    {RULE_DEFINITIONS.map((definition) => (
-                      <RuleTypePickerCard
-                        key={definition.type}
-                        type={definition.type}
-                        selected={selectedType === definition.type}
-                        onClick={() => setSelectedType(definition.type)}
-                      />
-                    ))}
-                  </div>
+<div className="mt-4">
+  <PgyCallPoolBuilder
+  rules={rules}
+  onChange={setRules}
+  scheduleSlotMode={scheduleSlotMode}
+/>
+</div>
 
-                  <div className="mt-4 flex justify-end">
-                    <button
-                      type="button"
-                      onClick={addRule}
-                      className="inline-flex h-[48px] items-center gap-2 rounded-full bg-slate-950 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
-                    >
-                      <Plus className="h-4 w-4" />
-                      Add rule
-                    </button>
-                  </div>
-                </div>
+    <div className="mt-5 rounded-[1.35rem] border border-slate-200 bg-slate-50 p-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-2">
+          <SlidersHorizontal className="h-4 w-4 text-slate-700" />
+          <p className="text-sm font-semibold text-slate-800">
+            Add a rule
+          </p>
+        </div>
 
-                <div className="mt-5 space-y-4">
-                  {loading ? (
-                    <div className="rounded-[1.25rem] border border-slate-200 bg-white px-5 py-10 text-center">
-                      <Loader2 className="mx-auto h-6 w-6 animate-spin text-slate-500" />
-                      <p className="mt-3 text-sm text-slate-500">
-                        Loading rules...
-                      </p>
-                    </div>
-                  ) : rules.length === 0 ? (
-                    <div className="rounded-[1.25rem] border border-dashed border-slate-200 bg-slate-50 px-5 py-10 text-center">
-                      <ShieldCheck className="mx-auto h-8 w-8 text-slate-400" />
-                      <p className="mt-3 text-sm font-semibold text-slate-800">
-                        No rules yet
-                      </p>
-                      <p className="mt-1 text-sm text-slate-500">
-                        Add your first rule to start defining program logic.
-                      </p>
-                    </div>
-                  ) : (
-                    rules.map((rule) => (
-                      <RuleCard
-                        key={rule.id}
-                        rule={rule}
-                        onChange={(next) => updateRule(rule.id, next)}
-                        onDelete={() => deleteRule(rule.id)}
-                        rotationOptions={rotationOptions}
-                      />
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
+        <button
+          type="button"
+          onClick={() => setAiOpen(true)}
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-sky-200 bg-white px-4 text-sm font-semibold text-sky-800 shadow-sm transition hover:bg-sky-50"
+        >
+          <Wand2 className="h-4 w-4" />
+          Add custom rule with AI
+        </button>
+      </div>
+
+      <div className="mt-4 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
+        {RULE_DEFINITIONS.map((definition) => (
+          <RuleTypePickerCard
+            key={definition.type}
+            type={definition.type}
+            selected={selectedType === definition.type}
+            onClick={() => setSelectedType(definition.type)}
+          />
+        ))}
+      </div>
+
+      <div className="mt-4 flex justify-end">
+        <button
+          type="button"
+          onClick={addRule}
+          className="inline-flex h-[48px] items-center gap-2 rounded-full bg-slate-950 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800"
+        >
+          <Plus className="h-4 w-4" />
+          Add rule
+        </button>
+      </div>
+    </div>
+
+    <div className="mt-5 space-y-4">
+      {loading ? (
+        <div className="rounded-[1.25rem] border border-slate-200 bg-white px-5 py-10 text-center">
+          <Loader2 className="mx-auto h-6 w-6 animate-spin text-slate-500" />
+          <p className="mt-3 text-sm text-slate-500">
+            Loading rules...
+          </p>
+        </div>
+      ) : rules.length === 0 ? (
+        <div className="rounded-[1.25rem] border border-dashed border-slate-200 bg-slate-50 px-5 py-10 text-center">
+          <ShieldCheck className="mx-auto h-8 w-8 text-slate-400" />
+          <p className="mt-3 text-sm font-semibold text-slate-800">
+            No rules yet
+          </p>
+          <p className="mt-1 text-sm text-slate-500">
+            Add your first rule to start defining program logic.
+          </p>
+        </div>
+      ) : (
+  rules
+    .filter((rule) => {
+      if (rule.type !== "restrict_call_type_by_pgy") return true;
+      return !rule.name.toLowerCase().includes("call pool");
+    })
+    .map((rule) => (
+      <RuleCard
+        key={rule.id}
+        rule={rule}
+        onChange={(next) => updateRule(rule.id, next)}
+        onDelete={() => deleteRule(rule.id)}
+        rotationOptions={rotationOptions}
+      />
+    ))
+)}
+    </div>
+  </div>
+</div>
 
             <div className="shrink-0 border-t border-slate-200 px-6 py-4 md:px-8">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -1175,9 +1619,228 @@ export default function ProgramRulesSheet({
                 </div>
               </div>
             </div>
-          </motion.div>
-        </>
-      ) : null}
-    </AnimatePresence>
-  );
+          </div>
+
+          <AnimatePresence>
+            {aiOpen ? (
+              <motion.div
+                className="fixed inset-0 z-[150] flex items-center justify-center bg-slate-950/50 p-4 backdrop-blur-sm"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <motion.div
+                  className="w-full max-w-3xl overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-2xl"
+                  initial={{ scale: 0.96, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.96, opacity: 0 }}
+                >
+                  <div className="border-b border-slate-200 px-6 py-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <div className="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-sky-800">
+                          <Wand2 className="h-3.5 w-3.5" />
+                          AI Rule Builder
+                        </div>
+                        <h3 className="mt-3 text-xl font-bold text-slate-950">
+                          Add a custom rule
+                        </h3>
+                        <p className="mt-1 text-sm text-slate-500">
+                          Type the rule in plain English. You can review it before saving.
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setAiOpen(false)}
+                        className="rounded-full border border-slate-200 bg-white p-2 text-slate-500 transition hover:bg-slate-50"
+                      >
+                        <X className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="max-h-[65vh] overflow-y-auto px-6 py-5">
+                    <textarea
+                      value={aiText}
+                      onChange={(e) => setAiText(e.target.value)}
+                      placeholder="Example: PGY-1 residents cannot take primary call. No resident should have more than 2 weekends per month. Avoid back-to-back call unless unavoidable."
+                      className="min-h-36 w-full resize-none rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+                    />
+
+                    {aiError ? (
+                      <div className="mt-4 rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+                        {aiError}
+                      </div>
+                    ) : null}
+
+                    {aiParsed ? (
+                      <div className="mt-5 space-y-4">
+                        <div className="rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
+                          <p className="text-sm font-bold text-slate-950">
+                            Detected rules
+                          </p>
+
+                          {aiParsed.rules.length === 0 ? (
+                            <p className="mt-2 text-sm text-slate-500">
+                              No supported rules were detected.
+                            </p>
+                          ) : (
+                            <div className="mt-3 space-y-3">
+                              {aiParsed.rules.map((rule, index) => (
+                                <div
+                                  key={`ai-rule-${index}`}
+                                  className="rounded-[1rem] border border-slate-200 bg-white p-4"
+                                >
+                                  <div className="flex items-center justify-between gap-3">
+                                    <p className="text-sm font-semibold text-slate-950">
+                                      {rule.name}
+                                    </p>
+                                    <span
+                                      className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${
+                                        rule.is_hard_rule
+                                          ? "bg-rose-50 text-rose-700 ring-1 ring-rose-200"
+                                          : "bg-sky-50 text-sky-700 ring-1 ring-sky-200"
+                                      }`}
+                                    >
+                                      {rule.is_hard_rule ? "Hard rule" : "Soft rule"}
+                                    </span>
+                                  </div>
+
+                                  <p className="mt-2 text-xs text-slate-500">
+                                    Type: {rule.rule_type}
+                                  </p>
+
+                                  {rule.explanation ? (
+                                    <p className="mt-2 text-sm text-slate-600">
+                                      {rule.explanation}
+                                    </p>
+                                  ) : null}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+
+                        {aiParsed.proposedRuleTypes.length > 0 ? (
+                          <div className="rounded-[1.25rem] border border-sky-200 bg-sky-50 p-4">
+                            <p className="text-sm font-bold text-sky-950">
+                              New rule type suggested
+                            </p>
+
+                            <div className="mt-3 space-y-3">
+                              {aiParsed.proposedRuleTypes.map((rule, index) => (
+                                <div
+                                  key={`proposed-rule-${index}`}
+                                  className="rounded-[1rem] border border-sky-200 bg-white p-4"
+                                >
+                                  <p className="text-sm font-semibold text-slate-950">
+                                    {rule.name}
+                                  </p>
+
+                                  <p className="mt-2 text-xs text-slate-500">
+                                    Proposed type: {rule.rule_type}
+                                  </p>
+
+                                  {rule.explanation ? (
+                                    <p className="mt-2 text-sm text-slate-600">
+                                      {rule.explanation}
+                                    </p>
+                                  ) : null}
+                                </div>
+                              ))}
+                            </div>
+
+                            <p className="mt-3 text-xs text-sky-800">
+                              This rule is not supported by the scheduler yet. Submit it for review so it can be added as a future rule type.
+                            </p>
+                          </div>
+                        ) : null}
+
+                        {aiParsed.warnings.length > 0 ? (
+                          <div className="rounded-[1rem] border border-amber-200 bg-amber-50 px-4 py-3">
+                            <p className="text-sm font-semibold text-amber-800">
+                              Warnings
+                            </p>
+                            <ul className="mt-1 space-y-1 text-xs text-amber-700">
+                              {aiParsed.warnings.map((warning, index) => (
+                                <li key={`warning-${index}`}>• {warning}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        ) : null}
+
+                        {aiParsed.unparsedStatements.length > 0 ? (
+                          <div className="rounded-[1rem] border border-slate-200 bg-white px-4 py-3">
+                            <p className="text-sm font-semibold text-slate-800">
+                              Could not fully parse
+                            </p>
+                            <ul className="mt-1 space-y-1 text-xs text-slate-500">
+                              {aiParsed.unparsedStatements.map((statement, index) => (
+                                <li key={`unparsed-${index}`}>• {statement}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div className="border-t border-slate-200 px-6 py-4">
+                    <div className="flex justify-end gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setAiOpen(false)}
+                        className="rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={parseAiRule}
+                        disabled={aiLoading || !aiText.trim()}
+                        className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2.5 text-sm font-semibold text-sky-900 transition hover:bg-sky-100 disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {aiLoading ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Wand2 className="h-4 w-4" />
+                        )}
+                        {aiLoading ? "Generating..." : "Generate rule"}
+                      </button>
+
+                      {aiParsed && aiParsed.rules.length > 0 ? (
+                        <button
+                          type="button"
+                          onClick={addAiRulesToDraft}
+                          className="rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                        >
+                          Add detected rules
+                        </button>
+                      ) : null}
+
+                      {aiParsed &&
+                      aiParsed.rules.length === 0 &&
+                      aiParsed.proposedRuleTypes.length > 0 ? (
+                        <button
+                          type="button"
+                          onClick={submitProposedRuleType}
+                          disabled={aiLoading}
+                          className="rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:opacity-60"
+                        >
+                          Submit new rule request
+                        </button>
+                      ) : null}
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+        </motion.div>
+      </>
+    ) : null}
+  </AnimatePresence>
+);
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import ProgramCallReviewModal from "@/components/workspace/call/programcallreviewmodal";
+import { generateCallSchedule } from "@/components/workspace/call/programcallautogenerator";
 import {
   ChevronLeft,
   ChevronRight,
@@ -29,6 +31,45 @@ import {
   getFlagsForAssignedResident,
   isResidentAllowedForSlot,
 } from "@/components/workspace/call/programcallevaluator";
+
+type Slot = "Primary" | "Backup";
+
+
+type AIReviewContext = {
+  monthLabel: string;
+  scheduleSlotMode: ScheduleSlotMode;
+  coverage: {
+    assignedSlots: number;
+    expectedSlots: number;
+    unfilledRequiredSlots: Array<{
+      dateKey: string;
+      dayName: string;
+      isWeekend: boolean;
+      slot: Slot;
+    }>;
+  };
+  schedule: Array<{
+    dateKey: string;
+    dayName: string;
+    isWeekend: boolean;
+    primaryMembershipId: string | null;
+    backupMembershipId: string | null;
+    primaryName: string | null;
+    backupName: string | null;
+    primaryFlags: AssignmentFlag[];
+    backupFlags: AssignmentFlag[];
+  }>;
+  residentStats: ResidentSchedulingStats[];
+  pgyStats: {
+    label: string;
+    monthTotal: number;
+    monthWeekend: number;
+    yearTotal: number;
+    yearWeekend: number;
+  }[];
+};
+
+type ScheduleSlotMode = "Primary" | "Both";
 
 function formatMonthLabel(monthValue: string) {
   const [year, month] = monthValue.split("-").map(Number);
@@ -174,12 +215,12 @@ function buildAssignmentsFromCalls(calls: MonthCall[]) {
   return nextAssignments;
 }
 
+
 export default function ProgramCallManager() {
   const [builderMonth, setBuilderMonth] = useState(getCurrentMonthValue());
   const [residents, setResidents] = useState<ResidentOption[]>([]);
   const [residentLoading, setResidentLoading] = useState(true);
 
-  const [rules, setRules] = useState<ProgramRule[]>([]);
   const [callsLoading, setCallsLoading] = useState(false);
   const [existingCalls, setExistingCalls] = useState<MonthCall[]>([]);
   const [statsLoading, setStatsLoading] = useState(false);
@@ -200,6 +241,9 @@ export default function ProgramCallManager() {
   const [originalAssignments, setOriginalAssignments] = useState<
     Record<string, DraftDayAssignment>
   >({});
+  const [reviewOpen, setReviewOpen] = useState(false);
+  const [generationReport, setGenerationReport] = useState<unknown>(null);
+const [aiAutoReviewToken, setAiAutoReviewToken] = useState<number | null>(null);
 
   const [showRulesSheet, setShowRulesSheet] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -218,6 +262,8 @@ export default function ProgramCallManager() {
     () => getCalendarGrid(builderMonth),
     [builderMonth]
   );
+  const [scheduleSlotMode, setScheduleSlotMode] =
+  useState<ScheduleSlotMode>("Primary");
 
   type ProgramMembersApiResident = {
   membershipId?: string | null;
@@ -226,6 +272,38 @@ export default function ProgramCallManager() {
   pgyYear?: number | null;
   gradYear?: number | null;
 };
+
+const [rules, setRules] = useState<ProgramRule[]>([]);
+
+async function loadRules() {
+  try {
+    const ruleSetResponse = await fetch("/api/program/call-rule-sets", {
+      credentials: "include",
+    });
+
+    const ruleSetPayload = await ruleSetResponse.json();
+
+    const ruleSetId = ruleSetPayload.defaultRuleSetId;
+
+    if (!ruleSetId) {
+      setRules([]);
+      return;
+    }
+
+    const rulesResponse = await fetch(
+      `/api/program/call-rules?ruleSetId=${encodeURIComponent(ruleSetId)}`,
+      {
+        credentials: "include",
+      }
+    );
+
+    const rulesPayload = await rulesResponse.json();
+
+    setRules(rulesPayload.rules ?? []);
+  } catch (error) {
+    console.error("Failed to load rules", error);
+  }
+}
 
 type ProgramMembersApiResponse = {
   residents?: ProgramMembersApiResident[];
@@ -285,33 +363,8 @@ type ProgramMembersApiResponse = {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function loadRules() {
-      try {
-        const response = await fetch("/api/program/call-rules", {
-          credentials: "include",
-        });
-
-        if (!response.ok) throw new Error("Failed to load rules");
-        const payload = await response.json();
-
-        if (cancelled) return;
-        setRules(Array.isArray(payload?.rules) ? payload.rules : []);
-      } catch (err) {
-        if (!cancelled) {
-          console.error("Failed to load rules", err);
-          setRules([]);
-        }
-      }
-    }
-
-    loadRules();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  loadRules();
+}, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -631,19 +684,130 @@ type ProgramMembersApiResponse = {
     };
   }, [draftAssignments, historicalStats, monthDays, residents]);
 
+  const aiReviewContext: AIReviewContext = useMemo(() => {
+  const expectedSlots =
+    scheduleSlotMode === "Primary" ? monthDays.length : monthDays.length * 2;
+
+  let assignedSlots = 0;
+
+  const unfilledRequiredSlots: AIReviewContext["coverage"]["unfilledRequiredSlots"] =
+    [];
+
+  const schedule = monthDays.map((day) => {
+    const assignment = draftAssignments[day.key] ?? {
+      primaryMembershipId: null,
+      backupMembershipId: null,
+    };
+
+    const primary = assignment.primaryMembershipId
+      ? residentLookup.get(assignment.primaryMembershipId)
+      : null;
+
+    const backup = assignment.backupMembershipId
+      ? residentLookup.get(assignment.backupMembershipId)
+      : null;
+
+    if (assignment.primaryMembershipId) assignedSlots += 1;
+    if (scheduleSlotMode === "Both" && assignment.backupMembershipId) {
+      assignedSlots += 1;
+    }
+
+    if (!assignment.primaryMembershipId) {
+      unfilledRequiredSlots.push({
+        dateKey: day.key,
+        dayName: day.dayName,
+        isWeekend: day.isWeekend,
+        slot: "Primary",
+      });
+    }
+
+    if (scheduleSlotMode === "Both" && !assignment.backupMembershipId) {
+      unfilledRequiredSlots.push({
+        dateKey: day.key,
+        dayName: day.dayName,
+        isWeekend: day.isWeekend,
+        slot: "Backup",
+      });
+    }
+
+    return {
+      dateKey: day.key,
+      dayName: day.dayName,
+      isWeekend: day.isWeekend,
+      primaryMembershipId: assignment.primaryMembershipId ?? null,
+      backupMembershipId:
+        scheduleSlotMode === "Both" ? assignment.backupMembershipId ?? null : null,
+      primaryName: primary?.displayName ?? null,
+      backupName: scheduleSlotMode === "Both" ? backup?.displayName ?? null : null,
+      primaryFlags: assignment.primaryMembershipId
+        ? getAssignedResidentFlags({
+            residentId: assignment.primaryMembershipId,
+            dateKey: day.key,
+            assignments: draftAssignments,
+            rules,
+          })
+        : [],
+      backupFlags:
+        scheduleSlotMode === "Both" && assignment.backupMembershipId
+          ? getAssignedResidentFlags({
+              residentId: assignment.backupMembershipId,
+              dateKey: day.key,
+              assignments: draftAssignments,
+              rules,
+            })
+          : [],
+    };
+  });
+
+  return {
+    monthLabel: formatMonthLabel(builderMonth),
+    scheduleSlotMode,
+    coverage: {
+      assignedSlots,
+      expectedSlots,
+      unfilledRequiredSlots,
+    },
+    schedule,
+    residentStats: computedStats.residentRows,
+    pgyStats: computedStats.pgyRows,
+  };
+}, [
+  builderMonth,
+  monthDays,
+  draftAssignments,
+  scheduleSlotMode,
+  residentLookup,
+  getAssignedResidentFlags,
+  rules,
+  computedStats.residentRows,
+  computedStats.pgyRows,
+]);
+
   const selectedResidentStats = useMemo(() => {
-    if (!quickAssignResidentId) return null;
+  if (!quickAssignResidentId) return null;
 
-    return (
-      computedStats.residentRows.find(
-        (row) => row.resident.membershipId === quickAssignResidentId
-      ) ?? null
-    );
-  }, [computedStats.residentRows, quickAssignResidentId]);
+  return (
+    computedStats.residentRows.find(
+      (row) => row.resident.membershipId === quickAssignResidentId
+    ) ?? null
+  );
+}, [computedStats.residentRows, quickAssignResidentId]);
 
-  const hasExistingSchedule = useMemo(() => {
-    return existingCalls.length > 0;
-  }, [existingCalls]);
+const hasSavableAssignments = useMemo(() => {
+  return monthDays.some((day) => {
+    const assignment = draftAssignments[day.key];
+
+    if (scheduleSlotMode === "Primary") {
+      return !!assignment?.primaryMembershipId;
+    }
+
+    return !!assignment?.primaryMembershipId && !!assignment?.backupMembershipId;
+  });
+}, [draftAssignments, monthDays, scheduleSlotMode]);
+
+const hasExistingSchedule = useMemo(() => {
+  return existingCalls.length > 0;
+}, [existingCalls]);
 
   const filteredPickerResidents = useMemo(() => {
     if (!pickerSlot) return [];
@@ -800,6 +964,49 @@ type ProgramMembersApiResponse = {
       };
     });
   }
+
+
+ async function handleAutoGenerate(forceRegenerate = true) {
+  try {
+    setError(null);
+
+    const latestRules = await loadLatestRules();
+
+    const generated = generateCallSchedule({
+  monthDays,
+  residents: sortedResidents,
+  existingAssignments: forceRegenerate ? {} : draftAssignments,
+  rules: latestRules,
+  generationVersion: Date.now(),
+  forceRegenerate,
+  availabilityByResident: programAvailability?.availability ?? {},
+  historicalStats,
+  slotMode: scheduleSlotMode,
+});
+
+    setDraftAssignments(generated.assignments);
+setGenerationReport(generated.generationReport ?? null);
+setReviewOpen(true);
+setAiAutoReviewToken(Date.now());
+  } catch (err) {
+    setError(err instanceof Error ? err.message : "Failed to auto-generate schedule");
+  }
+}
+
+async function loadLatestRules() {
+  const response = await fetch(`/api/program/call-rules?ts=${Date.now()}`, {
+    credentials: "include",
+    cache: "no-store",
+  });
+
+  if (!response.ok) throw new Error("Failed to load latest rules");
+
+  const payload = await response.json();
+  const latestRules = Array.isArray(payload?.rules) ? payload.rules : [];
+
+  setRules(latestRules);
+  return latestRules;
+}
 
   async function refreshMonthData() {
     const { monthStart, monthEnd } = getMonthRange(builderMonth);
@@ -1061,13 +1268,19 @@ type ProgramMembersApiResponse = {
                   </button>
 
                   <button
-                    type="button"
-                    disabled
-                    className="inline-flex h-[46px] items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 text-sm font-semibold text-sky-900 opacity-70"
-                  >
-                    <Wand2 className="h-4 w-4" />
-                    Auto generate
-                  </button>
+  type="button"
+  disabled={
+    residentLoading ||
+    availabilityLoading ||
+    callsLoading ||
+    sortedResidents.length === 0
+  }
+  onClick={() => handleAutoGenerate(true)}
+  className="inline-flex h-[46px] items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 text-sm font-semibold text-sky-900 transition hover:bg-sky-100 disabled:cursor-not-allowed disabled:opacity-50"
+>
+  <Wand2 className="h-4 w-4" />
+  Auto generate
+</button>
 
                   <button
                     type="button"
@@ -1143,7 +1356,7 @@ type ProgramMembersApiResponse = {
                   <button
                     type="button"
                     onClick={handleSaveBuilderMonth}
-                    disabled={saving || computedStats.fullyBuiltDays === 0}
+                    disabled={saving || !hasSavableAssignments}
                     className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
@@ -1163,9 +1376,12 @@ type ProgramMembersApiResponse = {
       </div>
 
       <ProgramRulesSheet
-        open={showRulesSheet}
-        onClose={() => setShowRulesSheet(false)}
-      />
+  open={showRulesSheet}
+  onClose={() => setShowRulesSheet(false)}
+  onSaved={loadRules}
+  scheduleSlotMode={scheduleSlotMode}
+  onScheduleSlotModeChange={setScheduleSlotMode}
+/>
 
       <ResidentPickerSheet
         open={pickerOpen}
@@ -1192,6 +1408,36 @@ type ProgramMembersApiResponse = {
         }
         onClearResident={() => assignResidentToPickerSlot(null)}
       />
+      <ProgramCallReviewModal
+  open={reviewOpen}
+  onClose={() => setReviewOpen(false)}
+  onConfirm={async () => {
+    setReviewOpen(false);
+
+    if (hasExistingSchedule) {
+      await handleSaveEditedMonth();
+    } else {
+      await handleSaveBuilderMonth();
+    }
+  }}
+  onRegenerate={() => handleAutoGenerate(true)}
+  onSelectGeneratedOption={(assignments) => {
+    setDraftAssignments(assignments);
+    setAiAutoReviewToken((token) => (token ?? 0) + 1);
+  }}
+  saving={saving}
+  monthLabel={formatMonthLabel(builderMonth)}
+  monthDays={monthDays}
+  residents={sortedResidents}
+  draftAssignments={draftAssignments}
+  historicalStats={historicalStats}
+  rules={rules}
+  availabilityByResident={programAvailability?.availability ?? {}}
+  scheduleSlotMode={scheduleSlotMode}
+  aiReviewContext={aiReviewContext}
+  generationReport={generationReport}
+  autoReviewToken={aiAutoReviewToken}
+/>
     </>
   );
 }
