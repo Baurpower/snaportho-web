@@ -69,29 +69,42 @@ export async function GET(request: NextRequest) {
     );
 
     const normalizedAssignments = assignments
-      .map((assignment: ProgramRotationAssignment) => ({
-        id: assignment.id,
-        membershipId: assignment.membershipId ?? null,
-        rosterId: assignment.rosterId ?? null,
-        memberName: assignment.memberName ?? null,
-        gradYear: assignment.gradYear ?? null,
-        role: assignment.role ?? null,
-        userId: assignment.userId ?? null,
-        startDate: assignment.startDate ?? null,
-        endDate: assignment.endDate ?? null,
-        siteLabel: assignment.siteLabel ?? null,
-        teamLabel: assignment.teamLabel ?? null,
-        notes: assignment.notes ?? null,
-        rotation: assignment.rotation
-          ? {
-              id: assignment.rotation.id,
-              name: assignment.rotation.name ?? null,
-              short_name: assignment.rotation.short_name ?? null,
-              category: assignment.rotation.category ?? null,
-              color: assignment.rotation.color ?? null,
-            }
-          : null,
-      }))
+  .map((assignment: ProgramRotationAssignment) => ({
+    id: assignment.id,
+
+    membershipId: assignment.rosterId ?? assignment.membershipId ?? null,
+    membership_id: assignment.rosterId ?? assignment.membershipId ?? null,
+
+    rosterId: assignment.rosterId ?? null,
+    roster_id: assignment.rosterId ?? null,
+
+    rotationId: assignment.rotation?.id ?? null,
+    rotation_id: assignment.rotation?.id ?? null,
+
+    memberName: assignment.memberName ?? null,
+    gradYear: assignment.gradYear ?? null,
+    role: assignment.role ?? null,
+    userId: assignment.userId ?? null,
+
+    startDate: assignment.startDate ?? null,
+    start_date: assignment.startDate ?? null,
+    endDate: assignment.endDate ?? null,
+    end_date: assignment.endDate ?? null,
+
+    siteLabel: assignment.siteLabel ?? null,
+    teamLabel: assignment.teamLabel ?? null,
+    notes: assignment.notes ?? null,
+
+    rotation: assignment.rotation
+      ? {
+          id: assignment.rotation.id,
+          name: assignment.rotation.name ?? null,
+          short_name: assignment.rotation.short_name ?? null,
+          category: assignment.rotation.category ?? null,
+          color: assignment.rotation.color ?? null,
+        }
+      : null,
+  }))
       .sort((a, b) => {
         const aName = a.memberName ?? "";
         const bName = b.memberName ?? "";

@@ -58,6 +58,116 @@ type GeneratedScheduleCombination = {
   stats: ResidentAutoStats[];
 };
 
+type ResidentWithRotation = ResidentOption & {
+  currentRotationId?: string | null;
+  rotationId?: string | null;
+  activeRotationId?: string | null;
+  current_rotation_id?: string | null;
+  rotation_id?: string | null;
+  rotationAssignments?: Array<{
+    rotationId?: string | null;
+    rotation_id?: string | null;
+    startDate?: string | null;
+    start_date?: string | null;
+    endDate?: string | null;
+    end_date?: string | null;
+  }>;
+};
+
+function getResidentRotationId(resident: ResidentOption, dateKey: string) {
+  const r = resident as ResidentWithRotation;
+
+  const dateSpecificRotation = r.rotationAssignments?.find((assignment) => {
+    const startDate = assignment.startDate ?? assignment.start_date;
+    const endDate = assignment.endDate ?? assignment.end_date;
+
+    if (!startDate || !endDate) return false;
+
+    return dateKey >= startDate && dateKey <= endDate;
+  });
+
+  if (dateSpecificRotation) {
+    return (
+      dateSpecificRotation.rotationId ??
+      dateSpecificRotation.rotation_id ??
+      null
+    );
+  }
+
+  return (
+    r.currentRotationId ??
+    r.rotationId ??
+    r.activeRotationId ??
+    r.current_rotation_id ??
+    r.rotation_id ??
+    null
+  );
+}
+
+function isResidentBlockedByRotationRule({
+  resident,
+  slot,
+  dateKey,
+  rules,
+}: {
+  resident: ResidentOption;
+  slot: Slot;
+  dateKey: string;
+  rules: ProgramRule[];
+}) {
+  const residentRotationId = getResidentRotationId(resident, dateKey);
+
+  if (resident.displayName.toLowerCase().includes("nguyen")) {
+    console.log("DEBUG NGUYEN ROTATION CHECK", {
+      residentName: resident.displayName,
+      dateKey,
+      slot,
+      residentRotationId,
+      residentObject: resident,
+      rotationAssignments: (resident as ResidentWithRotation).rotationAssignments,
+      restrictRotationRules: rules
+        .filter((rule) => getRuleType(rule) === "restrict_call_by_rotation")
+        .map((rule) => ({
+          enabled: isRuleEnabled(rule),
+          type: getRuleType(rule),
+          config: getRuleConfig(rule),
+        })),
+    });
+  }
+
+  if (!residentRotationId) return false;
+
+  for (const rule of rules) {
+    if (!isRuleEnabled(rule)) continue;
+
+    const ruleType = getRuleType(rule);
+    if (ruleType !== "restrict_call_by_rotation") continue;
+
+    const config = getRuleConfig(rule);
+
+    const rotationIds = Array.isArray(config.rotationIds)
+      ? config.rotationIds.map(String)
+      : [];
+
+    const restrictedCallTypes = Array.isArray(config.restrictedCallTypes)
+      ? config.restrictedCallTypes.map(String)
+      : ["Primary", "Backup"];
+
+    const blockAllCall =
+      typeof config.blockAllCall === "boolean" ? config.blockAllCall : true;
+
+    if (
+      blockAllCall &&
+      rotationIds.includes(String(residentRotationId)) &&
+      restrictedCallTypes.includes(slot)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 const PRIMARY_WEIGHT = 1;
 const BACKUP_WEIGHT = 0.25;
 const WEEKEND_PRIMARY_WEIGHT = 1;
@@ -433,6 +543,19 @@ function getRulePenalty({
     const hardMultiplier = isHardRule(rule) ? 10 : 1;
     const ruleWeight = isHardRule(rule) ? hardSlotWeight : softSlotWeight;
 
+    if (ruleType === "restrict_call_by_rotation") {
+  if (
+    isResidentBlockedByRotationRule({
+      resident,
+      slot,
+      dateKey: day.key,
+      rules: [rule],
+    })
+  ) {
+    penalty += 999999 * hardMultiplier;
+  }
+}
+
     if (
       ruleType === "min_days_between_assignments" ||
       ruleType === "minimum_spacing" ||
@@ -717,7 +840,14 @@ function pickBestResident({
   stats: Map<string, ResidentAutoStats>;
   generationVersion: number;
 }) {
-  const eligible = residents.filter((resident) =>
+  const eligible = residents.filter(
+  (resident) =>
+    !isResidentBlockedByRotationRule({
+      resident,
+      slot,
+      dateKey: day.key,
+      rules,
+    }) &&
     isResidentAllowedForSlot({
       resident,
       slot,
@@ -726,7 +856,7 @@ function pickBestResident({
       rules,
       availabilityByResident,
     })
-  );
+);
 
   if (eligible.length === 0) return null;
 

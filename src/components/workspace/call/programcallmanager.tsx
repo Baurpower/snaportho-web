@@ -33,7 +33,63 @@ import {
 } from "@/components/workspace/call/programcallevaluator";
 
 type Slot = "Primary" | "Backup";
+type ScheduleSlotMode = "Primary" | "Both";
 
+type RotationAssignmentLike = {
+  rotationId?: string | null;
+  rotation_id?: string | null;
+  startDate?: string | null;
+  start_date?: string | null;
+  endDate?: string | null;
+  end_date?: string | null;
+};
+
+type ResidentWithRotation = ResidentOption & {
+  rosterId?: string | null;
+  roster_id?: string | null;
+  currentRotationId?: string | null;
+  rotationId?: string | null;
+  activeRotationId?: string | null;
+  current_rotation_id?: string | null;
+  rotation_id?: string | null;
+  rotationAssignments?: RotationAssignmentLike[];
+};
+
+type ProgramMembersApiResident = {
+  membershipId?: string | null; 
+  rosterId?: string | null;    
+  roster_id?: string | null;
+  displayName?: string | null;
+  trainingLevel?: string | null;
+  pgyYear?: number | null;
+  gradYear?: number | null;
+};
+
+type ProgramMembersApiResponse = {
+  residents?: ProgramMembersApiResident[];
+};
+
+type CoverageItem = {
+  rosterId?: string | null;
+  roster_id?: string | null;
+  membershipId?: string | null;
+  membership_id?: string | null;
+  rotationId?: string | null;
+  rotation_id?: string | null;
+  rotation?: {
+    id?: string | null;
+  } | null;
+  startDate?: string | null;
+  start_date?: string | null;
+  endDate?: string | null;
+  end_date?: string | null;
+};
+
+type CoveragePayload = {
+  coverage?: CoverageItem[];
+  assignments?: CoverageItem[];
+  rotationAssignments?: CoverageItem[];
+};
 
 type AIReviewContext = {
   monthLabel: string;
@@ -69,8 +125,6 @@ type AIReviewContext = {
   }[];
 };
 
-type ScheduleSlotMode = "Primary" | "Both";
-
 function formatMonthLabel(monthValue: string) {
   const [year, month] = monthValue.split("-").map(Number);
   return new Date(year, month - 1, 1).toLocaleDateString("en-US", {
@@ -88,16 +142,16 @@ function getMonthRange(monthValue: string) {
   const start = getMonthStart(monthValue);
   const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
 
-  const monthStart = `${start.getFullYear()}-${String(
-    start.getMonth() + 1
-  ).padStart(2, "0")}-${String(start.getDate()).padStart(2, "0")}`;
-
-  const monthEnd = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}-${String(end.getDate()).padStart(2, "0")}`;
-
-  return { monthStart, monthEnd };
+  return {
+    monthStart: `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(start.getDate()).padStart(2, "0")}`,
+    monthEnd: `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(
+      2,
+      "0"
+    )}-${String(end.getDate()).padStart(2, "0")}`,
+  };
 }
 
 function getMonthDays(monthValue: string): CalendarDay[] {
@@ -130,10 +184,7 @@ function getCurrentMonthValue() {
 function shiftMonth(monthValue: string, amount: number) {
   const [year, month] = monthValue.split("-").map(Number);
   const next = new Date(year, month - 1 + amount, 1);
-  return `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}`;
+  return `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, "0")}`;
 }
 
 function pgyLabel(
@@ -215,26 +266,58 @@ function buildAssignmentsFromCalls(calls: MonthCall[]) {
   return nextAssignments;
 }
 
+function getCoverageItems(payload: CoveragePayload | null): CoverageItem[] {
+  if (Array.isArray(payload?.coverage)) return payload.coverage;
+  if (Array.isArray(payload?.assignments)) return payload.assignments;
+  if (Array.isArray(payload?.rotationAssignments)) return payload.rotationAssignments;
+  return [];
+}
+
+function buildRotationAssignmentsByRosterId(payload: CoveragePayload | null) {
+  const rotationAssignmentsByRosterId = new Map<string, RotationAssignmentLike[]>();
+
+  for (const item of getCoverageItems(payload)) {
+    const rosterId = String(
+      item.rosterId ?? item.roster_id ?? item.membershipId ?? item.membership_id ?? ""
+    );
+
+    const rotationId = item.rotation?.id ?? item.rotationId ?? item.rotation_id ?? null;
+
+    if (!rosterId || !rotationId) continue;
+
+    const current = rotationAssignmentsByRosterId.get(rosterId) ?? [];
+    const startDate = item.startDate ?? item.start_date ?? null;
+    const endDate = item.endDate ?? item.end_date ?? null;
+
+    current.push({
+      rotationId,
+      rotation_id: rotationId,
+      startDate,
+      start_date: startDate,
+      endDate,
+      end_date: endDate,
+    });
+
+    rotationAssignmentsByRosterId.set(rosterId, current);
+  }
+
+  return rotationAssignmentsByRosterId;
+}
 
 export default function ProgramCallManager() {
   const [builderMonth, setBuilderMonth] = useState(getCurrentMonthValue());
   const [residents, setResidents] = useState<ResidentOption[]>([]);
   const [residentLoading, setResidentLoading] = useState(true);
-
   const [callsLoading, setCallsLoading] = useState(false);
   const [existingCalls, setExistingCalls] = useState<MonthCall[]>([]);
   const [statsLoading, setStatsLoading] = useState(false);
-  const [historicalStats, setHistoricalStats] = useState<
-    ExistingResidentStats[]
-  >([]);
+  const [historicalStats, setHistoricalStats] = useState<ExistingResidentStats[]>([]);
   const [availabilityLoading, setAvailabilityLoading] = useState(false);
   const [programAvailability, setProgramAvailability] =
     useState<ProgramAvailabilityMonthResponse | null>(null);
-
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [statsCollapsed, setStatsCollapsed] = useState(false);
-
   const [draftAssignments, setDraftAssignments] = useState<
     Record<string, DraftDayAssignment>
   >({});
@@ -243,106 +326,119 @@ export default function ProgramCallManager() {
   >({});
   const [reviewOpen, setReviewOpen] = useState(false);
   const [generationReport, setGenerationReport] = useState<unknown>(null);
-const [aiAutoReviewToken, setAiAutoReviewToken] = useState<number | null>(null);
-
+  const [aiAutoReviewToken, setAiAutoReviewToken] = useState<number | null>(null);
   const [showRulesSheet, setShowRulesSheet] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pickerSearch, setPickerSearch] = useState("");
   const [pickerSlot, setPickerSlot] = useState<{
     dateKey: string;
-    slot: "Primary" | "Backup";
+    slot: Slot;
   } | null>(null);
-
   const [quickAssignResidentId, setQuickAssignResidentId] = useState("");
   const [quickAssignSlotMode, setQuickAssignSlotMode] =
     useState<QuickAssignSlotMode>("Primary");
+  const [scheduleSlotMode, setScheduleSlotMode] =
+    useState<ScheduleSlotMode>("Primary");
+  const [rules, setRules] = useState<ProgramRule[]>([]);
 
   const monthDays = useMemo(() => getMonthDays(builderMonth), [builderMonth]);
-  const calendarGrid = useMemo(
-    () => getCalendarGrid(builderMonth),
-    [builderMonth]
-  );
-  const [scheduleSlotMode, setScheduleSlotMode] =
-  useState<ScheduleSlotMode>("Primary");
+  const calendarGrid = useMemo(() => getCalendarGrid(builderMonth), [builderMonth]);
 
-  type ProgramMembersApiResident = {
-  membershipId?: string | null;
-  displayName?: string | null;
-  trainingLevel?: string | null;
-  pgyYear?: number | null;
-  gradYear?: number | null;
-};
-
-const [rules, setRules] = useState<ProgramRule[]>([]);
-
-async function loadRules() {
-  try {
-    const ruleSetResponse = await fetch("/api/program/call-rule-sets", {
-      credentials: "include",
-    });
-
-    const ruleSetPayload = await ruleSetResponse.json();
-
-    const ruleSetId = ruleSetPayload.defaultRuleSetId;
-
-    if (!ruleSetId) {
-      setRules([]);
-      return;
-    }
-
-    const rulesResponse = await fetch(
-      `/api/program/call-rules?ruleSetId=${encodeURIComponent(ruleSetId)}`,
-      {
+  async function loadRules() {
+    try {
+      const ruleSetResponse = await fetch("/api/program/call-rule-sets", {
         credentials: "include",
+      });
+
+      const ruleSetPayload = await ruleSetResponse.json();
+      const ruleSetId = ruleSetPayload.defaultRuleSetId;
+
+      if (!ruleSetId) {
+        setRules([]);
+        return;
       }
-    );
 
-    const rulesPayload = await rulesResponse.json();
+      const rulesResponse = await fetch(
+        `/api/program/call-rules?ruleSetId=${encodeURIComponent(ruleSetId)}`,
+        {
+          credentials: "include",
+        }
+      );
 
-    setRules(rulesPayload.rules ?? []);
-  } catch (error) {
-    console.error("Failed to load rules", error);
+      const rulesPayload = await rulesResponse.json();
+      setRules(Array.isArray(rulesPayload?.rules) ? rulesPayload.rules : []);
+    } catch (error) {
+      console.error("Failed to load rules", error);
+      setRules([]);
+    }
   }
-}
 
-type ProgramMembersApiResponse = {
-  residents?: ProgramMembersApiResident[];
-};
-
-    useEffect(() => {
+  useEffect(() => {
     let cancelled = false;
 
     async function loadResidents() {
       try {
         setResidentLoading(true);
 
-        const response = await fetch("/api/program/members", {
-          credentials: "include",
-        });
+        const { monthStart, monthEnd } = getMonthRange(builderMonth);
 
-        const payload: ProgramMembersApiResponse | null = await response
-          .json()
-          .catch(() => null);
+        const [membersResponse, rotationAssignmentsResponse] = await Promise.all([
+  fetch("/api/program/members", {
+    credentials: "include",
+  }),
+  fetch(
+    `/api/program/rotation-assignments?monthStart=${encodeURIComponent(
+      monthStart
+    )}&monthEnd=${encodeURIComponent(monthEnd)}`,
+    {
+      credentials: "include",
+      cache: "no-store",
+    }
+  ),
+]);
 
-        if (!response.ok) {
-          throw new Error("Failed to load residents");
-        }
+const payload: ProgramMembersApiResponse | null = await membersResponse
+  .json()
+  .catch(() => null);
 
-        if (cancelled) return;
+const rotationAssignmentsPayload: CoveragePayload | null =
+  await rotationAssignmentsResponse.json().catch(() => null);
+
+if (!membersResponse.ok) {
+  throw new Error("Failed to load residents");
+}
+
+if (!rotationAssignmentsResponse.ok) {
+  throw new Error("Failed to load rotation assignments");
+}
+
+if (cancelled) return;
+
+const rotationAssignmentsByRosterId =
+  buildRotationAssignmentsByRosterId(rotationAssignmentsPayload);
 
         const items: ResidentOption[] = Array.isArray(payload?.residents)
-          ? payload.residents
-              .map((item): ResidentOption => ({
-                membershipId: String(item.membershipId ?? ""),
-                displayName: String(item.displayName ?? "Unknown"),
-                trainingLevel: item.trainingLevel ?? null,
-                pgyYear:
-                  typeof item.pgyYear === "number" ? item.pgyYear : null,
-                gradYear:
-                  typeof item.gradYear === "number" ? item.gradYear : null,
-              }))
-              .filter((item) => !!item.membershipId)
-          : [];
+  ? payload.residents
+      .map((item) => {
+        const rosterId = String(item.rosterId ?? item.roster_id ?? "");
+
+        if (!rosterId) return null;
+
+        const resident: ResidentWithRotation = {
+          membershipId: rosterId, // call scheduler uses roster ID as resident ID
+          rosterId,
+          roster_id: rosterId,
+          displayName: String(item.displayName ?? "Unknown"),
+          trainingLevel: item.trainingLevel ?? null,
+          pgyYear: typeof item.pgyYear === "number" ? item.pgyYear : null,
+          gradYear: typeof item.gradYear === "number" ? item.gradYear : null,
+          rotationAssignments: rotationAssignmentsByRosterId.get(rosterId) ?? [],
+        };
+
+        return resident;
+      })
+      .filter((item): item is ResidentOption => item !== null)
+  : [];
 
         setResidents(items);
       } catch (err) {
@@ -360,11 +456,11 @@ type ProgramMembersApiResponse = {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [builderMonth]);
 
   useEffect(() => {
-  loadRules();
-}, []);
+    loadRules();
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -391,10 +487,9 @@ type ProgramMembersApiResponse = {
         if (cancelled) return;
 
         const calls = Array.isArray(payload.calls) ? payload.calls : [];
-        setExistingCalls(calls);
-
         const nextAssignments = buildAssignmentsFromCalls(calls);
 
+        setExistingCalls(calls);
         setDraftAssignments(nextAssignments);
         setOriginalAssignments(nextAssignments);
         setQuickAssignResidentId("");
@@ -417,7 +512,7 @@ type ProgramMembersApiResponse = {
     };
   }, [builderMonth]);
 
-  useEffect(() => {
+    useEffect(() => {
     let cancelled = false;
 
     async function loadStats() {
@@ -430,9 +525,11 @@ type ProgramMembersApiResponse = {
         );
 
         if (!response.ok) throw new Error("Failed to load stats");
+
         const payload = await response.json();
 
         if (cancelled) return;
+
         setHistoricalStats(
           Array.isArray(payload?.residentStats) ? payload.residentStats : []
         );
@@ -475,12 +572,11 @@ type ProgramMembersApiResponse = {
         const payload = await response.json().catch(() => null);
 
         if (!response.ok) {
-          throw new Error(
-            payload?.error ?? "Failed to load program availability"
-          );
+          throw new Error(payload?.error ?? "Failed to load program availability");
         }
 
         if (cancelled) return;
+
         setProgramAvailability(payload as ProgramAvailabilityMonthResponse);
       } catch (err) {
         if (!cancelled) {
@@ -505,7 +601,7 @@ type ProgramMembersApiResponse = {
   );
 
   const residentLookup = useMemo(() => {
-    return new Map(residents.map((r) => [r.membershipId, r]));
+    return new Map(residents.map((resident) => [resident.membershipId, resident]));
   }, [residents]);
 
   const getAssignedResidentFlags = useCallback(
@@ -521,7 +617,8 @@ type ProgramMembersApiResponse = {
       if (!resident) return [];
 
       const assignmentForDay = params.assignments[params.dateKey];
-      const slot =
+
+      const slot: Slot =
         assignmentForDay?.primaryMembershipId === params.residentId
           ? "Primary"
           : "Backup";
@@ -595,11 +692,13 @@ type ProgramMembersApiResponse = {
 
       if (assignment.primaryMembershipId) {
         const entry = perResident.get(assignment.primaryMembershipId);
+
         if (entry) {
           entry.monthPrimary += 1;
           entry.monthTotal += 1;
           entry.yearPrimary += 1;
           entry.yearTotal += 1;
+
           if (day.isWeekend) {
             entry.monthWeekend += 1;
             entry.yearWeekend += 1;
@@ -609,11 +708,13 @@ type ProgramMembersApiResponse = {
 
       if (assignment.backupMembershipId) {
         const entry = perResident.get(assignment.backupMembershipId);
+
         if (entry) {
           entry.monthBackup += 1;
           entry.monthTotal += 1;
           entry.yearBackup += 1;
           entry.yearTotal += 1;
+
           if (day.isWeekend) {
             entry.monthWeekend += 1;
             entry.yearWeekend += 1;
@@ -629,6 +730,7 @@ type ProgramMembersApiResponse = {
       );
 
       const entry = perResident.get(resident.membershipId);
+
       if (entry) {
         entry.spacingFlags = Math.max(0, assignedDates.length - 1);
       }
@@ -637,8 +739,10 @@ type ProgramMembersApiResponse = {
     const residentRows = Array.from(perResident.values()).sort((a, b) => {
       const yearDiff =
         getResidentYearValue(a.resident) - getResidentYearValue(b.resident);
+
       if (yearDiff !== 0) return yearDiff;
       if (b.monthTotal !== a.monthTotal) return b.monthTotal - a.monthTotal;
+
       return a.resident.displayName.localeCompare(b.resident.displayName);
     });
 
@@ -667,6 +771,7 @@ type ProgramMembersApiResponse = {
       current.monthWeekend += row.monthWeekend;
       current.yearTotal += row.yearTotal;
       current.yearWeekend += row.yearWeekend;
+
       byPgy.set(label, current);
     }
 
@@ -685,129 +790,130 @@ type ProgramMembersApiResponse = {
   }, [draftAssignments, historicalStats, monthDays, residents]);
 
   const aiReviewContext: AIReviewContext = useMemo(() => {
-  const expectedSlots =
-    scheduleSlotMode === "Primary" ? monthDays.length : monthDays.length * 2;
+    const expectedSlots =
+      scheduleSlotMode === "Primary" ? monthDays.length : monthDays.length * 2;
 
-  let assignedSlots = 0;
+    let assignedSlots = 0;
 
-  const unfilledRequiredSlots: AIReviewContext["coverage"]["unfilledRequiredSlots"] =
-    [];
+    const unfilledRequiredSlots: AIReviewContext["coverage"]["unfilledRequiredSlots"] =
+      [];
 
-  const schedule = monthDays.map((day) => {
-    const assignment = draftAssignments[day.key] ?? {
-      primaryMembershipId: null,
-      backupMembershipId: null,
-    };
+    const schedule = monthDays.map((day) => {
+      const assignment = draftAssignments[day.key] ?? {
+        primaryMembershipId: null,
+        backupMembershipId: null,
+      };
 
-    const primary = assignment.primaryMembershipId
-      ? residentLookup.get(assignment.primaryMembershipId)
-      : null;
+      const primary = assignment.primaryMembershipId
+        ? residentLookup.get(assignment.primaryMembershipId)
+        : null;
 
-    const backup = assignment.backupMembershipId
-      ? residentLookup.get(assignment.backupMembershipId)
-      : null;
+      const backup = assignment.backupMembershipId
+        ? residentLookup.get(assignment.backupMembershipId)
+        : null;
 
-    if (assignment.primaryMembershipId) assignedSlots += 1;
-    if (scheduleSlotMode === "Both" && assignment.backupMembershipId) {
-      assignedSlots += 1;
-    }
+      if (assignment.primaryMembershipId) assignedSlots += 1;
 
-    if (!assignment.primaryMembershipId) {
-      unfilledRequiredSlots.push({
+      if (scheduleSlotMode === "Both" && assignment.backupMembershipId) {
+        assignedSlots += 1;
+      }
+
+      if (!assignment.primaryMembershipId) {
+        unfilledRequiredSlots.push({
+          dateKey: day.key,
+          dayName: day.dayName,
+          isWeekend: day.isWeekend,
+          slot: "Primary",
+        });
+      }
+
+      if (scheduleSlotMode === "Both" && !assignment.backupMembershipId) {
+        unfilledRequiredSlots.push({
+          dateKey: day.key,
+          dayName: day.dayName,
+          isWeekend: day.isWeekend,
+          slot: "Backup",
+        });
+      }
+
+      return {
         dateKey: day.key,
         dayName: day.dayName,
         isWeekend: day.isWeekend,
-        slot: "Primary",
-      });
-    }
-
-    if (scheduleSlotMode === "Both" && !assignment.backupMembershipId) {
-      unfilledRequiredSlots.push({
-        dateKey: day.key,
-        dayName: day.dayName,
-        isWeekend: day.isWeekend,
-        slot: "Backup",
-      });
-    }
-
-    return {
-      dateKey: day.key,
-      dayName: day.dayName,
-      isWeekend: day.isWeekend,
-      primaryMembershipId: assignment.primaryMembershipId ?? null,
-      backupMembershipId:
-        scheduleSlotMode === "Both" ? assignment.backupMembershipId ?? null : null,
-      primaryName: primary?.displayName ?? null,
-      backupName: scheduleSlotMode === "Both" ? backup?.displayName ?? null : null,
-      primaryFlags: assignment.primaryMembershipId
-        ? getAssignedResidentFlags({
-            residentId: assignment.primaryMembershipId,
-            dateKey: day.key,
-            assignments: draftAssignments,
-            rules,
-          })
-        : [],
-      backupFlags:
-        scheduleSlotMode === "Both" && assignment.backupMembershipId
+        primaryMembershipId: assignment.primaryMembershipId ?? null,
+        backupMembershipId:
+          scheduleSlotMode === "Both" ? assignment.backupMembershipId ?? null : null,
+        primaryName: primary?.displayName ?? null,
+        backupName: scheduleSlotMode === "Both" ? backup?.displayName ?? null : null,
+        primaryFlags: assignment.primaryMembershipId
           ? getAssignedResidentFlags({
-              residentId: assignment.backupMembershipId,
+              residentId: assignment.primaryMembershipId,
               dateKey: day.key,
               assignments: draftAssignments,
               rules,
             })
           : [],
-    };
-  });
+        backupFlags:
+          scheduleSlotMode === "Both" && assignment.backupMembershipId
+            ? getAssignedResidentFlags({
+                residentId: assignment.backupMembershipId,
+                dateKey: day.key,
+                assignments: draftAssignments,
+                rules,
+              })
+            : [],
+      };
+    });
 
-  return {
-    monthLabel: formatMonthLabel(builderMonth),
+    return {
+      monthLabel: formatMonthLabel(builderMonth),
+      scheduleSlotMode,
+      coverage: {
+        assignedSlots,
+        expectedSlots,
+        unfilledRequiredSlots,
+      },
+      schedule,
+      residentStats: computedStats.residentRows,
+      pgyStats: computedStats.pgyRows,
+    };
+  }, [
+    builderMonth,
+    monthDays,
+    draftAssignments,
     scheduleSlotMode,
-    coverage: {
-      assignedSlots,
-      expectedSlots,
-      unfilledRequiredSlots,
-    },
-    schedule,
-    residentStats: computedStats.residentRows,
-    pgyStats: computedStats.pgyRows,
-  };
-}, [
-  builderMonth,
-  monthDays,
-  draftAssignments,
-  scheduleSlotMode,
-  residentLookup,
-  getAssignedResidentFlags,
-  rules,
-  computedStats.residentRows,
-  computedStats.pgyRows,
-]);
+    residentLookup,
+    getAssignedResidentFlags,
+    rules,
+    computedStats.residentRows,
+    computedStats.pgyRows,
+  ]);
 
   const selectedResidentStats = useMemo(() => {
-  if (!quickAssignResidentId) return null;
+    if (!quickAssignResidentId) return null;
 
-  return (
-    computedStats.residentRows.find(
-      (row) => row.resident.membershipId === quickAssignResidentId
-    ) ?? null
-  );
-}, [computedStats.residentRows, quickAssignResidentId]);
+    return (
+      computedStats.residentRows.find(
+        (row) => row.resident.membershipId === quickAssignResidentId
+      ) ?? null
+    );
+  }, [computedStats.residentRows, quickAssignResidentId]);
 
-const hasSavableAssignments = useMemo(() => {
-  return monthDays.some((day) => {
-    const assignment = draftAssignments[day.key];
+  const hasSavableAssignments = useMemo(() => {
+    return monthDays.some((day) => {
+      const assignment = draftAssignments[day.key];
 
-    if (scheduleSlotMode === "Primary") {
-      return !!assignment?.primaryMembershipId;
-    }
+      if (scheduleSlotMode === "Primary") {
+        return !!assignment?.primaryMembershipId;
+      }
 
-    return !!assignment?.primaryMembershipId && !!assignment?.backupMembershipId;
-  });
-}, [draftAssignments, monthDays, scheduleSlotMode]);
+      return !!assignment?.primaryMembershipId && !!assignment?.backupMembershipId;
+    });
+  }, [draftAssignments, monthDays, scheduleSlotMode]);
 
-const hasExistingSchedule = useMemo(() => {
-  return existingCalls.length > 0;
-}, [existingCalls]);
+  const hasExistingSchedule = useMemo(() => {
+    return existingCalls.length > 0;
+  }, [existingCalls]);
 
   const filteredPickerResidents = useMemo(() => {
     if (!pickerSlot) return [];
@@ -867,7 +973,7 @@ const hasExistingSchedule = useMemo(() => {
     setDraftAssignments(originalAssignments);
   }
 
-  function openPicker(dateKey: string, slot: "Primary" | "Backup") {
+  function openPicker(dateKey: string, slot: Slot) {
     setPickerSlot({ dateKey, slot });
     setPickerSearch("");
     setPickerOpen(true);
@@ -911,6 +1017,7 @@ const hasExistingSchedule = useMemo(() => {
 
       const togglePrimary =
         quickAssignSlotMode === "Primary" || quickAssignSlotMode === "Both";
+
       const toggleBackup =
         quickAssignSlotMode === "Backup" || quickAssignSlotMode === "Both";
 
@@ -965,51 +1072,74 @@ const hasExistingSchedule = useMemo(() => {
     });
   }
 
+  async function handleAutoGenerate(forceRegenerate = true) {
+    try {
+      setError(null);
 
- async function handleAutoGenerate(forceRegenerate = true) {
-  try {
-    setError(null);
+      const latestRules = await loadLatestRules();
 
-    const latestRules = await loadLatestRules();
+      const generated = generateCallSchedule({
+        monthDays,
+        residents: sortedResidents,
+        existingAssignments: forceRegenerate ? {} : draftAssignments,
+        rules: latestRules,
+        generationVersion: Date.now(),
+        forceRegenerate,
+        availabilityByResident: programAvailability?.availability ?? {},
+        historicalStats,
+        slotMode: scheduleSlotMode,
+      });
 
-    const generated = generateCallSchedule({
-  monthDays,
-  residents: sortedResidents,
-  existingAssignments: forceRegenerate ? {} : draftAssignments,
-  rules: latestRules,
-  generationVersion: Date.now(),
-  forceRegenerate,
-  availabilityByResident: programAvailability?.availability ?? {},
-  historicalStats,
-  slotMode: scheduleSlotMode,
-});
-
-    setDraftAssignments(generated.assignments);
-setGenerationReport(generated.generationReport ?? null);
-setReviewOpen(true);
-setAiAutoReviewToken(Date.now());
-  } catch (err) {
-    setError(err instanceof Error ? err.message : "Failed to auto-generate schedule");
+      setDraftAssignments(generated.assignments);
+      setGenerationReport(generated.generationReport ?? null);
+      setReviewOpen(true);
+      setAiAutoReviewToken(Date.now());
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to auto-generate schedule");
+    }
   }
-}
 
-async function loadLatestRules() {
-  const response = await fetch(`/api/program/call-rules?ts=${Date.now()}`, {
-    credentials: "include",
-    cache: "no-store",
-  });
+  async function loadLatestRules() {
+    const ruleSetResponse = await fetch(
+      `/api/program/call-rule-sets?ts=${Date.now()}`,
+      {
+        credentials: "include",
+        cache: "no-store",
+      }
+    );
 
-  if (!response.ok) throw new Error("Failed to load latest rules");
+    if (!ruleSetResponse.ok) throw new Error("Failed to load rule set");
 
-  const payload = await response.json();
-  const latestRules = Array.isArray(payload?.rules) ? payload.rules : [];
+    const ruleSetPayload = await ruleSetResponse.json();
+    const ruleSetId = ruleSetPayload.defaultRuleSetId;
 
-  setRules(latestRules);
-  return latestRules;
-}
+    if (!ruleSetId) {
+      setRules([]);
+      return [];
+    }
+
+    const response = await fetch(
+      `/api/program/call-rules?ruleSetId=${encodeURIComponent(
+        ruleSetId
+      )}&ts=${Date.now()}`,
+      {
+        credentials: "include",
+        cache: "no-store",
+      }
+    );
+
+    if (!response.ok) throw new Error("Failed to load latest rules");
+
+    const payload = await response.json();
+    const latestRules = Array.isArray(payload?.rules) ? payload.rules : [];
+
+    setRules(latestRules);
+    return latestRules;
+  }
 
   async function refreshMonthData() {
     const { monthStart, monthEnd } = getMonthRange(builderMonth);
+
     const monthResponse = await fetch(
       `/api/program/calls/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
       { credentials: "include" }
@@ -1022,71 +1152,68 @@ async function loadLatestRules() {
 
     const refreshed: MonthResponse = await monthResponse.json();
     const calls = Array.isArray(refreshed.calls) ? refreshed.calls : [];
-    setExistingCalls(calls);
-
     const nextAssignments = buildAssignmentsFromCalls(calls);
+
+    setExistingCalls(calls);
     setDraftAssignments(nextAssignments);
     setOriginalAssignments(nextAssignments);
   }
 
-  async function handleSaveBuilderMonth() {
-    try {
-      setError(null);
+  function buildSaveRows() {
+    return monthDays.flatMap((day) => {
+      const assignment = draftAssignments[day.key];
+      if (!assignment) return [];
 
-      const rows = monthDays.flatMap((day) => {
-        const assignment = draftAssignments[day.key];
-        if (!assignment) return [];
+      const output: Array<{
+        residentName: string;
+        callDate: string;
+        callType: Slot;
+        site: string | null;
+        isHomeCall: boolean;
+        notes: string | null;
+        matchedMembershipId: string;
+      }> = [];
 
-        const output: Array<{
-          residentName: string;
-          callDate: string;
-          callType: "Primary" | "Backup";
-          site: string | null;
-          isHomeCall: boolean;
-          notes: string | null;
-          matchedMembershipId: string;
-        }> = [];
+      if (assignment.primaryMembershipId) {
+        const resident = residentLookup.get(assignment.primaryMembershipId);
 
-        if (assignment.primaryMembershipId) {
-          const resident = residentLookup.get(assignment.primaryMembershipId);
-          if (resident) {
-            output.push({
-              residentName: resident.displayName,
-              callDate: day.key,
-              callType: "Primary",
-              site: null,
-              isHomeCall: true,
-              notes: null,
-              matchedMembershipId: resident.membershipId,
-            });
-          }
+        if (resident) {
+          output.push({
+            residentName: resident.displayName,
+            callDate: day.key,
+            callType: "Primary",
+            site: null,
+            isHomeCall: true,
+            notes: null,
+            matchedMembershipId: resident.membershipId,
+          });
         }
-
-        if (assignment.backupMembershipId) {
-          const resident = residentLookup.get(assignment.backupMembershipId);
-          if (resident) {
-            output.push({
-              residentName: resident.displayName,
-              callDate: day.key,
-              callType: "Backup",
-              site: null,
-              isHomeCall: true,
-              notes: null,
-              matchedMembershipId: resident.membershipId,
-            });
-          }
-        }
-
-        return output;
-      });
-
-      if (rows.length === 0) {
-        setError("Add at least one assignment before saving the month.");
-        return;
       }
 
-      setSaving(true);
+      if (assignment.backupMembershipId) {
+        const resident = residentLookup.get(assignment.backupMembershipId);
 
+        if (resident) {
+          output.push({
+            residentName: resident.displayName,
+            callDate: day.key,
+            callType: "Backup",
+            site: null,
+            isHomeCall: true,
+            notes: null,
+            matchedMembershipId: resident.membershipId,
+          });
+        }
+      }
+
+      return output;
+    });
+  }
+
+  async function saveRows(rows: ReturnType<typeof buildSaveRows>, fallbackError: string) {
+    setSaving(true);
+
+    try {
       const response = await fetch("/api/program/calls/bulk", {
         method: "POST",
         credentials: "include",
@@ -1103,16 +1230,31 @@ async function loadLatestRules() {
       const payload = await response.json().catch(() => null);
 
       if (!response.ok) {
-        throw new Error(payload?.error ?? "Failed to save generated schedule");
+        throw new Error(payload?.error ?? fallbackError);
       }
 
       await refreshMonthData();
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleSaveBuilderMonth() {
+    try {
+      setError(null);
+
+      const rows = buildSaveRows();
+
+      if (rows.length === 0) {
+        setError("Add at least one assignment before saving the month.");
+        return;
+      }
+
+      await saveRows(rows, "Failed to save generated schedule");
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to save generated schedule"
       );
-    } finally {
-      setSaving(false);
     }
   }
 
@@ -1120,81 +1262,11 @@ async function loadLatestRules() {
     try {
       setError(null);
 
-      const rows = monthDays.flatMap((day) => {
-        const assignment = draftAssignments[day.key];
-        if (!assignment) return [];
+      const rows = buildSaveRows();
 
-        const output: Array<{
-          residentName: string;
-          callDate: string;
-          callType: "Primary" | "Backup";
-          site: string | null;
-          isHomeCall: boolean;
-          notes: string | null;
-          matchedMembershipId: string;
-        }> = [];
-
-        if (assignment.primaryMembershipId) {
-          const resident = residentLookup.get(assignment.primaryMembershipId);
-          if (resident) {
-            output.push({
-              residentName: resident.displayName,
-              callDate: day.key,
-              callType: "Primary",
-              site: null,
-              isHomeCall: true,
-              notes: null,
-              matchedMembershipId: resident.membershipId,
-            });
-          }
-        }
-
-        if (assignment.backupMembershipId) {
-          const resident = residentLookup.get(assignment.backupMembershipId);
-          if (resident) {
-            output.push({
-              residentName: resident.displayName,
-              callDate: day.key,
-              callType: "Backup",
-              site: null,
-              isHomeCall: true,
-              notes: null,
-              matchedMembershipId: resident.membershipId,
-            });
-          }
-        }
-
-        return output;
-      });
-
-      setSaving(true);
-
-      const response = await fetch("/api/program/calls/bulk", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          label: `${formatMonthLabel(builderMonth)} Call Schedule`,
-          notes: null,
-          rows,
-        }),
-      });
-
-      const payload = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        throw new Error(payload?.error ?? "Failed to save edited schedule");
-      }
-
-      await refreshMonthData();
+      await saveRows(rows, "Failed to save edited schedule");
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to save edited schedule"
-      );
-    } finally {
-      setSaving(false);
+      setError(err instanceof Error ? err.message : "Failed to save edited schedule");
     }
   }
 
@@ -1268,19 +1340,19 @@ async function loadLatestRules() {
                   </button>
 
                   <button
-  type="button"
-  disabled={
-    residentLoading ||
-    availabilityLoading ||
-    callsLoading ||
-    sortedResidents.length === 0
-  }
-  onClick={() => handleAutoGenerate(true)}
-  className="inline-flex h-[46px] items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 text-sm font-semibold text-sky-900 transition hover:bg-sky-100 disabled:cursor-not-allowed disabled:opacity-50"
->
-  <Wand2 className="h-4 w-4" />
-  Auto generate
-</button>
+                    type="button"
+                    disabled={
+                      residentLoading ||
+                      availabilityLoading ||
+                      callsLoading ||
+                      sortedResidents.length === 0
+                    }
+                    onClick={() => handleAutoGenerate(true)}
+                    className="inline-flex h-[46px] items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 text-sm font-semibold text-sky-900 transition hover:bg-sky-100 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <Wand2 className="h-4 w-4" />
+                    Auto generate
+                  </button>
 
                   <button
                     type="button"
@@ -1376,12 +1448,12 @@ async function loadLatestRules() {
       </div>
 
       <ProgramRulesSheet
-  open={showRulesSheet}
-  onClose={() => setShowRulesSheet(false)}
-  onSaved={loadRules}
-  scheduleSlotMode={scheduleSlotMode}
-  onScheduleSlotModeChange={setScheduleSlotMode}
-/>
+        open={showRulesSheet}
+        onClose={() => setShowRulesSheet(false)}
+        onSaved={loadRules}
+        scheduleSlotMode={scheduleSlotMode}
+        onScheduleSlotModeChange={setScheduleSlotMode}
+      />
 
       <ResidentPickerSheet
         open={pickerOpen}
@@ -1389,7 +1461,7 @@ async function loadLatestRules() {
         title={
           pickerSlot
             ? `${pickerSlot.slot} assignment · ${
-                monthDays.find((d) => d.key === pickerSlot.dateKey)?.dayName ?? ""
+                monthDays.find((day) => day.key === pickerSlot.dateKey)?.dayName ?? ""
               } ${pickerSlot.dateKey}`
             : "Select resident"
         }
@@ -1408,36 +1480,37 @@ async function loadLatestRules() {
         }
         onClearResident={() => assignResidentToPickerSlot(null)}
       />
-      <ProgramCallReviewModal
-  open={reviewOpen}
-  onClose={() => setReviewOpen(false)}
-  onConfirm={async () => {
-    setReviewOpen(false);
 
-    if (hasExistingSchedule) {
-      await handleSaveEditedMonth();
-    } else {
-      await handleSaveBuilderMonth();
-    }
-  }}
-  onRegenerate={() => handleAutoGenerate(true)}
-  onSelectGeneratedOption={(assignments) => {
-    setDraftAssignments(assignments);
-    setAiAutoReviewToken((token) => (token ?? 0) + 1);
-  }}
-  saving={saving}
-  monthLabel={formatMonthLabel(builderMonth)}
-  monthDays={monthDays}
-  residents={sortedResidents}
-  draftAssignments={draftAssignments}
-  historicalStats={historicalStats}
-  rules={rules}
-  availabilityByResident={programAvailability?.availability ?? {}}
-  scheduleSlotMode={scheduleSlotMode}
-  aiReviewContext={aiReviewContext}
-  generationReport={generationReport}
-  autoReviewToken={aiAutoReviewToken}
-/>
+      <ProgramCallReviewModal
+        open={reviewOpen}
+        onClose={() => setReviewOpen(false)}
+        onConfirm={async () => {
+          setReviewOpen(false);
+
+          if (hasExistingSchedule) {
+            await handleSaveEditedMonth();
+          } else {
+            await handleSaveBuilderMonth();
+          }
+        }}
+        onRegenerate={() => handleAutoGenerate(true)}
+        onSelectGeneratedOption={(assignments) => {
+          setDraftAssignments(assignments);
+          setAiAutoReviewToken((token) => (token ?? 0) + 1);
+        }}
+        saving={saving}
+        monthLabel={formatMonthLabel(builderMonth)}
+        monthDays={monthDays}
+        residents={sortedResidents}
+        draftAssignments={draftAssignments}
+        historicalStats={historicalStats}
+        rules={rules}
+        availabilityByResident={programAvailability?.availability ?? {}}
+        scheduleSlotMode={scheduleSlotMode}
+        aiReviewContext={aiReviewContext}
+        generationReport={generationReport}
+        autoReviewToken={aiAutoReviewToken}
+      />
     </>
   );
 }

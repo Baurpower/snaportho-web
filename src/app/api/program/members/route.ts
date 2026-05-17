@@ -3,7 +3,9 @@ import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/db/memberships";
 
 type NormalizedResident = {
-  membershipId: string;
+  rosterId: string;
+  membershipId: string; // kept as roster ID so existing call scheduling code does not break
+  programMembershipId: string | null;
   displayName: string;
   gradYear: number | null;
   pgyYear: number | null;
@@ -54,7 +56,15 @@ export async function GET() {
 
     const { data, error } = await supabase
       .from("program_roster")
-      .select("id, first_name, last_name, full_name, grad_year, role")
+      .select(`
+        id,
+        program_membership_id,
+        first_name,
+        last_name,
+        full_name,
+        grad_year,
+        role
+      `)
       .eq("program_id", membership.program_id)
       .eq("role", "resident")
       .order("grad_year", { ascending: true })
@@ -65,6 +75,11 @@ export async function GET() {
     }
 
     const residents: NormalizedResident[] = (data ?? []).map((row) => {
+      const rosterId = String(row.id);
+      const programMembershipId = row.program_membership_id
+        ? String(row.program_membership_id)
+        : null;
+
       const gradYear =
         typeof row.grad_year === "number" ? row.grad_year : null;
 
@@ -76,8 +91,9 @@ export async function GET() {
         "Unknown";
 
       return {
-        // This is intentionally program_roster.id
-        membershipId: row.id,
+        rosterId,
+        membershipId: rosterId,
+        programMembershipId,
         displayName,
         gradYear,
         pgyYear,

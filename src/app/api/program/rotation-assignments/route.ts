@@ -283,3 +283,104 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function GET(request: NextRequest) {
+  try {
+    const supabase = await createClient();
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const activeMembership = await getActiveMembershipForUser(user.id);
+
+    if (!activeMembership?.program_id) {
+      return NextResponse.json({ assignments: [] }, { status: 200 });
+    }
+
+    const searchParams = request.nextUrl.searchParams;
+    const monthStart = searchParams.get("monthStart");
+    const monthEnd = searchParams.get("monthEnd");
+
+    if (!monthStart || !monthEnd) {
+      return NextResponse.json(
+        { error: "monthStart and monthEnd are required." },
+        { status: 400 }
+      );
+    }
+
+    const { data, error } = await supabase
+      .from("rotation_assignments")
+      .select(`
+        id,
+        program_id,
+        roster_id,
+        program_membership_id,
+        rotation_id,
+        start_date,
+        end_date,
+        site_label,
+        team_label,
+        notes,
+        rotations (
+          id,
+          name,
+          short_name,
+          category,
+          color
+        )
+      `)
+      .eq("program_id", activeMembership.program_id)
+      .lte("start_date", monthEnd)
+      .gte("end_date", monthStart)
+      .order("start_date", { ascending: true });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    const assignments = (data ?? []).map((row) => {
+      const rotation = Array.isArray(row.rotations)
+        ? row.rotations[0]
+        : row.rotations;
+
+      return {
+        id: row.id,
+        rosterId: row.roster_id,
+        membershipId: row.program_membership_id,
+        rotationId: row.rotation_id,
+        startDate: row.start_date,
+        endDate: row.end_date,
+        siteLabel: row.site_label,
+        teamLabel: row.team_label,
+        notes: row.notes,
+        rotation: rotation
+          ? {
+              id: rotation.id,
+              name: rotation.name,
+              shortName: rotation.short_name,
+              category: rotation.category,
+              color: rotation.color,
+            }
+          : null,
+      };
+    });
+
+    return NextResponse.json({ assignments }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to load rotation assignments.",
+      },
+      { status: 500 }
+    );
+  }
+}
