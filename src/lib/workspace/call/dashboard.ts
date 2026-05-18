@@ -1,9 +1,9 @@
-import { getActiveMembershipForUser } from '@/lib/db/memberships'
+import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
 import {
   getCurrentRotationForMember,
   getNextRotationForMember,
-} from '@/lib/db/rotations'
-import { getNextCallForMembership } from '@/lib/db/calls'
+} from '@/lib/workspace/call/rotations'
+import { getNextCallForMembership } from '@/lib/workspace/call/calls'
 
 function getCurrentChiefGradYear(date = new Date()): number {
   const year = date.getFullYear()

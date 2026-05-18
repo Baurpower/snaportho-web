@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 
-type NormalizedResident = {
+type NormalizedRosterPerson = {
   rosterId: string;
-  membershipId: string; // kept as roster ID so existing call scheduling code does not break
   programMembershipId: string | null;
   displayName: string;
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  role: string;
   gradYear: number | null;
   pgyYear: number | null;
   trainingLevel: string | null;
@@ -27,8 +30,9 @@ function getPgyFromGradYear(gradYear: number | null): number | null {
   return pgy >= 1 && pgy <= 5 ? pgy : null;
 }
 
-function emptyResidentPayload() {
+function emptyRosterPayload() {
   return {
+    roster: [],
     residents: [],
     residentsByPgy: { 1: [], 2: [], 3: [], 4: [], 5: [] },
     countsByPgy: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
@@ -51,22 +55,25 @@ export async function GET() {
     const membership = await getActiveMembershipForUser(user.id);
 
     if (!membership?.program_id) {
-      return NextResponse.json(emptyResidentPayload(), { status: 200 });
+      return NextResponse.json(emptyRosterPayload(), { status: 200 });
     }
 
     const { data, error } = await supabase
       .from("program_roster")
-      .select(`
+      .select(
+        `
         id,
         program_membership_id,
         first_name,
         last_name,
         full_name,
         grad_year,
-        role
-      `)
+        role,
+        email
+      `
+      )
       .eq("program_id", membership.program_id)
-      .eq("role", "resident")
+      .order("role", { ascending: true })
       .order("grad_year", { ascending: true })
       .order("last_name", { ascending: true });
 
@@ -74,34 +81,37 @@ export async function GET() {
       throw new Error(error.message);
     }
 
-    const residents: NormalizedResident[] = (data ?? []).map((row) => {
-      const rosterId = String(row.id);
-      const programMembershipId = row.program_membership_id
-        ? String(row.program_membership_id)
-        : null;
-
+    const roster: NormalizedRosterPerson[] = (data ?? []).map((row) => {
       const gradYear =
         typeof row.grad_year === "number" ? row.grad_year : null;
 
-      const pgyYear = getPgyFromGradYear(gradYear);
+      const pgyYear = row.role === "resident" ? getPgyFromGradYear(gradYear) : null;
 
       const displayName =
         row.full_name ||
         [row.first_name, row.last_name].filter(Boolean).join(" ") ||
+        row.email ||
         "Unknown";
 
       return {
-        rosterId,
-        membershipId: rosterId,
-        programMembershipId,
+        rosterId: String(row.id),
+        programMembershipId: row.program_membership_id
+          ? String(row.program_membership_id)
+          : null,
         displayName,
+        firstName: row.first_name ?? null,
+        lastName: row.last_name ?? null,
+        email: row.email ?? null,
+        role: row.role,
         gradYear,
         pgyYear,
         trainingLevel: pgyYear ? `PGY-${pgyYear}` : null,
       };
     });
 
-    const residentsByPgy: Record<string, NormalizedResident[]> = {
+    const residents = roster.filter((person) => person.role === "resident");
+
+    const residentsByPgy: Record<string, NormalizedRosterPerson[]> = {
       1: [],
       2: [],
       3: [],
@@ -117,6 +127,7 @@ export async function GET() {
 
     return NextResponse.json(
       {
+        roster,
         residents,
         residentsByPgy,
         countsByPgy: {
@@ -130,14 +141,14 @@ export async function GET() {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Failed to load program residents", error);
+    console.error("Failed to load program roster", error);
 
     return NextResponse.json(
       {
         error:
           error instanceof Error
             ? error.message
-            : "Failed to load program residents",
+            : "Failed to load program roster",
       },
       { status: 500 }
     );

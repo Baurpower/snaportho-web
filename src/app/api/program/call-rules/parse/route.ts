@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { createScheduleEvents } from '@/lib/db/schedule-events'
+import { createScheduleEvents } from '@/lib/workspace/call/schedule-events'
 
 type CreateBody = {
   title?: string

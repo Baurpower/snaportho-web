@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
   createProgramRuleSet,
   getDefaultProgramRuleSet,
   getProgramRuleSets,
-} from "@/lib/db/programcallrules";
+} from "@/lib/workspace/call/programcallrules";
 
 export async function GET() {
   try {

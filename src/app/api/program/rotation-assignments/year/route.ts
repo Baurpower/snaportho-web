@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
   getProgramRotationAssignmentsInRange,
   type ProgramRotationAssignment,
-} from "@/lib/db/rotations";
+} from "@/lib/workspace/call/rotations";
 
 function getAcademicStartYear(date = new Date()) {
   const year = date.getFullYear();

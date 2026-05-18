@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
-import { parseCallUploadFile } from "@/lib/calls/import-parser";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { parseCallUploadFile } from "@/lib/workspace/call/import-parser";
 
 type MembershipRow = {
   id: string;

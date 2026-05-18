@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
   getDefaultProgramRuleSet,
   getProgramRules,
   replaceProgramRulesForRuleSet,
-} from "@/lib/db/programcallrules";
+} from "@/lib/workspace/call/programcallrules";
 
 type IncomingRule = {
   id?: string;

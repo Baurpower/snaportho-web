@@ -11,6 +11,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   PlaneTakeoffIcon,
+  GraduationCap,
 } from "lucide-react";
 
 type NavItem = {
@@ -27,6 +28,7 @@ const PRIMARY_NAV: NavItem[] = [
   { label: "Home", href: "/work", icon: LayoutGrid },
   { label: "Call", href: "/work/call", icon: Calendar },
   { label: "Time Off", href: "/work/time-off", icon: PlaneTakeoffIcon },
+  { label: "Academics", href: "/work/academic", icon: GraduationCap },
 ];
 
 const BOTTOM_NAV: NavItem[] = [
@@ -44,10 +46,12 @@ function isActivePath(pathname: string | null, href: string) {
 
 function NavLink({
   item,
+  href,
   collapsed,
   active,
 }: {
   item: NavItem;
+  href: string;
   collapsed: boolean;
   active: boolean;
 }) {
@@ -55,7 +59,7 @@ function NavLink({
 
   return (
     <Link
-      href={item.href}
+      href={href}
       className={`group flex items-center rounded-2xl transition-all ${
         collapsed ? "justify-center px-3 py-3" : "gap-3 px-3.5 py-3"
       } ${
@@ -165,6 +169,7 @@ export function WorkspaceSidebar({ onHide }: WorkspaceSidebarProps) {
               <NavLink
                 key={item.href}
                 item={item}
+                href={item.href}
                 collapsed={collapsed}
                 active={isActivePath(pathname, item.href)}
               />
@@ -183,6 +188,7 @@ export function WorkspaceSidebar({ onHide }: WorkspaceSidebarProps) {
                 <NavLink
                   key={item.href}
                   item={item}
+                  href={item.href}
                   collapsed={collapsed}
                   active={isActivePath(pathname, item.href)}
                 />

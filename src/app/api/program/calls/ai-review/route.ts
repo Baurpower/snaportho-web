@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
-import { buildSchedulePacket } from "@/lib/workspace/call-ai/buildSchedulePacket";
+import { buildSchedulePacket } from "@/lib/workspace/call/buildSchedulePacket";
 import { getFlagsForAssignedResident } from "@/components/workspace/call/programcallevaluator";
 import type {
   CalendarDay,

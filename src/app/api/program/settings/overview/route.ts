@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
-import { getProgramRotationAssignmentsInRange } from "@/lib/db/rotations";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { getProgramRotationAssignmentsInRange } from "@/lib/workspace/call/rotations";
 
 type ProgramRosterRow = {
   id: string;

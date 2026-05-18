@@ -1,8 +1,8 @@
 // app/api/program/time-off/month/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
-import { getProgramTimeOffMonth } from "@/lib/db/time-off";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { getProgramTimeOffMonth } from "@/lib/workspace/call/time-off";
 
 export async function GET(request: NextRequest) {
   try {

@@ -1,13 +1,13 @@
 // app/api/program/time-off/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
   createTimeOffEvent,
   TimeOffType,
   ApprovalStatus,
   ConstraintLevel,
-} from "@/lib/db/time-off";
+} from "@/lib/workspace/call/time-off";
 
 type CreateBody = {
   eventType: TimeOffType;

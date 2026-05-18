@@ -1,10 +1,10 @@
 // lib/db/programavailability.ts
 import { createClient } from "@/utils/supabase/server";
-import { getProgramResidents } from "@/lib/db/calls";
+import { getProgramResidents } from "@/lib/workspace/call/calls";
 import {
   getDefaultProgramRuleSet,
   getProgramRules,
-} from "@/lib/db/programcallrules";
+} from "@/lib/workspace/call/programcallrules";
 
 type CallType = "Primary" | "Backup";
 

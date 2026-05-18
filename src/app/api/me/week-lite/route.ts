@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { getActiveMembershipForUser } from '@/lib/db/memberships'
-import { getWeekLiteForMembership } from '@/lib/db/week-lite'
+import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
+import { getWeekLiteForMembership } from '@/lib/workspace/call/week-lite'
 
 function isValidDateString(value: string | null): value is string {
   return !!value && /^\d{4}-\d{2}-\d{2}$/.test(value)

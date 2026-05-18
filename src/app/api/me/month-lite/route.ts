@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
-import { getRotationAssignmentsForMemberInRange } from "@/lib/db/rotations";
-import { getCallAssignmentsForMembershipInRange } from "@/lib/db/calls";
-import { getScheduleEventsForUserInRange } from "@/lib/db/schedule-events";
-import { getProgramTimeOffMonth } from "@/lib/db/time-off";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { getRotationAssignmentsForMemberInRange } from "@/lib/workspace/call/rotations";
+import { getCallAssignmentsForMembershipInRange } from "@/lib/workspace/call/calls";
+import { getScheduleEventsForUserInRange } from "@/lib/workspace/call/schedule-events";
+import { getProgramTimeOffMonth } from "@/lib/workspace/call/time-off";
 
 function isValidDateString(value: string | null): value is string {
   return !!value && /^\d{4}-\d{2}-\d{2}$/.test(value);

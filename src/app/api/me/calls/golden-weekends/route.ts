@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { getActiveMembershipForUser } from '@/lib/db/memberships'
-import { getGoldenWeekendsForMembershipInMonth } from '@/lib/db/calls'
+import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
+import { getGoldenWeekendsForMembershipInMonth } from '@/lib/workspace/call/calls'
 
 export async function GET(request: NextRequest) {
   try {

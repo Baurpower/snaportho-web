@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
-import { createCallAssignmentsForMembership } from "@/lib/db/calls";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { createCallAssignmentsForMembership } from "@/lib/workspace/call/calls";
 
 type CreateMyCallsBody = {
   dates?: string[];

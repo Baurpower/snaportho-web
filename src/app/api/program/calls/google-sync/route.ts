@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { google, calendar_v3 } from "googleapis";
 
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { getGoogleOAuthClient } from "@/lib/google/calendar";
 
 type SyncScope = "mine" | "program";

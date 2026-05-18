@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { getScheduleEventsForUserInRange } from '@/lib/db/schedule-events'
+import { getScheduleEventsForUserInRange } from '@/lib/workspace/call/schedule-events'
 
 function isValidDateString(value: unknown): value is string {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)

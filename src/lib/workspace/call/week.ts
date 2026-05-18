@@ -1,15 +1,15 @@
 import {
   getRotationAssignmentsForMemberInRange,
   type RotationAssignmentSummary,
-} from '@/lib/db/rotations'
+} from '@/lib/workspace/call/rotations'
 import {
   getCallAssignmentsForMembershipInRange,
   type CallAssignmentSummary,
-} from '@/lib/db/calls'
+} from '@/lib/workspace/call/calls'
 import {
   getScheduleEventsForUserInRange,
   type ScheduleEventSummary,
-} from '@/lib/db/schedule-events'
+} from '@/lib/workspace/call/schedule-events'
 
 export type WeekScheduleDay = {
   date: string

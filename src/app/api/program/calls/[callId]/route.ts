@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/db/memberships";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { syncGoogleCalendarAfterCallChange } from "@/lib/google/syncCallCalendarAfterChange";
 
 type RouteContext = {

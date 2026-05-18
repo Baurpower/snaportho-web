@@ -1,4 +1,4 @@
-// src/lib/workspace/call-ai/buildSchedulePacket.ts
+// src/lib/workspace/call/buildSchedulePacket.ts
 
 type ScheduleSlotMode = "Primary" | "Both";
 type Slot = "Primary" | "Backup";

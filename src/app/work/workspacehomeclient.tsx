@@ -25,7 +25,7 @@ import {
   type UserCalendarEvent,
   type RotationTimelineEvent,
 } from "@/components/workspace/monthsscheduleview";
-import type { TimeOffItem } from "@/lib/db/time-off";
+import type { TimeOffItem } from "@/lib/workspace/call/time-off";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },

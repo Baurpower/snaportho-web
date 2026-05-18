@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { getActiveMembershipForUser } from '@/lib/db/memberships'
-import { getMonthlyCoverageForProgram } from '@/lib/db/coverage'
+import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
+import { getMonthlyCoverageForProgram } from '@/lib/workspace/call/coverage'
 
 export async function GET(request: NextRequest) {
   try {
