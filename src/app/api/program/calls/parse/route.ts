@@ -3,9 +3,12 @@ import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { parseCallUploadFile } from "@/lib/workspace/call/import-parser";
 
-type MembershipRow = {
+type RosterRow = {
   id: string;
-  display_name: string | null;
+  full_name: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  program_membership_id: string | null;
   training_level: string | null;
   class_year: number | null;
 };
@@ -50,14 +53,17 @@ function buildNameVariants(value: string): string[] {
   return Array.from(variants);
 }
 
-function findMembershipMatch(
+function findRosterMatch(
   residentName: string,
-  memberships: MembershipRow[]
-): MembershipRow | null {
+  rosterRows: RosterRow[]
+): RosterRow | null {
   const targetVariants = buildNameVariants(residentName);
 
-  for (const item of memberships) {
-    const display = item.display_name ?? "";
+  for (const item of rosterRows) {
+    const display =
+      item.full_name ??
+      [item.first_name, item.last_name].filter(Boolean).join(" ") ??
+      "";
     const displayVariants = buildNameVariants(display);
 
     const exact = targetVariants.some((target) => displayVariants.includes(target));
@@ -66,15 +72,19 @@ function findMembershipMatch(
 
   const target = splitNameParts(residentName);
 
-  const lastNameMatches = memberships.filter((item) => {
-    const parts = splitNameParts(item.display_name ?? "");
+  const lastNameMatches = rosterRows.filter((item) => {
+    const parts = splitNameParts(
+      item.full_name ?? [item.first_name, item.last_name].filter(Boolean).join(" ")
+    );
     return target.last && parts.last === target.last;
   });
 
   if (lastNameMatches.length === 1) return lastNameMatches[0];
 
-  const fuzzy = memberships.find((item) => {
-    const name = normalizeName(item.display_name ?? "");
+  const fuzzy = rosterRows.find((item) => {
+    const name = normalizeName(
+      item.full_name ?? [item.first_name, item.last_name].filter(Boolean).join(" ")
+    );
     return (
       targetVariants.some((variant) => name.includes(variant)) ||
       targetVariants.some((variant) => variant.includes(name))
@@ -122,24 +132,30 @@ export async function POST(request: NextRequest) {
 
     const parsedRows = await parseCallUploadFile(file);
 
-    const { data: membershipsData, error: membershipsError } = await supabase
-      .from("program_memberships")
-      .select("id, display_name, training_level, class_year")
+    const { data: rosterData, error: rosterError } = await supabase
+      .from("program_roster")
+      .select("id, full_name, first_name, last_name, program_membership_id, training_level, class_year")
       .eq("program_id", membership.program_id);
 
-    if (membershipsError) {
-      throw new Error(`Failed to load program memberships: ${membershipsError.message}`);
+    if (rosterError) {
+      throw new Error(`Failed to load program roster: ${rosterError.message}`);
     }
 
-    const memberships = (membershipsData ?? []) as MembershipRow[];
+    const rosterRows = (rosterData ?? []) as RosterRow[];
 
     const previewRows = parsedRows.map((row) => {
-      const match = findMembershipMatch(row.residentName, memberships);
+      const match = findRosterMatch(row.residentName, rosterRows);
+      const displayName =
+        match?.full_name ??
+        [match?.first_name, match?.last_name].filter(Boolean).join(" ") ??
+        null;
 
       return {
         ...row,
+        matchedRosterId: match?.id ?? null,
         matchedMembershipId: match?.id ?? null,
-        matchedDisplayName: match?.display_name ?? null,
+        programMembershipId: match?.program_membership_id ?? null,
+        matchedDisplayName: displayName,
         matchedTrainingLevel: match?.training_level ?? null,
         matchedClassYear: match?.class_year ?? null,
         status:

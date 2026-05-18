@@ -69,6 +69,8 @@ type MonthContextResponse = {
   timeOff: Array<{
     id: string;
     membershipId: string | null;
+    rosterId?: string | null;
+    programMembershipId?: string | null;
     residentName?: string | null;
     trainingLevel?: string | null;
     classYear?: number | null;

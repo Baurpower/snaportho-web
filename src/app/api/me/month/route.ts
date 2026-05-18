@@ -128,17 +128,22 @@ export async function GET(request: NextRequest) {
             monthStart,
             monthEnd,
             myMembershipId: membership.id,
+            myRosterId: membership.roster_id ?? null,
           })
         : Promise.resolve({
             monthStart,
             monthEnd,
             myMembershipId: membership.id,
+            myRosterId: membership.roster_id ?? null,
             items: [],
           }),
     ]);
 
     const myTimeOff = (timeOffPayload.items ?? []).filter(
-      (item) => item.isMine || item.membershipId === membership.id
+      (item) =>
+        item.isMine ||
+        item.rosterId === (membership.roster_id ?? null) ||
+        item.programMembershipId === membership.id
     );
 
     return NextResponse.json(

@@ -60,8 +60,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    let rosterId = membership.roster_id ?? null;
+
+    // Backfill roster identity for legacy memberships that do not yet carry roster_id.
+    if (!rosterId) {
+      const { data: rosterRow, error: rosterLookupError } = await supabase
+        .from("program_roster")
+        .select("id")
+        .eq("program_id", membership.program_id)
+        .eq("program_membership_id", membership.id)
+        .maybeSingle();
+
+      if (rosterLookupError) {
+        return NextResponse.json(
+          { error: `Failed to resolve roster identity: ${rosterLookupError.message}` },
+          { status: 500 }
+        );
+      }
+
+      rosterId = rosterRow?.id ?? null;
+    }
+
+    if (!rosterId) {
+      return NextResponse.json(
+        { error: "No roster row is linked to this membership." },
+        { status: 400 }
+      );
+    }
+
     const result = await createTimeOffEvent({
       programId: membership.program_id,
+      rosterId,
       membershipId: membership.id,
       createdByUserId: user.id,
       eventType: body.eventType,

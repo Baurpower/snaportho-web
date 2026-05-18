@@ -56,6 +56,7 @@ export async function GET(request: NextRequest) {
 
     const result = await getWeekLiteForMembership({
       membershipId: membership.id,
+      rosterId: membership.roster_id ?? null,
       userId: user.id,
       weekStart,
       weekEnd,

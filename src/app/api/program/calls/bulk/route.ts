@@ -9,6 +9,7 @@ type SaveRow = {
   site?: string | null;
   isHomeCall?: boolean;
   notes?: string | null;
+  matchedRosterId?: string | null;
   matchedMembershipId?: string | null;
 };
 
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     const invalidRow = rows.find(
       (row) =>
-        !row.matchedMembershipId ||
+        (!row.matchedRosterId && !row.matchedMembershipId) ||
         !row.residentName?.trim() ||
         !isValidDateString(row.callDate) ||
         !["Primary", "Backup"].includes(row.callType)
@@ -67,7 +68,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "Every row must have a matchedMembershipId, residentName, valid callDate, and callType",
+            "Every row must have a matchedRosterId (or legacy matchedMembershipId), residentName, valid callDate, and callType",
         },
         { status: 400 }
       );
@@ -85,27 +86,34 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const membershipIds = Array.from(
-      new Set(rows.map((row) => row.matchedMembershipId!).filter(Boolean))
+    const rosterIds = Array.from(
+      new Set(
+        rows
+          .map((row) => row.matchedRosterId ?? row.matchedMembershipId ?? null)
+          .filter(Boolean)
+      )
     );
 
-    if (membershipIds.length > 0) {
-      const { data: validMemberships, error: validMembershipsError } = await supabase
-        .from("program_memberships")
+    if (rosterIds.length > 0) {
+      const { data: validRosterRows, error: validRosterRowsError } = await supabase
+        .from("program_roster")
         .select("id")
         .eq("program_id", membership.program_id)
-        .in("id", membershipIds);
+        .in("id", rosterIds);
 
-      if (validMembershipsError) {
+      if (validRosterRowsError) {
         throw new Error(
-          `Failed to verify memberships: ${validMembershipsError.message}`
+          `Failed to verify roster rows: ${validRosterRowsError.message}`
         );
       }
 
-      const validMembershipIdSet = new Set((validMemberships ?? []).map((row) => row.id));
+      const validRosterIdSet = new Set((validRosterRows ?? []).map((row) => row.id));
 
       const rowsOutsideProgram = rows.filter(
-        (row) => !validMembershipIdSet.has(row.matchedMembershipId!)
+        (row) =>
+          !validRosterIdSet.has(
+            row.matchedRosterId ?? row.matchedMembershipId ?? ""
+          )
       );
 
       if (rowsOutsideProgram.length > 0) {
@@ -174,13 +182,35 @@ export async function POST(request: NextRequest) {
 
     const saved: Array<{ action: "created" | "updated"; id: string }> = [];
 
+    const membershipByRosterId = new Map<string, string | null>();
+    if (rosterIds.length > 0) {
+      const { data: rosterMapRows, error: rosterMapError } = await supabase
+        .from("program_roster")
+        .select("id, program_membership_id")
+        .eq("program_id", membership.program_id)
+        .in("id", rosterIds);
+
+      if (rosterMapError) {
+        throw new Error(`Failed to map roster to membership: ${rosterMapError.message}`);
+      }
+
+      for (const row of rosterMapRows ?? []) {
+        membershipByRosterId.set(String(row.id), row.program_membership_id ?? null);
+      }
+    }
+
     for (const row of rows) {
       const slotKey = `${row.callDate}__${row.callType}`;
       const existing = existingRowsBySlot.get(slotKey);
+      const rosterId = row.matchedRosterId ?? row.matchedMembershipId!;
 
       const payload = {
         program_id: membership.program_id,
-        program_membership_id: row.matchedMembershipId!,
+        roster_id: rosterId,
+        program_membership_id:
+          row.matchedMembershipId ??
+          membershipByRosterId.get(rosterId) ??
+          null,
         call_type: row.callType,
         call_date: row.callDate,
         start_datetime: null,

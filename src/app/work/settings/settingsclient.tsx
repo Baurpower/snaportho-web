@@ -54,6 +54,7 @@ type MeProgramResponse = {
 
 export type OverviewMember = {
   membershipId: string;
+  programMembershipId?: string | null;
   rosterId: string | null;
   displayName: string;
   gradYear: number | null;
@@ -77,6 +78,7 @@ export type OverviewRotationCatalogItem = {
 export type OverviewAssignment = {
   id: string;
   membershipId: string | null;
+  programMembershipId?: string | null;
   rosterId: string | null;
   memberName: string | null;
   gradYear: number | null;
@@ -152,6 +154,7 @@ type EditProgramRotationCatalogItem = {
 type EditProgramRotationAssignment = {
   id: string;
   membershipId: string | null;
+  programMembershipId?: string | null;
   rosterId: string | null;
   memberName: string | null;
   gradYear: number | null;
@@ -173,7 +176,8 @@ type EditProgramRotationAssignment = {
 
 type SaveRotationAssignmentPayload = {
   id?: string;
-  membershipId: string;
+  rosterId: string;
+  membershipId?: string;
   rotationId: string;
   startDate: string;
   endDate: string;
@@ -360,7 +364,7 @@ function normalizeAssignments(assignments: OverviewAssignment[]): RotationBlock[
     )
     .map((item) => ({
       id: item.id,
-      memberId: item.membershipId,
+      memberId: item.rosterId ?? item.membershipId,
       startDate: item.startDate,
       endDate: item.endDate,
       rotationId: item.rotation?.id ?? null,

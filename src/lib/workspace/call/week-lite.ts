@@ -2,6 +2,8 @@ import { createClient } from '@/utils/supabase/server'
 
 type LiteRotationRow = {
   id: string
+  roster_id: string | null
+  program_membership_id: string | null
   start_date: string | null
   end_date: string | null
   site_label: string | null
@@ -22,6 +24,8 @@ type LiteRotationRow = {
 
 type LiteCallRow = {
   id: string
+  roster_id: string | null
+  program_membership_id: string | null
   call_date: string | null
   call_type: string | null
   site: string | null
@@ -60,6 +64,7 @@ export type WeekLiteResponse = {
 
 type GetWeekLiteInput = {
   membershipId: string
+  rosterId?: string | null
   userId: string
   weekStart: string
   weekEnd: string
@@ -196,7 +201,7 @@ function resolveCustomTitle(
 export async function getWeekLiteForMembership(
   input: GetWeekLiteInput
 ): Promise<WeekLiteResponse> {
-  const { membershipId, userId, weekStart, weekEnd } = input
+  const { membershipId, rosterId, userId, weekStart, weekEnd } = input
   const supabase = await createClient()
 
   const [
@@ -208,6 +213,8 @@ export async function getWeekLiteForMembership(
       .from('rotation_assignments')
       .select(`
         id,
+        roster_id,
+        program_membership_id,
         start_date,
         end_date,
         site_label,
@@ -218,7 +225,11 @@ export async function getWeekLiteForMembership(
           color
         )
       `)
-      .eq('program_membership_id', membershipId)
+      .or(
+        rosterId
+          ? `roster_id.eq.${rosterId},program_membership_id.eq.${membershipId}`
+          : `program_membership_id.eq.${membershipId}`
+      )
       .lte('start_date', weekEnd)
       .gte('end_date', weekStart)
       .order('start_date', { ascending: true }),
@@ -227,11 +238,17 @@ export async function getWeekLiteForMembership(
       .from('call_assignments')
       .select(`
         id,
+        roster_id,
+        program_membership_id,
         call_date,
         call_type,
         site
       `)
-      .eq('program_membership_id', membershipId)
+      .or(
+        rosterId
+          ? `roster_id.eq.${rosterId},program_membership_id.eq.${membershipId}`
+          : `program_membership_id.eq.${membershipId}`
+      )
       .gte('call_date', weekStart)
       .lte('call_date', weekEnd)
       .order('call_date', { ascending: true }),

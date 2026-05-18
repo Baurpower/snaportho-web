@@ -50,6 +50,16 @@ type ProgramCallRow = {
   program_roster: ProgramRosterRelation | ProgramRosterRelation[] | null;
 };
 
+type ProgramRosterLookupRow = {
+  id: string;
+  full_name: string | null;
+  first_name: string | null;
+  last_name: string | null;
+  grad_year: number | null;
+  role: string | null;
+  program_membership_id: string | null;
+};
+
 function normalizeRoster(
   value: ProgramCallRow["program_roster"]
 ): ProgramRosterRelation | null {
@@ -114,6 +124,7 @@ export async function GET(request: NextRequest) {
           monthStart,
           monthEnd,
           myMembershipId: null,
+          myRosterId: null,
           calls: [],
         },
         { status: 200 }
@@ -183,15 +194,69 @@ export async function GET(request: NextRequest) {
       new Map(merged.map((row) => [row.id, row])).values()
     );
 
-    
+    const rosterIds = Array.from(
+      new Set(deduped.map((row) => row.roster_id).filter(Boolean))
+    ) as string[];
+    const membershipIds = Array.from(
+      new Set(deduped.map((row) => row.program_membership_id).filter(Boolean))
+    ) as string[];
+    const rosterById = new Map<string, ProgramRosterRelation>();
+    const rosterByMembershipId = new Map<string, ProgramRosterRelation>();
+
+    if (rosterIds.length > 0 || membershipIds.length > 0) {
+      let rosterQuery = supabase
+        .from("program_roster")
+        .select(
+          "id, full_name, first_name, last_name, grad_year, role, program_membership_id"
+        )
+        .eq("program_id", activeMembership.program_id);
+
+      if (rosterIds.length > 0 && membershipIds.length > 0) {
+        rosterQuery = rosterQuery.or(
+          `id.in.(${rosterIds.join(",")}),program_membership_id.in.(${membershipIds.join(",")})`
+        );
+      } else if (rosterIds.length > 0) {
+        rosterQuery = rosterQuery.in("id", rosterIds);
+      } else if (membershipIds.length > 0) {
+        rosterQuery = rosterQuery.in("program_membership_id", membershipIds);
+      }
+
+      const { data: rosterRows, error: rosterError } = await rosterQuery;
+
+      if (rosterError) {
+        throw new Error(`Failed to resolve roster names: ${rosterError.message}`);
+      }
+
+      for (const row of (rosterRows ?? []) as ProgramRosterLookupRow[]) {
+        const normalized: ProgramRosterRelation = {
+          id: String(row.id),
+          full_name: row.full_name ?? null,
+          first_name: row.first_name ?? null,
+          last_name: row.last_name ?? null,
+          grad_year: row.grad_year ?? null,
+          role: row.role ?? null,
+          program_membership_id: row.program_membership_id ?? null,
+        };
+        rosterById.set(normalized.id, normalized);
+        if (normalized.program_membership_id) {
+          rosterByMembershipId.set(normalized.program_membership_id, normalized);
+        }
+      }
+    }
 
     return NextResponse.json(
       {
         monthStart,
         monthEnd,
         myMembershipId: activeMembership.id,
+        myRosterId: activeMembership.roster_id ?? null,
         calls: deduped.map((row) => {
-          const roster = normalizeRoster(row.program_roster);
+          const roster =
+            normalizeRoster(row.program_roster) ??
+            (row.roster_id ? rosterById.get(row.roster_id) ?? null : null) ??
+            (row.program_membership_id
+              ? rosterByMembershipId.get(row.program_membership_id) ?? null
+              : null);
           const gradYear = roster?.grad_year ?? null;
           const pgyYear = getPgyFromGradYear(gradYear);
           const trainingLevel = pgyYear ? `PGY-${pgyYear}` : null;
@@ -199,7 +264,8 @@ export async function GET(request: NextRequest) {
           return {
             id: row.id,
             rosterId: row.roster_id,
-            membershipId: row.program_membership_id,
+            // Compatibility field: `membershipId` carries roster identity in roster-first flows.
+            membershipId: row.roster_id ?? row.program_membership_id,
             residentName: getRosterDisplayName(roster),
             gradYear,
             pgyYear,
@@ -212,7 +278,9 @@ export async function GET(request: NextRequest) {
             site: row.site,
             isHomeCall: row.is_home_call,
             notes: row.notes,
-            isMine: row.program_membership_id === activeMembership.id,
+            isMine:
+              row.roster_id === (activeMembership.roster_id ?? null) ||
+              row.program_membership_id === activeMembership.id,
           };
         }),
       },

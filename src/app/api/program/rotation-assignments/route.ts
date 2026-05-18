@@ -155,7 +155,7 @@ export async function POST(request: NextRequest) {
 
     if (!rosterId && !membershipId) {
       return NextResponse.json(
-        { error: "rosterId or membershipId is required." },
+        { error: "rosterId is required (membershipId accepted for legacy compatibility)." },
         { status: 400 }
       );
     }
@@ -249,7 +249,8 @@ export async function POST(request: NextRequest) {
         message: "Rotation assignment created successfully.",
         assignment: {
           id: inserted.id,
-          membershipId: inserted.program_membership_id ?? null,
+          membershipId: inserted.roster_id ?? null,
+          programMembershipId: inserted.program_membership_id ?? null,
           rosterId: inserted.roster_id ?? null,
           memberName: getRosterDisplayName(roster),
           gradYear: roster.grad_year ?? null,
@@ -352,7 +353,9 @@ export async function GET(request: NextRequest) {
       return {
         id: row.id,
         rosterId: row.roster_id,
-        membershipId: row.program_membership_id,
+        // Compatibility field: `membershipId` mirrors roster identity for older clients.
+        membershipId: row.roster_id,
+        programMembershipId: row.program_membership_id,
         rotationId: row.rotation_id,
         startDate: row.start_date,
         endDate: row.end_date,

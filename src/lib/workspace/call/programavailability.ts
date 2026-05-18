@@ -62,7 +62,9 @@ type RuleConfig = {
 };
 
 type AvailabilityResident = {
-  membershipId: string;
+  membershipId: string; // compatibility: roster identity key
+  rosterId: string;
+  programMembershipId: string | null;
   displayName: string;
   trainingLevel: string | null;
   pgyYear: number | null;
@@ -100,6 +102,7 @@ type TimeOffRow = {
 
 type CallRow = {
   id: string;
+  roster_id: string | null;
   program_membership_id: string | null;
   call_type: string | null;
   call_date: string | null;
@@ -107,6 +110,7 @@ type CallRow = {
 
 type RotationRow = {
   id: string;
+  roster_id: string | null;
   program_membership_id: string | null;
   rotation_id: string | null;
   start_date: string | null;
@@ -129,7 +133,8 @@ type RotationRow = {
 };
 
 type RawResident = {
-  membershipId: string;
+  rosterId: string;
+  membershipId: string | null;
   displayName: string;
   gradYear: number | null;
   userId?: string | null;
@@ -291,7 +296,9 @@ export async function getProgramAvailabilityMonth(params: {
     const pgyYear = getPgyFromGradYear(resident.gradYear, evaluationDate);
 
     return {
-      membershipId: resident.membershipId,
+      membershipId: resident.rosterId,
+      rosterId: resident.rosterId,
+      programMembershipId: resident.membershipId ?? null,
       displayName: resident.displayName,
       gradYear: resident.gradYear ?? null,
       pgyYear,
@@ -390,13 +397,25 @@ export async function getProgramAvailabilityMonth(params: {
   }
 
   const callsByResident = new Map<string, string[]>();
+  const membershipToRoster = new Map<string, string>();
+  for (const resident of residents) {
+    if (resident.programMembershipId) {
+      membershipToRoster.set(resident.programMembershipId, resident.rosterId);
+    }
+  }
 
   for (const call of (callRows ?? []) as CallRow[]) {
-    if (!call.program_membership_id || !call.call_date) continue;
+    if (!call.call_date) continue;
+    const residentKey =
+      call.roster_id ??
+      (call.program_membership_id
+        ? membershipToRoster.get(call.program_membership_id) ?? null
+        : null);
+    if (!residentKey) continue;
 
-    const existing = callsByResident.get(call.program_membership_id) ?? [];
+    const existing = callsByResident.get(residentKey) ?? [];
     existing.push(call.call_date);
-    callsByResident.set(call.program_membership_id, existing);
+    callsByResident.set(residentKey, existing);
   }
 
   for (const [residentId, dates] of callsByResident.entries()) {
@@ -407,7 +426,9 @@ export async function getProgramAvailabilityMonth(params: {
   }
 
   for (const row of (timeOffRows ?? []) as TimeOffRow[]) {
-    const residentAvailability = availability[row.membership_id];
+    const residentKey = membershipToRoster.get(row.membership_id) ?? null;
+    if (!residentKey) continue;
+    const residentAvailability = availability[residentKey];
     if (!residentAvailability) continue;
 
     const coveredDates = enumerateDates(row.start_date, row.end_date).filter(
@@ -461,9 +482,15 @@ export async function getProgramAvailabilityMonth(params: {
   }
 
   for (const row of (rotationRows ?? []) as RotationRow[]) {
-    if (!row.program_membership_id || !row.start_date || !row.end_date) continue;
+    if (!row.start_date || !row.end_date) continue;
+    const residentKey =
+      row.roster_id ??
+      (row.program_membership_id
+        ? membershipToRoster.get(row.program_membership_id) ?? null
+        : null);
+    if (!residentKey) continue;
 
-    const residentAvailability = availability[row.program_membership_id];
+    const residentAvailability = availability[residentKey];
     if (!residentAvailability) continue;
 
     const { rotationId, rotationName } = getRotationMeta(row);

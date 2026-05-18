@@ -191,7 +191,8 @@ export async function GET(request: NextRequest) {
     .trim();
 
   return {
-    membershipId: row.program_membership_id ?? null,
+    membershipId: row.id,
+    programMembershipId: row.program_membership_id ?? null,
     rosterId: row.id,
     displayName: row.full_name ?? (fallbackName || "Unknown"),
     gradYear: row.grad_year ?? null,

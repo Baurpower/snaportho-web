@@ -206,7 +206,8 @@ export async function GET(_request: NextRequest, context: RouteContext) {
       {
         assignment: {
           id: assignment.id,
-          membershipId: assignment.program_membership_id ?? null,
+          membershipId: assignment.roster_id ?? null,
+          programMembershipId: assignment.program_membership_id ?? null,
           rosterId: assignment.roster_id ?? null,
           rotationId: assignment.rotation_id ?? null,
           startDate: assignment.start_date ?? null,
@@ -448,7 +449,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
         message: "Rotation assignment updated successfully.",
         assignment: {
           id: updated?.id ?? assignmentId,
-          membershipId: updated?.program_membership_id ?? null,
+          // Compatibility field: `membershipId` mirrors roster identity for older clients.
+          membershipId: updated?.roster_id ?? null,
+          programMembershipId: updated?.program_membership_id ?? null,
           rosterId: updated?.roster_id ?? null,
           rotationId: updated?.rotation_id ?? null,
           startDate: updated?.start_date ?? null,

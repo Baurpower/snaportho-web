@@ -142,6 +142,8 @@ function mapTimeOffItem(item: ProgramTimeOffItem) {
   return {
     id: item.id,
     membershipId: item.membershipId ?? null,
+    rosterId: item.rosterId ?? null,
+    programMembershipId: item.programMembershipId ?? null,
     residentName: item.residentName ?? null,
     trainingLevel: item.trainingLevel ?? null,
     classYear: item.classYear ?? null,
@@ -231,17 +233,23 @@ export async function GET(request: NextRequest) {
             monthStart,
             monthEnd,
             myMembershipId: membership.id,
+            myRosterId: membership.roster_id ?? null,
           })
         : Promise.resolve({
             monthStart,
             monthEnd,
             myMembershipId: membership.id,
+            myRosterId: membership.roster_id ?? null,
             items: [] as ProgramTimeOffItem[],
           }),
     ]);
 
     const myTimeOff = (timeOffPayload.items ?? []).filter((item) => {
-      return item.isMine || item.membershipId === membership.id;
+      return (
+        item.isMine ||
+        item.rosterId === (membership.roster_id ?? null) ||
+        item.programMembershipId === membership.id
+      );
     });
 
     return NextResponse.json(

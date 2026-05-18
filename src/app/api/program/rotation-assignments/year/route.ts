@@ -72,8 +72,11 @@ export async function GET(request: NextRequest) {
   .map((assignment: ProgramRotationAssignment) => ({
     id: assignment.id,
 
+    // Compatibility fields: membershipId/membership_id carry roster identity for legacy consumers.
     membershipId: assignment.rosterId ?? assignment.membershipId ?? null,
     membership_id: assignment.rosterId ?? assignment.membershipId ?? null,
+    programMembershipId: assignment.programMembershipId ?? null,
+    program_membership_id: assignment.programMembershipId ?? null,
 
     rosterId: assignment.rosterId ?? null,
     roster_id: assignment.rosterId ?? null,

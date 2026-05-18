@@ -56,7 +56,8 @@ type ResidentWithRotation = ResidentOption & {
 };
 
 type ProgramMembersApiResident = {
-  membershipId?: string | null; 
+  membershipId?: string | null;
+  programMembershipId?: string | null;
   rosterId?: string | null;    
   roster_id?: string | null;
   displayName?: string | null;
@@ -426,6 +427,8 @@ const rotationAssignmentsByRosterId =
 
         const resident: ResidentWithRotation = {
           membershipId: rosterId, // call scheduler uses roster ID as resident ID
+          programMembershipId:
+            item.programMembershipId ?? item.membershipId ?? null,
           rosterId,
           roster_id: rosterId,
           displayName: String(item.displayName ?? "Unknown"),
@@ -1171,6 +1174,7 @@ const rotationAssignmentsByRosterId =
         site: string | null;
         isHomeCall: boolean;
         notes: string | null;
+        matchedRosterId: string;
         matchedMembershipId: string;
       }> = [];
 
@@ -1185,6 +1189,7 @@ const rotationAssignmentsByRosterId =
             site: null,
             isHomeCall: true,
             notes: null,
+            matchedRosterId: resident.membershipId,
             matchedMembershipId: resident.membershipId,
           });
         }
@@ -1201,6 +1206,7 @@ const rotationAssignmentsByRosterId =
             site: null,
             isHomeCall: true,
             notes: null,
+            matchedRosterId: resident.membershipId,
             matchedMembershipId: resident.membershipId,
           });
         }

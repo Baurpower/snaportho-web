@@ -437,6 +437,7 @@ useEffect(() => {
   async function patchCall(
     callId: string,
     body: {
+      rosterId?: string;
       programMembershipId?: string;
       callType?: string;
       callDate?: string | null;
@@ -786,7 +787,7 @@ async function stopGoogleSync() {
       }
 
       await patchCall(payload.callId, {
-        programMembershipId: payload.toMembershipId,
+        rosterId: payload.toMembershipId,
       });
 
       await refreshMonth();

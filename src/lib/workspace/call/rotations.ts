@@ -326,6 +326,7 @@ type RawProgramRotationAssignmentRow = {
 export type ProgramRotationAssignment = {
   id: string;
   membershipId: string | null;
+  programMembershipId: string | null;
   rosterId: string | null;
   memberName: string | null;
   gradYear: number | null;
@@ -372,7 +373,9 @@ function toProgramRotationAssignment(
 
   return {
     id: row.id,
-    membershipId: roster?.program_membership_id ?? row.program_membership_id ?? null,
+    membershipId: roster?.id ?? row.roster_id ?? null,
+    programMembershipId:
+      roster?.program_membership_id ?? row.program_membership_id ?? null,
     rosterId: roster?.id ?? row.roster_id ?? null,
     memberName: getRosterDisplayName(roster),
     gradYear: roster?.grad_year ?? null,

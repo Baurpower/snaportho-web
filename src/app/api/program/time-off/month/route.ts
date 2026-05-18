@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
           monthStart: "",
           monthEnd: "",
           myMembershipId: null,
+          myRosterId: null,
           items: [],
         },
         { status: 200 }
@@ -53,6 +54,7 @@ export async function GET(request: NextRequest) {
       monthStart,
       monthEnd,
       myMembershipId: membership.id ?? null,
+      myRosterId: membership.roster_id ?? null,
     });
 
     return NextResponse.json(payload, { status: 200 });

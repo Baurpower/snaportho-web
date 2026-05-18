@@ -9,7 +9,9 @@ export type ConstraintLevel = "hard" | "soft" | "informational";
 
 export type TimeOffItem = {
   id: string;
-  membershipId: string | null;
+  membershipId: string | null; // compatibility
+  rosterId: string | null;
+  programMembershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
   classYear: number | null;
@@ -30,11 +32,13 @@ export type TimeOffMonthResponse = {
   monthStart: string;
   monthEnd: string;
   myMembershipId: string | null;
+  myRosterId: string | null;
   items: TimeOffItem[];
 };
 
 export type CreateTimeOffInput = {
   programId: string;
+  rosterId: string;
   membershipId: string;
   createdByUserId: string;
   eventType: TimeOffType;
@@ -100,6 +104,7 @@ function enumerateDates(startDate: string, endDate: string) {
 type RawDayRow = {
   event_id: string;
   membership_id: string | null;
+  roster_id: string | null;
   off_date: string;
   event_type: string;
   source_kind: string;
@@ -108,6 +113,7 @@ type RawDayRow = {
   availability_events: {
     id: string;
     membership_id: string;
+    roster_id: string | null;
     start_date: string;
     end_date: string;
     title: string | null;
@@ -131,15 +137,17 @@ export async function getProgramTimeOffMonth(params: {
   monthStart: string;
   monthEnd: string;
   myMembershipId: string | null;
+  myRosterId?: string | null;
 }): Promise<TimeOffMonthResponse> {
   const supabase = await createClient();
-  const { programId, monthStart, monthEnd, myMembershipId } = params;
+  const { programId, monthStart, monthEnd, myMembershipId, myRosterId = null } = params;
 
   const { data, error } = await supabase
     .from("availability_event_days")
     .select(`
       event_id,
       membership_id,
+      roster_id,
       off_date,
       event_type,
       source_kind,
@@ -148,6 +156,7 @@ export async function getProgramTimeOffMonth(params: {
       availability_events (
         id,
         membership_id,
+        roster_id,
         start_date,
         end_date,
         title,
@@ -182,6 +191,44 @@ export async function getProgramTimeOffMonth(params: {
   }
 
   const rows = (data ?? []) as unknown as RawDayRow[];
+  const membershipIds = Array.from(
+    new Set(
+      rows
+        .map(
+          (row) =>
+            row.membership_id ?? row.availability_events?.membership_id ?? null
+        )
+        .filter(Boolean)
+    )
+  ) as string[];
+  const rosterByMembershipId = new Map<
+    string,
+    { id: string; full_name: string | null; first_name: string | null; last_name: string | null }
+  >();
+
+  if (membershipIds.length > 0) {
+    const { data: rosterRows, error: rosterError } = await supabase
+      .from("program_roster")
+      .select("id, program_membership_id, full_name, first_name, last_name")
+      .eq("program_id", programId)
+      .in("program_membership_id", membershipIds);
+
+    if (rosterError) {
+      throw new Error(`Failed to map time-off roster rows: ${rosterError.message}`);
+    }
+
+    for (const row of rosterRows ?? []) {
+      if (row.program_membership_id) {
+        rosterByMembershipId.set(String(row.program_membership_id), {
+          id: String(row.id),
+          full_name: row.full_name ?? null,
+          first_name: row.first_name ?? null,
+          last_name: row.last_name ?? null,
+        });
+      }
+    }
+  }
+
   const byEventId = new Map<string, TimeOffItem>();
 
   for (const row of rows) {
@@ -200,10 +247,23 @@ export async function getProgramTimeOffMonth(params: {
     const approvalStatus = normalizeApprovalStatus(event.approval_status);
 
     if (!byEventId.has(row.event_id)) {
+      const effectiveMembershipId =
+        membership?.id ?? event.membership_id ?? row.membership_id ?? null;
+      const effectiveRosterId = row.roster_id ?? event.roster_id ?? null;
+      const roster =
+        (effectiveMembershipId
+          ? rosterByMembershipId.get(effectiveMembershipId) ?? null
+          : null) ?? (effectiveRosterId ? { id: effectiveRosterId, full_name: null, first_name: null, last_name: null } : null);
+      const rosterDisplayName =
+        roster?.full_name ??
+        [roster?.first_name, roster?.last_name].filter(Boolean).join(" ").trim() ??
+        null;
       const item: TimeOffItem = {
         id: event.id,
-        membershipId: membership?.id ?? event.membership_id ?? row.membership_id ?? null,
-        residentName: membership?.display_name ?? "Unknown Resident",
+        membershipId: effectiveRosterId ?? roster?.id ?? effectiveMembershipId,
+        rosterId: effectiveRosterId ?? roster?.id ?? null,
+        programMembershipId: effectiveMembershipId,
+        residentName: rosterDisplayName || membership?.display_name || "Unknown Resident",
         trainingLevel: membership?.role ?? null,
         classYear: membership?.grad_year ?? null,
         userId: membership?.user_id ?? event.created_by_user_id ?? null,
@@ -217,10 +277,14 @@ export async function getProgramTimeOffMonth(params: {
         approvalStatus,
         approved: approvalStatusToBoolean(approvalStatus),
         isMine:
-          !!myMembershipId &&
-          ((membership?.id ?? null) === myMembershipId ||
-            (event.membership_id ?? null) === myMembershipId ||
-            (row.membership_id ?? null) === myMembershipId),
+          (!!myRosterId &&
+            ((row.roster_id ?? null) === myRosterId ||
+              (event.roster_id ?? null) === myRosterId ||
+              (roster?.id ?? null) === myRosterId)) ||
+          (!!myMembershipId &&
+            ((membership?.id ?? null) === myMembershipId ||
+              (event.membership_id ?? null) === myMembershipId ||
+              (row.membership_id ?? null) === myMembershipId)),
       };
 
       console.log("Mapped time-off item", item);
@@ -234,6 +298,7 @@ export async function getProgramTimeOffMonth(params: {
     monthStart,
     monthEnd,
     myMembershipId,
+    myRosterId,
     items,
   };
 }
@@ -243,6 +308,7 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
 
   const {
     programId,
+    rosterId,
     membershipId,
     createdByUserId,
     eventType,
@@ -262,6 +328,7 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     .insert({
       program_id: programId,
       membership_id: membershipId,
+      roster_id: rosterId,
       event_type: eventType,
       using_pto: usingPto,
       source_kind: sourceKind,
@@ -291,6 +358,7 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     event_id: event.id,
     program_id: programId,
     membership_id: membershipId,
+    roster_id: rosterId,
     off_date: day.off_date,
     event_type: eventType,
     source_kind: sourceKind,

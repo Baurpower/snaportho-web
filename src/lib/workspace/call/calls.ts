@@ -26,7 +26,8 @@ export type CreateCallAssignmentsForMembershipInput = {
 }
 
 export type CreateProgramCallAssignmentRow = {
-  membershipId: string
+  rosterId: string
+  membershipId?: string | null
   dates: string[]
   callType: string
   site?: string | null
@@ -46,7 +47,8 @@ export type DeleteCallAssignmentInput = {
 }
 
 export type ProgramResidentOption = {
-  membershipId: string
+  rosterId: string
+  membershipId: string | null
   displayName: string
   gradYear: number | null
   userId: string | null
@@ -54,24 +56,25 @@ export type ProgramResidentOption = {
 
 export type ProgramResidentCallStats = {
   membershipId: string
+  rosterId: string | null
   totalCallsYear: number
   weekendCallsYear: number
   primaryCallsYear: number
   backupCallsYear: number
 }
 
-type ProgramMembershipResidentRow = {
+type ProgramRosterResidentRow = {
   id: string
-  display_name: string | null
+  full_name: string | null
+  first_name: string | null
+  last_name: string | null
+  program_membership_id: string | null
   grad_year: number | null
-  user_id: string | null
-}
-
-type ProgramMembershipIdRow = {
-  id: string
+  claimed_by_user_id: string | null
 }
 
 type ProgramCallStatRow = {
+  roster_id: string | null
   program_membership_id: string | null
   call_type: string | null
   call_date: string | null
@@ -254,12 +257,37 @@ export async function createProgramCallAssignments(
 ): Promise<CallAssignmentSummary[]> {
   const supabase = await createClient()
 
+  const rosterIds = Array.from(
+    new Set(input.rows.map((row) => row.rosterId).filter(Boolean))
+  )
+
+  const membershipByRosterId = new Map<string, string | null>()
+
+  if (rosterIds.length > 0) {
+    const { data: rosterRows, error: rosterError } = await supabase
+      .from('program_roster')
+      .select('id, program_membership_id')
+      .eq('program_id', input.programId)
+      .in('id', rosterIds)
+
+    if (rosterError) {
+      throw new Error(`Failed to validate roster rows: ${rosterError.message}`)
+    }
+
+    for (const row of rosterRows ?? []) {
+      membershipByRosterId.set(String(row.id), row.program_membership_id ?? null)
+    }
+  }
+
   const rowsToInsert = input.rows.flatMap((row) => {
     const uniqueDates = dedupeDates(row.dates)
+    const mappedMembershipId =
+      row.membershipId ?? membershipByRosterId.get(row.rosterId) ?? null
 
     return uniqueDates.map((date) => ({
       program_id: input.programId,
-      program_membership_id: row.membershipId,
+      roster_id: row.rosterId,
+      program_membership_id: mappedMembershipId,
       call_type: row.callType,
       call_date: date,
       start_datetime: null,
@@ -281,6 +309,7 @@ export async function createProgramCallAssignments(
     .select(`
       id,
       program_id,
+      roster_id,
       program_membership_id,
       call_type,
       call_date,
@@ -321,29 +350,36 @@ export async function getProgramResidents(
   const supabase = await createClient()
 
   const { data, error } = await supabase
-    .from('program_memberships')
+    .from('program_roster')
     .select(`
       id,
-      display_name,
+      full_name,
+      first_name,
+      last_name,
+      program_membership_id,
       grad_year,
-      user_id
+      claimed_by_user_id
     `)
     .eq('program_id', programId)
-    .eq('is_active', true)
     .order('grad_year', { ascending: true, nullsFirst: false })
-    .order('display_name', { ascending: true })
+    .order('last_name', { ascending: true, nullsFirst: false })
+    .order('first_name', { ascending: true, nullsFirst: false })
 
   if (error) {
     throw new Error(`Failed to fetch program residents: ${error.message}`)
   }
 
-  const rows = (data ?? []) as ProgramMembershipResidentRow[]
+  const rows = (data ?? []) as ProgramRosterResidentRow[]
 
   return rows.map((row) => ({
-    membershipId: row.id,
-    displayName: row.display_name ?? 'Unknown Resident',
+    rosterId: row.id,
+    membershipId: row.program_membership_id ?? null,
+    displayName:
+      row.full_name ??
+      [row.first_name, row.last_name].filter(Boolean).join(' ') ??
+      'Unknown Resident',
     gradYear: row.grad_year ?? null,
-    userId: row.user_id ?? null,
+    userId: row.claimed_by_user_id ?? null,
   }))
 }
 
@@ -354,31 +390,38 @@ export async function getProgramCallStatsForMonth(
   const supabase = await createClient()
   const { yearStart, yearEnd } = getYearStartAndEndFromMonth(month)
 
-  const { data: memberships, error: membershipsError } = await supabase
-    .from('program_memberships')
-    .select('id')
+  const { data: rosterRows, error: rosterError } = await supabase
+    .from('program_roster')
+    .select('id, program_membership_id')
     .eq('program_id', programId)
 
-  if (membershipsError) {
-    throw new Error(`Failed to fetch program memberships: ${membershipsError.message}`)
+  if (rosterError) {
+    throw new Error(`Failed to fetch program roster rows: ${rosterError.message}`)
   }
 
-  const membershipRows = (memberships ?? []) as ProgramMembershipIdRow[]
-  const membershipIds = membershipRows.map((row) => row.id)
+  const rosterIds = (rosterRows ?? []).map((row) => String(row.id))
+  const rosterByMembershipId = new Map<string, string>()
+  for (const row of rosterRows ?? []) {
+    if (row.program_membership_id) {
+      rosterByMembershipId.set(String(row.program_membership_id), String(row.id))
+    }
+  }
 
-  if (membershipIds.length === 0) {
+  if (rosterIds.length === 0) {
     return []
   }
 
   const { data: calls, error: callsError } = await supabase
     .from('call_assignments')
     .select(`
+      roster_id,
       program_membership_id,
       call_type,
       call_date,
       start_datetime
     `)
-    .in('program_membership_id', membershipIds)
+    .eq('program_id', programId)
+    .in('roster_id', rosterIds)
     .gte('call_date', yearStart)
     .lte('call_date', yearEnd)
 
@@ -390,9 +433,10 @@ export async function getProgramCallStatsForMonth(
 
   const statsMap = new Map<string, ProgramResidentCallStats>()
 
-  for (const membershipId of membershipIds) {
-    statsMap.set(membershipId, {
-      membershipId,
+  for (const rosterId of rosterIds) {
+    statsMap.set(rosterId, {
+      membershipId: rosterId,
+      rosterId,
       totalCallsYear: 0,
       weekendCallsYear: 0,
       primaryCallsYear: 0,
@@ -401,10 +445,14 @@ export async function getProgramCallStatsForMonth(
   }
 
   for (const row of callRows) {
-    const membershipId = row.program_membership_id
-    if (!membershipId) continue
+    const residentKey =
+      row.roster_id ??
+      (row.program_membership_id
+        ? rosterByMembershipId.get(row.program_membership_id) ?? null
+        : null)
+    if (!residentKey) continue
 
-    const entry = statsMap.get(membershipId)
+    const entry = statsMap.get(residentKey)
     if (!entry) continue
 
     entry.totalCallsYear += 1

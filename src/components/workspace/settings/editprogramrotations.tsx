@@ -31,6 +31,7 @@ export type EditProgramInfo = {
 
 export type EditProgramMember = {
   membershipId: string;
+  programMembershipId?: string | null;
   rosterId: string | null;
   displayName: string;
   gradYear: number | null;
@@ -54,6 +55,7 @@ export type EditProgramRotationCatalogItem = {
 export type EditProgramRotationAssignment = {
   id: string;
   membershipId: string | null;
+  programMembershipId?: string | null;
   rosterId: string | null;
   memberName: string | null;
   gradYear: number | null;
@@ -94,7 +96,7 @@ type VisibleSegment = {
 
 type DraftForm = {
   assignmentId: string | null;
-  membershipId: string;
+  rosterId: string;
   rotationId: string;
   siteLabel: string;
   teamLabel: string;
@@ -105,7 +107,8 @@ type DraftForm = {
 
 export type SaveRotationAssignmentPayload = {
   id?: string;
-  membershipId: string;
+  rosterId: string;
+  membershipId?: string;
   rotationId: string;
   startDate: string;
   endDate: string;
@@ -569,7 +572,7 @@ export default function EditProgramRotations({
   const [search, setSearch] = useState("");
   const [monthPage, setMonthPage] = useState(0);
   const [selection, setSelection] = useState<{
-    membershipId: string;
+    rosterId: string;
     startIndex: number;
     endIndex: number;
   } | null>(null);
@@ -607,10 +610,11 @@ export default function EditProgramRotations({
   const assignmentsByMember = useMemo(() => {
     const map = new Map<string, EditProgramRotationAssignment[]>();
     for (const assignment of assignments) {
-      if (!assignment.membershipId) continue;
-      const existing = map.get(assignment.membershipId) ?? [];
+      const residentKey = assignment.rosterId ?? assignment.membershipId;
+      if (!residentKey) continue;
+      const existing = map.get(residentKey) ?? [];
       existing.push(assignment);
-      map.set(assignment.membershipId, existing);
+      map.set(residentKey, existing);
     }
     return map;
   }, [assignments]);
@@ -625,9 +629,9 @@ export default function EditProgramRotations({
   }, [rotations]);
 
   const selectedMember = useMemo(() => {
-    if (!draft?.membershipId) return null;
-    return members.find((member) => member.membershipId === draft.membershipId) ?? null;
-  }, [draft?.membershipId, members]);
+    if (!draft?.rosterId) return null;
+    return members.find((member) => member.membershipId === draft.rosterId) ?? null;
+  }, [draft?.rosterId, members]);
 
   useEffect(() => {
     setSelection(null);
@@ -643,7 +647,7 @@ export default function EditProgramRotations({
     clearSelection();
   }
 
-  function openCreateModal(membershipId: string, startIndex: number, endIndex: number) {
+  function openCreateModal(rosterId: string, startIndex: number, endIndex: number) {
     const normalizedStart = Math.min(startIndex, endIndex);
     const normalizedEnd = Math.max(startIndex, endIndex);
     const { startDate, endDate } = monthRangeToDates(
@@ -654,7 +658,7 @@ export default function EditProgramRotations({
 
     setDraft({
       assignmentId: null,
-      membershipId,
+      rosterId,
       rotationId: "",
       siteLabel: "",
       teamLabel: "",
@@ -666,11 +670,11 @@ export default function EditProgramRotations({
   }
 
   function openEditModal(assignment: EditProgramRotationAssignment) {
-    if (!assignment.membershipId || !assignment.startDate || !assignment.endDate) return;
+    if (!(assignment.rosterId ?? assignment.membershipId) || !assignment.startDate || !assignment.endDate) return;
 
     setDraft({
       assignmentId: assignment.id,
-      membershipId: assignment.membershipId,
+      rosterId: assignment.rosterId ?? assignment.membershipId ?? "",
       rotationId: assignment.rotation?.id ?? "",
       siteLabel: assignment.siteLabel ?? "",
       teamLabel: assignment.teamLabel ?? "",
@@ -703,9 +707,9 @@ export default function EditProgramRotations({
       return;
     }
 
-    if (!selection || selection.membershipId !== member.membershipId) {
+    if (!selection || selection.rosterId !== member.membershipId) {
       setSelection({
-        membershipId: member.membershipId,
+        rosterId: member.membershipId,
         startIndex: monthIndex,
         endIndex: monthIndex,
       });
@@ -723,7 +727,7 @@ export default function EditProgramRotations({
 
     await onSaveAssignment({
       id: draft.assignmentId ?? undefined,
-      membershipId: draft.membershipId,
+      rosterId: draft.rosterId,
       rotationId: draft.rotationId,
       startDate: draft.startDate,
       endDate: draft.endDate,
@@ -937,7 +941,7 @@ export default function EditProgramRotations({
                             <div className="absolute inset-0 grid grid-cols-6">
                               {visibleMonths.map((month, idx) => {
                                 const isSelected =
-                                  selection?.membershipId === member.membershipId &&
+                                  selection?.rosterId === member.membershipId &&
                                   idx >= Math.min(selection.startIndex, selection.endIndex) &&
                                   idx <= Math.max(selection.startIndex, selection.endIndex);
 

@@ -84,15 +84,22 @@ export async function PATCH(
       );
     }
 
-    const { data, error } = await supabase
+    const updateQuery = supabase
       .from("availability_events")
       .update(updates)
       .eq("id", id)
-      .eq("membership_id", membership.id)
+      .eq("program_id", membership.program_id);
+
+    const scopedUpdateQuery = membership.roster_id
+      ? updateQuery.eq("roster_id", membership.roster_id)
+      : updateQuery.eq("membership_id", membership.id);
+
+    const { data, error } = await scopedUpdateQuery
       .select(
         `
           id,
           membership_id,
+          roster_id,
           event_type,
           using_pto,
           start_date,
@@ -123,7 +130,10 @@ export async function PATCH(
     return NextResponse.json({
       item: {
         id: data.id,
-        membershipId: data.membership_id ?? null,
+        // Compatibility field: `membershipId` carries roster identity in roster-first time-off payloads.
+        membershipId: data.roster_id ?? data.membership_id ?? null,
+        rosterId: data.roster_id ?? membership.roster_id ?? null,
+        programMembershipId: data.membership_id ?? null,
         type: data.event_type,
         usingPto: !!data.using_pto,
         startDate: data.start_date,

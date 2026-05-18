@@ -6,6 +6,7 @@ import { syncGoogleCalendarAfterCallChange } from "@/lib/google/syncCallCalendar
 type CallAssignmentRow = {
   id: string;
   program_id: string | null;
+  roster_id: string | null;
   program_membership_id: string | null;
   call_type: string | null;
   call_date: string | null;
@@ -82,7 +83,7 @@ export async function POST(request: NextRequest) {
     const { data: rows, error: rowsError } = await supabase
       .from("call_assignments")
       .select(
-        "id, program_id, program_membership_id, call_type, call_date, start_datetime, end_datetime, site, is_home_call, notes"
+        "id, program_id, roster_id, program_membership_id, call_type, call_date, start_datetime, end_datetime, site, is_home_call, notes"
       )
       .eq("program_id", activeMembership.program_id)
       .in("id", [firstCallId, secondCallId]);
@@ -105,7 +106,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!firstCall.program_membership_id || !secondCall.program_membership_id) {
+    if (!firstCall.roster_id || !secondCall.roster_id) {
       return NextResponse.json(
         { error: "One or both calls are missing assigned residents" },
         { status: 400 }
@@ -125,11 +126,13 @@ export async function POST(request: NextRequest) {
     const tempDate = buildSafeTemporaryDate();
 
     const firstOriginal = {
+      roster_id: firstCall.roster_id,
       program_membership_id: firstCall.program_membership_id,
       call_date: firstCall.call_date,
     };
 
     const secondOriginal = {
+      roster_id: secondCall.roster_id,
       program_membership_id: secondCall.program_membership_id,
       call_date: secondCall.call_date,
     };
@@ -154,6 +157,7 @@ export async function POST(request: NextRequest) {
     const { error: updateSecondError } = await supabase
       .from("call_assignments")
       .update({
+        roster_id: firstOriginal.roster_id,
         program_membership_id: firstOriginal.program_membership_id,
         updated_at: timestamp,
       })
@@ -187,6 +191,7 @@ export async function POST(request: NextRequest) {
     const { error: finalizeFirstError } = await supabase
       .from("call_assignments")
       .update({
+        roster_id: secondOriginal.roster_id,
         program_membership_id: secondOriginal.program_membership_id,
         call_date: firstOriginal.call_date,
         updated_at: new Date().toISOString(),
@@ -199,6 +204,7 @@ export async function POST(request: NextRequest) {
       await supabase
         .from("call_assignments")
         .update({
+          roster_id: secondOriginal.roster_id,
           program_membership_id: secondOriginal.program_membership_id,
           updated_at: new Date().toISOString(),
         })
@@ -207,6 +213,7 @@ export async function POST(request: NextRequest) {
       await supabase
         .from("call_assignments")
         .update({
+          roster_id: firstOriginal.roster_id,
           program_membership_id: firstOriginal.program_membership_id,
           call_date: firstOriginal.call_date,
           updated_at: new Date().toISOString(),

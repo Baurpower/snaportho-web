@@ -12,6 +12,7 @@ type RouteContext = {
 type CallAssignmentRow = {
   id: string;
   program_id: string | null;
+  roster_id: string | null;
   program_membership_id: string | null;
   call_type: string | null;
   call_date: string | null;
@@ -81,7 +82,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     const { data: existingCall, error: existingCallError } = await supabase
       .from("call_assignments")
       .select(
-        "id, program_id, program_membership_id, call_type, call_date, start_datetime, end_datetime, site, is_home_call, notes"
+        "id, program_id, roster_id, program_membership_id, call_type, call_date, start_datetime, end_datetime, site, is_home_call, notes"
       )
       .eq("id", callId)
       .eq("program_id", activeMembership.program_id)
@@ -96,10 +97,11 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
     const body = await request.json().catch(() => null);
 
-    const nextProgramMembershipId =
-      body?.programMembershipId === undefined
-        ? existingCall.program_membership_id
-        : body.programMembershipId;
+    const nextRosterId =
+      body?.rosterId === undefined ? existingCall.roster_id : body.rosterId;
+
+    const nextProgramMembershipIdFromBody =
+      body?.programMembershipId === undefined ? null : body.programMembershipId;
 
     const nextCallType =
       body?.callType === undefined
@@ -142,9 +144,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
         ? existingCall.notes
         : normalizeNullableString(body.notes);
 
-    if (!nextProgramMembershipId) {
+    if (!nextRosterId) {
       return NextResponse.json(
-        { error: "programMembershipId is required" },
+        { error: "rosterId is required" },
         { status: 400 }
       );
     }
@@ -174,14 +176,14 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       );
     }
 
-    const { data: targetMembership, error: targetMembershipError } = await supabase
-      .from("program_memberships")
-      .select("id")
-      .eq("id", nextProgramMembershipId)
+    const { data: targetRoster, error: targetRosterError } = await supabase
+      .from("program_roster")
+      .select("id, program_membership_id")
+      .eq("id", nextRosterId)
       .eq("program_id", activeMembership.program_id)
       .single();
 
-    if (targetMembershipError || !targetMembership) {
+    if (targetRosterError || !targetRoster) {
       return NextResponse.json(
         { error: "Target resident is not in this program" },
         { status: 400 }
@@ -189,7 +191,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     }
 
     const updatePayload = {
-      program_membership_id: nextProgramMembershipId,
+      roster_id: nextRosterId,
+      program_membership_id:
+        nextProgramMembershipIdFromBody ?? targetRoster.program_membership_id ?? null,
       call_type: nextCallType,
       call_date: nextCallDate,
       start_datetime: nextStartDatetime,

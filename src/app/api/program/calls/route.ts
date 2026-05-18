@@ -4,6 +4,7 @@ import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
 import { createProgramCallAssignments } from '@/lib/workspace/call/calls'
 
 type ProgramCallInputRow = {
+  rosterId?: string
   membershipId?: string
   dates?: string[]
   callType?: string
@@ -64,9 +65,9 @@ export async function POST(request: NextRequest) {
     }
 
     for (const row of body.rows) {
-      if (!row.membershipId) {
+      if (!row.rosterId && !row.membershipId) {
         return NextResponse.json(
-          { error: 'each row must include membershipId' },
+          { error: 'each row must include rosterId (or legacy membershipId)' },
           { status: 400 }
         )
       }
@@ -97,7 +98,8 @@ export async function POST(request: NextRequest) {
       programId: membership.program_id,
       createdBy: user.id,
       rows: body.rows.map((row) => ({
-        membershipId: row.membershipId!,
+        rosterId: row.rosterId ?? row.membershipId!,
+        membershipId: row.membershipId ?? null,
         dates: row.dates!,
         callType: row.callType!,
         site: row.site ?? null,

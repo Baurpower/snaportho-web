@@ -35,6 +35,8 @@ export type ProgramRule = {
 };
 
 export type ResidentOption = {
+  rosterId?: string | null;
+  programMembershipId?: string | null;
   membershipId: string;
   displayName: string;
   trainingLevel: string | null;
@@ -43,6 +45,7 @@ export type ResidentOption = {
 };
 
 export type ExistingResidentStats = {
+  rosterId?: string | null;
   membershipId: string;
   totalCallsYear: number;
   weekendCallsYear: number;
@@ -65,6 +68,8 @@ export type CalendarDay = {
 
 export type MonthCall = {
   id: string;
+  rosterId?: string | null;
+  programMembershipId?: string | null;
   membershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
