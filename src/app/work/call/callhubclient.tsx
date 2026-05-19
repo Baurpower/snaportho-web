@@ -865,18 +865,18 @@ async function stopGoogleSync() {
 
   return (
     <>
-      <main className="min-w-0 text-slate-900">
-        <section className="relative overflow-hidden px-5 pb-5 pt-6 md:px-8 md:pb-6 md:pt-8">
+      <main className="min-w-0 overflow-x-clip text-slate-900">
+        <section className="relative overflow-hidden px-4 pb-4 pt-5 sm:px-5 md:px-6 md:pb-5 md:pt-7 xl:px-8">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.12),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_16%)]" />
 
-          <div className="relative mx-auto max-w-[1600px]">
+          <div className="relative mx-auto max-w-[1440px] 2xl:max-w-[1520px]">
             <motion.div
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur md:p-6"
+              className="rounded-[1.75rem] border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-5 md:p-6"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3 sm:gap-4">
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-200">
                     <PhoneCall className="h-3.5 w-3.5" />
@@ -890,7 +890,7 @@ async function stopGoogleSync() {
                   </p>
                 </div>
 
-                <div className="grid gap-3 md:grid-cols-3">
+                <div className="grid gap-3 lg:grid-cols-3">
                   <StatCard
                     title="Visible Month"
                     value={monthLabel(visibleMonth.year, visibleMonth.monthIndex)}
@@ -916,8 +916,8 @@ async function stopGoogleSync() {
           </div>
         </section>
 
-        <section className="px-5 pb-8 md:px-8 md:pb-10">
-          <div className="mx-auto max-w-[1600px] space-y-4">
+        <section className="px-4 pb-6 sm:px-5 md:px-6 md:pb-8 xl:px-8">
+          <div className="mx-auto max-w-[1440px] space-y-4 2xl:max-w-[1520px]">
             {error ? (
               <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
                 {error}
@@ -934,10 +934,10 @@ async function stopGoogleSync() {
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-xl md:p-5"
+              className="rounded-[1.75rem] border border-slate-200 bg-white p-3.5 shadow-xl sm:p-4 md:p-5"
             >
-              <div className="mb-4 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-                <div className="flex items-center gap-3">
+              <div className="mb-4 flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
+                <div className="flex flex-wrap items-center gap-3">
                   <button
                     type="button"
                     onClick={() =>
@@ -1083,27 +1083,31 @@ async function stopGoogleSync() {
                 ) : null}
               </div>
 
-              {editingCalendar ? (
-                <EditCallMonthCalendar
-                  year={visibleMonth.year}
-                  monthIndex={visibleMonth.monthIndex}
-                  calls={calls}
-                  loading={loading}
-                  residents={residentOptions}
-                  onCancel={() => setEditingCalendar(false)}
-                  onSwitch={handleSwitch}
-                  onSwap={handleSwap}
-                  onDelete={handleDelete}
-                />
-              ) : (
-                <CallMonthCalendar
-                  year={visibleMonth.year}
-                  monthIndex={visibleMonth.monthIndex}
-                  calls={calls}
-                  loading={loading}
-                  onSelectDate={setSelectedDateKey}
-                />
-              )}
+              <div className="min-w-0 overflow-x-auto">
+                <div className="min-w-[960px] xl:min-w-[1080px] 2xl:min-w-0">
+                  {editingCalendar ? (
+                    <EditCallMonthCalendar
+                      year={visibleMonth.year}
+                      monthIndex={visibleMonth.monthIndex}
+                      calls={calls}
+                      loading={loading}
+                      residents={residentOptions}
+                      onCancel={() => setEditingCalendar(false)}
+                      onSwitch={handleSwitch}
+                      onSwap={handleSwap}
+                      onDelete={handleDelete}
+                    />
+                  ) : (
+                    <CallMonthCalendar
+                      year={visibleMonth.year}
+                      monthIndex={visibleMonth.monthIndex}
+                      calls={calls}
+                      loading={loading}
+                      onSelectDate={setSelectedDateKey}
+                    />
+                  )}
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>

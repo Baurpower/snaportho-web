@@ -1,6 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import {
+  getPgyFromGradYear,
+  getTrainingLevelFromPgy,
+  toEffectiveDate,
+} from "@/lib/workspace/pgy";
 
 type NormalizedRosterPerson = {
   rosterId: string;
@@ -15,19 +20,8 @@ type NormalizedRosterPerson = {
   trainingLevel: string | null;
 };
 
-function getCurrentChiefGradYear(date = new Date()): number {
-  const year = date.getFullYear();
-  const julyFirst = new Date(year, 6, 1);
-  return date >= julyFirst ? year + 1 : year;
-}
-
-function getPgyFromGradYear(gradYear: number | null): number | null {
-  if (!gradYear) return null;
-
-  const currentChiefGradYear = getCurrentChiefGradYear();
-  const pgy = 5 - (gradYear - currentChiefGradYear);
-
-  return pgy >= 1 && pgy <= 5 ? pgy : null;
+function isValidDateString(value: string | null): value is string {
+  return !!value && /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
 function emptyRosterPayload() {
@@ -39,9 +33,25 @@ function emptyRosterPayload() {
   };
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
+    const effectiveDateParam =
+      request.nextUrl.searchParams.get("effectiveDate") ??
+      request.nextUrl.searchParams.get("monthStart");
+
+    if (
+      effectiveDateParam !== null &&
+      (!isValidDateString(effectiveDateParam) ||
+        !toEffectiveDate(effectiveDateParam))
+    ) {
+      return NextResponse.json(
+        { error: "effectiveDate must be in YYYY-MM-DD format" },
+        { status: 400 }
+      );
+    }
+
+    const effectiveDate = effectiveDateParam ?? new Date();
 
     const {
       data: { user },
@@ -85,7 +95,10 @@ export async function GET() {
       const gradYear =
         typeof row.grad_year === "number" ? row.grad_year : null;
 
-      const pgyYear = row.role === "resident" ? getPgyFromGradYear(gradYear) : null;
+      const pgyYear =
+        row.role === "resident"
+          ? getPgyFromGradYear(gradYear, effectiveDate)
+          : null;
 
       const displayName =
         row.full_name ||
@@ -105,7 +118,7 @@ export async function GET() {
         role: row.role,
         gradYear,
         pgyYear,
-        trainingLevel: pgyYear ? `PGY-${pgyYear}` : null,
+        trainingLevel: getTrainingLevelFromPgy(pgyYear),
       };
     });
 

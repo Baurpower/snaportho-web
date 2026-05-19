@@ -58,8 +58,8 @@ export function WorkspaceShell({
   }, [sidebarHidden, mounted, autoHideForRoute]);
 
   return (
-    <div className="w-full bg-slate-950">
-      <div className="flex w-full items-start">
+    <div className="w-full overflow-x-clip bg-slate-950">
+      <div className="flex min-w-0 w-full items-start">
         {!sidebarHidden ? (
           <div
             className="sticky shrink-0 self-start"
@@ -72,7 +72,7 @@ export function WorkspaceShell({
           </div>
         ) : (
           <div
-            className="sticky flex w-[72px] shrink-0 self-start border-r border-slate-200 bg-white"
+            className="sticky flex w-16 shrink-0 self-start border-r border-slate-200 bg-white lg:w-20 xl:w-[72px]"
             style={{
               top: TOP_NAV_HEIGHT,
               height: `calc(100vh - ${TOP_NAV_HEIGHT}px)`,
@@ -91,7 +91,7 @@ export function WorkspaceShell({
           </div>
         )}
 
-        <div className="min-w-0 flex-1 overflow-x-hidden">{children}</div>
+        <div className="min-w-0 flex-1 overflow-x-clip">{children}</div>
       </div>
     </div>
   );

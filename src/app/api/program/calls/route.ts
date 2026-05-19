@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
-import { createProgramCallAssignments } from '@/lib/workspace/call/calls'
+import {
+  CALL_ASSIGNMENT_EDITOR_ROLES,
+  createProgramCallAssignments,
+  ProgramCallValidationError,
+} from '@/lib/workspace/call/calls'
 
 type ProgramCallInputRow = {
   rosterId?: string
@@ -46,12 +50,11 @@ export async function POST(request: NextRequest) {
     if (!membership?.program_id) {
       return NextResponse.json(
         { error: 'No active program membership found' },
-        { status: 404 }
+        { status: 403 }
       )
     }
 
-    // Later you can replace this with a proper chief/admin role check.
-    if (!membership.role || !['chief', 'admin', 'program_admin'].includes(membership.role)) {
+    if (!membership.role || !CALL_ASSIGNMENT_EDITOR_ROLES.has(membership.role)) {
       return NextResponse.json(
         { error: 'You do not have permission to add program call assignments' },
         { status: 403 }
@@ -110,6 +113,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ calls: created }, { status: 201 })
   } catch (error) {
+    if (error instanceof ProgramCallValidationError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
     const message =
       error instanceof Error ? error.message : 'Unexpected server error'
 

@@ -485,59 +485,19 @@ export function WeekPlannerPanel({
     });
   }
 
-  function changeActiveDraftCategory(nextCategory: PlannerCategory) {
-    if (!activeDate) {
-      setCategory(nextCategory);
-      return;
-    }
-
-    setCategory(nextCategory);
-    setLocalError(null);
-    setSuccessMessage(null);
-
-    setDrafts((prev) => {
-      const current = prev[activeDate] ?? createDefaultDraft(nextCategory);
-
-      const shouldResetTitle =
-        isDefaultPlannerTitle(current.title) ||
-        current.title.trim() === defaultTitleForCategory(current.category);
-
-      return {
-        ...prev,
-        [activeDate]: {
-          ...current,
-          selected: true,
-          category: nextCategory,
-          title: shouldResetTitle ? defaultTitleForCategory(nextCategory) : current.title,
-          dirty: true,
-        },
-      };
-    });
-  }
-
   function selectCategory(next: PlannerCategory) {
-    const shouldApplyToActive =
-      !!activeDate &&
-      !!drafts[activeDate] &&
-      drafts[activeDate].selected &&
-      activeDate === activeDate;
+  setCategory(next);
+  setLocalError(null);
+  setSuccessMessage(null);
 
-    if (shouldApplyToActive) {
-      changeActiveDraftCategory(next);
-    } else {
-      setCategory(next);
-      setLocalError(null);
-      setSuccessMessage(null);
-    }
+  const firstInCategory = days.find(
+    (day) => drafts[day.date]?.selected && drafts[day.date]?.category === next
+  );
 
-    const firstInCategory = days.find(
-      (day) => drafts[day.date]?.selected && drafts[day.date]?.category === next
-    );
-
-    if (firstInCategory) {
-      setActiveDate(firstInCategory.date);
-    }
+  if (firstInCategory) {
+    setActiveDate(firstInCategory.date);
   }
+}
 
   function jumpToCategoryDay(date: string) {
     const draft = drafts[date];
@@ -862,7 +822,7 @@ export function WeekPlannerPanel({
             </div>
 
             <div className="overflow-x-auto">
-              <div className="grid min-w-[840px] grid-cols-7 gap-3">
+              <div className="grid min-w-[760px] grid-cols-7 gap-2.5 lg:min-w-[840px] lg:gap-3">
                 {days.map((day) => {
                   const draft = ensureDraft(day.date);
                   const isSelected = draft.selected;
@@ -883,7 +843,7 @@ export function WeekPlannerPanel({
                       type="button"
                       onClick={() => assignDayToCurrentCategory(day.date)}
                       onDoubleClick={() => activateDay(day.date)}
-                      className={`rounded-[1.25rem] border px-3 py-4 text-left transition ${cardClass}`}
+                      className={`rounded-[1.25rem] border px-2.5 py-4 text-left transition sm:px-3 ${cardClass}`}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div>

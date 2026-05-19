@@ -41,6 +41,23 @@ export type CreateProgramCallAssignmentsInput = {
   rows: CreateProgramCallAssignmentRow[]
 }
 
+export const CALL_ASSIGNMENT_EDITOR_ROLES = new Set([
+  'admin',
+  'program_admin',
+  'chief',
+  'chief_resident',
+  'faculty',
+  'faculty_lead',
+  'resident',
+])
+
+export class ProgramCallValidationError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ProgramCallValidationError'
+  }
+}
+
 export type DeleteCallAssignmentInput = {
   callId: string
   programId: string
@@ -81,6 +98,11 @@ type ProgramCallStatRow = {
   start_datetime: string | null
 }
 
+type ProgramRosterIdentityRow = {
+  id: string
+  program_membership_id: string | null
+}
+
 function dedupeDates(dates: string[]): string[] {
   return Array.from(new Set(dates)).sort()
 }
@@ -98,6 +120,99 @@ function getYearStartAndEndFromMonth(month: string) {
     yearStart: `${year}-01-01`,
     yearEnd: `${year}-12-31`,
   }
+}
+
+export async function resolveProgramRosterTargets(
+  programId: string,
+  rows: Array<{
+    rosterId?: string | null
+    membershipId?: string | null
+  }>
+): Promise<Array<{ rosterId: string; programMembershipId: string | null }>> {
+  const supabase = await createClient()
+
+  const rosterIds = Array.from(
+    new Set(rows.map((row) => row.rosterId).filter(Boolean))
+  ) as string[]
+  const membershipIds = Array.from(
+    new Set(rows.map((row) => row.membershipId).filter(Boolean))
+  ) as string[]
+
+  const rosterById = new Map<string, ProgramRosterIdentityRow>()
+  const rosterByMembershipId = new Map<string, ProgramRosterIdentityRow>()
+
+  if (rosterIds.length > 0) {
+    const { data, error } = await supabase
+      .from('program_roster')
+      .select('id, program_membership_id')
+      .eq('program_id', programId)
+      .in('id', rosterIds)
+
+    if (error) {
+      throw new Error(`Failed to validate roster rows: ${error.message}`)
+    }
+
+    for (const row of (data ?? []) as ProgramRosterIdentityRow[]) {
+      rosterById.set(String(row.id), row)
+      if (row.program_membership_id) {
+        rosterByMembershipId.set(String(row.program_membership_id), row)
+      }
+    }
+  }
+
+  if (membershipIds.length > 0) {
+    const missingMembershipIds = membershipIds.filter(
+      (membershipId) => !rosterByMembershipId.has(membershipId)
+    )
+
+    if (missingMembershipIds.length > 0) {
+      const { data, error } = await supabase
+        .from('program_roster')
+        .select('id, program_membership_id')
+        .eq('program_id', programId)
+        .in('program_membership_id', missingMembershipIds)
+
+      if (error) {
+        throw new Error(`Failed to validate membership-linked roster rows: ${error.message}`)
+      }
+
+      for (const row of (data ?? []) as ProgramRosterIdentityRow[]) {
+        rosterById.set(String(row.id), row)
+        if (row.program_membership_id) {
+          rosterByMembershipId.set(String(row.program_membership_id), row)
+        }
+      }
+    }
+  }
+
+  return rows.map((row, index) => {
+    const roster =
+      (row.rosterId ? rosterById.get(row.rosterId) ?? null : null) ??
+      (row.membershipId
+        ? rosterByMembershipId.get(row.membershipId) ?? null
+        : null)
+
+    if (!roster) {
+      throw new ProgramCallValidationError(
+        `Row ${index + 1}: resident roster record does not belong to this program`
+      )
+    }
+
+    if (
+      row.membershipId &&
+      roster.program_membership_id &&
+      row.membershipId !== roster.program_membership_id
+    ) {
+      throw new ProgramCallValidationError(
+        `Row ${index + 1}: resident membership does not match the selected roster row`
+      )
+    }
+
+    return {
+      rosterId: String(roster.id),
+      programMembershipId: roster.program_membership_id ?? null,
+    }
+  })
 }
 
 export async function getNextCallForMembership(
@@ -256,38 +371,22 @@ export async function createProgramCallAssignments(
   input: CreateProgramCallAssignmentsInput
 ): Promise<CallAssignmentSummary[]> {
   const supabase = await createClient()
-
-  const rosterIds = Array.from(
-    new Set(input.rows.map((row) => row.rosterId).filter(Boolean))
+  const resolvedTargets = await resolveProgramRosterTargets(
+    input.programId,
+    input.rows.map((row) => ({
+      rosterId: row.rosterId,
+      membershipId: row.membershipId ?? null,
+    }))
   )
 
-  const membershipByRosterId = new Map<string, string | null>()
-
-  if (rosterIds.length > 0) {
-    const { data: rosterRows, error: rosterError } = await supabase
-      .from('program_roster')
-      .select('id, program_membership_id')
-      .eq('program_id', input.programId)
-      .in('id', rosterIds)
-
-    if (rosterError) {
-      throw new Error(`Failed to validate roster rows: ${rosterError.message}`)
-    }
-
-    for (const row of rosterRows ?? []) {
-      membershipByRosterId.set(String(row.id), row.program_membership_id ?? null)
-    }
-  }
-
-  const rowsToInsert = input.rows.flatMap((row) => {
+  const rowsToInsert = input.rows.flatMap((row, index) => {
     const uniqueDates = dedupeDates(row.dates)
-    const mappedMembershipId =
-      row.membershipId ?? membershipByRosterId.get(row.rosterId) ?? null
+    const resolvedTarget = resolvedTargets[index]
 
     return uniqueDates.map((date) => ({
       program_id: input.programId,
-      roster_id: row.rosterId,
-      program_membership_id: mappedMembershipId,
+      roster_id: resolvedTarget.rosterId,
+      program_membership_id: resolvedTarget.programMembershipId,
       call_type: row.callType,
       call_date: date,
       start_datetime: null,

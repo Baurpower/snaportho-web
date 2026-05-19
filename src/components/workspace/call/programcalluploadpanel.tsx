@@ -22,7 +22,9 @@ export type ParsedProgramCallRow = {
   isHomeCall: boolean;
   notes: string | null;
   errors: string[];
+  matchedRosterId: string | null;
   matchedMembershipId: string | null;
+  programMembershipId?: string | null;
   matchedDisplayName: string | null;
   matchedTrainingLevel: string | null;
   matchedClassYear: number | null;
@@ -131,7 +133,9 @@ export default function ProgramCallUploadPanel({
             site: row.site,
             isHomeCall: row.isHomeCall,
             notes: row.notes,
-            matchedMembershipId: row.matchedMembershipId,
+            matchedRosterId: row.matchedRosterId,
+            matchedMembershipId:
+              row.programMembershipId ?? row.matchedMembershipId ?? null,
           })),
         }),
       });

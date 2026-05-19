@@ -1,28 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import {
+  getPgyFromGradYear,
+  getTrainingLevelFromPgy,
+} from "@/lib/workspace/pgy";
 
 function isValidDateString(value: string | null): value is string {
   return !!value && /^\d{4}-\d{2}-\d{2}$/.test(value);
-}
-
-function getAcademicYear(date = new Date()): number {
-  const year = date.getFullYear();
-  const julyFirst = new Date(year, 6, 1);
-  return date >= julyFirst ? year + 1 : year;
-}
-
-function getPgyFromGradYear(
-  gradYear: number | null,
-  date = new Date()
-): number | null {
-  if (!gradYear) return null;
-
-  const academicYear = getAcademicYear(date);
-  const pgy = gradYear - academicYear + 1;
-
-  if (pgy < 1 || pgy > 5) return null;
-  return pgy;
 }
 
 type ProgramRosterRelation = {
@@ -251,6 +236,8 @@ export async function GET(request: NextRequest) {
         myMembershipId: activeMembership.id,
         myRosterId: activeMembership.roster_id ?? null,
         calls: deduped.map((row) => {
+          const effectiveDate =
+            row.call_date ?? row.start_datetime?.slice(0, 10) ?? null;
           const roster =
             normalizeRoster(row.program_roster) ??
             (row.roster_id ? rosterById.get(row.roster_id) ?? null : null) ??
@@ -258,8 +245,10 @@ export async function GET(request: NextRequest) {
               ? rosterByMembershipId.get(row.program_membership_id) ?? null
               : null);
           const gradYear = roster?.grad_year ?? null;
-          const pgyYear = getPgyFromGradYear(gradYear);
-          const trainingLevel = pgyYear ? `PGY-${pgyYear}` : null;
+          const pgyYear = effectiveDate
+            ? getPgyFromGradYear(gradYear, effectiveDate)
+            : null;
+          const trainingLevel = getTrainingLevelFromPgy(pgyYear);
 
           return {
             id: row.id,

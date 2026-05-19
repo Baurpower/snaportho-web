@@ -153,7 +153,7 @@ export async function POST(request: NextRequest) {
       return {
         ...row,
         matchedRosterId: match?.id ?? null,
-        matchedMembershipId: match?.id ?? null,
+        matchedMembershipId: match?.program_membership_id ?? null,
         programMembershipId: match?.program_membership_id ?? null,
         matchedDisplayName: displayName,
         matchedTrainingLevel: match?.training_level ?? null,
@@ -166,17 +166,6 @@ export async function POST(request: NextRequest) {
             : "unmatched",
       };
     });
-
-    console.log(
-      previewRows.slice(0, 20).map((row) => ({
-        sourceRow: row.sourceRow,
-        residentName: row.residentName,
-        callDate: row.callDate,
-        callType: row.callType,
-        matchedDisplayName: row.matchedDisplayName,
-        errors: row.errors,
-      }))
-    );
 
     return NextResponse.json(
       {

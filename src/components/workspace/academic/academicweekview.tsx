@@ -332,15 +332,15 @@ export default function AcademicWeekView({
   }
 
   return (
-    <section className="overflow-x-auto rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-xl">
-        <div className="grid min-w-[1400px] grid-cols-7 gap-3">
+    <section className="overflow-x-auto rounded-[1.75rem] border border-slate-200 bg-white p-3 shadow-xl md:p-4">
+        <div className="grid min-w-[980px] grid-cols-7 gap-2.5 xl:min-w-[1120px] xl:gap-3 2xl:min-w-0">
         {eventsByDay.map(({ day, events: dayEvents }) => {
           const isToday = isSameDay(day, new Date());
 
           return (
             <div
               key={day.toISOString()}
-              className={`min-h-[300px] rounded-3xl border p-3 ${
+              className={`min-h-[300px] min-w-0 rounded-3xl border p-2.5 md:p-3 ${
                 isToday
                   ? "border-slate-950 bg-slate-50"
                   : "border-slate-200 bg-white"

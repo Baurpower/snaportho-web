@@ -89,19 +89,7 @@ type SummaryResponse = {
 type WeekScheduleResponse = {
   weekStart: string;
   weekEnd: string;
-  days: Array<{
-    date: string;
-    dayKey: string;
-    primaryLabel: string | null;
-    dayCategory: "OR" | "Clinic" | "Custom" | null;
-    customTitle: string | null;
-    location: string | null;
-    attending: string | null;
-    rotationPill: string | null;
-    rotationColor: string | null;
-    hasCall: boolean;
-    callLabel: string | null;
-  }>;
+  days: WeekDayCard[];
 };
 
 type MonthLiteResponse = {
@@ -653,11 +641,11 @@ function RotationsPanel({
             No coverage found for this month.
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
             {groupedRotations.map((group) => (
               <div
                 key={`${activeKey}-${group.rotation}`}
-                className="relative overflow-hidden rounded-[1.55rem] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+                className="relative overflow-hidden rounded-[1.25rem] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
               >
                 <div
                   className={`absolute inset-x-0 top-0 h-1.5 ${group.tone
@@ -667,20 +655,20 @@ function RotationsPanel({
                 />
 
                 <div className="pt-2">
-                  <h4 className="text-[1.85rem] font-black leading-none tracking-[-0.03em] text-slate-950">
-                    {group.rotation}
-                  </h4>
-                  <p className="mt-2 text-sm font-medium text-slate-400">
+                  <h4 className="truncate text-xl font-black leading-tight tracking-[-0.03em] text-slate-950 xl:text-2xl">
+  {group.rotation}
+</h4>
+<p className="mt-1 text-xs font-medium text-slate-400">
                     {group.residents.length} resident
                     {group.residents.length === 1 ? "" : "s"}
                   </p>
                 </div>
 
-                <div className="mt-5 space-y-2">
+                <div className="mt-3 space-y-2">
                   {group.residents.map((resident) => (
                     <div
                       key={`${group.rotation}-${resident.resident}-${resident.level}`}
-                      className="rounded-[1rem] border border-slate-200 bg-slate-50/80 px-3.5 py-3"
+                      className="rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-2.5"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">

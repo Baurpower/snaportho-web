@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import {
+  CALL_ASSIGNMENT_EDITOR_ROLES,
+  ProgramCallValidationError,
+  resolveProgramRosterTargets,
+} from "@/lib/workspace/call/calls";
 
 type SaveRow = {
   residentName: string;
@@ -42,7 +47,7 @@ export async function POST(request: NextRequest) {
     if (!membership?.program_id) {
       return NextResponse.json(
         { error: "No active program membership found" },
-        { status: 400 }
+        { status: 403 }
       );
     }
 
@@ -86,42 +91,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const rosterIds = Array.from(
-      new Set(
-        rows
-          .map((row) => row.matchedRosterId ?? row.matchedMembershipId ?? null)
-          .filter(Boolean)
-      )
+    const resolvedTargets = await resolveProgramRosterTargets(
+      membership.program_id,
+      rows.map((row) => ({
+        rosterId: row.matchedRosterId ?? null,
+        membershipId: row.matchedMembershipId ?? null,
+      }))
     );
 
-    if (rosterIds.length > 0) {
-      const { data: validRosterRows, error: validRosterRowsError } = await supabase
-        .from("program_roster")
-        .select("id")
-        .eq("program_id", membership.program_id)
-        .in("id", rosterIds);
-
-      if (validRosterRowsError) {
-        throw new Error(
-          `Failed to verify roster rows: ${validRosterRowsError.message}`
-        );
-      }
-
-      const validRosterIdSet = new Set((validRosterRows ?? []).map((row) => row.id));
-
-      const rowsOutsideProgram = rows.filter(
-        (row) =>
-          !validRosterIdSet.has(
-            row.matchedRosterId ?? row.matchedMembershipId ?? ""
-          )
+    if (!membership.role || !CALL_ASSIGNMENT_EDITOR_ROLES.has(membership.role)) {
+      return NextResponse.json(
+        { error: "You do not have permission to add program call assignments" },
+        { status: 403 }
       );
-
-      if (rowsOutsideProgram.length > 0) {
-        return NextResponse.json(
-          { error: "One or more rows do not belong to this program" },
-          { status: 400 }
-        );
-      }
     }
 
     const touchedDates = Array.from(
@@ -182,35 +164,15 @@ export async function POST(request: NextRequest) {
 
     const saved: Array<{ action: "created" | "updated"; id: string }> = [];
 
-    const membershipByRosterId = new Map<string, string | null>();
-    if (rosterIds.length > 0) {
-      const { data: rosterMapRows, error: rosterMapError } = await supabase
-        .from("program_roster")
-        .select("id, program_membership_id")
-        .eq("program_id", membership.program_id)
-        .in("id", rosterIds);
-
-      if (rosterMapError) {
-        throw new Error(`Failed to map roster to membership: ${rosterMapError.message}`);
-      }
-
-      for (const row of rosterMapRows ?? []) {
-        membershipByRosterId.set(String(row.id), row.program_membership_id ?? null);
-      }
-    }
-
-    for (const row of rows) {
+    for (const [index, row] of rows.entries()) {
       const slotKey = `${row.callDate}__${row.callType}`;
       const existing = existingRowsBySlot.get(slotKey);
-      const rosterId = row.matchedRosterId ?? row.matchedMembershipId!;
+      const resolvedTarget = resolvedTargets[index];
 
       const payload = {
         program_id: membership.program_id,
-        roster_id: rosterId,
-        program_membership_id:
-          row.matchedMembershipId ??
-          membershipByRosterId.get(rosterId) ??
-          null,
+        roster_id: resolvedTarget.rosterId,
+        program_membership_id: resolvedTarget.programMembershipId,
         call_type: row.callType,
         call_date: row.callDate,
         start_datetime: null,
@@ -258,6 +220,10 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof ProgramCallValidationError) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
     return NextResponse.json(
       {
         error:

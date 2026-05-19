@@ -383,8 +383,8 @@ export default function ProgramCallManager() {
 
         const { monthStart, monthEnd } = getMonthRange(builderMonth);
 
-        const [membersResponse, rotationAssignmentsResponse] = await Promise.all([
-  fetch("/api/program/members", {
+const [membersResponse, rotationAssignmentsResponse] = await Promise.all([
+  fetch(`/api/program/members?effectiveDate=${encodeURIComponent(monthStart)}`, {
     credentials: "include",
   }),
   fetch(
@@ -1175,7 +1175,7 @@ const rotationAssignmentsByRosterId =
         isHomeCall: boolean;
         notes: string | null;
         matchedRosterId: string;
-        matchedMembershipId: string;
+        matchedMembershipId: string | null;
       }> = [];
 
       if (assignment.primaryMembershipId) {
@@ -1189,8 +1189,8 @@ const rotationAssignmentsByRosterId =
             site: null,
             isHomeCall: true,
             notes: null,
-            matchedRosterId: resident.membershipId,
-            matchedMembershipId: resident.membershipId,
+            matchedRosterId: resident.rosterId ?? resident.membershipId,
+            matchedMembershipId: resident.programMembershipId ?? null,
           });
         }
       }
@@ -1206,8 +1206,8 @@ const rotationAssignmentsByRosterId =
             site: null,
             isHomeCall: true,
             notes: null,
-            matchedRosterId: resident.membershipId,
-            matchedMembershipId: resident.membershipId,
+            matchedRosterId: resident.rosterId ?? resident.membershipId,
+            matchedMembershipId: resident.programMembershipId ?? null,
           });
         }
       }
@@ -1216,7 +1216,10 @@ const rotationAssignmentsByRosterId =
     });
   }
 
-  async function saveRows(rows: ReturnType<typeof buildSaveRows>, fallbackError: string) {
+  async function saveRows(
+    rows: ReturnType<typeof buildSaveRows>,
+    fallbackError: string
+  ) {
     setSaving(true);
 
     try {
@@ -1229,6 +1232,7 @@ const rotationAssignmentsByRosterId =
         body: JSON.stringify({
           label: `${formatMonthLabel(builderMonth)} Call Schedule`,
           notes: null,
+          replaceExistingForDates: monthDays.map((day) => day.key),
           rows,
         }),
       });

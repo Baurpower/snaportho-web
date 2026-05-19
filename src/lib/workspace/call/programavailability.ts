@@ -5,6 +5,10 @@ import {
   getDefaultProgramRuleSet,
   getProgramRules,
 } from "@/lib/workspace/call/programcallrules";
+import {
+  getPgyFromGradYear,
+  getTrainingLevelFromPgy,
+} from "@/lib/workspace/pgy";
 
 type CallType = "Primary" | "Backup";
 
@@ -139,25 +143,6 @@ type RawResident = {
   gradYear: number | null;
   userId?: string | null;
 };
-
-function getAcademicYear(date = new Date()): number {
-  const year = date.getFullYear();
-  const julyFirst = new Date(year, 6, 1);
-  return date >= julyFirst ? year + 1 : year;
-}
-
-function getPgyFromGradYear(
-  gradYear: number | null,
-  date = new Date()
-): number | null {
-  if (!gradYear) return null;
-
-  const academicYear = getAcademicYear(date);
-  const pgy = gradYear - academicYear + 1;
-
-  if (pgy < 1 || pgy > 5) return null;
-  return pgy;
-}
 
 function parseDateKey(dateKey: string) {
   return new Date(`${dateKey}T00:00:00`);
@@ -302,7 +287,7 @@ export async function getProgramAvailabilityMonth(params: {
       displayName: resident.displayName,
       gradYear: resident.gradYear ?? null,
       pgyYear,
-      trainingLevel: pgyYear ? `PGY-${pgyYear}` : null,
+      trainingLevel: getTrainingLevelFromPgy(pgyYear),
     };
   });
 

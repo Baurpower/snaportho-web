@@ -99,14 +99,17 @@ export function WorkspaceSidebar({ onHide }: WorkspaceSidebarProps) {
     window.localStorage.setItem(STORAGE_KEY, String(collapsed));
   }, [collapsed, mounted]);
 
-  const sidebarWidth = useMemo(
-    () => (collapsed ? "w-[88px]" : "w-[240px]"),
-    [collapsed]
-  );
+  const sidebarWidth = useMemo(() => {
+    if (collapsed) {
+      return "w-20 xl:w-[88px]";
+    }
+
+    return "w-[216px] xl:w-[232px] 2xl:w-[240px]";
+  }, [collapsed]);
 
   return (
     <aside
-      className={`${sidebarWidth} relative h-full border-r border-slate-200 bg-white transition-[width] duration-200`}
+      className={`${sidebarWidth} relative h-full max-w-full border-r border-slate-200 bg-white transition-[width] duration-200`}
     >
       {!collapsed ? (
         <button

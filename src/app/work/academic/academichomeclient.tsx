@@ -344,13 +344,13 @@ const params = new URLSearchParams({
   }, [monthPreviewOpen, programId, selectedDate, requiredOnly, eventTypeId]);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-900">
-      <section className="relative overflow-hidden px-5 pb-5 pt-6 md:px-8 md:pb-6 md:pt-8">
+    <main className="min-h-screen overflow-x-clip bg-slate-950 text-slate-900">
+      <section className="relative overflow-hidden px-4 pb-4 pt-5 sm:px-5 md:px-6 md:pb-5 md:pt-7 xl:px-8">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.14),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_16%)]" />
 
-        <div className="relative mx-auto max-w-[1600px]">
-          <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 backdrop-blur md:p-6">
-            <div className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
+        <div className="relative mx-auto max-w-[1440px] 2xl:max-w-[1520px]">
+          <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-4 backdrop-blur sm:p-5 md:p-6">
+            <div className="flex flex-col gap-4 2xl:flex-row 2xl:items-end 2xl:justify-between">
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-200">
                   <GraduationCap className="h-3.5 w-3.5" />
@@ -367,7 +367,7 @@ const params = new URLSearchParams({
                 </p>
               </div>
 
-              <div className="grid gap-3 xl:min-w-[720px] xl:grid-cols-[1.4fr_0.8fr]">
+              <div className="grid gap-3 xl:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.8fr)] 2xl:min-w-[720px]">
   <button
     type="button"
     onClick={() => nextEvent && setSelectedEventId(nextEvent.id)}
@@ -452,11 +452,11 @@ const params = new URLSearchParams({
         </div>
       </section>
 
-      <section className="px-5 pb-8 md:px-8 md:pb-10">
-        <div className="mx-auto max-w-[1600px] space-y-4">
-          <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-xl md:p-5">
-            <div className="mb-4 flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-              <div className="flex items-center gap-3">
+      <section className="px-4 pb-6 sm:px-5 md:px-6 md:pb-8 xl:px-8">
+        <div className="mx-auto max-w-[1440px] space-y-4 2xl:max-w-[1520px]">
+          <div className="rounded-[1.75rem] border border-slate-200 bg-white p-3.5 shadow-xl sm:p-4 md:p-5">
+            <div className="mb-4 flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
+              <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
                   onClick={goToPreviousWeek}
@@ -606,7 +606,7 @@ const params = new URLSearchParams({
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
           />
 
-          <div className="absolute left-1/2 top-1/2 flex max-h-[92vh] w-[min(1400px,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-white shadow-2xl">
+          <div className="absolute left-1/2 top-1/2 flex max-h-[92vh] w-[min(1320px,calc(100vw-1.5rem))] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-white shadow-2xl xl:w-[min(1360px,calc(100vw-2rem))]">
             <div className="border-b border-slate-200 p-5 md:p-6">
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -667,8 +667,8 @@ const params = new URLSearchParams({
               </div>
             </div>
 
-            <div className="grid min-h-0 flex-1 gap-0 lg:grid-cols-[1fr_380px]">
-              <div className="min-h-0 overflow-y-auto p-4 md:p-6">
+            <div className="grid min-h-0 flex-1 gap-0 xl:grid-cols-[minmax(0,1fr)_340px] 2xl:grid-cols-[minmax(0,1fr)_380px]">
+              <div className="min-h-0 overflow-auto p-3 sm:p-4 md:p-5 xl:p-6">
                 {monthEventsLoading ? (
                   <div className="flex min-h-[420px] items-center justify-center rounded-3xl border border-slate-200 bg-slate-50">
                     <div className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-sm font-bold text-slate-500 shadow-sm">
@@ -682,155 +682,159 @@ const params = new URLSearchParams({
                   </div>
                 ) : (
                   <>
-                    <div className="mb-3 grid grid-cols-7 gap-2 text-center text-[11px] font-black uppercase tracking-wide text-slate-400">
-                      {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
-                        (day) => (
-                          <div key={day}>{day}</div>
-                        )
-                      )}
-                    </div>
+                    <div className="overflow-x-auto">
+                      <div className="min-w-[920px] xl:min-w-0">
+                        <div className="mb-3 grid grid-cols-7 gap-2 text-center text-[11px] font-black uppercase tracking-wide text-slate-400">
+                          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+                            (day) => (
+                              <div key={day}>{day}</div>
+                            )
+                          )}
+                        </div>
 
-                    <div className="grid grid-cols-7 gap-2">
-                      {monthDays.map((day) => {
-                        const isSelected = isSameDay(day, selectedDate);
-                        const isToday = isSameDay(day, new Date());
-                        const inMonth = isSameMonth(day, selectedDate);
-                        const dayEvents = monthEvents
-                          .filter((event) => isSameDay(new Date(event.start_datetime), day))
-                          .sort(
-                            (a, b) =>
-                              new Date(a.start_datetime).getTime() -
-                              new Date(b.start_datetime).getTime()
-                          );
+                        <div className="grid grid-cols-7 gap-2">
+                          {monthDays.map((day) => {
+                            const isSelected = isSameDay(day, selectedDate);
+                            const isToday = isSameDay(day, new Date());
+                            const inMonth = isSameMonth(day, selectedDate);
+                            const dayEvents = monthEvents
+                              .filter((event) => isSameDay(new Date(event.start_datetime), day))
+                              .sort(
+                                (a, b) =>
+                                  new Date(a.start_datetime).getTime() -
+                                  new Date(b.start_datetime).getTime()
+                              );
 
-                        return (
-                          <div
-                            key={day.toISOString()}
-                            className={`min-h-[140px] rounded-2xl border p-2.5 text-left ${
-                              isSelected
-                                ? "border-slate-950 bg-slate-950 text-white"
-                                : isToday
-                                ? "border-sky-300 bg-sky-50 text-slate-950"
-                                : inMonth
-                                ? "border-slate-200 bg-white text-slate-950"
-                                : "border-slate-100 bg-slate-50 text-slate-300"
-                            }`}
-                          >
-                            <button
-                              type="button"
-                              onClick={() => jumpToDay(day)}
-                              className="flex w-full items-center justify-between gap-2 rounded-xl px-1 py-0.5 text-left hover:bg-black/5"
-                            >
-                              <span className="text-sm font-black">
-                                {day.getDate()}
-                              </span>
-
-                              <div className="flex items-center gap-1">
-                                {dayEvents.length > 0 && (
-                                  <span
-                                    className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
-                                      isSelected
-                                        ? "bg-white/15 text-white"
-                                        : "bg-slate-100 text-slate-600"
-                                    }`}
-                                  >
-                                    {dayEvents.length}
-                                  </span>
-                                )}
-
-                                {isToday && (
-                                  <span
-                                    className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
-                                      isSelected
-                                        ? "bg-white text-slate-950"
-                                        : "bg-sky-200 text-sky-950"
-                                    }`}
-                                  >
-                                    Today
-                                  </span>
-                                )}
-                              </div>
-                            </button>
-
-                            <div className="mt-2 space-y-1.5">
-                              {dayEvents.length === 0 ? (
-                                <div
-                                  className={`rounded-xl border border-dashed px-2 py-3 text-center text-[11px] font-semibold ${
-                                    isSelected
-                                      ? "border-white/15 text-slate-300"
-                                      : "border-slate-200 text-slate-400"
-                                  }`}
-                                >
-                                  No events
-                                </div>
-                              ) : (
-                                dayEvents.slice(0, 4).map((event) => (
-                                  <button
-                                    key={event.id}
-                                    type="button"
-                                    onClick={(clickEvent) => {
-                                      clickEvent.stopPropagation();
-                                      openEventFromMonth(event);
-                                    }}
-                                    className={`w-full rounded-xl px-2 py-1.5 text-left transition hover:scale-[1.01] ${
-                                      selectedMonthEvent?.id === event.id
-                                        ? isSelected
-                                          ? "bg-white text-slate-950"
-                                          : "bg-slate-950 text-white"
-                                        : isSelected
-                                        ? "bg-white/15 text-white hover:bg-white/20"
-                                        : event.is_required
-                                        ? "bg-slate-950 text-white hover:bg-slate-800"
-                                        : "bg-sky-50 text-sky-900 hover:bg-sky-100"
-                                    }`}
-                                  >
-                                    <div className="truncate text-[11px] font-black">
-                                      {event.title}
-                                    </div>
-                                    <div
-                                      className={`mt-0.5 truncate text-[10px] font-semibold ${
-                                        selectedMonthEvent?.id === event.id
-                                          ? selectedMonthEvent?.id === event.id &&
-                                            !isSelected
-                                            ? "text-slate-200"
-                                            : "text-slate-500"
-                                          : isSelected || event.is_required
-                                          ? "text-slate-200"
-                                          : "text-sky-700"
-                                      }`}
-                                    >
-                                      {formatTime(event.start_datetime)}
-                                      {event.event_type?.name
-                                        ? ` · ${event.event_type.name}`
-                                        : ""}
-                                    </div>
-                                  </button>
-                                ))
-                              )}
-
-                              {dayEvents.length > 4 && (
+                            return (
+                              <div
+                                key={day.toISOString()}
+                                className={`min-h-[140px] rounded-2xl border p-2.5 text-left ${
+                                  isSelected
+                                    ? "border-slate-950 bg-slate-950 text-white"
+                                    : isToday
+                                    ? "border-sky-300 bg-sky-50 text-slate-950"
+                                    : inMonth
+                                    ? "border-slate-200 bg-white text-slate-950"
+                                    : "border-slate-100 bg-slate-50 text-slate-300"
+                                }`}
+                              >
                                 <button
                                   type="button"
                                   onClick={() => jumpToDay(day)}
-                                  className={`w-full rounded-xl px-2 py-1 text-left text-[11px] font-black ${
-                                    isSelected
-                                      ? "bg-white/10 text-slate-200"
-                                      : "bg-slate-100 text-slate-600"
-                                  }`}
+                                  className="flex w-full items-center justify-between gap-2 rounded-xl px-1 py-0.5 text-left hover:bg-black/5"
                                 >
-                                  +{dayEvents.length - 4} more
+                                  <span className="text-sm font-black">
+                                    {day.getDate()}
+                                  </span>
+
+                                  <div className="flex items-center gap-1">
+                                    {dayEvents.length > 0 && (
+                                      <span
+                                        className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
+                                          isSelected
+                                            ? "bg-white/15 text-white"
+                                            : "bg-slate-100 text-slate-600"
+                                        }`}
+                                      >
+                                        {dayEvents.length}
+                                      </span>
+                                    )}
+
+                                    {isToday && (
+                                      <span
+                                        className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
+                                          isSelected
+                                            ? "bg-white text-slate-950"
+                                            : "bg-sky-200 text-sky-950"
+                                        }`}
+                                      >
+                                        Today
+                                      </span>
+                                    )}
+                                  </div>
                                 </button>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
+
+                                <div className="mt-2 space-y-1.5">
+                                  {dayEvents.length === 0 ? (
+                                    <div
+                                      className={`rounded-xl border border-dashed px-2 py-3 text-center text-[11px] font-semibold ${
+                                        isSelected
+                                          ? "border-white/15 text-slate-300"
+                                          : "border-slate-200 text-slate-400"
+                                      }`}
+                                    >
+                                      No events
+                                    </div>
+                                  ) : (
+                                    dayEvents.slice(0, 4).map((event) => (
+                                      <button
+                                        key={event.id}
+                                        type="button"
+                                        onClick={(clickEvent) => {
+                                          clickEvent.stopPropagation();
+                                          openEventFromMonth(event);
+                                        }}
+                                        className={`w-full rounded-xl px-2 py-1.5 text-left transition hover:scale-[1.01] ${
+                                          selectedMonthEvent?.id === event.id
+                                            ? isSelected
+                                              ? "bg-white text-slate-950"
+                                              : "bg-slate-950 text-white"
+                                            : isSelected
+                                            ? "bg-white/15 text-white hover:bg-white/20"
+                                            : event.is_required
+                                            ? "bg-slate-950 text-white hover:bg-slate-800"
+                                            : "bg-sky-50 text-sky-900 hover:bg-sky-100"
+                                        }`}
+                                      >
+                                        <div className="truncate text-[11px] font-black">
+                                          {event.title}
+                                        </div>
+                                        <div
+                                          className={`mt-0.5 truncate text-[10px] font-semibold ${
+                                            selectedMonthEvent?.id === event.id
+                                              ? selectedMonthEvent?.id === event.id &&
+                                                !isSelected
+                                                ? "text-slate-200"
+                                                : "text-slate-500"
+                                              : isSelected || event.is_required
+                                              ? "text-slate-200"
+                                              : "text-sky-700"
+                                          }`}
+                                        >
+                                          {formatTime(event.start_datetime)}
+                                          {event.event_type?.name
+                                            ? ` · ${event.event_type.name}`
+                                            : ""}
+                                        </div>
+                                      </button>
+                                    ))
+                                  )}
+
+                                  {dayEvents.length > 4 && (
+                                    <button
+                                      type="button"
+                                      onClick={() => jumpToDay(day)}
+                                      className={`w-full rounded-xl px-2 py-1 text-left text-[11px] font-black ${
+                                        isSelected
+                                          ? "bg-white/10 text-slate-200"
+                                          : "bg-slate-100 text-slate-600"
+                                      }`}
+                                    >
+                                      +{dayEvents.length - 4} more
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   </>
                 )}
               </div>
 
-              <aside className="min-h-0 border-t border-slate-200 bg-slate-50 p-4 lg:border-l lg:border-t-0 md:p-6">
+              <aside className="min-h-0 overflow-y-auto border-t border-slate-200 bg-slate-50 p-4 xl:border-l xl:border-t-0 md:p-5 2xl:p-6">
                 {!selectedMonthEvent ? (
                   <div className="flex h-full min-h-[320px] flex-col justify-center rounded-3xl border border-dashed border-slate-200 bg-white p-6 text-center">
                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 text-slate-500">

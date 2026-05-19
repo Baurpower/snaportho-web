@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 type TimeOffType = "personal" | "conference";
-type ConstraintLevel = "hard" | "soft" | "informational";
+type ConstraintLevel = "hard" | "soft";
 type ApprovalStatus = "requested" | "approved" | "denied";
 
 type MonthContextResponse = {
@@ -940,8 +940,7 @@ export default function AddTimeOffPage() {
                     Constraint level
                   </p>
                   <p className="mt-1 text-xs text-slate-500">
-                    Hard = should not schedule over it, soft = try to avoid,
-                    informational = visible only.
+                    Hard = should not schedule over it, soft = try to avoid.
                   </p>
                 </div>
               </div>
@@ -961,13 +960,6 @@ export default function AddTimeOffPage() {
   inactiveClassName="bg-pink-50 text-pink-700 hover:bg-pink-100"
   onClick={() => setConstraintLevel("soft")}
 />
-                <ChipButton
-                  label="Info"
-                  active={constraintLevel === "informational"}
-                  activeClassName="bg-slate-700 text-white shadow-sm"
-                  inactiveClassName="bg-slate-100 text-slate-900 hover:bg-slate-200"
-                  onClick={() => setConstraintLevel("informational")}
-                />
               </div>
             </div>
 
@@ -1000,9 +992,7 @@ export default function AddTimeOffPage() {
                   )} to ${formatLongDate(selectionSummary.endDate)} • ${
                     constraintLevel === "hard"
                       ? "Hard block"
-                      : constraintLevel === "soft"
-                      ? "Soft preference"
-                      : "Informational"
+                      : "Soft preference"
                   } • Requested`}
             </p>
           </div>

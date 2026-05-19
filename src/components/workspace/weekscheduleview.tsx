@@ -2,14 +2,26 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  GraduationCap,
   MapPin,
   Phone,
+  Hammer,
   Stethoscope,
   UserRound,
   Clock3,
   CalendarDays,
 } from "lucide-react";
 import DayDetailsModal from "@/components/workspace/shared/daydetailsmodal";
+
+export type WeekAcademicEvent = {
+  id: string;
+  title: string;
+  eventTypeName: string | null;
+  startTime: string | null;
+  endTime: string | null;
+  location: string | null;
+  isRequired: boolean;
+};
 
 export type WeekDayCard = {
   date: string;
@@ -23,6 +35,7 @@ export type WeekDayCard = {
   rotationColor: string | null;
   hasCall: boolean;
   callLabel: string | null;
+  academicEvents?: WeekAcademicEvent[];
 };
 
 function formatShortDate(dateString: string | null | undefined) {
@@ -44,12 +57,53 @@ function formatLongDate(dateString: string | null | undefined) {
   });
 }
 
+function getAcademicEventSummary(event: WeekAcademicEvent | null | undefined) {
+  if (!event) {
+    return {
+      timeLabel: null,
+      titleLabel: null,
+    };
+  }
+
+  return {
+    timeLabel: event.startTime ?? null,
+    titleLabel: event.title?.trim() || null,
+  };
+}
+
+function getRotationAbbreviation(rotationPill: string | null | undefined) {
+  if (!rotationPill) return null;
+
+  const words = rotationPill
+    .split(/[\s/-]+/)
+    .map((word) => word.trim())
+    .filter(Boolean);
+
+  if (words.length === 0) return null;
+
+  const initialism = words
+    .map((word) => word[0]?.toUpperCase() ?? "")
+    .join("");
+
+  if (initialism.length >= 2 && initialism.length <= 5) {
+    return initialism;
+  }
+
+  const shortened = words
+    .slice(0, 2)
+    .map((word) => word.slice(0, 3))
+    .join(" ")
+    .toUpperCase();
+
+  return shortened !== rotationPill.toUpperCase() ? shortened : null;
+}
+
 function getCategoryTone(category: WeekDayCard["dayCategory"]) {
   if (category === "OR") {
     return {
       card: "border-slate-300 bg-slate-200 text-slate-900",
       badge: "bg-slate-800 text-white",
-      icon: <Stethoscope className="h-4 w-4 shrink-0" />,
+      icon: <Hammer className="h-4 w-4 shrink-0" />,
     };
   }
 
@@ -259,94 +313,119 @@ export function WeekScheduleView({
 
   return (
     <>
-      <div className="mt-6 overflow-x-auto pb-2">
-        <div className="flex min-w-[980px] gap-4">
+      <div className="mt-6">
+  <div className="grid grid-cols-7 gap-2 lg:gap-3 xl:gap-4">
           {orderedDays.map((day) => {
             const tone = getCategoryTone(day.dayCategory);
             const isToday = day.date === todayKey;
             const title = getDisplayTitle(day);
             const secondaryLabel = getSecondaryLabel(day);
+            const primaryAcademicEvent = day.academicEvents?.[0] ?? null;
+            const academicSummary = getAcademicEventSummary(primaryAcademicEvent);
+            const academicCount = day.academicEvents?.length ?? 0;
+            const rotationAbbreviation = getRotationAbbreviation(day.rotationPill);
 
             return (
               <button
-                key={`${day.dayKey}-${day.date}`}
-                type="button"
-                onClick={() => setSelectedDay(day)}
-                className={`relative min-h-[250px] flex-1 rounded-[1.5rem] border p-4 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md ${tone.card} ${
-                  isToday ? "ring-2 ring-slate-900/10" : ""
-                }`}
-              >
+  key={`${day.dayKey}-${day.date}`}
+  type="button"
+  onClick={() => setSelectedDay(day)}
+  className={`relative min-h-[220px] min-w-0 rounded-[1.25rem] border p-2.5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md lg:p-3 xl:min-h-[250px] xl:p-4 ${tone.card} ${
+    isToday ? "ring-2 ring-slate-900/10" : ""
+  }`}
+>
                 <div className="flex h-full flex-col">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] opacity-70">
-                        {day.dayKey}
-                      </p>
-                      <p className="mt-1 text-lg font-bold">
-                        {formatShortDate(day.date)}
-                      </p>
-                    </div>
+  <div className="min-w-0">
+    <p className="text-[11px] font-semibold uppercase tracking-[0.16em] opacity-70">
+      {day.dayKey}
+    </p>
+    <p className="mt-1 text-lg font-bold leading-tight">
+      {formatShortDate(day.date)}
+    </p>
+  </div>
 
-                    <div className="flex min-h-[56px] flex-col items-end gap-2">
-                      {day.hasCall ? (
-                        <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-600 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white shadow-sm">
-                          <Phone className="h-3.5 w-3.5" />
-                          {day.callLabel ?? "Call"}
-                        </div>
-                      ) : (
-                        <div className="h-[34px]" />
-                      )}
+  {day.hasCall ? (
+  <div className="mt-3 flex min-w-0 max-w-full items-center gap-1.5 overflow-hidden rounded-xl bg-rose-100 px-2 py-1.5 text-[11px] font-semibold text-rose-700 xl:text-xs">
+    <Phone className="h-3.5 w-3.5 shrink-0" />
+    <span className="min-w-0 truncate">{day.callLabel ?? "Call"}</span>
+  </div>
+) : (
+  <div className="mt-3 h-[30px]" />
+)}
 
-                      {day.dayCategory ? (
-                        <div
-                          className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] ${tone.badge}`}
-                        >
-                          {tone.icon}
-                          {secondaryLabel}
-                        </div>
-                      ) : (
-                        <div className="h-[34px]" />
-                      )}
-                    </div>
-                  </div>
+<div className="mt-4 min-h-[48px] xl:mt-5 xl:min-h-[56px]">
+  <p className="line-clamp-2 text-base font-bold tracking-tight xl:text-lg">
+    {title}
+  </p>
 
-                  <div className="mt-8 min-h-[72px]">
-                    <p className="line-clamp-2 text-xl font-bold tracking-tight">
-                      {title}
-                    </p>
-                  </div>
+  {day.dayCategory ? (
+    <div
+      className={`mt-2 flex w-fit min-w-0 max-w-full items-center gap-1.5 overflow-hidden rounded-xl px-2 py-1 text-[11px] font-semibold xl:text-xs ${tone.badge}`}
+      title={secondaryLabel}
+    >
+      {tone.icon}
+    </div>
+  ) : null}
+</div>
 
-                  <div className="mt-4 min-h-[56px] space-y-2">
-                    {day.location ? (
-                      <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-black/10 px-3 py-1.5 text-xs font-semibold">
-                        <MapPin className="h-3.5 w-3.5 shrink-0" />
-                        <span className="truncate">{day.location}</span>
-                      </div>
-                    ) : null}
+<div className="mt-5 space-y-1.5 text-[11px] xl:text-xs">
 
-                    {day.attending ? (
-                      <div className="inline-flex max-w-full items-center gap-2 rounded-full bg-black/10 px-3 py-1.5 text-xs font-semibold">
-                        <UserRound className="h-3.5 w-3.5 shrink-0" />
-                        <span className="truncate">{day.attending}</span>
-                      </div>
-                    ) : null}
-                  </div>
+    {academicCount > 0 ? (
+      <div className="flex min-w-0 max-w-full items-center gap-1.5 overflow-hidden rounded-xl bg-indigo-100 px-2 py-1.5 font-semibold text-indigo-900">
+        <GraduationCap className="h-3.5 w-3.5 shrink-0" />
 
-                  <div className="mt-auto pt-5">
-                    {day.rotationPill ? (
-                      <div
-                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold ${getRotationPillClasses(
-                          day.rotationColor
-                        )}`}
-                      >
-                        <Clock3 className="h-3.5 w-3.5" />
-                        {day.rotationPill}
-                      </div>
-                    ) : (
-                      <div className="h-[34px]" />
-                    )}
-                  </div>
-                </div>
+        {academicSummary.timeLabel ? (
+          <span className="shrink-0 font-bold">
+            {academicSummary.timeLabel}
+          </span>
+        ) : null}
+
+        {academicSummary.titleLabel ? (
+          <span className="hidden min-w-0 truncate 2xl:inline">
+            {academicSummary.titleLabel}
+          </span>
+        ) : null}
+
+        {academicCount > 1 ? (
+          <span className="ml-auto shrink-0 text-[10px] font-bold text-indigo-700">
+            +{academicCount - 1}
+          </span>
+        ) : null}
+      </div>
+    ) : null}
+
+    {day.location ? (
+      <div className="flex min-w-0 items-center gap-1.5 rounded-xl bg-black/10 px-2 py-1.5 font-semibold">
+        <MapPin className="h-3.5 w-3.5 shrink-0" />
+        <span className="truncate">{day.location}</span>
+      </div>
+    ) : null}
+
+    {day.attending ? (
+      <div className="flex min-w-0 items-center gap-1.5 rounded-xl bg-black/10 px-2 py-1.5 font-semibold">
+        <UserRound className="h-3.5 w-3.5 shrink-0" />
+        <span className="truncate">{day.attending}</span>
+      </div>
+    ) : null}
+  </div>
+
+  <div className="mt-auto pt-3">
+    {day.rotationPill ? (
+      <div
+        className={`flex min-w-0 max-w-full items-center gap-1.5 overflow-hidden rounded-xl px-2 py-1.5 text-[11px] font-semibold xl:text-xs ${getRotationPillClasses(
+          day.rotationColor
+        )}`}
+      >
+        <span className="min-w-0 flex-1 truncate">{day.rotationPill}</span>
+        {rotationAbbreviation && rotationAbbreviation !== day.rotationPill ? (
+          <span className="hidden shrink-0 text-[10px] font-bold uppercase opacity-75 2xl:inline">
+            {rotationAbbreviation}
+          </span>
+        ) : null}
+      </div>
+    ) : null}
+  </div>
+</div>
               </button>
             );
           })}
@@ -354,212 +433,248 @@ export function WeekScheduleView({
       </div>
 
       <DayDetailsModal
-        open={!!selectedDay && !!draftDay}
-        onClose={() => setSelectedDay(null)}
-        title="Day details"
-        subtitle={draftDay ? getSecondaryLabel(draftDay) : undefined}
-        dateLabel={draftDay ? formatLongDate(draftDay.date) : "—"}
-        onSave={handleSaveDay}
-      >
-        {(isEditing) =>
-          draftDay ? (
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-center gap-2">
-                {draftDay.dayCategory ? (
-                  <div
-                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] ${
-                      getCategoryTone(draftDay.dayCategory).badge
-                    }`}
-                  >
-                    {getCategoryTone(draftDay.dayCategory).icon}
-                    {getSecondaryLabel(draftDay)}
-                  </div>
-                ) : (
-                  <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-700">
-                    <CalendarDays className="h-4 w-4" />
-                    Unplanned
-                  </div>
-                )}
-
-                {draftDay.hasCall ? (
-                  <div className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-rose-700">
-                    <Phone className="h-4 w-4" />
-                    {draftDay.callLabel ?? "Call"}
-                  </div>
-                ) : null}
-
-                {draftDay.rotationPill ? (
-                  <div
-                    className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-semibold ${getRotationPillClasses(
-                      draftDay.rotationColor
-                    )}`}
-                  >
-                    <Clock3 className="h-4 w-4" />
-                    {draftDay.rotationPill}
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                <DetailField
-                  label="Title"
-                  icon={<Stethoscope className="h-4 w-4" />}
-                  value={
-                    isEditing ? (
-                      <input
-                        value={draftDay.primaryLabel ?? ""}
-                        onChange={(e) => updateDraft("primaryLabel", e.target.value)}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
-                        placeholder="Enter title"
-                      />
-                    ) : (
-                      draftDay.primaryLabel ?? "—"
-                    )
-                  }
-                />
-
-                <DetailField
-                  label="Category"
-                  icon={<Clock3 className="h-4 w-4" />}
-                  value={
-                    isEditing ? (
-                      <div className="flex flex-wrap gap-2">
-                        {[
-                          { value: null, label: "Unplanned" },
-                          { value: "OR", label: "OR" },
-                          { value: "Clinic", label: "Clinic" },
-                          { value: "Custom", label: "Custom" },
-                        ].map((option) => {
-                          const active = draftDay.dayCategory === option.value;
-
-                          return (
-                            <button
-                              key={option.label}
-                              type="button"
-                              onClick={() =>
-                                setCategory(
-                                  option.value as WeekDayCard["dayCategory"]
-                                )
-                              }
-                              className={`rounded-full px-3 py-2 text-sm font-semibold transition ${
-                                active
-                                  ? "bg-slate-900 text-white"
-                                  : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
-                              }`}
-                            >
-                              {option.label}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      getSecondaryLabel(draftDay)
-                    )
-                  }
-                />
-
-                {draftDay.dayCategory === "Custom" ? (
-                  <DetailField
-                    label="Custom title"
-                    icon={<Clock3 className="h-4 w-4" />}
-                    value={
-                      isEditing ? (
-                        <input
-                          value={draftDay.customTitle ?? ""}
-                          onChange={(e) => updateDraft("customTitle", e.target.value)}
-                          className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
-                          placeholder="Enter custom title"
-                        />
-                      ) : (
-                        draftDay.customTitle ?? "—"
-                      )
-                    }
-                  />
-                ) : null}
-
-                <DetailField
-                  label="Location"
-                  icon={<MapPin className="h-4 w-4" />}
-                  value={
-                    isEditing ? (
-                      <input
-                        value={draftDay.location ?? ""}
-                        onChange={(e) => updateDraft("location", e.target.value)}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
-                        placeholder="Enter location"
-                      />
-                    ) : (
-                      draftDay.location ?? "—"
-                    )
-                  }
-                />
-
-                <DetailField
-                  label="Attending"
-                  icon={<UserRound className="h-4 w-4" />}
-                  value={
-                    isEditing ? (
-                      <input
-                        value={draftDay.attending ?? ""}
-                        onChange={(e) => updateDraft("attending", e.target.value)}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
-                        placeholder="Enter attending"
-                      />
-                    ) : (
-                      draftDay.attending ?? "—"
-                    )
-                  }
-                />
-
-                <DetailField
-                  label="Call status"
-                  icon={<Phone className="h-4 w-4" />}
-                  value={
-                    isEditing ? (
-                      <div className="space-y-3">
-                        <label className="inline-flex items-center gap-2 text-sm text-slate-700">
-                          <input
-                            type="checkbox"
-                            checked={draftDay.hasCall}
-                            onChange={(e) => {
-                              const checked = e.target.checked;
-                              updateDraft("hasCall", checked);
-                              if (!checked) {
-                                updateDraft("callLabel", null);
-                              }
-                            }}
-                            className="h-4 w-4 rounded border-slate-300"
-                          />
-                          On call
-                        </label>
-
-                        {draftDay.hasCall ? (
-                          <input
-                            value={draftDay.callLabel ?? ""}
-                            onChange={(e) => updateDraft("callLabel", e.target.value)}
-                            className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
-                            placeholder="Primary Call"
-                          />
-                        ) : null}
-                      </div>
-                    ) : draftDay.hasCall ? (
-                      draftDay.callLabel ?? "Call"
-                    ) : (
-                      "Not on call"
-                    )
-                  }
-                />
-
-                <DetailField
-                  label="Rotation"
-                  icon={<Clock3 className="h-4 w-4" />}
-                  value={draftDay.rotationPill ?? "—"}
-                />
-              </div>
+  open={!!selectedDay && !!draftDay}
+  onClose={() => setSelectedDay(null)}
+  title="Day details"
+  subtitle={draftDay ? getSecondaryLabel(draftDay) : undefined}
+  dateLabel={draftDay ? formatLongDate(draftDay.date) : "—"}
+  onSave={handleSaveDay}
+>
+  {(isEditing) =>
+    draftDay ? (
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {draftDay.dayCategory ? (
+            <div
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] ${
+                getCategoryTone(draftDay.dayCategory).badge
+              }`}
+            >
+              {getCategoryTone(draftDay.dayCategory).icon}
+              {getSecondaryLabel(draftDay)}
             </div>
-          ) : null
-        }
-      </DayDetailsModal>
+          ) : (
+            <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-700">
+              <CalendarDays className="h-4 w-4" />
+              Unplanned
+            </div>
+          )}
+
+          {draftDay.hasCall ? (
+            <div className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-rose-700">
+              <Phone className="h-4 w-4" />
+              {draftDay.callLabel ?? "Call"}
+            </div>
+          ) : null}
+
+          {draftDay.rotationPill ? (
+            <div
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] font-semibold ${getRotationPillClasses(
+                draftDay.rotationColor
+              )}`}
+            >
+              {draftDay.rotationPill}
+            </div>
+          ) : null}
+        </div>
+
+        {draftDay.academicEvents?.length ? (
+          <div className="rounded-2xl border border-indigo-100 bg-indigo-50 px-4 py-3">
+            <div className="flex items-center gap-2">
+              <GraduationCap className="h-4 w-4 text-indigo-700" />
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-700">
+                Academic events
+              </p>
+            </div>
+
+            <div className="mt-3 space-y-2">
+              {draftDay.academicEvents.map((event) => (
+                <div
+                  key={event.id}
+                  className="rounded-xl border border-indigo-100 bg-white px-3 py-2"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold text-slate-950">
+                        {event.title}
+                      </p>
+                      <p className="mt-1 text-xs text-slate-500">
+                        {[event.eventTypeName, event.startTime, event.location]
+                          .filter(Boolean)
+                          .join(" · ") || "Academic event"}
+                      </p>
+                    </div>
+
+                    {event.isRequired ? (
+                      <span className="shrink-0 rounded-full bg-indigo-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-indigo-700">
+                        Required
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
+        <div className="grid gap-4 md:grid-cols-2">
+          <DetailField
+            label="Title"
+            icon={<Stethoscope className="h-4 w-4" />}
+            value={
+              isEditing ? (
+                <input
+                  value={draftDay.primaryLabel ?? ""}
+                  onChange={(e) => updateDraft("primaryLabel", e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+                  placeholder="Enter title"
+                />
+              ) : (
+                draftDay.primaryLabel ?? "—"
+              )
+            }
+          />
+
+          <DetailField
+            label="Category"
+            icon={<Clock3 className="h-4 w-4" />}
+            value={
+              isEditing ? (
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { value: null, label: "Unplanned" },
+                    { value: "OR", label: "OR" },
+                    { value: "Clinic", label: "Clinic" },
+                    { value: "Custom", label: "Custom" },
+                  ].map((option) => {
+                    const active = draftDay.dayCategory === option.value;
+
+                    return (
+                      <button
+                        key={option.label}
+                        type="button"
+                        onClick={() =>
+                          setCategory(option.value as WeekDayCard["dayCategory"])
+                        }
+                        className={`rounded-full px-3 py-2 text-sm font-semibold transition ${
+                          active
+                            ? "bg-slate-900 text-white"
+                            : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                getSecondaryLabel(draftDay)
+              )
+            }
+          />
+
+          {draftDay.dayCategory === "Custom" ? (
+            <DetailField
+              label="Custom title"
+              icon={<Clock3 className="h-4 w-4" />}
+              value={
+                isEditing ? (
+                  <input
+                    value={draftDay.customTitle ?? ""}
+                    onChange={(e) => updateDraft("customTitle", e.target.value)}
+                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+                    placeholder="Enter custom title"
+                  />
+                ) : (
+                  draftDay.customTitle ?? "—"
+                )
+              }
+            />
+          ) : null}
+
+          <DetailField
+            label="Location"
+            icon={<MapPin className="h-4 w-4" />}
+            value={
+              isEditing ? (
+                <input
+                  value={draftDay.location ?? ""}
+                  onChange={(e) => updateDraft("location", e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+                  placeholder="Enter location"
+                />
+              ) : (
+                draftDay.location ?? "—"
+              )
+            }
+          />
+
+          <DetailField
+            label="Attending"
+            icon={<UserRound className="h-4 w-4" />}
+            value={
+              isEditing ? (
+                <input
+                  value={draftDay.attending ?? ""}
+                  onChange={(e) => updateDraft("attending", e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+                  placeholder="Enter attending"
+                />
+              ) : (
+                draftDay.attending ?? "—"
+              )
+            }
+          />
+
+          <DetailField
+            label="Call status"
+            icon={<Phone className="h-4 w-4" />}
+            value={
+              isEditing ? (
+                <div className="space-y-3">
+                  <label className="inline-flex items-center gap-2 text-sm text-slate-700">
+                    <input
+                      type="checkbox"
+                      checked={draftDay.hasCall}
+                      onChange={(e) => {
+                        const checked = e.target.checked;
+                        updateDraft("hasCall", checked);
+                        if (!checked) {
+                          updateDraft("callLabel", null);
+                        }
+                      }}
+                      className="h-4 w-4 rounded border-slate-300"
+                    />
+                    On call
+                  </label>
+
+                  {draftDay.hasCall ? (
+                    <input
+                      value={draftDay.callLabel ?? ""}
+                      onChange={(e) => updateDraft("callLabel", e.target.value)}
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+                      placeholder="Primary Call"
+                    />
+                  ) : null}
+                </div>
+              ) : draftDay.hasCall ? (
+                draftDay.callLabel ?? "Call"
+              ) : (
+                "Not on call"
+              )
+            }
+          />
+
+          <DetailField
+            label="Rotation"
+            icon={<Clock3 className="h-4 w-4" />}
+            value={draftDay.rotationPill ?? "—"}
+          />
+        </div>
+      </div>
+    ) : null
+  }
+</DayDetailsModal>
     </>
   );
 }
