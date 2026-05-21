@@ -10,6 +10,9 @@ import {
   RotateCcw,
   X,
 } from "lucide-react";
+import type { CallValidationResult } from "@/lib/workspace/call/validation";
+import { serializeSlotId } from "@/lib/workspace/call/validation";
+import { getSlotValidationGuidance } from "@/lib/workspace/call/validation-display";
 import type {
   AssignmentFlag,
   CalendarDay,
@@ -337,6 +340,9 @@ function AssignmentCard({
   removed,
   blocked,
   warning,
+  validationClassName,
+  validationBadgeText,
+  validationTooltip,
   onClick,
   onOpenFlag,
 }: {
@@ -348,6 +354,9 @@ function AssignmentCard({
   removed: boolean;
   blocked: boolean;
   warning: boolean;
+  validationClassName?: string;
+  validationBadgeText?: string | null;
+  validationTooltip?: string;
   onClick: () => void;
   onOpenFlag: (flag: DisplayFlag) => void;
 }) {
@@ -369,7 +378,8 @@ function AssignmentCard({
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-full min-h-[74px] w-full min-w-0 flex-col overflow-hidden rounded-xl border px-2.5 py-2 text-left transition ${toneClass}`}
+      title={validationTooltip}
+      className={`flex h-full min-h-[74px] w-full min-w-0 flex-col overflow-hidden rounded-xl border px-2.5 py-2 text-left transition ${toneClass} ${validationClassName ?? ""}`}
     >
       <div className="flex items-start justify-between gap-2">
         <p className="truncate text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-500">
@@ -398,6 +408,18 @@ function AssignmentCard({
           {removed ? (
             <span className="hidden rounded-full border border-rose-200 bg-rose-100 px-1.5 py-0.5 text-[8px] font-semibold text-rose-700 2xl:inline-flex">
               Removed
+            </span>
+          ) : null}
+
+          {validationBadgeText ? (
+            <span
+              className={`hidden rounded-full px-1.5 py-0.5 text-[8px] font-semibold 2xl:inline-flex ${
+                validationBadgeText === "Error"
+                  ? "bg-rose-600 text-white"
+                  : "bg-amber-500 text-white"
+              }`}
+            >
+              {validationBadgeText}
             </span>
           ) : null}
 
@@ -466,6 +488,7 @@ function DayCell({
   onOpenFlag,
   draftAssignments,
   availabilityByResident,
+  validation,
 }: {
   day: CalendarDay;
   current: DraftDayAssignment | undefined;
@@ -487,6 +510,7 @@ function DayCell({
   }) => void;
   draftAssignments: Record<string, DraftDayAssignment>;
   availabilityByResident: ResidentAvailabilityMap;
+  validation?: CallValidationResult | null;
 }) {
   const primaryResident = current?.primaryMembershipId
     ? residentLookup.get(current.primaryMembershipId)
@@ -545,6 +569,24 @@ function DayCell({
 
   const backupRemoved =
     !!original?.backupMembershipId && !current?.backupMembershipId;
+  const primaryValidation = validation
+    ? getSlotValidationGuidance(
+        validation,
+        serializeSlotId({
+          dateKey: day.key,
+          callType: "Primary",
+        })
+      )
+    : null;
+  const backupValidation = validation
+    ? getSlotValidationGuidance(
+        validation,
+        serializeSlotId({
+          dateKey: day.key,
+          callType: "Backup",
+        })
+      )
+    : null;
 
   return (
     <div
@@ -581,6 +623,9 @@ function DayCell({
           removed={primaryRemoved}
           blocked={Boolean(primaryAvailability?.isBlocked)}
           warning={Boolean(primaryAvailability?.isWarning)}
+          validationClassName={primaryValidation?.className}
+          validationBadgeText={primaryValidation?.badgeText}
+          validationTooltip={primaryValidation?.tooltip}
           onClick={() => onOpenPicker(day.key, "Primary")}
           onOpenFlag={(flag) =>
             onOpenFlag({
@@ -603,6 +648,9 @@ function DayCell({
           removed={backupRemoved}
           blocked={Boolean(backupAvailability?.isBlocked)}
           warning={Boolean(backupAvailability?.isWarning)}
+          validationClassName={backupValidation?.className}
+          validationBadgeText={backupValidation?.badgeText}
+          validationTooltip={backupValidation?.tooltip}
           onClick={() => onOpenPicker(day.key, "Backup")}
           onOpenFlag={(flag) =>
             onOpenFlag({
@@ -643,6 +691,7 @@ type EditViewProps = {
   residentLoading: boolean;
   statsCollapsed: boolean;
   setStatsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+  validation?: CallValidationResult | null;
   onSave: () => void;
   onReset: () => void;
   saving: boolean;
@@ -658,6 +707,7 @@ export default function ProgramCallEditView({
   availabilityByResident,
   onOpenPicker,
   pgyRows,
+  validation,
   statsLoading,
   residentLoading,
   statsCollapsed,
@@ -797,6 +847,7 @@ export default function ProgramCallEditView({
                     onOpenFlag={setActiveFlag}
                     draftAssignments={draftAssignments}
                     availabilityByResident={availabilityByResident}
+                    validation={validation}
                   />
                 );
               })}

@@ -9,8 +9,16 @@ import {
   getPgyFromGradYear,
   getTrainingLevelFromPgy,
 } from "@/lib/workspace/pgy";
-
-type CallType = "Primary" | "Backup";
+import {
+  countUniqueWeekendBuckets,
+  evaluateMonthlyLimitForResident,
+  evaluatePgyEligibility,
+  evaluateRotationEligibility,
+  evaluateSpacingForResident,
+  evaluateWeekendLimitForResident,
+  getWeekendBucket,
+} from "@/lib/workspace/call/rule-evaluator";
+import { getTimeOffTypeLabel, type TimeOffType } from "@/lib/workspace/call/time-off";
 
 type AvailabilityFlag = {
   key: string;
@@ -23,7 +31,7 @@ type AvailabilityFlag = {
 type TimeOffConflict = {
   eventId: string;
   title: string | null;
-  type: "personal" | "conference";
+  type: TimeOffType;
   usingPto: boolean;
   startDate: string | null;
   endDate: string | null;
@@ -48,25 +56,9 @@ type RuleBlock = {
   isHardRule: boolean;
 };
 
-type RuleConfig = {
-  minDays?: number;
-  excludeAdjacentWeekendPairing?: boolean;
-
-  maxCalls?: number;
-  maxWeekends?: number;
-
-  restrictedPgyYears?: number[];
-  allowedCallTypes?: CallType[];
-
-  sameResidentForWeekend?: boolean;
-
-  rotationIds?: string[];
-  blockAllCall?: boolean;
-  restrictedCallTypes?: CallType[];
-};
-
 type AvailabilityResident = {
-  membershipId: string; // compatibility: roster identity key
+  residentId: string;
+  membershipId: string; // compatibility alias for residentId
   rosterId: string;
   programMembershipId: string | null;
   displayName: string;
@@ -93,7 +85,8 @@ export type ProgramAvailabilityResponse = {
 
 type TimeOffRow = {
   id: string;
-  membership_id: string;
+  membership_id: string | null;
+  roster_id: string | null;
   event_type: string;
   using_pto: boolean | null;
   start_date: string;
@@ -137,6 +130,7 @@ type RotationRow = {
 };
 
 type RawResident = {
+  residentId: string;
   rosterId: string;
   membershipId: string | null;
   displayName: string;
@@ -169,71 +163,10 @@ function enumerateDates(startDate: string, endDate: string) {
   return result;
 }
 
-function getResidentYearValue(resident: {
-  trainingLevel: string | null;
-  pgyYear: number | null;
-}) {
-  if (typeof resident.pgyYear === "number") return resident.pgyYear;
-
-  const match = resident.trainingLevel?.match(/(\d+)/);
-  if (match) return Number(match[1]);
-
-  return null;
-}
-
 function isWeekend(dateKey: string) {
   const date = parseDateKey(dateKey);
   const day = date.getDay();
   return day === 0 || day === 6;
-}
-
-function getDateDiffInDays(a: string, b: string) {
-  const aDate = parseDateKey(a);
-  const bDate = parseDateKey(b);
-  const diffMs = Math.abs(aDate.getTime() - bDate.getTime());
-  return Math.round(diffMs / (1000 * 60 * 60 * 24));
-}
-
-function isAdjacentWeekendPair(a: string, b: string) {
-  const dateA = parseDateKey(a);
-  const dateB = parseDateKey(b);
-
-  const diff = Math.abs(
-    (dateA.getTime() - dateB.getTime()) / (1000 * 60 * 60 * 24)
-  );
-
-  if (diff !== 1) return false;
-
-  const dayA = dateA.getDay();
-  const dayB = dateB.getDay();
-
-  return (dayA === 6 && dayB === 0) || (dayA === 0 && dayB === 6);
-}
-
-function getWeekendBucket(dateKey: string): string | null {
-  const date = parseDateKey(dateKey);
-  const day = date.getDay();
-
-  if (day === 6) return toDateKey(date);
-
-  if (day === 0) {
-    const saturday = new Date(date);
-    saturday.setDate(saturday.getDate() - 1);
-    return toDateKey(saturday);
-  }
-
-  return null;
-}
-
-function countUniqueWeekendBuckets(dateKeys: string[]) {
-  const buckets = new Set<string>();
-
-  for (const dateKey of dateKeys) {
-    const bucket = getWeekendBucket(dateKey);
-    if (bucket) buckets.add(bucket);
-  }
-
-  return buckets.size;
 }
 
 function pushFlagIfMissing(day: ResidentAvailabilityDay, flag: AvailabilityFlag) {
@@ -281,6 +214,7 @@ export async function getProgramAvailabilityMonth(params: {
     const pgyYear = getPgyFromGradYear(resident.gradYear, evaluationDate);
 
     return {
+      residentId: resident.residentId,
       membershipId: resident.rosterId,
       rosterId: resident.rosterId,
       programMembershipId: resident.membershipId ?? null,
@@ -301,6 +235,7 @@ export async function getProgramAvailabilityMonth(params: {
     .select(`
       id,
       membership_id,
+      roster_id,
       event_type,
       using_pto,
       start_date,
@@ -367,10 +302,10 @@ export async function getProgramAvailabilityMonth(params: {
   const availability: Record<string, Record<string, ResidentAvailabilityDay>> = {};
 
   for (const resident of residents) {
-    availability[resident.membershipId] = {};
+    availability[resident.residentId] = {};
 
     for (const dateKey of allDateKeys) {
-      availability[resident.membershipId][dateKey] = {
+      availability[resident.residentId][dateKey] = {
         isBlocked: false,
         isWarning: false,
         flags: [],
@@ -411,7 +346,11 @@ export async function getProgramAvailabilityMonth(params: {
   }
 
   for (const row of (timeOffRows ?? []) as TimeOffRow[]) {
-    const residentKey = membershipToRoster.get(row.membership_id) ?? null;
+    const residentKey =
+      row.roster_id ??
+      (row.membership_id
+        ? membershipToRoster.get(row.membership_id) ?? null
+        : null);
     if (!residentKey) continue;
     const residentAvailability = availability[residentKey];
     if (!residentAvailability) continue;
@@ -427,7 +366,13 @@ export async function getProgramAvailabilityMonth(params: {
       const conflict: TimeOffConflict = {
         eventId: row.id,
         title: row.title,
-        type: row.event_type === "conference" ? "conference" : "personal",
+        type:
+          row.event_type === "conference" ||
+          row.event_type === "vacation" ||
+          row.event_type === "sick" ||
+          row.event_type === "other"
+            ? row.event_type
+            : "personal",
         usingPto: Boolean(row.using_pto),
         startDate: row.start_date,
         endDate: row.end_date,
@@ -445,19 +390,20 @@ export async function getProgramAvailabilityMonth(params: {
 
       if (row.approval_status === "approved") {
         day.isBlocked = true;
+        const timeOffLabel = getTimeOffTypeLabel(row.event_type);
         pushFlagIfMissing(day, {
           key: `timeoff-approved-${row.id}-${dateKey}`,
-          label: row.event_type === "conference" ? "Conference" : "Time Off",
+          label: timeOffLabel,
           tone: "rose",
           description: row.title ?? "Approved time-off",
           category: "time_off",
         });
       } else if (row.approval_status === "requested") {
         day.isWarning = true;
+        const timeOffLabel = getTimeOffTypeLabel(row.event_type);
         pushFlagIfMissing(day, {
           key: `timeoff-requested-${row.id}-${dateKey}`,
-          label:
-            row.event_type === "conference" ? "Conference Req" : "Time-Off Req",
+          label: `${timeOffLabel} Req`,
           tone: "amber",
           description: row.title ?? "Requested time-off",
           category: "time_off",
@@ -499,12 +445,11 @@ export async function getProgramAvailabilityMonth(params: {
   }
 
   for (const resident of residents) {
-    const residentYear = getResidentYearValue(resident);
-    const assignedDates = [...(callsByResident.get(resident.membershipId) ?? [])].sort();
+    const assignedDates = [...(callsByResident.get(resident.residentId) ?? [])].sort();
     const assignedWeekendCount = countUniqueWeekendBuckets(assignedDates);
 
     for (const dateKey of allDateKeys) {
-      const day = availability[resident.membershipId][dateKey];
+      const day = availability[resident.residentId][dateKey];
       if (!day) continue;
 
       const alreadyAssignedOnDate = assignedDates.includes(dateKey);
@@ -515,176 +460,155 @@ export async function getProgramAvailabilityMonth(params: {
           (assignedDate) => getWeekendBucket(assignedDate) === currentWeekendBucket
         );
 
-      for (const rule of rules) {
-        if (!rule.is_enabled) continue;
+      const projectedMonthCount = alreadyAssignedOnDate
+        ? assignedDates.length
+        : assignedDates.length + 1;
+      for (const violation of evaluateMonthlyLimitForResident({
+        assignmentCount: projectedMonthCount,
+        rules,
+      })) {
+        day.isBlocked = day.isBlocked || violation.severity === "error";
+        day.isWarning = day.isWarning || violation.severity === "warning";
 
-        const config = (rule.config ?? {}) as RuleConfig;
+        pushRuleBlockIfMissing(day, {
+          ruleId: violation.rule.id,
+          ruleType: violation.rule.rule_type ?? "",
+          ruleName: violation.rule.name ?? "",
+          message: violation.message,
+          isHardRule: violation.severity === "error",
+        });
 
-        if (rule.rule_type === "max_weekends_per_month" && isWeekend(dateKey)) {
-          const maxWeekends = config.maxWeekends;
+        pushFlagIfMissing(day, {
+          key: `rule-${violation.rule.id}-${dateKey}-month`,
+          label: "Month Limit",
+          tone: violation.severity === "error" ? "rose" : "amber",
+          description: violation.message,
+          category: "rule",
+        });
+      }
 
-          if (typeof maxWeekends === "number") {
-            const wouldExceed = alreadyAssignedInThisWeekendBucket
-              ? assignedWeekendCount > maxWeekends
-              : assignedWeekendCount >= maxWeekends;
+      const projectedWeekendCount = alreadyAssignedInThisWeekendBucket
+        ? assignedWeekendCount
+        : assignedWeekendCount + (isWeekend(dateKey) ? 1 : 0);
+      for (const violation of evaluateWeekendLimitForResident({
+        dateKey,
+        weekendCount: projectedWeekendCount,
+        rules,
+      })) {
+        day.isBlocked = day.isBlocked || violation.severity === "error";
+        day.isWarning = day.isWarning || violation.severity === "warning";
 
-            if (wouldExceed) {
-              day.isBlocked = day.isBlocked || Boolean(rule.is_hard_rule);
-              day.isWarning = day.isWarning || !rule.is_hard_rule;
+        pushRuleBlockIfMissing(day, {
+          ruleId: violation.rule.id,
+          ruleType: violation.rule.rule_type ?? "",
+          ruleName: violation.rule.name ?? "",
+          message: violation.message,
+          isHardRule: violation.severity === "error",
+        });
 
-              pushRuleBlockIfMissing(day, {
-                ruleId: rule.id,
-                ruleType: rule.rule_type,
-                ruleName: rule.name,
-                message: `Weekend limit reached (${assignedWeekendCount}/${maxWeekends})`,
-                isHardRule: rule.is_hard_rule,
-              });
+        pushFlagIfMissing(day, {
+          key: `rule-${violation.rule.id}-${dateKey}-weekend`,
+          label: "Weekend Limit",
+          tone: violation.severity === "error" ? "rose" : "amber",
+          description: violation.message,
+          category: "rule",
+        });
+      }
 
-              pushFlagIfMissing(day, {
-                key: `rule-${rule.id}-${dateKey}`,
-                label: "Weekend Limit",
-                tone: rule.is_hard_rule ? "rose" : "amber",
-                description: rule.name,
-                category: "rule",
-              });
-            }
-          }
-        }
+      for (const violation of evaluateSpacingForResident({
+        assignedDates: assignedDates.filter((otherDate) => otherDate !== dateKey),
+        dateKey,
+        rules,
+      })) {
+        day.isBlocked = day.isBlocked || violation.severity === "error";
+        day.isWarning = day.isWarning || violation.severity === "warning";
 
-        if (rule.rule_type === "max_calls_per_month") {
-          const maxCalls = config.maxCalls;
+        pushRuleBlockIfMissing(day, {
+          ruleId: violation.rule.id,
+          ruleType: violation.rule.rule_type ?? "",
+          ruleName: violation.rule.name ?? "",
+          message: violation.message,
+          isHardRule: violation.severity === "error",
+        });
 
-          if (typeof maxCalls === "number") {
-            const wouldExceed = alreadyAssignedOnDate
-              ? assignedDates.length > maxCalls
-              : assignedDates.length >= maxCalls;
+        pushFlagIfMissing(day, {
+          key: `rule-${violation.rule.id}-${dateKey}-spacing`,
+          label: "Spacing",
+          tone: violation.severity === "error" ? "rose" : "amber",
+          description: violation.message,
+          category: "rule",
+        });
+      }
 
-            if (wouldExceed) {
-              day.isBlocked = day.isBlocked || Boolean(rule.is_hard_rule);
-              day.isWarning = day.isWarning || !rule.is_hard_rule;
+      const primaryRotationViolations = evaluateRotationEligibility({
+        rotationIds: day.rotationConflicts.map((conflict) => conflict.rotationId),
+        callType: "Primary",
+        rules,
+      });
+      const backupRotationViolations = evaluateRotationEligibility({
+        rotationIds: day.rotationConflicts.map((conflict) => conflict.rotationId),
+        callType: "Backup",
+        rules,
+      });
+      if (primaryRotationViolations.length > 0 && backupRotationViolations.length > 0) {
+        const matchingRotation = day.rotationConflicts[0];
+        const representativeViolation = primaryRotationViolations[0];
 
-              pushRuleBlockIfMissing(day, {
-                ruleId: rule.id,
-                ruleType: rule.rule_type,
-                ruleName: rule.name,
-                message: `Monthly call limit reached (${assignedDates.length}/${maxCalls})`,
-                isHardRule: rule.is_hard_rule,
-              });
+        day.isBlocked = day.isBlocked || representativeViolation.severity === "error";
+        day.isWarning = day.isWarning || representativeViolation.severity === "warning";
 
-              pushFlagIfMissing(day, {
-                key: `rule-${rule.id}-${dateKey}`,
-                label: "Month Limit",
-                tone: rule.is_hard_rule ? "rose" : "amber",
-                description: rule.name,
-                category: "rule",
-              });
-            }
-          }
-        }
+        pushRuleBlockIfMissing(day, {
+          ruleId: representativeViolation.rule.id,
+          ruleType:
+            representativeViolation.rule.rule_type ?? "",
+          ruleName: representativeViolation.rule.name ?? "",
+          message: matchingRotation
+            ? `Blocked by rotation: ${matchingRotation.rotationName}`
+            : representativeViolation.message,
+          isHardRule: representativeViolation.severity === "error",
+        });
 
-        if (rule.rule_type === "min_days_between_assignments") {
-          const minDays = Math.max(1, config.minDays ?? 2);
-          const excludeAdjacentWeekendPairing =
-            config.excludeAdjacentWeekendPairing ?? true;
+        pushFlagIfMissing(day, {
+          key: `rule-${representativeViolation.rule.id}-${dateKey}-rotation`,
+          label: "Rotation Restriction",
+          tone: representativeViolation.severity === "error" ? "rose" : "amber",
+          description: matchingRotation?.rotationName ?? representativeViolation.message,
+          category: "rotation",
+        });
+      }
 
-          const violatesSpacing = assignedDates.some((otherDate) => {
-            if (otherDate === dateKey) return false;
+      const primaryPgyViolations = evaluatePgyEligibility({
+        resident,
+        callType: "Primary",
+        rules,
+      });
+      const backupPgyViolations = evaluatePgyEligibility({
+        resident,
+        callType: "Backup",
+        rules,
+      });
+      if (primaryPgyViolations.length > 0 && backupPgyViolations.length > 0) {
+        const representativeViolation = primaryPgyViolations[0];
 
-            if (
-              excludeAdjacentWeekendPairing &&
-              isAdjacentWeekendPair(otherDate, dateKey)
-            ) {
-              return false;
-            }
+        day.isBlocked = day.isBlocked || representativeViolation.severity === "error";
+        day.isWarning = day.isWarning || representativeViolation.severity === "warning";
 
-            return getDateDiffInDays(otherDate, dateKey) <= minDays;
-          });
+        pushRuleBlockIfMissing(day, {
+          ruleId: representativeViolation.rule.id,
+          ruleType:
+            representativeViolation.rule.rule_type ?? "",
+          ruleName: representativeViolation.rule.name ?? "",
+          message: representativeViolation.message,
+          isHardRule: representativeViolation.severity === "error",
+        });
 
-          if (violatesSpacing) {
-            day.isBlocked = day.isBlocked || Boolean(rule.is_hard_rule);
-            day.isWarning = day.isWarning || !rule.is_hard_rule;
-
-            pushRuleBlockIfMissing(day, {
-              ruleId: rule.id,
-              ruleType: rule.rule_type,
-              ruleName: rule.name,
-              message: excludeAdjacentWeekendPairing
-                ? `Violates minimum spacing (${minDays} days, ignoring paired Sat/Sun)`
-                : `Violates minimum spacing (${minDays} days)`,
-              isHardRule: rule.is_hard_rule,
-            });
-
-            pushFlagIfMissing(day, {
-              key: `rule-${rule.id}-${dateKey}`,
-              label: "Spacing",
-              tone: rule.is_hard_rule ? "rose" : "amber",
-              description: rule.name,
-              category: "rule",
-            });
-          }
-        }
-
-        if (rule.rule_type === "restrict_call_by_rotation") {
-          const blockedRotationIds = (config.rotationIds ?? []).filter(Boolean);
-
-          if (blockedRotationIds.length > 0) {
-            const matchingRotation = day.rotationConflicts.find(
-              (conflict) =>
-                conflict.rotationId && blockedRotationIds.includes(conflict.rotationId)
-            );
-
-            if (matchingRotation) {
-              day.isBlocked = day.isBlocked || Boolean(rule.is_hard_rule);
-              day.isWarning = day.isWarning || !rule.is_hard_rule;
-
-              pushRuleBlockIfMissing(day, {
-                ruleId: rule.id,
-                ruleType: rule.rule_type,
-                ruleName: rule.name,
-                message: `Blocked by rotation: ${matchingRotation.rotationName}`,
-                isHardRule: rule.is_hard_rule,
-              });
-
-              pushFlagIfMissing(day, {
-                key: `rule-${rule.id}-${dateKey}`,
-                label: "Rotation Restriction",
-                tone: rule.is_hard_rule ? "rose" : "amber",
-                description: matchingRotation.rotationName,
-                category: "rotation",
-              });
-            }
-          }
-        }
-
-        if (rule.rule_type === "restrict_call_type_by_pgy") {
-          const restrictedPgyYears = config.restrictedPgyYears ?? [];
-          const allowedCallTypes = config.allowedCallTypes ?? [];
-
-          const isRestrictedYear =
-            typeof residentYear === "number" &&
-            restrictedPgyYears.includes(residentYear);
-
-          if (isRestrictedYear && allowedCallTypes.length === 0) {
-            day.isBlocked = day.isBlocked || Boolean(rule.is_hard_rule);
-            day.isWarning = day.isWarning || !rule.is_hard_rule;
-
-            pushRuleBlockIfMissing(day, {
-              ruleId: rule.id,
-              ruleType: rule.rule_type,
-              ruleName: rule.name,
-              message: `PGY-${residentYear} is not allowed to take call`,
-              isHardRule: rule.is_hard_rule,
-            });
-
-            pushFlagIfMissing(day, {
-              key: `rule-${rule.id}-${dateKey}-pgy`,
-              label: "PGY Restriction",
-              tone: rule.is_hard_rule ? "rose" : "amber",
-              description: rule.name,
-              category: "rule",
-            });
-          }
-        }
+        pushFlagIfMissing(day, {
+          key: `rule-${representativeViolation.rule.id}-${dateKey}-pgy`,
+          label: "PGY Restriction",
+          tone: representativeViolation.severity === "error" ? "rose" : "amber",
+          description: representativeViolation.message,
+          category: "rule",
+        });
       }
     }
   }

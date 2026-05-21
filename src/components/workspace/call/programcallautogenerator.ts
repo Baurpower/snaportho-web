@@ -13,6 +13,21 @@ import {
   isResidentAllowedForSlot,
   getFlagsForAssignedResident,
 } from "@/components/workspace/call/programcallevaluator";
+import {
+  countUniqueWeekendBuckets,
+  evaluateMonthlyLimitForResident,
+  evaluatePgyEligibility,
+  evaluateRotationEligibility,
+  evaluateSpacingForResident,
+  evaluateWeekendLimitForResident,
+  evaluateWeekendPairingForResident,
+  getAdjacentWeekendDateKey,
+  getDateDiffInDays,
+  getRequiredCallTypesFromRules,
+  getResidentPgyYear,
+  getRuleSeverity,
+  isRuleEnabled,
+} from "@/lib/workspace/call/rule-evaluator";
 
 type Slot = "Primary" | "Backup";
 
@@ -117,55 +132,15 @@ function isResidentBlockedByRotationRule({
 }) {
   const residentRotationId = getResidentRotationId(resident, dateKey);
 
-  if (resident.displayName.toLowerCase().includes("nguyen")) {
-    console.log("DEBUG NGUYEN ROTATION CHECK", {
-      residentName: resident.displayName,
-      dateKey,
-      slot,
-      residentRotationId,
-      residentObject: resident,
-      rotationAssignments: (resident as ResidentWithRotation).rotationAssignments,
-      restrictRotationRules: rules
-        .filter((rule) => getRuleType(rule) === "restrict_call_by_rotation")
-        .map((rule) => ({
-          enabled: isRuleEnabled(rule),
-          type: getRuleType(rule),
-          config: getRuleConfig(rule),
-        })),
-    });
-  }
-
   if (!residentRotationId) return false;
 
-  for (const rule of rules) {
-    if (!isRuleEnabled(rule)) continue;
-
-    const ruleType = getRuleType(rule);
-    if (ruleType !== "restrict_call_by_rotation") continue;
-
-    const config = getRuleConfig(rule);
-
-    const rotationIds = Array.isArray(config.rotationIds)
-      ? config.rotationIds.map(String)
-      : [];
-
-    const restrictedCallTypes = Array.isArray(config.restrictedCallTypes)
-      ? config.restrictedCallTypes.map(String)
-      : ["Primary", "Backup"];
-
-    const blockAllCall =
-      typeof config.blockAllCall === "boolean" ? config.blockAllCall : true;
-
-    if (
-      blockAllCall &&
-      rotationIds.includes(String(residentRotationId)) &&
-      restrictedCallTypes.includes(slot)
-    ) {
-      return true;
-    }
-  }
-
-  return false;
+  return (
+    evaluateRotationEligibility({
+      rotationIds: [residentRotationId],
+      callType: slot,
+      rules,
+    }).length > 0
+  );
 }
 
 const PRIMARY_WEIGHT = 1;
@@ -173,36 +148,8 @@ const BACKUP_WEIGHT = 0.25;
 const WEEKEND_PRIMARY_WEIGHT = 1;
 const WEEKEND_BACKUP_WEIGHT = 0.3;
 
-function getRuleType(rule: ProgramRule) {
-  const raw = rule as unknown as { rule_type?: string; type?: string };
-  return raw.rule_type ?? raw.type ?? "";
-}
-
-function getRuleConfig(rule: ProgramRule): Record<string, unknown> {
-  const raw = rule as unknown as { config?: Record<string, unknown> | null };
-  return raw.config ?? {};
-}
-
-function isRuleEnabled(rule: ProgramRule) {
-  const raw = rule as unknown as { is_enabled?: boolean; enabled?: boolean };
-  return raw.is_enabled ?? raw.enabled ?? true;
-}
-
-function isHardRule(rule: ProgramRule) {
-  const raw = rule as unknown as {
-    is_hard_rule?: boolean;
-    isHardRule?: boolean;
-  };
-  return raw.is_hard_rule ?? raw.isHardRule ?? false;
-}
-
 function getResidentYearValue(resident: ResidentOption) {
-  if (typeof resident.pgyYear === "number") return resident.pgyYear;
-
-  const match = resident.trainingLevel?.match(/(\d+)/);
-  if (match) return Number(match[1]);
-
-  return 99;
+  return getResidentPgyYear(resident) ?? 99;
 }
 
 function getExpectedPgyBurdenMultiplier(resident: ResidentOption) {
@@ -256,40 +203,7 @@ function getAdjustedWeekendBurden(entry: ResidentAutoStats) {
 }
 
 function daysBetween(a: string, b: string) {
-  const aDate = new Date(`${a}T00:00:00`);
-  const bDate = new Date(`${b}T00:00:00`);
-
-  return Math.abs(
-    Math.round((aDate.getTime() - bDate.getTime()) / (1000 * 60 * 60 * 24))
-  );
-}
-
-function getNeighborDateKey(dateKey: string, amount: number) {
-  const date = new Date(`${dateKey}T00:00:00`);
-  date.setDate(date.getDate() + amount);
-
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-    2,
-    "0"
-  )}-${String(date.getDate()).padStart(2, "0")}`;
-}
-
-function getDateDayOfWeek(dateKey: string) {
-  return new Date(`${dateKey}T00:00:00`).getDay();
-}
-
-function asNumber(value: unknown, fallback: number) {
-  return typeof value === "number" && Number.isFinite(value) ? value : fallback;
-}
-
-function asNumberArray(value: unknown) {
-  if (!Array.isArray(value)) return [];
-  return value.map((item) => Number(item)).filter((item) => Number.isFinite(item));
-}
-
-function asSlotArray(value: unknown): Slot[] {
-  if (!Array.isArray(value)) return [];
-  return value.filter((item): item is Slot => item === "Primary" || item === "Backup");
+  return getDateDiffInDays(a, b);
 }
 
 function getFlagMessage(flag: AssignmentFlag) {
@@ -323,7 +237,7 @@ function summarizeRuleWarningsForCombination({
   availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
 }) {
   const residentLookup = new Map(
-    residents.map((resident) => [resident.membershipId, resident])
+    residents.map((resident) => [resident.residentId, resident])
   );
 
   const warnings: Array<{
@@ -382,10 +296,10 @@ function buildInitialStats(
 
   for (const resident of residents) {
     const baseline = historicalStats.find(
-      (item) => item.membershipId === resident.membershipId
+      (item) => item.residentId === resident.residentId
     );
 
-    stats.set(resident.membershipId, {
+    stats.set(resident.residentId, {
   resident,
   monthPrimary: 0,
   monthBackup: 0,
@@ -513,7 +427,7 @@ function getRulePenalty({
   assignments: Record<string, DraftDayAssignment>;
   rules: ProgramRule[];
 }) {
-  const entry = stats.get(resident.membershipId);
+  const entry = stats.get(resident.residentId);
   if (!entry) return 999999;
 
   let penalty = 0;
@@ -535,157 +449,98 @@ function getRulePenalty({
     projectedWeekendPrimary * WEEKEND_PRIMARY_WEIGHT +
     projectedWeekendBackup * WEEKEND_BACKUP_WEIGHT;
 
+  for (const violation of evaluateRotationEligibility({
+    rotationIds: [getResidentRotationId(resident, day.key)],
+    callType: slot,
+    rules,
+  })) {
+    penalty += 999999 * (violation.severity === "error" ? 10 : 1);
+  }
+
+  for (const violation of evaluateSpacingForResident({
+    assignedDates: entry.assignedDates,
+    dateKey: day.key,
+    rules,
+  })) {
+    const minDays = Number(violation.metadata?.minDays ?? 0);
+    const gap = Number(
+      violation.metadata?.conflictingDateKey
+        ? daysBetween(day.key, String(violation.metadata.conflictingDateKey))
+        : 0
+    );
+    const hardMultiplier = violation.severity === "error" ? 10 : 1;
+    const ruleWeight = violation.severity === "error" ? hardSlotWeight : softSlotWeight;
+
+    if (gap > 0 && minDays > 0) {
+      penalty += (minDays - gap + 1) * 120 * hardMultiplier * ruleWeight;
+    }
+  }
+
+  for (const violation of evaluateMonthlyLimitForResident({
+    assignmentCount: entry.monthTotal + 1,
+    rules,
+  })) {
+    const hardMultiplier = violation.severity === "error" ? 10 : 1;
+    penalty += 50000 * hardMultiplier;
+  }
+
+  const projectedWeekendCount = countUniqueWeekendBuckets([
+    ...entry.assignedDates,
+    ...(day.isWeekend ? [day.key] : []),
+  ]);
+  for (const violation of evaluateWeekendLimitForResident({
+    dateKey: day.key,
+    weekendCount: projectedWeekendCount,
+    rules,
+  })) {
+    const hardMultiplier = violation.severity === "error" ? 10 : 1;
+    penalty += 50000 * hardMultiplier;
+  }
+
+  for (const violation of evaluatePgyEligibility({
+    resident,
+    callType: slot,
+    rules,
+  })) {
+    const hardMultiplier = violation.severity === "error" ? 10 : 1;
+    penalty += 99999 * hardMultiplier;
+  }
+
+  const pairedDateKey = getAdjacentWeekendDateKey(day.key);
+  const pairedAssignment = pairedDateKey ? assignments[pairedDateKey] : null;
+  const pairedResidentId =
+    slot === "Primary"
+      ? pairedAssignment?.primaryMembershipId ?? null
+      : pairedAssignment?.backupMembershipId ?? null;
+
+  for (const violation of evaluateWeekendPairingForResident({
+    residentId: resident.residentId,
+    adjacentResidentId: pairedResidentId,
+    dateKey: day.key,
+    callType: slot,
+    rules,
+  })) {
+    const hardMultiplier = violation.severity === "error" ? 10 : 1;
+    const ruleWeight = violation.severity === "error" ? hardSlotWeight : softSlotWeight;
+    penalty += (slot === "Primary" ? 250 : 150) * hardMultiplier * ruleWeight;
+  }
+
   for (const rule of rules) {
     if (!isRuleEnabled(rule)) continue;
 
-    const ruleType = getRuleType(rule);
-    const config = getRuleConfig(rule);
-    const hardMultiplier = isHardRule(rule) ? 10 : 1;
-    const ruleWeight = isHardRule(rule) ? hardSlotWeight : softSlotWeight;
+    const ruleWeight = getRuleSeverity(rule) === "error" ? hardSlotWeight : softSlotWeight;
 
-    if (ruleType === "restrict_call_by_rotation") {
-  if (
-    isResidentBlockedByRotationRule({
-      resident,
-      slot,
-      dateKey: day.key,
-      rules: [rule],
-    })
-  ) {
-    penalty += 999999 * hardMultiplier;
-  }
-}
+    const heuristicRuleType =
+      ((rule as unknown as { rule_type?: string; type?: string }).rule_type ??
+        (rule as unknown as { rule_type?: string; type?: string }).type ??
+        "");
 
-    if (
-      ruleType === "min_days_between_assignments" ||
-      ruleType === "minimum_spacing" ||
-      ruleType === "avoid_consecutive_call"
-    ) {
-      const minDays = asNumber(config.minDays ?? config.min_days ?? config.days, 2);
-      const excludeWeekendPairing = Boolean(
-        config.excludeAdjacentWeekendPairing ??
-          config.exclude_adjacent_weekend_pairing ??
-          true
-      );
-
-      const relevantDates =
-  slot === "Primary" ? entry.primaryDates : entry.backupDates;
-
-for (const assignedDate of relevantDates) {
-        const gap = daysBetween(day.key, assignedDate);
-        const currentDow = getDateDayOfWeek(day.key);
-        const priorDow = getDateDayOfWeek(assignedDate);
-
-        const isSatSunPair =
-          excludeWeekendPairing &&
-          gap === 1 &&
-          ((currentDow === 0 && priorDow === 6) ||
-            (currentDow === 6 && priorDow === 0));
-
-        if (isSatSunPair) continue;
-
-        if (gap > 0 && gap <= minDays) {
-          penalty += (minDays - gap + 1) * 120 * hardMultiplier * ruleWeight;
-        }
-      }
-    }
-
-    if (ruleType === "max_calls_per_month" || ruleType === "max_monthly_calls") {
-  const maxCalls = asNumber(config.maxCalls ?? config.max_calls, 6);
-
-  const projectedRawTotal =
-    entry.monthTotal + 1;
-
-  if (projectedRawTotal > maxCalls) {
-    penalty += 50000 * hardMultiplier;
-  } else {
-    penalty += Math.max(0, projectedRawTotal - maxCalls + 1) * 300;
-  }
-}
-
-    if (
-  ruleType === "max_weekends_per_month" ||
-  ruleType === "max_weekend_calls"
-) {
-  const maxWeekends = asNumber(config.maxWeekends ?? config.max_weekends, 2);
-
-  const projectedRawWeekend =
-    entry.monthWeekend + (day.isWeekend ? 1 : 0);
-
-  if (day.isWeekend && projectedRawWeekend > maxWeekends) {
-    penalty += 50000 * hardMultiplier;
-  } else if (day.isWeekend) {
-    penalty += Math.max(0, projectedRawWeekend - maxWeekends + 1) * 400;
-  }
-}
-
-    if (
-      ruleType === "restrict_call_type_by_pgy" ||
-      ruleType === "pgy_slot_restriction"
-    ) {
-      const restrictedPgyYears = asNumberArray(
-        config.restrictedPgyYears ??
-          config.restricted_pgy_years ??
-          config.pgyYears ??
-          config.pgy_years
-      );
-
-      const allowedCallTypes = asSlotArray(
-        config.allowedCallTypes ??
-          config.allowed_call_types ??
-          config.allowedSlots ??
-          config.allowed_slots
-      );
-
-      const residentPgy = getResidentYearValue(resident);
-
-      if (
-        restrictedPgyYears.includes(residentPgy) &&
-        allowedCallTypes.length > 0 &&
-        !allowedCallTypes.includes(slot)
-      ) {
-        penalty += 99999 * hardMultiplier;
-      }
-
-      if (restrictedPgyYears.includes(residentPgy) && allowedCallTypes.length === 0) {
-        penalty += 99999 * hardMultiplier;
-      }
-    }
-
-    if (ruleType === "weekend_pairing") {
-      const sameResidentForWeekend = Boolean(config.sameResidentForWeekend ?? true);
-
-      if (sameResidentForWeekend && day.isWeekend) {
-        const dayOfWeek = getDateDayOfWeek(day.key);
-        const pairedDateKey =
-          dayOfWeek === 6
-            ? getNeighborDateKey(day.key, 1)
-            : dayOfWeek === 0
-            ? getNeighborDateKey(day.key, -1)
-            : null;
-
-        if (pairedDateKey) {
-          const pairedAssignment = assignments[pairedDateKey];
-          const pairedResidentId =
-            slot === "Primary"
-              ? pairedAssignment?.primaryMembershipId
-              : pairedAssignment?.backupMembershipId;
-
-          if (pairedResidentId && pairedResidentId === resident.membershipId) {
-            penalty -= slot === "Primary" ? 300 : 120;
-          } else if (pairedResidentId && pairedResidentId !== resident.membershipId) {
-            penalty += (slot === "Primary" ? 250 : 150) * hardMultiplier * ruleWeight;
-          }
-        }
-      }
-    }
-
-    if (ruleType === "prefer_balanced_totals") {
+    if (heuristicRuleType === "prefer_balanced_totals") {
       penalty += projectedWeightedBurden * 20 * ruleWeight;
       penalty += getWeightedYearBurden(entry) * 1.5 * ruleWeight;
     }
 
-    if (ruleType === "prefer_balanced_weekends" && day.isWeekend) {
+    if (heuristicRuleType === "prefer_balanced_weekends" && day.isWeekend) {
       penalty += projectedWeightedWeekendBurden * 30 * ruleWeight;
       penalty += getWeightedYearWeekendBurden(entry) * 2 * ruleWeight;
     }
@@ -735,7 +590,7 @@ function scoreResident({
   rules: ProgramRule[];
   generationVersion: number;
 }) {
-  const entry = stats.get(resident.membershipId);
+  const entry = stats.get(resident.residentId);
   if (!entry) return Number.POSITIVE_INFINITY;
 
   const pgyAverages = getPgyAverages(stats);
@@ -796,8 +651,8 @@ function scoreResident({
   const current = assignments[day.key];
 
   if (
-    current?.primaryMembershipId === resident.membershipId ||
-    current?.backupMembershipId === resident.membershipId
+    current?.primaryMembershipId === resident.residentId ||
+    current?.backupMembershipId === resident.residentId
   ) {
     score += 99999;
   }
@@ -812,7 +667,7 @@ function scoreResident({
   });
 
   score += seededNoise({
-    residentId: resident.membershipId,
+    residentId: resident.residentId,
     dateKey: day.key,
     slot,
     generationVersion,
@@ -884,16 +739,25 @@ function pickBestResident({
 function countOpenRequiredSlots({
   monthDays,
   assignments,
+  rules,
   slotMode,
 }: {
   monthDays: CalendarDay[];
   assignments: Record<string, DraftDayAssignment>;
+  rules: ProgramRule[];
   slotMode: QuickAssignSlotMode;
 }) {
   let open = 0;
 
-  const shouldCheckPrimary = slotMode === "Primary" || slotMode === "Both";
-  const shouldCheckBackup = slotMode === "Backup" || slotMode === "Both";
+  const requiredCallTypes = getRequiredCallTypesFromRules(rules);
+  const shouldCheckPrimary =
+    requiredCallTypes.length > 0
+      ? requiredCallTypes.includes("Primary")
+      : slotMode === "Primary" || slotMode === "Both";
+  const shouldCheckBackup =
+    requiredCallTypes.length > 0
+      ? requiredCallTypes.includes("Backup")
+      : slotMode === "Backup" || slotMode === "Both";
 
   for (const day of monthDays) {
     const assignment = assignments[day.key];
@@ -914,16 +778,19 @@ function scoreGeneratedSchedule({
   stats,
   assignments,
   monthDays,
+  rules,
   slotMode,
 }: {
   stats: ResidentAutoStats[];
   assignments: Record<string, DraftDayAssignment>;
   monthDays: CalendarDay[];
+  rules: ProgramRule[];
   slotMode: QuickAssignSlotMode;
 }) {
   const openRequiredSlots = countOpenRequiredSlots({
     monthDays,
     assignments,
+    rules,
     slotMode,
   });
 
@@ -1007,8 +874,15 @@ function generateSingleCallSchedule({
     applyExistingAssignmentsToStats(stats, monthDays, nextAssignments);
   }
 
-  const shouldFillPrimary = slotMode === "Primary" || slotMode === "Both";
-  const shouldFillBackup = slotMode === "Backup" || slotMode === "Both";
+  const requiredCallTypes = getRequiredCallTypesFromRules(enabledRules);
+  const shouldFillPrimary =
+    requiredCallTypes.length > 0
+      ? requiredCallTypes.includes("Primary")
+      : slotMode === "Primary" || slotMode === "Both";
+  const shouldFillBackup =
+    requiredCallTypes.length > 0
+      ? requiredCallTypes.includes("Backup")
+      : slotMode === "Backup" || slotMode === "Both";
 
   for (const day of monthDays) {
     const current = nextAssignments[day.key] ?? {
@@ -1029,16 +903,16 @@ function generateSingleCallSchedule({
       });
 
       if (picked) {
-        current.primaryMembershipId = picked.membershipId;
+        current.primaryMembershipId = picked.residentId;
         nextAssignments[day.key] = current;
-        updateStats(stats, picked.membershipId, "Primary", day);
+        updateStats(stats, picked.residentId, "Primary", day);
       }
     }
 
     if (shouldFillBackup && !current.backupMembershipId) {
       const picked = pickBestResident({
         residents: residents.filter(
-          (resident) => resident.membershipId !== current.primaryMembershipId
+          (resident) => resident.residentId !== current.primaryMembershipId
         ),
         slot: "Backup",
         day,
@@ -1050,9 +924,9 @@ function generateSingleCallSchedule({
       });
 
       if (picked) {
-        current.backupMembershipId = picked.membershipId;
+        current.backupMembershipId = picked.residentId;
         nextAssignments[day.key] = current;
-        updateStats(stats, picked.membershipId, "Backup", day);
+        updateStats(stats, picked.residentId, "Backup", day);
       }
     }
 
@@ -1228,6 +1102,7 @@ export function generateCallSchedule({
     const openRequiredSlots = countOpenRequiredSlots({
       monthDays,
       assignments: generated.assignments,
+      rules,
       slotMode,
     });
 
@@ -1235,6 +1110,7 @@ export function generateCallSchedule({
       stats: generated.stats,
       assignments: generated.assignments,
       monthDays,
+      rules,
       slotMode,
     });
 

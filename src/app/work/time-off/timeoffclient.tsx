@@ -409,12 +409,12 @@ function SectionHeader({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4">
-      <div className="flex min-w-0 items-start gap-3">
+    <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start gap-3">
         <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-50 text-sky-700">
           {icon}
         </div>
-        <div className="min-w-0">
+        <div>
           <h3 className="text-xl font-bold tracking-tight text-slate-950">
             {title}
           </h3>
@@ -466,7 +466,7 @@ function TimeOffRequestCard({
     <button
       type="button"
       onClick={() => onOpen(item)}
-      className={`w-full rounded-[1.5rem] border p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md md:p-5 ${tone.card}`}
+      className={`w-full rounded-[1.5rem] border p-5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${tone.card}`}
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
@@ -560,7 +560,7 @@ function TimeOffListSection({
       {items.length === 0 ? (
         <EmptyState title={emptyTitle} subtitle={emptySubtitle} />
       ) : (
-        <div className="grid gap-3 md:gap-4">
+        <div className="grid gap-4">
           {items.map((item) => (
             <TimeOffRequestCard key={item.id} item={item} onOpen={onOpen} />
           ))}
@@ -620,11 +620,11 @@ function StatusBoard({
         icon={<CalendarDays className="h-5 w-5" />}
       />
 
-      <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
+      <div className="grid gap-4 xl:grid-cols-3">
         {columns.map((column) => (
           <div
             key={column.key}
-            className={`min-w-0 rounded-[1.5rem] border p-4 ${column.shell}`}
+            className={`rounded-[1.5rem] border p-4 ${column.shell}`}
           >
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
@@ -1085,18 +1085,18 @@ export default function TimeOffHubPage() {
 
   return (
     <>
-      <main className="min-w-0 overflow-x-clip text-slate-900">
-        <section className="relative overflow-hidden px-4 pb-6 pt-8 sm:px-5 md:px-6 md:pb-8 md:pt-10 xl:px-8">
+      <main className="min-w-0 text-slate-900">
+        <section className="relative overflow-hidden px-6 pb-8 pt-10 md:px-10 md:pb-10 md:pt-12">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.12),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_16%)]" />
 
-          <div className="relative mx-auto max-w-[1440px] 2xl:max-w-[1520px]">
+          <div className="relative mx-auto max-w-7xl">
             <motion.div
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              className="rounded-[2rem] border border-white/10 bg-white/5 p-5 backdrop-blur md:p-6 xl:p-7"
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur md:p-8"
             >
-              <div className="flex flex-col gap-4 md:gap-5">
+              <div className="flex flex-col gap-6">
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-sky-200">
                     <CalendarDays className="h-4 w-4" />
@@ -1111,7 +1111,7 @@ export default function TimeOffHubPage() {
                   </p>
                 </div>
 
-                <div className="grid gap-3 lg:grid-cols-3 md:gap-4">
+                <div className="grid gap-4 md:grid-cols-3">
                   <StatCard
                     title="Next Day Off"
                     value={nextDayOff ? formatShortDate(nextDayOff) : "—"}
@@ -1141,8 +1141,8 @@ export default function TimeOffHubPage() {
           </div>
         </section>
 
-        <section className="px-4 pb-10 sm:px-5 md:px-6 md:pb-12 xl:px-8">
-          <div className="mx-auto max-w-[1440px] space-y-5 2xl:max-w-[1520px] md:space-y-6">
+        <section className="px-6 pb-14 md:px-10 md:pb-16">
+          <div className="mx-auto max-w-7xl space-y-6">
             {error ? (
               <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
                 {error}
@@ -1153,9 +1153,9 @@ export default function TimeOffHubPage() {
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-xl md:p-5 xl:p-6"
+              className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-xl md:p-6"
             >
-              <div className="mb-5 flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between md:mb-6">
+              <div className="mb-6 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
                 <div className="flex flex-wrap items-center gap-3">
                   <button
                     type="button"
@@ -1211,7 +1211,7 @@ export default function TimeOffHubPage() {
                 </div>
               </div>
 
-              <div className="mb-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4 md:mb-6">
+              <div className="mb-6 grid gap-3 md:grid-cols-4">
                 <div className="rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4">
                   <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
                     Visible Range
@@ -1255,7 +1255,7 @@ export default function TimeOffHubPage() {
                   Loading time-off planner...
                 </div>
               ) : (
-                <div className="space-y-6 md:space-y-8">
+                <div className="space-y-8">
                   <TimeOffListSection
                     title="Upcoming"
                     subtitle={

@@ -3,7 +3,12 @@
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, UserRound, X, Check, Eraser } from "lucide-react";
+import type { CallValidationResult } from "@/lib/workspace/call/validation";
 import type { ResidentOption } from "@/components/workspace/call/programcalltypes";
+import {
+  getPickerResidentGuidance,
+  getSlotValidationGuidance,
+} from "@/lib/workspace/call/validation-display";
 
 type ResidentPickerSheetProps = {
   open: boolean;
@@ -15,6 +20,10 @@ type ResidentPickerSheetProps = {
   currentMembershipId: string | null;
   onSelectResident: (membershipId: string) => void;
   onClearResident?: () => void;
+  validation?: CallValidationResult | null;
+  activeSlotId?: string | null;
+  activeDateKey?: string | null;
+  activeCallType?: string | null;
 };
 
 function pgyLabel(resident: {
@@ -36,11 +45,18 @@ export default function ResidentPickerSheet({
   currentMembershipId,
   onSelectResident,
   onClearResident,
+  validation,
+  activeSlotId,
+  activeDateKey,
+  activeCallType,
 }: ResidentPickerSheetProps) {
   const totalResidents = groupedResidents.reduce(
     (sum, [, residents]) => sum + residents.length,
     0
   );
+  const slotValidation = validation && activeSlotId
+    ? getSlotValidationGuidance(validation, activeSlotId)
+    : null;
 
   return (
     <AnimatePresence>
@@ -101,6 +117,19 @@ export default function ResidentPickerSheet({
                   {totalResidents} available
                 </span>
 
+                {slotValidation?.badgeText ? (
+                  <span
+                    title={slotValidation.tooltip}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                      slotValidation.badgeText === "Error"
+                        ? "bg-rose-100 text-rose-700"
+                        : "bg-amber-100 text-amber-700"
+                    }`}
+                  >
+                    {slotValidation.badgeText}
+                  </span>
+                ) : null}
+
                 {onClearResident ? (
                   <button
                     type="button"
@@ -112,6 +141,22 @@ export default function ResidentPickerSheet({
                   </button>
                 ) : null}
               </div>
+
+              {slotValidation?.issues.length ? (
+                <div
+                  title={slotValidation.tooltip}
+                  className={`mt-3 rounded-[1rem] border px-3 py-3 text-sm text-slate-700 ${slotValidation.className}`}
+                >
+                  {slotValidation.shortMessage ??
+                    "This slot has validation conflicts."}{" "}
+                  Choose a resident that resolves the issue.
+                  {activeDateKey && activeCallType ? (
+                    <span className="ml-1 text-slate-500">
+                      {activeDateKey} · {activeCallType}
+                    </span>
+                  ) : null}
+                </div>
+              ) : null}
             </div>
 
             <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5 md:px-6">
@@ -139,6 +184,13 @@ export default function ResidentPickerSheet({
                         {residents.map((resident) => {
                           const isSelected =
                             currentMembershipId === resident.membershipId;
+                          const residentValidation = validation
+                            ? getPickerResidentGuidance(
+                                validation,
+                                resident.rosterId ?? resident.membershipId,
+                                activeSlotId
+                              )
+                            : null;
 
                           return (
                             <button
@@ -147,9 +199,12 @@ export default function ResidentPickerSheet({
                               onClick={() =>
                                 onSelectResident(resident.membershipId)
                               }
+                              title={residentValidation?.tooltip}
                               className={`flex w-full items-center justify-between gap-3 rounded-[1rem] border px-4 py-3 text-left transition ${
                                 isSelected
                                   ? "border-sky-300 bg-sky-50"
+                                  : residentValidation?.className
+                                  ? residentValidation.className
                                   : "border-slate-200 bg-white hover:bg-slate-50"
                               }`}
                             >
@@ -160,9 +215,25 @@ export default function ResidentPickerSheet({
                                 <p className="mt-0.5 text-xs text-slate-500">
                                   {pgyLabel(resident)}
                                 </p>
+                                {residentValidation?.shortMessage ? (
+                                  <p className="mt-1 text-xs text-slate-600">
+                                    {residentValidation.shortMessage}
+                                  </p>
+                                ) : null}
                               </div>
 
-                              <div className="shrink-0">
+                              <div className="shrink-0 flex items-center gap-2">
+                                {residentValidation?.badgeText ? (
+                                  <span
+                                    className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
+                                      residentValidation.badgeText === "Error"
+                                        ? "bg-rose-600 text-white"
+                                        : "bg-amber-500 text-white"
+                                    }`}
+                                  >
+                                    {residentValidation.badgeText}
+                                  </span>
+                                ) : null}
                                 {isSelected ? (
                                   <span className="inline-flex items-center gap-1 rounded-full bg-sky-100 px-2.5 py-1 text-xs font-semibold text-sky-700">
                                     <Check className="h-3.5 w-3.5" />

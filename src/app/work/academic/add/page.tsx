@@ -71,6 +71,49 @@ type AcademicSessionResponse = {
   end_datetime?: string | null;
 };
 
+type DescriptionMetadata = {
+  description: string;
+  manualLocation: string;
+  meetingUrl: string;
+};
+
+const DEFAULT_EVENT_TYPE_OPTIONS: EventTypeOption[] = [
+  {
+    id: "fallback:academic",
+    name: "Academic",
+    default_required: false,
+  },
+  {
+    id: "fallback:lab",
+    name: "Lab",
+    default_required: false,
+  },
+  {
+    id: "fallback:journal-club",
+    name: "Journal Club",
+    default_required: false,
+  },
+  {
+    id: "fallback:grand-rounds",
+    name: "Grand Rounds",
+    default_required: false,
+  },
+  {
+    id: "fallback:research",
+    name: "Research",
+    default_required: false,
+  },
+  {
+    id: "fallback:other",
+    name: "Other",
+    default_required: false,
+  },
+];
+
+const DESCRIPTION_METADATA_HEADER = "[Academic Event Metadata]";
+const DESCRIPTION_LOCATION_PREFIX = "Location: ";
+const DESCRIPTION_MEETING_LINK_PREFIX = "Meeting Link: ";
+
 function toDateInputValue(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -148,6 +191,144 @@ function addMinutesToTimeValue(timeValue: string, minutesToAdd: number) {
   ).padStart(2, "0")}`;
 }
 
+function parseTimeValueToMinutes(timeValue: string) {
+  const parts = timeValue.split(":");
+
+  if (parts.length < 2) return null;
+
+  const hours = Number(parts[0]);
+  const minutes = Number(parts[1]);
+
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) {
+    return null;
+  }
+
+  return hours * 60 + minutes;
+}
+
+function shouldAutoAdjustEndTime(startValue: string, endValue: string) {
+  if (!startValue) return false;
+  if (!endValue) return true;
+
+  const startMinutes = parseTimeValueToMinutes(startValue);
+  const endMinutes = parseTimeValueToMinutes(endValue);
+
+  if (startMinutes == null || endMinutes == null) {
+    return false;
+  }
+
+  return endMinutes <= startMinutes;
+}
+
+function getTimeRangeError(
+  date: string,
+  startValue: string,
+  endValue: string
+) {
+  if (!date || !startValue || !endValue) return null;
+
+  try {
+    const startDatetime = buildDateTime(date, startValue);
+    const endDatetime = buildDateTime(date, endValue);
+
+    if (new Date(endDatetime) <= new Date(startDatetime)) {
+      return "End time must be after start time.";
+    }
+  } catch {
+    return "Enter a valid date and time range.";
+  }
+
+  return null;
+}
+
+function parseDescriptionMetadata(
+  descriptionValue: string | null | undefined
+): DescriptionMetadata {
+  if (!descriptionValue) {
+    return {
+      description: "",
+      manualLocation: "",
+      meetingUrl: "",
+    };
+  }
+
+  const normalized = descriptionValue.replace(/\r\n/g, "\n");
+
+  if (!normalized.startsWith(DESCRIPTION_METADATA_HEADER)) {
+    return {
+      description: descriptionValue,
+      manualLocation: "",
+      meetingUrl: "",
+    };
+  }
+
+  const lines = normalized.split("\n");
+  let manualLocation = "";
+  let meetingUrl = "";
+  let index = 1;
+
+  while (index < lines.length) {
+    const line = lines[index] ?? "";
+
+    if (!line.trim()) {
+      index += 1;
+      break;
+    }
+
+    if (line.startsWith(DESCRIPTION_LOCATION_PREFIX)) {
+      manualLocation = line.slice(DESCRIPTION_LOCATION_PREFIX.length).trim();
+    } else if (line.startsWith(DESCRIPTION_MEETING_LINK_PREFIX)) {
+      meetingUrl = line.slice(DESCRIPTION_MEETING_LINK_PREFIX.length).trim();
+    }
+
+    index += 1;
+  }
+
+  return {
+    description: lines.slice(index).join("\n").trim(),
+    manualLocation,
+    meetingUrl,
+  };
+}
+
+function buildStoredDescription({
+  description,
+  manualLocation,
+  meetingUrl,
+}: DescriptionMetadata) {
+  const trimmedDescription = description.trim();
+  const trimmedLocation = manualLocation.trim();
+  const trimmedMeetingUrl = meetingUrl.trim();
+  const metadataLines = [DESCRIPTION_METADATA_HEADER];
+
+  if (trimmedLocation) {
+    metadataLines.push(`${DESCRIPTION_LOCATION_PREFIX}${trimmedLocation}`);
+  }
+
+  if (trimmedMeetingUrl) {
+    metadataLines.push(`${DESCRIPTION_MEETING_LINK_PREFIX}${trimmedMeetingUrl}`);
+  }
+
+  if (metadataLines.length === 1) {
+    return trimmedDescription || null;
+  }
+
+  const metadataBlock = metadataLines.join("\n");
+  return trimmedDescription
+    ? `${metadataBlock}\n\n${trimmedDescription}`
+    : metadataBlock;
+}
+
+function formatLocationOption(location: LocationOption) {
+  if (location.is_virtual) {
+    return `${location.name} · Virtual`;
+  }
+
+  return [location.name, location.room, location.building]
+    .filter(Boolean)
+    .join(" · ");
+}
+
 function AcademicAddEditEventPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -164,6 +345,8 @@ function AcademicAddEditEventPageContent() {
   const [description, setDescription] = useState("");
   const [eventTypeId, setEventTypeId] = useState("");
   const [locationId, setLocationId] = useState("");
+  const [manualLocation, setManualLocation] = useState("");
+  const [meetingUrl, setMeetingUrl] = useState("");
   const [dateValue, setDateValue] = useState(toDateInputValue(new Date()));
   const [startTime, setStartTime] = useState(getDefaultTimeValue(7, 0));
   const [endTime, setEndTime] = useState(getDefaultTimeValue(8, 0));
@@ -179,12 +362,35 @@ function AcademicAddEditEventPageContent() {
   const [error, setError] = useState<string | null>(null);
 
   const pageTitle = isEditMode ? "Edit Academic Event" : "Add Academic Event";
+  const displayedEventTypes =
+    eventTypes.length > 0 ? eventTypes : DEFAULT_EVENT_TYPE_OPTIONS;
 
   const canSave = useMemo(() => {
     return !!programId && title.trim().length > 0 && !saving;
   }, [programId, title, saving]);
 
   const [rosterOptions, setRosterOptions] = useState<RosterOption[]>([]);
+  const timeRangeError = useMemo(
+    () => getTimeRangeError(dateValue, startTime, endTime),
+    [dateValue, startTime, endTime]
+  );
+  const selectedLocation = useMemo(
+    () => locations.find((location) => location.id === locationId) ?? null,
+    [locationId, locations]
+  );
+  const selectedEventType = useMemo(
+    () =>
+      displayedEventTypes.find((type) => type.id === eventTypeId) ?? null,
+    [displayedEventTypes, eventTypeId]
+  );
+  const previewLocation = useMemo(() => {
+    const savedLocation = selectedLocation
+      ? formatLocationOption(selectedLocation)
+      : "";
+    const typedLocation = manualLocation.trim();
+
+    return [savedLocation, typedLocation].filter(Boolean).join(" · ");
+  }, [manualLocation, selectedLocation]);
 
   useEffect(() => {
     if (!programId) return;
@@ -275,11 +481,14 @@ function AcademicAddEditEventPageContent() {
         if (!cancelled) {
           const start = new Date(event.start_datetime);
           const end = new Date(event.end_datetime);
+          const parsedDescription = parseDescriptionMetadata(event.description);
 
           setTitle(event.title ?? "");
-          setDescription(event.description ?? "");
+          setDescription(parsedDescription.description);
           setEventTypeId(event.event_type?.id ?? "");
           setLocationId(event.location?.id ?? "");
+          setManualLocation(parsedDescription.manualLocation);
+          setMeetingUrl(parsedDescription.meetingUrl);
           setDateValue(toDateInputValue(start));
           setStartTime(
             `${String(start.getHours()).padStart(2, "0")}:${String(
@@ -334,6 +543,14 @@ function AcademicAddEditEventPageContent() {
       cancelled = true;
     };
   }, [eventId]);
+
+  useEffect(() => {
+    if (!shouldAutoAdjustEndTime(startTime, endTime)) {
+      return;
+    }
+
+    setEndTime(addMinutesToTimeValue(startTime, 60));
+  }, [endTime, startTime]);
 
   function addSession() {
     setSessions((current) => [...current, newSessionDraft()]);
@@ -409,6 +626,72 @@ function removeSessionPerson(sessionLocalId: string, personLocalId: string) {
   );
 }
 
+  async function ensureEventTypeId() {
+    if (!programId || !eventTypeId) {
+      return null;
+    }
+
+    if (!eventTypeId.startsWith("fallback:")) {
+      return eventTypeId;
+    }
+
+    const selectedFallbackType = DEFAULT_EVENT_TYPE_OPTIONS.find(
+      (type) => type.id === eventTypeId
+    );
+
+    if (!selectedFallbackType) {
+      return null;
+    }
+
+    const createResponse = await fetch("/api/program/academic-calendar/event-types", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        program_id: programId,
+        name: selectedFallbackType.name,
+        default_required: Boolean(selectedFallbackType.default_required),
+      }),
+    });
+
+    const createJson = await createResponse.json().catch(() => null);
+
+    if (createResponse.ok) {
+      const createdType = createJson?.data as EventTypeOption;
+      setEventTypes((current) => [...current, createdType]);
+      setEventTypeId(createdType.id);
+      return createdType.id;
+    }
+
+    if (createResponse.status !== 409) {
+      throw new Error(createJson?.error ?? "Failed to create event type");
+    }
+
+    const typesResponse = await fetch(
+      `/api/program/academic-calendar/event-types?programId=${programId}`,
+      { cache: "no-store" }
+    );
+    const typesJson = await typesResponse.json().catch(() => null);
+
+    if (!typesResponse.ok) {
+      throw new Error(typesJson?.error ?? "Failed to reload event types");
+    }
+
+    const reloadedTypes = (typesJson?.data ?? []) as EventTypeOption[];
+    const matchedType =
+      reloadedTypes.find((type) => type.name === selectedFallbackType.name) ??
+      null;
+
+    if (!matchedType) {
+      throw new Error("Selected event type could not be resolved");
+    }
+
+    setEventTypes(reloadedTypes);
+    setEventTypeId(matchedType.id);
+    return matchedType.id;
+  }
+
   async function handleSave() {
     if (!programId) {
       setError("Missing programId");
@@ -431,8 +714,8 @@ try {
   return;
 }
 
-    if (new Date(endDatetime) <= new Date(startDatetime)) {
-      setError("End time must be after start time");
+    if (timeRangeError) {
+      setError(null);
       return;
     }
 
@@ -440,6 +723,7 @@ try {
     setError(null);
 
     try {
+      const resolvedEventTypeId = await ensureEventTypeId();
       const url = isEditMode
         ? `/api/program/academic-calendar/events/${eventId}`
         : "/api/program/academic-calendar/events";
@@ -452,8 +736,12 @@ try {
         body: JSON.stringify({
           program_id: programId,
           title: title.trim(),
-          description: description.trim() || null,
-          event_type_id: eventTypeId || null,
+          description: buildStoredDescription({
+            description,
+            manualLocation,
+            meetingUrl,
+          }),
+          event_type_id: resolvedEventTypeId,
           location_id: locationId || null,
           start_datetime: startDatetime,
           end_datetime: endDatetime,
@@ -664,7 +952,7 @@ router.push("/work/academic");
                   />
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <label className="text-sm font-semibold text-gray-800">
                       Event Type
@@ -675,7 +963,7 @@ router.push("/work/academic");
   const nextId = event.target.value;
   setEventTypeId(nextId);
 
-  const selectedType = eventTypes.find((type) => type.id === nextId);
+  const selectedType = displayedEventTypes.find((type) => type.id === nextId);
 
   if (selectedType?.default_required != null) {
     setIsRequired(Boolean(selectedType.default_required));
@@ -683,8 +971,8 @@ router.push("/work/academic");
 }}
                       className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-900"
                     >
-                      <option value="">Academic</option>
-                      {eventTypes.map((type) => (
+                      <option value="">Select event type</option>
+                      {displayedEventTypes.map((type) => (
                         <option key={type.id} value={type.id}>
                           {type.name}
                         </option>
@@ -694,7 +982,7 @@ router.push("/work/academic");
 
                   <div>
                     <label className="text-sm font-semibold text-gray-800">
-                      Location
+                      Saved Location
                     </label>
                     <select
                       value={locationId}
@@ -704,29 +992,52 @@ router.push("/work/academic");
                       <option value="">No location</option>
                       {locations.map((location) => (
                         <option key={location.id} value={location.id}>
-                          {location.is_virtual
-                            ? `${location.name} · Virtual`
-                            : [location.name, location.room, location.building]
-                                .filter(Boolean)
-                                .join(" · ")}
+                          {formatLocationOption(location)}
                         </option>
                       ))}
                     </select>
                   </div>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-  <label className="text-sm font-semibold text-gray-800">
-    Date
-  </label>
-  <input
-  type="date"
-  value={dateValue}
-  onChange={(event) => setDateValue(event.target.value)}
-  className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-gray-900"
-/>
-</div>
+                    <label className="text-sm font-semibold text-gray-800">
+                      Location
+                    </label>
+                    <input
+                      value={manualLocation}
+                      onChange={(event) => setManualLocation(event.target.value)}
+                      placeholder="Room 301, Smith Building"
+                      className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-sm font-semibold text-gray-800">
+                      Zoom / Meeting Link
+                    </label>
+                    <input
+                      type="url"
+                      value={meetingUrl}
+                      onChange={(event) => setMeetingUrl(event.target.value)}
+                      placeholder="https://"
+                      className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)_minmax(0,1fr)]">
+                  <div>
+                    <label className="text-sm font-semibold text-gray-800">
+                      Date
+                    </label>
+                    <input
+                      type="date"
+                      value={dateValue}
+                      onChange={(event) => setDateValue(event.target.value)}
+                      className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-gray-900"
+                    />
+                  </div>
 
                   <div>
                     <label className="text-sm font-semibold text-gray-800">
@@ -736,7 +1047,14 @@ router.push("/work/academic");
                       type="time"
                       step="60"
                       value={startTime}
-                      onChange={(event) => setStartTime(event.target.value)}
+                      onChange={(event) => {
+                        const nextStartTime = event.target.value;
+                        setStartTime(nextStartTime);
+
+                        if (shouldAutoAdjustEndTime(nextStartTime, endTime)) {
+                          setEndTime(addMinutesToTimeValue(nextStartTime, 60));
+                        }
+                      }}
                       className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-gray-900"
                     />
                   </div>
@@ -750,10 +1068,18 @@ router.push("/work/academic");
   step="60"
   value={endTime}
   onChange={(event) => setEndTime(event.target.value)}
-  className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none focus:border-gray-900"
+  className={`mt-2 w-full rounded-xl border px-3 py-2 text-sm outline-none focus:border-gray-900 ${
+    timeRangeError ? "border-red-300 focus:ring-2 focus:ring-red-200" : "border-gray-200"
+  }`}
 />
                   </div>
                 </div>
+
+                {timeRangeError ? (
+                  <p className="text-sm font-medium text-red-600">
+                    {timeRangeError}
+                  </p>
+                ) : null}
 
                 <div>
                   <label className="text-sm font-semibold text-gray-800">
@@ -875,7 +1201,7 @@ router.push("/work/academic");
     updateSession(session.localId, {
       start_time: nextStartTime,
       end_time:
-        nextStartTime && !session.end_time
+        nextStartTime && shouldAutoAdjustEndTime(nextStartTime, session.end_time)
           ? addMinutesToTimeValue(nextStartTime, 60)
           : session.end_time,
     });
@@ -995,8 +1321,7 @@ router.push("/work/academic");
 
               <div className="mt-4 rounded-2xl border border-gray-100 bg-gray-50 p-4">
                 <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                  {eventTypes.find((type) => type.id === eventTypeId)?.name ??
-                    "Academic"}
+                  {selectedEventType?.name ?? "Academic"}
                 </div>
 
                 <div className="mt-2 text-base font-bold text-gray-950">
@@ -1014,13 +1339,21 @@ router.push("/work/academic");
                     {startTime} – {endTime}
                   </div>
 
-                  {locationId && (
+                  {previewLocation ? (
                     <div className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
-                      {locations.find((location) => location.id === locationId)
-                        ?.name ?? "Location"}
+                      {previewLocation}
                     </div>
-                  )}
+                  ) : null}
+
+                  {meetingUrl.trim() ? (
+                    <div className="flex items-center gap-2 break-all">
+                      <span className="inline-flex h-4 w-4 items-center justify-center text-xs font-bold text-gray-500">
+                        @
+                      </span>
+                      {meetingUrl.trim()}
+                    </div>
+                  ) : null}
                 </div>
 
                 {isRequired && (

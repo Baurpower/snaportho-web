@@ -1,4 +1,16 @@
 import { createClient } from '@/utils/supabase/server'
+import { loadProgramCallValidationContext } from '@/lib/workspace/call/rule-loader'
+import {
+  buildResidentIdentityMaps,
+  getCanonicalResidentId,
+} from '@/lib/workspace/call/resident-identity'
+import {
+  serializeSlotId,
+  type CallDraftAssignment,
+  type CallValidationIssue,
+  type CallValidationResult,
+  validateCallMonthDraft,
+} from '@/lib/workspace/call/validation'
 
 export type CallAssignmentSummary = {
   id: string
@@ -58,12 +70,25 @@ export class ProgramCallValidationError extends Error {
   }
 }
 
+export class ProgramCallScheduleValidationError extends Error {
+  validation: CallValidationResult
+  issues: CallValidationIssue[]
+
+  constructor(validation: CallValidationResult) {
+    super('Schedule validation failed')
+    this.name = 'ProgramCallScheduleValidationError'
+    this.validation = validation
+    this.issues = validation.errors
+  }
+}
+
 export type DeleteCallAssignmentInput = {
   callId: string
   programId: string
 }
 
 export type ProgramResidentOption = {
+  residentId: string
   rosterId: string
   membershipId: string | null
   displayName: string
@@ -72,6 +97,7 @@ export type ProgramResidentOption = {
 }
 
 export type ProgramResidentCallStats = {
+  residentId: string
   membershipId: string
   rosterId: string | null
   totalCallsYear: number
@@ -103,6 +129,27 @@ type ProgramRosterIdentityRow = {
   program_membership_id: string | null
 }
 
+type ProgramCallAssignmentValidationRow = {
+  id: string
+  roster_id: string | null
+  program_membership_id: string | null
+  call_type: string | null
+  call_date: string | null
+  start_datetime: string | null
+  end_datetime: string | null
+}
+
+export type ProgramCallDraftMutationRow = {
+  id?: string | null
+  rosterId?: string | null
+  programMembershipId?: string | null
+  callType?: string | null
+  callDate?: string | null
+  startDatetime?: string | null
+  endDatetime?: string | null
+  slotId?: string | null
+}
+
 function dedupeDates(dates: string[]): string[] {
   return Array.from(new Set(dates)).sort()
 }
@@ -120,6 +167,201 @@ function getYearStartAndEndFromMonth(month: string) {
     yearStart: `${year}-01-01`,
     yearEnd: `${year}-12-31`,
   }
+}
+
+function uniqueStrings(values: Array<string | null | undefined>) {
+  return Array.from(new Set(values.filter(Boolean))) as string[]
+}
+
+function toCallDraftAssignment(
+  row: ProgramCallAssignmentValidationRow | ProgramCallDraftMutationRow
+): CallDraftAssignment {
+  const id = row.id ?? null
+  const callDate =
+    'call_date' in row ? row.call_date ?? null : row.callDate ?? null
+  const callType =
+    'call_type' in row ? row.call_type ?? null : row.callType ?? null
+  const rosterId =
+    'roster_id' in row ? row.roster_id ?? null : row.rosterId ?? null
+  const programMembershipId =
+    'program_membership_id' in row
+      ? row.program_membership_id ?? null
+      : row.programMembershipId ?? null
+  const startDatetime =
+    'start_datetime' in row
+      ? row.start_datetime ?? null
+      : row.startDatetime ?? null
+  const endDatetime =
+    'end_datetime' in row ? row.end_datetime ?? null : row.endDatetime ?? null
+  const slotId = 'slotId' in row ? row.slotId ?? null : null
+
+  return {
+    id,
+    callId: id,
+    residentId: rosterId,
+    membershipId: rosterId,
+    rosterId,
+    programMembershipId,
+    callDate,
+    dateKey: callDate,
+    callType,
+    startDatetime,
+    endDatetime,
+    slotId:
+      slotId ??
+      (callDate && callType
+        ? serializeSlotId({
+            dateKey: callDate,
+            callType,
+          })
+        : null),
+  }
+}
+
+async function getProgramCallAssignmentsForDates(
+  programId: string,
+  dates: string[]
+) {
+  const supabase = await createClient()
+  const uniqueDates = uniqueStrings(dates)
+
+  if (uniqueDates.length === 0) {
+    return [] as ProgramCallAssignmentValidationRow[]
+  }
+
+  const { data, error } = await supabase
+    .from('call_assignments')
+    .select(
+      'id, roster_id, program_membership_id, call_type, call_date, start_datetime, end_datetime'
+    )
+    .eq('program_id', programId)
+    .in('call_date', uniqueDates)
+
+  if (error) {
+    throw new Error(`Failed to load program calls for validation: ${error.message}`)
+  }
+
+  return (data ?? []) as ProgramCallAssignmentValidationRow[]
+}
+
+export async function validateProgramCallMutationDraft(params: {
+  programId: string
+  touchedDates: string[]
+  upserts?: ProgramCallDraftMutationRow[]
+  deleteCallIds?: string[]
+}) {
+  const uniqueTouchedDates = uniqueStrings(params.touchedDates)
+  const validationDateStart = uniqueTouchedDates[0] ?? null
+  const validationDateEnd =
+    uniqueTouchedDates.length > 0
+      ? uniqueTouchedDates[uniqueTouchedDates.length - 1]
+      : null
+  const validationContext = await loadProgramCallValidationContext(
+    params.programId,
+    null,
+    {
+      dateStart: validationDateStart,
+      dateEnd: validationDateEnd,
+    }
+  )
+  const existingRows = await getProgramCallAssignmentsForDates(
+    params.programId,
+    params.touchedDates
+  )
+  const { residentIdByProgramMembershipId } = buildResidentIdentityMaps(
+    validationContext.residents
+  )
+
+  const deleteIds = new Set(uniqueStrings(params.deleteCallIds ?? []))
+  const upserts = (params.upserts ?? []).map((row, index) => ({
+    ...row,
+    id: row.id ?? `draft-${index}-${row.callDate ?? 'unknown'}-${row.callType ?? 'unknown'}`,
+  }))
+  const upsertIds = new Set(
+    uniqueStrings(upserts.map((row) => row.id ?? null))
+  )
+
+  const remainingAssignments = existingRows
+    .filter((row) => !deleteIds.has(row.id) && !upsertIds.has(row.id))
+    .map(toCallDraftAssignment)
+
+  const nextAssignments = [
+    ...remainingAssignments,
+    ...upserts.map(toCallDraftAssignment),
+  ].map((assignment) => {
+    const residentIdFromAssignment =
+      getCanonicalResidentId({
+        residentId: assignment.residentId,
+        rosterId: assignment.rosterId,
+        membershipId: assignment.membershipId,
+      }) ?? null
+    const residentId =
+      residentIdFromAssignment ??
+      (assignment.programMembershipId
+        ? residentIdByProgramMembershipId.get(assignment.programMembershipId) ??
+          null
+        : null)
+
+    return {
+      ...assignment,
+      residentId,
+      membershipId: residentId,
+      rosterId: residentId ?? assignment.rosterId ?? null,
+    }
+  })
+
+  if (process.env.NODE_ENV !== 'production') {
+    const assignmentResidentIds = nextAssignments
+      .map((assignment) => assignment.rosterId ?? assignment.residentId ?? null)
+      .filter((value): value is string => Boolean(value))
+    const loadedRosterIds = validationContext.residents
+      .map((resident) => resident.rosterId ?? resident.residentId ?? null)
+      .filter((value): value is string => Boolean(value))
+
+    console.info('[call-validation-draft]', {
+      source: 'validateProgramCallMutationDraft',
+      programId: params.programId,
+      touchedDates: uniqueTouchedDates,
+      assignmentResidentIds,
+      loadedRosterCount: loadedRosterIds.length,
+      loadedRosterIds,
+      clientScope: 'admin',
+      timestamp: new Date().toISOString(),
+    })
+  }
+
+  return validateCallMonthDraft({
+    assignments: nextAssignments,
+    rules: validationContext.rules,
+    residents: validationContext.residents,
+    timeOff: validationContext.timeOff,
+    rotations: validationContext.rotations,
+    context: {
+      rules: validationContext.rules,
+      residents: validationContext.residents,
+      timeOff: validationContext.timeOff,
+      rotations: validationContext.rotations,
+      metadata: {
+        ...validationContext.programContext,
+        touchedDates: uniqueTouchedDates,
+      },
+    },
+  })
+}
+
+export async function assertValidProgramCallMutationDraft(params: {
+  programId: string
+  touchedDates: string[]
+  upserts?: ProgramCallDraftMutationRow[]
+  deleteCallIds?: string[]
+}) {
+  const validation = await validateProgramCallMutationDraft(params)
+
+  if (validation.hasErrors) {
+    throw new ProgramCallScheduleValidationError(validation)
+  }
+
+  return validation
 }
 
 export async function resolveProgramRosterTargets(
@@ -402,6 +644,20 @@ export async function createProgramCallAssignments(
     return []
   }
 
+  await assertValidProgramCallMutationDraft({
+    programId: input.programId,
+    touchedDates: rowsToInsert.map((row) => row.call_date),
+    upserts: rowsToInsert.map((row, index) => ({
+      id: `create-${index}-${row.call_date ?? 'unknown'}-${row.call_type ?? 'unknown'}`,
+      rosterId: row.roster_id,
+      programMembershipId: row.program_membership_id,
+      callType: row.call_type,
+      callDate: row.call_date,
+      startDatetime: row.start_datetime,
+      endDatetime: row.end_datetime,
+    })),
+  })
+
   const { data, error } = await supabase
     .from('call_assignments')
     .insert(rowsToInsert)
@@ -471,6 +727,7 @@ export async function getProgramResidents(
   const rows = (data ?? []) as ProgramRosterResidentRow[]
 
   return rows.map((row) => ({
+    residentId: row.id,
     rosterId: row.id,
     membershipId: row.program_membership_id ?? null,
     displayName:
@@ -534,6 +791,7 @@ export async function getProgramCallStatsForMonth(
 
   for (const rosterId of rosterIds) {
     statsMap.set(rosterId, {
+      residentId: rosterId,
       membershipId: rosterId,
       rosterId,
       totalCallsYear: 0,

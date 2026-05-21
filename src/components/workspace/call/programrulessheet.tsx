@@ -95,6 +95,8 @@ type AIRuleResponse = {
   unparsedStatements: string[];
 };
 
+const REQUIRED_DAILY_CALL_SLOTS_RULE: RuleType = "required_daily_call_slots";
+
 function isRuleSetResponse(value: unknown): value is RuleSetResponse {
   return (
     !!value &&
@@ -145,6 +147,8 @@ function parseNumberArray(input: string) {
 
 function getRuleIcon(type: RuleType) {
   switch (type) {
+    case "required_daily_call_slots":
+      return ShieldCheck;
     case "min_days_between_assignments":
       return CalendarRange;
     case "max_calls_per_month":
@@ -168,6 +172,9 @@ function getRotationDisplayName(rotation: ProgramRotationOption) {
 
 function mapAIRuleTypeToFrontendType(ruleType: string): RuleType | null {
   switch (ruleType) {
+    case "required_daily_call_slots":
+      return "required_daily_call_slots";
+
     case "minimum_spacing":
     case "avoid_consecutive_call":
     case "min_days_between_assignments":
@@ -194,6 +201,44 @@ function mapAIRuleTypeToFrontendType(ruleType: string): RuleType | null {
     default:
       return null;
   }
+}
+
+function getScheduleSlotModeFromRules(rules: RuleDraft[]): ScheduleSlotMode | null {
+  const matchingRule = rules.find((rule) => rule.type === REQUIRED_DAILY_CALL_SLOTS_RULE);
+
+  if (!matchingRule) return null;
+
+  const requiredCallTypes = Array.isArray(matchingRule.config?.requiredCallTypes)
+    ? matchingRule.config.requiredCallTypes
+    : [];
+
+  return requiredCallTypes.includes("Backup") ? "Both" : "Primary";
+}
+
+function upsertRequiredDailySlotsRule(
+  rules: RuleDraft[],
+  scheduleSlotMode: ScheduleSlotMode
+) {
+  const requiredCallTypes: ("Primary" | "Backup")[] =
+    scheduleSlotMode === "Both" ? ["Primary", "Backup"] : ["Primary"];
+  const existingRule =
+    rules.find((rule) => rule.type === REQUIRED_DAILY_CALL_SLOTS_RULE) ?? null;
+
+  const nextRule: RuleDraft = {
+    ...(existingRule ??
+      createDefaultRuleDraft(REQUIRED_DAILY_CALL_SLOTS_RULE, makeId())),
+    type: REQUIRED_DAILY_CALL_SLOTS_RULE,
+    name: existingRule?.name?.trim() || "Required daily call slots",
+    enabled: true,
+    isHardRule: existingRule?.isHardRule ?? true,
+    config: sanitizeRuleConfig(REQUIRED_DAILY_CALL_SLOTS_RULE, {
+      ...existingRule?.config,
+      requiredCallTypes,
+    }),
+  };
+
+  const remainingRules = rules.filter((rule) => rule.type !== REQUIRED_DAILY_CALL_SLOTS_RULE);
+  return [nextRule, ...remainingRules];
 }
 
 type CallPoolCapability = "none" | "primary" | "backup" | "both";
@@ -1237,7 +1282,14 @@ export default function ProgramRulesSheet({
 
         if (cancelled) return;
 
-        setRules(rulesPayload.rules.map(toFrontendRule));
+        const nextRules = rulesPayload.rules.map(toFrontendRule);
+        const persistedSlotMode = getScheduleSlotModeFromRules(nextRules);
+
+        if (persistedSlotMode) {
+          onScheduleSlotModeChange(persistedSlotMode);
+        }
+
+        setRules(nextRules);
       } catch (error) {
         if (!cancelled) {
           setLoadError(error instanceof Error ? error.message : "Failed to load rules");
@@ -1258,6 +1310,10 @@ export default function ProgramRulesSheet({
   }, [open]);
 
   function addRule() {
+    if (selectedType === REQUIRED_DAILY_CALL_SLOTS_RULE) {
+      return;
+    }
+
     const created = createDefaultRuleDraft(selectedType, makeId());
     setRules((prev) => [created, ...prev]);
   }
@@ -1379,7 +1435,9 @@ async function submitProposedRuleType() {
     try {
       if (!ruleSetId) throw new Error("No rule set available");
 
-      const invalidRule = rules.find((rule) => validateRuleDraft(rule).length > 0);
+      const rulesToSave = upsertRequiredDailySlotsRule(rules, scheduleSlotMode);
+
+      const invalidRule = rulesToSave.find((rule) => validateRuleDraft(rule).length > 0);
       if (invalidRule) {
         throw new Error(
           `Fix "${invalidRule.name || getRuleDefinition(invalidRule.type).label}" before saving`
@@ -1397,7 +1455,7 @@ async function submitProposedRuleType() {
         },
         body: JSON.stringify({
           ruleSetId,
-          rules: rules.map((rule) => ({
+          rules: rulesToSave.map((rule) => ({
             id: rule.id.startsWith("rule-") ? undefined : rule.id,
             name: rule.name.trim(),
             type: rule.type,
@@ -1415,7 +1473,7 @@ async function submitProposedRuleType() {
       }
 
       await onSaved?.();
-onClose();
+      onClose();
     } catch (error) {
       setLoadError(error instanceof Error ? error.message : "Failed to save rules");
     } finally {
@@ -1500,7 +1558,10 @@ onClose();
 
     <ScheduleSlotModePicker
   value={scheduleSlotMode}
-  onChange={onScheduleSlotModeChange}
+  onChange={(mode) => {
+    onScheduleSlotModeChange(mode);
+    setRules((prev) => upsertRequiredDailySlotsRule(prev, mode));
+  }}
 />
 
 <div className="mt-4">
@@ -1531,7 +1592,9 @@ onClose();
       </div>
 
       <div className="mt-4 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
-        {RULE_DEFINITIONS.map((definition) => (
+        {RULE_DEFINITIONS.filter(
+          (definition) => definition.type !== REQUIRED_DAILY_CALL_SLOTS_RULE
+        ).map((definition) => (
           <RuleTypePickerCard
             key={definition.type}
             type={definition.type}

@@ -3,6 +3,7 @@
 export type CallTypeOption = "Primary" | "Backup";
 
 export type RuleType =
+  | "required_daily_call_slots"
   | "min_days_between_assignments"
   | "max_calls_per_month"
   | "max_weekends_per_month"
@@ -11,6 +12,8 @@ export type RuleType =
   | "restrict_call_by_rotation";
 
 export type RuleConfig = {
+  requiredCallTypes?: CallTypeOption[];
+
   minDays?: number;
   excludeAdjacentWeekendPairing?: boolean;
 
@@ -85,6 +88,28 @@ export const CALL_TYPE_OPTIONS: CallTypeOption[] = ["Primary", "Backup"];
 export const PGY_YEAR_OPTIONS = [1, 2, 3, 4, 5];
 
 export const RULE_DEFINITIONS: RuleDefinition[] = [
+  {
+    type: "required_daily_call_slots",
+    label: "Required daily call slots",
+    description:
+      "Defines which call slots must be filled each day for this program.",
+    category: "eligibility",
+    defaultName: "Required daily call slots",
+    defaultEnabled: true,
+    defaultIsHardRule: true,
+    defaultConfig: {
+      requiredCallTypes: ["Primary"],
+    },
+    fields: [
+      {
+        key: "requiredCallTypes",
+        label: "Required call types",
+        type: "call_type_multi_select",
+        options: CALL_TYPE_OPTIONS,
+        description: "Each selected call type must be assigned every day.",
+      },
+    ],
+  },
   {
   type: "min_days_between_assignments",
   label: "Minimum days between assignments",
@@ -348,6 +373,13 @@ export function sanitizeRuleConfig(
   const next: RuleConfig = {};
   const source = incoming ?? {};
 
+  if (type === "required_daily_call_slots") {
+    next.requiredCallTypes = sanitizeCallTypeArray(
+      source.requiredCallTypes,
+      [...(definition.defaultConfig.requiredCallTypes ?? ["Primary"])]
+    );
+  }
+
   if (type === "min_days_between_assignments") {
   next.minDays = sanitizeNumber(
     source.minDays,
@@ -429,6 +461,15 @@ export function validateRuleDraft(rule: RuleDraft): string[] {
     errors.push("Minimum days must be 0 or greater.");
   }
 }
+
+  if (rule.type === "required_daily_call_slots") {
+    if (
+      !Array.isArray(rule.config.requiredCallTypes) ||
+      rule.config.requiredCallTypes.length === 0
+    ) {
+      errors.push("Select at least one required daily call type.");
+    }
+  }
 
   if (rule.type === "max_calls_per_month") {
     if (

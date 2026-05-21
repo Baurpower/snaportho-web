@@ -9,6 +9,12 @@ import {
   Loader2,
   Wand2,
 } from "lucide-react";
+import type { CallValidationResult } from "@/lib/workspace/call/validation";
+import { serializeSlotId } from "@/lib/workspace/call/validation";
+import {
+  getResidentValidationDisplay,
+  getSlotValidationGuidance,
+} from "@/lib/workspace/call/validation-display";
 import type {
   AssignmentFlagCategory,
   AssignmentFlagTone,
@@ -281,6 +287,7 @@ type AddViewProps = {
   }>;
   residentStats: ResidentSchedulingStats[];
   selectedResidentStats: ResidentSchedulingStats | null;
+  validation?: CallValidationResult | null;
   statsLoading: boolean;
   residentLoading: boolean;
   statsCollapsed: boolean;
@@ -295,6 +302,8 @@ function DayChip({
   residentLookup,
   selectedResidentAvailability,
   isChanged,
+  primaryValidation,
+  backupValidation,
   onClick,
 }: {
   day: CalendarDay;
@@ -304,6 +313,18 @@ function DayChip({
   residentLookup: Map<string, ResidentOption>;
   selectedResidentAvailability: ResidentAvailabilityForDate | null;
   isChanged: boolean;
+  primaryValidation?: {
+    className: string;
+    badgeText: string | null;
+    tooltip: string | undefined;
+    shortMessage?: string | null;
+  };
+  backupValidation?: {
+    className: string;
+    badgeText: string | null;
+    tooltip: string | undefined;
+    shortMessage?: string | null;
+  };
   onClick: () => void;
 }) {
   const primaryResident = assignment?.primaryMembershipId
@@ -398,21 +419,35 @@ function DayChip({
 
       <div className="mt-2 space-y-1.5">
         <div
+          title={primaryValidation?.tooltip}
           className={`rounded-lg px-1.5 py-1 ${
             active && quickAssignSlotMode !== "Backup"
               ? "bg-white/10"
               : "bg-slate-50"
-          }`}
+          } ${primaryValidation?.className ?? ""}`}
         >
-          <p
-            className={`text-[8px] font-semibold uppercase tracking-[0.12em] ${
-              active && quickAssignSlotMode !== "Backup"
-                ? "text-slate-200"
-                : "text-slate-500"
-            }`}
-          >
-            Primary
-          </p>
+          <div className="flex items-center justify-between gap-1">
+            <p
+              className={`text-[8px] font-semibold uppercase tracking-[0.12em] ${
+                active && quickAssignSlotMode !== "Backup"
+                  ? "text-slate-200"
+                  : "text-slate-500"
+              }`}
+            >
+              Primary
+            </p>
+            {primaryValidation?.badgeText ? (
+              <span
+                className={`rounded-full px-1.5 py-0.5 text-[8px] font-semibold ${
+                  primaryValidation.badgeText === "Error"
+                    ? "bg-rose-600 text-white"
+                    : "bg-amber-500 text-white"
+                }`}
+              >
+                {primaryValidation.badgeText}
+              </span>
+            ) : null}
+          </div>
           <p
             className={`mt-0.5 truncate text-[11px] font-semibold ${
               active && quickAssignSlotMode !== "Backup"
@@ -422,24 +457,43 @@ function DayChip({
           >
             {primaryResident?.displayName ?? "Open"}
           </p>
+          {primaryValidation?.shortMessage ? (
+            <p className="mt-0.5 truncate text-[10px] text-slate-500">
+              {primaryValidation.shortMessage}
+            </p>
+          ) : null}
         </div>
 
         <div
+          title={backupValidation?.tooltip}
           className={`rounded-lg px-1.5 py-1 ${
             active && quickAssignSlotMode !== "Primary"
               ? "bg-white/10"
               : "bg-slate-50"
-          }`}
+          } ${backupValidation?.className ?? ""}`}
         >
-          <p
-            className={`text-[8px] font-semibold uppercase tracking-[0.12em] ${
-              active && quickAssignSlotMode !== "Primary"
-                ? "text-slate-200"
-                : "text-slate-500"
-            }`}
-          >
-            Backup
-          </p>
+          <div className="flex items-center justify-between gap-1">
+            <p
+              className={`text-[8px] font-semibold uppercase tracking-[0.12em] ${
+                active && quickAssignSlotMode !== "Primary"
+                  ? "text-slate-200"
+                  : "text-slate-500"
+              }`}
+            >
+              Backup
+            </p>
+            {backupValidation?.badgeText ? (
+              <span
+                className={`rounded-full px-1.5 py-0.5 text-[8px] font-semibold ${
+                  backupValidation.badgeText === "Error"
+                    ? "bg-rose-600 text-white"
+                    : "bg-amber-500 text-white"
+                }`}
+              >
+                {backupValidation.badgeText}
+              </span>
+            ) : null}
+          </div>
           <p
             className={`mt-0.5 truncate text-[11px] font-semibold ${
               active && quickAssignSlotMode !== "Primary"
@@ -449,6 +503,11 @@ function DayChip({
           >
             {backupResident?.displayName ?? "Open"}
           </p>
+          {backupValidation?.shortMessage ? (
+            <p className="mt-0.5 truncate text-[10px] text-slate-500">
+              {backupValidation.shortMessage}
+            </p>
+          ) : null}
         </div>
 
         {selectedResidentId && firstFlag ? (
@@ -481,6 +540,7 @@ export default function ProgramCallAddView({
   setQuickAssignSlotMode,
   onToggleQuickAssignDay,
   pgyRows,
+  validation,
   statsLoading,
   residentLoading,
   statsCollapsed,
@@ -693,6 +753,12 @@ export default function ProgramCallAddView({
                         quickAssignResidentId === resident.membershipId;
                       const summary =
                         residentIssueSummary.get(resident.membershipId) ?? null;
+                      const residentValidation = validation
+                        ? getResidentValidationDisplay(
+                            validation,
+                            resident.rosterId ?? resident.membershipId
+                          )
+                        : null;
 
                       return (
                         <button
@@ -701,9 +767,12 @@ export default function ProgramCallAddView({
                           onClick={() =>
                             setQuickAssignResidentId(resident.membershipId)
                           }
+                          title={residentValidation?.tooltip}
                           className={`flex items-start justify-between gap-3 rounded-xl border px-3 py-2.5 text-left transition ${
                             selected
                               ? "border-slate-950 bg-slate-950 text-white"
+                              : residentValidation?.className
+                              ? residentValidation.className
                               : summary?.blockedDays
                               ? "border-rose-200 bg-rose-50 hover:bg-rose-100/60"
                               : summary?.warningDays
@@ -753,6 +822,20 @@ export default function ProgramCallAddView({
                                     {summary.warningDays} warning
                                   </span>
                                 ) : null}
+                              </div>
+                            ) : null}
+
+                            {residentValidation?.badgeText ? (
+                              <div className="mt-2">
+                                <span
+                                  className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                                    residentValidation.badgeText === "Error"
+                                      ? "bg-rose-600 text-white"
+                                      : "bg-amber-500 text-white"
+                                  }`}
+                                >
+                                  {residentValidation.badgeText}
+                                </span>
                               </div>
                             ) : null}
                           </div>
@@ -884,6 +967,24 @@ export default function ProgramCallAddView({
                               day.key
                             )
                           : null;
+                        const primaryValidation = validation
+                          ? getSlotValidationGuidance(
+                              validation,
+                              serializeSlotId({
+                                dateKey: day.key,
+                                callType: "Primary",
+                              })
+                            )
+                          : undefined;
+                        const backupValidation = validation
+                          ? getSlotValidationGuidance(
+                              validation,
+                              serializeSlotId({
+                                dateKey: day.key,
+                                callType: "Backup",
+                              })
+                            )
+                          : undefined;
 
                         return (
                           <DayChip
@@ -895,6 +996,8 @@ export default function ProgramCallAddView({
                             residentLookup={residentLookup}
                             selectedResidentAvailability={selectedResidentAvailability}
                             isChanged={isChanged}
+                            primaryValidation={primaryValidation}
+                            backupValidation={backupValidation}
                             onClick={() => onToggleQuickAssignDay(day.key)}
                           />
                         );

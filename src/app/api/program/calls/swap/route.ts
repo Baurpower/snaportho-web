@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { syncGoogleCalendarAfterCallChange } from "@/lib/google/syncCallCalendarAfterChange";
+import {
+  assertValidProgramCallMutationDraft,
+  ProgramCallScheduleValidationError,
+} from "@/lib/workspace/call/calls";
 
 type CallAssignmentRow = {
   id: string;
@@ -137,6 +141,33 @@ export async function POST(request: NextRequest) {
       call_date: secondCall.call_date,
     };
 
+    await assertValidProgramCallMutationDraft({
+      programId: activeMembership.program_id,
+      touchedDates: [firstCall.call_date, secondCall.call_date].filter(
+        (value): value is string => Boolean(value)
+      ),
+      upserts: [
+        {
+          id: firstCall.id,
+          rosterId: secondOriginal.roster_id,
+          programMembershipId: secondOriginal.program_membership_id,
+          callType: firstCall.call_type,
+          callDate: firstOriginal.call_date,
+          startDatetime: firstCall.start_datetime,
+          endDatetime: firstCall.end_datetime,
+        },
+        {
+          id: secondCall.id,
+          rosterId: firstOriginal.roster_id,
+          programMembershipId: firstOriginal.program_membership_id,
+          callType: secondCall.call_type,
+          callDate: secondOriginal.call_date,
+          startDatetime: secondCall.start_datetime,
+          endDatetime: secondCall.end_datetime,
+        },
+      ],
+    });
+
     const timestamp = new Date().toISOString();
 
     // Step 1: move first row out of the way to avoid unique constraint collision
@@ -251,6 +282,17 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof ProgramCallScheduleValidationError) {
+      return NextResponse.json(
+        {
+          error: "Schedule validation failed",
+          issues: error.issues,
+          validation: error.validation,
+        },
+        { status: 400 }
+      );
+    }
+
     const message =
       error instanceof Error ? error.message : "Failed to swap calls";
 

@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { syncGoogleCalendarAfterCallChange } from "@/lib/google/syncCallCalendarAfterChange";
+import {
+  assertValidProgramCallMutationDraft,
+  ProgramCallScheduleValidationError,
+} from "@/lib/workspace/call/calls";
 
 type RouteContext = {
   params: Promise<{
@@ -190,6 +194,16 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       );
     }
 
+    if (
+      nextProgramMembershipIdFromBody &&
+      nextProgramMembershipIdFromBody !== targetRoster.program_membership_id
+    ) {
+      return NextResponse.json(
+        { error: "programMembershipId does not match the selected roster row" },
+        { status: 400 }
+      );
+    }
+
     const updatePayload = {
       roster_id: nextRosterId,
       program_membership_id:
@@ -203,6 +217,26 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       notes: nextNotes,
       updated_at: new Date().toISOString(),
     };
+
+    await assertValidProgramCallMutationDraft({
+      programId: activeMembership.program_id,
+      touchedDates: [
+        existingCall.call_date,
+        nextCallDate,
+      ].filter((value): value is string => Boolean(value)),
+      upserts: [
+        {
+          id: existingCall.id,
+          rosterId: nextRosterId,
+          programMembershipId:
+            nextProgramMembershipIdFromBody ?? targetRoster.program_membership_id ?? null,
+          callType: nextCallType,
+          callDate: nextCallDate,
+          startDatetime: nextStartDatetime,
+          endDatetime: nextEndDatetime,
+        },
+      ],
+    });
 
     const { data: updatedCall, error: updateError } = await supabase
       .from("call_assignments")
@@ -240,6 +274,17 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof ProgramCallScheduleValidationError) {
+      return NextResponse.json(
+        {
+          error: "Schedule validation failed",
+          issues: error.issues,
+          validation: error.validation,
+        },
+        { status: 400 }
+      );
+    }
+
     const message =
       error instanceof Error ? error.message : "Failed to update call";
 

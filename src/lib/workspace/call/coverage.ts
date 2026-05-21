@@ -1,4 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
+import {
+  getPgyFromGradYear as getCanonicalPgyFromGradYear,
+  getTrainingLevelFromPgy,
+} from "@/lib/workspace/pgy";
 
 export type MonthlyCoverageResident = {
   membershipId: string | null;
@@ -75,28 +79,17 @@ function normalizeRotation(
   return rotation;
 }
 
-function getCurrentChiefGradYear(date = new Date()): number {
-  const year = date.getFullYear();
-  const julyFirst = new Date(year, 6, 1);
-  return date >= julyFirst ? year + 1 : year;
-}
-
 function getPgyFromGradYear(
   gradYear: number | null,
-  date = new Date()
+  activeMonthStartDate: string
 ): number | null {
-  if (!gradYear) return null;
-
-  const currentChiefGradYear = getCurrentChiefGradYear(date);
-  const pgy = 5 - (gradYear - currentChiefGradYear);
-
-  if (pgy < 1 || pgy > 5) return null;
-  return pgy;
+  return getCanonicalPgyFromGradYear(gradYear, activeMonthStartDate);
 }
 
-function deriveLevel(gradYear: number | null): string {
-  const pgyYear = getPgyFromGradYear(gradYear);
-  if (pgyYear !== null) return `PGY-${pgyYear}`;
+function deriveLevel(gradYear: number | null, activeMonthStartDate: string): string {
+  const pgyYear = getPgyFromGradYear(gradYear, activeMonthStartDate);
+  const trainingLevel = getTrainingLevelFromPgy(pgyYear);
+  if (trainingLevel) return trainingLevel;
   return "Resident";
 }
 
@@ -171,7 +164,7 @@ export async function getMonthlyCoverageForProgram(
     const rotation = normalizeRotation(row.rotations);
 
     const gradYear = roster?.grad_year ?? null;
-    const pgyYear = getPgyFromGradYear(gradYear);
+    const pgyYear = getPgyFromGradYear(gradYear, monthStart);
 
     const rotationKey = rotation?.id ?? `unknown-${row.id}`;
 
@@ -190,7 +183,7 @@ export async function getMonthlyCoverageForProgram(
       membershipId: roster?.program_membership_id ?? row.program_membership_id ?? null,
       rosterId: roster?.id ?? row.roster_id ?? null,
       resident: getRosterDisplayName(roster),
-      level: deriveLevel(gradYear),
+      level: deriveLevel(gradYear, monthStart),
       service: deriveService(row),
       startDate: row.start_date,
       endDate: row.end_date,

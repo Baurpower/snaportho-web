@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import { getProgramResidents } from "@/lib/workspace/call/calls";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
   getPgyFromGradYear,
@@ -110,6 +111,7 @@ export async function GET(request: NextRequest) {
           monthEnd,
           myMembershipId: null,
           myRosterId: null,
+          residents: [],
           calls: [],
         },
         { status: 200 }
@@ -229,12 +231,29 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    const residents = (await getProgramResidents(activeMembership.program_id)).map(
+      (resident) => {
+        const pgyYear = getPgyFromGradYear(resident.gradYear, monthStart);
+
+        return {
+          residentId: resident.residentId,
+          rosterId: resident.rosterId,
+          programMembershipId: resident.membershipId,
+          residentName: resident.displayName,
+          gradYear: resident.gradYear,
+          pgyYear,
+          trainingLevel: getTrainingLevelFromPgy(pgyYear),
+        };
+      }
+    );
+
     return NextResponse.json(
       {
         monthStart,
         monthEnd,
         myMembershipId: activeMembership.id,
         myRosterId: activeMembership.roster_id ?? null,
+        residents,
         calls: deduped.map((row) => {
           const effectiveDate =
             row.call_date ?? row.start_datetime?.slice(0, 10) ?? null;
@@ -252,8 +271,10 @@ export async function GET(request: NextRequest) {
 
           return {
             id: row.id,
+            residentId: row.roster_id ?? row.program_membership_id,
             rosterId: row.roster_id,
-            // Compatibility field: `membershipId` carries roster identity in roster-first flows.
+            programMembershipId: row.program_membership_id,
+            // Compatibility field kept for older consumers; roster-first UIs should use `rosterId`.
             membershipId: row.roster_id ?? row.program_membership_id,
             residentName: getRosterDisplayName(roster),
             gradYear,

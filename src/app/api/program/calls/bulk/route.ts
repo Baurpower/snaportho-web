@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
+  assertValidProgramCallMutationDraft,
   CALL_ASSIGNMENT_EDITOR_ROLES,
+  ProgramCallScheduleValidationError,
   ProgramCallValidationError,
   resolveProgramRosterTargets,
 } from "@/lib/workspace/call/calls";
@@ -123,8 +125,7 @@ export async function POST(request: NextRequest) {
         .from("call_assignments")
         .select("id, call_date, call_type")
         .eq("program_id", membership.program_id)
-        .in("call_date", touchedDates)
-        .in("call_type", ["Primary", "Backup"]);
+        .in("call_date", touchedDates);
 
       if (existingRowsError) {
         throw new Error(`Failed loading existing slots: ${existingRowsError.message}`);
@@ -150,6 +151,41 @@ export async function POST(request: NextRequest) {
         return !incomingSlotKeys.has(slotKey);
       })
       .map(([, row]) => row.id);
+
+    await assertValidProgramCallMutationDraft({
+      programId: membership.program_id,
+      touchedDates,
+      deleteCallIds: rowsToDelete,
+      upserts: rows.map((row, index) => {
+        const slotKey = `${row.callDate}__${row.callType}`;
+        const existing = existingRowsBySlot.get(slotKey);
+        const resolvedTarget = resolvedTargets[index];
+
+        return {
+          id: existing?.id ?? `bulk-${index}-${row.callDate}-${row.callType}`,
+          rosterId: resolvedTarget.rosterId,
+          programMembershipId: resolvedTarget.programMembershipId,
+          callType: row.callType,
+          callDate: row.callDate,
+          startDatetime: null,
+          endDatetime: null,
+        };
+      }),
+    });
+
+    if (process.env.NODE_ENV !== "production") {
+      console.info("[call-validation-ui-path]", {
+        endpoint: "/api/program/calls/bulk",
+        programId: membership.program_id,
+        userId: user.id,
+        rowRosterIds: resolvedTargets.map((target) => target.rosterId),
+        rowProgramMembershipIds: resolvedTargets.map(
+          (target) => target.programMembershipId
+        ),
+        source: "browser-save-validation",
+        timestamp: new Date().toISOString(),
+      });
+    }
 
     if (rowsToDelete.length > 0) {
       const { error: deleteError } = await supabase
@@ -220,6 +256,17 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof ProgramCallScheduleValidationError) {
+      return NextResponse.json(
+        {
+          error: "Schedule validation failed",
+          issues: error.issues,
+          validation: error.validation,
+        },
+        { status: 400 }
+      );
+    }
+
     if (error instanceof ProgramCallValidationError) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }

@@ -122,9 +122,38 @@ export async function getActiveMembershipForUser(
     throw new Error(`Failed to fetch linked roster: ${rosterError.message}`);
   }
 
-  const normalizedRoster = normalizeOne(
+  let normalizedRoster = normalizeOne(
     rosterData as ProgramRosterRow | ProgramRosterRow[] | null
   );
+
+  if (!normalizedRoster && activeMembership.program_id) {
+    const { data: fallbackRosterData, error: fallbackRosterError } = await supabase
+      .from("program_roster")
+      .select(`
+        id,
+        program_id,
+        full_name,
+        first_name,
+        last_name,
+        grad_year,
+        role,
+        claimed_by_user_id,
+        program_membership_id
+      `)
+      .eq("program_id", activeMembership.program_id)
+      .eq("claimed_by_user_id", userId)
+      .maybeSingle();
+
+    if (fallbackRosterError) {
+      throw new Error(
+        `Failed to fetch fallback linked roster: ${fallbackRosterError.message}`
+      );
+    }
+
+    normalizedRoster = normalizeOne(
+      fallbackRosterData as ProgramRosterRow | ProgramRosterRow[] | null
+    );
+  }
 
   return {
     id: activeMembership.id,

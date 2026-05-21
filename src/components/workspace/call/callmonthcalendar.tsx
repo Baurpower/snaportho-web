@@ -5,6 +5,8 @@ import { CalendarDays, PhoneCall } from "lucide-react";
 
 export type ProgramCallItem = {
   id: string;
+  rosterId?: string | null;
+  programMembershipId?: string | null;
   membershipId: string | null;
   residentName: string;
   trainingLevel: string | null;

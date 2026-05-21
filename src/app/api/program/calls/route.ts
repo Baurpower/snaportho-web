@@ -4,6 +4,7 @@ import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
 import {
   CALL_ASSIGNMENT_EDITOR_ROLES,
   createProgramCallAssignments,
+  ProgramCallScheduleValidationError,
   ProgramCallValidationError,
 } from '@/lib/workspace/call/calls'
 
@@ -113,6 +114,17 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ calls: created }, { status: 201 })
   } catch (error) {
+    if (error instanceof ProgramCallScheduleValidationError) {
+      return NextResponse.json(
+        {
+          error: 'Schedule validation failed',
+          issues: error.issues,
+          validation: error.validation,
+        },
+        { status: 400 }
+      )
+    }
+
     if (error instanceof ProgramCallValidationError) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }

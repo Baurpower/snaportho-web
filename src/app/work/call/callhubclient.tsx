@@ -21,6 +21,7 @@ import CallMonthCalendar, {
 } from "@/components/workspace/call/callmonthcalendar";
 import EditCallMonthCalendar from "@/components/workspace/call/editcallmonthcalendar";
 import { useRouter, useSearchParams } from "next/navigation";
+import { parseCallMutationResponse } from "@/lib/workspace/call/mutation-error";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -31,11 +32,14 @@ type ProgramCallsMonthResponse = {
   monthStart: string;
   monthEnd: string;
   myMembershipId: string | null;
+  myRosterId: string | null;
+  residents: ResidentOption[];
   calls: ProgramCallItem[];
 };
 
 type ResidentOption = {
-  membershipId: string;
+  rosterId: string;
+  programMembershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
 };
@@ -356,7 +360,7 @@ useEffect(() => {
   finishGoogleConnect();
 }, [searchParams, router]);
 
-  const calls = data?.calls ?? [];
+  const calls = useMemo(() => data?.calls ?? [], [data?.calls]);
 
   const callsByDate = useMemo(() => {
     const map = new Map<string, ProgramCallItem[]>();
@@ -400,12 +404,17 @@ useEffect(() => {
   const residentOptions = useMemo(() => {
     const map = new Map<string, ResidentOption>();
 
-    for (const call of calls) {
-      if (!call.membershipId) continue;
-      if (map.has(call.membershipId)) continue;
+    for (const resident of data?.residents ?? []) {
+      map.set(resident.rosterId, resident);
+    }
 
-      map.set(call.membershipId, {
-        membershipId: call.membershipId,
+    for (const call of calls) {
+      const rosterId = call.rosterId ?? call.membershipId;
+      if (!rosterId || map.has(rosterId)) continue;
+
+      map.set(rosterId, {
+        rosterId,
+        programMembershipId: call.programMembershipId ?? null,
         residentName: call.residentName,
         trainingLevel: call.trainingLevel,
       });
@@ -414,7 +423,7 @@ useEffect(() => {
     return Array.from(map.values()).sort((a, b) =>
       a.residentName.localeCompare(b.residentName)
     );
-  }, [calls]);
+  }, [calls, data?.residents]);
 
   async function refreshMonth() {
     const response = await fetch(
@@ -438,7 +447,7 @@ useEffect(() => {
     callId: string,
     body: {
       rosterId?: string;
-      programMembershipId?: string;
+      programMembershipId?: string | null;
       callType?: string;
       callDate?: string | null;
       startDatetime?: string | null;
@@ -457,13 +466,7 @@ useEffect(() => {
       body: JSON.stringify(body),
     });
 
-    const payload = await response.json().catch(() => null);
-
-    if (!response.ok) {
-      throw new Error(payload?.error ?? "Failed to update call");
-    }
-
-    return payload;
+    return parseCallMutationResponse(response, "Failed to update call");
   }
 
   async function deleteCall(callId: string) {
@@ -472,13 +475,7 @@ useEffect(() => {
       credentials: "include",
     });
 
-    const payload = await response.json().catch(() => null);
-
-    if (!response.ok) {
-      throw new Error(payload?.error ?? "Failed to delete call");
-    }
-
-    return payload;
+    return parseCallMutationResponse(response, "Failed to delete call");
   }
 
   async function swapCalls(firstCallId: string, secondCallId: string) {
@@ -494,18 +491,34 @@ useEffect(() => {
       }),
     });
 
-    const payload = await response.json().catch(() => null);
-
-    if (!response.ok) {
-      throw new Error(payload?.error ?? "Failed to swap calls");
-    }
-
-    return payload;
+    return parseCallMutationResponse(response, "Failed to swap calls");
   }
 
-  function finishSuccessfulEdit(title: string, message: string) {
-    setEditingCalendar(false);
-    setSuccessModal({ title, message });
+  async function createProgramCall(payload: {
+    rosterId: string;
+    callDate: string;
+    callType: string;
+    programMembershipId?: string | null;
+  }) {
+    const response = await fetch("/api/program/calls", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        rows: [
+          {
+            rosterId: payload.rosterId,
+            membershipId: payload.programMembershipId ?? null,
+            dates: [payload.callDate],
+            callType: payload.callType,
+          },
+        ],
+      }),
+    });
+
+    return parseCallMutationResponse(response, "Failed to create call");
   }
 
   function exportCalendar() {
@@ -763,8 +776,9 @@ async function stopGoogleSync() {
 
   async function handleSwitch(payload: {
     callId: string;
-    fromMembershipId: string | null;
-    toMembershipId: string;
+    fromRosterId: string | null;
+    toRosterId: string;
+    toProgramMembershipId?: string | null;
   }) {
     try {
       setActionError(null);
@@ -779,7 +793,7 @@ async function stopGoogleSync() {
       }
 
       const targetResident = residentOptions.find(
-        (resident) => resident.membershipId === payload.toMembershipId
+        (resident) => resident.rosterId === payload.toRosterId
       );
 
       if (!targetResident) {
@@ -787,17 +801,12 @@ async function stopGoogleSync() {
       }
 
       await patchCall(payload.callId, {
-        rosterId: payload.toMembershipId,
+        rosterId: payload.toRosterId,
+        programMembershipId:
+          payload.toProgramMembershipId ?? targetResident.programMembershipId,
       });
 
       await refreshMonth();
-
-      finishSuccessfulEdit(
-        "Call switched",
-        `${selectedCall.callType ?? "Call"} on ${formatShortDate(
-          selectedCall.callDate
-        )} was reassigned from ${selectedCall.residentName} to ${targetResident.residentName}.`
-      );
     } catch (err) {
       setActionError(err instanceof Error ? err.message : "Failed to switch call.");
       throw err;
@@ -824,11 +833,6 @@ async function stopGoogleSync() {
 
       await swapCalls(payload.firstCallId, payload.secondCallId);
       await refreshMonth();
-
-      finishSuccessfulEdit(
-        "Calls swapped",
-        `${firstCall.residentName} and ${secondCall.residentName} were swapped successfully.`
-      );
     } catch (err) {
       setActionError(err instanceof Error ? err.message : "Failed to swap calls.");
       throw err;
@@ -850,15 +854,33 @@ async function stopGoogleSync() {
 
       await deleteCall(payload.callId);
       await refreshMonth();
-
-      finishSuccessfulEdit(
-        "Call deleted",
-        `${selectedCall.callType ?? "Call"} for ${selectedCall.residentName} on ${formatShortDate(
-          selectedCall.callDate
-        )} was removed.`
-      );
     } catch (err) {
       setActionError(err instanceof Error ? err.message : "Failed to delete call.");
+      throw err;
+    }
+  }
+
+  async function handleCreate(payload: {
+    rosterId: string;
+    callDate: string;
+    callType: string;
+    programMembershipId?: string | null;
+  }) {
+    try {
+      setActionError(null);
+
+      const targetResident = residentOptions.find(
+        (resident) => resident.rosterId === payload.rosterId
+      );
+
+      if (!targetResident) {
+        throw new Error("Target resident could not be found.");
+      }
+
+      await createProgramCall(payload);
+      await refreshMonth();
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : "Failed to create call.");
       throw err;
     }
   }
@@ -1083,8 +1105,18 @@ async function stopGoogleSync() {
                 ) : null}
               </div>
 
-              <div className="min-w-0 overflow-x-auto">
-                <div className="min-w-[960px] xl:min-w-[1080px] 2xl:min-w-0">
+              <div
+                className={
+                  editingCalendar ? "min-w-0 overflow-x-hidden" : "min-w-0 overflow-x-auto"
+                }
+              >
+                <div
+                  className={
+                    editingCalendar
+                      ? "min-w-0"
+                      : "min-w-[960px] xl:min-w-[1080px] 2xl:min-w-0"
+                  }
+                >
                   {editingCalendar ? (
                     <EditCallMonthCalendar
                       year={visibleMonth.year}
@@ -1096,6 +1128,7 @@ async function stopGoogleSync() {
                       onSwitch={handleSwitch}
                       onSwap={handleSwap}
                       onDelete={handleDelete}
+                      onCreate={handleCreate}
                     />
                   ) : (
                     <CallMonthCalendar

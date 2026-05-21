@@ -541,7 +541,6 @@ function RotationsPanel({
       residents: group.residents.map((resident) => ({
         resident: resident.resident,
         level: resident.level,
-        service: resident.service ?? "—",
       })),
     }));
   }, [coverage]);
@@ -674,9 +673,6 @@ function RotationsPanel({
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-slate-900">
                             {resident.resident}
-                          </p>
-                          <p className="mt-1 truncate text-xs text-slate-500">
-                            {resident.service}
                           </p>
                         </div>
 

@@ -5,6 +5,8 @@ import {
   AlertCircle,
   BookOpen,
   CalendarDays,
+  ChevronDown,
+  ChevronRight,
   Clock,
   Loader2,
   MapPin,
@@ -148,6 +150,43 @@ function getTimeRange(start?: string | null, end?: string | null) {
   return "Time TBD";
 }
 
+function getAcademicYearEnd(date = new Date()) {
+  const year = date.getFullYear();
+  const julyFirstThisYear = new Date(year, 6, 1);
+  const endYear = date < julyFirstThisYear ? year : year + 1;
+
+  return new Date(endYear, 6, 1);
+}
+
+function getSessionPresenterSummary(sessions: AcademicEventSession[]) {
+  const people = sessions
+    .flatMap((session) => session.people ?? [])
+    .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
+
+  if (people.length === 0) return null;
+
+  const names = people.map(getPersonName);
+  if (names.length === 1) return names[0];
+  if (names.length === 2) return names.join(" + ");
+  return `${names[0]} + ${names.length - 1} more`;
+}
+
+function getSessionPreview(sessions: AcademicEventSession[]) {
+  if (sessions.length === 0) return null;
+
+  const sorted = sessions
+    .slice()
+    .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
+
+  const first = sorted[0];
+  const firstTitle = first?.title?.trim();
+
+  if (!firstTitle) return `${sessions.length} session${sessions.length === 1 ? "" : "s"}`;
+  if (sessions.length === 1) return firstTitle;
+
+  return `${firstTitle} + ${sessions.length - 1} more`;
+}
+
 function LoadingState({ label }: { label: string }) {
   return (
     <section className="flex min-h-[360px] items-center justify-center rounded-[1.75rem] border border-slate-200 bg-white shadow-xl">
@@ -159,12 +198,9 @@ function LoadingState({ label }: { label: string }) {
   );
 }
 
-export default function AcademicListView({
-  selectedDate,
-  requiredOnly,
-  eventTypeId,
-  onOpenEvent,
-}: AcademicListViewProps) {
+export default function AcademicListView(props: AcademicListViewProps) {
+  const { requiredOnly, eventTypeId, onOpenEvent } = props;
+
   const {
     programId,
     loading: workspaceLoading,
@@ -174,24 +210,19 @@ export default function AcademicListView({
   const [events, setEvents] = useState<AcademicCalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [expandedEventIds, setExpandedEventIds] = useState<Set<string>>(
+    () => new Set()
+  );
 
-  function getAcademicYearEnd(date = new Date()) {
-  const year = date.getFullYear();
-  const julyFirstThisYear = new Date(year, 6, 1);
-  const endYear = date < julyFirstThisYear ? year : year + 1;
+  const rangeStart = useMemo(() => {
+    return startOfDay(new Date());
+  }, []);
 
-  return new Date(endYear, 6, 1);
-}
+  const rangeEnd = useMemo(() => {
+    return getAcademicYearEnd(new Date());
+  }, []);
 
-const rangeStart = useMemo(() => {
-  return startOfDay(new Date());
-}, []);
-
-const rangeEnd = useMemo(() => {
-  return getAcademicYearEnd(new Date());
-}, []);
-
-useEffect(() => {
+  useEffect(() => {
     if (!programId) {
       setEvents([]);
       setLoading(false);
@@ -204,15 +235,6 @@ useEffect(() => {
     async function loadEvents() {
       setLoading(true);
       setError(null);
-
-      console.log("AcademicListView query", {
-  programId,
-  selectedDate,
-  rangeStart,
-  rangeEnd,
-  requiredOnly,
-  eventTypeId,
-});
 
       const params = new URLSearchParams({
         programId: activeProgramId,
@@ -244,10 +266,9 @@ useEffect(() => {
                 `/api/program/academic-calendar/events/${event.id}/sessions`,
                 { cache: "no-store" }
               ),
-              fetch(
-                `/api/program/academic-calendar/events/${event.id}/people`,
-                { cache: "no-store" }
-              ),
+              fetch(`/api/program/academic-calendar/events/${event.id}/people`, {
+                cache: "no-store",
+              }),
             ]);
 
             const [sessionsJson, peopleJson] = await Promise.all([
@@ -263,12 +284,14 @@ useEffect(() => {
               ? peopleJson.data ?? []
               : [];
 
-            const sessionsWithPeople = sessions.map((session) => ({
-              ...session,
-              people: people.filter(
-                (person) => person.academic_event_session_id === session.id
-              ),
-            }));
+            const sessionsWithPeople = sessions
+              .map((session) => ({
+                ...session,
+                people: people.filter(
+                  (person) => person.academic_event_session_id === session.id
+                ),
+              }))
+              .sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
 
             return {
               ...event,
@@ -279,6 +302,7 @@ useEffect(() => {
 
         if (!cancelled) {
           setEvents(hydratedEvents);
+          setExpandedEventIds(new Set());
         }
       } catch (err) {
         if (!cancelled) {
@@ -322,6 +346,18 @@ useEffect(() => {
       events: dayEvents,
     }));
   }, [events]);
+
+  function toggleExpanded(eventId: string) {
+    setExpandedEventIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(eventId)) {
+        next.delete(eventId);
+      } else {
+        next.add(eventId);
+      }
+      return next;
+    });
+  }
 
   if (workspaceLoading) {
     return <LoadingState label="Loading workspace..." />;
@@ -367,7 +403,7 @@ useEffect(() => {
           </h2>
 
           <p className="mt-1 text-sm text-slate-500">
-            Events, sessions, assigned presenters, and locations through the academic year.
+            Events are collapsed by default. Expand an event to view its sessions.
           </p>
         </div>
 
@@ -405,23 +441,26 @@ useEffect(() => {
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {group.events.map((event) => {
                   const locationText = getLocationText(event);
                   const sessions = event.sessions ?? [];
+                  const isExpanded = expandedEventIds.has(event.id);
+                  const presenterSummary = getSessionPresenterSummary(sessions);
+                  const sessionPreview = getSessionPreview(sessions);
 
                   return (
                     <article
                       key={event.id}
                       className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm"
                     >
-                      <button
-                        type="button"
-                        onClick={() => onOpenEvent(event.id)}
-                        className="w-full p-4 text-left transition hover:bg-slate-50"
-                      >
+                      <div className="p-4 transition hover:bg-slate-50">
                         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                          <div className="min-w-0 flex-1">
+                          <button
+                            type="button"
+                            onClick={() => toggleExpanded(event.id)}
+                            className="min-w-0 flex-1 text-left"
+                          >
                             <div className="mb-2 flex flex-wrap items-center gap-2">
                               <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-black uppercase tracking-wide text-slate-600">
                                 {event.event_type?.name ?? "Academic"}
@@ -440,6 +479,15 @@ useEffect(() => {
                                   {sessions.length === 1 ? "" : "s"}
                                 </span>
                               )}
+
+                              <span className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-black uppercase tracking-wide text-slate-500 ring-1 ring-slate-200">
+                                {isExpanded ? (
+                                  <ChevronDown className="h-3 w-3" />
+                                ) : (
+                                  <ChevronRight className="h-3 w-3" />
+                                )}
+                                {isExpanded ? "Expanded" : "Collapsed"}
+                              </span>
                             </div>
 
                             <h3 className="text-base font-black leading-snug text-slate-950 sm:text-lg">
@@ -451,33 +499,95 @@ useEffect(() => {
                                 {event.description}
                               </p>
                             )}
-                          </div>
 
-                          <div className="shrink-0 space-y-1 text-sm font-semibold text-slate-500 lg:text-right">
-                            <div className="flex items-center gap-1.5 lg:justify-end">
-                              <Clock className="h-3.5 w-3.5" />
-                              <span>
-                                {getTimeRange(
-                                  event.start_datetime,
-                                  event.end_datetime
-                                )}
-                              </span>
-                            </div>
+                            <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+                              {sessionPreview && (
+                                <div className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+                                  <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wide text-slate-400">
+                                    <BookOpen className="h-3.5 w-3.5" />
+                                    Sessions
+                                  </div>
+                                  <p className="mt-1 line-clamp-1 text-sm font-bold text-slate-800">
+                                    {sessionPreview}
+                                  </p>
+                                </div>
+                              )}
 
-                            {locationText && (
-                              <div className="flex items-center gap-1.5 lg:justify-end">
-                                <MapPin className="h-3.5 w-3.5" />
-                                <span className="line-clamp-1">
-                                  {locationText}
-                                </span>
+                              {presenterSummary && (
+                                <div className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+                                  <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wide text-slate-400">
+                                    <UserRound className="h-3.5 w-3.5" />
+                                    Presenter
+                                  </div>
+                                  <p className="mt-1 line-clamp-1 text-sm font-bold text-slate-800">
+                                    {presenterSummary}
+                                  </p>
+                                </div>
+                              )}
+
+                              <div className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+                                <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wide text-slate-400">
+                                  <Clock className="h-3.5 w-3.5" />
+                                  Time
+                                </div>
+                                <p className="mt-1 line-clamp-1 text-sm font-bold text-slate-800">
+                                  {getTimeRange(
+                                    event.start_datetime,
+                                    event.end_datetime
+                                  )}
+                                </p>
                               </div>
-                            )}
+
+                              {locationText && (
+                                <div className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+                                  <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wide text-slate-400">
+                                    <MapPin className="h-3.5 w-3.5" />
+                                    Location
+                                  </div>
+                                  <p className="mt-1 line-clamp-1 text-sm font-bold text-slate-800">
+                                    {locationText}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          </button>
+
+                          <div className="flex shrink-0 items-center gap-2 lg:flex-col lg:items-end">
+                            <button
+                              type="button"
+                              onClick={() => toggleExpanded(event.id)}
+                              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-black text-slate-700 transition hover:bg-slate-100"
+                            >
+                              {isExpanded ? (
+                                <ChevronDown className="h-4 w-4" />
+                              ) : (
+                                <ChevronRight className="h-4 w-4" />
+                              )}
+                              {isExpanded ? "Hide sessions" : "Show sessions"}
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => onOpenEvent(event.id)}
+                              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-3 py-2 text-xs font-black text-white transition hover:bg-slate-800"
+                            >
+                              Open details
+                            </button>
                           </div>
                         </div>
-                      </button>
+                      </div>
 
-                      {sessions.length > 0 && (
+                      {isExpanded && sessions.length > 0 && (
                         <div className="border-t border-slate-100 bg-slate-50 p-3">
+                          <div className="mb-2 flex items-center justify-between px-1">
+                            <p className="text-[11px] font-black uppercase tracking-wide text-slate-400">
+                              Sessions
+                            </p>
+                            <p className="text-xs font-bold text-slate-500">
+                              {sessions.length} total
+                            </p>
+                          </div>
+
                           <div className="space-y-2">
                             {sessions.map((session) => (
                               <button

@@ -1,11 +1,49 @@
 // lib/db/time-off.ts
 import { createClient } from "@/utils/supabase/server";
 
-export type TimeOffType = "personal" | "conference";
+export type TimeOffType =
+  | "personal"
+  | "conference"
+  | "vacation"
+  | "sick"
+  | "other";
 
 export type ApprovalStatus = "requested" | "approved" | "denied";
 
 export type ConstraintLevel = "hard" | "soft" | "informational";
+
+export const PROGRAM_TIME_OFF_EDITOR_ROLES = new Set([
+  "admin",
+  "program_admin",
+  "coordinator",
+  "chief",
+  "chief_resident",
+  "faculty",
+  "faculty_lead",
+]);
+
+export function normalizeProgramScopedRole(role: string | null | undefined) {
+  if (typeof role !== "string") return null;
+
+  const normalized = role.trim().toLowerCase().replace(/[\s-]+/g, "_");
+  return normalized.length > 0 ? normalized : null;
+}
+
+export function canManageProgramTimeOff(params: {
+  rosterRole?: string | null;
+  membershipRole?: string | null;
+}) {
+  const rosterRole = normalizeProgramScopedRole(params.rosterRole);
+  const membershipRole = normalizeProgramScopedRole(params.membershipRole);
+
+  return {
+    rosterRole,
+    membershipRole,
+    canManage:
+      (rosterRole ? PROGRAM_TIME_OFF_EDITOR_ROLES.has(rosterRole) : false) ||
+      (membershipRole ? PROGRAM_TIME_OFF_EDITOR_ROLES.has(membershipRole) : false),
+  };
+}
 
 export type TimeOffItem = {
   id: string;
@@ -39,7 +77,7 @@ export type TimeOffMonthResponse = {
 export type CreateTimeOffInput = {
   programId: string;
   rosterId: string;
-  membershipId: string;
+  membershipId?: string | null;
   createdByUserId: string;
   eventType: TimeOffType;
   usingPto?: boolean;
@@ -55,7 +93,18 @@ export type CreateTimeOffInput = {
 
 function mapEventTypeToFrontendType(eventType: string): TimeOffType {
   if (eventType === "conference") return "conference";
+  if (eventType === "vacation") return "vacation";
+  if (eventType === "sick") return "sick";
+  if (eventType === "other") return "other";
   return "personal";
+}
+
+export function getTimeOffTypeLabel(eventType: TimeOffType | string | null | undefined) {
+  if (eventType === "conference") return "Conference";
+  if (eventType === "vacation") return "Vacation";
+  if (eventType === "sick") return "Sick";
+  if (eventType === "other") return "Other";
+  return "Personal";
 }
 
 function normalizeApprovalStatus(
@@ -201,30 +250,55 @@ export async function getProgramTimeOffMonth(params: {
         .filter(Boolean)
     )
   ) as string[];
+  const rosterIds = Array.from(
+    new Set(
+      rows
+        .map((row) => row.roster_id ?? row.availability_events?.roster_id ?? null)
+        .filter(Boolean)
+    )
+  ) as string[];
   const rosterByMembershipId = new Map<
     string,
     { id: string; full_name: string | null; first_name: string | null; last_name: string | null }
   >();
+  const rosterById = new Map<
+    string,
+    { id: string; full_name: string | null; first_name: string | null; last_name: string | null }
+  >();
 
-  if (membershipIds.length > 0) {
-    const { data: rosterRows, error: rosterError } = await supabase
+  if (membershipIds.length > 0 || rosterIds.length > 0) {
+    let rosterQuery = supabase
       .from("program_roster")
       .select("id, program_membership_id, full_name, first_name, last_name")
-      .eq("program_id", programId)
-      .in("program_membership_id", membershipIds);
+      .eq("program_id", programId);
+
+    if (membershipIds.length > 0 && rosterIds.length > 0) {
+      rosterQuery = rosterQuery.or(
+        `program_membership_id.in.(${membershipIds.join(",")}),id.in.(${rosterIds.join(",")})`
+      );
+    } else if (membershipIds.length > 0) {
+      rosterQuery = rosterQuery.in("program_membership_id", membershipIds);
+    } else {
+      rosterQuery = rosterQuery.in("id", rosterIds);
+    }
+
+    const { data: rosterRows, error: rosterError } = await rosterQuery;
 
     if (rosterError) {
       throw new Error(`Failed to map time-off roster rows: ${rosterError.message}`);
     }
 
     for (const row of rosterRows ?? []) {
+      const normalized = {
+        id: String(row.id),
+        full_name: row.full_name ?? null,
+        first_name: row.first_name ?? null,
+        last_name: row.last_name ?? null,
+      };
+
+      rosterById.set(normalized.id, normalized);
       if (row.program_membership_id) {
-        rosterByMembershipId.set(String(row.program_membership_id), {
-          id: String(row.id),
-          full_name: row.full_name ?? null,
-          first_name: row.first_name ?? null,
-          last_name: row.last_name ?? null,
-        });
+        rosterByMembershipId.set(String(row.program_membership_id), normalized);
       }
     }
   }
@@ -251,6 +325,7 @@ export async function getProgramTimeOffMonth(params: {
         membership?.id ?? event.membership_id ?? row.membership_id ?? null;
       const effectiveRosterId = row.roster_id ?? event.roster_id ?? null;
       const roster =
+        (effectiveRosterId ? rosterById.get(effectiveRosterId) ?? null : null) ??
         (effectiveMembershipId
           ? rosterByMembershipId.get(effectiveMembershipId) ?? null
           : null) ?? (effectiveRosterId ? { id: effectiveRosterId, full_name: null, first_name: null, last_name: null } : null);
@@ -309,7 +384,7 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
   const {
     programId,
     rosterId,
-    membershipId,
+    membershipId = null,
     createdByUserId,
     eventType,
     usingPto = false,
@@ -322,6 +397,60 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     endDate,
     approvalStatus = "requested",
   } = input;
+
+  const { data: existingEvent, error: existingEventError } = await supabase
+    .from("availability_events")
+    .select(`
+      id,
+      program_id,
+      membership_id,
+      roster_id,
+      event_type,
+      using_pto,
+      source_kind,
+      constraint_level,
+      title,
+      notes,
+      location,
+      start_date,
+      end_date,
+      created_by_user_id,
+      approval_status
+    `)
+    .eq("program_id", programId)
+    .eq("roster_id", rosterId)
+    .eq("event_type", eventType)
+    .eq("start_date", startDate)
+    .eq("end_date", endDate)
+    .neq("approval_status", "denied")
+    .maybeSingle();
+
+  if (existingEventError) {
+    throw new Error(
+      `Failed to check for duplicate time-off event: ${existingEventError.message}`
+    );
+  }
+
+  if (existingEvent) {
+    const dayRows = enumerateDates(startDate, endDate).map((day) => ({
+      event_id: existingEvent.id,
+      program_id: programId,
+      membership_id: membershipId,
+      roster_id: rosterId,
+      off_date: day.off_date,
+      event_type: eventType,
+      source_kind: sourceKind,
+      constraint_level: constraintLevel,
+      is_weekend: day.is_weekend,
+    }));
+
+    return {
+      created: false,
+      event: existingEvent,
+      dayCount: dayRows.length,
+      dayRows,
+    };
+  }
 
   const { data: event, error: eventError } = await supabase
     .from("availability_events")
@@ -354,17 +483,17 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     );
   }
 
-  const dayRows = enumerateDates(startDate, endDate).map((day) => ({
-    event_id: event.id,
-    program_id: programId,
-    membership_id: membershipId,
-    roster_id: rosterId,
-    off_date: day.off_date,
-    event_type: eventType,
-    source_kind: sourceKind,
-    constraint_level: constraintLevel,
-    is_weekend: day.is_weekend,
-  }));
+  const dayRows = buildAvailabilityEventDayRows({
+    eventId: event.id,
+    programId,
+    membershipId,
+    rosterId,
+    eventType,
+    sourceKind,
+    constraintLevel,
+    startDate,
+    endDate,
+  });
 
   const { error: daysError } = await supabase
     .from("availability_event_days")
@@ -378,5 +507,102 @@ export async function createTimeOffEvent(input: CreateTimeOffInput) {
     throw new Error(`Failed to create time-off day rows: ${daysError.message}`);
   }
 
-  return { id: event.id };
+  return {
+    created: true,
+    event: {
+      id: event.id,
+      program_id: programId,
+      membership_id: membershipId,
+      roster_id: rosterId,
+      event_type: eventType,
+      using_pto: usingPto,
+      source_kind: sourceKind,
+      constraint_level: constraintLevel,
+      title: title ?? null,
+      notes: notes ?? null,
+      location: location ?? null,
+      start_date: startDate,
+      end_date: endDate,
+      created_by_user_id: createdByUserId,
+      approval_status: approvalStatus,
+    },
+    dayCount: dayRows.length,
+    dayRows,
+  };
+}
+
+export function buildAvailabilityEventDayRows(input: {
+  eventId: string;
+  programId: string;
+  membershipId?: string | null;
+  rosterId: string;
+  eventType: TimeOffType;
+  sourceKind: string;
+  constraintLevel: ConstraintLevel | string;
+  startDate: string;
+  endDate: string;
+}) {
+  const {
+    eventId,
+    programId,
+    membershipId = null,
+    rosterId,
+    eventType,
+    sourceKind,
+    constraintLevel,
+    startDate,
+    endDate,
+  } = input;
+
+  return enumerateDates(startDate, endDate).map((day) => ({
+    event_id: eventId,
+    program_id: programId,
+    membership_id: membershipId,
+    roster_id: rosterId,
+    off_date: day.off_date,
+    event_type: eventType,
+    source_kind: sourceKind,
+    constraint_level: constraintLevel,
+    is_weekend: day.is_weekend,
+  }));
+}
+
+export async function syncAvailabilityEventDays(input: {
+  eventId: string;
+  programId: string;
+  membershipId?: string | null;
+  rosterId: string;
+  eventType: TimeOffType;
+  sourceKind: string;
+  constraintLevel: ConstraintLevel | string;
+  startDate: string;
+  endDate: string;
+}) {
+  const supabase = await createClient();
+  const dayRows = buildAvailabilityEventDayRows(input);
+
+  const { error: deleteError } = await supabase
+    .from("availability_event_days")
+    .delete()
+    .eq("event_id", input.eventId)
+    .eq("program_id", input.programId);
+
+  if (deleteError) {
+    throw new Error(
+      `Failed to clear time-off day rows before sync: ${deleteError.message}`
+    );
+  }
+
+  const { error: insertError } = await supabase
+    .from("availability_event_days")
+    .insert(dayRows);
+
+  if (insertError) {
+    throw new Error(`Failed to sync time-off day rows: ${insertError.message}`);
+  }
+
+  return {
+    dayCount: dayRows.length,
+    dayRows,
+  };
 }

@@ -1,6 +1,7 @@
 export type CallType = "Primary" | "Backup";
 
 export type RuleType =
+  | "required_daily_call_slots"
   | "min_days_between_assignments"
   | "max_calls_per_month"
   | "max_weekends_per_month"
@@ -9,6 +10,8 @@ export type RuleType =
   | "restrict_call_by_rotation";
 
 export type RuleConfig = {
+  requiredCallTypes?: CallType[];
+
   minDays?: number;
   excludeAdjacentWeekendPairing?: boolean;
 
@@ -35,8 +38,10 @@ export type ProgramRule = {
 };
 
 export type ResidentOption = {
+  residentId: string;
   rosterId?: string | null;
   programMembershipId?: string | null;
+  // Legacy compatibility field; scheduler state should use `residentId`.
   membershipId: string;
   displayName: string;
   trainingLevel: string | null;
@@ -45,7 +50,9 @@ export type ResidentOption = {
 };
 
 export type ExistingResidentStats = {
+  residentId: string;
   rosterId?: string | null;
+  // Legacy compatibility field; stats are keyed by `residentId`.
   membershipId: string;
   totalCallsYear: number;
   weekendCallsYear: number;
@@ -68,8 +75,10 @@ export type CalendarDay = {
 
 export type MonthCall = {
   id: string;
+  residentId: string | null;
   rosterId?: string | null;
   programMembershipId?: string | null;
+  // Legacy compatibility field; month calls should use `residentId`.
   membershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
@@ -119,7 +128,7 @@ export type QuickAssignSlotMode = "Primary" | "Backup" | "Both";
 export type TimeOffConflict = {
   eventId: string;
   title: string | null;
-  type: "personal" | "conference";
+  type: "personal" | "conference" | "vacation" | "sick" | "other";
   usingPto: boolean;
   startDate: string | null;
   endDate: string | null;
@@ -145,6 +154,7 @@ export type RuleEvaluationBlock = {
 };
 
 export type ResidentAvailabilityForDate = {
+  residentId: string;
   membershipId: string;
   dateKey: string;
 

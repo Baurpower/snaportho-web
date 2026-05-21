@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import {
+  syncAvailabilityEventDays,
+  TimeOffType,
+} from "@/lib/workspace/call/time-off";
 
 type UpdateBody = {
-  eventType?: "personal" | "conference";
+  eventType?: TimeOffType;
   usingPto?: boolean;
   title?: string | null;
   notes?: string | null;
@@ -98,10 +102,13 @@ export async function PATCH(
       .select(
         `
           id,
+          program_id,
           membership_id,
           roster_id,
           event_type,
           using_pto,
+          source_kind,
+          constraint_level,
           start_date,
           end_date,
           title,
@@ -126,6 +133,27 @@ export async function PATCH(
         { status: 404 }
       );
     }
+
+    const resolvedRosterId = data.roster_id ?? membership.roster_id ?? null;
+
+    if (!resolvedRosterId) {
+      return NextResponse.json(
+        { error: "Time-off request is missing roster identity" },
+        { status: 400 }
+      );
+    }
+
+    await syncAvailabilityEventDays({
+      eventId: data.id,
+      programId: data.program_id,
+      membershipId: data.membership_id ?? null,
+      rosterId: resolvedRosterId,
+      eventType: (data.event_type ?? "personal") as TimeOffType,
+      sourceKind: data.source_kind ?? "self_reported",
+      constraintLevel: data.constraint_level ?? "soft",
+      startDate: data.start_date,
+      endDate: data.end_date,
+    });
 
     return NextResponse.json({
       item: {

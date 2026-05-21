@@ -11,6 +11,18 @@ import {
   StickyNote,
   Upload,
 } from "lucide-react";
+import type { CallValidationResult } from "@/lib/workspace/call/validation";
+import {
+  getValidationBadgeText,
+  getImportedRowValidationDisplay,
+  getValidationSeverityClass,
+  getValidationSummary,
+  getValidationTooltip,
+} from "@/lib/workspace/call/validation-display";
+import {
+  getCallMutationValidation,
+  parseCallMutationResponse,
+} from "@/lib/workspace/call/mutation-error";
 
 export type ParsedProgramCallRow = {
   tempId: string;
@@ -54,6 +66,8 @@ export default function ProgramCallUploadPanel({
   const [parsing, setParsing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [serverValidationResult, setServerValidationResult] =
+    useState<CallValidationResult | null>(null);
   const [parsed, setParsed] = useState<ParsedProgramCallPayload | null>(null);
 
   const matchedCount = useMemo(
@@ -69,6 +83,7 @@ export default function ProgramCallUploadPanel({
   async function handleParse() {
     try {
       setError(null);
+      setServerValidationResult(null);
 
       if (!selectedFile) {
         setError("Choose a file first.");
@@ -103,6 +118,7 @@ export default function ProgramCallUploadPanel({
   async function handleUploadParsed() {
     try {
       setError(null);
+      setServerValidationResult(null);
 
       if (!parsed) {
         setError("Parse a file before uploading.");
@@ -139,27 +155,36 @@ export default function ProgramCallUploadPanel({
           })),
         }),
       });
-
-      const payload = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        throw new Error(payload?.error ?? "Failed to upload parsed schedule");
-      }
+      await parseCallMutationResponse(
+        response,
+        "Failed to upload parsed schedule"
+      );
 
       setSelectedFile(null);
       setParsed(null);
       setUploadName("");
       setNotes("");
+      setServerValidationResult(null);
 
       onUploadSuccess?.();
     } catch (err) {
+      const validation = getCallMutationValidation(err);
+      setServerValidationResult(validation);
       setError(
-        err instanceof Error ? err.message : "Failed to upload parsed schedule"
+        validation
+          ? "Schedule validation failed. Review conflicts below."
+          : err instanceof Error
+          ? err.message
+          : "Failed to upload parsed schedule"
       );
     } finally {
       setSaving(false);
     }
   }
+
+  const validationSummary = serverValidationResult
+    ? getValidationSummary(serverValidationResult)
+    : null;
 
   return (
     <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-xl">
@@ -202,6 +227,7 @@ export default function ProgramCallUploadPanel({
                 setSelectedFile(file);
                 setParsed(null);
                 setError(null);
+                setServerValidationResult(null);
 
                 if (file && !uploadName.trim()) {
                   setUploadName(file.name.replace(/\.[^/.]+$/, ""));
@@ -315,63 +341,106 @@ export default function ProgramCallUploadPanel({
                   <div>Notes</div>
                 </div>
 
-                {parsed.rows.map((row) => (
-                  <div
-                    key={row.tempId}
-                    className="grid grid-cols-[100px_1.15fr_130px_110px_150px_100px_1fr] items-start border-b border-slate-100 px-4 py-3 text-sm last:border-b-0"
-                  >
-                    <div className="text-slate-500">Row {row.sourceRow}</div>
+                {parsed.rows.map((row) => {
+                  const rowValidation = serverValidationResult
+                    ? getImportedRowValidationDisplay(serverValidationResult, {
+                        callDate: row.callDate,
+                        callType: row.callType,
+                        rosterId: row.matchedRosterId,
+                        residentId:
+                          row.programMembershipId ?? row.matchedMembershipId ?? null,
+                      })
+                    : null;
 
-                    <div>
-                      <p className="font-semibold text-slate-900">
-                        {row.residentName || "—"}
-                      </p>
-                      {row.site ? (
-                        <p className="mt-1 text-xs text-slate-500">{row.site}</p>
-                      ) : null}
-                    </div>
+                  return (
+                    <div
+                      key={row.tempId}
+                      title={rowValidation?.tooltip}
+                      className={`grid grid-cols-[100px_1.15fr_130px_110px_150px_100px_1fr] items-start border-b border-slate-100 px-4 py-3 text-sm last:border-b-0 ${
+                        rowValidation?.className ?? ""
+                      }`}
+                    >
+                      <div className="text-slate-500">
+                        <div>Row {row.sourceRow}</div>
+                        {rowValidation?.badgeText ? (
+                          <span
+                            className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] ${
+                              rowValidation.badgeText === "Error"
+                                ? "bg-rose-600 text-white"
+                                : "bg-amber-500 text-white"
+                            }`}
+                          >
+                            {rowValidation.badgeText}
+                          </span>
+                        ) : null}
+                      </div>
 
-                    <div className="text-slate-700">{row.callDate ?? "—"}</div>
-
-                    <div>
-                      <span
-                        className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                          row.callType === "Primary"
-                            ? "bg-sky-50 text-sky-700"
-                            : "bg-violet-50 text-violet-700"
-                        }`}
-                      >
-                        {row.callType}
-                      </span>
-                    </div>
-
-                    <div>
-                      {row.status === "matched" ? (
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-                          <CheckCircle2 className="h-3.5 w-3.5" />
-                          {row.matchedDisplayName}
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                          <AlertTriangle className="h-3.5 w-3.5" />
-                          Review
-                        </span>
-                      )}
-
-                      {row.errors.length > 0 ? (
-                        <p className="mt-1 text-xs text-rose-600">
-                          {row.errors.join(", ")}
+                      <div>
+                        <p className="font-semibold text-slate-900">
+                          {row.residentName || "—"}
                         </p>
-                      ) : null}
-                    </div>
+                        {row.site ? (
+                          <p className="mt-1 text-xs text-slate-500">{row.site}</p>
+                        ) : null}
+                        {rowValidation?.issues.length ? (
+                          <p className="mt-1 text-xs text-slate-600">
+                            {rowValidation.issues.length} validation issue
+                            {rowValidation.issues.length === 1 ? "" : "s"}
+                          </p>
+                        ) : null}
+                      </div>
 
-                    <div className="text-slate-700">
-                      {row.isHomeCall ? "Yes" : "No"}
-                    </div>
+                      <div className="text-slate-700">{row.callDate ?? "—"}</div>
 
-                    <div className="text-slate-600">{row.notes ?? "—"}</div>
-                  </div>
-                ))}
+                      <div>
+                        <span
+                          className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                            row.callType === "Primary"
+                              ? "bg-sky-50 text-sky-700"
+                              : "bg-violet-50 text-violet-700"
+                          }`}
+                        >
+                          {row.callType}
+                        </span>
+                      </div>
+
+                      <div>
+                        {row.status === "matched" ? (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+                            <CheckCircle2 className="h-3.5 w-3.5" />
+                            {row.matchedDisplayName}
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
+                            <AlertTriangle className="h-3.5 w-3.5" />
+                            Review
+                          </span>
+                        )}
+
+                        {row.errors.length > 0 ? (
+                          <p className="mt-1 text-xs text-rose-600">
+                            {row.errors.join(", ")}
+                          </p>
+                        ) : null}
+                        {rowValidation?.issues.length ? (
+                          <p
+                            className="mt-1 text-xs text-rose-700"
+                            title={rowValidation.tooltip}
+                          >
+                            {rowValidation.shortMessage ??
+                              rowValidation.issues[0]?.message}
+                          </p>
+                        ) : null}
+                      </div>
+
+                      <div className="text-slate-700">
+                        {row.isHomeCall ? "Yes" : "No"}
+                      </div>
+
+                      <div className="text-slate-600">{row.notes ?? "—"}</div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -380,6 +449,47 @@ export default function ProgramCallUploadPanel({
         {error ? (
           <div className="mt-6 rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
             {error}
+          </div>
+        ) : null}
+
+        {validationSummary ? (
+          <div
+            className={`mt-4 rounded-[1rem] border px-4 py-3 text-sm text-slate-700 ${getValidationSeverityClass(
+              validationSummary.issues
+            )}`}
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] ${
+                  validationSummary.hasErrors
+                    ? "bg-rose-600 text-white"
+                    : "bg-amber-500 text-white"
+                }`}
+              >
+                {getValidationBadgeText(validationSummary.issues) ?? "Issue"}
+              </span>
+              <span className="font-semibold text-slate-900">
+                Schedule validation failed
+              </span>
+              <span>
+                {validationSummary.counts.error} error
+                {validationSummary.counts.error === 1 ? "" : "s"} ·{" "}
+                {validationSummary.counts.warning} warning
+                {validationSummary.counts.warning === 1 ? "" : "s"}
+              </span>
+            </div>
+            {validationSummary.firstIssues.length > 0 ? (
+              <div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-700">
+                {validationSummary.firstIssues.map((issue, index) => (
+                  <span
+                    key={`${issue.code}-${issue.slotId ?? issue.residentId ?? index}`}
+                    title={getValidationTooltip([issue])}
+                  >
+                    • {issue.message}
+                  </span>
+                ))}
+              </div>
+            ) : null}
           </div>
         ) : null}
       </div>

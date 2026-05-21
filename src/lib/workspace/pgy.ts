@@ -89,3 +89,12 @@ export function getTrainingLevelFromPgy(
   if (typeof pgy !== "number" || !Number.isInteger(pgy) || pgy < 1) return null;
   return `PGY-${pgy}`;
 }
+
+export function calculatePgyForDateRange(params: {
+  gradYear: number | null | undefined;
+  startDate?: string | null;
+  endDate?: string | null;
+}): number | null {
+  const effectiveDate = params.startDate ?? params.endDate ?? null;
+  return getPgyFromGradYear(params.gradYear, effectiveDate);
+}

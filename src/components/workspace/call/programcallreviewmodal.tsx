@@ -21,6 +21,7 @@ import type {
   ResidentOption,
 } from "@/components/workspace/call/programcalltypes";
 import { getFlagsForAssignedResident } from "@/components/workspace/call/programcallevaluator";
+import { getRequiredCallTypesFromRules } from "@/lib/workspace/call/rule-evaluator";
 
 type Slot = "Primary" | "Backup";
 type ScheduleSlotMode = "Primary" | "Both";
@@ -214,16 +215,25 @@ function getFlagText(flag: AssignmentFlag) {
 function countUnfilledDays(
   monthDays: CalendarDay[],
   assignments: Record<string, DraftDayAssignment>,
+  requiredCallTypes: Slot[],
   scheduleSlotMode: ScheduleSlotMode
 ) {
+  const shouldCheckPrimary =
+    requiredCallTypes.length > 0
+      ? requiredCallTypes.includes("Primary")
+      : scheduleSlotMode === "Primary" || scheduleSlotMode === "Both";
+  const shouldCheckBackup =
+    requiredCallTypes.length > 0
+      ? requiredCallTypes.includes("Backup")
+      : scheduleSlotMode !== "Primary";
+
   return monthDays.filter((day) => {
     const assignment = assignments[day.key];
 
-    if (scheduleSlotMode === "Primary") {
-      return !assignment?.primaryMembershipId;
-    }
-
-    return !assignment?.primaryMembershipId || !assignment?.backupMembershipId;
+    return (
+      (shouldCheckPrimary && !assignment?.primaryMembershipId) ||
+      (shouldCheckBackup && !assignment?.backupMembershipId)
+    );
   }).length;
 }
 
@@ -243,17 +253,17 @@ function buildReviewRows({
   availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
 }) {
   const residentLookup = new Map(
-    residents.map((resident) => [resident.membershipId, resident])
+    residents.map((resident) => [resident.residentId, resident])
   );
 
   const rows = new Map<string, ReviewRow>();
 
   for (const resident of residents) {
     const baseline = historicalStats.find(
-      (item) => item.membershipId === resident.membershipId
+      (item) => item.residentId === resident.residentId
     );
 
-    rows.set(resident.membershipId, {
+    rows.set(resident.residentId, {
       resident,
       monthPrimary: 0,
       monthBackup: 0,
@@ -531,7 +541,7 @@ React.useEffect(() => {
 }, [open, autoReviewToken, handleGetReview]);
 
   const residentLookup = useMemo(
-    () => new Map(residents.map((resident) => [resident.membershipId, resident])),
+    () => new Map(residents.map((resident) => [resident.residentId, resident])),
     [residents]
   );
 
@@ -561,10 +571,20 @@ React.useEffect(() => {
     () => parseGeneratedOptions(generationReport),
     [generationReport]
   );
+  const requiredCallTypes = useMemo(
+    () => getRequiredCallTypesFromRules(rules),
+    [rules]
+  );
 
   const unfilledDays = useMemo(
-    () => countUnfilledDays(monthDays, draftAssignments, scheduleSlotMode),
-    [monthDays, draftAssignments, scheduleSlotMode]
+    () =>
+      countUnfilledDays(
+        monthDays,
+        draftAssignments,
+        requiredCallTypes,
+        scheduleSlotMode
+      ),
+    [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode]
   );
 
   const totalFlags = useMemo(
@@ -577,20 +597,29 @@ React.useEffect(() => {
       const assignment = draftAssignments[day.key];
       if (!assignment) return sum;
 
-      if (scheduleSlotMode === "Primary") {
-        return sum + (assignment.primaryMembershipId ? 1 : 0);
-      }
+      const shouldCountPrimary =
+        requiredCallTypes.length > 0
+          ? requiredCallTypes.includes("Primary")
+          : scheduleSlotMode === "Primary" || scheduleSlotMode === "Both";
+      const shouldCountBackup =
+        requiredCallTypes.length > 0
+          ? requiredCallTypes.includes("Backup")
+          : scheduleSlotMode === "Both";
 
       return (
         sum +
-        (assignment.primaryMembershipId ? 1 : 0) +
-        (assignment.backupMembershipId ? 1 : 0)
+        (shouldCountPrimary && assignment.primaryMembershipId ? 1 : 0) +
+        (shouldCountBackup && assignment.backupMembershipId ? 1 : 0)
       );
     }, 0);
-  }, [monthDays, draftAssignments, scheduleSlotMode]);
+  }, [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode]);
 
   const expectedSlots =
-    scheduleSlotMode === "Primary" ? monthDays.length : monthDays.length * 2;
+    requiredCallTypes.length > 0
+      ? monthDays.length * requiredCallTypes.length
+      : scheduleSlotMode === "Primary"
+      ? monthDays.length
+      : monthDays.length * 2;
 
   function getWarningsForDay(day: CalendarDay): DayWarning[] {
     const assignment = draftAssignments[day.key];
@@ -965,7 +994,7 @@ React.useEffect(() => {
                         <tbody className="divide-y divide-slate-100">
                           {rows.map((row) => (
                             <tr
-                              key={row.resident.membershipId}
+                              key={row.resident.residentId}
                               className="transition hover:bg-slate-50"
                             >
                               <td className="px-4 py-3">

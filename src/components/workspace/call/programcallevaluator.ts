@@ -8,6 +8,17 @@ import type {
   ResidentOption,
   RuleEvaluationBlock,
 } from "@/components/workspace/call/programcalltypes";
+import {
+  countUniqueWeekendBuckets,
+  evaluateMonthlyLimitForResident,
+  evaluatePgyEligibility,
+  evaluateRotationEligibility,
+  evaluateSpacingForResident,
+  evaluateWeekendLimitForResident,
+  evaluateWeekendPairingForResident,
+  getAdjacentWeekendDateKey,
+  getWeekendBucket,
+} from "@/lib/workspace/call/rule-evaluator";
 
 type EvaluateResidentForSlotParams = {
   resident: ResidentOption;
@@ -27,81 +38,6 @@ export type EvaluatedResidentSlot = {
   warnings: RuleEvaluationBlock[];
   availability: ResidentAvailabilityForDate | null;
 };
-
-function getDateFromKey(dateKey: string) {
-  return new Date(`${dateKey}T00:00:00`);
-}
-
-function toDateKey(date: Date) {
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
-}
-
-function getDateDiffInDays(a: string, b: string) {
-  const aDate = getDateFromKey(a);
-  const bDate = getDateFromKey(b);
-  const diffMs = Math.abs(aDate.getTime() - bDate.getTime());
-  return Math.round(diffMs / (1000 * 60 * 60 * 24));
-}
-
-function isWeekend(dateKey: string) {
-  const day = getDateFromKey(dateKey).getDay();
-  return day === 0 || day === 6;
-}
-
-function isAdjacentWeekendPair(a: string, b: string) {
-  const dateA = getDateFromKey(a);
-  const dateB = getDateFromKey(b);
-
-  const diff =
-    Math.abs(dateA.getTime() - dateB.getTime()) / (1000 * 60 * 60 * 24);
-
-  if (diff !== 1) return false;
-
-  const dayA = dateA.getDay();
-  const dayB = dateB.getDay();
-
-  return (dayA === 6 && dayB === 0) || (dayA === 0 && dayB === 6);
-}
-
-function getWeekendBucket(dateKey: string): string | null {
-  const date = getDateFromKey(dateKey);
-  const day = date.getDay();
-
-  if (day === 6) {
-    return dateKey;
-  }
-
-  if (day === 0) {
-    const saturday = new Date(date);
-    saturday.setDate(saturday.getDate() - 1);
-    return toDateKey(saturday);
-  }
-
-  return null;
-}
-
-function countUniqueWeekendBuckets(dateKeys: string[]) {
-  const buckets = new Set<string>();
-
-  for (const dateKey of dateKeys) {
-    const bucket = getWeekendBucket(dateKey);
-    if (bucket) buckets.add(bucket);
-  }
-
-  return buckets.size;
-}
-
-function getResidentYearValue(resident: ResidentOption) {
-  if (typeof resident.pgyYear === "number") return resident.pgyYear;
-
-  const match = resident.trainingLevel?.match(/(\d+)/);
-  if (match) return Number(match[1]);
-
-  return null;
-}
 
 function getAssignedDatesForResident(
   residentId: string,
@@ -174,8 +110,7 @@ export function evaluateResidentForSlot(
   const { resident, slot, dateKey, assignments, rules, availabilityByResident } =
     params;
 
-  const residentId = resident.membershipId;
-  const residentYear = getResidentYearValue(resident);
+  const residentId = resident.residentId;
   const assignedDates = getAssignedDatesForResident(residentId, assignments);
   const availability = getAvailabilityDay(
     availabilityByResident,
@@ -215,258 +150,226 @@ export function evaluateResidentForSlot(
       (assignedDate) => getWeekendBucket(assignedDate) === currentWeekendBucket
     );
   const assignedWeekendCount = countUniqueWeekendBuckets(assignedDates);
+  const adjacentDateKey = getAdjacentWeekendDateKey(dateKey);
+  const adjacentAssignment = adjacentDateKey ? assignments[adjacentDateKey] : null;
+  const adjacentResidentId =
+    slot === "Primary"
+      ? adjacentAssignment?.primaryMembershipId ?? null
+      : adjacentAssignment?.backupMembershipId ?? null;
 
-  for (const rule of rules) {
-    if (!rule.is_enabled) continue;
+  for (const violation of evaluatePgyEligibility({
+    resident,
+    callType: slot,
+    rules,
+  })) {
+    addRuleResult({
+      rule: violation.rule,
+      block: {
+        ruleId: violation.rule.id,
+        ruleType: violation.rule.rule_type,
+        ruleName: violation.rule.name,
+        message: violation.message,
+        isHardRule: violation.severity === "error",
+      },
+      flags,
+      blocks,
+      warnings,
+      setBlocked: () => {
+        blocked = true;
+      },
+      setWarning: () => {
+        warning = true;
+      },
+      flag: {
+        key: `rule-${violation.rule.id}-${dateKey}-${slot}-pgy`,
+        label: "PGY Restriction",
+        tone: violation.severity === "error" ? "rose" : "amber",
+        description: violation.message,
+        category: "rule",
+      },
+    });
+  }
 
-    const config = rule.config ?? {};
+  for (const violation of evaluateSpacingForResident({
+    assignedDates: assignedDates.filter((assignedDate) => assignedDate !== dateKey),
+    dateKey,
+    rules,
+  })) {
+    addRuleResult({
+      rule: violation.rule,
+      block: {
+        ruleId: violation.rule.id,
+        ruleType: violation.rule.rule_type,
+        ruleName: violation.rule.name,
+        message: violation.message,
+        isHardRule: violation.severity === "error",
+      },
+      flags,
+      blocks,
+      warnings,
+      setBlocked: () => {
+        blocked = true;
+      },
+      setWarning: () => {
+        warning = true;
+      },
+      flag: {
+        key: `rule-${violation.rule.id}-${dateKey}-spacing`,
+        label: "Spacing",
+        tone: violation.severity === "error" ? "rose" : "amber",
+        description: violation.message,
+        category: "rule",
+      },
+    });
+  }
 
-    if (rule.rule_type === "restrict_call_type_by_pgy") {
-      const restrictedYears = config.restrictedPgyYears ?? [];
-      const allowedCallTypes = config.allowedCallTypes ?? [];
+  const projectedMonthCount = alreadyAssignedOnDate
+    ? assignedDates.length
+    : assignedDates.length + 1;
+  for (const violation of evaluateMonthlyLimitForResident({
+    assignmentCount: projectedMonthCount,
+    rules,
+  })) {
+    addRuleResult({
+      rule: violation.rule,
+      block: {
+        ruleId: violation.rule.id,
+        ruleType: violation.rule.rule_type,
+        ruleName: violation.rule.name,
+        message: violation.message,
+        isHardRule: violation.severity === "error",
+      },
+      flags,
+      blocks,
+      warnings,
+      setBlocked: () => {
+        blocked = true;
+      },
+      setWarning: () => {
+        warning = true;
+      },
+      flag: {
+        key: `rule-${violation.rule.id}-${dateKey}-month-limit`,
+        label: "Month Limit",
+        tone: violation.severity === "error" ? "rose" : "amber",
+        description: violation.message,
+        category: "rule",
+      },
+    });
+  }
 
-      const isRestrictedYear =
-        typeof residentYear === "number" &&
-        restrictedYears.includes(residentYear);
+  const projectedWeekendCount = alreadyAssignedInWeekendBucket
+    ? assignedWeekendCount
+    : assignedWeekendCount + (currentWeekendBucket ? 1 : 0);
+  for (const violation of evaluateWeekendLimitForResident({
+    dateKey,
+    weekendCount: projectedWeekendCount,
+    rules,
+  })) {
+    addRuleResult({
+      rule: violation.rule,
+      block: {
+        ruleId: violation.rule.id,
+        ruleType: violation.rule.rule_type,
+        ruleName: violation.rule.name,
+        message: violation.message,
+        isHardRule: violation.severity === "error",
+      },
+      flags,
+      blocks,
+      warnings,
+      setBlocked: () => {
+        blocked = true;
+      },
+      setWarning: () => {
+        warning = true;
+      },
+      flag: {
+        key: `rule-${violation.rule.id}-${dateKey}-weekend-limit`,
+        label: "Weekend Limit",
+        tone: violation.severity === "error" ? "rose" : "amber",
+        description: violation.message,
+        category: "rule",
+      },
+    });
+  }
 
-      if (isRestrictedYear) {
-        const allowsNoCall = allowedCallTypes.length === 0;
-        const slotAllowed = allowedCallTypes.includes(slot);
-        const violatesPgyRule = allowsNoCall || !slotAllowed;
+  const rotationViolations = evaluateRotationEligibility({
+    rotationIds: availability?.rotationConflicts.map((conflict) => conflict.rotationId) ?? [],
+    callType: slot,
+    rules,
+  });
+  for (const violation of rotationViolations) {
+    const matchingRotation =
+      availability?.rotationConflicts.find((conflict) =>
+        (violation.metadata?.blockedRotationIds as string[] | undefined)?.includes(
+          conflict.rotationId ?? ""
+        )
+      ) ?? availability?.rotationConflicts[0];
 
-        if (violatesPgyRule) {
-          const message = allowsNoCall
-            ? `PGY-${residentYear} is not allowed to take call`
-            : `PGY-${residentYear} cannot take ${slot} call`;
+    addRuleResult({
+      rule: violation.rule,
+      block: {
+        ruleId: violation.rule.id,
+        ruleType: violation.rule.rule_type,
+        ruleName: violation.rule.name,
+        message: matchingRotation
+          ? `Blocked by rotation: ${matchingRotation.rotationName}`
+          : violation.message,
+        isHardRule: violation.severity === "error",
+      },
+      flags,
+      blocks,
+      warnings,
+      setBlocked: () => {
+        blocked = true;
+      },
+      setWarning: () => {
+        warning = true;
+      },
+      flag: {
+        key: `rule-${violation.rule.id}-${dateKey}-${slot}-rotation`,
+        label: "Rotation Restriction",
+        tone: violation.severity === "error" ? "rose" : "amber",
+        description: matchingRotation?.rotationName ?? violation.message,
+        category: "rotation",
+      },
+    });
+  }
 
-          const nextBlock: RuleEvaluationBlock = {
-            ruleId: rule.id,
-            ruleType: rule.rule_type,
-            ruleName: rule.name,
-            message,
-            isHardRule: rule.is_hard_rule,
-          };
-
-          addRuleResult({
-            rule,
-            block: nextBlock,
-            flags,
-            blocks,
-            warnings,
-            setBlocked: () => {
-              blocked = true;
-            },
-            setWarning: () => {
-              warning = true;
-            },
-            flag: {
-              key: `rule-${rule.id}-${dateKey}-${slot}-pgy`,
-              label: "PGY Restriction",
-              tone: rule.is_hard_rule ? "rose" : "amber",
-              description: message,
-              category: "rule",
-            },
-          });
-        }
-      }
-    }
-
-    if (rule.rule_type === "min_days_between_assignments") {
-      const minDays = Math.max(1, config.minDays ?? 2);
-      const excludeAdjacentWeekendPairing =
-        config.excludeAdjacentWeekendPairing ?? true;
-
-      const violatesSpacing = assignedDates.some((otherDate) => {
-        if (otherDate === dateKey) return false;
-
-        if (
-          excludeAdjacentWeekendPairing &&
-          isAdjacentWeekendPair(otherDate, dateKey)
-        ) {
-          return false;
-        }
-
-        return getDateDiffInDays(otherDate, dateKey) <= minDays;
-      });
-
-      if (violatesSpacing) {
-        const message = excludeAdjacentWeekendPairing
-          ? `Violates minimum spacing (${minDays} days, ignoring paired Sat/Sun)`
-          : `Violates minimum spacing (${minDays} days)`;
-
-        const nextBlock: RuleEvaluationBlock = {
-          ruleId: rule.id,
-          ruleType: rule.rule_type,
-          ruleName: rule.name,
-          message,
-          isHardRule: rule.is_hard_rule,
-        };
-
-        addRuleResult({
-          rule,
-          block: nextBlock,
-          flags,
-          blocks,
-          warnings,
-          setBlocked: () => {
-            blocked = true;
-          },
-          setWarning: () => {
-            warning = true;
-          },
-          flag: {
-            key: `rule-${rule.id}-${dateKey}-spacing`,
-            label: "Spacing",
-            tone: rule.is_hard_rule ? "rose" : "amber",
-            description: message,
-            category: "rule",
-          },
-        });
-      }
-    }
-
-    if (rule.rule_type === "max_calls_per_month") {
-      const maxCalls = config.maxCalls;
-
-      if (typeof maxCalls === "number") {
-        const wouldExceed = alreadyAssignedOnDate
-          ? assignedDates.length > maxCalls
-          : assignedDates.length >= maxCalls;
-
-        if (wouldExceed) {
-          const message = `Monthly call limit reached (${assignedDates.length}/${maxCalls})`;
-
-          const nextBlock: RuleEvaluationBlock = {
-            ruleId: rule.id,
-            ruleType: rule.rule_type,
-            ruleName: rule.name,
-            message,
-            isHardRule: rule.is_hard_rule,
-          };
-
-          addRuleResult({
-            rule,
-            block: nextBlock,
-            flags,
-            blocks,
-            warnings,
-            setBlocked: () => {
-              blocked = true;
-            },
-            setWarning: () => {
-              warning = true;
-            },
-            flag: {
-              key: `rule-${rule.id}-${dateKey}-month-limit`,
-              label: "Month Limit",
-              tone: rule.is_hard_rule ? "rose" : "amber",
-              description: message,
-              category: "rule",
-            },
-          });
-        }
-      }
-    }
-
-    if (rule.rule_type === "max_weekends_per_month" && isWeekend(dateKey)) {
-      const maxWeekends = config.maxWeekends;
-
-      if (typeof maxWeekends === "number") {
-        const wouldExceed = alreadyAssignedInWeekendBucket
-          ? assignedWeekendCount > maxWeekends
-          : assignedWeekendCount >= maxWeekends;
-
-        if (wouldExceed) {
-          const message = `Weekend limit reached (${assignedWeekendCount}/${maxWeekends})`;
-
-          const nextBlock: RuleEvaluationBlock = {
-            ruleId: rule.id,
-            ruleType: rule.rule_type,
-            ruleName: rule.name,
-            message,
-            isHardRule: rule.is_hard_rule,
-          };
-
-          addRuleResult({
-            rule,
-            block: nextBlock,
-            flags,
-            blocks,
-            warnings,
-            setBlocked: () => {
-              blocked = true;
-            },
-            setWarning: () => {
-              warning = true;
-            },
-            flag: {
-              key: `rule-${rule.id}-${dateKey}-weekend-limit`,
-              label: "Weekend Limit",
-              tone: rule.is_hard_rule ? "rose" : "amber",
-              description: message,
-              category: "rule",
-            },
-          });
-        }
-      }
-    }
-
-    if (
-      rule.rule_type === "weekend_pairing" &&
-      config.sameResidentForWeekend &&
-      isWeekend(dateKey)
-    ) {
-      const dayOfWeek = getDateFromKey(dateKey).getDay();
-
-      const adjacentDate =
-        dayOfWeek === 6
-          ? toDateKey(new Date(getDateFromKey(dateKey).setDate(getDateFromKey(dateKey).getDate() + 1)))
-          : dayOfWeek === 0
-          ? toDateKey(new Date(getDateFromKey(dateKey).setDate(getDateFromKey(dateKey).getDate() - 1)))
-          : null;
-
-      if (adjacentDate) {
-        const adjacentAssignment = assignments[adjacentDate];
-        const adjacentResidentId =
-          slot === "Primary"
-            ? adjacentAssignment?.primaryMembershipId
-            : adjacentAssignment?.backupMembershipId;
-
-        if (adjacentResidentId && adjacentResidentId !== residentId) {
-          const message =
-            "Weekend pairing requires the same resident on both days";
-
-          const nextBlock: RuleEvaluationBlock = {
-            ruleId: rule.id,
-            ruleType: rule.rule_type,
-            ruleName: rule.name,
-            message,
-            isHardRule: rule.is_hard_rule,
-          };
-
-          addRuleResult({
-            rule,
-            block: nextBlock,
-            flags,
-            blocks,
-            warnings,
-            setBlocked: () => {
-              blocked = true;
-            },
-            setWarning: () => {
-              warning = true;
-            },
-            flag: {
-              key: `rule-${rule.id}-${dateKey}-weekend-pairing-${slot}`,
-              label: "Weekend Pairing",
-              tone: rule.is_hard_rule ? "rose" : "amber",
-              description: message,
-              category: "rule",
-            },
-          });
-        }
-      }
-    }
+  for (const violation of evaluateWeekendPairingForResident({
+    residentId,
+    adjacentResidentId,
+    dateKey,
+    callType: slot,
+    rules,
+  })) {
+    addRuleResult({
+      rule: violation.rule,
+      block: {
+        ruleId: violation.rule.id,
+        ruleType: violation.rule.rule_type,
+        ruleName: violation.rule.name,
+        message: violation.message,
+        isHardRule: violation.severity === "error",
+      },
+      flags,
+      blocks,
+      warnings,
+      setBlocked: () => {
+        blocked = true;
+      },
+      setWarning: () => {
+        warning = true;
+      },
+      flag: {
+        key: `rule-${violation.rule.id}-${dateKey}-weekend-pairing-${slot}`,
+        label: "Weekend Pairing",
+        tone: violation.severity === "error" ? "rose" : "amber",
+        description: violation.message,
+        category: "rule",
+      },
+    });
   }
 
   return {

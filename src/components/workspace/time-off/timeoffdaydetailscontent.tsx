@@ -3,22 +3,30 @@
 import React from "react";
 import {
   BriefcaseMedical,
+  CalendarDays,
   CheckCircle2,
   Clock3,
   MapPin,
+  Palmtree,
   PlaneTakeoff,
+  ShieldPlus,
   StickyNote,
   UserRound,
   XCircle,
 } from "lucide-react";
 
-export type TimeOffType = "personal" | "conference";
+export type TimeOffType =
+  | "personal"
+  | "conference"
+  | "vacation"
+  | "sick"
+  | "other";
 export type ApprovalStatus = "requested" | "approved" | "denied";
 
 export type TimeOffItem = {
   id: string;
   membershipId: string | null;
-  type: "personal" | "conference";
+  type: TimeOffType;
   usingPto: boolean;
   startDate: string | null;
   endDate: string | null;
@@ -29,7 +37,7 @@ export type TimeOffItem = {
   approved?: boolean | null;
   isMine: boolean;
 
-  residentName?: string;
+  residentName?: string | null;
   trainingLevel?: string | null;
   classYear?: number | null;
   userId?: string | null;
@@ -45,6 +53,42 @@ function getTimeOffTone(item: TimeOffItem) {
       text: "text-violet-950",
       label: "Conference",
       icon: BriefcaseMedical,
+    };
+  }
+
+  if (item.type === "vacation") {
+    return {
+      card: item.isMine
+        ? "border-sky-300 bg-sky-50"
+        : "border-sky-200 bg-sky-50/70",
+      chip: "bg-sky-600 text-white",
+      text: "text-sky-950",
+      label: "Vacation",
+      icon: Palmtree,
+    };
+  }
+
+  if (item.type === "sick") {
+    return {
+      card: item.isMine
+        ? "border-rose-300 bg-rose-50"
+        : "border-rose-200 bg-rose-50/70",
+      chip: "bg-rose-600 text-white",
+      text: "text-rose-950",
+      label: "Sick",
+      icon: ShieldPlus,
+    };
+  }
+
+  if (item.type === "other") {
+    return {
+      card: item.isMine
+        ? "border-amber-300 bg-amber-50"
+        : "border-amber-200 bg-amber-50/70",
+      chip: "bg-amber-500 text-white",
+      text: "text-amber-950",
+      label: "Other",
+      icon: CalendarDays,
     };
   }
 
