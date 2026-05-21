@@ -23,7 +23,12 @@ function normalizeBaseUrl(value: string): string | null {
 }
 
 export function resolveBrowserAccessibleBaseUrl(request: Request): string {
-  const envBaseUrl = normalizeBaseUrl(process.env.NEXT_PUBLIC_APP_URL ?? "");
+  const envBaseUrl = normalizeBaseUrl(
+    process.env.NEXT_PUBLIC_SITE_URL ??
+      process.env.APP_URL ??
+      process.env.NEXT_PUBLIC_APP_URL ??
+      ""
+  );
   if (envBaseUrl) {
     return envBaseUrl;
   }

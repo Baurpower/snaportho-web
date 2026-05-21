@@ -347,6 +347,8 @@ function AcademicAddEditEventPageContent() {
   const [locationId, setLocationId] = useState("");
   const [manualLocation, setManualLocation] = useState("");
   const [meetingUrl, setMeetingUrl] = useState("");
+  const [locationEditorOpen, setLocationEditorOpen] = useState(false);
+  const [meetingLinkExpanded, setMeetingLinkExpanded] = useState(false);
   const [dateValue, setDateValue] = useState(toDateInputValue(new Date()));
   const [startTime, setStartTime] = useState(getDefaultTimeValue(7, 0));
   const [endTime, setEndTime] = useState(getDefaultTimeValue(8, 0));
@@ -383,13 +385,15 @@ function AcademicAddEditEventPageContent() {
       displayedEventTypes.find((type) => type.id === eventTypeId) ?? null,
     [displayedEventTypes, eventTypeId]
   );
+  const hasLocationValue = Boolean(locationId || manualLocation.trim());
+  const hasMeetingLinkValue = Boolean(meetingUrl.trim());
+  const visibleLocationValue = selectedLocation
+    ? formatLocationOption(selectedLocation)
+    : manualLocation;
   const previewLocation = useMemo(() => {
-    const savedLocation = selectedLocation
+    return selectedLocation
       ? formatLocationOption(selectedLocation)
-      : "";
-    const typedLocation = manualLocation.trim();
-
-    return [savedLocation, typedLocation].filter(Boolean).join(" · ");
+      : manualLocation.trim();
   }, [manualLocation, selectedLocation]);
 
   useEffect(() => {
@@ -489,6 +493,10 @@ function AcademicAddEditEventPageContent() {
           setLocationId(event.location?.id ?? "");
           setManualLocation(parsedDescription.manualLocation);
           setMeetingUrl(parsedDescription.meetingUrl);
+          setLocationEditorOpen(
+            Boolean(event.location?.id ?? parsedDescription.manualLocation.trim())
+          );
+          setMeetingLinkExpanded(Boolean(parsedDescription.meetingUrl.trim()));
           setDateValue(toDateInputValue(start));
           setStartTime(
             `${String(start.getHours()).padStart(2, "0")}:${String(
@@ -738,7 +746,7 @@ try {
           title: title.trim(),
           description: buildStoredDescription({
             description,
-            manualLocation,
+            manualLocation: locationId ? "" : manualLocation,
             meetingUrl,
           }),
           event_type_id: resolvedEventTypeId,
@@ -980,49 +988,130 @@ router.push("/work/academic");
                     </select>
                   </div>
 
-                  <div>
-                    <label className="text-sm font-semibold text-gray-800">
-                      Saved Location
-                    </label>
-                    <select
-                      value={locationId}
-                      onChange={(event) => setLocationId(event.target.value)}
-                      className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-900"
-                    >
-                      <option value="">No location</option>
-                      {locations.map((location) => (
-                        <option key={location.id} value={location.id}>
-                          {formatLocationOption(location)}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+                  <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:col-span-2">
+                    <div className="flex flex-col gap-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">
+                            Location
+                          </p>
+                          <p className="mt-1 text-xs text-gray-500">
+                            Add an in-person location, a meeting link, or both.
+                          </p>
+                        </div>
+                      </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label className="text-sm font-semibold text-gray-800">
-                      Location
-                    </label>
-                    <input
-                      value={manualLocation}
-                      onChange={(event) => setManualLocation(event.target.value)}
-                      placeholder="Room 301, Smith Building"
-                      className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
-                    />
-                  </div>
+                      {!locationEditorOpen && !hasLocationValue ? (
+                        <button
+                          type="button"
+                          onClick={() => setLocationEditorOpen(true)}
+                          className="inline-flex items-center gap-2 self-start rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                        >
+                          <MapPin className="h-4 w-4" />
+                          Add location
+                        </button>
+                      ) : (
+                        <div className="space-y-3">
+                          <div>
+                            <label className="text-sm font-semibold text-gray-800">
+                              Location
+                            </label>
+                            <div className="mt-2 flex gap-2">
+                              <input
+                                value={visibleLocationValue}
+                                onChange={(event) => {
+                                  setLocationEditorOpen(true);
+                                  setLocationId("");
+                                  setManualLocation(event.target.value);
+                                }}
+                                placeholder="Room 301, Smith Building"
+                                className="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setLocationId("");
+                                  setManualLocation("");
+                                  setLocationEditorOpen(false);
+                                }}
+                                className="shrink-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-50 hover:text-slate-700"
+                              >
+                                Clear
+                              </button>
+                            </div>
+                          </div>
 
-                  <div>
-                    <label className="text-sm font-semibold text-gray-800">
-                      Zoom / Meeting Link
-                    </label>
-                    <input
-                      type="url"
-                      value={meetingUrl}
-                      onChange={(event) => setMeetingUrl(event.target.value)}
-                      placeholder="https://"
-                      className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
-                    />
+                          {locations.length > 0 ? (
+                            <div>
+                              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+                                Saved locations
+                              </p>
+                              <div className="mt-2 flex flex-wrap gap-2">
+                                {locations.map((location) => {
+                                  const selected = locationId === location.id;
+
+                                  return (
+                                    <button
+                                      key={location.id}
+                                      type="button"
+                                      onClick={() => {
+                                        setLocationEditorOpen(true);
+                                        setLocationId(location.id);
+                                        setManualLocation("");
+                                      }}
+                                      className={`rounded-full border px-3 py-1.5 text-sm font-medium transition ${
+                                        selected
+                                          ? "border-slate-950 bg-slate-950 text-white"
+                                          : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                                      }`}
+                                    >
+                                      {formatLocationOption(location)}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
+
+                      {meetingLinkExpanded || hasMeetingLinkValue ? (
+                        <div>
+                          <div className="flex items-center justify-between gap-3">
+                            <label className="text-sm font-semibold text-gray-800">
+                              Meeting Link
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setMeetingUrl("");
+                                setMeetingLinkExpanded(false);
+                              }}
+                              className="text-sm font-semibold text-slate-500 transition hover:text-slate-700"
+                            >
+                              Remove
+                            </button>
+                          </div>
+                          <input
+                            type="url"
+                            value={meetingUrl}
+                            onChange={(event) => setMeetingUrl(event.target.value)}
+                            placeholder="https://"
+                            className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
+                          />
+                        </div>
+                      ) : null}
+
+                      {!meetingLinkExpanded && !hasMeetingLinkValue ? (
+                        <button
+                          type="button"
+                          onClick={() => setMeetingLinkExpanded(true)}
+                          className="inline-flex items-center gap-2 self-start rounded-xl border border-dashed border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-400 hover:bg-slate-50"
+                        >
+                          Add meeting link
+                        </button>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
 
@@ -1094,28 +1183,44 @@ router.push("/work/academic");
                   />
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setIsRequired((current) => !current)}
-                  className={`flex w-full items-center justify-between rounded-2xl border p-4 text-left ${
-                    isRequired
-                      ? "border-gray-950 bg-gray-950 text-white"
-                      : "border-gray-100 bg-gray-50 text-gray-900 hover:bg-gray-100"
-                  }`}
-                >
-                  <div>
-                    <div className="text-sm font-semibold">Required event</div>
-                    <div
-                      className={`mt-1 text-xs ${
-                        isRequired ? "text-gray-300" : "text-gray-500"
-                      }`}
-                    >
-                      Mark this event as required for the program.
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">
+                        Attendance Requirement
+                      </p>
+                      <p className="mt-1 text-xs text-gray-500">
+                        Mark whether attendance is optional or required for the program.
+                      </p>
+                    </div>
+
+                    <div className="inline-flex rounded-xl border border-slate-200 bg-white p-1">
+                      <button
+                        type="button"
+                        onClick={() => setIsRequired(false)}
+                        className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${
+                          !isRequired
+                            ? "bg-slate-950 text-white"
+                            : "text-slate-600 hover:bg-slate-50"
+                        }`}
+                      >
+                        Optional
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setIsRequired(true)}
+                        className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition ${
+                          isRequired
+                            ? "bg-slate-950 text-white"
+                            : "text-slate-600 hover:bg-slate-50"
+                        }`}
+                      >
+                        {isRequired ? <Check className="h-4 w-4" /> : null}
+                        Required
+                      </button>
                     </div>
                   </div>
-
-                  {isRequired && <Check className="h-5 w-5" />}
-                </button>
+                </div>
               </div>
             </section>
 
