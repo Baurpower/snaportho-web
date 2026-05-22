@@ -28,18 +28,24 @@ type OrthoContextRequest = {
   mode: 'fast' | 'enhanced';
 };
 
-const DEFAULT_CASEPREP_INTERNAL_BASE_URL = 'http://127.0.0.1:8000';
-const DEFAULT_FAST_TIMEOUT_MS = 8_000;
-const DEFAULT_ENHANCED_TIMEOUT_MS = 12_000;
+const DEFAULT_CASEPREP_INTERNAL_BASE_URL = 'https://api.snap-ortho.com';
+const DEFAULT_FAST_TIMEOUT_MS = 30_000;
+const DEFAULT_ENHANCED_TIMEOUT_MS = 30_000;
 
 function resolveCaseprepBaseUrl(): string {
   const configured = process.env.CASEPREP_INTERNAL_BASE_URL?.trim();
 
-  if (!configured) {
+  if (configured) {
+    return configured.replace(/\/+$/, '');
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
     return DEFAULT_CASEPREP_INTERNAL_BASE_URL;
   }
 
-  return configured.replace(/\/+$/, '');
+  throw new Error(
+    'CASEPREP_INTERNAL_BASE_URL is required in production for brobot-anki ortho-context.',
+  );
 }
 
 function resolveTimeoutMs(mode: 'fast' | 'enhanced'): number {
@@ -134,6 +140,7 @@ export async function POST(request: Request) {
     console.log('[brobot-anki/ortho-context] start', {
       mode: payload.mode,
       timeoutMs,
+      caseprepBaseUrl,
       hasDeck: Boolean(payload.deck),
       tagCount: payload.tags.length,
     });
@@ -199,6 +206,9 @@ export async function POST(request: Request) {
         totalElapsedMs: Date.now() - routeStartedAt,
       });
 
+      // Preserve the upstream caseprep payload verbatim so new fields like
+      // `card_level`, flat `related_pimp_questions`, `question_count`, and
+      // `formatter` flow through without route-specific reshaping.
       // TODO: Add a cache layer here if we establish a shared backend caching pattern.
       return NextResponse.json(upstreamJson);
     } catch (error: unknown) {
@@ -227,6 +237,25 @@ export async function POST(request: Request) {
     } finally {
       clearTimeout(timeoutHandle);
     }
+  } catch (error: unknown) {
+    if (
+      error instanceof Error &&
+      error.message.includes('CASEPREP_INTERNAL_BASE_URL is required')
+    ) {
+      console.error('[brobot-anki/ortho-context] configuration error', {
+        message: error.message,
+      });
+
+      return NextResponse.json(
+        {
+          error:
+            'Caseprep ortho-context is not configured on this deployment.',
+        },
+        { status: 500 },
+      );
+    }
+
+    throw error;
   } finally {
     console.log('[brobot-anki/ortho-context] route finished', {
       totalElapsedMs: Date.now() - routeStartedAt,
