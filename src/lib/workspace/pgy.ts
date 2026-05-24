@@ -1,5 +1,7 @@
 export type EffectiveDateInput = Date | string | null | undefined;
 
+const RESIDENT_SCHEDULE_ROLES = new Set(["resident", "chief_resident", "chief"]);
+
 function isValidDate(date: Date) {
   return !Number.isNaN(date.getTime());
 }
@@ -97,4 +99,31 @@ export function calculatePgyForDateRange(params: {
 }): number | null {
   const effectiveDate = params.startDate ?? params.endDate ?? null;
   return getPgyFromGradYear(params.gradYear, effectiveDate);
+}
+
+export function normalizeProgramRole(role: string | null | undefined): string | null {
+  if (typeof role !== "string") return null;
+
+  const normalized = role.trim().toLowerCase().replace(/[-\s]+/g, "_");
+  return normalized || null;
+}
+
+export function isResidentScheduleRole(role: string | null | undefined): boolean {
+  const normalized = normalizeProgramRole(role);
+  return normalized ? RESIDENT_SCHEDULE_ROLES.has(normalized) : false;
+}
+
+export function isVisibleResidentForAcademicYear(params: {
+  gradYear: number | null | undefined;
+  role: string | null | undefined;
+  academicYearStart: number;
+}): boolean {
+  if (!Number.isInteger(params.academicYearStart)) return false;
+  if (!isResidentScheduleRole(params.role)) return false;
+  if (typeof params.gradYear !== "number" || !Number.isInteger(params.gradYear)) return false;
+  if (params.gradYear <= params.academicYearStart) return false;
+
+  return (
+    getPgyFromGradYear(params.gradYear, `${params.academicYearStart}-07-01`) !== null
+  );
 }

@@ -314,6 +314,9 @@ type RawProgramRotationAssignmentRow = {
   id: string;
   program_membership_id: string | null;
   roster_id: string | null;
+  track_id: string | null;
+  track_block_id: string | null;
+  source_kind: string | null;
   start_date: string | null;
   end_date: string | null;
   site_label: string | null;
@@ -337,6 +340,9 @@ export type ProgramRotationAssignment = {
   siteLabel: string | null;
   teamLabel: string | null;
   notes: string | null;
+  sourceKind: string | null;
+  trackId: string | null;
+  trackBlockId: string | null;
   rotation: {
     id: string;
     name: string | null;
@@ -386,6 +392,9 @@ function toProgramRotationAssignment(
     siteLabel: row.site_label,
     teamLabel: row.team_label,
     notes: row.notes,
+    sourceKind: row.source_kind ?? null,
+    trackId: row.track_id ?? null,
+    trackBlockId: row.track_block_id ?? null,
     rotation: rotation
       ? {
           id: rotation.id,
@@ -411,6 +420,9 @@ export async function getProgramRotationAssignmentsInRange(
       id,
       program_membership_id,
       roster_id,
+      track_id,
+      track_block_id,
+      source_kind,
       start_date,
       end_date,
       site_label,

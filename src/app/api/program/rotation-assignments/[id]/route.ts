@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { requireRotationSettingsAccess } from "@/lib/workspace/rotations/permissions";
 
 type RouteContext = {
   params: Promise<{ id: string }>;
@@ -15,6 +16,24 @@ type PatchBody = {
   siteLabel?: string | null;
   teamLabel?: string | null;
   notes?: string | null;
+};
+
+type AssignmentSourceRow = {
+  id: string;
+  program_id: string | null;
+  program_membership_id: string | null;
+  roster_id: string | null;
+  rotation_id: string | null;
+  track_id: string | null;
+  track_block_id: string | null;
+  source_kind: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  site_label: string | null;
+  team_label: string | null;
+  notes: string | null;
+  program_roster: unknown;
+  rotations: unknown;
 };
 
 function isValidDate(value: unknown): value is string {
@@ -79,7 +98,7 @@ async function getAssignmentForProgram(assignmentId: string, programId: string) 
     throw new Error(`Failed to load rotation assignment: ${error.message}`);
   }
 
-  return data;
+  return data as AssignmentSourceRow | null;
 }
 
 async function ensureRosterByMembershipInProgram(
@@ -215,6 +234,9 @@ export async function GET(_request: NextRequest, context: RouteContext) {
           siteLabel: assignment.site_label ?? null,
           teamLabel: assignment.team_label ?? null,
           notes: assignment.notes ?? null,
+          sourceKind: assignment.source_kind ?? null,
+          trackId: assignment.track_id ?? null,
+          trackBlockId: assignment.track_block_id ?? null,
           member: roster,
           rotation,
         },
@@ -262,6 +284,20 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       return NextResponse.json(
         { error: "No active program membership found." },
         { status: 403 }
+      );
+    }
+
+    const access = await requireRotationSettingsAccess({
+      supabase,
+      userId: user.id,
+      programId: activeMembership.program_id,
+      level: "edit",
+    });
+
+    if (!access.ok) {
+      return NextResponse.json(
+        { error: access.error ?? "You do not have permission to manage rotation settings." },
+        { status: access.status }
       );
     }
 
@@ -391,6 +427,11 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     if (siteLabel !== undefined) updates.site_label = siteLabel;
     if (teamLabel !== undefined) updates.team_label = teamLabel;
     if (notes !== undefined) updates.notes = notes;
+    updates.updated_by = user.id;
+
+    if (existingAssignment.source_kind === "generated_from_track") {
+      updates.source_kind = "manual";
+    }
 
     const nextStartDate = (updates.start_date ??
       existingAssignment.start_date) as string | null;
@@ -427,6 +468,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
         program_membership_id,
         roster_id,
         rotation_id,
+        track_id,
+        track_block_id,
+        source_kind,
         start_date,
         end_date,
         site_label,
@@ -459,6 +503,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
           siteLabel: updated?.site_label ?? null,
           teamLabel: updated?.team_label ?? null,
           notes: updated?.notes ?? null,
+          sourceKind: updated?.source_kind ?? null,
+          trackId: updated?.track_id ?? null,
+          trackBlockId: updated?.track_block_id ?? null,
         },
       },
       { status: 200 }
@@ -504,6 +551,20 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
       return NextResponse.json(
         { error: "No active program membership found." },
         { status: 403 }
+      );
+    }
+
+    const access = await requireRotationSettingsAccess({
+      supabase,
+      userId: user.id,
+      programId: activeMembership.program_id,
+      level: "edit",
+    });
+
+    if (!access.ok) {
+      return NextResponse.json(
+        { error: access.error ?? "You do not have permission to manage rotation settings." },
+        { status: access.status }
       );
     }
 

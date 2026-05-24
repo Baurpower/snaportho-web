@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { requireRotationSettingsAccess } from "@/lib/workspace/rotations/permissions";
 
 type PostBody = {
   membershipId?: string | null;
@@ -140,6 +141,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const access = await requireRotationSettingsAccess({
+      supabase,
+      userId: user.id,
+      programId: activeMembership.program_id,
+      level: "edit",
+    });
+
+    if (!access.ok) {
+      return NextResponse.json(
+        { error: access.error ?? "You do not have permission to manage rotation settings." },
+        { status: access.status }
+      );
+    }
+
     const body = (await request.json().catch(() => null)) as PostBody | null;
 
     if (!body) {
@@ -219,7 +234,9 @@ export async function POST(request: NextRequest) {
       site_label: siteLabel ?? null,
       team_label: teamLabel ?? null,
       notes: notes ?? null,
+      source_kind: "manual",
       created_by: user.id,
+      updated_by: user.id,
     };
 
     const { data: inserted, error: insertError } = await supabase
@@ -229,6 +246,9 @@ export async function POST(request: NextRequest) {
         id,
         program_membership_id,
         roster_id,
+        track_id,
+        track_block_id,
+        source_kind,
         start_date,
         end_date,
         site_label,
@@ -261,6 +281,9 @@ export async function POST(request: NextRequest) {
           siteLabel: inserted.site_label ?? null,
           teamLabel: inserted.team_label ?? null,
           notes: inserted.notes ?? null,
+          sourceKind: inserted.source_kind ?? null,
+          trackId: inserted.track_id ?? null,
+          trackBlockId: inserted.track_block_id ?? null,
           rotation: {
             id: rotation.id,
             name: rotation.name ?? null,

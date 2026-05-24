@@ -10,13 +10,20 @@ import {
   Loader2,
   PencilLine,
   Save,
- Search,
+  Search,
   Settings2,
+  Shapes,
   Users,
   X,
 } from "lucide-react";
 import ProgramRotations from "@/components/workspace/settings/programrotations";
 import EditProgramRotations from "@/components/workspace/settings/editprogramrotations";
+import RotationSettingsSegmentedControl from "@/components/workspace/settings/rotationsettingssegmentedcontrol";
+import RotationTracksManager from "@/components/workspace/settings/rotationtracksmanager";
+import { isVisibleResidentForAcademicYear } from "@/lib/workspace/pgy";
+
+export type GenerateAssignmentsMode = "overwrite_generated" | "fill_gaps";
+export type RotationSettingsTab = "tracks" | "assignments";
 
 export type OverviewProgram = {
   id: string;
@@ -24,6 +31,8 @@ export type OverviewProgram = {
   slug: string | null;
   institutionName: string | null;
   timezone: string | null;
+  city?: string | null;
+  state?: string | null;
 };
 
 type RawOverviewProgram =
@@ -34,6 +43,8 @@ type RawOverviewProgram =
       institutionName?: string | null;
       institution_name?: string | null;
       timezone?: string | null;
+      city?: string | null;
+      state?: string | null;
     }
   | null
   | undefined;
@@ -89,6 +100,9 @@ export type OverviewAssignment = {
   siteLabel: string | null;
   teamLabel: string | null;
   notes: string | null;
+  sourceKind: string | null;
+  trackId: string | null;
+  trackBlockId: string | null;
   rotation: {
     id: string;
     name: string | null;
@@ -98,15 +112,66 @@ export type OverviewAssignment = {
   } | null;
 };
 
+export type RotationTrackItem = {
+  id: string;
+  programId: string;
+  academicYearStart: number;
+  name: string;
+  description: string | null;
+  targetPgyYear: number | null;
+  sortOrder: number | null;
+  isActive: boolean | null;
+  copiedFromTrackId: string | null;
+  createdBy: string | null;
+  updatedBy: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type RotationTrackBlockItem = {
+  id: string;
+  trackId: string;
+  rotationId: string;
+  startDate: string;
+  endDate: string;
+  siteLabel: string | null;
+  teamLabel: string | null;
+  notes: string | null;
+  sortOrder: number | null;
+  createdAt: string;
+  updatedAt: string;
+  rotation: {
+    id: string;
+    name: string | null;
+    shortName: string | null;
+    category: string | null;
+    color: string | null;
+  } | null;
+};
+
+export type RotationTrackMembershipItem = {
+  id: string;
+  trackId: string;
+  rosterId: string;
+  programMembershipId: string | null;
+  createdAt: string;
+  updatedAt: string;
+  member: OverviewMember | null;
+};
+
 type RawOverviewResponse = {
   program?: RawOverviewProgram;
   academicYearStart?: number | null;
   academicYearLabel?: string | null;
-  rangeStart?: string | null;
-  rangeEnd?: string | null;
   members?: OverviewMember[];
   rotations?: OverviewRotationCatalogItem[];
+  tracks?: RotationTrackItem[];
+  trackBlocks?: RotationTrackBlockItem[];
+  trackMemberships?: RotationTrackMembershipItem[];
   assignments?: OverviewAssignment[];
+  permissions?: {
+    canManageRotationSettings?: boolean;
+  } | null;
   error?: string;
 } | null;
 
@@ -121,6 +186,7 @@ export type RotationBlock = {
   siteLabel: string | null;
   teamLabel: string | null;
   color: string | null;
+  sourceKind: string | null;
 };
 
 export type MonthMeta = {
@@ -165,6 +231,9 @@ type EditProgramRotationAssignment = {
   siteLabel: string | null;
   teamLabel: string | null;
   notes: string | null;
+  sourceKind: string | null;
+  trackId: string | null;
+  trackBlockId: string | null;
   rotation: {
     id: string;
     name: string | null;
@@ -191,6 +260,11 @@ type RotationMutationResponse = {
   assignment?: EditProgramRotationAssignment;
   error?: string;
 };
+
+type Banner = {
+  tone: "error" | "success";
+  message: string;
+} | null;
 
 const MONTHS_PER_PAGE = 6;
 
@@ -281,52 +355,46 @@ function normalizeProgram(
     slug,
     institutionName,
     timezone,
+    city:
+      typeof program.city === "string" && program.city.trim() ? program.city.trim() : null,
+    state:
+      typeof program.state === "string" && program.state.trim()
+        ? program.state.trim()
+        : null,
   };
-}
-
-function getProgramDisplayName(program: OverviewProgram | null) {
-  if (program?.name && program.name.trim()) return program.name.trim();
-  if (program?.institutionName && program.institutionName.trim()) {
-    return program.institutionName.trim();
-  }
-  return "Your Program";
-}
-
-function getProgramSecondaryLabel(program: OverviewProgram | null) {
-  if (!program) return null;
-
-  if (
-    program.institutionName &&
-    program.name &&
-    program.institutionName.trim() !== program.name.trim()
-  ) {
-    return program.institutionName.trim();
-  }
-
-  return null;
 }
 
 function SectionShell({
   title,
   subtitle,
   icon,
+  headerActions,
   children,
 }: {
   title: string;
   subtitle: string;
   icon: ReactNode;
+  headerActions?: ReactNode;
   children: ReactNode;
 }) {
   return (
     <div className="rounded-[1.8rem] border border-white/10 bg-white/[0.05] p-5 shadow-[0_18px_50px_rgba(2,8,23,0.18)] backdrop-blur md:p-6">
-      <div className="flex items-start gap-3">
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-400/10 text-sky-300 ring-1 ring-sky-300/10">
-          {icon}
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex items-start gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-400/10 text-sky-300 ring-1 ring-sky-300/10">
+            {icon}
+          </div>
+          <div>
+            <h2 className="text-lg font-bold tracking-tight text-white">{title}</h2>
+            <p className="mt-1 text-sm text-slate-400">{subtitle}</p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-lg font-bold tracking-tight text-white">{title}</h2>
-          <p className="mt-1 text-sm text-slate-400">{subtitle}</p>
-        </div>
+
+        {headerActions ? (
+          <div className="flex flex-wrap items-center gap-3 lg:justify-end">
+            {headerActions}
+          </div>
+        ) : null}
       </div>
 
       <div className="mt-5">{children}</div>
@@ -334,20 +402,41 @@ function SectionShell({
   );
 }
 
-function SummaryStat({
-  label,
-  value,
+function getAcademicYearOptions(selectedAcademicYearStart: number) {
+  const currentAcademicYear =
+    new Date().getMonth() >= 6 ? new Date().getFullYear() : new Date().getFullYear() - 1;
+  const options = new Set<number>();
+  for (let offset = -2; offset <= 2; offset += 1) {
+    options.add(currentAcademicYear + offset);
+  }
+  options.add(selectedAcademicYearStart);
+  return Array.from(options).sort((a, b) => a - b);
+}
+
+function AcademicYearSelector({
+  academicYearStart,
+  onChange,
 }: {
-  label: string;
-  value: string;
+  academicYearStart: number;
+  onChange: (year: number) => void;
 }) {
+  const yearOptions = getAcademicYearOptions(academicYearStart);
+
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
-      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-        {label}
-      </p>
-      <p className="mt-1 text-lg font-bold text-white">{value}</p>
-    </div>
+    <label className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white">
+      <span className="font-semibold text-slate-300">Academic year</span>
+      <select
+        value={academicYearStart}
+        onChange={(event) => onChange(Number(event.target.value))}
+        className="rounded-xl border border-white/10 bg-[#0b1728] px-3 py-2 text-sm text-white outline-none"
+      >
+        {yearOptions.map((year) => (
+          <option key={year} value={year}>
+            {getAcademicYearLabel(year)}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 
@@ -373,6 +462,7 @@ function normalizeAssignments(assignments: OverviewAssignment[]): RotationBlock[
       siteLabel: item.siteLabel ?? null,
       teamLabel: item.teamLabel ?? null,
       color: item.rotation?.color ?? null,
+      sourceKind: item.sourceKind ?? null,
     }));
 }
 
@@ -411,14 +501,46 @@ function upsertAssignment<
   return sortAssignments(filtered);
 }
 
+function formatImportSummary(summary: {
+  createdTracksCount: number;
+  createdBlocksCount: number;
+  createdMembershipsCount: number;
+  skippedRosterIds: string[];
+}) {
+  const skipped = summary.skippedRosterIds.length;
+  return `Imported ${summary.createdTracksCount} tracks, ${summary.createdBlocksCount} blocks, and ${summary.createdMembershipsCount} memberships${skipped > 0 ? ` with ${skipped} skipped roster rows` : ""}.`;
+}
+
+function formatGenerationSummary(summary: {
+  createdCount: number;
+  deletedCount: number;
+  skippedCount: number;
+}) {
+  return `Generated ${summary.createdCount} assignments, removed ${summary.deletedCount} generated assignments, and skipped ${summary.skippedCount} overlapping items.`;
+}
+
+function matchesMemberSearch(member: OverviewMember, search: string) {
+  if (!search.trim()) return true;
+
+  return [
+    member.displayName,
+    member.trainingLevel ?? "",
+    String(member.gradYear ?? ""),
+    member.role ?? "",
+  ]
+    .join(" ")
+    .toLowerCase()
+    .includes(search.toLowerCase());
+}
+
 export default function ProgramSettingsPage() {
+  const [activeTab, setActiveTab] = useState<RotationSettingsTab>("assignments");
   const [search, setSearch] = useState("");
   const [monthPage, setMonthPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState<string | null>(null);
-  const [saveError, setSaveError] = useState<string | null>(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const [mutating, setMutating] = useState(false);
+  const [banner, setBanner] = useState<Banner>(null);
+  const [isEditingAssignments, setIsEditingAssignments] = useState(false);
 
   const [program, setProgram] = useState<OverviewProgram | null>(null);
   const [fallbackProgram, setFallbackProgram] = useState<OverviewProgram | null>(null);
@@ -430,17 +552,18 @@ export default function ProgramSettingsPage() {
   );
   const [members, setMembers] = useState<OverviewMember[]>([]);
   const [rotationCatalog, setRotationCatalog] = useState<OverviewRotationCatalogItem[]>([]);
+  const [tracks, setTracks] = useState<RotationTrackItem[]>([]);
+  const [trackBlocks, setTrackBlocks] = useState<RotationTrackBlockItem[]>([]);
+  const [trackMemberships, setTrackMemberships] = useState<RotationTrackMembershipItem[]>([]);
   const [assignments, setAssignments] = useState<OverviewAssignment[]>([]);
   const [draftAssignments, setDraftAssignments] = useState<EditProgramRotationAssignment[]>([]);
+  const [canManageRotationSettings, setCanManageRotationSettings] = useState(false);
 
   const [selectedRotationIds, setSelectedRotationIds] = useState<string[]>([]);
   const [rotationFilterOpen, setRotationFilterOpen] = useState(false);
   const filterRef = useRef<HTMLDivElement | null>(null);
 
-  const months = useMemo(
-    () => getAcademicMonths(academicYearStart),
-    [academicYearStart]
-  );
+  const months = useMemo(() => getAcademicMonths(academicYearStart), [academicYearStart]);
 
   const visibleMonths = months.slice(
     monthPage * MONTHS_PER_PAGE,
@@ -450,66 +573,74 @@ export default function ProgramSettingsPage() {
   const canGoBack = monthPage > 0;
   const canGoForward = (monthPage + 1) * MONTHS_PER_PAGE < months.length;
 
-  useEffect(() => {
-    let cancelled = false;
+  async function loadOverview(targetAcademicYearStart: number) {
+    setLoading(true);
+    setBanner(null);
 
-    async function loadOverview() {
-      try {
-        setLoading(true);
-        setLoadError(null);
-
-        const targetAcademicYearStart = getAcademicStartYear();
-
-        const response = await fetch(
-          `/api/program/settings/overview?academicYearStart=${targetAcademicYearStart}`,
-          {
-            credentials: "include",
-            cache: "no-store",
-          }
-        );
-
-        const payload = (await response.json().catch(() => null)) as RawOverviewResponse;
-
-        if (!response.ok) {
-          throw new Error(payload?.error ?? "Failed to load program settings.");
+    try {
+      const response = await fetch(
+        `/api/program/rotation-settings/overview?academicYearStart=${targetAcademicYearStart}`,
+        {
+          credentials: "include",
+          cache: "no-store",
         }
+      );
 
-        if (cancelled) return;
+      const payload = (await response.json().catch(() => null)) as RawOverviewResponse;
 
-        const nextProgram = normalizeProgram(payload?.program);
-        const nextMembers = Array.isArray(payload?.members) ? payload.members : [];
-        const nextRotations = Array.isArray(payload?.rotations) ? payload.rotations : [];
-        const nextAssignments = Array.isArray(payload?.assignments)
-          ? payload.assignments
-          : [];
-
-        setProgram(nextProgram);
-        setAcademicYearStart(payload?.academicYearStart ?? targetAcademicYearStart);
-        setAcademicYearLabel(
-          payload?.academicYearLabel ?? getAcademicYearLabel(targetAcademicYearStart)
-        );
-        setMembers(nextMembers);
-        setRotationCatalog(nextRotations);
-        setAssignments(sortAssignments(nextAssignments));
-        setDraftAssignments(sortAssignments(nextAssignments));
-        setSelectedRotationIds([]);
-        setMonthPage(0);
-      } catch (error) {
-        if (!cancelled) {
-          setLoadError(
-            error instanceof Error ? error.message : "Failed to load program settings."
-          );
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
+      if (!response.ok) {
+        throw new Error(payload?.error ?? "Failed to load program settings.");
       }
+
+      const nextProgram = normalizeProgram(payload?.program);
+      const nextMembers = Array.isArray(payload?.members) ? payload.members : [];
+      const nextRotations = Array.isArray(payload?.rotations) ? payload.rotations : [];
+      const nextTracks = Array.isArray(payload?.tracks) ? payload.tracks : [];
+      const nextTrackBlocks = Array.isArray(payload?.trackBlocks) ? payload.trackBlocks : [];
+      const nextTrackMemberships = Array.isArray(payload?.trackMemberships)
+        ? payload.trackMemberships
+        : [];
+      const nextAssignments = Array.isArray(payload?.assignments)
+        ? payload.assignments
+        : [];
+
+      setProgram(nextProgram);
+      setAcademicYearStart(payload?.academicYearStart ?? targetAcademicYearStart);
+      setAcademicYearLabel(
+        payload?.academicYearLabel ?? getAcademicYearLabel(targetAcademicYearStart)
+      );
+      setMembers(nextMembers);
+      setRotationCatalog(nextRotations);
+      setTracks(nextTracks);
+      setTrackBlocks(nextTrackBlocks);
+      setTrackMemberships(nextTrackMemberships);
+      setAssignments(sortAssignments(nextAssignments));
+      setDraftAssignments(sortAssignments(nextAssignments));
+      setCanManageRotationSettings(
+        Boolean(payload?.permissions?.canManageRotationSettings)
+      );
+      setSelectedRotationIds([]);
+      setMonthPage(0);
+    } catch (error) {
+      setBanner({
+        tone: "error",
+        message:
+          error instanceof Error ? error.message : "Failed to load program settings.",
+      });
+    } finally {
+      setLoading(false);
     }
+  }
 
-    loadOverview();
+  function handleAcademicYearChange(year: number) {
+    setIsEditingAssignments(false);
+    setSearch("");
+    setSelectedRotationIds([]);
+    loadOverview(year);
+  }
 
-    return () => {
-      cancelled = true;
-    };
+  useEffect(() => {
+    loadOverview(getAcademicStartYear());
   }, []);
 
   useEffect(() => {
@@ -560,21 +691,30 @@ export default function ProgramSettingsPage() {
     [assignments]
   );
 
-  const filteredMembers = useMemo(() => {
-    return members.filter((member) => {
-      if (!search.trim()) return true;
+  const visibleResidentMembers = useMemo(
+    () =>
+      members.filter((member) =>
+        isVisibleResidentForAcademicYear({
+          gradYear: member.gradYear,
+          role: member.role,
+          academicYearStart,
+        })
+      ),
+    [members, academicYearStart]
+  );
 
-      return [
-        member.displayName,
-        member.trainingLevel ?? "",
-        String(member.gradYear ?? ""),
-        member.role ?? "",
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(search.toLowerCase());
-    });
-  }, [members, search]);
+  const visibleResidentIds = useMemo(
+    () =>
+      new Set(
+        visibleResidentMembers.map((member) => member.rosterId ?? member.membershipId)
+      ),
+    [visibleResidentMembers]
+  );
+
+  const filteredMembers = useMemo(
+    () => visibleResidentMembers.filter((member) => matchesMemberSearch(member, search)),
+    [visibleResidentMembers, search]
+  );
 
   const rotationOptions = useMemo(() => {
     return [...rotationCatalog]
@@ -598,22 +738,42 @@ export default function ProgramSettingsPage() {
   const hasRotationFilter = selectedRotationIds.length > 0;
 
   const filteredAssignments = useMemo(() => {
-    if (!hasRotationFilter) return normalizedAssignments;
+    const visibleAssignments = normalizedAssignments.filter((assignment) =>
+      visibleResidentIds.has(assignment.memberId)
+    );
 
-    return normalizedAssignments.filter(
+    if (!hasRotationFilter) return visibleAssignments;
+
+    return visibleAssignments.filter(
       (assignment) =>
         assignment.rotationId && selectedRotationSet.has(assignment.rotationId)
     );
-  }, [normalizedAssignments, hasRotationFilter, selectedRotationSet]);
+  }, [
+    normalizedAssignments,
+    hasRotationFilter,
+    selectedRotationSet,
+    visibleResidentIds,
+  ]);
 
   const filteredDraftAssignments = useMemo(() => {
-    if (!hasRotationFilter) return draftAssignments;
+    const visibleAssignments = draftAssignments.filter((assignment) => {
+      const memberId = assignment.rosterId ?? assignment.membershipId;
+      return memberId ? visibleResidentIds.has(memberId) : false;
+    });
 
-    return draftAssignments.filter(
+    if (!hasRotationFilter) return visibleAssignments;
+
+    return visibleAssignments.filter(
       (assignment) =>
         assignment.rotation?.id && selectedRotationSet.has(assignment.rotation.id)
     );
-  }, [draftAssignments, hasRotationFilter, selectedRotationSet]);
+  }, [draftAssignments, hasRotationFilter, selectedRotationSet, visibleResidentIds]);
+
+  const visibleTrackMemberships = useMemo(
+    () =>
+      trackMemberships.filter((membership) => visibleResidentIds.has(membership.rosterId)),
+    [trackMemberships, visibleResidentIds]
+  );
 
   const visibleRangeLabel = useMemo(() => {
     if (visibleMonths.length === 0) return "";
@@ -625,16 +785,6 @@ export default function ProgramSettingsPage() {
   const resolvedProgram = useMemo(
     () => program ?? fallbackProgram,
     [program, fallbackProgram]
-  );
-
-  const programDisplayName = useMemo(
-    () => getProgramDisplayName(resolvedProgram),
-    [resolvedProgram]
-  );
-
-  const programSecondaryLabel = useMemo(
-    () => getProgramSecondaryLabel(resolvedProgram),
-    [resolvedProgram]
   );
 
   const rotationFilterLabel = useMemo(() => {
@@ -674,6 +824,28 @@ export default function ProgramSettingsPage() {
     [rotationCatalog]
   );
 
+  async function runMutation<T>(
+    work: () => Promise<T>,
+    successMessage?: (result: T) => string
+  ) {
+    try {
+      setMutating(true);
+      setBanner(null);
+      const result = await work();
+      if (successMessage) {
+        setBanner({ tone: "success", message: successMessage(result) });
+      }
+      return result;
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "The request could not be completed.";
+      setBanner({ tone: "error", message });
+      throw error;
+    } finally {
+      setMutating(false);
+    }
+  }
+
   function toggleRotation(rotationId: string) {
     setSelectedRotationIds((prev) =>
       prev.includes(rotationId)
@@ -691,99 +863,334 @@ export default function ProgramSettingsPage() {
   }
 
   function handleEnterEdit() {
-    setSaveError(null);
+    setBanner(null);
     setDraftAssignments(sortAssignments(assignments));
-    setIsEditing(true);
+    setIsEditingAssignments(true);
   }
 
   function handleCancelEdit() {
-    setSaveError(null);
+    setBanner(null);
     setDraftAssignments(sortAssignments(assignments));
-    setIsEditing(false);
+    setIsEditingAssignments(false);
   }
 
   function handleDoneEditing() {
-    setSaveError(null);
-    setIsEditing(false);
+    setBanner(null);
+    setIsEditingAssignments(false);
   }
 
   async function handleSaveAssignment(payload: SaveRotationAssignmentPayload) {
-    try {
-      setSaving(true);
-      setSaveError(null);
+    await runMutation(
+      async () => {
+        const isEdit = Boolean(payload.id);
+        const url = isEdit
+          ? `/api/program/rotation-assignments/${payload.id}`
+          : `/api/program/rotation-assignments`;
+        const method = isEdit ? "PATCH" : "POST";
 
-      const isEdit = Boolean(payload.id);
-      const url = isEdit
-        ? `/api/program/rotation-assignments/${payload.id}`
-        : `/api/program/rotation-assignments`;
-      const method = isEdit ? "PATCH" : "POST";
+        const response = await fetch(url, {
+          method,
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
 
-      const response = await fetch(url, {
-        method,
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+        const result = (await response.json().catch(() => null)) as
+          | RotationMutationResponse
+          | null;
 
-      const result = (await response.json().catch(() => null)) as
-        | RotationMutationResponse
-        | null;
+        if (!response.ok || !result?.assignment) {
+          throw new Error(result?.error ?? "Failed to save rotation assignment.");
+        }
 
-      if (!response.ok || !result?.assignment) {
-        throw new Error(result?.error ?? "Failed to save rotation assignment.");
-      }
-
-      const savedAssignment = result.assignment;
-
-      setDraftAssignments((prev) => upsertAssignment(prev, savedAssignment));
-      setAssignments((prev) => upsertAssignment(prev, savedAssignment));
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Failed to save rotation assignment.";
-      setSaveError(message);
-      throw error;
-    } finally {
-      setSaving(false);
-    }
+        const savedAssignment = result.assignment;
+        setDraftAssignments((prev) => upsertAssignment(prev, savedAssignment));
+        setAssignments((prev) => upsertAssignment(prev, savedAssignment));
+        await refreshCurrentYear();
+        return savedAssignment;
+      },
+      () => "Rotation assignment saved."
+    );
   }
 
   async function handleDeleteAssignment(assignmentId: string) {
-    try {
-      setSaving(true);
-      setSaveError(null);
+    await runMutation(
+      async () => {
+        const response = await fetch(
+          `/api/program/rotation-assignments/${assignmentId}`,
+          {
+            method: "DELETE",
+            credentials: "include",
+          }
+        );
 
-      const response = await fetch(
-        `/api/program/rotation-assignments/${assignmentId}`,
-        {
+        const result = (await response.json().catch(() => null)) as
+          | { deletedId?: string; error?: string }
+          | null;
+
+        if (!response.ok) {
+          throw new Error(result?.error ?? "Failed to delete rotation assignment.");
+        }
+
+        setDraftAssignments((prev) =>
+          sortAssignments(prev.filter((item) => item.id !== assignmentId))
+        );
+        setAssignments((prev) =>
+          sortAssignments(prev.filter((item) => item.id !== assignmentId))
+        );
+
+        return assignmentId;
+      },
+      () => "Rotation assignment deleted."
+    );
+  }
+
+  async function refreshCurrentYear() {
+    await loadOverview(academicYearStart);
+  }
+
+  async function handleCreateTrack(payload: {
+    academicYearStart: number;
+    name: string;
+    description: string | null;
+    targetPgyYear: number | null;
+  }) {
+    await runMutation(
+      async () => {
+        const response = await fetch("/api/program/rotation-tracks", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            academicYearStart: payload.academicYearStart,
+            name: payload.name,
+            description: payload.description,
+            targetPgyYear: payload.targetPgyYear,
+          }),
+        });
+
+        const result = (await response.json().catch(() => null)) as
+          | { item?: RotationTrackItem; error?: string }
+          | null;
+
+        if (!response.ok || !result?.item) {
+          throw new Error(result?.error ?? "Failed to create track.");
+        }
+
+        await refreshCurrentYear();
+        return result.item;
+      },
+      (item) => `Created track "${item.name}".`
+    );
+  }
+
+  async function handleUpdateTrack(
+    trackId: string,
+    payload: {
+      name: string;
+      description: string | null;
+      targetPgyYear: number | null;
+      isActive?: boolean;
+    }
+  ) {
+    await runMutation(
+      async () => {
+        const response = await fetch(`/api/program/rotation-tracks/${trackId}`, {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const result = (await response.json().catch(() => null)) as
+          | { item?: RotationTrackItem; error?: string }
+          | null;
+
+        if (!response.ok || !result?.item) {
+          throw new Error(result?.error ?? "Failed to update track.");
+        }
+
+        await refreshCurrentYear();
+        return result.item;
+      },
+      (item) => `Saved track "${item.name}".`
+    );
+  }
+
+  async function handleDeleteTrack(trackId: string) {
+    await runMutation(
+      async () => {
+        const response = await fetch(`/api/program/rotation-tracks/${trackId}`, {
           method: "DELETE",
           credentials: "include",
+        });
+
+        const result = (await response.json().catch(() => null)) as
+          | { item?: { id: string }; error?: string }
+          | null;
+
+        if (!response.ok) {
+          throw new Error(result?.error ?? "Failed to delete track.");
         }
-      );
 
-      const result = (await response.json().catch(() => null)) as
-        | { deletedId?: string; error?: string }
-        | null;
+        await refreshCurrentYear();
+        return trackId;
+      },
+      () => "Track deleted."
+    );
+  }
 
-      if (!response.ok) {
-        throw new Error(result?.error ?? "Failed to delete rotation assignment.");
-      }
+  async function handleSaveTrackBlocks(
+    trackId: string,
+    blocks: Array<{
+      id?: string;
+      rotationId: string;
+      startDate: string;
+      endDate: string;
+      siteLabel?: string | null;
+      teamLabel?: string | null;
+      notes?: string | null;
+      sortOrder?: number | null;
+    }>
+  ) {
+    await runMutation(
+      async () => {
+        const response = await fetch(`/api/program/rotation-tracks/${trackId}/blocks`, {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ blocks }),
+        });
 
-      setDraftAssignments((prev) =>
-        sortAssignments(prev.filter((item) => item.id !== assignmentId))
-      );
-      setAssignments((prev) =>
-        sortAssignments(prev.filter((item) => item.id !== assignmentId))
-      );
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : "Failed to delete rotation assignment.";
-      setSaveError(message);
-      throw error;
-    } finally {
-      setSaving(false);
-    }
+        const result = (await response.json().catch(() => null)) as
+          | { items?: RotationTrackBlockItem[]; error?: string }
+          | null;
+
+        if (!response.ok || !result?.items) {
+          throw new Error(result?.error ?? "Failed to save track blocks.");
+        }
+
+        await refreshCurrentYear();
+        return result.items;
+      },
+      () => "Track blocks saved."
+    );
+  }
+
+  async function handleSaveTrackMembers(trackId: string, rosterIds: string[]) {
+    await runMutation(
+      async () => {
+        const response = await fetch(`/api/program/rotation-tracks/${trackId}/members`, {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ rosterIds }),
+        });
+
+        const result = (await response.json().catch(() => null)) as
+          | { items?: RotationTrackMembershipItem[]; error?: string }
+          | null;
+
+        if (!response.ok || !result?.items) {
+          throw new Error(result?.error ?? "Failed to save assigned people.");
+        }
+
+        await refreshCurrentYear();
+        return result.items;
+      },
+      () => "Assigned people saved."
+    );
+  }
+
+  async function handleImportPreviousYear(payload: {
+    fromAcademicYearStart: number;
+    toAcademicYearStart: number;
+    copyMemberships: boolean;
+  }) {
+    await runMutation(
+      async () => {
+        const response = await fetch("/api/program/rotation-tracks/import", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const result = (await response.json().catch(() => null)) as
+          | {
+              success?: boolean;
+              summary?: {
+                createdTracksCount: number;
+                createdBlocksCount: number;
+                createdMembershipsCount: number;
+                skippedRosterIds: string[];
+              };
+              error?: string;
+            }
+          | null;
+
+        if (!response.ok || !result?.summary) {
+          throw new Error(result?.error ?? "Failed to import tracks.");
+        }
+
+        await refreshCurrentYear();
+        return result.summary;
+      },
+      formatImportSummary
+    );
+  }
+
+  async function handleGenerateAssignments(payload: {
+    academicYearStart: number;
+    mode: GenerateAssignmentsMode;
+  }) {
+    await runMutation(
+      async () => {
+        const response = await fetch(
+          "/api/program/rotation-tracks/generate-assignments",
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        const result = (await response.json().catch(() => null)) as
+          | {
+              success?: boolean;
+              summary?: {
+                createdCount: number;
+                deletedCount: number;
+                skippedCount: number;
+              };
+              error?: string;
+            }
+          | null;
+
+        if (!response.ok || !result?.summary) {
+          throw new Error(result?.error ?? "Failed to generate assignments.");
+        }
+
+        await refreshCurrentYear();
+        return result.summary;
+      },
+      formatGenerationSummary
+    );
   }
 
   return (
@@ -801,271 +1208,288 @@ export default function ProgramSettingsPage() {
               Program settings
             </div>
 
-            <div className="mt-5 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-              <div>
-                <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
-                  Program rotation settings
-                </h1>
-                <p className="mt-3 max-w-3xl text-base leading-7 text-slate-300">
-                  Review your roster, filter rotations, and scan the academic year
-                  schedule in one place.
-                </p>
-              </div>
-
-              {!loading ? (
-                !isEditing ? (
-                  <button
-                    type="button"
-                    onClick={handleEnterEdit}
-                    className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
-                  >
-                    <PencilLine className="h-4 w-4" />
-                    Edit rotations
-                  </button>
-                ) : (
-                  <div className="flex flex-wrap gap-3">
-                    <button
-                      type="button"
-                      onClick={handleCancelEdit}
-                      disabled={saving}
-                      className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
-                    >
-                      <X className="h-4 w-4" />
-                      Cancel
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={handleDoneEditing}
-                      disabled={saving}
-                      className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100 disabled:opacity-60"
-                    >
-                      {saving ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Save className="h-4 w-4" />
-                      )}
-                      Done editing
-                    </button>
-                  </div>
-                )
-              ) : null}
+            <div className="mt-5">
+              <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
+                Program rotation settings
+              </h1>
+              <p className="mt-3 max-w-3xl text-base leading-7 text-slate-300">
+                Review live assignments first, then manage academic-year track templates when needed.
+              </p>
             </div>
           </div>
 
-          {loadError ? (
-            <div className="mb-6 rounded-2xl border border-rose-300/20 bg-rose-400/10 px-4 py-3 text-sm text-rose-100">
-              {loadError}
-            </div>
-          ) : null}
-
-          {saveError ? (
-            <div className="mb-6 rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
-              {saveError}
+          {banner ? (
+            <div
+              className={`mb-6 rounded-2xl px-4 py-3 text-sm ${
+                banner.tone === "error"
+                  ? "border border-rose-300/20 bg-rose-400/10 text-rose-100"
+                  : "border border-emerald-300/20 bg-emerald-400/10 text-emerald-100"
+              }`}
+            >
+              {banner.message}
             </div>
           ) : null}
 
           <div className="space-y-5">
-            <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.03] shadow-[0_24px_70px_rgba(2,8,23,0.22)]">
-              <div className="flex flex-col gap-5 p-5 md:p-6">
-                <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 text-sky-200">
-                      <Users className="h-4 w-4" />
-                      <span className="text-[11px] font-semibold uppercase tracking-[0.22em]">
-                        Active program
-                      </span>
-                    </div>
-
-                    <h2 className="mt-2 truncate text-2xl font-bold tracking-tight text-white">
-                      {programDisplayName}
-                    </h2>
-
-                    {programSecondaryLabel ? (
-                      <p className="mt-1 truncate text-sm text-slate-400">
-                        {programSecondaryLabel}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  <div className="grid gap-3 sm:grid-cols-3 lg:min-w-[420px]">
-                    <SummaryStat label="People in program" value={String(members.length)} />
-                    <SummaryStat label="Academic year" value={academicYearLabel} />
-                    <SummaryStat
-                      label="Visible after filters"
-                      value={String(filteredMembers.length)}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <SectionShell
-              title={isEditing ? "Edit rotation schedule" : "Roster and schedule"}
+              title={activeTab === "tracks" ? "Tracks and templates" : "Assignments"}
               subtitle={
-                isEditing
-                  ? "Update assignments directly. Search residents and narrow the view by rotation."
-                  : "Search residents, filter by rotation, and move through the academic year."
+                activeTab === "tracks"
+                  ? "Design academic-year track templates, assign people, and generate live rotation assignments."
+                  : "Search residents, filter rotations, and review the live assignment grid."
               }
-              icon={<Users className="h-5 w-5" />}
-            >
-              <div className="space-y-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="rounded-full border border-sky-300/15 bg-sky-400/10 px-4 py-2 text-sm text-sky-100">
-                    <span className="font-semibold">Academic year:</span> {academicYearLabel}
-                  </div>
-
-                  {hasRotationFilter ? (
-                    <button
-                      type="button"
-                      onClick={handleClearRotationFilter}
-                      className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-semibold text-slate-200 transition hover:bg-white/[0.08]"
-                    >
-                      Clear rotation filter
-                    </button>
-                  ) : null}
-                </div>
-
-                <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
-                  <div className="flex flex-1 flex-col gap-3 md:flex-row md:items-center">
-                    <label className="relative block w-full max-w-md">
-                      <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                      <input
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search residents"
-                        className="w-full rounded-2xl border border-white/10 bg-white/10 py-3 pl-10 pr-4 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-sky-300/40 focus:ring-2 focus:ring-sky-300/20"
-                      />
-                    </label>
-
-                    <div className="relative" ref={filterRef}>
-                      <button
-                        type="button"
-                        onClick={() => setRotationFilterOpen((prev) => !prev)}
-                        className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
-                      >
-                        <span>{rotationFilterLabel}</span>
-                        <ChevronDown
-                          className={`h-4 w-4 transition ${
-                            rotationFilterOpen ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
-
-                      {rotationFilterOpen ? (
-                        <div className="absolute left-0 z-30 mt-2 w-[320px] overflow-hidden rounded-2xl border border-white/10 bg-[#0b1728] shadow-[0_24px_70px_rgba(2,8,23,0.38)]">
-                          <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-                            <p className="text-sm font-semibold text-white">
-                              Filter rotations
-                            </p>
-                            <button
-                              type="button"
-                              onClick={handleSelectAllRotations}
-                              className="text-xs font-semibold text-sky-200 transition hover:text-sky-100"
-                            >
-                              Show all
-                            </button>
-                          </div>
-
-                          <div className="max-h-72 overflow-y-auto p-2">
-                            {rotationOptions.length > 0 ? (
-                              rotationOptions.map((rotation) => {
-                                const checked = selectedRotationSet.has(rotation.id);
-                                const label =
-                                  rotation.shortName ?? rotation.name ?? "Rotation";
-
-                                return (
-                                  <button
-                                    key={rotation.id}
-                                    type="button"
-                                    onClick={() => toggleRotation(rotation.id)}
-                                    className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-left transition hover:bg-white/[0.06]"
-                                  >
-                                    <div className="min-w-0">
-                                      <p className="truncate text-sm font-medium text-white">
-                                        {label}
-                                      </p>
-                                      {rotation.category ? (
-                                        <p className="mt-0.5 truncate text-xs text-slate-400">
-                                          {rotation.category}
-                                        </p>
-                                      ) : null}
-                                    </div>
-
-                                    <div
-                                      className={`ml-3 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${
-                                        checked
-                                          ? "border-sky-300 bg-sky-300 text-slate-950"
-                                          : "border-white/15 bg-white/[0.03] text-transparent"
-                                      }`}
-                                    >
-                                      <Check className="h-3.5 w-3.5" />
-                                    </div>
-                                  </button>
-                                );
-                              })
-                            ) : (
-                              <div className="px-3 py-4 text-sm text-slate-400">
-                                No active rotation catalog loaded.
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setMonthPage((prev) => Math.max(prev - 1, 0))}
-                      disabled={!canGoBack}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
-                    >
-                      <ChevronLeft className="h-4 w-4" />
-                    </button>
-
-                    <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-slate-200">
-                      {visibleRangeLabel}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => setMonthPage((prev) => prev + 1)}
-                      disabled={!canGoForward}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
-                    >
-                      <ChevronRight className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-
-                {loading ? (
-                  <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-6 py-14 text-slate-300">
-                    <div className="flex items-center justify-center gap-3">
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                      Loading program data...
-                    </div>
-                  </div>
-                ) : isEditing ? (
-                  <EditProgramRotations
-                    program={editProgram}
+              icon={
+                activeTab === "tracks" ? (
+                  <Shapes className="h-5 w-5" />
+                ) : (
+                  <Users className="h-5 w-5" />
+                )
+              }
+              headerActions={
+                activeTab === "tracks" ? (
+                  <AcademicYearSelector
                     academicYearStart={academicYearStart}
-                    academicYearLabel={academicYearLabel}
-                    members={filteredMembers as EditProgramMember[]}
-                    rotations={editRotationCatalog}
-                    assignments={filteredDraftAssignments}
-                    loading={loading}
-                    saving={saving}
-                    onSaveAssignment={handleSaveAssignment}
-                    onDeleteAssignment={handleDeleteAssignment}
+                    onChange={handleAcademicYearChange}
                   />
                 ) : (
-                  <ProgramRotations
-                    members={filteredMembers}
-                    months={visibleMonths}
-                    assignments={filteredAssignments}
-                  />
+                  <>
+                    <AcademicYearSelector
+                      academicYearStart={academicYearStart}
+                      onChange={handleAcademicYearChange}
+                    />
+
+                    {canManageRotationSettings && !loading ? (
+                      !isEditingAssignments ? (
+                        <button
+                          type="button"
+                          onClick={handleEnterEdit}
+                          className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+                        >
+                          <PencilLine className="h-4 w-4" />
+                          Edit assignments
+                        </button>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            onClick={handleCancelEdit}
+                            disabled={mutating}
+                            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            <X className="h-4 w-4" />
+                            Cancel
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleDoneEditing}
+                            disabled={mutating}
+                            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100 disabled:opacity-60"
+                          >
+                            {mutating ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Save className="h-4 w-4" />
+                            )}
+                            Done editing
+                          </button>
+                        </>
+                      )
+                    ) : null}
+                  </>
+                )
+              }
+            >
+              <div className="space-y-5">
+                <RotationSettingsSegmentedControl
+                  activeTab={activeTab}
+                  onChange={(tab) => {
+                    setActiveTab(tab);
+                    setBanner(null);
+                  }}
+                />
+
+                {activeTab === "tracks" ? (
+                  loading ? (
+                    <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-6 py-14 text-slate-300">
+                      <div className="flex items-center justify-center gap-3">
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                        Loading track data...
+                      </div>
+                    </div>
+                  ) : (
+                    <RotationTracksManager
+                      academicYearStart={academicYearStart}
+                      members={visibleResidentMembers}
+                      rotations={rotationCatalog}
+                      tracks={tracks}
+                      trackBlocks={trackBlocks}
+                      trackMemberships={visibleTrackMemberships}
+                      canManage={canManageRotationSettings}
+                      saving={mutating}
+                      onCreateTrack={handleCreateTrack}
+                      onUpdateTrack={handleUpdateTrack}
+                      onDeleteTrack={handleDeleteTrack}
+                      onSaveBlocks={handleSaveTrackBlocks}
+                      onSaveMembers={handleSaveTrackMembers}
+                      onImportPreviousYear={handleImportPreviousYear}
+                      onGenerateAssignments={handleGenerateAssignments}
+                    />
+                  )
+                ) : (
+                  <div className="space-y-4">
+                    <div className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+                      <div className="flex flex-1 flex-col gap-3 md:flex-row md:items-center">
+                        <label className="relative block w-full max-w-md">
+                          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                          <input
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search residents"
+                            className="w-full rounded-2xl border border-white/10 bg-white/10 py-3 pl-10 pr-4 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-sky-300/40 focus:ring-2 focus:ring-sky-300/20"
+                          />
+                        </label>
+
+                        <div className="relative" ref={filterRef}>
+                          <button
+                            type="button"
+                            onClick={() => setRotationFilterOpen((prev) => !prev)}
+                            className="inline-flex min-h-[48px] items-center gap-2 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+                          >
+                            <span>{rotationFilterLabel}</span>
+                            <ChevronDown
+                              className={`h-4 w-4 transition ${
+                                rotationFilterOpen ? "rotate-180" : ""
+                              }`}
+                            />
+                          </button>
+
+                          {rotationFilterOpen ? (
+                            <div className="absolute left-0 z-30 mt-2 w-[320px] overflow-hidden rounded-2xl border border-white/10 bg-[#0b1728] shadow-[0_24px_70px_rgba(2,8,23,0.38)]">
+                              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+                                <p className="text-sm font-semibold text-white">
+                                  Filter rotations
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={handleSelectAllRotations}
+                                  className="text-xs font-semibold text-sky-200 transition hover:text-sky-100"
+                                >
+                                  Show all
+                                </button>
+                              </div>
+
+                              <div className="max-h-72 overflow-y-auto p-2">
+                                {rotationOptions.length > 0 ? (
+                                  rotationOptions.map((rotation) => {
+                                    const checked = selectedRotationSet.has(rotation.id);
+                                    const label =
+                                      rotation.shortName ?? rotation.name ?? "Rotation";
+
+                                    return (
+                                      <button
+                                        key={rotation.id}
+                                        type="button"
+                                        onClick={() => toggleRotation(rotation.id)}
+                                        className="flex w-full items-center justify-between rounded-xl px-3 py-2 text-left transition hover:bg-white/[0.06]"
+                                      >
+                                        <div className="min-w-0">
+                                          <p className="truncate text-sm font-medium text-white">
+                                            {label}
+                                          </p>
+                                          {rotation.category ? (
+                                            <p className="mt-0.5 truncate text-xs text-slate-400">
+                                              {rotation.category}
+                                            </p>
+                                          ) : null}
+                                        </div>
+
+                                        <div
+                                          className={`ml-3 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${
+                                            checked
+                                              ? "border-sky-300 bg-sky-300 text-slate-950"
+                                              : "border-white/15 bg-white/[0.03] text-transparent"
+                                          }`}
+                                        >
+                                          <Check className="h-3.5 w-3.5" />
+                                        </div>
+                                      </button>
+                                    );
+                                  })
+                                ) : (
+                                  <div className="px-3 py-4 text-sm text-slate-400">
+                                    No active rotation catalog loaded.
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        {hasRotationFilter ? (
+                          <button
+                            type="button"
+                            onClick={handleClearRotationFilter}
+                            className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-semibold text-slate-200 transition hover:bg-white/[0.08]"
+                          >
+                            Clear rotation filter
+                          </button>
+                        ) : null}
+
+                        <button
+                          type="button"
+                          onClick={() => setMonthPage((prev) => Math.max(prev - 1, 0))}
+                          disabled={!canGoBack}
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                        </button>
+
+                        <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-slate-200">
+                          {visibleRangeLabel}
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => setMonthPage((prev) => prev + 1)}
+                          disabled={!canGoForward}
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {loading ? (
+                      <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] px-6 py-14 text-slate-300">
+                        <div className="flex items-center justify-center gap-3">
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          Loading program data...
+                        </div>
+                      </div>
+                    ) : isEditingAssignments && canManageRotationSettings ? (
+                      <EditProgramRotations
+                        program={editProgram}
+                        academicYearStart={academicYearStart}
+                        academicYearLabel={academicYearLabel}
+                        members={filteredMembers as EditProgramMember[]}
+                        rotations={editRotationCatalog}
+                        assignments={filteredDraftAssignments}
+                        loading={loading}
+                        saving={mutating}
+                        onSaveAssignment={handleSaveAssignment}
+                        onDeleteAssignment={handleDeleteAssignment}
+                      />
+                    ) : (
+                      <ProgramRotations
+                        members={filteredMembers}
+                        months={visibleMonths}
+                        assignments={filteredAssignments}
+                      />
+                    )}
+                  </div>
                 )}
               </div>
             </SectionShell>

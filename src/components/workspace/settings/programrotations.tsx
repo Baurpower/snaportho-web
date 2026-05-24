@@ -80,6 +80,12 @@ function formatRoleLabel(role: string | null) {
   return role ?? "member";
 }
 
+function getSourceKindLabel(sourceKind: string | null | undefined) {
+  if (sourceKind === "generated_from_track") return "Generated";
+  if (sourceKind === "copied") return "Copied";
+  return "Manual";
+}
+
 function getVisibleSegments(
   blocks: RotationBlock[],
   visibleMonths: MonthMeta[]
@@ -284,6 +290,12 @@ export default function ProgramRotations({
                           <p className="truncate text-sm font-bold">
                             {segment.block.shortName ?? segment.block.rotationName}
                           </p>
+
+                          <div className="mt-2">
+                            <span className="inline-flex rounded-full border border-white/10 bg-black/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] opacity-85">
+                              {getSourceKindLabel(segment.block.sourceKind)}
+                            </span>
+                          </div>
 
                           <div className="mt-2 flex-1 overflow-hidden">
                             {segment.block.siteLabel ? (

@@ -66,6 +66,9 @@ export type EditProgramRotationAssignment = {
   siteLabel: string | null;
   teamLabel: string | null;
   notes: string | null;
+  sourceKind: string | null;
+  trackId: string | null;
+  trackBlockId: string | null;
   rotation: {
     id: string;
     name: string | null;
@@ -103,6 +106,7 @@ type DraftForm = {
   notes: string;
   startDate: string;
   endDate: string;
+  sourceKind: string | null;
 };
 
 export type SaveRotationAssignmentPayload = {
@@ -231,6 +235,12 @@ function getRotationLabel(
     | undefined
 ) {
   return rotation?.short_name ?? rotation?.name ?? "Rotation";
+}
+
+function getSourceKindLabel(sourceKind: string | null | undefined) {
+  if (sourceKind === "generated_from_track") return "Generated";
+  if (sourceKind === "copied") return "Copied";
+  return "Manual";
 }
 
 function getVisibleSegments(
@@ -398,6 +408,8 @@ function EditRotationModal({
   if (!open || !draft || !member) return null;
 
   const selectedRotation = rotations.find((r) => r.id === draft.rotationId) ?? null;
+  const isGeneratedAssignment =
+    Boolean(draft.assignmentId) && draft.sourceKind === "generated_from_track";
 
   return (
     <div className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/75 p-4 backdrop-blur-sm">
@@ -423,6 +435,12 @@ function EditRotationModal({
         </div>
 
         <div className="mt-5 grid gap-4 md:grid-cols-2">
+          {isGeneratedAssignment ? (
+            <div className="md:col-span-2 rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-3 text-sm text-amber-100">
+              Editing this generated assignment will save it as a manual override.
+            </div>
+          ) : null}
+
           <div className="md:col-span-2">
             <label className="mb-2 block text-sm font-medium text-slate-200">
               Rotation
@@ -665,6 +683,7 @@ export default function EditProgramRotations({
       notes: "",
       startDate,
       endDate,
+      sourceKind: "manual",
     });
     setModalOpen(true);
   }
@@ -681,6 +700,7 @@ export default function EditProgramRotations({
       notes: assignment.notes ?? "",
       startDate: assignment.startDate,
       endDate: assignment.endDate,
+      sourceKind: assignment.sourceKind ?? null,
     });
     setModalOpen(true);
   }
@@ -741,6 +761,9 @@ export default function EditProgramRotations({
 
   async function handleDelete() {
     if (!draft?.assignmentId || !onDeleteAssignment) return;
+    if (!window.confirm("Delete this rotation assignment? This action cannot be undone.")) {
+      return;
+    }
     await onDeleteAssignment(draft.assignmentId);
     closeModal();
   }
@@ -1000,6 +1023,12 @@ export default function EditProgramRotations({
                                     <p className="truncate text-sm font-bold">
                                       {getRotationLabel(segment.block.rotation)}
                                     </p>
+
+                                    <div className="mt-2">
+                                      <span className="rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-200">
+                                        {getSourceKindLabel(segment.block.sourceKind)}
+                                      </span>
+                                    </div>
 
                                     <div className="mt-2 flex-1 overflow-hidden text-[11px] opacity-80">
                                       {segment.block.siteLabel ? (
