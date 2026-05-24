@@ -4,9 +4,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
+  CheckCircle2,
   Building2,
   Globe,
   GraduationCap,
+  KeyRound,
   Loader2,
   LogOut,
   Pencil,
@@ -17,6 +19,8 @@ import {
   MapPin,
 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
+import { useWorkspaceInfo } from "@/lib/workspace/use-workspace-info";
+import { buildPasswordResetRedirectUrl } from "@/lib/auth/password-reset";
 
 type ProfileForm = {
   full_name: string;
@@ -143,12 +147,16 @@ function Input({
   onChange,
   placeholder,
   type = "text",
+  disabled = false,
+  helperText,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
   type?: string;
+  disabled?: boolean;
+  helperText?: string;
 }) {
   return (
     <div>
@@ -160,8 +168,12 @@ function Input({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-sky-300/40 focus:ring-2 focus:ring-sky-300/20"
+        disabled={disabled}
+        className="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-white placeholder:text-slate-500 outline-none transition focus:border-sky-300/40 focus:ring-2 focus:ring-sky-300/20 disabled:cursor-not-allowed disabled:opacity-60"
       />
+      {helperText ? (
+        <p className="mt-2 text-xs text-slate-500">{helperText}</p>
+      ) : null}
     </div>
   );
 }
@@ -174,16 +186,29 @@ function HeroBadge({ label }: { label: string }) {
   );
 }
 
+function formatRoleLabel(role: string | null | undefined) {
+  if (!role) return "Not assigned";
+
+  return role
+    .split(/[_\s-]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 export default function WorkProfilePage() {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
+  const { workspaceInfo } = useWorkspaceInfo();
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [sendingReset, setSendingReset] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const [userId, setUserId] = useState<string | null>(null);
+  const [authEmail, setAuthEmail] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -232,6 +257,7 @@ export default function WorkProfilePage() {
 
         if (cancelled) return;
         setUserId(user.id);
+        setAuthEmail(user.email ?? null);
 
         const { data: profile, error: profileError } = await supabase
           .from("user_profiles")
@@ -301,7 +327,7 @@ export default function WorkProfilePage() {
       const trimmedFullName = form.full_name.trim();
       const trimmedEmail = form.email.trim();
 
-      if (trimmedFullName.length < 2) {
+      if (!hasRosterManagedName && trimmedFullName.length < 2) {
         throw new Error("Please enter your full name.");
       }
 
@@ -366,30 +392,88 @@ export default function WorkProfilePage() {
   }
 
   const initials = useMemo(() => {
-    const trimmed = form.full_name.trim();
+    const trimmed =
+      workspaceInfo?.roster?.fullName?.trim() || form.full_name.trim();
     if (!trimmed) return "SO";
     const parts = trimmed.split(" ").filter(Boolean);
     return parts
       .slice(0, 2)
       .map((p) => p[0]?.toUpperCase())
       .join("");
-  }, [form.full_name]);
+  }, [form.full_name, workspaceInfo?.roster?.fullName]);
 
-  const gradYearNumber = useMemo(() => {
+  const profileGradYearNumber = useMemo(() => {
     if (!form.grad_year.trim()) return null;
     const parsed = Number.parseInt(form.grad_year, 10);
     return Number.isNaN(parsed) ? null : parsed;
   }, [form.grad_year]);
 
+  const effectiveDisplayName = useMemo(() => {
+    const rosterName = workspaceInfo?.roster?.fullName?.trim();
+    const profileName = form.full_name.trim();
+
+    return rosterName || profileName || "Your profile";
+  }, [form.full_name, workspaceInfo?.roster?.fullName]);
+
+  const effectiveGradYear = useMemo(() => {
+    return workspaceInfo?.roster?.gradYear ?? profileGradYearNumber;
+  }, [profileGradYearNumber, workspaceInfo?.roster?.gradYear]);
+
   const pgyDisplayLabel = useMemo(
-    () => getPgyDisplayLabel(gradYearNumber),
-    [gradYearNumber]
+    () => getPgyDisplayLabel(effectiveGradYear),
+    [effectiveGradYear]
   );
 
   const pgyHelperText = useMemo(
-    () => getPgyHelperText(gradYearNumber),
-    [gradYearNumber]
+    () => getPgyHelperText(effectiveGradYear),
+    [effectiveGradYear]
   );
+
+  const rosterRoleLabel = useMemo(
+    () => formatRoleLabel(workspaceInfo?.roster?.role),
+    [workspaceInfo?.roster?.role]
+  );
+  const hasRosterManagedName = Boolean(workspaceInfo?.roster?.fullName?.trim());
+  const hasRosterManagedGradYear =
+    typeof workspaceInfo?.roster?.gradYear === "number";
+
+  async function handleResetPassword() {
+    try {
+      setSendingReset(true);
+      setErrorMsg(null);
+      setMessage(null);
+
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
+
+      if (authError) throw authError;
+
+      const authEmail = user?.email?.trim();
+
+      if (!authEmail) {
+        throw new Error("No authenticated email is available for password reset.");
+      }
+
+      const { error } = await supabase.auth.resetPasswordForEmail(authEmail, {
+        redirectTo: buildPasswordResetRedirectUrl("/work/profile"),
+      });
+
+      if (error) throw error;
+
+      setMessage(`Password reset link sent to ${authEmail}.`);
+    } catch (error) {
+      console.error("Failed to send workspace password reset email:", error);
+      setErrorMsg(
+        error instanceof Error
+          ? error.message
+          : "Failed to send password reset email."
+      );
+    } finally {
+      setSendingReset(false);
+    }
+  }
 
   return (
     <main className="min-h-screen bg-[#071120] text-white">
@@ -487,7 +571,7 @@ export default function WorkProfilePage() {
 
                     <div>
                       <h2 className="text-2xl font-bold tracking-tight text-white">
-                        {form.full_name || "Your profile"}
+                        {effectiveDisplayName}
                       </h2>
 
                       <p className="mt-1 text-sm text-slate-300">
@@ -503,12 +587,20 @@ export default function WorkProfilePage() {
                   </div>
 
                   <div className="flex flex-wrap gap-2">
+                    {workspaceInfo?.roster?.role ? (
+                      <HeroBadge label={rosterRoleLabel} />
+                    ) : null}
+
+                    {workspaceInfo?.roster?.isAdmin ? (
+                      <HeroBadge label="Admin" />
+                    ) : null}
+
                     {pgyDisplayLabel ? (
                       <HeroBadge label={pgyDisplayLabel} />
                     ) : null}
 
-                    {form.grad_year ? (
-                      <HeroBadge label={`Class of ${form.grad_year}`} />
+                    {effectiveGradYear ? (
+                      <HeroBadge label={`Class of ${effectiveGradYear}`} />
                     ) : null}
                   </div>
                 </div>
@@ -523,9 +615,15 @@ export default function WorkProfilePage() {
                   <div className="grid gap-4 md:grid-cols-2">
                     <Input
                       label="Full name"
-                      value={form.full_name}
+                      value={hasRosterManagedName ? effectiveDisplayName : form.full_name}
                       onChange={(value) => updateField("full_name", value)}
                       placeholder="Your full name"
+                      disabled={hasRosterManagedName}
+                      helperText={
+                        hasRosterManagedName
+                          ? "This name is currently managed by your active workspace roster."
+                          : undefined
+                      }
                     />
                     <Input
                       label="Email"
@@ -538,9 +636,19 @@ export default function WorkProfilePage() {
                     <Input
                       label="Graduation year"
                       type="number"
-                      value={form.grad_year}
+                      value={
+                        hasRosterManagedGradYear
+                          ? String(workspaceInfo?.roster?.gradYear ?? "")
+                          : form.grad_year
+                      }
                       onChange={(value) => updateField("grad_year", value)}
                       placeholder="2031"
+                      disabled={hasRosterManagedGradYear}
+                      helperText={
+                        hasRosterManagedGradYear
+                          ? "This graduation year is currently managed by your active workspace roster."
+                          : undefined
+                      }
                     />
 
                     <div>
@@ -548,7 +656,7 @@ export default function WorkProfilePage() {
                         Current PGY preview
                       </label>
                       <div className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white">
-                        {pgyDisplayLabel ?? "Will be calculated from graduation year"}
+                        {pgyDisplayLabel ?? "Shown when a graduation year is available"}
                       </div>
                       <p className="mt-2 text-xs text-slate-500">{pgyHelperText}</p>
                     </div>
@@ -609,23 +717,27 @@ export default function WorkProfilePage() {
                   >
                     <div className="grid gap-4 md:grid-cols-2">
                       <InfoRow
-                        label="Current PGY"
-                        value={pgyDisplayLabel}
-                        icon={<GraduationCap className="h-4 w-4" />}
-                      />
-                      <InfoRow
                         label="Institution"
                         value={form.institution}
                         icon={<Building2 className="h-4 w-4" />}
                       />
-                      <InfoRow
-                        label="Graduation year"
-                        value={form.grad_year}
-                        icon={<Sparkles className="h-4 w-4" />}
-                      />
+                      {pgyDisplayLabel ? (
+                        <InfoRow
+                          label="Current PGY"
+                          value={pgyDisplayLabel}
+                          icon={<GraduationCap className="h-4 w-4" />}
+                        />
+                      ) : null}
+                      {effectiveGradYear ? (
+                        <InfoRow
+                          label="Graduation year"
+                          value={String(effectiveGradYear)}
+                          icon={<Sparkles className="h-4 w-4" />}
+                        />
+                      ) : null}
                     </div>
 
-                    {gradYearNumber ? (
+                    {effectiveGradYear ? (
                       <div className="mt-4 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
                           PGY timing
@@ -673,7 +785,42 @@ export default function WorkProfilePage() {
                 </>
               )}
 
-              <div className="flex justify-center pt-3">
+              <SectionShell
+                title="Security"
+                subtitle="Manage account access separately from your profile and training details."
+                icon={<KeyRound className="h-5 w-5" />}
+              >
+                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-white">
+                      Reset password
+                    </p>
+                    <p className="mt-1 text-sm text-slate-400">
+                      Send a password reset link to your authenticated email.
+                    </p>
+                    <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-slate-300">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-300" />
+                      {authEmail || "Signed-in account"}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleResetPassword}
+                    disabled={sendingReset || loading}
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {sendingReset ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <KeyRound className="h-4 w-4" />
+                    )}
+                    Reset password
+                  </button>
+                </div>
+              </SectionShell>
+
+              <div className="flex justify-center pt-1">
                 <button
                   type="button"
                   onClick={handleLogout}

@@ -14,6 +14,7 @@ export default function UpdatePasswordPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [ready, setReady] = useState(false);
+  const [returnPath, setReturnPath] = useState("/learn");
 
   useEffect(() => {
     let isMounted = true;
@@ -22,6 +23,12 @@ export default function UpdatePasswordPage() {
       try {
         const searchParams = new URLSearchParams(window.location.search);
         const hashParams = new URLSearchParams(window.location.hash.slice(1));
+        const nextParam =
+          searchParams.get("next") ?? searchParams.get("redirectTo");
+
+        if (nextParam) {
+          setReturnPath(nextParam);
+        }
 
         // Preferred SSR / PKCE flow: ?code=...
         const code = searchParams.get("code");
@@ -123,7 +130,7 @@ export default function UpdatePasswordPage() {
 
     setMessage("✅ Password updated! Redirecting...");
     router.refresh();
-    setTimeout(() => router.replace("/learn"), 1200);
+    setTimeout(() => router.replace(returnPath), 1200);
   };
 
   if (!ready) {

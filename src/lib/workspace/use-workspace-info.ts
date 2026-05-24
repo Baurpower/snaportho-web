@@ -11,10 +11,18 @@ type WorkspaceInfo = {
     activeProgram?: {
       id: string;
       name: string;
+      institutionName?: string | null;
     } | null;
     membership?: {
       id: string;
-      role: string;
+      role: string | null;
+    } | null;
+    roster?: {
+      id: string;
+      fullName: string | null;
+      gradYear: number | null;
+      role: string | null;
+      isAdmin: boolean;
     } | null;
   };
   error?: string;
@@ -22,6 +30,9 @@ type WorkspaceInfo = {
 
 export function useWorkspaceInfo() {
   const [programId, setProgramId] = useState<string | null>(null);
+  const [workspaceInfo, setWorkspaceInfo] = useState<WorkspaceInfo["data"] | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,10 +56,12 @@ export function useWorkspaceInfo() {
         }
 
         if (!cancelled) {
+          setWorkspaceInfo(json?.data ?? null);
           setProgramId(json?.data?.activeProgram?.id ?? null);
         }
       } catch (err) {
         if (!cancelled) {
+          setWorkspaceInfo(null);
           setProgramId(null);
           setError(
             err instanceof Error ? err.message : "Failed to load workspace info"
@@ -68,5 +81,5 @@ export function useWorkspaceInfo() {
     };
   }, []);
 
-  return { programId, loading, error };
+  return { programId, workspaceInfo, loading, error };
 }

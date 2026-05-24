@@ -2,12 +2,12 @@
 "use client";
 export const dynamic = "force-dynamic";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createClient } from '@/utils/supabase/client';
-
-const supabase = createClient();
+import { buildPasswordResetRedirectUrl } from "@/lib/auth/password-reset";
 
 export default function PasswordResetPage() {
+  const supabase = useMemo(() => createClient(), []);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
 
@@ -17,8 +17,12 @@ export default function PasswordResetPage() {
 
     console.log("Attempting password reset for:", email);
     try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const nextParam =
+        searchParams.get("next") ?? searchParams.get("redirectTo") ?? "/learn";
+
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/update-password`,
+        redirectTo: buildPasswordResetRedirectUrl(nextParam),
       });
       console.log("resetPasswordForEmail response:", { data, error });
 
@@ -29,7 +33,7 @@ export default function PasswordResetPage() {
       }
     } catch (err) {
       console.error("Unexpected error during password reset:", err);
-      setMessage("An unexpected error occurred. See console for details.");
+      setMessage(err instanceof Error ? err.message : "An unexpected error occurred.");
     }
   };
 

@@ -16,6 +16,7 @@ type ProgramRosterRow = {
   last_name: string | null;
   grad_year: number | null;
   role: string | null;
+  isAdmin: boolean | null;
   claimed_by_user_id: string | null;
   program_membership_id: string | null;
 };
@@ -111,6 +112,7 @@ export async function getActiveMembershipForUser(
       last_name,
       grad_year,
       role,
+      isAdmin,
       claimed_by_user_id,
       program_membership_id
     `)
@@ -137,6 +139,7 @@ export async function getActiveMembershipForUser(
         last_name,
         grad_year,
         role,
+        isAdmin,
         claimed_by_user_id,
         program_membership_id
       `)

@@ -43,7 +43,7 @@ export async function requireWorkspaceAccess(
   const { data: roster, error: rosterError } = await adminSupabase
     .from("program_roster")
     .select(
-      "id, program_id, program_membership_id, claimed_by_user_id, claimed_at, full_name, role, grad_year"
+      "id, program_id, program_membership_id, claimed_by_user_id, claimed_at, full_name, role, isAdmin, grad_year"
     )
     .eq("program_membership_id", membership.id)
     .eq("program_id", membership.program_id)
