@@ -43,8 +43,16 @@ type GeneratedOption = {
   rank: number;
   score: number;
   isComplete: boolean;
+  isValid?: boolean;
   openRequiredSlots: number;
   assignments: Record<string, DraftDayAssignment>;
+  ruleWarnings?: {
+    total?: number;
+    errors?: number;
+    warnings?: number;
+    invalidAssignments?: number;
+    isCompleteButInvalid?: boolean;
+  };
   spreads?: {
     primary?: number;
     backup?: number;
@@ -401,10 +409,22 @@ function parseGeneratedOptions(generationReport: unknown): GeneratedOption[] {
       rank: Number(combo.rank ?? summary?.rank ?? index + 1),
       score: Number(combo.score ?? summary?.score ?? 0),
       isComplete: Boolean(combo.isComplete ?? summary?.isComplete),
+      isValid:
+        typeof summary?.isValid === "boolean"
+          ? summary.isValid
+          : typeof combo.isValid === "boolean"
+          ? combo.isValid
+          : undefined,
       openRequiredSlots: Number(
         combo.openRequiredSlots ?? summary?.openRequiredSlots ?? 0
       ),
       assignments: combo.assignments ?? {},
+      ruleWarnings:
+        typeof summary?.ruleWarnings === "object" && summary.ruleWarnings
+          ? summary.ruleWarnings
+          : typeof combo.ruleWarnings === "object" && combo.ruleWarnings
+          ? combo.ruleWarnings
+          : undefined,
       spreads: summary?.spreads ?? combo.spreads,
       residentSummaries: summary?.residentSummaries ?? combo.residentSummaries,
     };
@@ -791,6 +811,7 @@ React.useEffect(() => {
         }`}
       >
         Option {option.rank}
+        {option.ruleWarnings?.errors ? ` · ${option.ruleWarnings.errors} errors` : ""}
         {option.openRequiredSlots > 0 ? ` · ${option.openRequiredSlots} open` : ""}
         {selected ? " · selected" : ""}
       </button>

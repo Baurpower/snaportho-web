@@ -17,6 +17,7 @@ Trash2,
 UserRound,
 X,
 } from "lucide-react";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 type RosterPerson = {
   id: string;
@@ -214,6 +215,7 @@ export default function AcademicEventDetail({
   onClose,
   onDeleted,
 }: AcademicEventDetailProps) {
+  const { permissions } = useWorkspacePermissions();
   const [event, setEvent] = useState<AcademicEventDetail | null>(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -228,6 +230,8 @@ export default function AcademicEventDetail({
   const [isRequired, setIsRequired] = useState(false);
   const [visibility, setVisibility] = useState("program");
   const [newSessions, setNewSessions] = useState<SessionDraft[]>([]);
+  const canEditAcademicEvents = permissions?.canEditAcademicEvents ?? false;
+  const canDeleteAcademicEvents = permissions?.canDeleteAcademicEvents ?? false;
 
   const sessionPeopleBySessionId = useMemo(() => {
     const grouped = new Map<string, NonNullable<AcademicEventDetail["people"]>>();
@@ -491,7 +495,7 @@ onDeleted?.();
             </div>
 
             <div className="flex shrink-0 items-center gap-2">
-              {event && (
+              {event && canEditAcademicEvents ? (
                 <button
                   type="button"
                   onClick={() => setEditMode((current) => !current)}
@@ -500,7 +504,7 @@ onDeleted?.();
                   <Edit3 className="h-4 w-4" />
                   {editMode ? "Cancel" : "Edit"}
                 </button>
-              )}
+              ) : null}
 
               <button
                 type="button"
@@ -530,7 +534,7 @@ onDeleted?.();
             </div>
           ) : event ? (
             <div className="space-y-4">
-              {editMode ? (
+              {editMode && canEditAcademicEvents ? (
                 <Section title="Edit Event" icon={<Edit3 className="h-4 w-4" />}>
                   <div className="space-y-4">
                     <div>
@@ -928,7 +932,8 @@ onDeleted?.();
                 </Section>
               )}
 
-              {editMode && (
+              {/* TODO Phase 3: split resident academic detail from the current admin editing drawer. */}
+              {editMode && canDeleteAcademicEvents ? (
                 <button
                   type="button"
                   onClick={handleDelete}
@@ -938,7 +943,7 @@ onDeleted?.();
                   {deleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
                   Delete Event
                 </button>
-              )}
+              ) : null}
             </div>
           ) : null}
         </div>

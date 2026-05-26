@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   CheckCircle2,
   Download,
   ChevronLeft,
   ChevronRight,
+  Loader2,
   PencilLine,
   PhoneCall,
   Plus,
@@ -20,8 +23,20 @@ import CallMonthCalendar, {
   type ProgramCallItem,
 } from "@/components/workspace/call/callmonthcalendar";
 import EditCallMonthCalendar from "@/components/workspace/call/editcallmonthcalendar";
+import SwapRequestDetailDrawer from "@/components/workspace/call-swaps/SwapRequestDetailDrawer";
+import { useSwapRequests } from "@/hooks/useSwapRequests";
+import AdminSwapApprovalQueue from "@/components/workspace/call-swaps/AdminSwapApprovalQueue";
+import AdminApprovalWorkspace from "@/components/workspace/call-swaps/AdminApprovalWorkspace";
+import NotificationBell from "@/components/workspace/notifications/NotificationBell";
 import { useRouter, useSearchParams } from "next/navigation";
 import { parseCallMutationResponse } from "@/lib/workspace/call/mutation-error";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
+import type { SwapRequestListItem } from "@/lib/workspace/call-swaps/types";
+
+const ChangeMyCallModal = dynamic(
+  () => import("@/components/workspace/call-swaps/ChangeMyCallModal"),
+  { ssr: false }
+);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -29,6 +44,7 @@ const fadeUp = {
 };
 
 type ProgramCallsMonthResponse = {
+  programId: string | null;
   monthStart: string;
   monthEnd: string;
   myMembershipId: string | null;
@@ -42,6 +58,8 @@ type ResidentOption = {
   programMembershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
+  pgyYear: number | null;
+  gradYear: number | null;
 };
 
 type SuccessModalState = {
@@ -114,6 +132,28 @@ function StatCard({
       </p>
       <p className="mt-1.5 text-xs text-slate-600 md:text-sm">{subtitle}</p>
     </div>
+  );
+}
+
+function CompactRequestCountChip({
+  label,
+  count,
+  href,
+}: {
+  label: string;
+  count: number;
+  href: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+    >
+      <span>{label}</span>
+      <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-bold text-slate-700">
+        {count}
+      </span>
+    </Link>
   );
 }
 
@@ -199,6 +239,7 @@ export default function CallHubPage() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { permissions, isAdmin } = useWorkspacePermissions();
 
   const [googleSyncStatus, setGoogleSyncStatus] =
   useState<GoogleSyncStatus | null>(null);
@@ -230,6 +271,22 @@ export default function CallHubPage() {
   const [googleStopping, setGoogleStopping] = useState(false);
   const [creatingGoogleCalendar, setCreatingGoogleCalendar] = useState(false);
   const [googleStopMessage, setGoogleStopMessage] = useState<string | null>(null);
+  const [selectedSwapRequestId, setSelectedSwapRequestId] = useState<string | null>(null);
+  const [selectedAdminRequestId, setSelectedAdminRequestId] = useState<string | null>(null);
+  const [adminNotesByRequestId, setAdminNotesByRequestId] = useState<Record<string, string>>({});
+  const [changeMyCallOpen, setChangeMyCallOpen] = useState(false);
+  const canEditCallAssignments = permissions?.canEditCallAssignments ?? false;
+  const canShowAdminCallActions =
+    canEditCallAssignments || permissions?.mode === "admin" || isAdmin;
+  const canExportProgramCallCalendar =
+    permissions?.canExportProgramCallCalendar ?? false;
+  const canSyncProgramCalendar = permissions?.canSyncProgramCalendar ?? false;
+  const canShowResidentChangeMyCall =
+    permissions?.mode === "resident" &&
+    !canShowAdminCallActions &&
+    Boolean(data?.myRosterId) &&
+    Boolean(permissions?.canRequestCoverage) &&
+    Boolean(permissions?.canRespondToCoverageRequests);
   
 
   const { monthStart, monthEnd } = useMemo(
@@ -360,7 +417,67 @@ useEffect(() => {
   finishGoogleConnect();
 }, [searchParams, router]);
 
+useEffect(() => {
+  if (!canExportProgramCallCalendar && exportScope === "program") {
+    setExportScope("mine");
+  }
+}, [canExportProgramCallCalendar, exportScope]);
+
+useEffect(() => {
+  if (!canSyncProgramCalendar && googleSyncScope === "program") {
+    setGoogleSyncScope("mine");
+  }
+}, [canSyncProgramCalendar, googleSyncScope]);
+
   const calls = useMemo(() => data?.calls ?? [], [data?.calls]);
+
+  const swapRequests = useSwapRequests(data?.myRosterId ?? null);
+  const pendingAdminRequests = useMemo(
+    () =>
+      swapRequests.adminPending.filter(
+        (request) => request.status === "accepted_pending_admin"
+      ),
+    [swapRequests.adminPending]
+  );
+  const pendingAdminRequestsByCallId = useMemo(() => {
+    const map = new Map<string, SwapRequestListItem>();
+
+    for (const request of pendingAdminRequests) {
+      const callId = request.requesterCall?.id;
+      if (!callId) continue;
+      map.set(callId, request);
+    }
+
+    return map;
+  }, [pendingAdminRequests]);
+  const residentPendingAdminCount = useMemo(
+    () =>
+      swapRequests.items.filter(
+        (request) =>
+          request.status === "accepted_pending_admin" &&
+          (request.requester?.id === data?.myRosterId ||
+            request.recipient?.id === data?.myRosterId)
+      ).length,
+    [data?.myRosterId, swapRequests.items]
+  );
+  const urgentIncomingRequest = useMemo(
+    () => swapRequests.incoming[0] ?? null,
+    [swapRequests.incoming]
+  );
+
+  // Auto-select the first pending admin request when none is selected
+  useEffect(() => {
+    if (!swapRequests.canReviewAdmin) return;
+    const pending = swapRequests.adminPending;
+    if (pending.length === 0) {
+      setSelectedAdminRequestId(null);
+      return;
+    }
+    if (selectedAdminRequestId && pending.some((r) => r.id === selectedAdminRequestId)) {
+      return;
+    }
+    setSelectedAdminRequestId(pending[0]?.id ?? null);
+  }, [swapRequests.canReviewAdmin, swapRequests.adminPending, selectedAdminRequestId]);
 
   const callsByDate = useMemo(() => {
     const map = new Map<string, ProgramCallItem[]>();
@@ -383,13 +500,13 @@ useEffect(() => {
     return map;
   }, [calls]);
 
+  const selectedDayCalls = useMemo(
+    () => (selectedDateKey ? callsByDate.get(selectedDateKey) ?? [] : []),
+    [callsByDate, selectedDateKey]
+  );
   const callsById = useMemo(() => {
     return new Map(calls.map((call) => [call.id, call]));
   }, [calls]);
-
-  const selectedDayCalls = selectedDateKey
-    ? callsByDate.get(selectedDateKey) ?? []
-    : [];
 
   const myCalls = calls.filter((call) => call.isMine);
   const nextMyCall =
@@ -417,6 +534,8 @@ useEffect(() => {
         programMembershipId: call.programMembershipId ?? null,
         residentName: call.residentName,
         trainingLevel: call.trainingLevel,
+        pgyYear: call.pgyYear ?? null,
+        gradYear: call.gradYear ?? null,
       });
     }
 
@@ -424,6 +543,14 @@ useEffect(() => {
       a.residentName.localeCompare(b.residentName)
     );
   }, [calls, data?.residents]);
+
+  async function refreshSwapRequests() {
+    await swapRequests.refresh();
+  }
+
+  function handleSelectDate(dateKey: string) {
+    setSelectedDateKey(dateKey);
+  }
 
   async function refreshMonth() {
     const response = await fetch(
@@ -522,12 +649,16 @@ useEffect(() => {
   }
 
   function exportCalendar() {
+  const scope =
+    exportScope === "program" && !canExportProgramCallCalendar
+      ? "mine"
+      : exportScope;
   const range = getExportRange(exportRange, visibleMonth);
 
   const params = new URLSearchParams({
     monthStart: range.monthStart,
     monthEnd: range.monthEnd,
-    scope: exportScope,
+    scope,
   });
 
   setExportModalOpen(false);
@@ -610,6 +741,10 @@ async function syncGoogleCalendar() {
     setGoogleSyncing(true);
     setGoogleSyncError(null);
 
+    const scope =
+      googleSyncScope === "program" && !canSyncProgramCalendar
+        ? "mine"
+        : googleSyncScope;
     const range = getAcademicYearRange(visibleMonth);
 
     const response = await fetch("/api/program/calls/google-sync", {
@@ -619,7 +754,7 @@ async function syncGoogleCalendar() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        scope: googleSyncScope,
+        scope,
         syncMode: googleSyncMode,
         calendarId: selectedGoogleCalendarId,
         monthStart: range.monthStart,
@@ -673,6 +808,10 @@ async function manualGoogleSyncFromStatus() {
     setGoogleSyncing(true);
     setGoogleSyncError(null);
 
+    const scope =
+      googleSyncScope === "program" && !canSyncProgramCalendar
+        ? "mine"
+        : googleSyncScope;
     const range = getAcademicYearRange(visibleMonth);
 
     const response = await fetch("/api/program/calls/google-sync", {
@@ -682,7 +821,7 @@ async function manualGoogleSyncFromStatus() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        scope: googleSyncScope,
+        scope,
         syncMode: googleSyncStatus?.syncEnabled ? "automatic" : "once",
         calendarId:
           googleSyncStatus?.calendarId ??
@@ -958,6 +1097,104 @@ async function stopGoogleSync() {
               variants={fadeUp}
               className="rounded-[1.75rem] border border-slate-200 bg-white p-3.5 shadow-xl sm:p-4 md:p-5"
             >
+              {!canShowAdminCallActions ? (
+                <div className="mb-4 rounded-[1.25rem] border border-slate-200 bg-slate-50 px-4 py-4">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sky-700">
+                        Coverage requests
+                      </p>
+                      <p className="mt-1 text-sm text-slate-600">
+                        Quick summary only. Use the swap requests page for full details and responses.
+                      </p>
+                    </div>
+
+                    <Link
+                      href="/work/call/swaps"
+                      className="inline-flex items-center justify-center rounded-full bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                    >
+                      Open coverage requests
+                    </Link>
+                  </div>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <CompactRequestCountChip
+                      label="Needs response"
+                      count={swapRequests.incoming.length}
+                      href="/work/call/swaps"
+                    />
+                    <CompactRequestCountChip
+                      label="Sent"
+                      count={swapRequests.outgoing.filter((request) => request.status === "pending_recipient").length}
+                      href="/work/call/swaps"
+                    />
+                    <CompactRequestCountChip
+                      label="Pending admin"
+                      count={residentPendingAdminCount}
+                      href="/work/call/swaps"
+                    />
+                    <CompactRequestCountChip
+                      label="Completed"
+                      count={swapRequests.completed.length}
+                      href="/work/call/swaps"
+                    />
+                  </div>
+
+                  {urgentIncomingRequest ? (
+                    <div className="mt-3 flex flex-col gap-3 rounded-[1rem] border border-amber-200 bg-amber-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-amber-700">
+                          Action needed
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-slate-900">
+                          {(urgentIncomingRequest.requester?.fullName ?? "A resident")} asked you to cover{" "}
+                          {formatShortDate(urgentIncomingRequest.requesterCall?.callDate)}
+                        </p>
+                        {swapRequests.incoming.length > 1 ? (
+                          <p className="mt-1 text-xs text-slate-600">
+                            +{swapRequests.incoming.length - 1} more waiting on you
+                          </p>
+                        ) : null}
+                      </div>
+
+                      <Link
+                        href="/work/call/swaps"
+                        className="inline-flex items-center justify-center rounded-full border border-amber-300 bg-white px-4 py-2 text-sm font-semibold text-amber-900 transition hover:bg-amber-100"
+                      >
+                        Review
+                      </Link>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {swapRequests.canReviewAdmin && pendingAdminRequests.length > 0 ? (
+                <div className="mb-4 rounded-[1.25rem] border border-amber-200 bg-amber-50 px-4 py-4">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-amber-700">
+                        Coverage requests need approval
+                      </p>
+                      <p className="mt-1 text-sm font-semibold text-slate-900">
+                        {pendingAdminRequests.length} coverage request
+                        {pendingAdminRequests.length === 1 ? "" : "s"} need approval
+                      </p>
+                      <p className="mt-1 text-sm text-slate-600">
+                        Pending requested changes are marked directly on the schedule.
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => router.push("/work/call/swaps?tab=admin")}
+                      className="inline-flex items-center justify-center rounded-full bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                    >
+                      Review requests
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+
               <div className="mb-4 flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
                 <div className="flex flex-wrap items-center gap-3">
                   <button
@@ -1006,7 +1243,9 @@ async function stopGoogleSync() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">
-  <button
+  <NotificationBell />
+
+<button
   type="button"
   onClick={() => setExportModalOpen(true)}
   className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-950 transition hover:border-emerald-300 hover:bg-emerald-100"
@@ -1014,6 +1253,31 @@ async function stopGoogleSync() {
   <Download className="h-4 w-4" />
   Export
 </button>
+
+{canShowAdminCallActions ? (
+  <Link
+    href={swapRequests.canReviewAdmin ? "/work/call/swaps?tab=admin" : "/work/call/swaps"}
+    className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+  >
+    View coverage requests
+    {swapRequests.canReviewAdmin && pendingAdminRequests.length > 0 ? (
+      <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-bold text-amber-800 ring-1 ring-amber-200">
+        {pendingAdminRequests.length}
+      </span>
+    ) : null}
+  </Link>
+) : null}
+
+{canShowResidentChangeMyCall ? (
+  <button
+    type="button"
+    onClick={() => setChangeMyCallOpen(true)}
+    className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
+  >
+    <RefreshCw className="h-4 w-4" />
+    New Coverage Request
+  </button>
+) : null}
 
 <button
   type="button"
@@ -1052,6 +1316,7 @@ async function stopGoogleSync() {
     : "Connect Google"}
 </button>
 
+{canShowAdminCallActions ? (
   <button
     type="button"
     onClick={() => {
@@ -1067,7 +1332,9 @@ async function stopGoogleSync() {
     <PencilLine className="h-4 w-4" />
     {editingCalendar ? "Exit Edit" : "Edit"}
   </button>
+) : null}
 
+{canShowAdminCallActions ? (
   <button
     type="button"
     onClick={() => router.push("/work/call/add")}
@@ -1076,6 +1343,7 @@ async function stopGoogleSync() {
     <Plus className="h-4 w-4" />
     Add Call
   </button>
+) : null}
 </div>
               </div>
 
@@ -1136,12 +1404,60 @@ async function stopGoogleSync() {
                       monthIndex={visibleMonth.monthIndex}
                       calls={calls}
                       loading={loading}
-                      onSelectDate={setSelectedDateKey}
+                      onSelectDate={handleSelectDate}
+                      pendingSwapRequestsByCallId={
+                        swapRequests.canReviewAdmin ? pendingAdminRequestsByCallId : undefined
+                      }
                     />
                   )}
                 </div>
               </div>
             </motion.div>
+
+            {swapRequests.error ? (
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
+                {swapRequests.error}
+              </div>
+            ) : null}
+
+            {swapRequests.loading ? (
+              <div className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-4 text-sm text-slate-500 shadow-sm">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Loading coverage requests...
+              </div>
+            ) : null}
+
+            {swapRequests.canReviewAdmin ? (
+              <div className="grid gap-4 xl:grid-cols-[360px_minmax(0,1fr)]">
+                <AdminSwapApprovalQueue
+                  requests={swapRequests.adminPending}
+                  currentRosterId={data?.myRosterId ?? null}
+                  selectedRequestId={selectedAdminRequestId}
+                  onSelectRequest={setSelectedAdminRequestId}
+                  onViewDetails={setSelectedSwapRequestId}
+                />
+                <AdminApprovalWorkspace
+                  request={
+                    selectedAdminRequestId
+                      ? (swapRequests.adminPending.find(
+                          (r) => r.id === selectedAdminRequestId
+                        ) ?? null)
+                      : null
+                  }
+                  adminNotesByRequestId={adminNotesByRequestId}
+                  onChangeAdminNote={(requestId, note) =>
+                    setAdminNotesByRequestId((prev) => ({
+                      ...prev,
+                      [requestId]: note,
+                    }))
+                  }
+                  onRequestUpdated={async () => {
+                    await Promise.all([refreshSwapRequests(), refreshMonth()]);
+                  }}
+                  onViewDetails={setSelectedSwapRequestId}
+                />
+              </div>
+            ) : null}
           </div>
         </section>
       </main>
@@ -1153,8 +1469,46 @@ async function stopGoogleSync() {
         subtitle="Full call assignments visible for this selected day."
         dateLabel={formatLongDate(selectedDateKey)}
       >
-        {() => <CallDayDetailsContent calls={selectedDayCalls} />}
+        {() => (
+          <CallDayDetailsContent
+            calls={selectedDayCalls}
+            pendingSwapRequestsByCallId={
+              swapRequests.canReviewAdmin ? pendingAdminRequestsByCallId : undefined
+            }
+            canApprovePendingRequests={swapRequests.canReviewAdmin}
+            onPendingRequestUpdated={async () => {
+              await Promise.all([refreshSwapRequests(), refreshMonth()]);
+            }}
+            onViewPendingRequest={setSelectedSwapRequestId}
+          />
+        )}
       </DayDetailsModal>
+
+      <SwapRequestDetailDrawer
+        open={canShowAdminCallActions && !!selectedSwapRequestId}
+        requestId={selectedSwapRequestId}
+        onClose={() => setSelectedSwapRequestId(null)}
+        viewerMode="default"
+      />
+
+      {canShowResidentChangeMyCall ? (
+        <ChangeMyCallModal
+          open={changeMyCallOpen}
+          onClose={() => setChangeMyCallOpen(false)}
+          programId={data?.programId ?? null}
+          currentRosterId={data?.myRosterId ?? null}
+          calls={calls}
+          residents={residentOptions}
+          outgoingRequests={swapRequests.items.filter(
+            (request) => request.requester?.id === data?.myRosterId
+          )}
+          initialYear={visibleMonth.year}
+          initialMonthIndex={visibleMonth.monthIndex}
+          onCreated={async () => {
+            await refreshSwapRequests();
+          }}
+        />
+      ) : null}
 
         {exportModalOpen ? (
   <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/45 p-4">
@@ -1170,11 +1524,14 @@ async function stopGoogleSync() {
               Calendar export
             </p>
             <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-950">
-              Export call calendar
+              {canExportProgramCallCalendar
+                ? "Export call schedule"
+                : "Export my call calendar"}
             </h3>
             <p className="mt-2 text-sm leading-6 text-slate-600">
-              Download an .ics calendar file that can be imported into Apple Calendar,
-              Google Calendar, Outlook, or another calendar app.
+              {canExportProgramCallCalendar
+                ? "Download personal or program-wide .ics files for Apple Calendar, Google Calendar, Outlook, or another calendar app."
+                : "Download an .ics calendar file that can be imported into Apple Calendar, Google Calendar, Outlook, or another calendar app."}
             </p>
           </div>
         </div>
@@ -1210,20 +1567,22 @@ async function stopGoogleSync() {
               </p>
             </button>
 
-            <button
-              type="button"
-              onClick={() => setExportScope("program")}
-              className={`rounded-2xl border px-4 py-3 text-left transition ${
-                exportScope === "program"
-                  ? "border-emerald-300 bg-emerald-50 text-emerald-950"
-                  : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
-              }`}
-            >
-              <p className="text-sm font-bold">Program call</p>
-              <p className="mt-1 text-xs leading-5 text-slate-600">
-                Exports all visible program call assignments.
-              </p>
-            </button>
+            {canExportProgramCallCalendar ? (
+              <button
+                type="button"
+                onClick={() => setExportScope("program")}
+                className={`rounded-2xl border px-4 py-3 text-left transition ${
+                  exportScope === "program"
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-950"
+                    : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                <p className="text-sm font-bold">Program call</p>
+                <p className="mt-1 text-xs leading-5 text-slate-600">
+                  Exports all visible program call assignments.
+                </p>
+              </button>
+            ) : null}
           </div>
         </div>
 
@@ -1312,14 +1671,18 @@ async function stopGoogleSync() {
 
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-700">
-              Google Calendar sync
+              {canSyncProgramCalendar
+                ? "Program calendar sync"
+                : "Google Calendar sync"}
             </p>
             <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-950">
               {googleConnected ? "Set up calendar sync" : "Allow calendar access"}
             </h3>
             <p className="mt-2 text-sm leading-6 text-slate-600">
               {googleConnected
-                ? "Choose how SnapOrtho should sync call assignments into your connected Google Calendar."
+                ? canSyncProgramCalendar
+                  ? "Choose how SnapOrtho should sync program call assignments into Google Calendar for administrative operations."
+                  : "Choose how SnapOrtho should sync your call assignments into your connected Google Calendar."
                 : "First, allow SnapOrtho to access Google Calendar. After approval, you’ll return here to choose your sync settings."}
             </p>
 
@@ -1369,20 +1732,22 @@ async function stopGoogleSync() {
                 </p>
               </button>
 
-              <button
-                type="button"
-                onClick={() => setGoogleSyncScope("program")}
-                className={`rounded-2xl border px-4 py-3 text-left transition ${
-                  googleSyncScope === "program"
-                    ? "border-sky-300 bg-sky-50 text-sky-950"
-                    : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
-                }`}
-              >
-                <p className="text-sm font-bold">Program calendar</p>
-                <p className="mt-1 text-xs leading-5 text-slate-600">
-                  Sync all program call assignments.
-                </p>
-              </button>
+              {canSyncProgramCalendar ? (
+                <button
+                  type="button"
+                  onClick={() => setGoogleSyncScope("program")}
+                  className={`rounded-2xl border px-4 py-3 text-left transition ${
+                    googleSyncScope === "program"
+                      ? "border-sky-300 bg-sky-50 text-sky-950"
+                      : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                  }`}
+                >
+                  <p className="text-sm font-bold">Program calendar</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-600">
+                    Sync all program call assignments.
+                  </p>
+                </button>
+              ) : null}
             </div>
           </div>
 

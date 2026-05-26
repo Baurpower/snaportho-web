@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
   assertValidProgramCallMutationDraft,
-  CALL_ASSIGNMENT_EDITOR_ROLES,
   ProgramCallScheduleValidationError,
   ProgramCallValidationError,
   resolveProgramRosterTargets,
 } from "@/lib/workspace/call/calls";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 type SaveRow = {
   residentName: string;
@@ -44,14 +46,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const membership = await getActiveMembershipForUser(user.id);
-
-    if (!membership?.program_id) {
-      return NextResponse.json(
-        { error: "No active program membership found" },
-        { status: 403 }
-      );
-    }
+    const access = await requireWorkspacePermission({
+      userId: user.id,
+      permission: "canUploadCallSchedule",
+    });
 
     const body = await request.json();
     const rows = (body?.rows ?? []) as SaveRow[];
@@ -94,19 +92,12 @@ export async function POST(request: NextRequest) {
     }
 
     const resolvedTargets = await resolveProgramRosterTargets(
-      membership.program_id,
+      access.accessContext.programId,
       rows.map((row) => ({
         rosterId: row.matchedRosterId ?? null,
         membershipId: row.matchedMembershipId ?? null,
       }))
     );
-
-    if (!membership.role || !CALL_ASSIGNMENT_EDITOR_ROLES.has(membership.role)) {
-      return NextResponse.json(
-        { error: "You do not have permission to add program call assignments" },
-        { status: 403 }
-      );
-    }
 
     const touchedDates = Array.from(
       new Set([
@@ -124,7 +115,7 @@ export async function POST(request: NextRequest) {
       const { data: existingRows, error: existingRowsError } = await supabase
         .from("call_assignments")
         .select("id, call_date, call_type")
-        .eq("program_id", membership.program_id)
+        .eq("program_id", access.accessContext.programId)
         .in("call_date", touchedDates);
 
       if (existingRowsError) {
@@ -153,7 +144,7 @@ export async function POST(request: NextRequest) {
       .map(([, row]) => row.id);
 
     await assertValidProgramCallMutationDraft({
-      programId: membership.program_id,
+      programId: access.accessContext.programId,
       touchedDates,
       deleteCallIds: rowsToDelete,
       upserts: rows.map((row, index) => {
@@ -176,7 +167,7 @@ export async function POST(request: NextRequest) {
     if (process.env.NODE_ENV !== "production") {
       console.info("[call-validation-ui-path]", {
         endpoint: "/api/program/calls/bulk",
-        programId: membership.program_id,
+        programId: access.accessContext.programId,
         userId: user.id,
         rowRosterIds: resolvedTargets.map((target) => target.rosterId),
         rowProgramMembershipIds: resolvedTargets.map(
@@ -206,7 +197,7 @@ export async function POST(request: NextRequest) {
       const resolvedTarget = resolvedTargets[index];
 
       const payload = {
-        program_id: membership.program_id,
+        program_id: access.accessContext.programId,
         roster_id: resolvedTarget.rosterId,
         program_membership_id: resolvedTarget.programMembershipId,
         call_type: row.callType,
@@ -256,6 +247,10 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     if (error instanceof ProgramCallScheduleValidationError) {
       return NextResponse.json(
         {

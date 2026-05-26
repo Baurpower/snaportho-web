@@ -4,6 +4,11 @@ import { google, calendar_v3 } from "googleapis";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { getGoogleOAuthClient } from "@/lib/google/calendar";
+import { classifyGoogleCalendarError } from "@/lib/google/errors";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 type SyncScope = "mine" | "program";
 type SyncMode = "once" | "automatic";
@@ -104,6 +109,20 @@ export async function POST(request: NextRequest) {
         { error: "No active membership" },
         { status: 400 }
       );
+    }
+
+    if (scope === "program") {
+      await requireWorkspacePermission({
+        userId: user.id,
+        programId: activeMembership.program_id,
+        permission: "canSyncProgramCalendar",
+      });
+    } else {
+      await requireWorkspacePermission({
+        userId: user.id,
+        programId: activeMembership.program_id,
+        permission: "canSyncOwnCalendar",
+      });
     }
 
     const { data: connection, error: connectionError } = await supabase
@@ -377,6 +396,10 @@ export async function POST(request: NextRequest) {
           user_id: user.id,
           provider: "google",
           enabled: syncMode === "automatic",
+          scope,
+          last_error: null,
+          last_error_at: null,
+          last_success_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         },
         {
@@ -402,6 +425,10 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     console.error(error);
 
     return NextResponse.json(
@@ -410,6 +437,7 @@ export async function POST(request: NextRequest) {
           error instanceof Error
             ? error.message
             : "Failed syncing Google Calendar",
+        errorClass: classifyGoogleCalendarError(error),
       },
       { status: 500 }
     );

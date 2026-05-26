@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import {
+  WorkspacePermissionError,
+  requireWorkspacePermission,
+} from "@/lib/workspace/access-control";
 import { z } from "zod";
 
 const CreateExternalPersonSchema = z.object({
@@ -26,133 +30,165 @@ function jsonError(message: string, status = 400) {
 }
 
 export async function GET(request: NextRequest) {
-  const supabase = await createClient();
+  try {
+    const supabase = await createClient();
 
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-  if (userError || !user) {
-    return jsonError("Unauthorized", 401);
-  }
+    if (userError || !user) {
+      return jsonError("Unauthorized", 401);
+    }
 
-  const programId = request.nextUrl.searchParams.get("programId");
+    const programId = request.nextUrl.searchParams.get("programId");
 
-  if (!programId) {
-    return jsonError("Missing programId", 400);
-  }
+    if (!programId) {
+      return jsonError("Missing programId", 400);
+    }
 
-  const search = request.nextUrl.searchParams.get("search");
+    await requireWorkspacePermission({
+      userId: user.id,
+      programId,
+      permission: "canViewAcademicCalendar",
+      allowUnlinkedRoster: true,
+    });
 
-  let query = supabase
-    .from("external_people")
-    .select(`
-      id,
-      program_id,
-      first_name,
-      last_name,
-      full_name,
-      credentials,
-      title,
-      institution,
-      email,
-      bio,
-      headshot_url,
-      created_at,
-      updated_at
-    `)
-    .eq("program_id", programId)
-    .order("full_name", { ascending: true });
+    const search = request.nextUrl.searchParams.get("search");
 
-  if (search && search.trim()) {
-    query = query.or(
-      `full_name.ilike.%${search.trim()}%,institution.ilike.%${search.trim()}%,email.ilike.%${search.trim()}%`
-    );
-  }
+    let query = supabase
+      .from("external_people")
+      .select(`
+        id,
+        program_id,
+        first_name,
+        last_name,
+        full_name,
+        credentials,
+        title,
+        institution,
+        email,
+        bio,
+        headshot_url,
+        created_at,
+        updated_at
+      `)
+      .eq("program_id", programId)
+      .order("full_name", { ascending: true });
 
-  const { data, error } = await query;
+    if (search && search.trim()) {
+      query = query.or(
+        `full_name.ilike.%${search.trim()}%,institution.ilike.%${search.trim()}%,email.ilike.%${search.trim()}%`
+      );
+    }
 
-  if (error) {
-    console.error("Error fetching external people:", error);
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Error fetching external people:", error);
+      return jsonError("Failed to fetch external people", 500);
+    }
+
+    return NextResponse.json({
+      data,
+      error: null,
+    });
+  } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return jsonError(error.message, error.status);
+    }
+
+    console.error("Unexpected external people GET error:", error);
     return jsonError("Failed to fetch external people", 500);
   }
-
-  return NextResponse.json({
-    data,
-    error: null,
-  });
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
-
-  if (userError || !user) {
-    return jsonError("Unauthorized", 401);
-  }
-
-  let body: unknown;
-
   try {
-    body = await request.json();
-  } catch {
-    return jsonError("Invalid JSON body", 400);
-  }
+    const supabase = await createClient();
 
-  const parsed = CreateExternalPersonSchema.safeParse(body);
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-  if (!parsed.success) {
-    return jsonError(
-      parsed.error.issues[0]?.message ?? "Invalid request",
-      400
-    );
-  }
+    if (userError || !user) {
+      return jsonError("Unauthorized", 401);
+    }
 
-  const person = parsed.data;
+    let body: unknown;
 
-  const { data, error } = await supabase
-    .from("external_people")
-    .insert({
-      program_id: person.program_id,
-      first_name: person.first_name ?? null,
-      last_name: person.last_name ?? null,
-      full_name: person.full_name.trim(),
-      credentials: person.credentials ?? null,
-      title: person.title ?? null,
-      institution: person.institution ?? null,
-      email: person.email ?? null,
-      bio: person.bio ?? null,
-      headshot_url: person.headshot_url ?? null,
-    })
-    .select(`
-      id,
-      program_id,
-      first_name,
-      last_name,
-      full_name,
-      credentials,
-      title,
-      institution,
-      email,
-      bio,
-      headshot_url,
-      created_at,
-      updated_at
-    `)
-    .single();
+    try {
+      body = await request.json();
+    } catch {
+      return jsonError("Invalid JSON body", 400);
+    }
 
-  if (error) {
-    console.error("Error creating external person:", error);
+    const parsed = CreateExternalPersonSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return jsonError(
+        parsed.error.issues[0]?.message ?? "Invalid request",
+        400
+      );
+    }
+
+    const person = parsed.data;
+
+    await requireWorkspacePermission({
+      userId: user.id,
+      programId: person.program_id,
+      permission: "canEditAcademicEvents",
+      allowUnlinkedRoster: true,
+    });
+
+    const { data, error } = await supabase
+      .from("external_people")
+      .insert({
+        program_id: person.program_id,
+        first_name: person.first_name ?? null,
+        last_name: person.last_name ?? null,
+        full_name: person.full_name.trim(),
+        credentials: person.credentials ?? null,
+        title: person.title ?? null,
+        institution: person.institution ?? null,
+        email: person.email ?? null,
+        bio: person.bio ?? null,
+        headshot_url: person.headshot_url ?? null,
+      })
+      .select(`
+        id,
+        program_id,
+        first_name,
+        last_name,
+        full_name,
+        credentials,
+        title,
+        institution,
+        email,
+        bio,
+        headshot_url,
+        created_at,
+        updated_at
+      `)
+      .single();
+
+    if (error) {
+      console.error("Error creating external person:", error);
+      return jsonError("Failed to create external person", 500);
+    }
+
+    return NextResponse.json({
+      data,
+      error: null,
+    });
+  } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return jsonError(error.message, error.status);
+    }
+
+    console.error("Unexpected external people POST error:", error);
     return jsonError("Failed to create external person", 500);
   }
-
-  return NextResponse.json({
-    data,
-    error: null,
-  });
 }

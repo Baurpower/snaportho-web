@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getGoogleAuthUrl } from "@/lib/google/calendar";
+import {
+  createGoogleOAuthNonce,
+  encodeGoogleOAuthState,
+  getGoogleAuthUrl,
+  GOOGLE_OAUTH_STATE_COOKIE,
+  GOOGLE_OAUTH_STATE_MAX_AGE_SECONDS,
+  sanitizeGoogleOAuthNextPath,
+} from "@/lib/google/calendar";
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,16 +22,30 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const next = new URL(request.url).searchParams.get("next") ?? "/work/call";
+    const next = sanitizeGoogleOAuthNextPath(
+      new URL(request.url).searchParams.get("next")
+    );
+    const expiresAt =
+      Date.now() + GOOGLE_OAUTH_STATE_MAX_AGE_SECONDS * 1000;
+    const state = encodeGoogleOAuthState({
+      nonce: createGoogleOAuthNonce(),
+      userId: user.id,
+      next,
+      expiresAt,
+    });
 
-    const state = Buffer.from(
-      JSON.stringify({
-        userId: user.id,
-        next,
-      })
-    ).toString("base64url");
+    const response = NextResponse.redirect(getGoogleAuthUrl(state));
+    response.cookies.set({
+      name: GOOGLE_OAUTH_STATE_COOKIE,
+      value: state,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: GOOGLE_OAUTH_STATE_MAX_AGE_SECONDS,
+    });
 
-    return NextResponse.redirect(getGoogleAuthUrl(state));
+    return response;
   } catch (error) {
     console.error(error);
 

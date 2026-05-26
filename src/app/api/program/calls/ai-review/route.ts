@@ -4,6 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { buildSchedulePacket } from "@/lib/workspace/call/buildSchedulePacket";
 import { getFlagsForAssignedResident } from "@/components/workspace/call/programcallevaluator";
+import { createClient } from "@/utils/supabase/server";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 import type {
   CalendarDay,
   DraftDayAssignment,
@@ -771,6 +776,21 @@ function sanitizeReview(
 
 export async function POST(request: NextRequest) {
   try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    await requireWorkspacePermission({
+      userId: user.id,
+      permission: "canUploadCallSchedule",
+    });
+
     const rawBody: unknown = await request.json();
 const bodyRecord = record(rawBody);
 
@@ -855,6 +875,10 @@ Return JSON only:
       topOptions,
     });
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     console.error("AI review error:", error);
     return NextResponse.json(
       { error: "Failed to review schedule." },

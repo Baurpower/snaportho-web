@@ -15,6 +15,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useWorkspaceInfo } from "@/lib/workspace/use-workspace-info";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 type EventTypeOption = {
   id: string;
@@ -333,6 +334,10 @@ function AcademicAddEditEventPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const {
+    loading: permissionsLoading,
+    permissions,
+  } = useWorkspacePermissions();
+  const {
     programId,
     loading: workspaceLoading,
     error: workspaceError,
@@ -366,6 +371,14 @@ function AcademicAddEditEventPageContent() {
   const pageTitle = isEditMode ? "Edit Academic Event" : "Add Academic Event";
   const displayedEventTypes =
     eventTypes.length > 0 ? eventTypes : DEFAULT_EVENT_TYPE_OPTIONS;
+
+  useEffect(() => {
+    if (permissionsLoading) return;
+
+    if (!permissions?.canCreateAcademicEvents) {
+      router.replace("/work/academic");
+    }
+  }, [permissions?.canCreateAcademicEvents, permissionsLoading, router]);
 
   const canSave = useMemo(() => {
     return !!programId && title.trim().length > 0 && !saving;
@@ -848,7 +861,7 @@ router.push("/work/academic");
     }
   }
 
-  if (workspaceLoading) {
+  if (permissionsLoading || workspaceLoading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-950 px-5 text-white">
         <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm font-semibold text-slate-200 shadow-xl backdrop-blur">

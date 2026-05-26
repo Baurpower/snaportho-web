@@ -61,6 +61,38 @@ function getAvailabilityDay(
   return availabilityByResident?.[residentId]?.[dateKey] ?? null;
 }
 
+function getAvailabilityBlocks(
+  availability: ResidentAvailabilityForDate | null
+) {
+  if (!availability) return [] as RuleEvaluationBlock[];
+
+  if (Array.isArray(availability.blocks) && availability.blocks.length > 0) {
+    return availability.blocks;
+  }
+
+  if (Array.isArray(availability.ruleBlocks)) {
+    return availability.ruleBlocks.filter((block) => block.isHardRule);
+  }
+
+  return [] as RuleEvaluationBlock[];
+}
+
+function getAvailabilityWarnings(
+  availability: ResidentAvailabilityForDate | null
+) {
+  if (!availability) return [] as RuleEvaluationBlock[];
+
+  if (Array.isArray(availability.warnings) && availability.warnings.length > 0) {
+    return availability.warnings;
+  }
+
+  if (Array.isArray(availability.ruleBlocks)) {
+    return availability.ruleBlocks.filter((block) => !block.isHardRule);
+  }
+
+  return [] as RuleEvaluationBlock[];
+}
+
 function pushFlag(flags: AssignmentFlag[], next: AssignmentFlag) {
   if (!flags.some((flag) => flag.key === next.key)) {
     flags.push(next);
@@ -130,11 +162,11 @@ export function evaluateResidentForSlot(
       pushFlag(flags, flag);
     }
 
-    for (const block of availability.blocks ?? []) {
+    for (const block of getAvailabilityBlocks(availability)) {
       pushBlock(blocks, block);
     }
 
-    for (const item of availability.warnings ?? []) {
+    for (const item of getAvailabilityWarnings(availability)) {
       pushBlock(warnings, item);
     }
 

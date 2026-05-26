@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { z } from "zod";
+import {
+  getProgramIdForAcademicEvent,
+  requireAcademicCalendarAccess,
+} from "@/lib/workspace/academic-calendar/permissions";
 
 const CreateAcademicEventPersonSchema = z.object({
   academic_event_session_id: z.string().uuid().nullable().optional(),
@@ -68,6 +72,24 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
   const { eventId } = await context.params;
 
+  const { programId, error: programLookupError } =
+    await getProgramIdForAcademicEvent(supabase, eventId);
+
+  if (programLookupError || !programId) {
+    return jsonError("Academic event not found", 404);
+  }
+
+  const access = await requireAcademicCalendarAccess({
+    supabase,
+    userId: user.id,
+    programId,
+    level: "view",
+  });
+
+  if (!access.ok) {
+    return jsonError(access.error ?? "You do not have access to this academic calendar", 403);
+  }
+
   const { data, error } = await supabase
     .from("academic_event_people")
     .select(EVENT_PERSON_SELECT)
@@ -99,6 +121,24 @@ export async function POST(request: NextRequest, context: RouteContext) {
   }
 
   const { eventId } = await context.params;
+
+  const { programId, error: programLookupError } =
+    await getProgramIdForAcademicEvent(supabase, eventId);
+
+  if (programLookupError || !programId) {
+    return jsonError("Academic event not found", 404);
+  }
+
+  const access = await requireAcademicCalendarAccess({
+    supabase,
+    userId: user.id,
+    programId,
+    level: "edit",
+  });
+
+  if (!access.ok) {
+    return jsonError(access.error ?? "You do not have permission to edit academic events", 403);
+  }
 
   let body: unknown;
 

@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
 import {
-  CALL_ASSIGNMENT_EDITOR_ROLES,
   createProgramCallAssignments,
   ProgramCallScheduleValidationError,
   ProgramCallValidationError,
 } from '@/lib/workspace/call/calls'
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from '@/lib/workspace/access-control'
 
 type ProgramCallInputRow = {
   rosterId?: string
@@ -46,21 +48,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
     }
 
-    const membership = await getActiveMembershipForUser(user.id)
-
-    if (!membership?.program_id) {
-      return NextResponse.json(
-        { error: 'No active program membership found' },
-        { status: 403 }
-      )
-    }
-
-    if (!membership.role || !CALL_ASSIGNMENT_EDITOR_ROLES.has(membership.role)) {
-      return NextResponse.json(
-        { error: 'You do not have permission to add program call assignments' },
-        { status: 403 }
-      )
-    }
+    const access = await requireWorkspacePermission({
+      userId: user.id,
+      permission: "canEditCallAssignments",
+    })
 
     const body = (await request.json()) as CreateProgramCallsBody
 
@@ -99,7 +90,7 @@ export async function POST(request: NextRequest) {
     }
 
     const created = await createProgramCallAssignments({
-      programId: membership.program_id,
+      programId: access.accessContext.programId,
       createdBy: user.id,
       rows: body.rows.map((row) => ({
         rosterId: row.rosterId ?? row.membershipId!,
@@ -114,6 +105,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ calls: created }, { status: 201 })
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status })
+    }
+
     if (error instanceof ProgramCallScheduleValidationError) {
       return NextResponse.json(
         {

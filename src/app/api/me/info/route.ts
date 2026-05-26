@@ -3,7 +3,9 @@ import { requireWorkspaceAccess } from "@/lib/workspace/require-workspace-access
 
 export async function GET() {
   try {
-    const workspace = await requireWorkspaceAccess();
+    const workspace = await requireWorkspaceAccess({
+      allowUnlinkedRoster: true,
+    });
     let activeProgram:
       | {
           id: string;
@@ -54,6 +56,20 @@ export async function GET() {
               isAdmin: Boolean(workspace.roster.isAdmin),
             }
           : null,
+        accessContext: workspace.accessContext
+          ? {
+              userId: workspace.accessContext.userId,
+              programId: workspace.accessContext.programId,
+              membershipId: workspace.accessContext.membershipId,
+              rosterId: workspace.accessContext.rosterId,
+              isRosterLinked: workspace.accessContext.isRosterLinked,
+              isAdmin: workspace.accessContext.isAdmin,
+              mode: workspace.accessContext.mode,
+              membershipRole: workspace.accessContext.membershipRole,
+              rosterRole: workspace.accessContext.rosterRole,
+            }
+          : null,
+        permissions: workspace.permissions,
       },
     });
   } catch (error) {

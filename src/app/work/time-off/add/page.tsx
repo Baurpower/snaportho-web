@@ -1,11 +1,18 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, PlaneTakeoff, UserRound, Users } from "lucide-react";
+import {
+  ArrowLeft,
+  Loader2,
+  PlaneTakeoff,
+  UserRound,
+  Users,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import AddIndividualTimeOffView from "@/components/workspace/time-off/addindividualtimeoffview";
 import ProgramTimeOffAddView from "@/components/workspace/call/programtimeoffaddview";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -52,6 +59,40 @@ export default function TimeOffAddPage() {
   const [mode, setMode] = useState<AddMode>("individual");
   const router = useRouter();
   const defaultStartDate = useMemo(() => toDateKey(new Date()), []);
+  const { loading, permissions, isRosterLinked } = useWorkspacePermissions();
+  const canRequestTimeOff = permissions?.canRequestTimeOff ?? false;
+  const canUploadTimeOff = permissions?.canUploadTimeOff ?? false;
+  const isAdminMode = permissions?.mode === "admin";
+
+  useEffect(() => {
+    if (loading) return;
+
+    if (!isRosterLinked && !canUploadTimeOff) {
+      router.replace("/work/onboarding");
+      return;
+    }
+
+    if (!canRequestTimeOff && !canUploadTimeOff) {
+      router.replace("/work/time-off");
+    }
+  }, [canRequestTimeOff, canUploadTimeOff, isRosterLinked, loading, router]);
+
+  useEffect(() => {
+    if (!canUploadTimeOff && mode === "program") {
+      setMode("individual");
+    }
+  }, [canUploadTimeOff, mode]);
+
+  if (loading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
+        <div className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-5 py-4">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span className="text-sm font-semibold">Loading workspace access...</span>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-100 text-slate-900">
@@ -69,16 +110,17 @@ export default function TimeOffAddPage() {
               <div className="max-w-3xl">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-sky-200">
                   <PlaneTakeoff className="h-4 w-4" />
-                  SnapOrtho
+                  {isAdminMode ? "Admin Workspace" : "SnapOrtho"}
                 </div>
 
                 <h1 className="mt-5 text-4xl font-black tracking-tight text-white md:text-6xl">
-                  Add Time Off
+                  {isAdminMode ? "Time-Off Operations" : "Request Time Off"}
                 </h1>
 
                 <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
-                  Choose between a personal request workflow and a program-level
-                  upload workflow for chiefs and admins.
+                  {isAdminMode
+                    ? "Use the current admin workflow to enter personal requests or import and manage time-off across the program."
+                    : "Submit your own time-off request without opening the program management workflow."}
                 </p>
 
                 <button
@@ -95,26 +137,30 @@ export default function TimeOffAddPage() {
                 <div className="rounded-[1.5rem] border border-white/10 bg-white/10 p-2 backdrop-blur">
                   <div className="mb-3 px-2 pt-1">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-300">
-                      Workflow Mode
+                      {isAdminMode ? "Admin Workflow" : "Workflow Mode"}
                     </p>
                     <p className="mt-1 text-sm text-slate-400">
-                      Switch between personal entry and program upload.
+                      {isAdminMode
+                        ? "Switch between resident requests and program-wide import tools."
+                        : "Personal requests are available here. Program import tools remain admin-only."}
                     </p>
                   </div>
 
                   <div className="flex flex-col gap-2 sm:flex-row">
                     <ModeToggle
                       active={mode === "individual"}
-                      label="Individual Add"
+                      label={isAdminMode ? "Request Entry" : "Individual Add"}
                       icon={<UserRound className="h-4 w-4" />}
                       onClick={() => setMode("individual")}
                     />
-                    <ModeToggle
-                      active={mode === "program"}
-                      label="Program Upload"
-                      icon={<Users className="h-4 w-4" />}
-                      onClick={() => setMode("program")}
-                    />
+                    {canUploadTimeOff ? (
+                      <ModeToggle
+                        active={mode === "program"}
+                        label="Import Requests"
+                        icon={<Users className="h-4 w-4" />}
+                        onClick={() => setMode("program")}
+                      />
+                    ) : null}
                   </div>
                 </div>
               </div>

@@ -38,6 +38,7 @@ export type ProgramRule = {
 };
 
 export type ResidentOption = {
+  // Canonical scheduler identity. This should resolve to program_roster.id.
   residentId: string;
   rosterId?: string | null;
   programMembershipId?: string | null;
@@ -61,6 +62,8 @@ export type ExistingResidentStats = {
 };
 
 export type DraftDayAssignment = {
+  // Legacy field names: these values store canonical resident ids (program_roster.id),
+  // not program_memberships.id.
   primaryMembershipId: string | null;
   backupMembershipId: string | null;
 };
@@ -161,8 +164,9 @@ export type ResidentAvailabilityForDate = {
   isBlocked: boolean;
   isWarning: boolean;
 
-  blocks: RuleEvaluationBlock[];
-  warnings: RuleEvaluationBlock[];
+  blocks?: RuleEvaluationBlock[];
+  warnings?: RuleEvaluationBlock[];
+  ruleBlocks?: RuleEvaluationBlock[];
 
   timeOffConflicts: TimeOffConflict[];
   rotationConflicts: RotationConflict[];

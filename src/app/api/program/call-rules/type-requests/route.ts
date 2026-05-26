@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 export async function POST(request: NextRequest) {
   try {
@@ -28,6 +32,12 @@ export async function POST(request: NextRequest) {
         { status: 403 }
       );
     }
+
+    await requireWorkspacePermission({
+      userId: user.id,
+      programId: membership.program_id,
+      permission: "canManageCallRules",
+    });
 
     const body = await request.json();
 
@@ -96,6 +106,10 @@ return NextResponse.json(
   { status: 201 }
 );
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     return NextResponse.json(
       {
         error:

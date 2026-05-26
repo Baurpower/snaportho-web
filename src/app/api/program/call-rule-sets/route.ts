@@ -6,6 +6,10 @@ import {
   getDefaultProgramRuleSet,
   getProgramRuleSets,
 } from "@/lib/workspace/call/programcallrules";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 export async function GET() {
   try {
@@ -33,6 +37,12 @@ export async function GET() {
       return NextResponse.json({ ruleSets: [], defaultRuleSetId: null });
     }
 
+    await requireWorkspacePermission({
+      userId: user.id,
+      programId: membership.program_id,
+      permission: "canManageCallRules",
+    });
+
     let ruleSets = await getProgramRuleSets(membership.program_id);
     let defaultRuleSet = await getDefaultProgramRuleSet(membership.program_id);
 
@@ -53,6 +63,10 @@ export async function GET() {
       defaultRuleSetId: defaultRuleSet.id,
     });
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     return NextResponse.json(
       {
         error:

@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { parseCallUploadFile } from "@/lib/workspace/call/import-parser";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 type RosterRow = {
   id: string;
@@ -114,14 +117,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const membership = await getActiveMembershipForUser(user.id);
-
-    if (!membership?.program_id) {
-      return NextResponse.json(
-        { error: "No active program membership found" },
-        { status: 400 }
-      );
-    }
+    const access = await requireWorkspacePermission({
+      userId: user.id,
+      permission: "canUploadCallSchedule",
+    });
 
     const formData = await request.formData();
     const file = formData.get("file");
@@ -135,7 +134,7 @@ export async function POST(request: NextRequest) {
     const { data: rosterData, error: rosterError } = await supabase
       .from("program_roster")
       .select("id, full_name, first_name, last_name, program_membership_id, training_level, class_year")
-      .eq("program_id", membership.program_id);
+      .eq("program_id", access.accessContext.programId);
 
     if (rosterError) {
       throw new Error(`Failed to load program roster: ${rosterError.message}`);
@@ -179,6 +178,10 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     return NextResponse.json(
       {
         error:

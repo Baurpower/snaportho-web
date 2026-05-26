@@ -2,14 +2,18 @@
 
 import React, { useMemo } from "react";
 import { CalendarDays, PhoneCall } from "lucide-react";
+import type { SwapRequestListItem } from "@/lib/workspace/call-swaps/types";
 
 export type ProgramCallItem = {
+  programId?: string | null;
   id: string;
   rosterId?: string | null;
   programMembershipId?: string | null;
   membershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
+  pgyYear?: number | null;
+  gradYear?: number | null;
   classYear: number | null;
   userId: string | null;
   callType: string | null;
@@ -100,18 +104,25 @@ function getCallTone(call: ProgramCallItem) {
   };
 }
 
+function getPendingLabel(request: SwapRequestListItem) {
+  const recipientName = request.recipient?.fullName?.trim();
+  return recipientName ? `-> ${recipientName}` : "Pending swap";
+}
+
 export default function CallMonthCalendar({
   year,
   monthIndex,
   calls,
   loading,
   onSelectDate,
+  pendingSwapRequestsByCallId,
 }: {
   year: number;
   monthIndex: number;
   calls: ProgramCallItem[];
   loading?: boolean;
   onSelectDate?: (dateKey: string) => void;
+  pendingSwapRequestsByCallId?: Map<string, SwapRequestListItem>;
 }) {
   const weeks = useMemo(
     () => buildCalendarWeeksSunday(year, monthIndex),
@@ -241,12 +252,26 @@ export default function CallMonthCalendar({
                     <div className="mt-1.5 h-[102px] space-y-1 overflow-y-auto pr-0.5 md:h-[108px] xl:h-[112px]">
                       {visibleCalls.map((call) => {
                         const tone = getCallTone(call);
+                        const pendingRequest =
+                          pendingSwapRequestsByCallId?.get(call.id) ?? null;
 
                         return (
                           <div
                             key={call.id}
-                            className={`rounded-lg border px-2 py-1.5 ${tone.card}`}
-                            title={`${call.residentName} • ${call.callType ?? "Call"} • ${call.site ?? "No site"}`}
+                            className={`rounded-lg border px-2 py-1.5 ${tone.card} ${
+                              pendingRequest ? "ring-1 ring-amber-300" : ""
+                            }`}
+                            title={`${call.residentName} • ${call.callType ?? "Call"} • ${
+                              call.site ?? "No site"
+                            }${
+                              pendingRequest
+                                ? ` • Coverage change pending approval${
+                                    pendingRequest.recipient?.fullName
+                                      ? ` -> ${pendingRequest.recipient.fullName}`
+                                      : ""
+                                  }`
+                                : ""
+                            }`}
                           >
                             <div className="flex items-start justify-between gap-1.5">
                               <div className="min-w-0">
@@ -270,6 +295,17 @@ export default function CallMonthCalendar({
                                 </span>
                               ) : null}
                             </div>
+
+                            {pendingRequest ? (
+                              <div className="mt-1.5 space-y-1">
+                                <div className="inline-flex rounded-full bg-amber-100 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.12em] text-amber-800 ring-1 ring-amber-200">
+                                  Pending swap
+                                </div>
+                                <p className="truncate text-[8px] font-semibold text-amber-900">
+                                  {getPendingLabel(pendingRequest)}
+                                </p>
+                              </div>
+                            ) : null}
                           </div>
                         );
                       })}

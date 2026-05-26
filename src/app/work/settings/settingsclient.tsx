@@ -21,6 +21,7 @@ import EditProgramRotations from "@/components/workspace/settings/editprogramrot
 import RotationSettingsSegmentedControl from "@/components/workspace/settings/rotationsettingssegmentedcontrol";
 import RotationTracksManager from "@/components/workspace/settings/rotationtracksmanager";
 import { isVisibleResidentForAcademicYear } from "@/lib/workspace/pgy";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 export type GenerateAssignmentsMode = "overwrite_generated" | "fill_gaps";
 export type RotationSettingsTab = "tracks" | "assignments";
@@ -534,6 +535,7 @@ function matchesMemberSearch(member: OverviewMember, search: string) {
 }
 
 export default function ProgramSettingsPage() {
+  const { permissions } = useWorkspacePermissions();
   const [activeTab, setActiveTab] = useState<RotationSettingsTab>("assignments");
   const [search, setSearch] = useState("");
   const [monthPage, setMonthPage] = useState(0);
@@ -558,6 +560,7 @@ export default function ProgramSettingsPage() {
   const [assignments, setAssignments] = useState<OverviewAssignment[]>([]);
   const [draftAssignments, setDraftAssignments] = useState<EditProgramRotationAssignment[]>([]);
   const [canManageRotationSettings, setCanManageRotationSettings] = useState(false);
+  const isAdminMode = permissions?.mode === "admin";
 
   const [selectedRotationIds, setSelectedRotationIds] = useState<string[]>([]);
   const [rotationFilterOpen, setRotationFilterOpen] = useState(false);
@@ -1205,16 +1208,21 @@ export default function ProgramSettingsPage() {
           <div className="mb-8">
             <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-200">
               <Settings2 className="mr-2 h-3.5 w-3.5" />
-              Program settings
+              {isAdminMode ? "Admin Workspace" : "Program settings"}
             </div>
 
             <div className="mt-5">
               <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
-                Program rotation settings
+                Program operations
               </h1>
               <p className="mt-3 max-w-3xl text-base leading-7 text-slate-300">
-                Review live assignments first, then manage academic-year track templates when needed.
+                Use the current administrative workspace to manage live rotation assignments, academic-year track templates, and roster-linked planning data.
               </p>
+              {isAdminMode ? (
+                <p className="mt-3 text-sm font-semibold text-sky-200">
+                  This area is only available to program administrators.
+                </p>
+              ) : null}
             </div>
           </div>
 
@@ -1266,7 +1274,7 @@ export default function ProgramSettingsPage() {
                           className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
                         >
                           <PencilLine className="h-4 w-4" />
-                          Edit assignments
+                          Manage assignments
                         </button>
                       ) : (
                         <>
@@ -1291,7 +1299,7 @@ export default function ProgramSettingsPage() {
                             ) : (
                               <Save className="h-4 w-4" />
                             )}
-                            Done editing
+                            Save assignment changes
                           </button>
                         </>
                       )

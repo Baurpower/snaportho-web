@@ -1,36 +1,61 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
 import { createClient } from "@/utils/supabase/server";
-import { getGoogleOAuthClient } from "@/lib/google/calendar";
+import {
+  decodeGoogleOAuthState,
+  getGoogleOAuthClient,
+  GOOGLE_OAUTH_STATE_COOKIE,
+} from "@/lib/google/calendar";
 
 export async function GET(request: NextRequest) {
+  const clearStateCookie = (response: NextResponse) => {
+    response.cookies.set({
+      name: GOOGLE_OAUTH_STATE_COOKIE,
+      value: "",
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 0,
+    });
+
+    return response;
+  };
+
   try {
     const { searchParams } = new URL(request.url);
 
     const code = searchParams.get("code");
     const state = searchParams.get("state");
+    const cookieState = request.cookies.get(GOOGLE_OAUTH_STATE_COOKIE)?.value;
+    const parsedState = decodeGoogleOAuthState(state);
+    const parsedCookieState = decodeGoogleOAuthState(cookieState);
 
     let nextPath = "/work/call?google=connected";
 
-    if (state) {
-      try {
-        const parsed = JSON.parse(
-          Buffer.from(state, "base64url").toString("utf8")
-        );
-
-        if (typeof parsed.next === "string" && parsed.next.startsWith("/")) {
-          nextPath = parsed.next;
-        }
-      } catch {
-        nextPath = "/work/call?google=connected";
-      }
+    if (!code) {
+      return clearStateCookie(NextResponse.redirect(
+        new URL("/work/call?google=failed", request.url)
+      ));
     }
 
-    if (!code) {
-      return NextResponse.redirect(
-        new URL("/work/call?google=failed", request.url)
+    if (
+      !parsedState ||
+      !parsedCookieState ||
+      parsedState.nonce !== parsedCookieState.nonce ||
+      parsedState.userId !== parsedCookieState.userId ||
+      parsedState.next !== parsedCookieState.next ||
+      parsedState.expiresAt !== parsedCookieState.expiresAt ||
+      parsedState.expiresAt < Date.now()
+    ) {
+      return clearStateCookie(
+        NextResponse.redirect(
+          new URL("/work/call?google=invalid_state", request.url)
+        )
       );
     }
+
+    nextPath = parsedState.next;
 
     const supabase = await createClient();
 
@@ -39,10 +64,10 @@ export async function GET(request: NextRequest) {
       error,
     } = await supabase.auth.getUser();
 
-    if (error || !user) {
-      return NextResponse.redirect(
+    if (error || !user || user.id !== parsedState.userId) {
+      return clearStateCookie(NextResponse.redirect(
         new URL("/work/call?google=auth_failed", request.url)
-      );
+      ));
     }
 
     const { data: existingConnection } = await supabase
@@ -92,12 +117,12 @@ export async function GET(request: NextRequest) {
       throw new Error(upsertError.message);
     }
 
-    return NextResponse.redirect(new URL(nextPath, request.url));
+    return clearStateCookie(NextResponse.redirect(new URL(nextPath, request.url)));
   } catch (error) {
     console.error(error);
 
-    return NextResponse.redirect(
+    return clearStateCookie(NextResponse.redirect(
       new URL("/work/call?google=failed", request.url)
-    );
+    ));
   }
 }

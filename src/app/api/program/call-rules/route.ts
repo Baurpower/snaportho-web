@@ -6,6 +6,10 @@ import {
   getProgramRules,
   replaceProgramRulesForRuleSet,
 } from "@/lib/workspace/call/programcallrules";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 type IncomingRule = {
   id?: string;
@@ -43,6 +47,12 @@ export async function GET(request: NextRequest) {
     if (!membership?.program_id) {
       return NextResponse.json({ rules: [], ruleSetId: null });
     }
+
+    await requireWorkspacePermission({
+      userId: user.id,
+      programId: membership.program_id,
+      permission: "canManageCallRules",
+    });
 
     let ruleSetId = requestedRuleSetId;
 
@@ -97,6 +107,12 @@ export async function PUT(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    await requireWorkspacePermission({
+      userId: user.id,
+      programId: membership.program_id,
+      permission: "canManageCallRules",
+    });
 
     const body = await request.json();
     const ruleSetId = body?.ruleSetId as string | undefined;
@@ -155,6 +171,10 @@ export async function PUT(request: NextRequest) {
       rules: saved,
     });
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     return NextResponse.json(
       {
         error:

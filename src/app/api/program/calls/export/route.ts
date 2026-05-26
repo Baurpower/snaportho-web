@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 type ExportScope = "mine" | "program";
 
@@ -157,6 +161,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    if (scope === "program") {
+      await requireWorkspacePermission({
+        userId: user.id,
+        programId: activeMembership.program_id,
+        permission: "canExportProgramCallCalendar",
+      });
+    }
+
     const startIso = `${monthStart}T00:00:00.000Z`;
     const endIso = `${monthEnd}T23:59:59.999Z`;
 
@@ -238,6 +250,10 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     return NextResponse.json(
       {
         error: error instanceof Error ? error.message : "Failed to export call calendar",

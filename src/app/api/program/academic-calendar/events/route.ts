@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { z } from "zod";
+import { requireAcademicCalendarAccess } from "@/lib/workspace/academic-calendar/permissions";
 
 const CreateAcademicEventSchema = z.object({
   program_id: z.string().uuid(),
@@ -46,6 +47,17 @@ export async function GET(request: NextRequest) {
 
   if (!programId) {
     return jsonError("Missing programId", 400);
+  }
+
+  const access = await requireAcademicCalendarAccess({
+    supabase,
+    userId: user.id,
+    programId,
+    level: "view",
+  });
+
+  if (!access.ok) {
+    return jsonError(access.error ?? "You do not have access to this academic calendar", 403);
   }
 
   let query = supabase
@@ -138,6 +150,17 @@ export async function POST(request: NextRequest) {
   }
 
   const event = parsed.data;
+
+  const access = await requireAcademicCalendarAccess({
+    supabase,
+    userId: user.id,
+    programId: event.program_id,
+    level: "edit",
+  });
+
+  if (!access.ok) {
+    return jsonError(access.error ?? "You do not have permission to create academic events", 403);
+  }
 
   const startDate = new Date(event.start_datetime);
   const endDate = new Date(event.end_datetime);

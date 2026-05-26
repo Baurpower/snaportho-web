@@ -13,11 +13,13 @@ import {
   PlaneTakeoffIcon,
   GraduationCap,
 } from "lucide-react";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 type NavItem = {
   label: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
+  adminLabel?: string;
 };
 
 type WorkspaceSidebarProps = {
@@ -26,14 +28,29 @@ type WorkspaceSidebarProps = {
 
 const PRIMARY_NAV: NavItem[] = [
   { label: "Home", href: "/work", icon: LayoutGrid },
-  { label: "Call", href: "/work/call", icon: Calendar },
+  {
+    label: "Call",
+    adminLabel: "Call Hub",
+    href: "/work/call",
+    icon: Calendar,
+  },
   { label: "Time Off", href: "/work/time-off", icon: PlaneTakeoffIcon },
-  { label: "Academics", href: "/work/academic", icon: GraduationCap },
+  {
+    label: "Academics",
+    adminLabel: "Academic Calendar",
+    href: "/work/academic",
+    icon: GraduationCap,
+  },
 ];
 
 const BOTTOM_NAV: NavItem[] = [
   { label: "Profile", href: "/work/profile", icon: UserCircle2 },
-  { label: "Settings", href: "/work/settings", icon: Settings },
+  {
+    label: "Settings",
+    adminLabel: "Program Settings",
+    href: "/work/settings",
+    icon: Settings,
+  },
 ];
 
 const STORAGE_KEY = "snaportho-workspace-sidebar-collapsed";
@@ -49,13 +66,16 @@ function NavLink({
   href,
   collapsed,
   active,
+  isAdminMode,
 }: {
   item: NavItem;
   href: string;
   collapsed: boolean;
   active: boolean;
+  isAdminMode: boolean;
 }) {
   const Icon = item.icon;
+  const label = isAdminMode ? item.adminLabel ?? item.label : item.label;
 
   return (
     <Link
@@ -67,7 +87,7 @@ function NavLink({
           ? "bg-slate-950 text-white shadow-sm"
           : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
       }`}
-      title={collapsed ? item.label : undefined}
+      title={collapsed ? label : undefined}
     >
       <Icon
         className={`h-5 w-5 shrink-0 ${
@@ -77,7 +97,7 @@ function NavLink({
         }`}
       />
       {!collapsed ? (
-        <span className="truncate text-sm font-semibold">{item.label}</span>
+        <span className="truncate text-sm font-semibold">{label}</span>
       ) : null}
     </Link>
   );
@@ -85,8 +105,18 @@ function NavLink({
 
 export function WorkspaceSidebar({ onHide }: WorkspaceSidebarProps) {
   const pathname = usePathname();
+  const { permissions, isAdmin } = useWorkspacePermissions();
   const [collapsed, setCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const bottomNav = useMemo(
+    () =>
+      BOTTOM_NAV.filter((item) =>
+        item.href === "/work/settings"
+          ? permissions?.canManageProgramSettings ?? false
+          : true
+      ),
+    [permissions?.canManageProgramSettings]
+  );
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -164,7 +194,7 @@ export function WorkspaceSidebar({ onHide }: WorkspaceSidebarProps) {
           <nav className="space-y-1">
             {!collapsed ? (
               <p className="px-3 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Schedule
+                {isAdmin ? "Workspace" : "Schedule"}
               </p>
             ) : null}
 
@@ -175,25 +205,41 @@ export function WorkspaceSidebar({ onHide }: WorkspaceSidebarProps) {
                 href={item.href}
                 collapsed={collapsed}
                 active={isActivePath(pathname, item.href)}
+                isAdminMode={isAdmin}
               />
             ))}
           </nav>
 
+          {isAdmin && !collapsed ? (
+            <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-3.5 py-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Program Operations
+              </p>
+              <p className="mt-1.5 text-sm font-semibold text-slate-900">
+                Admin workspace mode is active.
+              </p>
+              <p className="mt-1 text-xs leading-5 text-slate-500">
+                Manage schedules, swaps, academic planning, and program setup from the current workspace shell.
+              </p>
+            </div>
+          ) : null}
+
           <div className="mt-6 border-t border-slate-200 pt-4">
             {!collapsed ? (
               <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                Account
+                {isAdmin ? "Program & Account" : "Account"}
               </p>
             ) : null}
 
             <div className="space-y-1">
-              {BOTTOM_NAV.map((item) => (
+              {bottomNav.map((item) => (
                 <NavLink
                   key={item.href}
                   item={item}
                   href={item.href}
                   collapsed={collapsed}
                   active={isActivePath(pathname, item.href)}
+                  isAdminMode={isAdmin}
                 />
               ))}
             </div>

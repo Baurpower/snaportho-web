@@ -1,72 +1,368 @@
 import { google, calendar_v3 } from "googleapis";
-import { createClient } from "@/utils/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { getWorkspaceAccessContext } from "@/lib/workspace/access-control";
 import { getGoogleOAuthClient } from "@/lib/google/calendar";
+import {
+  classifyGoogleCalendarError,
+  getGoogleErrorStatus,
+  type GoogleCalendarErrorClass,
+} from "@/lib/google/errors";
 
-export async function syncGoogleCalendarAfterCallChange(userId: string) {
-  const supabase = await createClient();
+type CalendarScope = "mine" | "program";
 
-  const { data: syncSettings } = await supabase
+type SyncedEventRow = {
+  id: string;
+  call_assignment_id: string | null;
+  provider_event_id: string | null;
+  provider_calendar_id: string | null;
+};
+
+type CallRow = {
+  id: string;
+  program_id: string | null;
+  program_membership_id: string | null;
+  call_type: string | null;
+  call_date: string | null;
+  start_datetime: string | null;
+  end_datetime: string | null;
+  site: string | null;
+  is_home_call: boolean | null;
+  notes: string | null;
+  program_memberships:
+    | { display_name: string | null }
+    | { display_name: string | null }[]
+    | null;
+};
+
+type ReconciliationIssue = {
+  callAssignmentId?: string | null;
+  eventId?: string | null;
+  errorClass: GoogleCalendarErrorClass;
+  message: string;
+  status: number | null;
+};
+
+type ReconciliationSummary = {
+  skipped: boolean;
+  reason?: string;
+  scope?: CalendarScope;
+  created: number;
+  updated: number;
+  deleted: number;
+  errors: ReconciliationIssue[];
+};
+
+function isDev() {
+  return process.env.NODE_ENV !== "production";
+}
+
+function logSync(label: string, details?: Record<string, unknown>) {
+  if (!isDev()) return;
+  const payload = details ? ` ${JSON.stringify(details)}` : "";
+  console.info(`[google-calendar-sync] ${label}${payload}`);
+}
+
+function addOneDay(dateString: string) {
+  const date = new Date(`${dateString}T00:00:00.000Z`);
+  date.setUTCDate(date.getUTCDate() + 1);
+  return date.toISOString().slice(0, 10);
+}
+
+function normalizeMembership(membership: CallRow["program_memberships"]) {
+  if (!membership) return null;
+  if (Array.isArray(membership)) return membership[0] ?? null;
+  return membership;
+}
+
+function toSummary(
+  scope: CalendarScope,
+  call: CallRow
+) {
+  const membership = normalizeMembership(call.program_memberships);
+  const residentName = membership?.display_name ?? "Unknown Resident";
+
+  return scope === "mine"
+    ? `${call.call_type ?? "Call"} Call`
+    : `${residentName} — ${call.call_type ?? "Call"} Call`;
+}
+
+function buildEventPayload(scope: CalendarScope, call: CallRow): calendar_v3.Schema$Event | null {
+  const eventPayload: calendar_v3.Schema$Event = {
+    summary: toSummary(scope, call),
+    description: [
+      "Created by SnapOrtho Workspace.",
+      call.site ? `Site: ${call.site}` : null,
+      call.is_home_call ? "Home Call" : null,
+      call.notes ? `Notes: ${call.notes}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n"),
+    location: call.site ?? undefined,
+    extendedProperties: {
+      private: {
+        snaportho_call_assignment_id: call.id,
+        snaportho_sync_scope: scope,
+      },
+    },
+  };
+
+  if (call.start_datetime && call.end_datetime) {
+    eventPayload.start = { dateTime: call.start_datetime };
+    eventPayload.end = { dateTime: call.end_datetime };
+    return eventPayload;
+  }
+
+  if (call.call_date) {
+    eventPayload.start = { date: call.call_date };
+    eventPayload.end = { date: addOneDay(call.call_date) };
+    return eventPayload;
+  }
+
+  return null;
+}
+
+async function deleteGoogleEventSafely(params: {
+  calendar: ReturnType<typeof google.calendar>;
+  calendarId: string;
+  eventId: string;
+}) {
+  try {
+    await params.calendar.events.delete({
+      calendarId: params.calendarId,
+      eventId: params.eventId,
+    });
+
+    return true;
+  } catch (error) {
+    const errorClass = classifyGoogleCalendarError(error);
+    if (errorClass === "event_missing") {
+      return true;
+    }
+
+    throw error;
+  }
+}
+
+function classifyScope(value: string | null | undefined): CalendarScope | null {
+  return value === "program" || value === "mine" ? value : null;
+}
+
+async function inferScopeFromExistingRows(params: {
+  userId: string;
+  programMembershipId: string | null;
+}) {
+  const supabase = createAdminClient();
+
+  const { data, error } = await supabase
+    .from("synced_call_events")
+    .select(
+      `
+        call_assignment_id,
+        call_assignments (
+          program_membership_id
+        )
+      `
+    )
+    .eq("user_id", params.userId)
+    .eq("provider", "google")
+    .eq("sync_target", "user");
+
+  if (error) {
+    throw new Error(`Failed inferring Google sync scope: ${error.message}`);
+  }
+
+  const rows = (data ?? []) as Array<{
+    call_assignment_id: string | null;
+    call_assignments:
+      | { program_membership_id: string | null }
+      | { program_membership_id: string | null }[]
+      | null;
+  }>;
+
+  const hasProgramWideRow = rows.some((row) => {
+    const call = Array.isArray(row.call_assignments)
+      ? row.call_assignments[0]
+      : row.call_assignments;
+
+    return Boolean(
+      call?.program_membership_id &&
+        params.programMembershipId &&
+        call.program_membership_id !== params.programMembershipId
+    );
+  });
+
+  return hasProgramWideRow ? "program" : "mine";
+}
+
+async function loadCallsForReconciliation(params: {
+  programId: string;
+  scope: CalendarScope;
+  programMembershipId: string | null;
+  relevantCallAssignmentIds: string[];
+}) {
+  if (params.relevantCallAssignmentIds.length === 0) {
+    return [] as CallRow[];
+  }
+
+  const supabase = createAdminClient();
+  let query = supabase
+    .from("call_assignments")
+    .select(
+      `
+        id,
+        program_id,
+        program_membership_id,
+        call_type,
+        call_date,
+        start_datetime,
+        end_datetime,
+        site,
+        is_home_call,
+        notes,
+        program_memberships (
+          display_name
+        )
+      `
+    )
+    .eq("program_id", params.programId)
+    .in("id", params.relevantCallAssignmentIds);
+
+  if (params.scope === "mine") {
+    query = query.eq("program_membership_id", params.programMembershipId);
+  }
+
+  const { data, error } = await query;
+
+  if (error) {
+    throw new Error(`Failed loading calls for Google reconciliation: ${error.message}`);
+  }
+
+  return (data ?? []) as CallRow[];
+}
+
+export async function reconcileGoogleCalendarForUser(
+  userId: string,
+  options?: {
+    programId?: string | null;
+    affectedCallAssignmentIds?: string[];
+    scope?: CalendarScope;
+    source?: string;
+  }
+): Promise<ReconciliationSummary> {
+  const startedAt = Date.now();
+  const userIdPrefix = userId.slice(0, 8);
+  const affectedIds = Array.from(new Set((options?.affectedCallAssignmentIds ?? []).filter(Boolean)));
+
+  logSync("reconcile.start", {
+    userIdPrefix,
+    source: options?.source ?? null,
+    affectedCallCount: affectedIds.length,
+  });
+
+  const supabase = createAdminClient();
+
+  const { accessContext, membership } = await getWorkspaceAccessContext({
+    userId,
+    programId: options?.programId ?? undefined,
+  });
+
+  if (!accessContext?.programId || !membership?.id) {
+    return {
+      skipped: true,
+      reason: "No active workspace context",
+      created: 0,
+      updated: 0,
+      deleted: 0,
+      errors: [],
+    };
+  }
+
+  const { data: syncSettings, error: syncSettingsError } = await supabase
     .from("user_calendar_sync_settings")
-    .select("enabled")
+    .select("enabled, scope")
     .eq("user_id", userId)
     .eq("provider", "google")
     .maybeSingle();
 
+  if (syncSettingsError) {
+    throw new Error(`Failed loading Google sync settings: ${syncSettingsError.message}`);
+  }
+
   if (!syncSettings?.enabled) {
     return {
       skipped: true,
-      reason: "Google Sync is not enabled",
+      reason: "Google sync is not enabled",
+      created: 0,
+      updated: 0,
+      deleted: 0,
+      errors: [],
     };
   }
 
-  const { data: connection } = await supabase
+  const { data: connection, error: connectionError } = await supabase
     .from("user_calendar_connections")
     .select("access_token, refresh_token, calendar_id")
     .eq("user_id", userId)
     .eq("provider", "google")
     .maybeSingle();
 
+  if (connectionError) {
+    throw new Error(`Failed loading Google connection: ${connectionError.message}`);
+  }
+
   if (!connection?.calendar_id) {
     return {
       skipped: true,
-      reason: "Google Calendar is not connected",
+      reason: "Google calendar is not connected",
+      created: 0,
+      updated: 0,
+      deleted: 0,
+      errors: [],
     };
   }
 
-  const { data: syncedRows, error: syncedRowsError } = await supabase
+  const scope =
+    options?.scope ??
+    classifyScope(syncSettings?.scope) ??
+    (await inferScopeFromExistingRows({
+      userId,
+      programMembershipId: membership.id,
+    }));
+
+  const { data: existingRows, error: existingRowsError } = await supabase
     .from("synced_call_events")
-    .select(
-      `
-        id,
-        call_assignment_id,
-        provider_event_id,
-        provider_calendar_id,
-        call_assignments (
-          id,
-          call_type,
-          call_date,
-          start_datetime,
-          end_datetime,
-          site,
-          is_home_call,
-          notes,
-          program_memberships (
-            display_name
-          )
-        )
-      `
-    )
+    .select("id, call_assignment_id, provider_event_id, provider_calendar_id")
     .eq("user_id", userId)
     .eq("provider", "google")
-    .eq("sync_target", "user")
-    .eq("sync_enabled", true);
+    .eq("sync_target", "user");
 
-  if (syncedRowsError) {
-    throw new Error(syncedRowsError.message);
+  if (existingRowsError) {
+    throw new Error(`Failed loading synced call events: ${existingRowsError.message}`);
   }
 
-  const oauth2Client = getGoogleOAuthClient();
+  const syncedRows = (existingRows ?? []) as SyncedEventRow[];
+  const relevantCallAssignmentIds = Array.from(
+    new Set([
+      ...syncedRows.map((row) => row.call_assignment_id).filter(Boolean),
+      ...affectedIds,
+    ])
+  ) as string[];
 
+  const currentCalls = await loadCallsForReconciliation({
+    programId: accessContext.programId,
+    scope,
+    programMembershipId: membership.id,
+    relevantCallAssignmentIds,
+  });
+
+  const callsById = new Map(currentCalls.map((call) => [call.id, call]));
+  const rowsByCallId = new Map(
+    syncedRows
+      .filter((row) => row.call_assignment_id)
+      .map((row) => [row.call_assignment_id as string, row])
+  );
+
+  const oauth2Client = getGoogleOAuthClient();
   oauth2Client.setCredentials({
     access_token: connection.access_token,
     refresh_token: connection.refresh_token,
@@ -77,103 +373,235 @@ export async function syncGoogleCalendarAfterCallChange(userId: string) {
     auth: oauth2Client,
   });
 
-  let updatedCount = 0;
-  let removedCount = 0;
+  let created = 0;
+  let updated = 0;
+  let deleted = 0;
+  const errors: ReconciliationIssue[] = [];
+  const nowIso = new Date().toISOString();
+  const staleRowIdsToDelete = new Set<string>();
 
-  for (const row of syncedRows ?? []) {
-    const call = Array.isArray(row.call_assignments)
-      ? row.call_assignments[0]
-      : row.call_assignments;
+  for (const row of syncedRows) {
+    const callId = row.call_assignment_id ?? null;
+    const call = callId ? callsById.get(callId) ?? null : null;
+
+    if (!row.provider_event_id) {
+      if (row.id) staleRowIdsToDelete.add(row.id);
+      continue;
+    }
 
     const calendarId =
       row.provider_calendar_id || connection.calendar_id || "primary";
 
-    if (!row.provider_event_id) continue;
-
     if (!call) {
       try {
-        await calendar.events.delete({
+        await deleteGoogleEventSafely({
+          calendar,
           calendarId,
           eventId: row.provider_event_id,
         });
-
-        removedCount += 1;
-      } catch {
-        // Already deleted from Google.
+        deleted += 1;
+      } catch (error) {
+        errors.push({
+          callAssignmentId: callId,
+          eventId: row.provider_event_id,
+          errorClass: classifyGoogleCalendarError(error),
+          message: error instanceof Error ? error.message : "Failed deleting stale event",
+          status: getGoogleErrorStatus(error),
+        });
       }
 
-      await supabase
-        .from("synced_call_events")
-        .delete()
-        .eq("id", row.id);
-
+      if (row.id) staleRowIdsToDelete.add(row.id);
       continue;
     }
 
-    const membership = Array.isArray(call.program_memberships)
-      ? call.program_memberships[0]
-      : call.program_memberships;
-
-    const residentName = membership?.display_name ?? "Unknown Resident";
-
-    const eventPayload: calendar_v3.Schema$Event = {
-      summary: `${residentName} — ${call.call_type ?? "Call"} Call`,
-      description: [
-        "Created by SnapOrtho Workspace.",
-        call.site ? `Site: ${call.site}` : null,
-        call.is_home_call ? "Home Call" : null,
-        call.notes ? `Notes: ${call.notes}` : null,
-      ]
-        .filter(Boolean)
-        .join("\n"),
-      location: call.site ?? undefined,
-      extendedProperties: {
-        private: {
-          snaportho_call_assignment_id: call.id,
-        },
-      },
-    };
-
-    if (call.start_datetime && call.end_datetime) {
-      eventPayload.start = { dateTime: call.start_datetime };
-      eventPayload.end = { dateTime: call.end_datetime };
-    } else if (call.call_date) {
-      const endDate = new Date(`${call.call_date}T00:00:00.000Z`);
-      endDate.setUTCDate(endDate.getUTCDate() + 1);
-
-      eventPayload.start = { date: call.call_date };
-      eventPayload.end = { date: endDate.toISOString().slice(0, 10) };
-    } else {
-      continue;
-    }
+    const payload = buildEventPayload(scope, call);
+    if (!payload) continue;
 
     try {
-      await calendar.events.update({
+      const result = await calendar.events.update({
         calendarId,
         eventId: row.provider_event_id,
-        requestBody: eventPayload,
+        requestBody: payload,
       });
 
-      updatedCount += 1;
+      updated += 1;
 
       await supabase
         .from("synced_call_events")
         .update({
-          synced_at: new Date().toISOString(),
+          provider_event_id: result.data.id ?? row.provider_event_id,
+          provider_calendar_id: connection.calendar_id,
+          synced_at: nowIso,
+          sync_enabled: true,
         })
         .eq("id", row.id);
-    } catch {
-      // If Google event was manually deleted, remove local sync row.
-      await supabase
-        .from("synced_call_events")
-        .delete()
-        .eq("id", row.id);
+    } catch (error) {
+      const errorClass = classifyGoogleCalendarError(error);
+
+      if (errorClass === "event_missing") {
+        try {
+          const createdEvent = await calendar.events.insert({
+            calendarId: connection.calendar_id,
+            requestBody: payload,
+          });
+
+          created += 1;
+
+          await supabase
+            .from("synced_call_events")
+            .upsert(
+              {
+                id: row.id,
+                call_assignment_id: call.id,
+                user_id: userId,
+                provider: "google",
+                provider_event_id: createdEvent.data.id ?? null,
+                provider_calendar_id: connection.calendar_id,
+                sync_target: "user",
+                synced_at: nowIso,
+                program_id: accessContext.programId,
+                sync_enabled: true,
+              },
+              {
+                onConflict: "call_assignment_id,provider,sync_target,user_id",
+              }
+            );
+          continue;
+        } catch (createError) {
+          errors.push({
+            callAssignmentId: call.id,
+            eventId: row.provider_event_id,
+            errorClass: classifyGoogleCalendarError(createError),
+            message:
+              createError instanceof Error
+                ? createError.message
+                : "Failed recreating missing event",
+            status: getGoogleErrorStatus(createError),
+          });
+          continue;
+        }
+      }
+
+      errors.push({
+        callAssignmentId: call.id,
+        eventId: row.provider_event_id,
+        errorClass,
+        message: error instanceof Error ? error.message : "Failed updating Google event",
+        status: getGoogleErrorStatus(error),
+      });
     }
   }
 
+  for (const call of currentCalls) {
+    if (rowsByCallId.has(call.id)) continue;
+
+    const payload = buildEventPayload(scope, call);
+    if (!payload) continue;
+
+    try {
+      const createdEvent = await calendar.events.insert({
+        calendarId: connection.calendar_id,
+        requestBody: payload,
+      });
+
+      await supabase
+        .from("synced_call_events")
+        .upsert(
+          {
+            call_assignment_id: call.id,
+            user_id: userId,
+            provider: "google",
+            provider_event_id: createdEvent.data.id ?? null,
+            provider_calendar_id: connection.calendar_id,
+            sync_target: "user",
+            synced_at: nowIso,
+            program_id: accessContext.programId,
+            sync_enabled: true,
+          },
+          {
+            onConflict: "call_assignment_id,provider,sync_target,user_id",
+          }
+        );
+
+      created += 1;
+    } catch (error) {
+      errors.push({
+        callAssignmentId: call.id,
+        errorClass: classifyGoogleCalendarError(error),
+        message: error instanceof Error ? error.message : "Failed creating Google event",
+        status: getGoogleErrorStatus(error),
+      });
+    }
+  }
+
+  if (staleRowIdsToDelete.size > 0) {
+    await supabase
+      .from("synced_call_events")
+      .delete()
+      .in("id", Array.from(staleRowIdsToDelete));
+  }
+
+  const hasErrors = errors.length > 0;
+  await supabase
+    .from("user_calendar_sync_settings")
+    .update({
+      scope,
+      last_error: hasErrors ? errors[0]?.message ?? null : null,
+      last_error_at: hasErrors ? nowIso : null,
+      last_success_at: hasErrors ? null : nowIso,
+      updated_at: nowIso,
+    })
+    .eq("user_id", userId)
+    .eq("provider", "google");
+
+  logSync("reconcile.finish", {
+    userIdPrefix,
+    scope,
+    calendarIdPrefix: connection.calendar_id?.slice(0, 12) ?? null,
+    created,
+    updated,
+    deleted,
+    errorCount: errors.length,
+    durationMs: Date.now() - startedAt,
+  });
+
   return {
     skipped: false,
-    updatedCount,
-    removedCount,
+    scope,
+    created,
+    updated,
+    deleted,
+    errors,
   };
 }
+
+export function triggerGoogleCalendarReconciliation(params: {
+  userIds: Array<string | null | undefined>;
+  programId?: string | null;
+  affectedCallAssignmentIds?: string[];
+  source?: string;
+}) {
+  const userIds = Array.from(new Set(params.userIds.filter(Boolean))) as string[];
+  const affectedCallAssignmentIds = Array.from(
+    new Set((params.affectedCallAssignmentIds ?? []).filter(Boolean))
+  );
+
+  for (const userId of userIds) {
+    void reconcileGoogleCalendarForUser(userId, {
+      programId: params.programId ?? null,
+      affectedCallAssignmentIds,
+      source: params.source,
+    }).catch((error) => {
+      logSync("reconcile.error", {
+        userIdPrefix: userId.slice(0, 8),
+        programId: params.programId ?? null,
+        source: params.source ?? null,
+        errorClass: classifyGoogleCalendarError(error),
+        message: error instanceof Error ? error.message : "Unknown reconciliation error",
+      });
+    });
+  }
+}
+
+// Legacy alias for older imports. New code should use reconcileGoogleCalendarForUser.
+export const syncGoogleCalendarAfterCallChange = reconcileGoogleCalendarForUser;

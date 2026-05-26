@@ -32,6 +32,7 @@ export function normalizeProgramScopedRole(role: string | null | undefined) {
 export function canManageProgramTimeOff(params: {
   rosterRole?: string | null;
   membershipRole?: string | null;
+  isRosterAdmin?: boolean | null;
 }) {
   const rosterRole = normalizeProgramScopedRole(params.rosterRole);
   const membershipRole = normalizeProgramScopedRole(params.membershipRole);
@@ -39,9 +40,7 @@ export function canManageProgramTimeOff(params: {
   return {
     rosterRole,
     membershipRole,
-    canManage:
-      (rosterRole ? PROGRAM_TIME_OFF_EDITOR_ROLES.has(rosterRole) : false) ||
-      (membershipRole ? PROGRAM_TIME_OFF_EDITOR_ROLES.has(membershipRole) : false),
+    canManage: Boolean(params.isRosterAdmin),
   };
 }
 

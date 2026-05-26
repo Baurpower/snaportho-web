@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
-import { syncGoogleCalendarAfterCallChange } from "@/lib/google/syncCallCalendarAfterChange";
+import { triggerGoogleCalendarReconciliation } from "@/lib/google/syncCallCalendarAfterChange";
 import {
   assertValidProgramCallMutationDraft,
   ProgramCallScheduleValidationError,
 } from "@/lib/workspace/call/calls";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 type CallAssignmentRow = {
   id: string;
@@ -19,6 +22,11 @@ type CallAssignmentRow = {
   site: string | null;
   is_home_call: boolean | null;
   notes: string | null;
+};
+
+type RosterIdentityRow = {
+  id: string;
+  claimed_by_user_id: string | null;
 };
 
 function isUniqueConstraintError(message: string) {
@@ -54,14 +62,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const activeMembership = await getActiveMembershipForUser(user.id);
-
-    if (!activeMembership?.program_id) {
-      return NextResponse.json(
-        { error: "No active program membership found" },
-        { status: 400 }
-      );
-    }
+    const access = await requireWorkspacePermission({
+      userId: user.id,
+      permission: "canEditCallAssignments",
+    });
 
     const body = await request.json().catch(() => null);
 
@@ -89,7 +93,7 @@ export async function POST(request: NextRequest) {
       .select(
         "id, program_id, roster_id, program_membership_id, call_type, call_date, start_datetime, end_datetime, site, is_home_call, notes"
       )
-      .eq("program_id", activeMembership.program_id)
+      .eq("program_id", access.accessContext.programId)
       .in("id", [firstCallId, secondCallId]);
 
     if (rowsError) {
@@ -142,7 +146,7 @@ export async function POST(request: NextRequest) {
     };
 
     await assertValidProgramCallMutationDraft({
-      programId: activeMembership.program_id,
+      programId: access.accessContext.programId,
       touchedDates: [firstCall.call_date, secondCall.call_date].filter(
         (value): value is string => Boolean(value)
       ),
@@ -178,7 +182,7 @@ export async function POST(request: NextRequest) {
         updated_at: timestamp,
       })
       .eq("id", firstCall.id)
-      .eq("program_id", activeMembership.program_id);
+      .eq("program_id", access.accessContext.programId);
 
     if (tempMoveError) {
       throw new Error(`Failed preparing swap: ${tempMoveError.message}`);
@@ -193,7 +197,7 @@ export async function POST(request: NextRequest) {
         updated_at: timestamp,
       })
       .eq("id", secondCall.id)
-      .eq("program_id", activeMembership.program_id);
+      .eq("program_id", access.accessContext.programId);
 
     if (updateSecondError) {
       // best-effort rollback
@@ -228,7 +232,7 @@ export async function POST(request: NextRequest) {
         updated_at: new Date().toISOString(),
       })
       .eq("id", firstCall.id)
-      .eq("program_id", activeMembership.program_id);
+      .eq("program_id", access.accessContext.programId);
 
     if (finalizeFirstError) {
       // best-effort rollback attempt
@@ -264,11 +268,27 @@ export async function POST(request: NextRequest) {
       throw new Error(`Failed finalizing swap: ${finalizeFirstError.message}`);
     }
 
-        try {
-      await syncGoogleCalendarAfterCallChange(user.id);
-    } catch (syncError) {
-      console.error("Google sync after call swap failed:", syncError);
-    }
+    const { data: rosterRows } = await supabase
+      .from("program_roster")
+      .select("id, claimed_by_user_id")
+      .in(
+        "id",
+        Array.from(
+          new Set([firstOriginal.roster_id, secondOriginal.roster_id].filter(Boolean))
+        ) as string[]
+      );
+
+    triggerGoogleCalendarReconciliation({
+      userIds: [
+        user.id,
+        ...((rosterRows ?? []) as RosterIdentityRow[]).map(
+          (row) => row.claimed_by_user_id
+        ),
+      ],
+      programId: access.accessContext.programId,
+      affectedCallAssignmentIds: [firstCall.id, secondCall.id],
+      source: "call-swap",
+    });
 
     return NextResponse.json(
       {
@@ -282,6 +302,10 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     if (error instanceof ProgramCallScheduleValidationError) {
       return NextResponse.json(
         {

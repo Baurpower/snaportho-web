@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useWorkspaceInfo } from "@/lib/workspace/use-workspace-info";
 import AcademicEventDetailDrawer from "@/components/workspace/academic/academiceventdetail";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 type AssignmentStatus =
   | "assigned"
@@ -144,6 +145,11 @@ function isDueSoon(assignment: AcademicAssignment) {
 export default function AcademicAssignmentsPage() {
   const router = useRouter();
   const {
+    loading: permissionsLoading,
+    permissions,
+    isRosterLinked,
+  } = useWorkspacePermissions();
+  const {
     programId,
     loading: workspaceLoading,
     error: workspaceError,
@@ -160,6 +166,24 @@ export default function AcademicAssignmentsPage() {
   const [statusFilter, setStatusFilter] = useState<"all" | AssignmentStatus>(
     "all"
   );
+
+  useEffect(() => {
+    if (permissionsLoading) return;
+
+    if (!permissions?.canViewAcademicCalendar) {
+      router.replace("/work");
+      return;
+    }
+
+    if (!isRosterLinked) {
+      router.replace("/work/onboarding");
+    }
+  }, [
+    isRosterLinked,
+    permissions?.canViewAcademicCalendar,
+    permissionsLoading,
+    router,
+  ]);
 
   useEffect(() => {
     if (!programId) {
@@ -279,7 +303,7 @@ export default function AcademicAssignmentsPage() {
     };
   }, [assignments]);
 
-  if (workspaceLoading || loading) {
+  if (permissionsLoading || workspaceLoading || loading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
         <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm font-semibold text-slate-200 shadow-xl">

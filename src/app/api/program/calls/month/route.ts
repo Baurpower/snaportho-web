@@ -107,6 +107,7 @@ export async function GET(request: NextRequest) {
     if (!activeMembership?.program_id) {
       return NextResponse.json(
         {
+          programId: null,
           monthStart,
           monthEnd,
           myMembershipId: null,
@@ -133,7 +134,7 @@ export async function GET(request: NextRequest) {
       site,
       is_home_call,
       notes,
-      program_roster (
+      program_roster:program_roster!call_assignments_roster_id_fkey (
         id,
         full_name,
         first_name,
@@ -251,6 +252,7 @@ export async function GET(request: NextRequest) {
       {
         monthStart,
         monthEnd,
+        programId: activeMembership.program_id,
         myMembershipId: activeMembership.id,
         myRosterId: activeMembership.roster_id ?? null,
         residents,
@@ -271,6 +273,7 @@ export async function GET(request: NextRequest) {
 
           return {
             id: row.id,
+            programId: row.program_id,
             residentId: row.roster_id ?? row.program_membership_id,
             rosterId: row.roster_id,
             programMembershipId: row.program_membership_id,

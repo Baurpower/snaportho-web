@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { z } from "zod";
+import { requireAcademicCalendarAccess } from "@/lib/workspace/academic-calendar/permissions";
 
 const AssignmentStatusSchema = z.enum([
   "assigned",
@@ -54,6 +55,19 @@ export async function GET(request: NextRequest) {
   // Default behavior: only return assignments for the logged-in user's roster row.
   // Use mineOnly=false for admin/program-wide views.
   const mineOnly = searchParams.get("mineOnly") !== "false";
+
+  if (programId) {
+    const access = await requireAcademicCalendarAccess({
+      supabase,
+      userId: user.id,
+      programId,
+      level: "view",
+    });
+
+    if (!access.ok) {
+      return jsonError(access.error ?? "You do not have access to this academic calendar", 403);
+    }
+  }
 
   let activeRosterId = rosterId;
 
@@ -187,6 +201,27 @@ export async function POST(request: NextRequest) {
   }
 
   const assignment = parsed.data;
+
+  const { data: event, error: eventError } = await supabase
+    .from("academic_events")
+    .select("program_id")
+    .eq("id", assignment.academic_event_id)
+    .maybeSingle();
+
+  if (eventError || !event?.program_id) {
+    return jsonError("Academic event not found", 404);
+  }
+
+  const access = await requireAcademicCalendarAccess({
+    supabase,
+    userId: user.id,
+    programId: event.program_id,
+    level: "edit",
+  });
+
+  if (!access.ok) {
+    return jsonError(access.error ?? "You do not have permission to manage academic assignments", 403);
+  }
 
   const { data, error } = await supabase
     .from("academic_event_assignments")

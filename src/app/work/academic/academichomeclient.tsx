@@ -18,6 +18,7 @@ import AcademicWeekView from "@/components/workspace/academic/academicweekview";
 import AcademicListView from "@/components/workspace/academic/academiclistview";
 import AcademicEventDetailDrawer from "@/components/workspace/academic/academiceventdetail";
 import { useWorkspaceInfo } from "@/lib/workspace/use-workspace-info";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 type ViewMode = "week" | "list";
 
@@ -151,6 +152,8 @@ function getLocationText(event: MonthEvent) {
 export default function AcademicCalendarHomePage() {
   const router = useRouter();
   const { programId } = useWorkspaceInfo();
+  const { permissions } = useWorkspacePermissions();
+  const canCreateAcademicEvents = permissions?.canCreateAcademicEvents ?? false;
 
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [viewMode, setViewMode] = useState<ViewMode>("week");
@@ -537,14 +540,16 @@ const params = new URLSearchParams({
                   </button>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => router.push("/work/academic/add")}
-                  className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
-                >
-                  <Plus className="h-4 w-4" />
-                  Create Event
-                </button>
+                {canCreateAcademicEvents ? (
+                  <button
+                    type="button"
+                    onClick={() => router.push("/work/academic/add")}
+                    className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Manage Academic Calendar
+                  </button>
+                ) : null}
               </div>
             </div>
 

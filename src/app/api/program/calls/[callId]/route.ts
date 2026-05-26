@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
-import { syncGoogleCalendarAfterCallChange } from "@/lib/google/syncCallCalendarAfterChange";
+import { triggerGoogleCalendarReconciliation } from "@/lib/google/syncCallCalendarAfterChange";
 import {
   assertValidProgramCallMutationDraft,
   ProgramCallScheduleValidationError,
 } from "@/lib/workspace/call/calls";
+import {
+  requireWorkspacePermission,
+  WorkspacePermissionError,
+} from "@/lib/workspace/access-control";
 
 type RouteContext = {
   params: Promise<{
@@ -25,6 +28,11 @@ type CallAssignmentRow = {
   site: string | null;
   is_home_call: boolean | null;
   notes: string | null;
+};
+
+type RosterIdentityRow = {
+  id: string;
+  claimed_by_user_id: string | null;
 };
 
 function isValidDateString(value: unknown): value is string {
@@ -74,14 +82,10 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const activeMembership = await getActiveMembershipForUser(user.id);
-
-    if (!activeMembership?.program_id) {
-      return NextResponse.json(
-        { error: "No active program membership found" },
-        { status: 400 }
-      );
-    }
+    const access = await requireWorkspacePermission({
+      userId: user.id,
+      permission: "canEditCallAssignments",
+    });
 
     const { data: existingCall, error: existingCallError } = await supabase
       .from("call_assignments")
@@ -89,7 +93,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
         "id, program_id, roster_id, program_membership_id, call_type, call_date, start_datetime, end_datetime, site, is_home_call, notes"
       )
       .eq("id", callId)
-      .eq("program_id", activeMembership.program_id)
+      .eq("program_id", access.accessContext.programId)
       .single<CallAssignmentRow>();
 
     if (existingCallError || !existingCall) {
@@ -182,9 +186,9 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
 
     const { data: targetRoster, error: targetRosterError } = await supabase
       .from("program_roster")
-      .select("id, program_membership_id")
+      .select("id, program_membership_id, claimed_by_user_id")
       .eq("id", nextRosterId)
-      .eq("program_id", activeMembership.program_id)
+      .eq("program_id", access.accessContext.programId)
       .single();
 
     if (targetRosterError || !targetRoster) {
@@ -219,7 +223,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     };
 
     await assertValidProgramCallMutationDraft({
-      programId: activeMembership.program_id,
+      programId: access.accessContext.programId,
       touchedDates: [
         existingCall.call_date,
         nextCallDate,
@@ -242,7 +246,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       .from("call_assignments")
       .update(updatePayload)
       .eq("id", callId)
-      .eq("program_id", activeMembership.program_id)
+      .eq("program_id", access.accessContext.programId)
       .select()
       .single();
 
@@ -260,10 +264,26 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       throw new Error(`Failed updating call row: ${updateError.message}`);
     }
 
-    try {
-      await syncGoogleCalendarAfterCallChange(user.id);
-    } catch (syncError) {
-      console.error("Google sync after call update failed:", syncError);
+    const rosterIdsToResolve = Array.from(
+      new Set([existingCall.roster_id, nextRosterId].filter(Boolean))
+    ) as string[];
+
+    if (rosterIdsToResolve.length > 0) {
+      const { data: rosterRows } = await supabase
+        .from("program_roster")
+        .select("id, claimed_by_user_id")
+        .in("id", rosterIdsToResolve);
+
+      const claimedByUserIds = ((rosterRows ?? []) as RosterIdentityRow[]).map(
+        (row) => row.claimed_by_user_id
+      );
+
+      triggerGoogleCalendarReconciliation({
+        userIds: [user.id, ...claimedByUserIds],
+        programId: access.accessContext.programId,
+        affectedCallAssignmentIds: [existingCall.id],
+        source: "call-update",
+      });
     }
 
     return NextResponse.json(
@@ -274,6 +294,10 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     if (error instanceof ProgramCallScheduleValidationError) {
       return NextResponse.json(
         {
@@ -318,20 +342,16 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const activeMembership = await getActiveMembershipForUser(user.id);
-
-    if (!activeMembership?.program_id) {
-      return NextResponse.json(
-        { error: "No active program membership found" },
-        { status: 400 }
-      );
-    }
+    const access = await requireWorkspacePermission({
+      userId: user.id,
+      permission: "canEditCallAssignments",
+    });
 
     const { data: existingCall, error: existingCallError } = await supabase
       .from("call_assignments")
-      .select("id")
+      .select("id, roster_id")
       .eq("id", callId)
-      .eq("program_id", activeMembership.program_id)
+      .eq("program_id", access.accessContext.programId)
       .single();
 
     if (existingCallError || !existingCall) {
@@ -345,17 +365,30 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
       .from("call_assignments")
       .delete()
       .eq("id", callId)
-      .eq("program_id", activeMembership.program_id);
+      .eq("program_id", access.accessContext.programId);
 
     if (deleteError) {
       throw new Error(`Failed deleting call row: ${deleteError.message}`);
     }
 
-    try {
-      await syncGoogleCalendarAfterCallChange(user.id);
-    } catch (syncError) {
-      console.error("Google sync after call delete failed:", syncError);
+    const userIdsToReconcile = [user.id];
+
+    if (existingCall.roster_id) {
+      const { data: rosterRow } = await supabase
+        .from("program_roster")
+        .select("claimed_by_user_id")
+        .eq("id", existingCall.roster_id)
+        .maybeSingle();
+
+      userIdsToReconcile.push(rosterRow?.claimed_by_user_id ?? null);
     }
+
+    triggerGoogleCalendarReconciliation({
+      userIds: userIdsToReconcile,
+      programId: access.accessContext.programId,
+      affectedCallAssignmentIds: [callId],
+      source: "call-delete",
+    });
 
     return NextResponse.json(
       {
@@ -365,6 +398,10 @@ export async function DELETE(_request: NextRequest, context: RouteContext) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     const message =
       error instanceof Error ? error.message : "Failed to delete call";
 

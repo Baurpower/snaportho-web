@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   Layers3,
   ZoomIn,
@@ -9,6 +10,11 @@ import {
   Users,
   ChevronLeft,
   ChevronRight,
+  Calendar,
+  PlaneTakeoff,
+  Settings2,
+  GraduationCap,
+  ShieldCheck,
 } from "lucide-react";
 
 import {
@@ -26,6 +32,7 @@ import {
   type RotationTimelineEvent,
 } from "@/components/workspace/monthsscheduleview";
 import type { TimeOffItem } from "@/lib/workspace/call/time-off";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -693,6 +700,7 @@ function RotationsPanel({
 }
 
 export default function SnapOrthoWorkspaceHomeDraft() {
+  const { permissions } = useWorkspacePermissions();
   const [viewMode, setViewMode] = useState<ViewMode>("week");
   const [summary, setSummary] = useState<SummaryResponse | null>(null);
   const [weekData, setWeekData] = useState<WeekScheduleResponse | null>(null);
@@ -1261,6 +1269,39 @@ export default function SnapOrthoWorkspaceHomeDraft() {
   const todayCallSummary = useMemo(() => {
     return formatTodayCallSummary(todayProgramCalls);
   }, [todayProgramCalls]);
+  const isAdminMode = permissions?.mode === "admin";
+  const adminQuickLinks = [
+    {
+      href: "/work/call",
+      label: "Manage Schedule",
+      description: "Review assignments, swaps, exports, and calendar sync.",
+      icon: <Calendar className="h-4 w-4" />,
+    },
+    {
+      href: "/work/call/add",
+      label: "Import Call Schedule",
+      description: "Open the current upload and planning workflow.",
+      icon: <ShieldCheck className="h-4 w-4" />,
+    },
+    {
+      href: "/work/time-off/add",
+      label: "Import Time-Off Requests",
+      description: "Add resident requests and program-level time off.",
+      icon: <PlaneTakeoff className="h-4 w-4" />,
+    },
+    {
+      href: "/work/academic/add",
+      label: "Manage Academics",
+      description: "Create events, sessions, and academic resources.",
+      icon: <GraduationCap className="h-4 w-4" />,
+    },
+    {
+      href: "/work/settings",
+      label: "Program Settings",
+      description: "Manage rotations, tracks, and planning templates.",
+      icon: <Settings2 className="h-4 w-4" />,
+    },
+  ];
 
   return (
     <main className="min-h-[calc(100vh-64px)] bg-gradient-to-b from-slate-950 via-slate-900 to-slate-100 text-slate-900">
@@ -1278,7 +1319,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
               <div className="max-w-3xl">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-sky-200">
                   <Layers3 className="h-4 w-4" />
-                  SnapOrtho
+                  {isAdminMode ? "Admin Workspace" : "SnapOrtho"}
                 </div>
 
                 <h1 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl xl:text-6xl">
@@ -1286,8 +1327,9 @@ export default function SnapOrthoWorkspaceHomeDraft() {
                 </h1>
 
                 <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
-                  A clean, fast view of your schedule with the things you actually
-                  need first.
+                  {isAdminMode
+                    ? "The current administrative workspace for daily operations across call, time off, academics, and program setup."
+                    : "A clean, fast view of your schedule with the things you actually need first."}
                 </p>
               </div>
 
@@ -1338,6 +1380,48 @@ export default function SnapOrthoWorkspaceHomeDraft() {
             <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700 shadow-sm">
               {error}
             </div>
+          ) : null}
+
+          {isAdminMode ? (
+            <motion.div initial="hidden" animate="visible" variants={fadeUp}>
+              <SectionShell className="p-5 md:p-6">
+                <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-2">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                      Program Operations
+                    </p>
+                    <div>
+                      <h2 className="text-2xl font-bold tracking-tight text-slate-950">
+                        Admin workspace mode
+                      </h2>
+                      <p className="mt-1 text-sm text-slate-500">
+                        The current workspace shell remains the official admin experience. Use these links to jump into schedule management, imports, approvals, and setup flows.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+                    {adminQuickLinks.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="rounded-[1.4rem] border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
+                      >
+                        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-950 text-white">
+                          {item.icon}
+                        </div>
+                        <p className="mt-3 text-sm font-bold text-slate-950">
+                          {item.label}
+                        </p>
+                        <p className="mt-1 text-xs leading-5 text-slate-500">
+                          {item.description}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </SectionShell>
+            </motion.div>
           ) : null}
 
           <motion.div initial="hidden" animate="visible" variants={fadeUp}>

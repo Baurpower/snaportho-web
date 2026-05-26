@@ -96,6 +96,7 @@ export async function GET() {
     const resolvedPermission = canManageProgramTimeOff({
       rosterRole: membership.roster?.role ?? null,
       membershipRole: membership.role ?? null,
+      isRosterAdmin: membership.roster?.isAdmin ?? false,
     });
 
     logProgramTimeOffPermissionGate({
@@ -229,6 +230,7 @@ export async function POST(request: NextRequest) {
     const resolvedPermission = canManageProgramTimeOff({
       rosterRole: membership.roster?.role ?? null,
       membershipRole: membership.role ?? null,
+      isRosterAdmin: membership.roster?.isAdmin ?? false,
     });
 
     logProgramTimeOffPermissionGate({

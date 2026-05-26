@@ -10,6 +10,7 @@ import type {
 } from "@/components/workspace/call/programcalltypes";
 
 import {
+  evaluateResidentForSlot,
   isResidentAllowedForSlot,
   getFlagsForAssignedResident,
 } from "@/components/workspace/call/programcallevaluator";
@@ -67,10 +68,36 @@ type GeneratedScheduleCombination = {
   rank: number;
   generationVersion: number;
   isComplete: boolean;
+  isValid: boolean;
   score: number;
   openRequiredSlots: number;
+  hardErrorCount: number;
+  warningCount: number;
   assignments: Record<string, DraftDayAssignment>;
   stats: ResidentAutoStats[];
+  diagnostics: CombinationDiagnostics;
+};
+
+type CombinationIssue = {
+  dateKey: string;
+  slot: Slot;
+  residentId: string;
+  residentName: string;
+  severity: "error" | "warning";
+  message: string;
+};
+
+type CombinationDiagnostics = {
+  totalIssues: number;
+  hardErrors: number;
+  warnings: number;
+  primaryIssues: number;
+  backupIssues: number;
+  invalidAssignments: number;
+  unresolvedResidentAssignments: number;
+  isCompleteButInvalid: boolean;
+  examples: CombinationIssue[];
+  invalidAssignmentsByDate: CombinationIssue[];
 };
 
 type ResidentWithRotation = ResidentOption & {
@@ -357,6 +384,113 @@ function updateStats(
       entry.yearWeekendBackup += 1;
     }
   }
+}
+
+function analyzeCombinationDiagnostics({
+  combo,
+  monthDays,
+  residents,
+  rules,
+  availabilityByResident,
+}: {
+  combo: Pick<GeneratedScheduleCombination, "assignments" | "openRequiredSlots">;
+  monthDays: CalendarDay[];
+  residents: ResidentOption[];
+  rules: ProgramRule[];
+  availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
+}) {
+  const residentLookup = new Map(
+    residents.map((resident) => [resident.residentId, resident])
+  );
+
+  const issues: CombinationIssue[] = [];
+  let invalidAssignments = 0;
+  let unresolvedResidentAssignments = 0;
+
+  for (const day of monthDays) {
+    const assignment = combo.assignments[day.key];
+    if (!assignment) continue;
+
+    function inspectResidentAssignment(
+      residentId: string | null | undefined,
+      slot: Slot
+    ) {
+      if (!residentId) return;
+
+      const resident = residentLookup.get(residentId);
+
+      if (!resident) {
+        unresolvedResidentAssignments += 1;
+        issues.push({
+          dateKey: day.key,
+          slot,
+          residentId,
+          residentName: "Unknown resident",
+          severity: "error",
+          message: "Assigned resident id does not match any loaded roster resident.",
+        });
+        return;
+      }
+
+      const evaluation = evaluateResidentForSlot({
+        resident,
+        slot,
+        dateKey: day.key,
+        assignments: combo.assignments,
+        rules,
+        availabilityByResident,
+      });
+
+      let slotHasHardError = false;
+
+      for (const block of evaluation.blocks) {
+        slotHasHardError = true;
+        issues.push({
+          dateKey: day.key,
+          slot,
+          residentId,
+          residentName: resident.displayName,
+          severity: "error",
+          message: block.message,
+        });
+      }
+
+      for (const warning of evaluation.warnings) {
+        issues.push({
+          dateKey: day.key,
+          slot,
+          residentId,
+          residentName: resident.displayName,
+          severity: "warning",
+          message: warning.message,
+        });
+      }
+
+      if (slotHasHardError) {
+        invalidAssignments += 1;
+      }
+    }
+
+    inspectResidentAssignment(assignment.primaryMembershipId, "Primary");
+    inspectResidentAssignment(assignment.backupMembershipId, "Backup");
+  }
+
+  const hardErrors = issues.filter((issue) => issue.severity === "error");
+  const warnings = issues.filter((issue) => issue.severity === "warning");
+
+  return {
+    totalIssues: issues.length,
+    hardErrors: hardErrors.length,
+    warnings: warnings.length,
+    primaryIssues: issues.filter((issue) => issue.slot === "Primary").length,
+    backupIssues: issues.filter((issue) => issue.slot === "Backup").length,
+    invalidAssignments,
+    unresolvedResidentAssignments,
+    isCompleteButInvalid:
+      combo.openRequiredSlots === 0 && hardErrors.length > 0,
+    examples: issues.slice(0, 8),
+    invalidAssignmentsByDate: hardErrors.slice(0, 12),
+  } satisfies CombinationDiagnostics;
 }
 
 function applyExistingAssignmentsToStats(
@@ -780,12 +914,14 @@ function scoreGeneratedSchedule({
   monthDays,
   rules,
   slotMode,
+  diagnostics,
 }: {
   stats: ResidentAutoStats[];
   assignments: Record<string, DraftDayAssignment>;
   monthDays: CalendarDay[];
   rules: ProgramRule[];
   slotMode: QuickAssignSlotMode;
+  diagnostics: CombinationDiagnostics;
 }) {
   const openRequiredSlots = countOpenRequiredSlots({
     monthDays,
@@ -826,7 +962,10 @@ function scoreGeneratedSchedule({
   );
 
   return (
+    diagnostics.hardErrors * 1000000 +
+    diagnostics.invalidAssignments * 250000 +
     openRequiredSlots * 100000 +
+    diagnostics.warnings * 300 +
     adjustedBurdenSpread * 800 +
     adjustedWeekendSpread * 1000 +
     primarySpread * 650 +
@@ -1007,8 +1146,15 @@ function summarizeCombinationForAI(
   return {
     rank: combo.rank,
     isComplete: combo.isComplete,
+    isValid: combo.isValid,
     score: Number(combo.score.toFixed(2)),
     openRequiredSlots: combo.openRequiredSlots,
+    selectionReason:
+      combo.hardErrorCount > 0
+        ? "Ranked lower because it contains hard-rule violations."
+        : combo.openRequiredSlots > 0
+        ? "Ranked lower because required slots remain open."
+        : "Ranked by fairness and burden-balancing score.",
     spreads: {
       primary:
         primaryTotals.length > 0 ? Math.max(...primaryTotals) - Math.min(...primaryTotals) : 0,
@@ -1053,13 +1199,22 @@ function summarizeCombinationForAI(
       selectedIfRankOne: combo.rank === 1,
       monthLength: monthDays.length,
     },
-    ruleWarnings: summarizeRuleWarningsForCombination({
-  combo,
-  monthDays,
-  residents,
-  rules,
-  availabilityByResident,
-}),
+    ruleWarnings: {
+      ...summarizeRuleWarningsForCombination({
+        combo,
+        monthDays,
+        residents,
+        rules,
+        availabilityByResident,
+      }),
+      errors: combo.diagnostics.hardErrors,
+      warnings: combo.diagnostics.warnings,
+      invalidAssignments: combo.diagnostics.invalidAssignments,
+      unresolvedResidentAssignments: combo.diagnostics.unresolvedResidentAssignments,
+      isCompleteButInvalid: combo.diagnostics.isCompleteButInvalid,
+      examples: combo.diagnostics.examples,
+      invalidAssignmentsByDate: combo.diagnostics.invalidAssignmentsByDate,
+    },
   };
 }
 
@@ -1106,27 +1261,47 @@ export function generateCallSchedule({
       slotMode,
     });
 
+    const diagnostics = analyzeCombinationDiagnostics({
+      combo: {
+        assignments: generated.assignments,
+        openRequiredSlots,
+      },
+      monthDays,
+      residents,
+      rules,
+      availabilityByResident,
+    });
+
     const score = scoreGeneratedSchedule({
       stats: generated.stats,
       assignments: generated.assignments,
       monthDays,
       rules,
       slotMode,
+      diagnostics,
     });
 
     combinations.push({
       rank: 0,
       generationVersion: attemptVersion,
       isComplete: openRequiredSlots === 0,
+      isValid: diagnostics.hardErrors === 0,
       score,
       openRequiredSlots,
+      hardErrorCount: diagnostics.hardErrors,
+      warningCount: diagnostics.warnings,
       assignments: generated.assignments,
       stats: generated.stats,
+      diagnostics,
     });
   }
 
   const rankedCombinations = combinations
     .sort((a, b) => {
+      if (a.hardErrorCount !== b.hardErrorCount) {
+        return a.hardErrorCount - b.hardErrorCount;
+      }
+
       if (a.openRequiredSlots !== b.openRequiredSlots) {
         return a.openRequiredSlots - b.openRequiredSlots;
       }
@@ -1139,7 +1314,7 @@ export function generateCallSchedule({
     }));
 
   const completeCombinations = rankedCombinations.filter(
-    (combo) => combo.isComplete
+    (combo) => combo.isComplete && combo.isValid
   );
 
   const topCombinations = rankedCombinations.slice(0, 5);
@@ -1179,6 +1354,13 @@ export function generateCallSchedule({
         weekendBackupWeight: WEEKEND_BACKUP_WEIGHT,
         pgyAdjustment:
           "Lower PGY residents are allowed higher expected burden before fairness penalties increase. Backup call is weighted substantially less than primary call.",
+      },
+      selectionSummary: {
+        selectedRank: best?.rank ?? null,
+        selectedIsValid: best?.isValid ?? null,
+        selectedHardErrorCount: best?.hardErrorCount ?? null,
+        selectedWarningCount: best?.warningCount ?? null,
+        selectedOpenRequiredSlots: best?.openRequiredSlots ?? null,
       },
     },
   };
