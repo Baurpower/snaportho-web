@@ -8,7 +8,9 @@ import {
   ChevronDownIcon,
   Bars3Icon,
 } from '@heroicons/react/24/outline';
-import { getBroBotResponse } from '@/lib/types/api';
+// Phase 1: All BroBot AI calls now go through our secure server proxy.
+// Direct browser calls to the external CasePrep API have been eliminated.
+
 import { createClient } from '@/utils/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import Nav from '@/components/Nav';
@@ -134,9 +136,23 @@ export default function BroBotMember() {
       if (existing?.answer) {
         setData(existing.answer as BroBotPayload);
       } else {
-        // Call API
+        // Phase 1: Call the secure server proxy (the only place that talks to CasePrep)
         const start = Date.now();
-        const parsed = await getBroBotResponse(prompt);
+        const res = await fetch('/api/brobot/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          if (res.status === 429 || err.isLimitReached) {
+            throw new Error(err.error || 'Daily limit reached for today.');
+          }
+          throw new Error(err.error || `HTTP ${res.status}`);
+        }
+
+        const parsed = await res.json();
         setData(parsed);
         const latency = Date.now() - start;
 
@@ -173,6 +189,8 @@ export default function BroBotMember() {
     if (!data || feedbackSubmitted) return;
     setFeedbackSubmitted(true);
     try {
+      // TODO (Phase 2): The route /api/case-prep-feedback does not exist.
+      // Move BroBot feedback to a proper internal endpoint under /api/brobot/feedback.
       await fetch('/api/case-prep-feedback', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },

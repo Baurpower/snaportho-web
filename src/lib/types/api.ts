@@ -10,43 +10,22 @@ if (!BASE) {
 console.log('[BroBot] API base:', BASE);
 
 
-/** POST the user prompt → receive structured JSON */
+/**
+ * @deprecated Phase 1 — Direct browser calls to CasePrep are no longer allowed.
+ * All BroBot AI requests must go through the secure server proxy at /api/brobot/ask.
+ *
+ * This function now throws immediately to prevent accidental bypass of usage limits,
+ * authentication, and guest tracking.
+ */
 export async function getBroBotResponse(
-  prompt: string,
-  signal?: AbortSignal
+  _prompt: string,
+  _signal?: AbortSignal
 ): Promise<BroBotPayload> {
-  const ctrl = new AbortController();
-  const id = setTimeout(() => ctrl.abort(), 40_000);
+  void _prompt;
+  void _signal;
 
-  try {
-    const res = await fetch(`${BASE}/case-prep`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt }),
-      signal: signal ?? ctrl.signal,
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} - ${res.statusText}`);
-    }
-
-    const json = await res.json();
-
-    if (!json.pimpQuestions || !Array.isArray(json.pimpQuestions)) {
-      throw new Error('Invalid response: missing "pimpQuestions"');
-    }
-
-    const parsed: BroBotPayload = {
-  pimpQuestions: json.pimpQuestions ?? [],
-  otherUsefulFacts: json.otherUsefulFacts ?? [],
-  anatomy: json.anatomy ?? null,
-};
-
-return parsed;
-  } catch (e) {
-    console.error('[BroBot API Error]', e);
-    throw e;
-  } finally {
-    clearTimeout(id);
-  }
+  throw new Error(
+    'getBroBotResponse is deprecated. Use the secure /api/brobot/ask proxy instead. ' +
+    'Direct browser calls to the external CasePrep API have been removed for security and monetization.'
+  );
 }

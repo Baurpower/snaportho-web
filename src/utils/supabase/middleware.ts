@@ -40,7 +40,15 @@ export async function updateSession(request: NextRequest) {
   const isAuthPage =
     pathname.startsWith('/auth') || pathname.startsWith('/auth/sign-in')
 
-  if (!user && !isAuthPage) {
+  // Phase 1: Allow public access to the BroBot guest surface and its secure proxy.
+  // The proxy itself performs authentication (user or signed guest cookie).
+  // This unblocks the "Continue as Guest" flow that was previously dead due to this middleware.
+  const isPublicBroBotPath =
+    pathname === '/brobot' ||
+    pathname.startsWith('/brobot/') ||
+    pathname.startsWith('/api/brobot/')
+
+  if (!user && !isAuthPage && !isPublicBroBotPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/sign-in'
     return NextResponse.redirect(url)

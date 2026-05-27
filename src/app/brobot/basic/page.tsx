@@ -7,7 +7,10 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
-import { getBroBotResponse } from '@/lib/types/api';
+// Phase 1: All BroBot AI calls now go through our secure server proxy.
+// The old direct getBroBotResponse (which called the public CasePrep API from the browser)
+// has been removed for security and usage tracking.
+
 
 
 type ApproachSelection = {
@@ -65,9 +68,24 @@ export default function BroBotBasic() {
       setUserFeedback('');
       setFeedbackSubmitted(false);
 
-      const parsed = await getBroBotResponse(prompt);
-      console.log('✅ parsed response:', parsed);
-      console.log('✅ anatomy:', parsed?.anatomy);
+      // Phase 1: Route through our secure server proxy (auth + usage tracking + limits)
+      const res = await fetch('/api/brobot/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        if (res.status === 429 || err.isLimitReached) {
+          // Surface limit information if the proxy returns it
+          throw new Error(err.error || 'Daily limit reached. Please sign up for more uses.');
+        }
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+
+      const parsed = await res.json();
+      console.log('✅ parsed response (via secure proxy):', parsed);
       setData(parsed);
 
       // Dynamically import branch and log event (only in browser)
@@ -96,6 +114,8 @@ export default function BroBotBasic() {
       if (!data) return;
       setFeedbackSubmitted(true);
 
+      // TODO (Phase 2): Move feedback to our own backend (/api/brobot/feedback or similar)
+      // This direct external call bypasses our infrastructure and should be consolidated.
       await fetch('https://api.snap-ortho.com/case-prep-log', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
