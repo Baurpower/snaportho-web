@@ -9,6 +9,7 @@ import {
   type CallValidationRule,
   type CallValidationTimeOff,
 } from "@/lib/workspace/call/validation";
+import { getEffectiveRules } from "@/lib/workspace/call/rule-definitions";
 import {
   buildResidentIdentityMaps,
 } from "@/lib/workspace/call/resident-identity";
@@ -237,7 +238,7 @@ async function loadValidationRulesForResolvedRuleSet(params: {
     )
     .eq("program_id", programId)
     .eq("rule_set_id", ruleSetId)
-    .eq("is_enabled", true)
+    .eq("is_enabled", true) // DB-level filter for performance
     .order("priority", { ascending: true })
     .order("created_at", { ascending: true });
 
@@ -245,7 +246,9 @@ async function loadValidationRulesForResolvedRuleSet(params: {
     throw new Error(`Failed to load program call validation rules: ${error.message}`);
   }
 
-  return ((data ?? []) as ProgramCallRuleRow[]).map(toValidationRule);
+  // Belt-and-suspenders: run through the canonical effective filter (Phase 9 alignment)
+  const effective = getEffectiveRules((data ?? []) as ProgramCallRuleRow[], { includeDisabled: false });
+  return (effective as ProgramCallRuleRow[]).map(toValidationRule);
 }
 
 async function loadValidationResidents(params: {

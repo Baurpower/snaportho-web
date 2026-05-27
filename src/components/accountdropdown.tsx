@@ -6,6 +6,11 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
+type EntitlementStatus = {
+  unlimited: boolean;
+  source: string;
+};
+
 export default function AccountDropdown() {
   const router = useRouter();
   const { user, signOut } = useAuth();
@@ -13,6 +18,7 @@ export default function AccountDropdown() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [fullName, setFullName] = useState<string | null>(null);
+  const [entitlementStatus, setEntitlementStatus] = useState<EntitlementStatus | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = async () => {
@@ -52,6 +58,39 @@ export default function AccountDropdown() {
     };
   }, [user, supabase]);
 
+  // Fetch minimal BroBot entitlement status for menu (one small call per session)
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchEntitlement = async () => {
+      if (!user?.id) {
+        if (isMounted) setEntitlementStatus(null);
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/me/entitlements');
+        const body = await res.json();
+        if (body.data?.aiAccess) {
+          if (isMounted) {
+            setEntitlementStatus({
+              unlimited: body.data.aiAccess.unlimited,
+              source: body.data.source,
+            });
+          }
+        }
+      } catch {
+        if (isMounted) setEntitlementStatus(null);
+      }
+    };
+
+    fetchEntitlement();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -83,6 +122,23 @@ export default function AccountDropdown() {
           </div>
 
           <hr className="border-slate-200" />
+
+          <Link
+            href="/account/billing"
+            className="block px-4 py-2 text-sm hover:bg-slate-100 text-midnight/90 font-medium"
+          >
+            Billing &amp; Subscription
+          </Link>
+
+          {entitlementStatus && (
+            <div className="px-4 py-1 text-xs text-midnight/60">
+              {entitlementStatus.unlimited ? (
+                <span className="inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-emerald-700 text-[10px] font-medium">Unlimited BroBot</span>
+              ) : (
+                <span className="text-amber-600">Free BroBot</span>
+              )}
+            </div>
+          )}
 
           <Link
             href="/learn/settings"

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
   MagnifyingGlassCircleIcon,
@@ -60,6 +60,31 @@ export default function BroBotBasic() {
   const [userFeedback, setUserFeedback] = useState('');
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
 
+  // Guest quota error state (separate from generic errors)
+  type GuestError = { type: 'quota_limit' } | { type: 'generic'; message?: string };
+  const [guestError, setGuestError] = useState<GuestError | null>(null);
+
+  // Proactive usage info for guests (fetched from /api/me/entitlements)
+  const [guestUsage, setGuestUsage] = useState<{ remainingToday: number | null; dailyCap: number | null } | null>(null);
+
+  // Fetch guest entitlement on mount for proactive limit display
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/me/entitlements');
+        const body = await res.json();
+        if (body.data?.aiAccess) {
+          setGuestUsage({
+            remainingToday: body.data.aiAccess.remainingToday,
+            dailyCap: body.data.aiAccess.dailyCap,
+          });
+        }
+      } catch {
+        // Non-critical for guests
+      }
+    })();
+  }, []);
+
   async function handleSubmit() {
     try {
       setLoading(true);
@@ -77,16 +102,24 @@ export default function BroBotBasic() {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
+
         if (res.status === 429 || err.isLimitReached) {
-          // Surface limit information if the proxy returns it
-          throw new Error(err.error || 'Daily limit reached. Please sign up for more uses.');
+          // Guest quota hit — show the guest paywall card, never fake content
+          setGuestError({ type: 'quota_limit' });
+          setData(null);
+          return;
         }
-        throw new Error(err.error || `HTTP ${res.status}`);
+
+        // Other errors
+        setGuestError({ type: 'generic', message: err.error || `HTTP ${res.status}` });
+        setData(null);
+        return;
       }
 
       const parsed = await res.json();
       console.log('✅ parsed response (via secure proxy):', parsed);
       setData(parsed);
+      setGuestError(null);
 
       // Dynamically import branch and log event (only in browser)
       const branch = (await import('branch-sdk')).default;
@@ -100,10 +133,8 @@ export default function BroBotBasic() {
       }, 100);
     } catch (error) {
       console.error('❌ BroBot Error', error);
-      setData({
-        pimpQuestions: [],
-        otherUsefulFacts: ['❌ Error fetching data. Please try again.'],
-      });
+      setGuestError({ type: 'generic' });
+      setData(null);
     } finally {
       setLoading(false);
     }
@@ -179,19 +210,39 @@ export default function BroBotBasic() {
           />
           <button
             onClick={handleSubmit}
-            disabled={loading || !prompt.trim()}
+            disabled={loading || !prompt.trim() || guestUsage?.remainingToday === 0}
             className="mt-4 inline-flex items-center justify-center rounded-md bg-teal-600 px-5 py-2 text-white shadow hover:bg-teal-700 disabled:opacity-40"
           >
             Get&nbsp;Prep
           </button>
         </Card>
 
-        {data && (
+        {/* Proactive guest limit card */}
+        {guestUsage && guestUsage.remainingToday === 0 && !loading && !guestError && (
+          <div className="mt-6">
+            <GuestQuotaCard />
+          </div>
+        )}
+
+        {guestError && !loading && (
+          <div ref={summaryRef} className="mt-8">
+            {guestError.type === 'quota_limit' ? (
+              <GuestQuotaCard />
+            ) : (
+              <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center">
+                <p className="text-gray-700">
+                  {guestError.message || 'Something went wrong. Please try again in a moment.'}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {data && !guestError && (
           <div ref={summaryRef}>
             <Card title="Prep Summary">
               <Section label="Common Pimp Questions" bullets={data.pimpQuestions} />
               <Section label="Other Useful Facts" bullets={data.otherUsefulFacts} />
-              
             </Card>
             {data.anatomy && (
   <Card title="Anatomy">
@@ -283,6 +334,41 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
   );
 }
 
+// Guest-specific quota limit card (encourages sign-up)
+function GuestQuotaCard() {
+  return (
+    <div className="rounded-2xl border border-amber-200 bg-white shadow-sm overflow-hidden">
+      <div className="bg-amber-50 border-b border-amber-200 px-6 py-4">
+        <p className="font-semibold text-amber-900">Daily guest limit reached</p>
+        <p className="text-amber-700 text-sm mt-1">
+          You’ve used your 2 free guest BroBot preps for today.
+        </p>
+      </div>
+
+      <div className="px-6 py-6 space-y-4">
+        <p className="text-gray-700 text-sm">
+          Create an account to save your history, get 5 daily preps, and unlock the option to go unlimited.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link
+            href="/auth/sign-up?from=brobot"
+            className="inline-flex flex-1 items-center justify-center rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-teal-700 transition-colors"
+          >
+            Create an account
+          </Link>
+          <button
+            onClick={() => window.location.reload()}
+            className="inline-flex flex-1 items-center justify-center rounded-md border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            Try again tomorrow
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Section({
   label,
   bullets,
@@ -333,8 +419,8 @@ function Section({
               ))
             )
           ) : (
-            <li className="rounded bg-yellow-50 px-3 py-2 text-sm text-yellow-900">
-              Nothing found.
+            <li className="rounded bg-gray-50 px-3 py-2 text-sm text-gray-500 italic">
+              No key points returned for this section.
             </li>
           )}
         </ul>

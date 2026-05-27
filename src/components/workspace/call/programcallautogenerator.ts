@@ -14,6 +14,7 @@ import {
   isResidentAllowedForSlot,
   getFlagsForAssignedResident,
 } from "@/components/workspace/call/programcallevaluator";
+import { getEffectiveRules } from "@/lib/workspace/call/rule-definitions"; // Phase 9 alignment
 import {
   countUniqueWeekendBuckets,
   evaluateMonthlyLimitForResident,
@@ -1229,6 +1230,10 @@ export function generateCallSchedule({
   historicalStats,
   slotMode = "Both",
 }: GenerateParams) {
+  // Phase 9 alignment: use canonical effective filter (disabled rules are excluded
+  // from generation by default, matching validation behavior).
+  const effectiveRules = getEffectiveRules(rules, { includeDisabled: false });
+
   const ATTEMPTS = 75;
 
   const seen = new Set<string>();
@@ -1241,7 +1246,7 @@ export function generateCallSchedule({
       monthDays,
       residents,
       existingAssignments,
-      rules,
+      rules: effectiveRules, // Phase 9: consistent effective rules only (typed via getEffectiveRules)
       generationVersion: attemptVersion,
       forceRegenerate,
       availabilityByResident,

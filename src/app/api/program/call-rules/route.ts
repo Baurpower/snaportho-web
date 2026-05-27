@@ -6,6 +6,7 @@ import {
   getProgramRules,
   replaceProgramRulesForRuleSet,
 } from "@/lib/workspace/call/programcallrules";
+import { normalizeRuleForSave, getDefaultRuleScope } from "@/lib/workspace/call/rule-definitions";
 import {
   requireWorkspacePermission,
   WorkspacePermissionError,
@@ -117,12 +118,33 @@ export async function PUT(request: NextRequest) {
     const body = await request.json();
     const ruleSetId = body?.ruleSetId as string | undefined;
     const rules = (body?.rules ?? []) as IncomingRule[];
+    const previousRuleSetUpdatedAt = body?.previousRuleSetUpdatedAt as string | undefined; // Phase 7 staleness guard
 
     if (!ruleSetId) {
       return NextResponse.json(
         { error: "ruleSetId is required" },
         { status: 400 }
       );
+    }
+
+    // Phase 7: optional staleness protection using rule_set.updated_at
+    if (previousRuleSetUpdatedAt) {
+      const { data: currentSet } = await supabase
+        .from("program_call_rule_sets")
+        .select("updated_at")
+        .eq("id", ruleSetId)
+        .maybeSingle();
+
+      if (currentSet?.updated_at && currentSet.updated_at !== previousRuleSetUpdatedAt) {
+        return NextResponse.json(
+          {
+            error: "Rule set has been modified since you last loaded it. Please reload and try again.",
+            code: "STALE_RULE_SET",
+            currentUpdatedAt: currentSet.updated_at,
+          },
+          { status: 409 }
+        );
+      }
     }
 
     if (!Array.isArray(rules)) {
@@ -147,28 +169,52 @@ export async function PUT(request: NextRequest) {
       );
     }
 
+    // Phase 3: run every incoming rule through the canonical normalizer
+    // so config shape, defaults, and sanitization are identical for manual + future AI paths.
+    const normalized = rules.map((rule) =>
+      normalizeRuleForSave({
+        id: rule.id,
+        type: rule.type,
+        name: rule.name,
+        enabled: rule.enabled,
+        isHardRule: rule.isHardRule,
+        config: rule.config,
+      })
+    );
+
     const saved = await replaceProgramRulesForRuleSet({
       programId: membership.program_id,
       ruleSetId,
       userId: user.id,
-      rules: rules.map((rule, index) => ({
-        id: rule.id,
+      rules: normalized.map((nr, index) => ({
+        id: rules[index]?.id, // preserve original id for updates
         programId: membership.program_id!,
         ruleSetId,
-        ruleType: rule.type,
-        name: rule.name,
-        isEnabled: rule.enabled,
-        isHardRule: rule.isHardRule,
+        ruleType: nr.type,
+        name: nr.name,
+        isEnabled: nr.enabled,
+        isHardRule: nr.isHardRule,
         priority: (index + 1) * 10,
-        scope: {},
-        config: rule.config ?? {},
+        scope: getDefaultRuleScope(),
+        config: nr.config,
       })),
     });
+
+    // Bump the rule set's updated_at so that the staleness guard (previousRuleSetUpdatedAt)
+    // actually protects against concurrent *rules* edits (not just metadata edits).
+    // This makes the optimistic lock meaningful for the rules sheet without schema changes.
+    const now = new Date().toISOString();
+    await supabase
+      .from("program_call_rule_sets")
+      .update({ updated_at: now })
+      .eq("id", ruleSetId)
+      .eq("program_id", membership.program_id);
 
     return NextResponse.json({
       success: true,
       count: saved.length,
       rules: saved,
+      ruleSetUpdatedAt: now, // so client can immediately refresh its local copy
     });
   } catch (error) {
     if (error instanceof WorkspacePermissionError) {

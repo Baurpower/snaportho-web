@@ -7,6 +7,18 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+/**
+ * NOTE: This list is intentionally broader than the current executable RuleType union
+ * because the /parse endpoint is used for *proposing* rules (some of which may be
+ * future or soft-only). The canonical executable types live in
+ * src/lib/workspace/call/rule-definitions.ts (RuleType).
+ *
+ * The sheet's mapAIRuleTypeToFrontendType + convertAIRuleToDraft handle mapping
+ * the aliases the model may emit back to executable types.
+ *
+ * TODO (future): Derive a "supportedForAI" list from the canonical definitions +
+ * a mapping table in rule-definitions.ts to avoid drift.
+ */
 const ALLOWED_RULE_TYPES = [
   "pgy_slot_restriction",
   "minimum_spacing",

@@ -51,6 +51,18 @@ export async function updateSession(request: NextRequest) {
   if (!user && !isAuthPage && !isPublicBroBotPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/sign-in'
+
+    // Preserve the FULL original URL (pathname + search) so query params like success=true survive
+    const fullOriginal = pathname + (request.nextUrl.search || '')
+    url.searchParams.set('redirectTo', fullOriginal)
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[middleware] Redirecting unauthenticated request to sign-in', {
+        original: fullOriginal,
+        redirectTo: url.searchParams.get('redirectTo'),
+      });
+    }
+
     return NextResponse.redirect(url)
   }
 

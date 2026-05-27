@@ -43,6 +43,8 @@ type RuleSetResponse = {
     name: string;
     description: string | null;
     is_default: boolean;
+    updated_at?: string;   // present from DB select("*")
+    created_at?: string;
   }>;
   defaultRuleSetId: string | null;
 };
@@ -215,31 +217,62 @@ function getScheduleSlotModeFromRules(rules: RuleDraft[]): ScheduleSlotMode | nu
   return requiredCallTypes.includes("Backup") ? "Both" : "Primary";
 }
 
-function upsertRequiredDailySlotsRule(
+/**
+ * Syncs the scheduleSlotMode picker into the required_daily_call_slots rule's
+ * config.requiredCallTypes **without** overwriting user edits to name, enabled,
+ * isHardRule, or other config keys.
+ *
+ * - If the required rule already exists in the draft list, we mutate ONLY its
+ *   requiredCallTypes (then sanitize).
+ * - If it does not exist (first time / legacy), we create a default one.
+ *
+ * This is the key fix for Phase 4: the required slots rule is now a normal
+ * persisted rule. The picker is only a convenience that keeps the callTypes
+ * in sync during editing. Saving other rules never touches it.
+ */
+function syncSlotModeIntoRequiredRule(
   rules: RuleDraft[],
   scheduleSlotMode: ScheduleSlotMode
-) {
+): RuleDraft[] {
   const requiredCallTypes: ("Primary" | "Backup")[] =
     scheduleSlotMode === "Both" ? ["Primary", "Backup"] : ["Primary"];
-  const existingRule =
-    rules.find((rule) => rule.type === REQUIRED_DAILY_CALL_SLOTS_RULE) ?? null;
 
-  const nextRule: RuleDraft = {
-    ...(existingRule ??
-      createDefaultRuleDraft(REQUIRED_DAILY_CALL_SLOTS_RULE, makeId())),
-    type: REQUIRED_DAILY_CALL_SLOTS_RULE,
-    name: existingRule?.name?.trim() || "Required daily call slots",
-    enabled: true,
-    isHardRule: existingRule?.isHardRule ?? true,
+  const existingIndex = rules.findIndex(
+    (rule) => rule.type === REQUIRED_DAILY_CALL_SLOTS_RULE
+  );
+
+  if (existingIndex === -1) {
+    // Legacy / brand new workspace: create the rule from the picker
+    const created = createDefaultRuleDraft(
+      REQUIRED_DAILY_CALL_SLOTS_RULE,
+      makeId()
+    );
+    created.config = sanitizeRuleConfig(REQUIRED_DAILY_CALL_SLOTS_RULE, {
+      ...created.config,
+      requiredCallTypes,
+    });
+    return [created, ...rules];
+  }
+
+  // Normal case: update ONLY the call types on the existing rule draft.
+  // User edits to name / hardness / other config are preserved.
+  const existing = rules[existingIndex];
+  const updated: RuleDraft = {
+    ...existing,
     config: sanitizeRuleConfig(REQUIRED_DAILY_CALL_SLOTS_RULE, {
-      ...existingRule?.config,
+      ...existing.config,
       requiredCallTypes,
     }),
   };
 
-  const remainingRules = rules.filter((rule) => rule.type !== REQUIRED_DAILY_CALL_SLOTS_RULE);
-  return [nextRule, ...remainingRules];
+  const next = [...rules];
+  next[existingIndex] = updated;
+  return next;
 }
+
+// Backwards-compatible alias (some internal call sites still use the old name
+// during the transition). The old behavior was destructive; the new one is not.
+const upsertRequiredDailySlotsRule = syncSlotModeIntoRequiredRule;
 
 type CallPoolCapability = "none" | "primary" | "backup" | "both";
 
@@ -1185,6 +1218,7 @@ export default function ProgramRulesSheet({
   const [selectedType, setSelectedType] =
     useState<RuleType>("min_days_between_assignments");
   const [ruleSetId, setRuleSetId] = useState<string | null>(null);
+  const [ruleSetUpdatedAt, setRuleSetUpdatedAt] = useState<string | null>(null); // for staleness guard
   const [rotationOptions, setRotationOptions] = useState<ProgramRotationOption[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -1260,8 +1294,15 @@ export default function ProgramRulesSheet({
         const nextRuleSetId = ruleSetPayload.defaultRuleSetId;
         setRuleSetId(nextRuleSetId);
 
+        // Capture rule set updated_at for optimistic locking on save (Phase 7 wiring)
+        const defaultRs = ruleSetPayload.ruleSets.find(
+          (rs) => rs.id === nextRuleSetId
+        );
+        setRuleSetUpdatedAt(defaultRs?.updated_at ?? null);
+
         if (!nextRuleSetId) {
           setRules([]);
+          setRuleSetUpdatedAt(null);
           return;
         }
 
@@ -1295,6 +1336,7 @@ export default function ProgramRulesSheet({
           setLoadError(error instanceof Error ? error.message : "Failed to load rules");
           setRules([]);
           setRuleSetId(null);
+          setRuleSetUpdatedAt(null);
           setRotationOptions([]);
         }
       } finally {
@@ -1455,6 +1497,8 @@ async function submitProposedRuleType() {
         },
         body: JSON.stringify({
           ruleSetId,
+          // Send the timestamp we captured on load so the server can detect concurrent edits
+          previousRuleSetUpdatedAt: ruleSetUpdatedAt,
           rules: rulesToSave.map((rule) => ({
             id: rule.id.startsWith("rule-") ? undefined : rule.id,
             name: rule.name.trim(),
@@ -1468,8 +1512,26 @@ async function submitProposedRuleType() {
 
       const payload = await response.json().catch(() => null);
 
+      if (response.status === 409) {
+        // Staleness conflict — another user/session edited the rules since we loaded
+        const msg =
+          payload?.error ||
+          "These rules were updated elsewhere. Reload the latest version before saving.";
+        setLoadError(msg);
+        // Do not call onSaved or close — user must reload first (existing pattern: close sheet + reopen, or use the load error)
+        return;
+      }
+
       if (!response.ok) {
         throw new Error(getErrorMessage(payload, "Failed to save rules"));
+      }
+
+      // Refresh our local copy of the rule set timestamp if server returns the fresh value
+      if (payload?.ruleSetUpdatedAt) {
+        setRuleSetUpdatedAt(payload.ruleSetUpdatedAt);
+      } else {
+        // Fallback: if server didn't return it yet, we could re-fetch, but for minimal change we leave it.
+        // The next full load (sheet reopen or manager) will get the latest anyway.
       }
 
       await onSaved?.();

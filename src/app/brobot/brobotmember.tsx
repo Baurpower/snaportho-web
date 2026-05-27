@@ -2,23 +2,29 @@
 
 import React, { useState, useRef, useEffect, useMemo, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   MagnifyingGlassCircleIcon,
   ChevronUpIcon,
   ChevronDownIcon,
   Bars3Icon,
+  SparklesIcon,
+  ArrowPathIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
-// Phase 1: All BroBot AI calls now go through our secure server proxy.
-// Direct browser calls to the external CasePrep API have been eliminated.
 
 import { createClient } from '@/utils/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import Nav from '@/components/Nav';
 import AccountDropdown from '@/components/accountdropdown';
 
-
+// Phase 1: All BroBot AI calls now go through our secure server proxy.
+// Direct browser calls to the external CasePrep API have been eliminated.
 
 const BROBOT_VERSION = 2.0;
+
+// ── Domain types (unchanged) ──────────────────────────────────────────────────
 
 type ApproachSelection = {
   selected: { id: string; confidence: number; rationale: string }[];
@@ -54,6 +60,7 @@ interface BroBotPayload {
   pimpQuestions: string[];
   otherUsefulFacts: string[];
   anatomy?: AnatomyPayload | null;
+  meta?: { remaining?: number | null; isLimitReached?: boolean };
 }
 
 interface SessionRow {
@@ -62,6 +69,32 @@ interface SessionRow {
   answer: BroBotPayload;
   created_at: string;
 }
+
+// ── Error / entitlement state types ──────────────────────────────────────────
+
+/**
+ * Discriminated union so every failure renders a distinct, appropriate card —
+ * never the same red banner for "no internet" and "hit your daily cap".
+ */
+type BroBotError =
+  | { type: 'quota_limit'; dailyCap: number | null }
+  | { type: 'network' }
+  | { type: 'upstream' }
+  | { type: 'timeout' }
+  | { type: 'generic'; message?: string };
+
+type UsageMeta = {
+  unlimited: boolean;
+  dailyCap: number | null;
+  remainingToday: number | null;
+  source: string;
+  // For canceling state display
+  status?: string;
+  cancelAtPeriodEnd?: boolean;
+  expiresAt?: string | null;
+};
+
+// ── Main component ────────────────────────────────────────────────────────────
 
 export default function BroBotMember() {
   const router = useRouter();
@@ -78,6 +111,15 @@ export default function BroBotMember() {
   const [data, setData] = useState<BroBotPayload | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Error state — replaces the old "data-as-error" hack
+  const [brobotError, setBrobotError] = useState<BroBotError | null>(null);
+
+  // Entitlement / usage context for the usage badge
+  const [usageMeta, setUsageMeta] = useState<UsageMeta | null>(null);
+
+  // Loading state for the Stripe checkout redirect
+  const [upgradeLoading, setUpgradeLoading] = useState(false);
+
   // Feedback
   const [wasHelpful, setWasHelpful] = useState<boolean | null>(null);
   const [userFeedback, setUserFeedback] = useState('');
@@ -88,9 +130,41 @@ export default function BroBotMember() {
   const [sessions, setSessions] = useState<SessionRow[]>([]);
   const [sessionsLoading, setSessionsLoading] = useState(false);
 
-  const summaryRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
 
-  // Load recent sessions when menu opens
+  // Fetch entitlements on mount so we can display the usage badge immediately
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      try {
+        const res = await fetch('/api/me/entitlements');
+        const body = await res.json();
+        if (body.data) {
+          const d = body.data;
+          setUsageMeta({
+            unlimited: d.aiAccess.unlimited,
+            dailyCap: d.aiAccess.dailyCap,
+            remainingToday: d.aiAccess.remainingToday,
+            source: d.source,
+            status: d.status,
+            cancelAtPeriodEnd: d.cancelAtPeriodEnd,
+            expiresAt: d.expiresAt,
+          });
+        }
+      } catch {
+        // Non-critical — quota badge just won't show until first successful call
+      }
+    })();
+  }, [user]);
+
+  // Auto-scroll to result / error card whenever it appears
+  useEffect(() => {
+    if ((data || brobotError) && resultRef.current) {
+      setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+    }
+  }, [data, brobotError]);
+
+  // Load recent sessions when the history menu opens
   useEffect(() => {
     if (!menuOpen || !user) return;
     (async () => {
@@ -112,19 +186,21 @@ export default function BroBotMember() {
     })();
   }, [menuOpen, user]);
 
-  // Handle prompt submit / caching logic
+  // ── Submit handler ──────────────────────────────────────────────────────────
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!user || !prompt.trim()) return;
 
     setLoading(true);
     setData(null);
+    setBrobotError(null);
     setWasHelpful(null);
     setUserFeedback('');
     setFeedbackSubmitted(false);
 
     try {
-      // Check for cached answer
+      // Check for a cached answer first — cache hits never consume quota
       const { data: existing } = await supabase
         .from('brobot_user_responses')
         .select('answer')
@@ -135,66 +211,126 @@ export default function BroBotMember() {
 
       if (existing?.answer) {
         setData(existing.answer as BroBotPayload);
-      } else {
-        // Phase 1: Call the secure server proxy (the only place that talks to CasePrep)
-        const start = Date.now();
-        const res = await fetch('/api/brobot/ask', {
+        return; // useEffect handles scroll
+      }
+
+      // Phase 1: Call the secure server proxy
+      const start = Date.now();
+      let res: Response;
+
+      try {
+        res = await fetch('/api/brobot/ask', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompt }),
         });
-
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          if (res.status === 429 || err.isLimitReached) {
-            throw new Error(err.error || 'Daily limit reached for today.');
-          }
-          throw new Error(err.error || `HTTP ${res.status}`);
-        }
-
-        const parsed = await res.json();
-        setData(parsed);
-        const latency = Date.now() - start;
-
-        // Save for next time
-        const { error: insertErr } = await supabase
-          .from('brobot_user_responses')
-          .insert({
-            user_id:        user.id,
-            question:       prompt,
-            answer: parsed,
-            latency,
-            brobot_version: BROBOT_VERSION,
-          });
-
-        if (insertErr && insertErr.code !== '23505') {
-          console.error('[BroBot] insert error:', insertErr);
-        }
+      } catch {
+        // True network failure — browser couldn't reach the server at all
+        setBrobotError({ type: 'network' });
+        return;
       }
 
-      setTimeout(() => summaryRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => ({}));
+
+        // 429: quota hit — show the premium upgrade card
+        if (res.status === 429 || errBody.isLimitReached) {
+          setBrobotError({
+            type: 'quota_limit',
+            dailyCap: errBody.dailyCap ?? usageMeta?.dailyCap ?? null,
+          });
+          // Reflect 0 remaining in the usage badge immediately
+          setUsageMeta(prev => (prev ? { ...prev, remainingToday: 0 } : null));
+          return;
+        }
+
+        // 408 / 504: timeout
+        if (res.status === 408 || res.status === 504) {
+          setBrobotError({ type: 'timeout' });
+          return;
+        }
+
+        // 5xx: upstream / AI service failure
+        if (res.status >= 500) {
+          setBrobotError({ type: 'upstream' });
+          return;
+        }
+
+        // Everything else (400, 401, …)
+        setBrobotError({ type: 'generic', message: errBody.error });
+        return;
+      }
+
+      const parsed = await res.json();
+      const latency = Date.now() - start;
+
+      setData(parsed);
+
+      // Keep the usage badge in sync with what the API just told us
+      if (parsed.meta && typeof parsed.meta.remaining === 'number') {
+        setUsageMeta(prev =>
+          prev ? { ...prev, remainingToday: parsed.meta!.remaining! } : null
+        );
+      }
+
+      // Save to cache for next time
+      const { error: insertErr } = await supabase
+        .from('brobot_user_responses')
+        .insert({
+          user_id: user.id,
+          question: prompt,
+          answer: parsed,
+          latency,
+          brobot_version: BROBOT_VERSION,
+        });
+
+      if (insertErr && insertErr.code !== '23505') {
+        console.error('[BroBot] insert error:', insertErr);
+      }
     } catch (err) {
-      console.error('[BroBot] error:', err);
-      setData({
-        pimpQuestions: [],
-        otherUsefulFacts: ['❌ Error fetching data. Please try again.'],
-      });
+      console.error('[BroBot] unexpected error:', err);
+      // Never leak fake data again — use the error state instead
+      setBrobotError({ type: 'generic' });
     } finally {
       setLoading(false);
     }
   }
 
-  // Submit feedback
+  // ── Stripe upgrade handler ──────────────────────────────────────────────────
+
+  async function handleUpgrade() {
+    setUpgradeLoading(true);
+    try {
+      const res = await fetch('/api/billing/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ interval: 'month' }),
+      });
+      const body = await res.json();
+      if (body.url) {
+        window.location.href = body.url;
+      } else {
+        // Fallback: billing page
+        router.push('/account/billing');
+      }
+    } catch {
+      router.push('/account/billing');
+    } finally {
+      setUpgradeLoading(false);
+    }
+  }
+
+  // ── Feedback handler ────────────────────────────────────────────────────────
+
   async function submitFeedback() {
     if (!data || feedbackSubmitted) return;
     setFeedbackSubmitted(true);
     try {
-      // TODO (Phase 2): The route /api/case-prep-feedback does not exist.
-      // Move BroBot feedback to a proper internal endpoint under /api/brobot/feedback.
+      // TODO (Phase 2): Move to /api/brobot/feedback
       await fetch('/api/case-prep-feedback', {
-        method:  'POST',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ prompt, data, wasHelpful, userFeedback }),
+        body: JSON.stringify({ prompt, data, wasHelpful, userFeedback }),
       });
     } catch (err) {
       console.error('[BroBot] feedback error:', err);
@@ -204,55 +340,55 @@ export default function BroBotMember() {
   if (!user) return null;
 
   return (
-  <div className="min-h-screen flex flex-col bg-[#fefcf7] text-[#1A1C2C]">
-    {/* shared navigation */}
-    <Nav />
+    <div className="min-h-screen flex flex-col bg-[#fefcf7] text-[#1A1C2C]">
+      <Nav />
 
-    {/* single row with burger on left and account on right */}
-    <div className="mt-16 px-6 py-2 bg-[#fefcf7] flex justify-between items-center relative">
-  <button
-    onClick={() => setMenuOpen(o => !o)}
-    className="p-2 bg-white rounded shadow"
-  >
-    <Bars3Icon className="h-6 w-6 text-gray-700" />
-  </button>
+      {/* Toolbar: history burger + account */}
+      <div className="mt-16 px-6 py-2 bg-[#fefcf7] flex justify-between items-center relative">
+        <button
+          onClick={() => setMenuOpen(o => !o)}
+          className="p-2 bg-white rounded shadow"
+        >
+          <Bars3Icon className="h-6 w-6 text-gray-700" />
+        </button>
 
-  <AccountDropdown />
+        <AccountDropdown />
 
-  {menuOpen && (
-    <div className="absolute top-full left-6 w-64 max-h-80 overflow-auto bg-white rounded shadow-lg z-50">
-      {sessionsLoading
-        ? <p className="p-4 text-sm text-gray-500">Loading…</p>
-        : sessions.length === 0
-          ? <p className="p-4 text-sm text-gray-500">No recent prompts</p>
-          : sessions.map(s => (
-              <button
-                key={s.response_id}
-                className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                onClick={() => {
-                  setPrompt(s.question);
-                  setData(s.answer);
-                  setMenuOpen(false);
-                  setTimeout(() => summaryRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
-                }}
-              >
-                <p className="truncate font-medium text-[#1A1C2C]">{s.question}</p>
-                <time className="block text-xs text-gray-500">
-                  {new Date(s.created_at).toLocaleString()}
-                </time>
-              </button>
-            ))
-      }
-    </div>
-  )}
-</div>
+        {menuOpen && (
+          <div className="absolute top-full left-6 w-64 max-h-80 overflow-auto bg-white rounded shadow-lg z-50">
+            {sessionsLoading ? (
+              <p className="p-4 text-sm text-gray-500">Loading…</p>
+            ) : sessions.length === 0 ? (
+              <p className="p-4 text-sm text-gray-500">No recent prompts</p>
+            ) : (
+              sessions.map(s => (
+                <button
+                  key={s.response_id}
+                  className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                  onClick={() => {
+                    setPrompt(s.question);
+                    setData(s.answer);
+                    setBrobotError(null);
+                    setMenuOpen(false);
+                  }}
+                >
+                  <p className="truncate font-medium text-[#1A1C2C]">{s.question}</p>
+                  <time className="block text-xs text-gray-500">
+                    {new Date(s.created_at).toLocaleString()}
+                  </time>
+                </button>
+              ))
+            )}
+          </div>
+        )}
+      </div>
 
-    <BroBotHeader />
+      <BroBotHeader />
 
-      <main className="flex-1 px-6 pt-6 pb-12 relative max-w-3xl mx-auto">
+      <main className="flex-1 px-6 pt-6 pb-12 relative max-w-3xl mx-auto w-full">
         {loading && <LoadingOverlay />}
 
-
+        {/* Input form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <Card title="Describe Your Case">
             <textarea
@@ -262,75 +398,366 @@ export default function BroBotMember() {
               placeholder="e.g. 90 y/o femoral neck fracture"
               className="w-full rounded-md border border-gray-300 p-3 shadow-sm focus:ring-2 focus:ring-teal-600"
             />
-            <button
-              type="submit"
-              disabled={loading || !prompt.trim()}
-              className="mt-4 inline-flex items-center rounded-md bg-teal-600 px-5 py-2 text-white shadow hover:bg-teal-700 disabled:opacity-40"
-            >
-              <MagnifyingGlassCircleIcon className="h-5 w-5 mr-2" />
-              Get Prep
-            </button>
+            <div className="mt-4 flex flex-wrap items-center gap-4">
+              <button
+                type="submit"
+                disabled={loading || !prompt.trim() || usageMeta?.remainingToday === 0 && !usageMeta?.unlimited}
+                className="inline-flex items-center rounded-md bg-teal-600 px-5 py-2 text-white shadow hover:bg-teal-700 disabled:opacity-40 transition-colors"
+              >
+                <MagnifyingGlassCircleIcon className="h-5 w-5 mr-2" />
+                Get Prep
+              </button>
+
+              {/* Usage badge — shown once entitlements are loaded */}
+              {usageMeta && <UsageBadge meta={usageMeta} />}
+            </div>
+
+            {/* Persistent BroBot subscription status / action (Phase 1 discoverability) */}
+            {usageMeta && (
+              <div className="mt-3 text-sm flex flex-wrap items-center gap-x-3 gap-y-1 text-gray-600">
+                {usageMeta.unlimited ? (
+                  <>
+                    <span className="font-medium text-emerald-700">Unlimited Access</span>
+                    {usageMeta.cancelAtPeriodEnd && usageMeta.expiresAt ? (
+                      <span className="text-amber-700">
+                        • ends {new Date(usageMeta.expiresAt).toLocaleDateString()}
+                      </span>
+                    ) : null}
+                    <Link
+                      href="/account/billing"
+                      className="text-teal-600 hover:underline font-medium"
+                    >
+                      {usageMeta.cancelAtPeriodEnd ? 'Manage / Reactivate' : 'Manage Subscription'}
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/account/billing"
+                      className="text-teal-600 hover:underline font-medium"
+                    >
+                      Upgrade to Unlimited BroBot
+                    </Link>
+                  </>
+                )}
+              </div>
+            )}
           </Card>
         </form>
 
-        {data && (
-          <div ref={summaryRef} className="mt-8 space-y-6">
-            <Card title="Prep Summary">
-              <Section label="Common Pimp Questions" bullets={data.pimpQuestions} />
-              <Section label="Other Useful Facts" bullets={data.otherUsefulFacts} />
-            </Card>
-            {data.anatomy && (
-  <Card title="Anatomy">
-    {data.anatomy.approachSelection?.selected?.length ? (
-      <ApproachQuiz approaches={data.anatomy.approachSelection.selected} />
-    ) : null}
-
-    {data.anatomy.anatomyQuiz?.questions?.length ? (
-      <Section
-        label="Anatomy Quiz"
-        bullets={data.anatomy.anatomyQuiz.questions.map(
-          (q) => `Q: ${q.q} A: ${q.answer}`
-        )}
-      />
-    ) : null}
-
-    {data.anatomy.highYieldAnatomy?.structures?.length ? (
-  <Section
-    label="High-Yield Structures: Identification & Function"
-    bullets={data.anatomy.highYieldAnatomy.structures.map(
-      (s) => `${s.name} — ${s.why_high_yield}`
-    )}
-  />
-) : null}
-  </Card>
-)}
-
-            <FeedbackSection
-              wasHelpful={wasHelpful}
-              setWasHelpful={setWasHelpful}
-              userFeedback={userFeedback}
-              setUserFeedback={setUserFeedback}
-              feedbackSubmitted={feedbackSubmitted}
-              submitFeedback={submitFeedback}
+        {/* Proactive upgrade card for logged-in free users at daily limit */}
+        {usageMeta && !usageMeta.unlimited && usageMeta.remainingToday === 0 && !loading && (
+          <div className="mt-6">
+            <QuotaHitCard
+              dailyCap={usageMeta.dailyCap}
+              onUpgrade={handleUpgrade}
+              upgradeLoading={upgradeLoading}
+              onTryTomorrow={() => { /* no-op for proactive case; user can just wait */ }}
             />
           </div>
         )}
+
+        {/* Result / error area */}
+        <div ref={resultRef}>
+          {/* Error card — shown instead of data when something goes wrong */}
+          {brobotError && !loading && (
+            <div className="mt-8">
+              {brobotError.type === 'quota_limit' ? (
+                <QuotaHitCard
+                  dailyCap={brobotError.dailyCap}
+                  onUpgrade={handleUpgrade}
+                  upgradeLoading={upgradeLoading}
+                  onTryTomorrow={() => setBrobotError(null)}
+                />
+              ) : (
+                <NonQuotaErrorCard
+                  errorType={brobotError.type}
+                  message={brobotError.type === 'generic' ? brobotError.message : undefined}
+                  onRetry={() => setBrobotError(null)}
+                />
+              )}
+            </div>
+          )}
+
+          {/* Response data */}
+          {data && !brobotError && !loading && (
+            <div className="mt-8 space-y-6">
+              <Card title="Prep Summary">
+                <Section label="Common Pimp Questions" bullets={data.pimpQuestions ?? []} />
+                <Section label="Other Useful Facts" bullets={data.otherUsefulFacts ?? []} />
+              </Card>
+
+              {data.anatomy && (
+                <Card title="Anatomy">
+                  {data.anatomy.approachSelection?.selected?.length ? (
+                    <ApproachQuiz approaches={data.anatomy.approachSelection.selected} />
+                  ) : null}
+
+                  {data.anatomy.anatomyQuiz?.questions?.length ? (
+                    <Section
+                      label="Anatomy Quiz"
+                      bullets={data.anatomy.anatomyQuiz.questions.map(
+                        q => `Q: ${q.q} A: ${q.answer}`
+                      )}
+                    />
+                  ) : null}
+
+                  {data.anatomy.highYieldAnatomy?.structures?.length ? (
+                    <Section
+                      label="High-Yield Structures: Identification & Function"
+                      bullets={data.anatomy.highYieldAnatomy.structures.map(
+                        s => `${s.name} — ${s.why_high_yield}`
+                      )}
+                    />
+                  ) : null}
+                </Card>
+              )}
+
+              <FeedbackSection
+                wasHelpful={wasHelpful}
+                setWasHelpful={setWasHelpful}
+                userFeedback={userFeedback}
+                setUserFeedback={setUserFeedback}
+                feedbackSubmitted={feedbackSubmitted}
+                submitFeedback={submitFeedback}
+              />
+            </div>
+          )}
+        </div>
       </main>
     </div>
   );
 }
+
+// ── Usage badge ───────────────────────────────────────────────────────────────
+
+function UsageBadge({ meta }: { meta: UsageMeta }) {
+  if (meta.unlimited) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-teal-50 border border-teal-200 px-3 py-1 text-xs font-medium text-teal-700">
+        <CheckCircleIcon className="h-3.5 w-3.5" />
+        Unlimited Access
+      </span>
+    );
+  }
+
+  const remaining = meta.remainingToday ?? 0;
+  const cap = meta.dailyCap ?? 0;
+
+  if (remaining === 0) {
+    return (
+      <span className="inline-flex items-center gap-1.5 text-xs font-medium text-red-600">
+        0 / {cap} free preps remaining today
+      </span>
+    );
+  }
+
+  if (remaining === 1) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-xs font-medium text-amber-700">
+        <ExclamationCircleIcon className="h-3.5 w-3.5" />
+        1 prep remaining today
+      </span>
+    );
+  }
+
+  return (
+    <span className="text-xs text-gray-400">
+      {remaining} of {cap} preps remaining today
+    </span>
+  );
+}
+
+// ── Quota-hit card (premium upgrade UX) ──────────────────────────────────────
+
+function QuotaHitCard({
+  dailyCap,
+  onUpgrade,
+  upgradeLoading,
+  onTryTomorrow,
+}: {
+  dailyCap: number | null;
+  onUpgrade: () => void;
+  upgradeLoading: boolean;
+  onTryTomorrow: () => void;
+}) {
+  const capLabel = dailyCap !== null ? `all ${dailyCap} free` : 'your free';
+
+  return (
+    <div className="rounded-2xl border border-amber-200 bg-white shadow-sm overflow-hidden">
+      {/* Amber header strip */}
+      <div className="bg-amber-50 border-b border-amber-200 px-6 py-4 flex items-start gap-3">
+        <ExclamationCircleIcon className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+        <div>
+          <p className="font-semibold text-amber-900 text-sm leading-snug">
+            Daily limit reached
+          </p>
+          <p className="text-amber-700 text-xs mt-0.5 leading-snug">
+            You&apos;ve used {capLabel} BroBot case preps for today.
+            Free access resets at midnight&nbsp;UTC.
+          </p>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="px-6 py-6 space-y-5">
+        {/* Premium upgrade card */}
+        <div className="rounded-xl bg-gradient-to-br from-[#0d4a3d] to-[#0a6b55] p-5 text-white">
+          <div className="flex items-start justify-between gap-4 mb-3">
+            <div className="flex items-center gap-2">
+              <SparklesIcon className="h-5 w-5 text-teal-300 shrink-0" />
+              <span className="font-semibold text-lg leading-tight">Unlimited BroBot</span>
+            </div>
+            <span className="shrink-0 rounded-full bg-teal-400/20 border border-teal-300/30 px-2.5 py-0.5 text-xs font-semibold text-teal-200 tracking-wide uppercase">
+              Unlimited
+            </span>
+          </div>
+
+          <p className="text-teal-100 text-sm leading-relaxed mb-4">
+            Prepare for every orthopaedic case, every day — no daily limits, no interruptions.
+          </p>
+
+          <ul className="space-y-2">
+            {[
+              'Unlimited AI-powered case preps',
+              'Full anatomy & high-yield question libraries',
+              'Cancel anytime from your account',
+            ].map(feature => (
+              <li key={feature} className="flex items-center gap-2 text-sm text-teal-100">
+                <CheckCircleIcon className="h-4 w-4 text-teal-300 shrink-0" />
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* CTAs */}
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={onUpgrade}
+            disabled={upgradeLoading}
+            className="inline-flex items-center gap-2 rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-teal-700 disabled:opacity-60 transition-colors"
+          >
+            {upgradeLoading ? (
+              <>
+                <ArrowPathIcon className="h-4 w-4 animate-spin" />
+                Redirecting…
+              </>
+            ) : (
+              <>
+                <SparklesIcon className="h-4 w-4" />
+                Upgrade to Unlimited
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={onTryTomorrow}
+            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            Try Again Tomorrow
+          </button>
+        </div>
+
+        <p className="text-xs text-gray-400">
+          Have questions?{' '}
+          <a
+            href="mailto:support@snap-ortho.com"
+            className="underline hover:text-gray-600 transition-colors"
+          >
+            support@snap-ortho.com
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ── Non-quota error card ──────────────────────────────────────────────────────
+
+const ERROR_CONTENT: Record<
+  Exclude<BroBotError['type'], 'quota_limit'>,
+  { icon: string; title: string; message: string }
+> = {
+  network: {
+    icon: '🔌',
+    title: 'Connection issue',
+    message:
+      "BroBot couldn't reach the server. Check your internet connection and try again.",
+  },
+  upstream: {
+    icon: '⚙️',
+    title: 'Service temporarily unavailable',
+    message:
+      "BroBot's AI service is temporarily down. Please try again in a few minutes.",
+  },
+  timeout: {
+    icon: '⏱',
+    title: 'Request timed out',
+    message: 'BroBot took too long to respond. Please try again.',
+  },
+  generic: {
+    icon: '⚠️',
+    title: 'Something went wrong',
+    message: 'An unexpected error occurred. Please try again.',
+  },
+};
+
+function NonQuotaErrorCard({
+  errorType,
+  message,
+  onRetry,
+}: {
+  errorType: Exclude<BroBotError['type'], 'quota_limit'>;
+  message?: string;
+  onRetry: () => void;
+}) {
+  const content = ERROR_CONTENT[errorType];
+
+  return (
+    <div className="rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-sm space-y-4">
+      <div className="flex items-start gap-3">
+        <span className="text-2xl leading-none mt-0.5" aria-hidden="true">
+          {content.icon}
+        </span>
+        <div>
+          <p className="font-semibold text-gray-800 leading-snug">{content.title}</p>
+          <p className="text-sm text-gray-500 mt-0.5 leading-relaxed">
+            {message ?? content.message}
+          </p>
+        </div>
+      </div>
+
+      <button
+        onClick={onRetry}
+        className="inline-flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+      >
+        <ArrowPathIcon className="h-4 w-4" />
+        Try Again
+      </button>
+    </div>
+  );
+}
+
+// ── Static sub-components (unchanged) ────────────────────────────────────────
 
 function BroBotHeader() {
   return (
     <header className="px-6 pb-12 text-center">
       <div className="mx-auto flex flex-col items-center space-y-4">
         <div className="flex items-center space-x-4">
-          <img src="/brologo.png" alt="Bro Logo" className="h-16 w-16 sm:h-20 sm:w-20 rounded-full" />
+          <img
+            src="/brologo.png"
+            alt="Bro Logo"
+            className="h-16 w-16 sm:h-20 sm:w-20 rounded-full"
+          />
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-midnight">
             Meet <span className="text-teal-600">Bro</span>
           </h1>
         </div>
-        <p className="max-w-xl text-lg text-gray-800">Prepare for ortho cases faster and smarter</p>
+        <p className="max-w-xl text-lg text-gray-800">
+          Prepare for ortho cases faster and smarter
+        </p>
       </div>
     </header>
   );
@@ -353,34 +780,40 @@ function Section({ label, bullets }: { label: string; bullets: string[] }) {
   const isOpen = !collapsed;
 
   const lower = label.toLowerCase();
-  const isQA = lower.includes('pimp') || lower.includes('quiz'); // ✅ add quiz
+  const isQA = lower.includes('pimp') || lower.includes('quiz');
 
   return (
     <div className="space-y-2">
       <button
-        onClick={() => setCollapsed((prev) => !prev)}
+        onClick={() => setCollapsed(prev => !prev)}
         className="flex w-full items-center justify-between rounded-md bg-teal-100 px-4 py-2 text-left text-base font-semibold text-teal-900"
       >
         <span>{label}</span>
-        {isOpen ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
+        {isOpen ? (
+          <ChevronUpIcon className="h-5 w-5" />
+        ) : (
+          <ChevronDownIcon className="h-5 w-5" />
+        )}
       </button>
 
       {isOpen && (
         <ul className="space-y-3 pl-1">
           {bullets.length > 0 ? (
-            isQA
-              ? bullets.map((b, i) => <ToggleItem key={i} raw={b} />) // ✅ same toggle UI
-              : bullets.map((b, i) => (
-                  <li
-                    key={i}
-                    className="rounded-md border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm"
-                  >
-                    {b}
-                  </li>
-                ))
+            isQA ? (
+              bullets.map((b, i) => <ToggleItem key={i} raw={b} />)
+            ) : (
+              bullets.map((b, i) => (
+                <li
+                  key={i}
+                  className="rounded-md border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm"
+                >
+                  {b}
+                </li>
+              ))
+            )
           ) : (
-            <li className="rounded bg-yellow-50 px-3 py-2 text-sm text-yellow-900">
-              Nothing found.
+            <li className="rounded-lg bg-gray-50 border border-gray-100 px-4 py-3 text-sm text-gray-400 italic">
+              No data available for this section.
             </li>
           )}
         </ul>
@@ -406,14 +839,16 @@ function ToggleItem({ raw }: { raw: string }) {
       <div className="flex justify-between items-center">
         <span className="font-medium text-gray-800">{question}</span>
         <button
-          onClick={() => setShow((s) => !s)}
-          className="ml-4 text-sm text-teal-600 hover:underline"
+          onClick={() => setShow(s => !s)}
+          className="ml-4 text-sm text-teal-600 hover:underline shrink-0"
         >
           {show ? 'Hide' : 'Show'} Answer
         </button>
       </div>
       {show && answer && (
-        <p className="mt-2 rounded bg-teal-50 px-3 py-2 text-teal-900 shadow-inner">{answer}</p>
+        <p className="mt-2 rounded bg-teal-50 px-3 py-2 text-teal-900 shadow-inner">
+          {answer}
+        </p>
       )}
     </li>
   );
@@ -475,7 +910,7 @@ function FeedbackSection({
           className="w-full mt-4 p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-red-400"
           placeholder="Let us know how we can improve this..."
           value={userFeedback}
-          onChange={(e) => setUserFeedback(e.target.value)}
+          onChange={e => setUserFeedback(e.target.value)}
         />
       )}
 
@@ -489,19 +924,19 @@ function FeedbackSection({
     </div>
   );
 }
+
 function ApproachQuiz({
   approaches,
 }: {
   approaches: { id: string; rationale: string }[];
 }) {
-  // whole section closed by default
   const [collapsed, setCollapsed] = useState(true);
   const isOpen = !collapsed;
 
   return (
     <div className="space-y-2">
       <button
-        onClick={() => setCollapsed((p) => !p)}
+        onClick={() => setCollapsed(p => !p)}
         className="flex w-full items-center justify-between rounded-md bg-teal-100 px-4 py-2 text-left text-base font-semibold text-teal-900"
       >
         <span>Recommended Approaches</span>
@@ -514,7 +949,7 @@ function ApproachQuiz({
 
       {isOpen && (
         <ul className="space-y-3 pl-1">
-          {approaches.map((a) => (
+          {approaches.map(a => (
             <ApproachItem
               key={a.id}
               name={formatApproachName(a.id)}
@@ -540,15 +975,13 @@ function ApproachItem({
     <li className="rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm">
       <div className="flex items-center justify-between gap-3">
         <span className="font-medium text-gray-800 truncate">{name}</span>
-
         <button
-          onClick={() => setShow((s) => !s)}
+          onClick={() => setShow(s => !s)}
           className="ml-2 shrink-0 text-sm text-teal-600 hover:underline"
         >
           {show ? 'Hide' : 'Show'}
         </button>
       </div>
-
       {show && (
         <p className="mt-2 rounded bg-teal-50 px-3 py-2 text-teal-900 shadow-inner">
           {description}
@@ -558,13 +991,11 @@ function ApproachItem({
   );
 }
 
-
 function formatApproachName(id: string) {
-  // "approach_wrist_volar_distal_henry" -> "Wrist volar distal Henry"
   return id
     .replace(/^approach_/, '')
     .replace(/_/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+    .replace(/\b\w/g, c => c.toUpperCase());
 }

@@ -12,6 +12,12 @@
  *   BROBOT_GUEST_SECRET=super-long-random-string-for-signing-guest-cookies
  */
 
+import {
+  getAppBaseUrl,
+  getBillingSuccessUrl,
+  getBillingCancelUrl,
+} from './app-url';
+
 export const BROBOT_FEATURE = 'brobot' as const;
 
 export const BROBOT_CONFIG = {
@@ -28,6 +34,35 @@ export const BROBOT_CONFIG = {
    *  Future AI surfaces (Anki ortho-context, new tools, etc.) can share this or use their own.
    */
   FEATURE: BROBOT_FEATURE,
+
+  // ─────────────────────────────────────────────────────────────
+  // Phase 2: Paid "Unlimited BroBot" configuration
+  // ─────────────────────────────────────────────────────────────
+
+  /** Master switch for paid subscription features. */
+  PAID_ENABLED: process.env.BROBOT_PAID_ENABLED !== 'false',
+
+  /** Stripe Price IDs (set in env + Vercel). Never hardcode elsewhere. */
+  MONTHLY_PRICE_ID: process.env.STRIPE_BROBOT_MONTHLY_PRICE_ID || '',
+  YEARLY_PRICE_ID: process.env.STRIPE_BROBOT_YEARLY_PRICE_ID || '',
+
+  /** Human-readable plan codes used in DB and entitlement logic. */
+  PAID_PLAN_CODE: 'unlimited_brobot',
+
+  /** Number of days a past_due subscription still grants unlimited access. */
+  GRACE_PERIOD_DAYS: parseInt(process.env.BROBOT_GRACE_PERIOD_DAYS || '7', 10),
+
+  /**
+   * Base site URL (always absolute, no trailing slash).
+   * Delegates to centralized app-url helper which:
+   *   - Throws with clear error in production if no valid URL env var is set
+   *   - Falls back to localhost only in development
+   */
+  SITE_URL: getAppBaseUrl(),
+
+  /** URLs for post-checkout and portal redirects. Centralized to guarantee production safety. */
+  BILLING_SUCCESS_URL: getBillingSuccessUrl(),
+  BILLING_CANCEL_URL: getBillingCancelUrl(),
 } as const;
 
 export type BroBotFeature = typeof BROBOT_FEATURE;

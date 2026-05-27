@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { getDefaultRuleScope } from "./rule-definitions";
 
 export type ProgramCallRuleSet = {
   id: string;
@@ -131,9 +132,46 @@ export async function replaceProgramRulesForRuleSet(input: {
   ruleSetId: string;
   rules: UpsertProgramCallRuleInput[];
   userId: string;
+  /**
+   * When true, explicitly allow saving an empty rule list (wipes all rules for the set).
+   * Default false to protect against accidental full deletion from bad payloads.
+   */
+  allowEmpty?: boolean;
 }) {
   const supabase = await createClient();
 
+  // 1. Guard: never delete if caller accidentally passed empty unless explicitly allowed
+  if (input.rules.length === 0 && !input.allowEmpty) {
+    // Return current rules instead of wiping (defensive)
+    return getProgramRules(input.programId, input.ruleSetId);
+  }
+
+  // 2. Basic validation before touching the DB (fail fast, no partial wipe)
+  for (const r of input.rules) {
+    if (!r.ruleType?.trim() || !r.name?.trim()) {
+      throw new Error("Each rule must have a non-empty ruleType and name");
+    }
+    if (typeof r.isEnabled !== "boolean" || typeof r.isHardRule !== "boolean") {
+      throw new Error("isEnabled and isHardRule must be booleans");
+    }
+  }
+
+  // 3. Ownership / existence check on the rule set (prevent cross-program accidents)
+  const { data: ruleSetCheck, error: checkErr } = await supabase
+    .from("program_call_rule_sets")
+    .select("id, program_id")
+    .eq("id", input.ruleSetId)
+    .maybeSingle();
+
+  if (checkErr) {
+    throw new Error(`Failed to verify rule set ownership: ${checkErr.message}`);
+  }
+  if (!ruleSetCheck || ruleSetCheck.program_id !== input.programId) {
+    throw new Error("Rule set does not belong to the specified program");
+  }
+
+  // 4. Perform the replace (delete + insert). This is still the current model.
+  // Future improvement: could move to an RPC with transaction + updated_at guard.
   const { error: deleteError } = await supabase
     .from("program_call_rules")
     .delete()
@@ -145,6 +183,7 @@ export async function replaceProgramRulesForRuleSet(input: {
   }
 
   if (input.rules.length === 0) {
+    // Only reachable if allowEmpty was true
     return [];
   }
 
@@ -156,7 +195,8 @@ export async function replaceProgramRulesForRuleSet(input: {
     is_enabled: rule.isEnabled,
     is_hard_rule: rule.isHardRule,
     priority: rule.priority ?? (index + 1) * 10,
-    scope: rule.scope ?? {},
+    // Scope is documented as currently unused for behavior (see rule-definitions.ts)
+    scope: rule.scope ?? getDefaultRuleScope(),
     config: rule.config ?? {},
     created_by: input.userId,
   }));

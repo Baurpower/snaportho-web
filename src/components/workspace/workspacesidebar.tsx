@@ -51,6 +51,11 @@ const BOTTOM_NAV: NavItem[] = [
     href: "/work/settings",
     icon: Settings,
   },
+  {
+    label: "Billing & Subscription",
+    href: "/account/billing",
+    icon: Settings, // reuse Settings icon for simplicity (low-risk)
+  },
 ];
 
 const STORAGE_KEY = "snaportho-workspace-sidebar-collapsed";

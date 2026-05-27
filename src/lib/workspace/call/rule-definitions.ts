@@ -300,6 +300,33 @@ export const RULE_DEFINITION_MAP: Record<RuleType, RuleDefinition> =
     return acc;
   }, {} as Record<RuleType, RuleDefinition>);
 
+/**
+ * Lightweight persisted rule shape used by scheduler/generation/validation consumers.
+ * This is the canonical "ProgramRule" view. Prefer importing RuleType + RuleConfig + this
+ * type from here rather than redefining in component files.
+ */
+export type ProgramRule = {
+  id: string;
+  name: string;
+  rule_type: RuleType;
+  is_enabled: boolean;
+  is_hard_rule: boolean;
+  config: RuleConfig;
+};
+
+/**
+ * Scope is currently stored but **not used** by any evaluator, loader, or generator
+ * for filtering or conditional application (as of this audit).
+ *
+ * All rules are effectively "program" scoped today.
+ *
+ * TODO (future): When multi-program / cohort / service / PGY scoping is implemented,
+ * this field will become meaningful. Until then:
+ *   - Do not rely on scope for behavior.
+ *   - All normalization paths default it to {} or { scope: "program" }.
+ */
+export const DEFAULT_RULE_SCOPE = {} as Record<string, unknown>;
+
 export function getRuleDefinition(type: RuleType): RuleDefinition {
   return RULE_DEFINITION_MAP[type];
 }
@@ -521,4 +548,152 @@ export function validateRuleDraft(rule: RuleDraft): string[] {
 }
 
   return errors;
+}
+
+/* ============================================================================
+   NORMALIZATION / EFFECTIVE RULES LAYER (Phases 3 + 5 + 6)
+   Single place for sanitizing, singleton semantics, and "effective" filtering.
+   All save paths (manual, AI, future) should go through these.
+   ========================================================================== */
+
+/**
+ * All current rule types are treated as singletons (one per rule_set).
+ * If you add a future multi-instance rule type, remove it from this set.
+ */
+export const SINGLETON_RULE_TYPES: ReadonlySet<RuleType> = new Set<RuleType>([
+  "required_daily_call_slots",
+  "min_days_between_assignments",
+  "max_calls_per_month",
+  "max_weekends_per_month",
+  "restrict_call_type_by_pgy",
+  "weekend_pairing",
+  "restrict_call_by_rotation",
+]);
+
+export function isSingletonRuleType(type: string): boolean {
+  return SINGLETON_RULE_TYPES.has(type as RuleType);
+}
+
+/**
+ * Produces a normalized rule ready for the replace/save path.
+ * Applies canonical sanitization + defaults.
+ */
+export function normalizeRuleForSave(input: {
+  id?: string;
+  type: string;
+  name: string;
+  enabled: boolean;
+  isHardRule: boolean;
+  config?: Record<string, unknown>;
+  priority?: number;
+}): {
+  type: RuleType;
+  name: string;
+  enabled: boolean;
+  isHardRule: boolean;
+  config: RuleConfig;
+  priority?: number;
+} {
+  const type = input.type as RuleType;
+  if (!RULE_DEFINITION_MAP[type]) {
+    throw new Error(`Unknown rule type: ${type}`);
+  }
+
+  const name = (input.name || "").trim() || getRuleDefinition(type).defaultName;
+  const enabled = !!input.enabled;
+  const isHardRule = !!input.isHardRule;
+  const config = sanitizeRuleConfig(type, input.config ?? {});
+
+  return {
+    type,
+    name,
+    enabled,
+    isHardRule,
+    config,
+    priority: input.priority,
+  };
+}
+
+/** Returns the scope value that should be written for all rules today. */
+export function getDefaultRuleScope(): Record<string, unknown> {
+  return DEFAULT_RULE_SCOPE;
+}
+
+/**
+ * Returns rules filtered for "effective" use (generation, validation, availability).
+ * By default excludes disabled rules. Pass includeDisabled: true for the editor.
+ */
+export function getEffectiveRules<T extends { is_enabled?: boolean; enabled?: boolean }>(
+  rules: T[] | null | undefined,
+  opts: { includeDisabled?: boolean } = {}
+): T[] {
+  const { includeDisabled = false } = opts;
+  if (!rules) return [];
+  if (includeDisabled) return [...rules];
+  return rules.filter((r) => {
+    const enabled = r.is_enabled ?? r.enabled;
+    return enabled !== false;
+  });
+}
+
+/**
+ * Given an incoming rule (already normalized), merge it into an existing list
+ * using singleton semantics: if a rule of the same type exists, replace it
+ * (preserving id when possible). Otherwise append.
+ *
+ * Used by AI-created path and any future "add one rule" flows.
+ */
+type MergeableRuleRow = {
+  id?: string;
+  rule_type?: string;
+  type?: string;
+  name?: string;
+  is_enabled?: boolean;
+  enabled?: boolean;
+  is_hard_rule?: boolean;
+  isHardRule?: boolean;
+  config?: Record<string, unknown>;
+  priority?: number;
+};
+
+export function mergeSingletonRuleIntoList(
+  existing: MergeableRuleRow[],
+  incoming: {
+    type: RuleType;
+    name: string;
+    enabled: boolean;
+    isHardRule: boolean;
+    config: RuleConfig;
+    id?: string;
+  }
+): MergeableRuleRow[] {
+  const type = incoming.type;
+  const idx = existing.findIndex(
+    (r) => (r.rule_type ?? r.type) === type
+  );
+
+  const normalizedIncoming = {
+    id: incoming.id,
+    rule_type: type,
+    name: incoming.name,
+    is_enabled: incoming.enabled,
+    is_hard_rule: incoming.isHardRule,
+    config: incoming.config,
+  };
+
+  if (idx === -1) {
+    return [...existing, normalizedIncoming];
+  }
+
+  // Replace in place, keep original id if the incoming didn't provide a better one
+  const original = existing[idx];
+  const merged = {
+    ...original,
+    ...normalizedIncoming,
+    id: incoming.id ?? original.id,
+  };
+
+  const next = [...existing];
+  next[idx] = merged;
+  return next;
 }

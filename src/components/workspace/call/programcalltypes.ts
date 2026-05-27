@@ -1,41 +1,35 @@
-export type CallType = "Primary" | "Backup";
+/**
+ * Re-exports from the single canonical source of truth.
+ * DO NOT duplicate RuleType / RuleConfig / ProgramRule here.
+ * Adding a new rule type only requires changes in rule-definitions.ts + evaluator branches.
+ */
+import type { CallTypeOption } from "@/lib/workspace/call/rule-definitions";
 
-export type RuleType =
-  | "required_daily_call_slots"
-  | "min_days_between_assignments"
-  | "max_calls_per_month"
-  | "max_weekends_per_month"
-  | "restrict_call_type_by_pgy"
-  | "weekend_pairing"
-  | "restrict_call_by_rotation";
+export type {
+  CallTypeOption as CallType,
+  RuleType,
+  RuleConfig,
+  ProgramRule,
+} from "@/lib/workspace/call/rule-definitions";
 
-export type RuleConfig = {
-  requiredCallTypes?: CallType[];
-
-  minDays?: number;
-  excludeAdjacentWeekendPairing?: boolean;
-
-  maxCalls?: number;
-  maxWeekends?: number;
-
-  restrictedPgyYears?: number[];
-  allowedCallTypes?: CallType[];
-
-  sameResidentForWeekend?: boolean;
-
-  rotationIds?: string[];
-  blockAllCall?: boolean;
-  restrictedCallTypes?: CallType[];
-};
-
-export type ProgramRule = {
-  id: string;
-  name: string;
-  rule_type: RuleType;
-  is_enabled: boolean;
-  is_hard_rule: boolean;
-  config: RuleConfig;
-};
+// Re-export the constants and definitions for consumers that need them
+export {
+  CALL_TYPE_OPTIONS,
+  PGY_YEAR_OPTIONS,
+  RULE_DEFINITIONS,
+  RULE_DEFINITION_MAP,
+  SINGLETON_RULE_TYPES,
+  getRuleDefinition,
+  createDefaultRuleDraft,
+  sanitizeRuleConfig,
+  validateRuleDraft,
+  normalizeRuleForSave,
+  getEffectiveRules,
+  mergeSingletonRuleIntoList,
+  isSingletonRuleType,
+  getDefaultRuleScope,
+  DEFAULT_RULE_SCOPE,
+} from "@/lib/workspace/call/rule-definitions";
 
 export type ResidentOption = {
   // Canonical scheduler identity. This should resolve to program_roster.id.
@@ -88,7 +82,7 @@ export type MonthCall = {
   pgyYear: number | null;
   gradYear: number | null;
   userId: string | null;
-  callType: CallType | null;
+  callType: CallTypeOption | null;
   callDate: string | null;
   startDatetime: string | null;
   endDatetime: string | null;

@@ -31,7 +31,11 @@ interface RecordUsageParams {
 /**
  * Atomically increments usage for a successful AI response.
  *
- * Uses Postgres UPSERT (ON CONFLICT) so concurrent requests are safe.
+ * Delegates to the increment_brobot_usage() Postgres function which uses
+ * ON CONFLICT targeting a partial unique index.  This avoids the NULL != NULL
+ * ambiguity that broke the old composite-constraint upsert and eliminates the
+ * two-step upsert+update race that caused PGRST116 ("multiple rows returned").
+ *
  * Returns the new total count for the day after the increment.
  */
 export async function incrementDailyUsage(subject: Subject): Promise<number> {
@@ -41,50 +45,20 @@ export async function incrementDailyUsage(subject: Subject): Promise<number> {
   const userId = subject.type === 'user' ? subject.id : null;
   const guestId = subject.type === 'guest' ? subject.id : null;
 
-  // Atomic upsert
-  const { data, error } = await supabase
-    .from('user_daily_usage')
-    .upsert(
-      {
-        user_id: userId,
-        guest_id: guestId,
-        usage_date: today,
-        feature: BROBOT_CONFIG.FEATURE,
-        count: 1, // will be overwritten by the increment expression below
-        updated_at: new Date().toISOString(),
-      },
-      {
-        onConflict: 'user_id,guest_id,usage_date,feature',
-        ignoreDuplicates: false,
-      }
-    )
-    .select('count')
-    .single();
+  const { data, error } = await supabase.rpc('increment_brobot_usage', {
+    p_user_id: userId,
+    p_guest_id: guestId,
+    p_date: today,
+    p_feature: BROBOT_CONFIG.FEATURE,
+  });
 
   if (error) {
-    console.error('[brobot] incrementDailyUsage upsert error', error);
+    console.error('[brobot] incrementDailyUsage rpc error', error);
     // Fail closed on write error for safety (user may see "limit reached" incorrectly once)
     throw new Error('Failed to record usage');
   }
 
-  // The row may have existed. We need the true incremented value.
-  // Best practice: use a small RPC or do a separate increment.
-  // For Phase 1 simplicity + correctness we do a targeted increment.
-  const { data: updated, error: incError } = await supabase
-    .from('user_daily_usage')
-    .update({ count: (data?.count ?? 0) + 1, updated_at: new Date().toISOString() })
-    .eq('usage_date', today)
-    .eq('feature', BROBOT_CONFIG.FEATURE)
-    .eq(subject.type === 'user' ? 'user_id' : 'guest_id', subject.id)
-    .select('count')
-    .single();
-
-  if (incError) {
-    console.error('[brobot] incrementDailyUsage update error', incError);
-    throw new Error('Failed to record usage');
-  }
-
-  return updated?.count ?? 1;
+  return (data as number) ?? 1;
 }
 
 /**
