@@ -52,7 +52,8 @@ export async function getOrCreateStripeCustomer(userId: string, email?: string):
  */
 export async function createBroBotCheckoutSession(
   userId: string,
-  interval: 'month' | 'year'
+  interval: 'month' | 'year',
+  email?: string
 ): Promise<{ url: string | null }> {
   const priceId =
     interval === 'year'
@@ -63,7 +64,7 @@ export async function createBroBotCheckoutSession(
     throw new Error('Stripe price ID not configured for BroBot');
   }
 
-  const customerId = await getOrCreateStripeCustomer(userId);
+  const customerId = await getOrCreateStripeCustomer(userId, email);
 
   // Explicit early resolution guarantees production never proceeds with unsafe (localhost) redirect URLs
   const successUrl = BROBOT_CONFIG.BILLING_SUCCESS_URL;
@@ -84,6 +85,7 @@ export async function createBroBotCheckoutSession(
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: successUrl,
     cancel_url: cancelUrl,
+    client_reference_id: userId, // stable identifier for webhook resolution
     metadata: {
       user_id: userId,
       plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,

@@ -71,7 +71,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const { url } = await createBroBotCheckoutSession(user.id, interval);
+    const { url } = await createBroBotCheckoutSession(user.id, interval, user.email ?? undefined);
 
     if (!url) {
       return NextResponse.json({ error: 'Failed to create checkout session' }, { status: 500 });

@@ -341,13 +341,13 @@ function GuestQuotaCard() {
       <div className="bg-amber-50 border-b border-amber-200 px-6 py-4">
         <p className="font-semibold text-amber-900">Daily guest limit reached</p>
         <p className="text-amber-700 text-sm mt-1">
-          You’ve used your 2 free guest BroBot preps for today.
+          You’ve used your 1 free guest BroBot prep for today.
         </p>
       </div>
 
       <div className="px-6 py-6 space-y-4">
         <p className="text-gray-700 text-sm">
-          Create an account to save your history, get 5 daily preps, and unlock the option to go unlimited.
+          Create an account to save your history, get 3 daily preps, and unlock the option to go unlimited.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3">

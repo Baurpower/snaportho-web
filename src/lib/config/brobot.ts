@@ -6,8 +6,8 @@
  *
  * Environment variables (add to Vercel + .env.local):
  *   BROBOT_ENABLED=true
- *   BROBOT_GUEST_DAILY_CAP=2
- *   BROBOT_FREE_DAILY_CAP=5
+ *   BROBOT_GUEST_DAILY_CAP=1
+ *   BROBOT_FREE_DAILY_CAP=3
  *   CASEPREP_INTERNAL_BASE_URL=https://api.snap-ortho.com   (server-only, preferred)
  *   BROBOT_GUEST_SECRET=super-long-random-string-for-signing-guest-cookies
  */
@@ -25,10 +25,10 @@ export const BROBOT_CONFIG = {
   ENABLED: process.env.BROBOT_ENABLED !== 'false',
 
   /** Daily cap for completely unauthenticated guest users (via signed cookie) */
-  GUEST_DAILY_CAP: parseInt(process.env.BROBOT_GUEST_DAILY_CAP || '2', 10),
+  GUEST_DAILY_CAP: parseInt(process.env.BROBOT_GUEST_DAILY_CAP || '1', 10),
 
   /** Daily cap for logged-in users who have no active paid subscription */
-  FREE_DAILY_CAP: parseInt(process.env.BROBOT_FREE_DAILY_CAP || '5', 10),
+  FREE_DAILY_CAP: parseInt(process.env.BROBOT_FREE_DAILY_CAP || '3', 10),
 
   /** The single feature key used in user_daily_usage for all BroBot AI today.
    *  Future AI surfaces (Anki ortho-context, new tools, etc.) can share this or use their own.

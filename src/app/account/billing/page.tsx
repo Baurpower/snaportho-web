@@ -67,6 +67,20 @@ function BillingContent() {
 
           if (latest?.source === 'subscription' || attempts >= maxAttempts) {
             if (pollInterval) clearInterval(pollInterval);
+
+            // Final fallback: if still not active after polling but we have success param,
+            // trigger a safe server-side sync from Stripe (webhook may have been delayed/missed)
+            if (attempts >= maxAttempts && hasSuccessParam && latest?.source !== 'subscription') {
+              try {
+                await fetch('/api/billing/sync', { method: 'POST' });
+                const afterSync = await fetchEntitlement();
+                if (isMounted && afterSync) {
+                  setEntitlement(afterSync);
+                }
+              } catch (e) {
+                console.error('[billing] manual sync fallback failed', e);
+              }
+            }
           }
         }, 1000);
       }
@@ -117,7 +131,7 @@ function BillingContent() {
   const isActivating = success && !isPaid && !loading;
   const expiresAt = entitlement?.expiresAt;
   const remaining = entitlement?.aiAccess?.remainingToday ?? 0;
-  const dailyCap = entitlement?.aiAccess?.dailyCap ?? 5;
+  const dailyCap = entitlement?.aiAccess?.dailyCap ?? 3;
 
   // New cancellation-aware state
   const cancelAtPeriodEnd = entitlement?.cancelAtPeriodEnd === true;
