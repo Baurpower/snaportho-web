@@ -62,12 +62,15 @@ export async function POST(request: Request) {
         const session = event.data.object as Stripe.Checkout.Session;
 
         console.log('[stripe/webhook] checkout.session.completed details', {
+          eventId: event.id,
           sessionId: session.id,
           customer: session.customer,
-          clientReferenceId: session.client_reference_id,
-          metadataUserId: session.metadata?.user_id,
           subscription: session.subscription,
+          clientReferenceId: session.client_reference_id,
+          metadata: session.metadata,
+          customerEmail: session.customer_email || session.customer_details?.email,
           mode: session.mode,
+          paymentStatus: session.payment_status,
         });
 
         // Try multiple places for user_id (defense in depth)
@@ -146,11 +149,13 @@ export async function POST(request: Request) {
       case 'customer.subscription.deleted': {
         const subscription = event.data.object as Stripe.Subscription;
         console.log('[stripe/webhook] subscription event', {
+          eventId: event.id,
           type: event.type,
           subscriptionId: subscription.id,
-          status: subscription.status,
           customer: subscription.customer,
-          metadataUserId: subscription.metadata?.user_id,
+          status: subscription.status,
+          metadata: subscription.metadata,
+          priceId: subscription.items?.data?.[0]?.price?.id,
         });
         await syncSubscriptionFromStripe(subscription);
         break;
@@ -158,7 +163,13 @@ export async function POST(request: Request) {
 
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice;
-        console.log('[stripe/webhook] invoice.payment_failed', { invoiceId: invoice.id, subscription: invoice.parent?.subscription_details?.subscription });
+        console.log('[stripe/webhook] invoice.payment_failed', {
+          eventId: event.id,
+          invoiceId: invoice.id,
+          customer: invoice.customer,
+          subscription: invoice.parent?.subscription_details?.subscription,
+          status: invoice.status,
+        });
         const subDetail = invoice.parent?.subscription_details?.subscription;
         const subId = typeof subDetail === 'string' ? subDetail : (subDetail as Stripe.Subscription | undefined)?.id ?? null;
         if (subId) {
@@ -170,7 +181,13 @@ export async function POST(request: Request) {
 
       case 'invoice.payment_succeeded': {
         const invoice = event.data.object as Stripe.Invoice;
-        console.log('[stripe/webhook] invoice.payment_succeeded', { invoiceId: invoice.id, subscription: invoice.parent?.subscription_details?.subscription });
+        console.log('[stripe/webhook] invoice.payment_succeeded', {
+          eventId: event.id,
+          invoiceId: invoice.id,
+          customer: invoice.customer,
+          subscription: invoice.parent?.subscription_details?.subscription,
+          status: invoice.status,
+        });
         const subDetail = invoice.parent?.subscription_details?.subscription;
         const subId = typeof subDetail === 'string' ? subDetail : (subDetail as Stripe.Subscription | undefined)?.id ?? null;
         if (subId) {

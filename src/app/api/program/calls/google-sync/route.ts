@@ -22,6 +22,7 @@ type CallRow = {
   site: string | null;
   is_home_call: boolean | null;
   notes: string | null;
+  roster_id: string | null;
   program_membership_id: string | null;
   program_memberships:
     | { display_name: string | null }
@@ -190,6 +191,7 @@ export async function POST(request: NextRequest) {
         site,
         is_home_call,
         notes,
+        roster_id,
         program_membership_id,
         program_memberships (
           display_name
@@ -200,7 +202,11 @@ export async function POST(request: NextRequest) {
       .lte("call_date", monthEnd);
 
     if (scope === "mine") {
-      query = query.eq("program_membership_id", activeMembership.id);
+      if (activeMembership.roster_id) {
+        query = query.eq("roster_id", activeMembership.roster_id);
+      } else if (activeMembership.id) {
+        query = query.eq("program_membership_id", activeMembership.id);
+      }
     }
 
     const { data: calls, error: callsError } = await query;
@@ -309,12 +315,12 @@ export async function POST(request: NextRequest) {
         },
       };
 
-      if (call.start_datetime && call.end_datetime) {
-        eventPayload.start = { dateTime: call.start_datetime };
-        eventPayload.end = { dateTime: call.end_datetime };
-      } else if (call.call_date) {
+      if (call.call_date) {
         eventPayload.start = { date: call.call_date };
         eventPayload.end = { date: addOneDay(call.call_date) };
+      } else if (call.start_datetime && call.end_datetime) {
+        eventPayload.start = { dateTime: call.start_datetime };
+        eventPayload.end = { dateTime: call.end_datetime };
       } else {
         continue;
       }

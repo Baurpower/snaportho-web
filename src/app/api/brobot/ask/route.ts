@@ -22,6 +22,7 @@ import {
 } from '@/lib/brobot/guest-session';
 import {
   getRemainingAIUses,
+  getMobileBroBotEntitlement,
   type Subject,
 } from '@/lib/brobot/entitlements';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
@@ -94,7 +95,21 @@ export async function POST(request: Request) {
     // 2. Determine identity (user > guest)
     const user = await getOptionalUser();
 
+    // Authenticated Supabase user check + entitlement validation using centralized BroBot engine.
+    // If the caller is a logged-in user without BroBot access (per hasBroBotAccess from getMobileBroBotEntitlement),
+    // block with 403. This prevents bypassing the iOS Swift UI gate (and web UI gates).
+    // Guest users continue to use the existing free quota path (unchanged).
     if (user) {
+      const mobileEnt = await getMobileBroBotEntitlement(user.id);
+      if (!mobileEnt.hasBroBotAccess) {
+        return NextResponse.json(
+          {
+            error: 'BroBot access required',
+            hasBroBotAccess: false,
+          },
+          { status: 403 }
+        );
+      }
       subject = { type: 'user', id: user.id };
     } else {
       // Guest path

@@ -20,6 +20,7 @@ type SyncedEventRow = {
 type CallRow = {
   id: string;
   program_id: string | null;
+  roster_id: string | null;
   program_membership_id: string | null;
   call_type: string | null;
   call_date: string | null;
@@ -106,15 +107,15 @@ function buildEventPayload(scope: CalendarScope, call: CallRow): calendar_v3.Sch
     },
   };
 
-  if (call.start_datetime && call.end_datetime) {
-    eventPayload.start = { dateTime: call.start_datetime };
-    eventPayload.end = { dateTime: call.end_datetime };
-    return eventPayload;
-  }
-
   if (call.call_date) {
     eventPayload.start = { date: call.call_date };
     eventPayload.end = { date: addOneDay(call.call_date) };
+    return eventPayload;
+  }
+
+  if (call.start_datetime && call.end_datetime) {
+    eventPayload.start = { dateTime: call.start_datetime };
+    eventPayload.end = { dateTime: call.end_datetime };
     return eventPayload;
   }
 
@@ -198,6 +199,7 @@ async function loadCallsForReconciliation(params: {
   programId: string;
   scope: CalendarScope;
   programMembershipId: string | null;
+  rosterId?: string | null;
   relevantCallAssignmentIds: string[];
 }) {
   if (params.relevantCallAssignmentIds.length === 0) {
@@ -211,6 +213,7 @@ async function loadCallsForReconciliation(params: {
       `
         id,
         program_id,
+        roster_id,
         program_membership_id,
         call_type,
         call_date,
@@ -228,7 +231,12 @@ async function loadCallsForReconciliation(params: {
     .in("id", params.relevantCallAssignmentIds);
 
   if (params.scope === "mine") {
-    query = query.eq("program_membership_id", params.programMembershipId);
+    const rosterId = params.rosterId ?? null;
+    if (rosterId) {
+      query = query.eq("roster_id", rosterId);
+    } else if (params.programMembershipId) {
+      query = query.eq("program_membership_id", params.programMembershipId);
+    }
   }
 
   const { data, error } = await query;
@@ -261,7 +269,7 @@ export async function reconcileGoogleCalendarForUser(
 
   const supabase = createAdminClient();
 
-  const { accessContext, membership } = await getWorkspaceAccessContext({
+  const { accessContext, membership, roster } = await getWorkspaceAccessContext({
     userId,
     programId: options?.programId ?? undefined,
   });
@@ -352,6 +360,7 @@ export async function reconcileGoogleCalendarForUser(
     programId: accessContext.programId,
     scope,
     programMembershipId: membership.id,
+    rosterId: roster?.id ?? null,
     relevantCallAssignmentIds,
   });
 

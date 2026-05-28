@@ -202,40 +202,39 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
   const periodStart = firstItem?.current_period_start ?? null;
   const periodEnd = firstItem?.current_period_end ?? null;
 
+  const upsertPayload = {
+    user_id: userId,
+    stripe_customer_id: typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer?.id,
+    stripe_subscription_id: stripeSub.id,
+    stripe_price_id: priceId,
+    plan_code: planCode,
+    status: internalStatus,
+    current_period_start: periodStart
+      ? new Date(periodStart * 1000).toISOString()
+      : null,
+    current_period_end: periodEnd
+      ? new Date(periodEnd * 1000).toISOString()
+      : null,
+    cancel_at_period_end: stripeSub.cancel_at_period_end,
+    canceled_at: stripeSub.canceled_at
+      ? new Date(stripeSub.canceled_at * 1000).toISOString()
+      : null,
+    updated_at: new Date().toISOString(),
+  };
+
   const { error: upsertError } = await supabase.from('subscriptions').upsert(
-    {
-      user_id: userId,
-      stripe_customer_id: typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer?.id,
-      stripe_subscription_id: stripeSub.id,
-      stripe_price_id: priceId,
-      plan_code: planCode,
-      status: internalStatus,
-      current_period_start: periodStart
-        ? new Date(periodStart * 1000).toISOString()
-        : null,
-      current_period_end: periodEnd
-        ? new Date(periodEnd * 1000).toISOString()
-        : null,
-      cancel_at_period_end: stripeSub.cancel_at_period_end,
-      canceled_at: stripeSub.canceled_at
-        ? new Date(stripeSub.canceled_at * 1000).toISOString()
-        : null,
-      updated_at: new Date().toISOString(),
-    },
+    upsertPayload,
     { onConflict: 'user_id' }
   );
 
-  if (process.env.NODE_ENV !== 'production') {
-    if (upsertError) {
-      console.error('[stripe] syncSubscriptionFromStripe upsert error', { userId, error: upsertError });
-    } else {
-      console.log('[stripe] syncSubscriptionFromStripe success', {
-        userId,
-        stripeSubscriptionId: stripeSub.id,
-        status: internalStatus,
-        planCode,
-        priceId,
-      });
-    }
-  }
+  console.log('[stripe] syncSubscriptionFromStripe upsert', {
+    userId,
+    subscriptionId: stripeSub.id,
+    resolvedStatus: internalStatus,
+    upsertPayload: {
+      ...upsertPayload,
+      // avoid dumping huge objects
+    },
+    upsertError: upsertError ? { message: upsertError.message, code: upsertError.code } : null,
+  });
 }

@@ -35,6 +35,12 @@ export interface BroBotEntitlement {
   status?: string;
   /** Whether the user has requested cancellation at the end of the current period */
   cancelAtPeriodEnd?: boolean;
+
+  // Additive fields for mobile entitlements + future Apple IAP (populated when relevant)
+  stripeCustomerId?: string | null;
+  stripeSubscriptionId?: string | null;
+  usedToday?: number;
+  isInGracePeriod?: boolean;
 }
 
 /**
@@ -122,7 +128,7 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
   // First try to find a "good" status row.
   let { data: sub } = await supabase
     .from('subscriptions')
-    .select('status, plan_code, current_period_end, cancel_at_period_end')
+    .select('status, plan_code, current_period_end, cancel_at_period_end, stripe_customer_id, stripe_subscription_id')
     .eq('user_id', userId)
     .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
     .in('status', ['active', 'trialing', 'past_due'])
@@ -134,7 +140,7 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     // Fallback to any row (including incomplete or canceled), still prefer latest period end
     const { data: fallback } = await supabase
       .from('subscriptions')
-      .select('status, plan_code, current_period_end, cancel_at_period_end')
+      .select('status, plan_code, current_period_end, cancel_at_period_end, stripe_customer_id, stripe_subscription_id')
       .eq('user_id', userId)
       .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
       .order('current_period_end', { ascending: false, nullsFirst: false })
@@ -167,7 +173,17 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     (sub.cancel_at_period_end && sub.current_period_end &&
       new Date(sub.current_period_end).getTime() > now.getTime());
 
+  // Compute grace separately so mobile (and future) can show "in grace" messaging
+  const isInGracePeriod =
+    (sub.status === 'past_due' && sub.current_period_end &&
+      new Date(sub.current_period_end).getTime() + graceMs > now.getTime()) ||
+    (sub.cancel_at_period_end && sub.current_period_end &&
+      new Date(sub.current_period_end).getTime() > now.getTime());
+
   if (isActive) {
+    // Also attach today's usage count for the mobile contract (even for unlimited users)
+    const usedToday = await getUsedCountToday({ type: 'user', id: userId });
+
     return {
       aiAccess: { unlimited: true, dailyCap: null, remainingToday: null },
       source: 'subscription',
@@ -175,6 +191,11 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
       expiresAt: sub.current_period_end,
       status: sub.status,
       cancelAtPeriodEnd: sub.cancel_at_period_end,
+      // New additive fields
+      stripeCustomerId: sub.stripe_customer_id ?? null,
+      stripeSubscriptionId: sub.stripe_subscription_id ?? null,
+      usedToday,
+      isInGracePeriod,
     };
   }
 
@@ -182,9 +203,11 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
 }
 
 /**
- * Internal: how many successful uses has this subject consumed today?
+ * Returns how many successful BroBot uses the subject has consumed today.
+ * Exported for reuse by mobile entitlement endpoint and other server code.
+ * (Internal implementation details may change; use for count only.)
  */
-async function getUsedCountToday(subject: Subject): Promise<number> {
+export async function getUsedCountToday(subject: Subject): Promise<number> {
   const supabase = createAdminClient();
   const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD UTC
 
@@ -220,5 +243,131 @@ export async function getRemainingAIUses(subject: Subject) {
   return {
     ...ent,
     isLimitReached: !ent.aiAccess.unlimited && (ent.aiAccess.remainingToday ?? 0) <= 0,
+  };
+}
+
+// ============================================================================
+// Mobile Entitlement Contract (additive, for iOS / future clients)
+// ============================================================================
+
+/**
+ * Normalized entitlement payload designed for the Swift iOS app.
+ * The backend remains the source of truth. Never trust client-side state.
+ *
+ * This shape is intentionally additive-friendly for future Apple IAP fields
+ * (appleOriginalTransactionId, appleProductId, appleExpiresAt, entitlementSource, etc.)
+ * without breaking existing web callers.
+ */
+export interface MobileBroBotEntitlement {
+  hasBroBotAccess: boolean;
+  plan: 'free' | 'unlimited_brobot' | 'promo' | 'disabled';
+  source: 'subscription' | 'override' | 'free_quota' | 'disabled';
+  stripeCustomerId: string | null;
+  stripeSubscriptionId: string | null;
+  subscriptionStatus: string | null;
+  currentPeriodEnd: string | null;
+  cancelAtPeriodEnd: boolean;
+  isInGracePeriod: boolean;
+  remainingFreeUses: number | null;
+  dailyLimit: number | null;
+  usedToday: number | null;
+  lastSyncedAt: string;
+  serverTime: string;
+
+  // Future Apple IAP placeholders (always null until implemented)
+  appleOriginalTransactionId?: string | null;
+  appleProductId?: string | null;
+  appleExpiresAt?: string | null;
+}
+
+/**
+ * Returns the mobile-optimized entitlement for a logged-in user.
+ * Thin mapping layer on top of the single centralized entitlement engine.
+ * No guest fallback — mobile always requires an authenticated Supabase user.
+ */
+export async function getMobileBroBotEntitlement(userId: string): Promise<MobileBroBotEntitlement> {
+  const now = new Date().toISOString();
+
+  const ent = await getUserEntitlement({ type: 'user', id: userId });
+  const usedToday = await getUsedCountToday({ type: 'user', id: userId });
+
+  const hasBroBotAccess =
+    ent.aiAccess.unlimited || (ent.aiAccess.remainingToday ?? 0) > 0;
+
+  let plan: MobileBroBotEntitlement['plan'] = 'free';
+  if (ent.source === 'subscription') {
+    plan = 'unlimited_brobot';
+  } else if (ent.source === 'override') {
+    plan = 'promo';
+  } else if (ent.source === 'disabled') {
+    plan = 'disabled';
+  }
+
+  // Base stripe fields (populated by enhanced getPaidSubscriptionEntitlement when active)
+  let stripeCustomerId: string | null = ent.stripeCustomerId ?? null;
+  let stripeSubscriptionId: string | null = ent.stripeSubscriptionId ?? null;
+  let subscriptionStatus: string | null = ent.status ?? null;
+  let currentPeriodEnd: string | null = ent.expiresAt ?? null;
+  let cancelAtPeriodEnd = ent.cancelAtPeriodEnd ?? false;
+  let isInGracePeriod = ent.isInGracePeriod ?? false;
+
+  // For canceled/expired subscriptions that no longer grant access,
+  // still surface the historical Stripe IDs + status so the app can show
+  // "You previously subscribed — restore / manage in billing" etc.
+  // This is a pure data lookup; the access decision logic stays in getUserEntitlement.
+  if ((!stripeCustomerId || !subscriptionStatus) && ent.source !== 'subscription') {
+    try {
+      const supabase = createAdminClient();
+      const { data: subRow } = await supabase
+        .from('subscriptions')
+        .select('stripe_customer_id, stripe_subscription_id, status, current_period_end, cancel_at_period_end')
+        .eq('user_id', userId)
+        .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+        .order('updated_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (subRow) {
+        stripeCustomerId = subRow.stripe_customer_id ?? null;
+        stripeSubscriptionId = subRow.stripe_subscription_id ?? null;
+        subscriptionStatus = subRow.status ?? null;
+        currentPeriodEnd = subRow.current_period_end ?? null;
+        cancelAtPeriodEnd = subRow.cancel_at_period_end ?? false;
+
+        // Recompute grace using the same constant/logic pattern (no duplication of full decision tree)
+        const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
+        const periodEndDate = subRow.current_period_end ? new Date(subRow.current_period_end) : null;
+        isInGracePeriod =
+          (subRow.status === 'past_due' && periodEndDate &&
+            periodEndDate.getTime() + graceMs > Date.now()) ||
+          (subRow.cancel_at_period_end && periodEndDate &&
+            periodEndDate.getTime() > Date.now());
+      }
+    } catch (e) {
+      // Non-fatal for mobile response — we still return what we have
+      console.error('[mobile/entitlements] secondary subscription lookup failed (non-fatal)', e);
+    }
+  }
+
+  return {
+    hasBroBotAccess,
+    plan,
+    source: ent.source === 'guest_quota' ? 'free_quota' : (ent.source as MobileBroBotEntitlement['source']),
+    stripeCustomerId,
+    stripeSubscriptionId,
+    subscriptionStatus,
+    currentPeriodEnd,
+    cancelAtPeriodEnd,
+    isInGracePeriod,
+    remainingFreeUses: ent.aiAccess.unlimited ? null : (ent.aiAccess.remainingToday ?? null),
+    dailyLimit: ent.aiAccess.dailyCap,
+    usedToday,
+    lastSyncedAt: now,
+    serverTime: now,
+
+    // Future Apple fields (null until Apple IAP support is added)
+    appleOriginalTransactionId: null,
+    appleProductId: null,
+    appleExpiresAt: null,
   };
 }
