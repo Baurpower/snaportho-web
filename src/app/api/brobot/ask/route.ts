@@ -61,10 +61,34 @@ function hashForLogging(value: string | null | undefined): string | undefined {
   return `h${Math.abs(h).toString(16)}`;
 }
 
-async function getOptionalUser() {
+async function getOptionalUser(request?: Request) {
   try {
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+
+    // Support native iOS Bearer token (Authorization: Bearer <token>)
+    let bearerToken: string | null = null;
+    if (request) {
+      const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
+      if (authHeader?.toLowerCase().startsWith('bearer ')) {
+        bearerToken = authHeader.replace(/^Bearer\s+/i, '').trim();
+      }
+    }
+
+    const {
+      data: { user },
+      error: authError,
+    } = bearerToken
+      ? await supabase.auth.getUser(bearerToken)
+      : await supabase.auth.getUser();
+
+    if (authError) {
+      // TEMP DEBUG only
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[BROBOT-ASK-DEBUG] getOptionalUser authError', authError.message);
+      }
+      return null;
+    }
+
     return user ?? null;
   } catch {
     return null;
@@ -78,10 +102,56 @@ export async function POST(request: Request) {
   let subject: Subject | null = null;
   let guestCookieToSet: string | null = null;
 
+  // TEMP DEBUG (safe only)
+  const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
+  const hasAuthorizationHeader = !!authHeader;
+  const isBearer = authHeader?.toLowerCase().startsWith('bearer ');
+  const authMode = isBearer ? 'bearer' : (hasAuthorizationHeader ? 'other' : 'cookie');
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[BROBOT-ASK-DEBUG] request start', {
+      hasAuthorizationHeader,
+      authMode,
+      method: request.method,
+    });
+  }
+
   try {
-    // 1. Parse body
+    // 1. Parse body + normalization (support iOS "prompt" + existing shape)
     const raw = await request.json().catch(() => ({}));
-    const parsed = AskRequestSchema.safeParse(raw);
+
+    // TEMP DEBUG (safe)
+    const bodyKeys = Object.keys(raw || {});
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[BROBOT-ASK-DEBUG] body received', { bodyKeys });
+    }
+
+    function normalizeAskPrompt(input: unknown): string | null {
+      if (!input || typeof input !== 'object') return null;
+      const obj = input as Record<string, unknown>;
+      // Accept iOS shape + legacy web shapes
+      const candidate = obj.prompt ?? obj.caseDescription ?? obj.query ?? obj.message ?? obj.text ?? obj.case;
+      if (typeof candidate !== 'string') return null;
+      const trimmed = candidate.trim();
+      return trimmed.length >= 3 ? trimmed : null;
+    }
+
+    const normalizedPrompt = normalizeAskPrompt(raw);
+    const normalizedPromptPresent = !!normalizedPrompt;
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[BROBOT-ASK-DEBUG] normalization', { normalizedPromptPresent });
+    }
+
+    if (!normalizedPrompt) {
+      return NextResponse.json(
+        { error: 'Missing case description' },
+        { status: 400 }
+      );
+    }
+
+    // Keep using the existing schema for validation (it accepts "prompt")
+    const parsed = AskRequestSchema.safeParse({ prompt: normalizedPrompt });
 
     if (!parsed.success) {
       return NextResponse.json(
@@ -90,10 +160,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const { prompt } = parsed.data;
+    const { prompt } = parsed.data;  // normalized + validated
 
-    // 2. Determine identity (user > guest)
-    const user = await getOptionalUser();
+    // 2. Determine identity (user > guest) — now supports Bearer for iOS
+    const user = await getOptionalUser(request);
 
     // Authenticated Supabase user check + entitlement validation using centralized BroBot engine.
     // If the caller is a logged-in user without BroBot access (per hasBroBotAccess from getMobileBroBotEntitlement),
@@ -142,11 +212,29 @@ export async function POST(request: Request) {
 
     if (!subject) {
       // Should be impossible after the logic above
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[BROBOT-ASK-DEBUG] no subject established');
+      }
       return NextResponse.json({ error: 'Unable to establish identity' }, { status: 500 });
+    }
+
+    // TEMP DEBUG (safe)
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[BROBOT-ASK-DEBUG] subject resolved', {
+        subjectType: subject.type,
+        userFound: !!user,
+      });
     }
 
     // 3. Entitlement check (centralized, the only place that decides)
     const entitlement = await getRemainingAIUses(subject);
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[BROBOT-ASK-DEBUG] entitlement', {
+        isLimitReached: entitlement.isLimitReached,
+        remaining: entitlement.aiAccess?.remainingToday,
+      });
+    }
 
     if (entitlement.isLimitReached) {
       await recordUsageEvent({
@@ -181,6 +269,9 @@ export async function POST(request: Request) {
     let upstreamResponse: Response;
 
     try {
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[BROBOT-ASK-DEBUG] calling upstream', { upstreamUrl });
+      }
       upstreamResponse = await fetch(upstreamUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -188,6 +279,9 @@ export async function POST(request: Request) {
         signal: controller.signal,
         cache: 'no-store',
       });
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[BROBOT-ASK-DEBUG] upstream status', { status: upstreamResponse.status });
+      }
     } catch (fetchErr) {
       clearTimeout(timeout);
       console.error(`[brobot/ask] ${requestId} upstream fetch failed`, fetchErr);
@@ -290,6 +384,13 @@ export async function POST(request: Request) {
 
     return res;
   } catch (err) {
+    const errorClass = err instanceof Error ? err.constructor.name : typeof err;
+    const errorMessage = err instanceof Error ? err.message : String(err);
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[BROBOT-ASK-DEBUG] route error', { errorClass, errorMessage });
+    }
+
     console.error(`[brobot/ask] ${requestId} unexpected error`, err);
 
     await recordUsageEvent({
