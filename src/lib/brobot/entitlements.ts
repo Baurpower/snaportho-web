@@ -235,6 +235,21 @@ export async function getUsedCountToday(subject: Subject): Promise<number> {
 }
 
 /**
+ * Computes the next daily reset time (start of tomorrow in UTC).
+ * Used for free/guest daily quotas.
+ */
+export function getDailyResetAt(): string {
+  const now = new Date();
+  const tomorrow = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1,
+    0, 0, 0, 0
+  ));
+  return tomorrow.toISOString();
+}
+
+/**
  * Convenience helper used by the proxy route.
  * Returns the entitlement plus a small derived object useful for responses.
  */
@@ -273,6 +288,13 @@ export interface MobileBroBotEntitlement {
   usedToday: number | null;
   lastSyncedAt: string;
   serverTime: string;
+
+  // Additive server-owned free quota fields (for iOS + web dynamic UI)
+  freeLimit?: number | null;
+  usedThisPeriod?: number | null;
+  remainingUses?: number | null;
+  resetAt?: string | null;
+  reasonIfBlocked?: string | null;
 
   // Future Apple IAP placeholders (always null until implemented)
   appleOriginalTransactionId?: string | null;
@@ -349,6 +371,20 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     }
   }
 
+  // Compute additive free quota fields (server-owned via BROBOT_CONFIG)
+  const isUnlimited = ent.aiAccess.unlimited;
+  const freeLimit = isUnlimited ? null : ent.aiAccess.dailyCap;
+  const usedThisPeriod = usedToday;
+  const remainingUses = isUnlimited ? null : (ent.aiAccess.remainingToday ?? null);
+  const resetAt = isUnlimited ? null : getDailyResetAt();
+
+  let reasonIfBlocked: string | null = null;
+  if (ent.source === 'disabled') {
+    reasonIfBlocked = 'feature_disabled';
+  } else if (!hasBroBotAccess && (ent.source === 'free_quota' || ent.source === 'guest_quota')) {
+    reasonIfBlocked = 'daily_limit_reached';
+  }
+
   return {
     hasBroBotAccess,
     plan,
@@ -364,6 +400,13 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     usedToday,
     lastSyncedAt: now,
     serverTime: now,
+
+    // Additive server-owned fields
+    freeLimit,
+    usedThisPeriod,
+    remainingUses,
+    resetAt,
+    reasonIfBlocked,
 
     // Future Apple fields (null until Apple IAP support is added)
     appleOriginalTransactionId: null,

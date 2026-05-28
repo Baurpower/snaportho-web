@@ -220,14 +220,14 @@ export default function BroBotBasic() {
         {/* Proactive guest limit card */}
         {guestUsage && guestUsage.remainingToday === 0 && !loading && !guestError && (
           <div className="mt-6">
-            <GuestQuotaCard />
+            <GuestQuotaCard guestUsage={guestUsage} />
           </div>
         )}
 
         {guestError && !loading && (
           <div ref={summaryRef} className="mt-8">
             {guestError.type === 'quota_limit' ? (
-              <GuestQuotaCard />
+              <GuestQuotaCard guestUsage={guestUsage} />
             ) : (
               <div className="rounded-2xl border border-gray-200 bg-white p-6 text-center">
                 <p className="text-gray-700">
@@ -335,19 +335,21 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 }
 
 // Guest-specific quota limit card (encourages sign-up)
-function GuestQuotaCard() {
+function GuestQuotaCard({ guestUsage }: { guestUsage: { remainingToday: number | null; dailyCap: number | null } | null }) {
   return (
     <div className="rounded-2xl border border-amber-200 bg-white shadow-sm overflow-hidden">
       <div className="bg-amber-50 border-b border-amber-200 px-6 py-4">
         <p className="font-semibold text-amber-900">Daily guest limit reached</p>
         <p className="text-amber-700 text-sm mt-1">
-          You’ve used your 1 free guest BroBot prep for today.
+          {guestUsage?.dailyCap
+            ? `You’ve used your ${guestUsage.dailyCap} free guest BroBot ${guestUsage.dailyCap === 1 ? 'prep' : 'preps'} for today.`
+            : "You've reached your daily guest BroBot limit."}
         </p>
       </div>
 
       <div className="px-6 py-6 space-y-4">
         <p className="text-gray-700 text-sm">
-          Create an account to save your history, get 3 daily preps, and unlock the option to go unlimited.
+          Create an account to save your history, get more daily preps (server-configured limit), and unlock the option to go unlimited.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3">

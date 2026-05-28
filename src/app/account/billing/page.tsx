@@ -131,7 +131,7 @@ function BillingContent() {
   const isActivating = success && !isPaid && !loading;
   const expiresAt = entitlement?.expiresAt;
   const remaining = entitlement?.aiAccess?.remainingToday ?? 0;
-  const dailyCap = entitlement?.aiAccess?.dailyCap ?? 3;
+  const dailyCap = entitlement?.aiAccess?.dailyCap ?? null;
 
   // New cancellation-aware state
   const cancelAtPeriodEnd = entitlement?.cancelAtPeriodEnd === true;
