@@ -305,7 +305,7 @@ export async function getRemainingAIUses(subject: Subject) {
  */
 export interface MobileBroBotEntitlement {
   hasBroBotAccess: boolean;
-  plan: 'free' | 'unlimited_brobot' | 'promo' | 'disabled';
+  plan: string; // e.g. 'unlimited_brobot', 'brobot_monthly', etc. Derived from DB plan_code for the subscription. Never null for paid Active cases.
   source: 'stripe' | 'override' | 'free_quota' | 'disabled'; // 'stripe' = web Stripe subscription (aligned with website paid path)
   stripeCustomerId: string | null;
   stripeSubscriptionId: string | null;
@@ -367,7 +367,9 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
   let mobileSource: MobileBroBotEntitlement['source'] = 'free_quota';
 
   if (ent.source === 'subscription') {
-    plan = 'unlimited_brobot';
+    // Derive plan from the actual subscription data (plan_code stored from Stripe metadata or default).
+    // This ensures the iOS app receives a stable, non-null plan identifier instead of hard-coded or missing value.
+    plan = ent.planCode || 'unlimited_brobot';
     mobileSource = 'stripe';
   } else if (ent.source === 'override') {
     plan = 'promo';

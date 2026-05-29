@@ -26,6 +26,9 @@ import {
   WeekScheduleView,
   type WeekDayCard,
 } from "@/components/workspace/weekscheduleview";
+import { MobileWeekScheduleView } from "@/components/workspace/mobile/mobileweekscheduleview";
+import { MobileRotationCoverage } from "@/components/workspace/mobile/mobilerotationcoverage";
+import { MobileMonthsAheadView } from "@/components/workspace/mobile/mobilemonthsaheadview";
 import {
   MonthsScheduleView,
   type UserCalendarEvent,
@@ -1507,32 +1510,83 @@ export default function SnapOrthoWorkspaceHomeDraft() {
 
               <div className="mt-6">
                 {viewMode === "week" ? (
-                  <WeekScheduleView days={weekCards} loading={weekLoading} />
+                  <>
+                    {/* Desktop grid - unchanged */}
+                    <div className="hidden md:block">
+                      <WeekScheduleView days={weekCards} loading={weekLoading} />
+                    </div>
+                    {/* Mobile stacked cards - additive */}
+                    <div className="md:hidden">
+                      <MobileWeekScheduleView
+                        days={weekCards}
+                        loading={weekLoading}
+                        onDayClick={() => {
+                          // For Phase 4: rich mobile cards + bottom sheet summary.
+                          // Full interactive editing available via Plan Week.
+                          // (Reuses same WeekDayCard data.)
+                        }}
+                      />
+                    </div>
+                  </>
                 ) : (
-                  <MonthsScheduleView
-                    months={aheadMonths}
-                    monthDataByKey={monthEventsByKey}
-                    rotationTimelineEvents={rotationTimelineEvents}
-                    programCallsByMonthKey={programCallsByMonthKey}
-                    timeOffByMonthKey={timeOffByMonthKey}
-                    loading={monthLoading}
-                    rotationLoading={rotationLoading}
-                    onPrevious={() => setAheadStartOffset((prev) => prev - 1)}
-                    onNext={() => setAheadStartOffset((prev) => prev + 1)}
-                    currentMembershipId={summary?.membership?.id ?? null}
-                    currentDisplayName={summary?.membership?.displayName ?? null}
-                  />
+                  <>
+                    {/* Desktop Months Ahead (original complex view with mini calendars) */}
+                    <div className="hidden md:block">
+                      <MonthsScheduleView
+                        months={aheadMonths}
+                        monthDataByKey={monthEventsByKey}
+                        rotationTimelineEvents={rotationTimelineEvents}
+                        programCallsByMonthKey={programCallsByMonthKey}
+                        timeOffByMonthKey={timeOffByMonthKey}
+                        loading={monthLoading}
+                        rotationLoading={rotationLoading}
+                        onPrevious={() => setAheadStartOffset((prev) => prev - 1)}
+                        onNext={() => setAheadStartOffset((prev) => prev + 1)}
+                        currentMembershipId={summary?.membership?.id ?? null}
+                        currentDisplayName={summary?.membership?.displayName ?? null}
+                      />
+                    </div>
+                    {/* Mobile Months Ahead - simple summary cards (additive) */}
+                    <div className="md:hidden">
+                      <MobileMonthsAheadView
+                        months={aheadMonths}
+                        monthDataByKey={monthEventsByKey}
+                        rotationTimelineEvents={rotationTimelineEvents}
+                        programCallsByMonthKey={programCallsByMonthKey}
+                        timeOffByMonthKey={timeOffByMonthKey}
+                        loading={monthLoading}
+                        rotationLoading={rotationLoading}
+                        onPrevious={() => setAheadStartOffset((prev) => prev - 1)}
+                        onNext={() => setAheadStartOffset((prev) => prev + 1)}
+                        currentMembershipId={summary?.membership?.id ?? null}
+                        currentDisplayName={summary?.membership?.displayName ?? null}
+                      />
+                    </div>
+                  </>
                 )}
               </div>
 
               <div className="mt-8">
-                <RotationsPanel
-                  months={aheadMonths}
-                  activeMonthIndex={activeMonthIndex}
-                  setActiveMonthIndex={setActiveMonthIndex}
-                  coverageByMonth={coverageByMonth}
-                  coverageLoading={coverageLoading}
-                />
+                {/* Desktop Rotation Coverage (original multi-column cards + pill selector) */}
+                <div className="hidden md:block">
+                  <RotationsPanel
+                    months={aheadMonths}
+                    activeMonthIndex={activeMonthIndex}
+                    setActiveMonthIndex={setActiveMonthIndex}
+                    coverageByMonth={coverageByMonth}
+                    coverageLoading={coverageLoading}
+                  />
+                </div>
+                {/* Mobile Rotation Coverage - single column + MobileMonthSelector (additive) */}
+                <div className="md:hidden">
+                  <MobileRotationCoverage
+                    months={aheadMonths}
+                    activeMonthIndex={activeMonthIndex}
+                    setActiveMonthIndex={setActiveMonthIndex}
+                    coverageByMonth={coverageByMonth}
+                    coverageLoading={coverageLoading}
+                  />
+                </div>
               </div>
             </SectionShell>
           </motion.div>

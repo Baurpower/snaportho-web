@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
-type NavItem = {
+export type NavItem = {
   label: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
@@ -26,7 +26,7 @@ type WorkspaceSidebarProps = {
   onHide?: () => void;
 };
 
-const PRIMARY_NAV: NavItem[] = [
+export const PRIMARY_NAV: NavItem[] = [
   { label: "Home", href: "/work", icon: LayoutGrid },
   {
     label: "Call",
@@ -43,7 +43,7 @@ const PRIMARY_NAV: NavItem[] = [
   },
 ];
 
-const BOTTOM_NAV: NavItem[] = [
+export const BOTTOM_NAV: NavItem[] = [
   { label: "Profile", href: "/work/profile", icon: UserCircle2 },
   {
     label: "Settings",
@@ -60,24 +60,26 @@ const BOTTOM_NAV: NavItem[] = [
 
 const STORAGE_KEY = "snaportho-workspace-sidebar-collapsed";
 
-function isActivePath(pathname: string | null, href: string) {
+export function isActivePath(pathname: string | null, href: string) {
   if (!pathname) return false;
   if (href === "/work") return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function NavLink({
+export function NavLink({
   item,
   href,
   collapsed,
   active,
   isAdminMode,
+  onClick,
 }: {
   item: NavItem;
   href: string;
   collapsed: boolean;
   active: boolean;
   isAdminMode: boolean;
+  onClick?: () => void;
 }) {
   const Icon = item.icon;
   const label = isAdminMode ? item.adminLabel ?? item.label : item.label;
@@ -85,6 +87,7 @@ function NavLink({
   return (
     <Link
       href={href}
+      onClick={onClick}
       className={`group flex items-center rounded-2xl transition-all ${
         collapsed ? "justify-center px-3 py-3" : "gap-3 px-3.5 py-3"
       } ${

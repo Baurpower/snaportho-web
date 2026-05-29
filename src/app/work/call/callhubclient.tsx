@@ -23,6 +23,8 @@ import CallMonthCalendar, {
   type ProgramCallItem,
 } from "@/components/workspace/call/callmonthcalendar";
 import EditCallMonthCalendar from "@/components/workspace/call/editcallmonthcalendar";
+import { MobileProgramCallAgenda } from "@/components/workspace/call/mobileprogramcallagenda";
+import { MobileMonthSelector } from "@/components/workspace/mobile/mobilemonthselector";
 import SwapRequestDetailDrawer from "@/components/workspace/call-swaps/SwapRequestDetailDrawer";
 import { useSwapRequests } from "@/hooks/useSwapRequests";
 import AdminSwapApprovalQueue from "@/components/workspace/call-swaps/AdminSwapApprovalQueue";
@@ -249,6 +251,9 @@ export default function CallHubPage() {
   const [selectedDateKey, setSelectedDateKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [editingCalendar, setEditingCalendar] = useState(false);
+
+  // Mobile-only UI state (Phase 3). Does not affect desktop or export/scope logic.
+  const [mobileCallView, setMobileCallView] = useState<"mine" | "program">("mine");
   const [successModal, setSuccessModal] = useState<SuccessModalState>(null);
   const [actionError, setActionError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -514,6 +519,16 @@ useEffect(() => {
       .filter((call) => call.callDate && call.callDate >= toDateKey(new Date()))
       .sort((a, b) => (a.callDate ?? "").localeCompare(b.callDate ?? ""))[0] ??
     null;
+
+  // Smart default for mobile toggle: prefer "mine" when the user has calls in this month
+  // This effect runs when the loaded calls for the visible month change.
+  useEffect(() => {
+    if (myCalls.length > 0) {
+      setMobileCallView("mine");
+    } else {
+      setMobileCallView("program");
+    }
+  }, [myCalls.length]); // Only depend on count to avoid thrashing on every render
 
   const totalCallDays = calls.length;
   const myCallDays = myCalls.length;
@@ -1195,7 +1210,60 @@ async function stopGoogleSync() {
                 </div>
               ) : null}
 
-              <div className="mb-4 flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
+              {/* Mobile month selector + view toggle (Phase 3) */}
+              <div className="mb-4 md:hidden">
+                <MobileMonthSelector
+                  activeLabel={monthLabel(visibleMonth.year, visibleMonth.monthIndex)}
+                  onPrevious={() =>
+                    setVisibleMonth((prev) => {
+                      const nextDate = new Date(prev.year, prev.monthIndex - 1, 1);
+                      return {
+                        year: nextDate.getFullYear(),
+                        monthIndex: nextDate.getMonth(),
+                      };
+                    })
+                  }
+                  onNext={() =>
+                    setVisibleMonth((prev) => {
+                      const nextDate = new Date(prev.year, prev.monthIndex + 1, 1);
+                      return {
+                        year: nextDate.getFullYear(),
+                        monthIndex: nextDate.getMonth(),
+                      };
+                    })
+                  }
+                  subtitle="Program call assignments"
+                />
+
+                {/* Mobile-only view toggle */}
+                <div className="mt-3 flex rounded-full border border-slate-200 bg-slate-100 p-1">
+                  <button
+                    type="button"
+                    onClick={() => setMobileCallView("mine")}
+                    className={`flex-1 rounded-full py-2 text-sm font-semibold transition ${
+                      mobileCallView === "mine"
+                        ? "bg-white text-slate-950 shadow-sm"
+                        : "text-slate-600 hover:text-slate-950"
+                    }`}
+                  >
+                    My Calls
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMobileCallView("program")}
+                    className={`flex-1 rounded-full py-2 text-sm font-semibold transition ${
+                      mobileCallView === "program"
+                        ? "bg-white text-slate-950 shadow-sm"
+                        : "text-slate-600 hover:text-slate-950"
+                    }`}
+                  >
+                    Program
+                  </button>
+                </div>
+              </div>
+
+              {/* Original desktop month navigation + header — hidden on mobile (we use MobileMonthSelector + toggle above) */}
+              <div className="mb-4 hidden md:flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
                 <div className="flex flex-wrap items-center gap-3">
                   <button
                     type="button"
@@ -1347,7 +1415,7 @@ async function stopGoogleSync() {
 </div>
               </div>
 
-              <div className="mb-4 flex flex-wrap items-center gap-3 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5">
+              <div className="mb-4 hidden md:flex flex-wrap items-center gap-3 rounded-full border border-slate-200 bg-slate-50 px-4 py-2.5">
                 <div className="inline-flex items-center gap-2 text-[11px] font-semibold text-slate-600">
                   <span className="h-2.5 w-2.5 rounded-full bg-sky-500" />
                   My call emphasized
@@ -1373,44 +1441,75 @@ async function stopGoogleSync() {
                 ) : null}
               </div>
 
-              <div
-                className={
-                  editingCalendar ? "min-w-0 overflow-x-hidden" : "min-w-0 overflow-x-auto"
-                }
-              >
+              {/* Desktop / tablet calendar grid (unchanged behavior) */}
+              <div className="hidden md:block">
                 <div
                   className={
-                    editingCalendar
-                      ? "min-w-0"
-                      : "min-w-[960px] xl:min-w-[1080px] 2xl:min-w-0"
+                    editingCalendar ? "min-w-0 overflow-x-hidden" : "min-w-0 overflow-x-auto"
                   }
                 >
-                  {editingCalendar ? (
-                    <EditCallMonthCalendar
-                      year={visibleMonth.year}
-                      monthIndex={visibleMonth.monthIndex}
-                      calls={calls}
-                      loading={loading}
-                      residents={residentOptions}
-                      onCancel={() => setEditingCalendar(false)}
-                      onSwitch={handleSwitch}
-                      onSwap={handleSwap}
-                      onDelete={handleDelete}
-                      onCreate={handleCreate}
-                    />
-                  ) : (
-                    <CallMonthCalendar
-                      year={visibleMonth.year}
-                      monthIndex={visibleMonth.monthIndex}
-                      calls={calls}
-                      loading={loading}
-                      onSelectDate={handleSelectDate}
-                      pendingSwapRequestsByCallId={
-                        swapRequests.canReviewAdmin ? pendingAdminRequestsByCallId : undefined
-                      }
-                    />
-                  )}
+                  <div
+                    className={
+                      editingCalendar
+                        ? "min-w-0"
+                        : "min-w-[960px] xl:min-w-[1080px] 2xl:min-w-0"
+                    }
+                  >
+                    {editingCalendar ? (
+                      <EditCallMonthCalendar
+                        year={visibleMonth.year}
+                        monthIndex={visibleMonth.monthIndex}
+                        calls={calls}
+                        loading={loading}
+                        residents={residentOptions}
+                        onCancel={() => setEditingCalendar(false)}
+                        onSwitch={handleSwitch}
+                        onSwap={handleSwap}
+                        onDelete={handleDelete}
+                        onCreate={handleCreate}
+                      />
+                    ) : (
+                      <CallMonthCalendar
+                        year={visibleMonth.year}
+                        monthIndex={visibleMonth.monthIndex}
+                        calls={calls}
+                        loading={loading}
+                        onSelectDate={handleSelectDate}
+                        pendingSwapRequestsByCallId={
+                          swapRequests.canReviewAdmin ? pendingAdminRequestsByCallId : undefined
+                        }
+                      />
+                    )}
+                  </div>
                 </div>
+              </div>
+
+              {/* Mobile-only agenda/list view (Phase 3) */}
+              <div className="md:hidden">
+                {editingCalendar ? (
+                  <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-800">
+                    <p className="font-semibold">Drag-and-drop editing is available on tablet and desktop.</p>
+                    <p className="mt-2">Exit edit mode or use a larger screen to rearrange call assignments.</p>
+                    <button
+                      type="button"
+                      onClick={() => setEditingCalendar(false)}
+                      className="mt-4 rounded-full bg-amber-900 px-4 py-2 text-sm font-semibold text-white"
+                    >
+                      Exit Edit Mode
+                    </button>
+                  </div>
+                ) : (
+                  <MobileProgramCallAgenda
+                    calls={calls}
+                    monthLabel={monthLabel(visibleMonth.year, visibleMonth.monthIndex)}
+                    viewMode={mobileCallView}
+                    onDayClick={(dateKey) => {
+                      // Reuse existing detail modal flow (safe, already works on mobile)
+                      setSelectedDateKey(dateKey);
+                    }}
+                    loading={loading}
+                  />
+                )}
               </div>
             </motion.div>
 

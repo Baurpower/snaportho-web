@@ -821,7 +821,41 @@ export function WeekPlannerPanel({
               </p>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Mobile-friendly day selector (additive for Phase 4) - reuses exact same draft/assign logic */}
+            <div className="md:hidden mb-4">
+              <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Tap days to assign the current category
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {days.map((day) => {
+                  const draft = ensureDraft(day.date);
+                  const isSelected = draft.selected;
+                  const isActive = activeDate === day.date;
+                  const theme = getCategoryTheme(draft.category, false);
+                  let cls = isSelected ? theme.daySelected : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50";
+                  if (isActive && !isSelected) cls = "border-slate-900 bg-slate-100 text-slate-900 ring-2 ring-slate-900/10";
+                  return (
+                    <button
+                      key={day.date}
+                      type="button"
+                      onClick={() => assignDayToCurrentCategory(day.date)}
+                      onDoubleClick={() => activateDay(day.date)}
+                      className={`min-h-[44px] min-w-[44px] rounded-2xl border px-3 py-2 text-sm font-semibold transition ${cls}`}
+                    >
+                      <div className="text-center">
+                        <div className="text-[10px] opacity-70">{day.dayKey}</div>
+                        <div className="text-base font-bold tabular-nums leading-none mt-0.5">
+                          {formatDayNumber(day.date)}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Original desktop 7-col selector - unchanged, wrapped for mobile */}
+            <div className="hidden md:block overflow-x-auto">
               <div className="grid min-w-[760px] grid-cols-7 gap-2.5 lg:min-w-[840px] lg:gap-3">
                 {days.map((day) => {
                   const draft = ensureDraft(day.date);

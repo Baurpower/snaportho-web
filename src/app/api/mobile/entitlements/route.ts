@@ -95,6 +95,21 @@ export async function GET(request: Request) {
       });
     }
 
+    // Enhanced debug: log the exact shape the iOS Account screen consumes (user id prefix only)
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[mobile/entitlements] FULL_PAYLOAD_FOR_IOS', {
+        userId: user.id.slice(0, 8),
+        hasBroBotAccess: payload.hasBroBotAccess,
+        plan: payload.plan,
+        source: payload.source,
+        subscriptionStatus: payload.subscriptionStatus,
+        currentPeriodEnd: payload.currentPeriodEnd,
+        usedToday: payload.usedToday,
+        // full object for complete trace (safe fields only)
+        payload
+      });
+    }
+
     // Existing lightweight success log (kept for continuity)
     if (process.env.NODE_ENV !== 'production') {
       console.log('[mobile/entitlements] success', {

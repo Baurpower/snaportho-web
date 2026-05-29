@@ -53,7 +53,10 @@ export async function getOrCreateStripeCustomer(userId: string, email?: string):
 export async function createBroBotCheckoutSession(
   userId: string,
   interval: 'month' | 'year',
-  email?: string
+  email?: string,
+  /** Optional overrides for mobile flows using custom URL schemes (e.g. snaportho://) */
+  customSuccessUrl?: string,
+  customCancelUrl?: string
 ): Promise<{ url: string | null }> {
   const priceId =
     interval === 'year'
@@ -66,16 +69,21 @@ export async function createBroBotCheckoutSession(
 
   const customerId = await getOrCreateStripeCustomer(userId, email);
 
-  // Explicit early resolution guarantees production never proceeds with unsafe (localhost) redirect URLs
-  const successUrl = BROBOT_CONFIG.BILLING_SUCCESS_URL;
-  const cancelUrl = BROBOT_CONFIG.BILLING_CANCEL_URL;
-  getAppBaseUrl(); // force throw in production if misconfigured (before creating session)
+  // Use custom redirect URLs if provided (mobile), otherwise fall back to centralized web URLs.
+  // Always call getAppBaseUrl() for the production safety throw when using web defaults.
+  const successUrl = customSuccessUrl || BROBOT_CONFIG.BILLING_SUCCESS_URL;
+  const cancelUrl = customCancelUrl || BROBOT_CONFIG.BILLING_CANCEL_URL;
+
+  if (!customSuccessUrl && !customCancelUrl) {
+    getAppBaseUrl(); // force throw in production if misconfigured (before creating session)
+  }
 
   // Dev-only debug logging for redirect troubleshooting
   if (process.env.NODE_ENV !== 'production') {
     console.log('[stripe] Creating Checkout Session with redirect URLs:', {
       success_url: successUrl,
       cancel_url: cancelUrl,
+      isMobileCustom: !!(customSuccessUrl || customCancelUrl),
     });
   }
 
@@ -104,7 +112,11 @@ export async function createBroBotCheckoutSession(
 /**
  * Creates a Stripe Customer Portal session for managing billing.
  */
-export async function createBillingPortalSession(userId: string): Promise<{ url: string | null }> {
+export async function createBillingPortalSession(
+  userId: string,
+  /** Optional custom return URL (e.g. mobile snaportho://subscription/portal-return) */
+  customReturnUrl?: string
+): Promise<{ url: string | null }> {
   const supabase = createAdminClient();
 
   const { data: sub } = await supabase
@@ -117,12 +129,18 @@ export async function createBillingPortalSession(userId: string): Promise<{ url:
     throw new Error('No Stripe customer found for user');
   }
 
-  // Explicit early resolution for production safety on portal return URL
-  getAppBaseUrl();
+  // Use custom return URL (mobile) or fall back to web (with production safety check)
+  let returnUrl: string;
+  if (customReturnUrl) {
+    returnUrl = customReturnUrl;
+  } else {
+    getAppBaseUrl(); // force throw in production
+    returnUrl = BROBOT_CONFIG.BILLING_SUCCESS_URL.replace('success=true', 'portal_return=true');
+  }
 
   const portal = await stripe.billingPortal.sessions.create({
     customer: sub.stripe_customer_id,
-    return_url: BROBOT_CONFIG.BILLING_SUCCESS_URL.replace('success=true', 'portal_return=true'),
+    return_url: returnUrl,
   });
 
   return { url: portal.url };
