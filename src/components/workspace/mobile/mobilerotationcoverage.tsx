@@ -130,35 +130,32 @@ export function MobileRotationCoverage({
             No coverage found for this month.
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2">
             {groupedRotations.map((group, idx) => (
               <MobileCardShell
                 key={`${activeKey}-${group.rotation}-${idx}`}
                 accentClassName={group.tone.replace(/text-\S+/g, "").replace(/border-\S+/g, "").trim()}
+                contentClassName="p-3"
               >
                 <div>
-                  <h4 className="text-xl font-black tracking-[-0.02em] text-slate-950">
+                  <h4 className="text-lg font-black tracking-[-0.02em] text-slate-950">
                     {group.rotation}
                   </h4>
-                  <p className="mt-0.5 text-xs font-medium text-slate-400">
+                  <p className="text-[10px] text-slate-400">
                     {group.residents.length} resident{group.residents.length === 1 ? "" : "s"}
                   </p>
                 </div>
 
-                <div className="mt-3 space-y-2">
+                <div className="mt-2 space-y-1">
                   {group.residents.map((res, rIdx) => (
                     <div
                       key={rIdx}
-                      className="rounded-xl border border-slate-200 bg-slate-50/80 px-3 py-2.5"
+                      className="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50/80 px-2.5 py-1 text-xs"
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <p className="truncate text-sm font-semibold text-slate-900">
-                          {res.resident}
-                        </p>
-                        <span className="shrink-0 rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 ring-1 ring-slate-200">
-                          {res.level}
-                        </span>
-                      </div>
+                      <span className="truncate font-medium text-slate-900">{res.resident}</span>
+                      <span className="ml-2 shrink-0 rounded-full bg-white px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-slate-500 ring-1 ring-slate-200">
+                        {res.level}
+                      </span>
                     </div>
                   ))}
                 </div>

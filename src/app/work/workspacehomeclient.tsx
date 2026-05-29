@@ -1308,7 +1308,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
 
   return (
     <main className="min-h-[calc(100vh-64px)] bg-gradient-to-b from-slate-950 via-slate-900 to-slate-100 text-slate-900">
-      <section className="relative overflow-hidden px-4 pb-8 pt-8 sm:px-6 md:px-8 md:pb-10 md:pt-10 xl:px-10">
+      <section className="relative overflow-hidden px-4 pb-4 pt-4 sm:px-6 md:px-8 md:pb-10 md:pt-10 xl:px-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.14),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_18%)]" />
 
         <div className="relative mx-auto max-w-[1480px]">
@@ -1316,7 +1316,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.06] p-6 shadow-[0_28px_80px_rgba(2,8,23,0.38)] backdrop-blur md:p-8 xl:p-9"
+            className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.06] p-4 shadow-[0_28px_80px_rgba(2,8,23,0.38)] backdrop-blur sm:p-5 md:p-8 xl:p-9"
           >
             <div className="flex flex-col gap-7">
               <div className="max-w-3xl">
@@ -1325,18 +1325,19 @@ export default function SnapOrthoWorkspaceHomeDraft() {
                   {isAdminMode ? "Admin Workspace" : "SnapOrtho"}
                 </div>
 
-                <h1 className="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl xl:text-6xl">
+                <h1 className="mt-3 text-3xl font-black tracking-tight text-white sm:text-4xl md:text-5xl xl:text-6xl">
                   Workspace
                 </h1>
 
-                <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base md:text-lg line-clamp-2 sm:line-clamp-none">
                   {isAdminMode
                     ? "The current administrative workspace for daily operations across call, time off, academics, and program setup."
                     : "A clean, fast view of your schedule with the things you actually need first."}
                 </p>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-3">
+              {/* Desktop stats - 3 cards, unchanged */}
+              <div className="hidden md:grid gap-4 md:grid-cols-3">
                 <StatCard
                   title="Current Rotation"
                   value={
@@ -1371,6 +1372,30 @@ export default function SnapOrthoWorkspaceHomeDraft() {
                   subtitle={todayCallSummary}
                   loading={weekLoading || todayCallsLoading}
                 />
+              </div>
+
+              {/* Mobile compact stats - single dense card (Phase 6 UX fix) */}
+              <div className="md:hidden mt-3 rounded-2xl border border-white/10 bg-white/95 p-3 text-sm shadow-sm">
+                <div className="space-y-1 text-slate-950">
+                  <div className="flex justify-between items-center py-0.5">
+                    <span className="text-xs text-slate-500">Current Rotation</span>
+                    <span className="font-semibold text-right truncate max-w-[55%]">
+                      {summary?.currentRotation?.shortName ?? summary?.currentRotation?.name ?? "—"}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center py-0.5 border-t border-white/30">
+                    <span className="text-xs text-slate-500">Next Call</span>
+                    <span className="font-semibold text-right truncate max-w-[55%]">
+                      {formatShortDate(summary?.nextCall?.callDate)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center py-0.5 border-t border-white/30">
+                    <span className="text-xs text-slate-500">Today</span>
+                    <span className="font-semibold text-right truncate max-w-[55%]">
+                      {todayScheduleLabel}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>

@@ -2,7 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, PanelLeftOpen, X } from "lucide-react";
+import { Menu, PanelLeftOpen, X, MoreHorizontal, Home } from "lucide-react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { WorkspaceSidebar } from "@/components/workspace/workspacesidebar";
 import {
@@ -86,6 +87,13 @@ export function WorkspaceShell({
     setMobileDrawerOpen(false);
   }, [pathname]);
 
+  // Listen for custom event from global Nav (on /work mobile) to open the workspace drawer
+  useEffect(() => {
+    const handler = () => setMobileDrawerOpen(true);
+    window.addEventListener('open-workspace-drawer', handler);
+    return () => window.removeEventListener('open-workspace-drawer', handler);
+  }, []);
+
   // Escape key closes drawer
   useEffect(() => {
     if (!mobileDrawerOpen) return;
@@ -147,10 +155,12 @@ export function WorkspaceShell({
         {/* Main content column. On mobile: full width (no sidebar squeeze).
             Mobile header is in-flow (no z-index conflict with global Nav).
             Safe-area padding for iOS bottom bar. overflow-x-clip preserved so child layout issues remain visible for later phases. */}
-        <div className="min-w-0 flex-1 overflow-x-clip pb-[env(safe-area-inset-bottom)] md:pb-0">
-          {/* Mobile-only workspace header (in-flow, below global Nav).
-              Provides menu trigger for the drawer. Scrolls with content (Phase 1 simple approach). */}
-          <div className="md:hidden flex h-12 items-center justify-between border-b border-slate-200 bg-white px-4">
+        <div className="min-w-0 flex-1 overflow-x-clip pb-[calc(56px+env(safe-area-inset-bottom))] md:pb-[env(safe-area-inset-bottom)] md:pb-0">
+          {/* Mobile-only workspace header.
+              Hidden on mobile because the global Nav now provides the single "Workspace" top bar
+              (rebranded on /work mobile routes) + hamburger that opens this drawer via custom event.
+              Desktop sidebar is used instead. */}
+          <div className="hidden flex h-12 items-center justify-between border-b border-slate-200 bg-white px-4">
             <button
               type="button"
               onClick={() => setMobileDrawerOpen(true)}
@@ -174,6 +184,40 @@ export function WorkspaceShell({
           {children}
         </div>
       </div>
+
+      {/* Mobile workspace bottom tab bar - Phase 6 UX fix.
+          Visible only on mobile, provides clear workspace navigation.
+          "More" opens the existing full drawer (which already handles permissions and secondary items).
+          Uses the same PRIMARY_NAV data for consistency. Compact, safe-area aware. */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-[60] border-t border-slate-200 bg-white pb-[env(safe-area-inset-bottom)]">
+        <div className="flex items-center justify-around h-14 text-[10px] font-medium text-slate-500">
+          {PRIMARY_NAV.map((item) => {
+            const Icon = item.icon;
+            const active = isActivePath(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center justify-center flex-1 py-1 transition ${active ? "text-slate-950 font-semibold" : "hover:text-slate-700"}`}
+              >
+                <Icon className="h-5 w-5 mb-0.5" />
+                <span className="leading-none">{item.label}</span>
+              </Link>
+            );
+          })}
+
+          {/* More opens the existing workspace drawer (Profile, Settings, Billing, admin info) */}
+          <button
+            type="button"
+            onClick={() => setMobileDrawerOpen(true)}
+            className="flex flex-col items-center justify-center flex-1 py-1 hover:text-slate-700"
+            aria-label="More workspace options"
+          >
+            <MoreHorizontal className="h-5 w-5 mb-0.5" />
+            <span className="leading-none">More</span>
+          </button>
+        </div>
+      </nav>
 
       {/* Mobile drawer (slide from left). Rendered at shell root so it can be fixed.
           Only functional/visible below md via header trigger. Reuses exact nav items + NavLink component from sidebar for consistency. */}
@@ -219,6 +263,16 @@ export function WorkspaceShell({
 
                 {/* Nav content (mirrors sidebar structure but always expanded, no collapse controls) */}
                 <div className="flex-1 overflow-y-auto px-3 py-4">
+                  {/* Prominent first item: SnapOrtho Home (goes to public site root) */}
+                  <Link
+                    href="/"
+                    onClick={() => setMobileDrawerOpen(false)}
+                    className="flex items-center gap-3 px-3.5 py-3 rounded-2xl text-sm font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-950 mb-2 border-b border-slate-200 pb-3"
+                  >
+                    <Home className="h-5 w-5 shrink-0" />
+                    SnapOrtho Home
+                  </Link>
+
                   <nav className="space-y-1">
                     <p className="px-3 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
                       {isAdmin ? "Workspace" : "Schedule"}

@@ -2,9 +2,13 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function Nav() {
+  const pathname = usePathname();
+  const isWorkspaceRoute = pathname?.startsWith('/work');
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [openLearn, setOpenLearn] = useState(false);
   const [openRef, setOpenRef] = useState(false);
@@ -54,28 +58,43 @@ export default function Nav() {
     >
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <Link
-          href="/"
+          href={isWorkspaceRoute ? "/work" : "/"}
           className="text-xl font-semibold tracking-tight hover:text-blue-300 transition"
           onClick={closeAll}
         >
-          SnapOrtho
+          {isWorkspaceRoute ? "Workspace" : "SnapOrtho"}
         </Link>
 
         {/* Mobile toggle button */}
         <div className="md:hidden">
-          <button
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Toggle menu"
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
-          </button>
+          {isWorkspaceRoute ? (
+            // On workspace mobile: this hamburger opens the workspace drawer (via custom event)
+            // instead of the public menu. Branding above already says "Workspace".
+            <button
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('open-workspace-drawer'));
+                setMenuOpen(false);
+              }}
+              aria-label="Open workspace menu"
+              aria-expanded={false}
+            >
+              <Bars3Icon className="h-6 w-6" />
+            </button>
+          ) : (
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label="Toggle menu"
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
+            </button>
+          )}
         </div>
 
         {/* Nav links */}
         <div
           className={`md:flex gap-8 font-medium capitalize ${
-            menuOpen ? 'block mt-4' : 'hidden'
+            menuOpen && !isWorkspaceRoute ? 'block mt-4' : 'hidden'
           } md:mt-0 md:items-center`}
         >
           <Link href="/" className="block hover:text-blue-300 transition py-2 md:py-0" onClick={closeAll}>

@@ -11,6 +11,8 @@ export interface MobileCardShellProps {
   onClick?: () => void;
   /** Optional role for accessibility when clickable */
   role?: string;
+  /** Override inner padding (default p-4). Useful for dense mobile lists. */
+  contentClassName?: string;
 }
 
 /**
@@ -26,6 +28,7 @@ export function MobileCardShell({
   accentClassName,
   onClick,
   role,
+  contentClassName,
 }: MobileCardShellProps) {
   const isInteractive = !!onClick;
 
@@ -47,7 +50,7 @@ export function MobileCardShell({
         <div className={`h-1.5 ${accentClassName}`} aria-hidden="true" />
       ) : null}
 
-      <div className="p-4">{children}</div>
+      <div className={contentClassName ?? "p-4"}>{children}</div>
     </div>
   );
 }
