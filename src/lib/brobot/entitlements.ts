@@ -128,7 +128,7 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
   // First try to find a "good" status row.
   let { data: sub } = await supabase
     .from('subscriptions')
-    .select('status, plan_code, current_period_end, cancel_at_period_end, stripe_customer_id, stripe_subscription_id')
+    .select('user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at, stripe_customer_id, stripe_subscription_id')
     .eq('user_id', userId)
     .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
     .in('status', ['active', 'trialing', 'past_due'])
@@ -140,7 +140,7 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     // Fallback to any row (including incomplete or canceled), still prefer latest period end
     const { data: fallback } = await supabase
       .from('subscriptions')
-      .select('status, plan_code, current_period_end, cancel_at_period_end, stripe_customer_id, stripe_subscription_id')
+      .select('user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at, stripe_customer_id, stripe_subscription_id')
       .eq('user_id', userId)
       .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
       .order('current_period_end', { ascending: false, nullsFirst: false })
@@ -149,21 +149,48 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     sub = fallback;
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[entitlements] getPaidSubscriptionEntitlement lookup', {
-      userId,
-      found: !!sub,
-      status: sub?.status,
-      planCode: sub?.plan_code,
-      currentPeriodEnd: sub?.current_period_end,
-      cancelAtPeriodEnd: sub?.cancel_at_period_end,
-    });
-  }
-
   if (!sub) return null;
 
   const now = new Date();
   const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
+
+  // === EXACT DIAGNOSTIC REQUESTED ===
+  {
+    const periodEndTs = sub.current_period_end ? new Date(sub.current_period_end).getTime() : null;
+    const nowTs = now.getTime();
+
+    const isActiveDecision =
+      sub.status === 'active' ||
+      sub.status === 'trialing' ||
+      (sub.status === 'past_due' && periodEndTs && periodEndTs + graceMs > nowTs) ||
+      (sub.cancel_at_period_end && periodEndTs && periodEndTs > nowTs) ||
+      (sub.status === 'canceled' && periodEndTs && periodEndTs > nowTs);
+
+    let reasonIfInactive = null;
+    if (!isActiveDecision) {
+      if (sub.status === 'canceled' && periodEndTs && periodEndTs <= nowTs) {
+        reasonIfInactive = 'canceled_and_period_ended';
+      } else if (sub.status === 'canceled') {
+        reasonIfInactive = 'canceled_but_no_remaining_period_logic_matched';
+      } else if (!['active','trialing','past_due'].includes(sub.status) && !sub.cancel_at_period_end) {
+        reasonIfInactive = `status_${sub.status}_not_in_active_set_and_not_cancel_at_period_end`;
+      } else {
+        reasonIfInactive = 'fell_through_isActive_conditions';
+      }
+    }
+
+    console.log('[SUBSCRIPTION-ENTITLEMENT-DEBUG]', {
+      resolvedUserId: userId,
+      subscriptionRowUserId: sub.user_id ?? null,
+      status: sub.status,
+      plan_code: sub.plan_code,
+      current_period_end: sub.current_period_end,
+      cancel_at_period_end: sub.cancel_at_period_end,
+      canceled_at: sub.canceled_at,
+      isActive: isActiveDecision,
+      reasonIfInactive,
+    });
+  }
 
   const isActive =
     sub.status === 'active' ||
@@ -171,6 +198,9 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     (sub.status === 'past_due' && sub.current_period_end &&
       new Date(sub.current_period_end).getTime() + graceMs > now.getTime()) ||
     (sub.cancel_at_period_end && sub.current_period_end &&
+      new Date(sub.current_period_end).getTime() > now.getTime()) ||
+    // Honor remaining paid time even after explicit cancel (common SaaS behavior)
+    (sub.status === 'canceled' && sub.current_period_end &&
       new Date(sub.current_period_end).getTime() > now.getTime());
 
   // Compute grace separately so mobile (and future) can show "in grace" messaging
@@ -276,7 +306,7 @@ export async function getRemainingAIUses(subject: Subject) {
 export interface MobileBroBotEntitlement {
   hasBroBotAccess: boolean;
   plan: 'free' | 'unlimited_brobot' | 'promo' | 'disabled';
-  source: 'subscription' | 'override' | 'free_quota' | 'disabled';
+  source: 'stripe' | 'override' | 'free_quota' | 'disabled'; // 'stripe' = web Stripe subscription (aligned with website paid path)
   stripeCustomerId: string | null;
   stripeSubscriptionId: string | null;
   subscriptionStatus: string | null;
@@ -310,68 +340,58 @@ export interface MobileBroBotEntitlement {
 export async function getMobileBroBotEntitlement(userId: string): Promise<MobileBroBotEntitlement> {
   const now = new Date().toISOString();
 
-  const ent = await getUserEntitlement({ type: 'user', id: userId });
-  const usedToday = await getUsedCountToday({ type: 'user', id: userId });
+  // === CRITICAL ALIGNMENT ===
+  // We deliberately call the EXACT same internal path the website trusts:
+  //   /api/me/entitlements  →  getRemainingAIUses({ type: "user", id })
+  // This guarantees identical paid subscription decisions (getPaidSubscriptionEntitlement + overrides + grace).
+  const websiteResult = await getRemainingAIUses({ type: 'user', id: userId });
+  const ent = websiteResult; // BroBotEntitlement shape + isLimitReached
+
+  // Safe debug logs (userId prefix only, no secrets)
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[mobile-entitlement-mapper] website-decision', {
+      userId: userId.slice(0, 8),
+      websiteSource: ent.source,
+      websiteUnlimited: ent.aiAccess.unlimited,
+      websiteRemaining: ent.aiAccess.remainingToday,
+      isLimitReached: websiteResult.isLimitReached,
+    });
+  }
 
   const hasBroBotAccess =
     ent.aiAccess.unlimited || (ent.aiAccess.remainingToday ?? 0) > 0;
 
+  // Map to mobile contract.
+  // Per requirements: website source "subscription" → mobile source "stripe" (web Stripe subs)
   let plan: MobileBroBotEntitlement['plan'] = 'free';
+  let mobileSource: MobileBroBotEntitlement['source'] = 'free_quota';
+
   if (ent.source === 'subscription') {
     plan = 'unlimited_brobot';
+    mobileSource = 'stripe';
   } else if (ent.source === 'override') {
     plan = 'promo';
+    mobileSource = 'override';
   } else if (ent.source === 'disabled') {
     plan = 'disabled';
+    mobileSource = 'disabled';
+  } else {
+    plan = 'free';
+    mobileSource = 'free_quota';
   }
 
-  // Base stripe fields (populated by enhanced getPaidSubscriptionEntitlement when active)
-  let stripeCustomerId: string | null = ent.stripeCustomerId ?? null;
-  let stripeSubscriptionId: string | null = ent.stripeSubscriptionId ?? null;
-  let subscriptionStatus: string | null = ent.status ?? null;
-  let currentPeriodEnd: string | null = ent.expiresAt ?? null;
-  let cancelAtPeriodEnd = ent.cancelAtPeriodEnd ?? false;
-  let isInGracePeriod = ent.isInGracePeriod ?? false;
+  // Stripe fields are populated additively on the BroBotEntitlement when the central
+  // paid path returns a subscription result (see getPaidSubscriptionEntitlement).
+  const stripeCustomerId = ent.stripeCustomerId ?? null;
+  const stripeSubscriptionId = ent.stripeSubscriptionId ?? null;
+  const subscriptionStatus = ent.status ?? null;
+  const currentPeriodEnd = ent.expiresAt ?? null;
+  const cancelAtPeriodEnd = ent.cancelAtPeriodEnd ?? false;
+  const isInGracePeriod = ent.isInGracePeriod ?? false;
 
-  // For canceled/expired subscriptions that no longer grant access,
-  // still surface the historical Stripe IDs + status so the app can show
-  // "You previously subscribed — restore / manage in billing" etc.
-  // This is a pure data lookup; the access decision logic stays in getUserEntitlement.
-  if ((!stripeCustomerId || !subscriptionStatus) && ent.source !== 'subscription') {
-    try {
-      const supabase = createAdminClient();
-      const { data: subRow } = await supabase
-        .from('subscriptions')
-        .select('stripe_customer_id, stripe_subscription_id, status, current_period_end, cancel_at_period_end')
-        .eq('user_id', userId)
-        .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
-        .order('updated_at', { ascending: false })
-        .limit(1)
-        .maybeSingle();
+  const usedToday = ent.usedToday ?? (await getUsedCountToday({ type: 'user', id: userId }));
 
-      if (subRow) {
-        stripeCustomerId = subRow.stripe_customer_id ?? null;
-        stripeSubscriptionId = subRow.stripe_subscription_id ?? null;
-        subscriptionStatus = subRow.status ?? null;
-        currentPeriodEnd = subRow.current_period_end ?? null;
-        cancelAtPeriodEnd = subRow.cancel_at_period_end ?? false;
-
-        // Recompute grace using the same constant/logic pattern (no duplication of full decision tree)
-        const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
-        const periodEndDate = subRow.current_period_end ? new Date(subRow.current_period_end) : null;
-        isInGracePeriod =
-          (subRow.status === 'past_due' && periodEndDate &&
-            periodEndDate.getTime() + graceMs > Date.now()) ||
-          (subRow.cancel_at_period_end && periodEndDate &&
-            periodEndDate.getTime() > Date.now());
-      }
-    } catch (e) {
-      // Non-fatal for mobile response — we still return what we have
-      console.error('[mobile/entitlements] secondary subscription lookup failed (non-fatal)', e);
-    }
-  }
-
-  // Compute additive free quota fields (server-owned via BROBOT_CONFIG)
+  // Free quota additive fields (server-owned, derived from the aligned central result + config)
   const isUnlimited = ent.aiAccess.unlimited;
   const freeLimit = isUnlimited ? null : ent.aiAccess.dailyCap;
   const usedThisPeriod = usedToday;
@@ -385,32 +405,46 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     reasonIfBlocked = 'daily_limit_reached';
   }
 
-  return {
+  const payload: MobileBroBotEntitlement = {
     hasBroBotAccess,
     plan,
-    source: ent.source === 'guest_quota' ? 'free_quota' : (ent.source as MobileBroBotEntitlement['source']),
+    source: mobileSource,
     stripeCustomerId,
     stripeSubscriptionId,
     subscriptionStatus,
     currentPeriodEnd,
     cancelAtPeriodEnd,
     isInGracePeriod,
-    remainingFreeUses: ent.aiAccess.unlimited ? null : (ent.aiAccess.remainingToday ?? null),
+    remainingFreeUses: isUnlimited ? null : (ent.aiAccess.remainingToday ?? null),
     dailyLimit: ent.aiAccess.dailyCap,
     usedToday,
     lastSyncedAt: now,
     serverTime: now,
 
-    // Additive server-owned fields
+    // Additive server-owned fields for iOS
     freeLimit,
     usedThisPeriod,
     remainingUses,
     resetAt,
     reasonIfBlocked,
 
-    // Future Apple fields (null until Apple IAP support is added)
+    // Future Apple IAP placeholders (always null in this pass)
     appleOriginalTransactionId: null,
     appleProductId: null,
     appleExpiresAt: null,
   };
+
+  // Additional required safe debug logs after mapping
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[mobile-entitlement-mapper] final', {
+      userId: userId.slice(0, 8),
+      hasBroBotAccess: payload.hasBroBotAccess,
+      plan: payload.plan,
+      source: payload.source,
+      websiteSource: ent.source,
+      websiteUnlimited: ent.aiAccess.unlimited,
+    });
+  }
+
+  return payload;
 }

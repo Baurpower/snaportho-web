@@ -84,7 +84,18 @@ export async function GET(request: Request) {
   try {
     const payload: MobileBroBotEntitlement = await getMobileBroBotEntitlement(user.id);
 
-    // Lightweight success log (safe, no PII beyond user id prefix in prod)
+    // Required safe debug logs (userId prefix only)
+    if (process.env.NODE_ENV !== 'production') {
+      console.log('[mobile/entitlements] website-aligned-decision', {
+        userId: user.id.slice(0, 8),
+        authMode,
+        websiteSourceFromMapper: payload.source, // reflects the getRemainingAIUses decision
+        hasBroBotAccess: payload.hasBroBotAccess,
+        plan: payload.plan,
+      });
+    }
+
+    // Existing lightweight success log (kept for continuity)
     if (process.env.NODE_ENV !== 'production') {
       console.log('[mobile/entitlements] success', {
         userId: user.id.slice(0, 8),
