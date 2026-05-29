@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { PhoneCall, MapPin, Home, UserRound } from "lucide-react";
+import { PhoneCall, Home } from "lucide-react";
 import { MobileCardShell } from "@/components/workspace/mobile/mobilecardshell";
 import { MobileSectionHeader } from "@/components/workspace/mobile/mobilesectionheader";
 import type { ProgramCallItem } from "@/components/workspace/call/callmonthcalendar";
@@ -57,9 +57,9 @@ export function MobileProgramCallAgenda({
       map.set(key, list);
     }
 
-    // Return sorted day entries (newest to oldest within the month is usually preferred for agenda)
+    // Return sorted day entries — chronological ascending (start of month → end of month)
     return Array.from(map.entries())
-      .sort(([a], [b]) => b.localeCompare(a)) // descending date order (most recent first)
+      .sort(([a], [b]) => a.localeCompare(b))
       .map(([date, dayCalls]) => ({ date, calls: dayCalls }));
   }, [calls, viewMode]);
 
@@ -107,34 +107,25 @@ export function MobileProgramCallAgenda({
       {days.map(({ date, calls: dayCalls }) => {
         const dateObj = new Date(`${date}T00:00:00`);
         const dayLabel = dateObj.toLocaleDateString("en-US", {
-          weekday: "long",
+          weekday: "short",
           month: "short",
           day: "numeric",
         });
 
-        const myCallInDay = dayCalls.find((c) => c.isMine);
-
         return (
-          <div key={date} className="space-y-2">
-            {/* Date header */}
-            <div className="flex items-baseline justify-between px-1">
-              <div>
-                <span className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  {dayLabel}
-                </span>
-                {myCallInDay && viewMode === "program" && (
-                  <span className="ml-2 inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-sky-700">
-                    You have a call
-                  </span>
-                )}
-              </div>
-              <span className="text-xs text-slate-400">
+          <div key={date} className="space-y-1.5">
+            {/* Date header - compact */}
+            <div className="flex items-center justify-between px-1">
+              <span className="text-xs font-semibold text-slate-600">
+                {dayLabel}
+              </span>
+              <span className="text-[10px] text-slate-400">
                 {dayCalls.length} assignment{dayCalls.length === 1 ? "" : "s"}
               </span>
             </div>
 
-            {/* Calls for this day - stacked cards */}
-            <div className="space-y-2">
+            {/* Calls for this day - stacked compact cards */}
+            <div className="space-y-1.5">
               {dayCalls.map((call) => {
                 const tone = getCallTone(call);
                 const isPersonal = call.isMine;
@@ -145,56 +136,41 @@ export function MobileProgramCallAgenda({
                     accentClassName={isPersonal ? "bg-sky-500" : tone.accent}
                     onClick={() => onDayClick?.(date)}
                     className="active:bg-slate-50"
+                    contentClassName="p-2.5"
                   >
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-2">
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5 flex-wrap">
                           <span
-                            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.5px] ${tone.chip}`}
+                            className={`inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.5px] ${tone.chip}`}
                           >
                             {call.callType ?? (isPersonal ? "Call" : "Assignment")}
                           </span>
                           {isPersonal && (
-                            <span className="inline-flex items-center rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-bold text-sky-700">
+                            <span className="inline-flex items-center rounded-full bg-sky-100 px-1.5 py-0.5 text-[9px] font-bold text-sky-700">
                               MY CALL
                             </span>
                           )}
                           {call.isHomeCall && (
-                            <span className="inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-bold text-violet-700">
-                              <Home className="h-3 w-3" /> Home
+                            <span className="inline-flex items-center gap-0.5 rounded-full bg-violet-100 px-1.5 py-0.5 text-[9px] font-bold text-violet-700">
+                              <Home className="h-2.5 w-2.5" /> Home
+                            </span>
+                          )}
+                          {call.site && (
+                            <span className="text-[9px] text-slate-500 truncate">
+                              {call.site}
+                            </span>
+                          )}
+                          {call.startDatetime && call.endDatetime && (
+                            <span className="text-[9px] text-slate-400">
+                              {formatTimeRange(call.startDatetime, call.endDatetime)}
                             </span>
                           )}
                         </div>
 
-                        <p className="mt-2 text-base font-bold leading-tight tracking-tight text-slate-950">
+                        <p className="mt-1 text-sm font-semibold leading-tight tracking-tight text-slate-950 truncate">
                           {call.residentName}
                         </p>
-
-                        {(call.site || call.startDatetime) && (
-                          <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-sm text-slate-600">
-                            {call.site && (
-                              <span className="inline-flex items-center gap-1">
-                                <MapPin className="h-3.5 w-3.5 text-slate-400" />
-                                {call.site}
-                              </span>
-                            )}
-                            {call.startDatetime && call.endDatetime && (
-                              <span className="text-xs text-slate-500">
-                                {formatTimeRange(call.startDatetime, call.endDatetime)}
-                              </span>
-                            )}
-                          </div>
-                        )}
-
-                        {call.notes && (
-                          <p className="mt-2 line-clamp-2 text-sm text-slate-500">
-                            {call.notes}
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="shrink-0 text-right">
-                        <UserRound className="h-5 w-5 text-slate-300" />
                       </div>
                     </div>
                   </MobileCardShell>

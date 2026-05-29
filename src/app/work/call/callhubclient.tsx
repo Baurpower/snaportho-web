@@ -24,6 +24,7 @@ import CallMonthCalendar, {
 } from "@/components/workspace/call/callmonthcalendar";
 import EditCallMonthCalendar from "@/components/workspace/call/editcallmonthcalendar";
 import { MobileProgramCallAgenda } from "@/components/workspace/call/mobileprogramcallagenda";
+import { MobileProgramCallCalendar } from "@/components/workspace/call/mobileprogramcallcalendar";
 import { MobileMonthSelector } from "@/components/workspace/mobile/mobilemonthselector";
 import SwapRequestDetailDrawer from "@/components/workspace/call-swaps/SwapRequestDetailDrawer";
 import { useSwapRequests } from "@/hooks/useSwapRequests";
@@ -1498,7 +1499,7 @@ async function stopGoogleSync() {
                       Exit Edit Mode
                     </button>
                   </div>
-                ) : (
+                ) : mobileCallView === "mine" ? (
                   <MobileProgramCallAgenda
                     calls={calls}
                     monthLabel={monthLabel(visibleMonth.year, visibleMonth.monthIndex)}
@@ -1508,6 +1509,17 @@ async function stopGoogleSync() {
                       setSelectedDateKey(dateKey);
                     }}
                     loading={loading}
+                  />
+                ) : (
+                  /* Program view: mobile-optimized compact calendar (not the desktop grid) */
+                  <MobileProgramCallCalendar
+                    year={visibleMonth.year}
+                    monthIndex={visibleMonth.monthIndex}
+                    calls={calls}
+                    loading={loading}
+                    onSelectDate={(dateKey) => {
+                      setSelectedDateKey(dateKey);
+                    }}
                   />
                 )}
               </div>

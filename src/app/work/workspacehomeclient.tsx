@@ -1308,16 +1308,55 @@ export default function SnapOrthoWorkspaceHomeDraft() {
 
   return (
     <main className="min-h-[calc(100vh-64px)] bg-gradient-to-b from-slate-950 via-slate-900 to-slate-100 text-slate-900">
-      <section className="relative overflow-hidden px-4 pb-4 pt-4 sm:px-6 md:px-8 md:pb-10 md:pt-10 xl:px-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.14),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_18%)]" />
+      {/* Mobile-only compact home intro - clean start under fixed header, no large Workspace duplication or clipping */}
+      <div className="md:hidden px-4 pt-14 pb-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-100 text-white">
+        <div className="flex items-center gap-2 mb-1.5">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-sky-200">
+            <Layers3 className="h-3 w-3" />
+            {isAdminMode ? "Admin Workspace" : "Workspace"}
+          </div>
+        </div>
 
-        <div className="relative mx-auto max-w-[1480px]">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.06] p-4 shadow-[0_28px_80px_rgba(2,8,23,0.38)] backdrop-blur sm:p-5 md:p-8 xl:p-9"
-          >
+        <h1 className="text-2xl font-black tracking-tight">Today</h1>
+        <p className="text-sm text-slate-300 mt-0.5">Quick status across call and rotations</p>
+
+        {/* Compact stats card - same data as the desktop version */}
+        <div className="mt-3 rounded-2xl border border-white/10 bg-white/95 p-3 text-sm shadow-sm text-slate-950">
+          <div className="space-y-1">
+            <div className="flex justify-between items-center py-0.5">
+              <span className="text-xs text-slate-500">Current Rotation</span>
+              <span className="font-semibold text-right truncate max-w-[55%]">
+                {summary?.currentRotation?.shortName ?? summary?.currentRotation?.name ?? "—"}
+              </span>
+            </div>
+            <div className="flex justify-between items-center py-0.5 border-t border-white/30">
+              <span className="text-xs text-slate-500">Next Call</span>
+              <span className="font-semibold text-right truncate max-w-[55%]">
+                {formatShortDate(summary?.nextCall?.callDate)}
+              </span>
+            </div>
+            <div className="flex justify-between items-center py-0.5 border-t border-white/30">
+              <span className="text-xs text-slate-500">Today</span>
+              <span className="font-semibold text-right truncate max-w-[55%]">
+                {todayScheduleLabel}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Original large dark hero - desktop only, completely unchanged */}
+      <div className="hidden md:block">
+        <section className="relative overflow-hidden px-4 pb-4 pt-4 sm:px-6 md:px-8 md:pb-10 md:pt-10 xl:px-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.14),transparent_28%),radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.08),transparent_18%)]" />
+
+          <div className="relative mx-auto max-w-[1480px]">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.06] p-4 shadow-[0_28px_80px_rgba(2,8,23,0.38)] backdrop-blur sm:p-5 md:p-8 xl:p-9"
+            >
             <div className="flex flex-col gap-7">
               <div className="max-w-3xl">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-sky-200">
@@ -1402,6 +1441,7 @@ export default function SnapOrthoWorkspaceHomeDraft() {
         </div>
       </section>
 
+      </div>
       <section className="px-4 pb-14 sm:px-6 md:px-8 md:pb-16 xl:px-10">
         <div className="mx-auto max-w-[1480px] space-y-6">
           {error ? (

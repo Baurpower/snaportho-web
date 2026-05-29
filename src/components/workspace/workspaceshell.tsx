@@ -234,12 +234,12 @@ export function WorkspaceShell({
               aria-hidden="true"
             />
 
-            {/* Drawer panel */}
+            {/* Drawer panel - slides from right to match right hamburger (mobile only) */}
             <motion.div
-              className="fixed left-0 top-0 z-[210] flex h-full w-72 flex-col border-r border-slate-200 bg-white shadow-2xl md:hidden"
-              initial={{ x: "-100%" }}
+              className="fixed right-0 top-0 z-[210] flex h-full w-72 flex-col border-l border-slate-200 bg-white shadow-2xl md:hidden"
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
+              exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
             >
               <div className="flex h-full flex-col overflow-hidden">
