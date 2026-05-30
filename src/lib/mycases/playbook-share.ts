@@ -108,6 +108,50 @@ export async function verifyBearerToken(
   }
 }
 
+// ─── Section counting (reused by page, OG image, and metadata) ───────────────
+
+export interface SectionCounts {
+  filled: number
+  total: number
+}
+
+export function countFilledSections(payload: Record<string, unknown>): SectionCounts {
+  try {
+    const playbook = (payload as { playbook?: { sections?: unknown[] } }).playbook
+    const sections = playbook?.sections ?? []
+    const filled = sections.filter((s: unknown) => {
+      const sec = s as { content?: string }
+      return typeof sec.content === 'string' && sec.content.trim().length > 0
+    }).length
+    return { filled, total: sections.length }
+  } catch {
+    return { filled: 0, total: 0 }
+  }
+}
+
+// Lightweight view of a share row used for metadata / OG image (no payload)
+export interface SharedPlaybookMeta {
+  shareCode: string
+  rotationName: string
+  institution: string | null
+  counts: SectionCounts
+  createdAt: string
+}
+
+export async function getShareMetadata(
+  shareCode: string
+): Promise<SharedPlaybookMeta | null> {
+  const row = await fetchSharedPlaybook(shareCode)
+  if (!row) return null
+  return {
+    shareCode: row.share_code,
+    rotationName: row.rotation_name,
+    institution: row.institution,
+    counts: countFilledSections(row.payload_json),
+    createdAt: row.created_at,
+  }
+}
+
 // ─── DB operations ───────────────────────────────────────────────────────────
 
 export async function createSharedPlaybook(
