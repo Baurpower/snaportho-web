@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect, useMemo, FormEvent } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -184,7 +185,7 @@ export default function BroBotMember() {
       }
       setSessionsLoading(false);
     })();
-  }, [menuOpen, user]);
+  }, [menuOpen, supabase, user]);
 
   // ── Submit handler ──────────────────────────────────────────────────────────
 
@@ -746,9 +747,11 @@ function BroBotHeader() {
     <header className="px-6 pb-12 text-center">
       <div className="mx-auto flex flex-col items-center space-y-4">
         <div className="flex items-center space-x-4">
-          <img
+          <Image
             src="/brologo.png"
             alt="Bro Logo"
+            width={80}
+            height={80}
             className="h-16 w-16 sm:h-20 sm:w-20 rounded-full"
           />
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-midnight">

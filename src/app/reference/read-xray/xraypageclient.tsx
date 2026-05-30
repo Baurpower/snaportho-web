@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import {
   EyeIcon,
   MapPinIcon,
@@ -269,9 +270,11 @@ export default function ReadXrayPage() {
 
         {/* Optional image */}
         {descriptorInfo[k].img && showImg[k] && (
-          <img
+          <Image
             src={descriptorInfo[k].img}
             alt={`${k} example`}
+            width={384}
+            height={256}
             className="mt-3 w-full max-w-sm rounded border"
           />
         )}

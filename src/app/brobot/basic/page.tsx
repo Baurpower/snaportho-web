@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   MagnifyingGlassCircleIcon,
@@ -180,9 +181,11 @@ export default function BroBotBasic() {
       <header className="px-6 pt-24 pb-14 text-center">
         <div className="mx-auto flex flex-col items-center justify-center space-y-4">
           <div className="flex items-center space-x-4">
-            <img
+            <Image
               src="/brologo.png"
               alt="Bro Logo"
+              width={80}
+              height={80}
               className="h-16 w-16 sm:h-20 sm:w-20 rounded-full"
             />
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-midnight">

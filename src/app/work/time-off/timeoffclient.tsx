@@ -884,7 +884,7 @@ export default function TimeOffHubPage() {
     setDraftItem(freshest);
   }, [selectedItem, data]);
 
-  const items = data?.items ?? [];
+  const items = useMemo(() => data?.items ?? [], [data?.items]);
 
   const myItems = useMemo(() => items.filter((item) => item.isMine), [items]);
 

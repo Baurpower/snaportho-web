@@ -497,14 +497,24 @@ export default function UnmatchedPage() {
     awaysChoice,
   ]);
 
-  const decisionQuestions = [
-  enjoyResearch,
-  startResidencyChoice,
-  salaryChoice,
-  connectionsChoice,
-  uncertaintyChoice,
-  awaysChoice,
-];
+const decisionQuestions = useMemo(
+  () => [
+    enjoyResearch,
+    startResidencyChoice,
+    salaryChoice,
+    connectionsChoice,
+    uncertaintyChoice,
+    awaysChoice,
+  ],
+  [
+    enjoyResearch,
+    startResidencyChoice,
+    salaryChoice,
+    connectionsChoice,
+    uncertaintyChoice,
+    awaysChoice,
+  ]
+);
 
 const getScaleScore = (value?: AnswerValue): number => {
   switch (value) {
@@ -526,25 +536,11 @@ const getScaleScore = (value?: AnswerValue): number => {
 
 const decisionScore = useMemo(() => {
   return decisionQuestions.reduce((sum, value) => sum + getScaleScore(value), 0);
-}, [
-  enjoyResearch,
-  startResidencyChoice,
-  salaryChoice,
-  connectionsChoice,
-  uncertaintyChoice,
-  awaysChoice,
-]);
+}, [decisionQuestions]);
 
 const unknownDecisionCount = useMemo(() => {
   return decisionQuestions.filter((value) => !value || value === "unknown").length;
-}, [
-  enjoyResearch,
-  startResidencyChoice,
-  salaryChoice,
-  connectionsChoice,
-  uncertaintyChoice,
-  awaysChoice,
-]);
+}, [decisionQuestions]);
 
 const recommendation = useMemo(() => {
   if (unknownDecisionCount >= 3) {

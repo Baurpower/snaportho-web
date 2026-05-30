@@ -349,11 +349,16 @@ export async function POST(request: Request) {
       return generationFailedResponse();
     }
 
-    const isValidBroBotResponse = (value: unknown): value is BroBotPayload =>
-      Boolean(value) &&
-      typeof value === 'object' &&
-      'pimpQuestions' in value &&
-      Array.isArray((value as Record<string, unknown>).pimpQuestions);
+    const isValidBroBotResponse = (value: unknown): value is BroBotPayload => {
+      if (value === null || typeof value !== 'object') {
+        return false;
+      }
+
+      return (
+        'pimpQuestions' in value &&
+        Array.isArray((value as Record<string, unknown>).pimpQuestions)
+      );
+    };
 
     if (!isValidBroBotResponse(upstreamJson)) {
       logBroBot('[BROBOT-ASK-GENERATION]', {
