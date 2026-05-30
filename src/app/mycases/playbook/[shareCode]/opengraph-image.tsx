@@ -9,22 +9,64 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
-const TEAL       = '#0891B2'
-const TEAL_DARK  = '#0E7490'
-const NAVY       = '#0F172A'
-const SLATE      = '#64748B'
-const PURPLE     = '#7C3AED'
-const WHITE      = '#FFFFFF'
+const TEAL        = '#0891B2'
+const TEAL_DARK   = '#0E7490'
+const NAVY        = '#0F172A'
+const SLATE       = '#64748B'
+const SLATE_LIGHT = '#94A3B8'
+const PURPLE      = '#7C3AED'
+const WHITE       = '#FFFFFF'
 
-// ── Load logo as base64 from public/ (Node runtime, no network needed) ────────
+// ── Logo loader ───────────────────────────────────────────────────────────────
+// Place the MyCases logo at public/mycases/mycases-logo.png
 async function getLogoDataUrl(): Promise<string | null> {
-  for (const name of ['MyCasesLogo.png', 'My CasesLogo.png']) {
+  const candidates = [
+    path.join(process.cwd(), 'public', 'mycases', 'mycases-logo.png'),
+    path.join(process.cwd(), 'public', 'MyCasesLogo.png'),
+    path.join(process.cwd(), 'public', 'My CasesLogo.png'),
+  ]
+  for (const p of candidates) {
     try {
-      const buf = await fs.readFile(path.join(process.cwd(), 'public', name))
+      const buf = await fs.readFile(p)
       return `data:image/png;base64,${buf.toString('base64')}`
     } catch { /* try next candidate */ }
   }
   return null
+}
+
+// ── Large logo element (200×200) used in main layout ─────────────────────────
+function LargeLogo({ src }: { src: string | null }) {
+  if (src) {
+    return (
+      <img
+        src={src}
+        width={200}
+        height={200}
+        style={{ borderRadius: 36, objectFit: 'contain' }}
+        alt=""
+      />
+    )
+  }
+  // Fallback: styled "MC" badge — swap for real logo by placing asset at the path above
+  return (
+    <div
+      style={{
+        width: 200,
+        height: 200,
+        borderRadius: 36,
+        background: `linear-gradient(135deg, ${TEAL} 0%, ${PURPLE} 100%)`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: WHITE,
+        fontSize: 74,
+        fontWeight: 900,
+        letterSpacing: -2,
+      }}
+    >
+      MC
+    </div>
+  )
 }
 
 export default async function OgImage({
@@ -33,40 +75,12 @@ export default async function OgImage({
   params: Promise<{ shareCode: string }>
 }) {
   const { shareCode } = await params
-  const [meta, logoSrc] = await Promise.all([getShareMetadata(shareCode), getLogoDataUrl()])
+  const [meta, logoSrc] = await Promise.all([
+    getShareMetadata(shareCode),
+    getLogoDataUrl(),
+  ])
 
-  // ── Logo element (reused in both branches) ────────────────────────────────
-  const logoEl = logoSrc ? (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={logoSrc}
-      width={56}
-      height={56}
-      style={{ borderRadius: 14, objectFit: 'contain' }}
-      alt=""
-    />
-  ) : (
-    <div
-      style={{
-        width: 56,
-        height: 56,
-        borderRadius: 14,
-        background: `linear-gradient(135deg, ${TEAL} 0%, ${PURPLE} 100%)`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: WHITE,
-        fontSize: 22,
-        fontWeight: 800,
-        letterSpacing: -0.5,
-      }}
-    >
-      MC
-    </div>
-  )
-
-  // ── Background canvas shared by both branches ─────────────────────────────
-  const canvasStyle = {
+  const canvasBase = {
     width: 1200,
     height: 630,
     display: 'flex',
@@ -81,8 +95,7 @@ export default async function OgImage({
   if (!meta) {
     return new ImageResponse(
       (
-        <div style={canvasStyle}>
-          {/* Subtle center radial glow */}
+        <div style={canvasBase}>
           <div
             style={{
               position: 'absolute',
@@ -96,7 +109,6 @@ export default async function OgImage({
             }}
           />
 
-          {/* Centered content */}
           <div
             style={{
               display: 'flex',
@@ -104,57 +116,51 @@ export default async function OgImage({
               alignItems: 'center',
               justifyContent: 'center',
               flex: 1,
-              gap: 40,
               position: 'relative',
             }}
           >
-            {/* Brand badge */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-              {logoEl}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-                <div
-                  style={{
-                    fontSize: 24,
-                    fontWeight: 800,
-                    color: TEAL_DARK,
-                    letterSpacing: 3,
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  MyCases
-                </div>
-                <div style={{ fontSize: 16, fontWeight: 500, color: SLATE }}>
-                  Rotation Playbook
-                </div>
-              </div>
-            </div>
+            <LargeLogo src={logoSrc} />
 
-            {/* Main message */}
+            <div style={{ height: 28 }} />
+
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 14,
+                fontSize: 40,
+                fontWeight: 800,
+                color: TEAL_DARK,
+                letterSpacing: 3,
+                textTransform: 'uppercase',
               }}
             >
-              <div
-                style={{
-                  fontSize: 58,
-                  fontWeight: 900,
-                  color: NAVY,
-                  letterSpacing: -1.5,
-                }}
-              >
-                Rotation Playbook
-              </div>
-              <div style={{ fontSize: 28, fontWeight: 500, color: SLATE }}>
-                Open this link in MyCases to view
-              </div>
+              MyCases
             </div>
 
-            {/* Powered by */}
-            <div style={{ fontSize: 18, fontWeight: 600, color: SLATE }}>
+            <div style={{ height: 8 }} />
+
+            <div style={{ fontSize: 22, fontWeight: 500, color: SLATE }}>
+              Rotation Playbook
+            </div>
+
+            <div style={{ height: 36 }} />
+
+            <div
+              style={{
+                width: 56,
+                height: 2,
+                background: 'rgba(8,145,178,0.25)',
+                borderRadius: 1,
+              }}
+            />
+
+            <div style={{ height: 36 }} />
+
+            <div style={{ fontSize: 26, fontWeight: 500, color: SLATE }}>
+              Open this link in MyCases to view
+            </div>
+
+            <div style={{ height: 20 }} />
+
+            <div style={{ fontSize: 17, fontWeight: 500, color: SLATE_LIGHT }}>
               Powered by SnapOrtho
             </div>
           </div>
@@ -167,162 +173,200 @@ export default async function OgImage({
   // ── Main image ────────────────────────────────────────────────────────────
   const { rotationName, institution, counts } = meta
   const hasSections = counts.total > 0
+
+  // Card inner content width ≈ 716px − 96px padding = 620px
   const titleFontSize =
-    rotationName.length > 45 ? 50 : rotationName.length > 30 ? 60 : 70
+    rotationName.length > 45 ? 44 : rotationName.length > 30 ? 54 : 64
 
   return new ImageResponse(
     (
-      <div style={{ ...canvasStyle, padding: '52px 72px' }}>
-        {/* Subtle off-center radial glow */}
+      <div
+        style={{
+          ...canvasBase,
+          padding: '48px 64px 40px 64px',
+        }}
+      >
+        {/* Subtle radial glow behind the card */}
         <div
           style={{
             position: 'absolute',
-            width: 800,
-            height: 560,
-            top: 35,
-            left: 200,
+            width: 700,
+            height: 500,
+            top: 65,
+            right: 80,
             borderRadius: '50%',
             background:
-              'radial-gradient(ellipse, rgba(8,145,178,0.08) 0%, transparent 68%)',
+              'radial-gradient(ellipse, rgba(8,145,178,0.07) 0%, transparent 68%)',
           }}
         />
 
-        {/* Content column */}
+        {/* ── Main row: brand left + card right ──────────────────── */}
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            flexDirection: 'row',
             flex: 1,
+            gap: 56,
             position: 'relative',
           }}
         >
-          {/* ── Header: logo + brand ─────────────────────────────── */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            {logoEl}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-              <div
-                style={{
-                  fontSize: 20,
-                  fontWeight: 800,
-                  color: TEAL_DARK,
-                  letterSpacing: 2.5,
-                  textTransform: 'uppercase',
-                }}
-              >
-                MyCases
-              </div>
-              <div
-                style={{
-                  fontSize: 13,
-                  fontWeight: 500,
-                  color: SLATE,
-                  letterSpacing: 0.3,
-                }}
-              >
-                Rotation Playbook
-              </div>
-            </div>
-          </div>
-
-          {/* ── Floating card ─────────────────────────────────────── */}
+          {/* Left: brand column */}
           <div
             style={{
-              background: WHITE,
-              borderRadius: 28,
-              border: '1.5px solid rgba(8,145,178,0.18)',
-              padding: '44px 56px',
               display: 'flex',
               flexDirection: 'column',
-              gap: 14,
-              boxShadow:
-                '0 6px 40px rgba(8,145,178,0.13), 0 1px 6px rgba(15,23,42,0.06)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 300,
+              flexShrink: 0,
             }}
           >
-            {/* Eyebrow label */}
+            <LargeLogo src={logoSrc} />
+
+            <div style={{ height: 24 }} />
+
             <div
               style={{
-                fontSize: 14,
-                fontWeight: 700,
-                color: TEAL,
+                fontSize: 32,
+                fontWeight: 800,
+                color: TEAL_DARK,
                 letterSpacing: 2.5,
                 textTransform: 'uppercase',
               }}
             >
+              MyCases
+            </div>
+
+            <div style={{ height: 8 }} />
+
+            <div style={{ fontSize: 17, fontWeight: 500, color: SLATE }}>
               Rotation Playbook
             </div>
 
-            {/* Rotation name */}
+            <div style={{ height: 28 }} />
+
             <div
               style={{
-                fontSize: titleFontSize,
-                fontWeight: 900,
-                color: NAVY,
-                lineHeight: 1.05,
-                letterSpacing: -1.5,
+                width: 48,
+                height: 2,
+                background: 'rgba(8,145,178,0.28)',
+                borderRadius: 1,
               }}
-            >
-              {rotationName}
-            </div>
+            />
 
-            {/* Institution */}
-            {institution && (
-              <div
-                style={{
-                  fontSize: 28,
-                  fontWeight: 600,
-                  color: SLATE,
-                  lineHeight: 1.2,
-                }}
-              >
-                {institution}
-              </div>
-            )}
+            <div style={{ height: 28 }} />
+
+            <div style={{ fontSize: 15, fontWeight: 500, color: SLATE_LIGHT }}>
+              Shared with MyCases
+            </div>
           </div>
 
-          {/* ── Footer row ───────────────────────────────────────── */}
+          {/* Right: playbook card */}
           <div
             style={{
+              flex: 1,
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
+              flexDirection: 'column',
+              justifyContent: 'center',
             }}
           >
-            {/* Progress pill */}
-            {hasSections ? (
+            <div
+              style={{
+                background: WHITE,
+                borderRadius: 28,
+                border: '1.5px solid rgba(8,145,178,0.18)',
+                padding: '44px 48px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 16,
+                boxShadow:
+                  '0 6px 40px rgba(8,145,178,0.13), 0 1px 6px rgba(15,23,42,0.06)',
+              }}
+            >
+              {/* Eyebrow */}
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 10,
-                  background: 'rgba(8,145,178,0.08)',
-                  borderRadius: 50,
-                  padding: '10px 22px',
-                  border: '1px solid rgba(8,145,178,0.2)',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: TEAL,
+                  letterSpacing: 2.5,
+                  textTransform: 'uppercase',
                 }}
               >
+                Rotation Playbook
+              </div>
+
+              {/* Rotation name */}
+              <div
+                style={{
+                  fontSize: titleFontSize,
+                  fontWeight: 900,
+                  color: NAVY,
+                  lineHeight: 1.1,
+                  letterSpacing: -1,
+                }}
+              >
+                {rotationName}
+              </div>
+
+              {/* Institution */}
+              {institution && (
                 <div
                   style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: '50%',
-                    background: TEAL,
+                    fontSize: 26,
+                    fontWeight: 600,
+                    color: SLATE,
+                    lineHeight: 1.2,
                   }}
-                />
-                <span
-                  style={{ fontSize: 22, fontWeight: 600, color: TEAL_DARK }}
                 >
-                  {counts.filled} of {counts.total} sections completed
-                </span>
-              </div>
-            ) : (
-              <div style={{ display: 'flex' }} />
-            )}
-
-            {/* Powered by */}
-            <div style={{ fontSize: 18, fontWeight: 600, color: SLATE }}>
-              Powered by SnapOrtho
+                  {institution}
+                </div>
+              )}
             </div>
+          </div>
+        </div>
+
+        {/* ── Footer: progress + powered-by ──────────────────────── */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginTop: 24,
+            position: 'relative',
+          }}
+        >
+          {hasSections ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                background: 'rgba(8,145,178,0.08)',
+                borderRadius: 50,
+                padding: '10px 22px',
+                border: '1px solid rgba(8,145,178,0.2)',
+              }}
+            >
+              <div
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  background: TEAL,
+                }}
+              />
+              <span style={{ fontSize: 20, fontWeight: 600, color: TEAL_DARK }}>
+                {counts.filled} of {counts.total} sections completed
+              </span>
+            </div>
+          ) : (
+            <div style={{ display: 'flex' }} />
+          )}
+
+          <div style={{ fontSize: 17, fontWeight: 600, color: SLATE }}>
+            Powered by SnapOrtho
           </div>
         </div>
       </div>
