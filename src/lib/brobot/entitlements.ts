@@ -139,8 +139,8 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
   let { data: sub } = await supabase
     .from('subscriptions')
     .select(`
-      user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at, 
-      stripe_customer_id, stripe_subscription_id,
+      user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at,
+      stripe_customer_id, stripe_subscription_id, stripe_price_id,
       provider, provider_subscription_id, provider_transaction_id, environment
     `)
     .eq('user_id', userId)
@@ -155,8 +155,8 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     const { data: fallback } = await supabase
       .from('subscriptions')
       .select(`
-        user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at, 
-        stripe_customer_id, stripe_subscription_id,
+        user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at,
+        stripe_customer_id, stripe_subscription_id, stripe_price_id,
         provider, provider_subscription_id, provider_transaction_id, environment
       `)
       .eq('user_id', userId)
@@ -165,6 +165,33 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
       .limit(1)
       .maybeSingle();
     sub = fallback;
+  }
+
+  // [BROBOT-ENTITLEMENT-SELECT] - detailed row inspection for debugging Apple vs Stripe
+  {
+    const { data: allRows } = await supabase
+      .from('subscriptions')
+      .select('provider, plan_code, status, current_period_end, environment, updated_at')
+      .eq('user_id', userId)
+      .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+      .order('updated_at', { ascending: false });
+
+    console.log('[BROBOT-ENTITLEMENT-SELECT]', {
+      userId: userId.slice(0, 8),
+      rowsFound: allRows?.length ?? 0,
+      rows: (allRows || []).map(r => ({
+        provider: r.provider,
+        plan_code: r.plan_code,
+        status: r.status,
+        current_period_end: r.current_period_end,
+        environment: r.environment,
+      })),
+      selectedRow: sub ? {
+        provider: sub.provider,
+        status: sub.status,
+        current_period_end: sub.current_period_end,
+      } : null,
+    });
   }
 
   if (!sub) return null;
@@ -250,7 +277,8 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
       providerTransactionId: sub.provider_transaction_id ?? null,
       environment: sub.environment ?? null,
       appleOriginalTransactionId: sub.provider === 'apple' ? sub.provider_subscription_id : null,
-      appleProductId: null, // not stored in this row (productId validated at sync time)
+      // Apple product ID is stored in stripe_price_id (semantically equivalent column).
+      appleProductId: sub.provider === 'apple' ? (sub.stripe_price_id ?? null) : null,
       appleExpiresAt: sub.provider === 'apple' ? sub.current_period_end : null,
     };
   }
