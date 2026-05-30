@@ -1,7 +1,5 @@
 import { ImageResponse } from 'next/og'
 import { getShareMetadata } from '@/lib/mycases/playbook-share'
-import fs from 'fs/promises'
-import path from 'path'
 
 export const runtime = 'nodejs'
 export const alt = 'Rotation Playbook — MyCases'
@@ -19,19 +17,12 @@ const WHITE       = '#FFFFFF'
 
 // ── Logo loader ───────────────────────────────────────────────────────────────
 // Place the MyCases logo at public/mycases/mycases-logo.png
-async function getLogoDataUrl(): Promise<string | null> {
-  const candidates = [
-    path.join(process.cwd(), 'public', 'mycases', 'mycases-logo.png'),
-    path.join(process.cwd(), 'public', 'MyCasesLogo.png'),
-    path.join(process.cwd(), 'public', 'My CasesLogo.png'),
-  ]
-  for (const p of candidates) {
-    try {
-      const buf = await fs.readFile(p)
-      return `data:image/png;base64,${buf.toString('base64')}`
-    } catch { /* try next candidate */ }
-  }
-  return null
+function getBaseUrl() {
+  return process.env.NEXT_PUBLIC_SITE_URL ?? 'https://snap-ortho.com'
+}
+
+function getLogoUrl(): string {
+  return `${getBaseUrl()}/mycases/mycases-logo.png`
 }
 
 // ── Large logo element (200×200) used in main layout ─────────────────────────
@@ -39,27 +30,27 @@ function LargeLogo({ src }: { src: string | null }) {
   if (src) {
     return (
       <img
-        src={src}
-        width={200}
-        height={200}
-        style={{ borderRadius: 36, objectFit: 'contain' }}
-        alt=""
-      />
+  src={src}
+  width={280}
+  height={280}
+  style={{ borderRadius: 48, objectFit: 'contain' }}
+  alt=""
+/>
     )
   }
   // Fallback: styled "MC" badge — swap for real logo by placing asset at the path above
   return (
     <div
       style={{
-        width: 200,
-        height: 200,
-        borderRadius: 36,
+        width: 280,
+        height: 280,
+        borderRadius: 48,
         background: `linear-gradient(135deg, ${TEAL} 0%, ${PURPLE} 100%)`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         color: WHITE,
-        fontSize: 74,
+        fontSize: 96,
         fontWeight: 900,
         letterSpacing: -2,
       }}
@@ -76,9 +67,9 @@ export default async function OgImage({
 }) {
   const { shareCode } = await params
   const [meta, logoSrc] = await Promise.all([
-    getShareMetadata(shareCode),
-    getLogoDataUrl(),
-  ])
+  getShareMetadata(shareCode),
+  Promise.resolve(getLogoUrl()),
+])
 
   const canvasBase = {
     width: 1200,
@@ -200,6 +191,37 @@ export default async function OgImage({
           }}
         />
 
+        {hasSections && (
+  <div
+    style={{
+      position: 'absolute',
+      top: 48,
+      right: 64,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 10,
+      background: 'rgba(255,255,255,0.82)',
+      borderRadius: 50,
+      padding: '12px 24px',
+      border: '1px solid rgba(8,145,178,0.22)',
+      boxShadow: '0 8px 24px rgba(15,23,42,0.08)',
+      zIndex: 5,
+    }}
+  >
+    <div
+      style={{
+        width: 9,
+        height: 9,
+        borderRadius: '50%',
+        background: TEAL,
+      }}
+    />
+    <span style={{ fontSize: 22, fontWeight: 700, color: TEAL_DARK }}>
+      {counts.filled} of {counts.total} sections completed
+    </span>
+  </div>
+)}
+
         {/* ── Main row: brand left + card right ──────────────────── */}
         <div
           style={{
@@ -208,6 +230,7 @@ export default async function OgImage({
             flex: 1,
             gap: 56,
             position: 'relative',
+            paddingTop: 56
           }}
         >
           {/* Left: brand column */}
@@ -217,7 +240,7 @@ export default async function OgImage({
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              width: 300,
+              width: 350,
               flexShrink: 0,
             }}
           >
@@ -227,7 +250,7 @@ export default async function OgImage({
 
             <div
               style={{
-                fontSize: 32,
+                fontSize: 48,
                 fontWeight: 800,
                 color: TEAL_DARK,
                 letterSpacing: 2.5,
@@ -255,10 +278,6 @@ export default async function OgImage({
             />
 
             <div style={{ height: 28 }} />
-
-            <div style={{ fontSize: 15, fontWeight: 500, color: SLATE_LIGHT }}>
-              Shared with MyCases
-            </div>
           </div>
 
           {/* Right: playbook card */}
@@ -337,33 +356,7 @@ export default async function OgImage({
             position: 'relative',
           }}
         >
-          {hasSections ? (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 10,
-                background: 'rgba(8,145,178,0.08)',
-                borderRadius: 50,
-                padding: '10px 22px',
-                border: '1px solid rgba(8,145,178,0.2)',
-              }}
-            >
-              <div
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: TEAL,
-                }}
-              />
-              <span style={{ fontSize: 20, fontWeight: 600, color: TEAL_DARK }}>
-                {counts.filled} of {counts.total} sections completed
-              </span>
-            </div>
-          ) : (
-            <div style={{ display: 'flex' }} />
-          )}
+          <div style={{ display: 'flex' }} />
 
           <div style={{ fontSize: 17, fontWeight: 600, color: SLATE }}>
             Powered by SnapOrtho
