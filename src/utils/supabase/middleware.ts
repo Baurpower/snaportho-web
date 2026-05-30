@@ -48,7 +48,13 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith('/brobot/') ||
     pathname.startsWith('/api/brobot/')
 
-  if (!user && !isAuthPage && !isPublicBroBotPath) {
+  // MyCases Rotation Playbook share links — public landing pages and API routes.
+  // Share codes are unguessable (base62, 8 chars); no auth required to read or import.
+  const isPublicMyCasesPlaybookPath =
+    pathname.startsWith('/mycases/playbook/') ||
+    pathname.startsWith('/api/mycases/')
+
+  if (!user && !isAuthPage && !isPublicBroBotPath && !isPublicMyCasesPlaybookPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/sign-in'
 

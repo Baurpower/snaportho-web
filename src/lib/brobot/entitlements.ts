@@ -199,13 +199,21 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
   const now = new Date();
   const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
 
-  // === EXACT DIAGNOSTIC REQUESTED ===
-  {
-    const periodEndTs = sub.current_period_end ? new Date(sub.current_period_end).getTime() : null;
-    const nowTs = now.getTime();
+  // Apple subscriptions have no server-push notifications — status is only updated
+  // when the iOS client calls /sync, which only happens while a transaction is in
+  // Transaction.currentEntitlements. Once expired, the transaction leaves StoreKit
+  // and no sync is ever sent, leaving a stale status='active' row in the DB.
+  // Guard: Apple 'active' only grants access if current_period_end is still in the future.
+  const periodEndTs = sub.current_period_end ? new Date(sub.current_period_end).getTime() : null;
+  const nowTs = now.getTime();
+  const appleActiveIsValid =
+    sub.provider !== 'apple' ||
+    (periodEndTs != null && periodEndTs > nowTs);
 
+  // === DIAGNOSTIC LOG ===
+  {
     const isActiveDecision =
-      sub.status === 'active' ||
+      (sub.status === 'active' && appleActiveIsValid) ||
       sub.status === 'trialing' ||
       (sub.status === 'past_due' && periodEndTs && periodEndTs + graceMs > nowTs) ||
       (sub.cancel_at_period_end && periodEndTs && periodEndTs > nowTs) ||
@@ -213,7 +221,9 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
 
     let reasonIfInactive = null;
     if (!isActiveDecision) {
-      if (sub.status === 'canceled' && periodEndTs && periodEndTs <= nowTs) {
+      if (sub.provider === 'apple' && sub.status === 'active' && (periodEndTs == null || periodEndTs <= nowTs)) {
+        reasonIfInactive = 'apple_active_but_period_ended';
+      } else if (sub.status === 'canceled' && periodEndTs && periodEndTs <= nowTs) {
         reasonIfInactive = 'canceled_and_period_ended';
       } else if (sub.status === 'canceled') {
         reasonIfInactive = 'canceled_but_no_remaining_period_logic_matched';
@@ -228,17 +238,30 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
       resolvedUserId: userId,
       subscriptionRowUserId: sub.user_id ?? null,
       status: sub.status,
+      provider: sub.provider ?? null,
       plan_code: sub.plan_code,
       current_period_end: sub.current_period_end,
       cancel_at_period_end: sub.cancel_at_period_end,
       canceled_at: sub.canceled_at,
+      appleActiveIsValid: sub.provider === 'apple' ? appleActiveIsValid : undefined,
       isActive: isActiveDecision,
       reasonIfInactive,
     });
+
+    // Required per-request log for Apple IAP status refresh tracing
+    if (sub.provider === 'apple') {
+      console.log('[APPLE-IAP-STATUS-REFRESH]', {
+        userId: userId.slice(0, 8),
+        originalTransactionId: sub.provider_subscription_id ?? null,
+        appleStatus: sub.status,
+        currentPeriodEnd: sub.current_period_end,
+        grantsAccess: isActiveDecision,
+      });
+    }
   }
 
   const isActive =
-    sub.status === 'active' ||
+    (sub.status === 'active' && appleActiveIsValid) ||
     sub.status === 'trialing' ||
     (sub.status === 'past_due' && sub.current_period_end &&
       new Date(sub.current_period_end).getTime() + graceMs > now.getTime()) ||
