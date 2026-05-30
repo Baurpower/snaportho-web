@@ -41,6 +41,15 @@ export interface BroBotEntitlement {
   stripeSubscriptionId?: string | null;
   usedToday?: number;
   isInGracePeriod?: boolean;
+
+  // Multi-provider / Apple IAP (additive)
+  provider?: 'stripe' | 'apple' | string;
+  providerSubscriptionId?: string | null;
+  providerTransactionId?: string | null;
+  environment?: string | null;
+  appleOriginalTransactionId?: string | null;
+  appleProductId?: string | null;
+  appleExpiresAt?: string | null;
 }
 
 /**
@@ -125,10 +134,15 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
   const supabase = createAdminClient();
 
   // Prefer active/past_due/trialing/canceling subscriptions over stale 'incomplete' placeholder rows.
+  // Supports both Stripe and Apple (and future providers).
   // First try to find a "good" status row.
   let { data: sub } = await supabase
     .from('subscriptions')
-    .select('user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at, stripe_customer_id, stripe_subscription_id')
+    .select(`
+      user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at, 
+      stripe_customer_id, stripe_subscription_id,
+      provider, provider_subscription_id, provider_transaction_id, environment
+    `)
     .eq('user_id', userId)
     .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
     .in('status', ['active', 'trialing', 'past_due'])
@@ -140,7 +154,11 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     // Fallback to any row (including incomplete or canceled), still prefer latest period end
     const { data: fallback } = await supabase
       .from('subscriptions')
-      .select('user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at, stripe_customer_id, stripe_subscription_id')
+      .select(`
+        user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at, 
+        stripe_customer_id, stripe_subscription_id,
+        provider, provider_subscription_id, provider_transaction_id, environment
+      `)
       .eq('user_id', userId)
       .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
       .order('current_period_end', { ascending: false, nullsFirst: false })
@@ -226,6 +244,14 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
       stripeSubscriptionId: sub.stripe_subscription_id ?? null,
       usedToday,
       isInGracePeriod,
+      // Apple / multi-provider support
+      provider: sub.provider ?? 'stripe',
+      providerSubscriptionId: sub.provider_subscription_id ?? null,
+      providerTransactionId: sub.provider_transaction_id ?? null,
+      environment: sub.environment ?? null,
+      appleOriginalTransactionId: sub.provider === 'apple' ? sub.provider_subscription_id : null,
+      appleProductId: null, // not stored in this row (productId validated at sync time)
+      appleExpiresAt: sub.provider === 'apple' ? sub.current_period_end : null,
     };
   }
 
@@ -306,7 +332,7 @@ export async function getRemainingAIUses(subject: Subject) {
 export interface MobileBroBotEntitlement {
   hasBroBotAccess: boolean;
   plan: string; // e.g. 'unlimited_brobot', 'brobot_monthly', etc. Derived from DB plan_code for the subscription. Never null for paid Active cases.
-  source: 'stripe' | 'override' | 'free_quota' | 'disabled'; // 'stripe' = web Stripe subscription (aligned with website paid path)
+  source: 'stripe' | 'apple' | 'override' | 'free_quota' | 'disabled'; // 'stripe' or 'apple' for paid BroBot subscriptions
   stripeCustomerId: string | null;
   stripeSubscriptionId: string | null;
   subscriptionStatus: string | null;
@@ -370,7 +396,8 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     // Derive plan from the actual subscription data (plan_code stored from Stripe metadata or default).
     // This ensures the iOS app receives a stable, non-null plan identifier instead of hard-coded or missing value.
     plan = ent.planCode || 'unlimited_brobot';
-    mobileSource = 'stripe';
+    // Support Apple IAP as first-class source (additive)
+    mobileSource = (ent.provider === 'apple') ? 'apple' : 'stripe';
   } else if (ent.source === 'override') {
     plan = 'promo';
     mobileSource = 'override';
@@ -430,10 +457,10 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     resetAt,
     reasonIfBlocked,
 
-    // Future Apple IAP placeholders (always null in this pass)
-    appleOriginalTransactionId: null,
-    appleProductId: null,
-    appleExpiresAt: null,
+    // Apple IAP fields (populated when provider=apple from the central engine)
+    appleOriginalTransactionId: ent.appleOriginalTransactionId ?? (ent as BroBotEntitlement & { providerSubscriptionId?: string }).providerSubscriptionId ?? null,
+    appleProductId: ent.appleProductId ?? null,
+    appleExpiresAt: ent.appleExpiresAt ?? (ent.provider === 'apple' ? ent.expiresAt : null),
   };
 
   // Additional required safe debug logs after mapping

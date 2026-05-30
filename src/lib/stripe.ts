@@ -222,6 +222,7 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
 
   const upsertPayload = {
     user_id: userId,
+    provider: 'stripe',
     stripe_customer_id: typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer?.id,
     stripe_subscription_id: stripeSub.id,
     stripe_price_id: priceId,
@@ -242,7 +243,7 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
 
   const { error: upsertError } = await supabase.from('subscriptions').upsert(
     upsertPayload,
-    { onConflict: 'user_id' }
+    { onConflict: 'user_id,provider' }
   );
 
   console.log('[stripe] syncSubscriptionFromStripe upsert', {
