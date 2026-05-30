@@ -34,6 +34,11 @@ export interface GuestSession {
   dayKey: string;      // 'YYYY-MM-DD' in UTC — this is what makes old cookies useless
 }
 
+export interface CreatedGuestSession {
+  session: GuestSession;
+  cookie: string;
+}
+
 /**
  * Returns today's date key in UTC (YYYY-MM-DD).
  * This is the key we embed so a cookie created yesterday is worthless today.
@@ -88,22 +93,7 @@ export function createGuestSessionCookie(): string {
   return cookie;
 }
 
-/**
- * Parses and verifies the guest cookie from a Request (or NextRequest).
- * Returns a valid GuestSession only if:
- *   - Cookie exists
- *   - Signature is valid
- *   - Day key matches today (prevents yesterday's cookies from working)
- */
-export function getGuestSessionFromRequest(request: Request): GuestSession | null {
-  const cookieHeader = request.headers.get('cookie');
-  if (!cookieHeader) return null;
-
-  // Simple cookie parser (sufficient for our single cookie)
-  const match = cookieHeader.match(new RegExp(`${BROBOT_GUEST_COOKIE_NAME}=([^;]+)`));
-  if (!match) return null;
-
-  const value = decodeURIComponent(match[1]);
+function parseGuestCookieValue(value: string): GuestSession | null {
   const parts = value.split('.');
 
   // Expected: v1.guest_xxx.1234567890.2025-05-27.sig
@@ -120,9 +110,8 @@ export function getGuestSessionFromRequest(request: Request): GuestSession | nul
     return null;
   }
 
-  // Day boundary check — the whole point of embedding the day
   if (dayKey !== getUtcDayKey()) {
-    return null; // old day → treat as no session (will mint a fresh one)
+    return null;
   }
 
   const issuedAt = parseInt(iatStr, 10);
@@ -133,6 +122,41 @@ export function getGuestSessionFromRequest(request: Request): GuestSession | nul
     issuedAt,
     dayKey,
   };
+}
+
+export function createGuestSession(): CreatedGuestSession {
+  const cookie = createGuestSessionCookie();
+  const match = cookie.match(new RegExp(`${BROBOT_GUEST_COOKIE_NAME}=([^;]+)`));
+
+  if (!match) {
+    throw new Error('Failed to parse newly-created BroBot guest cookie');
+  }
+
+  const session = parseGuestCookieValue(match[1]);
+  if (!session) {
+    throw new Error('Failed to verify newly-created BroBot guest session');
+  }
+
+  return { session, cookie };
+}
+
+/**
+ * Parses and verifies the guest cookie from a Request (or NextRequest).
+ * Returns a valid GuestSession only if:
+ *   - Cookie exists
+ *   - Signature is valid
+ *   - Day key matches today (prevents yesterday's cookies from working)
+ */
+export function getGuestSessionFromRequest(request: Request): GuestSession | null {
+  const cookieHeader = request.headers.get('cookie');
+  if (!cookieHeader) return null;
+
+  // Simple cookie parser (sufficient for our single cookie)
+  const match = cookieHeader.match(new RegExp(`${BROBOT_GUEST_COOKIE_NAME}=([^;]+)`));
+  if (!match) return null;
+
+  const value = decodeURIComponent(match[1]);
+  return parseGuestCookieValue(value);
 }
 
 /**

@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 
-import { getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
+import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
 import { getRemainingAIUses, getDailyResetAt } from '@/lib/brobot/entitlements';
-import { BROBOT_CONFIG } from '@/lib/config/brobot';
 
 /**
  * Public (cookie-based) guest BroBot entitlement endpoint.
@@ -15,20 +14,13 @@ import { BROBOT_CONFIG } from '@/lib/config/brobot';
  * Returns server-owned quota values so changing env vars instantly affects clients.
  */
 export async function GET(request: Request) {
-  const guestSession = getGuestSessionFromRequest(request);
+  let guestSession = getGuestSessionFromRequest(request);
+  let guestCookieToSet: string | null = null;
 
   if (!guestSession) {
-    // No (or invalid/expired) guest session cookie yet → they have the full daily cap available.
-    const freeLimit = BROBOT_CONFIG.GUEST_DAILY_CAP;
-    const resetAt = getDailyResetAt();
-
-    return NextResponse.json({
-      freeLimit,
-      usedThisPeriod: 0,
-      remainingUses: freeLimit,
-      resetAt,
-      reasonIfBlocked: null,
-    });
+    const createdGuest = createGuestSession();
+    guestSession = createdGuest.session;
+    guestCookieToSet = createdGuest.cookie;
   }
 
   const subject = { type: 'guest' as const, id: guestSession.guestId };
@@ -43,11 +35,17 @@ export async function GET(request: Request) {
   const resetAt = getDailyResetAt();
   const reasonIfBlocked = ent.isLimitReached ? 'daily_limit_reached' : null;
 
-  return NextResponse.json({
+  const response = NextResponse.json({
     freeLimit,
     usedThisPeriod,
     remainingUses,
     resetAt,
     reasonIfBlocked,
   });
+
+  if (guestCookieToSet) {
+    response.headers.append('Set-Cookie', guestCookieToSet);
+  }
+
+  return response;
 }

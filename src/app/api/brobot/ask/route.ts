@@ -2,24 +2,13 @@
  * BroBot Secure AI Proxy (Phase 1)
  *
  * THIS IS THE ONLY ROUTE ALLOWED TO CALL THE EXTERNAL CASEPREP /case-prep ENDPOINT.
- *
- * All BroBot AI usage (main case-prep today) MUST come through here.
- * - Authenticates the caller (user or guest)
- * - Enforces global daily caps via centralized helpers
- * - Only successful responses consume quota
- * - Sets signed guest cookies when needed
- * - Structured logging for metrics and abuse detection
  */
 
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
 import { getCasePrepInternalBaseUrl } from '@/lib/config/brobot';
-import {
-  getGuestSessionFromRequest,
-  createGuestSessionCookie,
-  BROBOT_GUEST_COOKIE_NAME,
-} from '@/lib/brobot/guest-session';
+import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
 import {
   getRemainingAIUses,
   getMobileBroBotEntitlement,
@@ -30,19 +19,30 @@ import { createClient } from '@/utils/supabase/server';
 import type { BroBotPayload } from '@/types/caseprep';
 
 const AskRequestSchema = z.object({
-  prompt: z.string().trim().min(3, 'Prompt must be at least 3 characters'),
+  prompt: z.string().trim().min(1),
 });
 
 export type BroBotAskResponse = BroBotPayload & {
-  // Phase 1 additions (safe for existing clients)
   meta?: {
     remaining?: number | null;
     isLimitReached?: boolean;
   };
 };
 
+type AskRequestBody = {
+  prompt?: unknown;
+  caseDescription?: unknown;
+  query?: unknown;
+  message?: unknown;
+  text?: unknown;
+  case?: unknown;
+};
+
+function logBroBot(event: string, payload: Record<string, unknown>) {
+  console.log(event, payload);
+}
+
 function getClientIp(request: Request): string | null {
-  // Vercel / common proxy headers
   return (
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     request.headers.get('x-real-ip') ||
@@ -52,27 +52,78 @@ function getClientIp(request: Request): string | null {
 
 function hashForLogging(value: string | null | undefined): string | undefined {
   if (!value) return undefined;
-  // Simple non-crypto hash for abuse patterns (not for security)
+
   let h = 0;
   for (let i = 0; i < value.length; i++) {
     h = (h << 5) - h + value.charCodeAt(i);
     h |= 0;
   }
+
   return `h${Math.abs(h).toString(16)}`;
 }
 
-async function getOptionalUser(request?: Request) {
+function subjectPrefix(subject: Subject): string {
+  return subject.id.slice(0, Math.min(12, subject.id.length));
+}
+
+function invalidRequestResponse() {
+  return NextResponse.json(
+    {
+      error: 'invalid_request',
+      message: 'Please enter a case description.',
+    },
+    { status: 400 }
+  );
+}
+
+function limitReachedResponse(dailyCap: number | null) {
+  return NextResponse.json(
+    {
+      error: 'daily_limit_reached',
+      message: 'Daily limit reached.',
+      isLimitReached: true,
+      remaining: 0,
+      dailyCap,
+    },
+    { status: 429 }
+  );
+}
+
+function generationFailedResponse() {
+  return NextResponse.json(
+    {
+      error: 'brobot_generation_failed',
+      message: 'BroBot is having trouble responding. Please try again in a moment.',
+    },
+    { status: 500 }
+  );
+}
+
+function normalizePrompt(input: unknown): string | null {
+  if (!input || typeof input !== 'object') return null;
+
+  const body = input as AskRequestBody;
+  const candidate =
+    body.prompt ??
+    body.caseDescription ??
+    body.query ??
+    body.message ??
+    body.text ??
+    body.case;
+
+  if (typeof candidate !== 'string') return null;
+
+  const trimmed = candidate.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+async function getOptionalUser(request: Request) {
   try {
     const supabase = await createClient();
-
-    // Support native iOS Bearer token (Authorization: Bearer <token>)
-    let bearerToken: string | null = null;
-    if (request) {
-      const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
-      if (authHeader?.toLowerCase().startsWith('bearer ')) {
-        bearerToken = authHeader.replace(/^Bearer\s+/i, '').trim();
-      }
-    }
+    const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
+    const bearerToken = authHeader?.toLowerCase().startsWith('bearer ')
+      ? authHeader.replace(/^Bearer\s+/i, '').trim()
+      : null;
 
     const {
       data: { user },
@@ -82,15 +133,20 @@ async function getOptionalUser(request?: Request) {
       : await supabase.auth.getUser();
 
     if (authError) {
-      // TEMP DEBUG only
-      if (process.env.NODE_ENV !== 'production') {
-        console.log('[BROBOT-ASK-DEBUG] getOptionalUser authError', authError.message);
-      }
+      logBroBot('[BROBOT-ASK-AUTH]', {
+        hasBearerToken: Boolean(bearerToken),
+        success: false,
+        message: authError.message,
+      });
       return null;
     }
 
     return user ?? null;
-  } catch {
+  } catch (error) {
+    logBroBot('[BROBOT-ASK-AUTH]', {
+      success: false,
+      message: error instanceof Error ? error.message : 'Unknown auth error',
+    });
     return null;
   }
 }
@@ -102,176 +158,129 @@ export async function POST(request: Request) {
   let subject: Subject | null = null;
   let guestCookieToSet: string | null = null;
 
-  // TEMP DEBUG (safe only)
-  const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
-  const hasAuthorizationHeader = !!authHeader;
-  const isBearer = authHeader?.toLowerCase().startsWith('bearer ');
-  const authMode = isBearer ? 'bearer' : (hasAuthorizationHeader ? 'other' : 'cookie');
-
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[BROBOT-ASK-DEBUG] request start', {
-      hasAuthorizationHeader,
-      authMode,
-      method: request.method,
-    });
-  }
-
   try {
-    // 1. Parse body + normalization (support iOS "prompt" + existing shape)
-    const raw = await request.json().catch(() => ({}));
-
-    // TEMP DEBUG (safe)
-    const bodyKeys = Object.keys(raw || {});
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[BROBOT-ASK-DEBUG] body received', { bodyKeys });
-    }
-
-    function normalizeAskPrompt(input: unknown): string | null {
-      if (!input || typeof input !== 'object') return null;
-      const obj = input as Record<string, unknown>;
-      // Accept iOS shape + legacy web shapes
-      const candidate = obj.prompt ?? obj.caseDescription ?? obj.query ?? obj.message ?? obj.text ?? obj.case;
-      if (typeof candidate !== 'string') return null;
-      const trimmed = candidate.trim();
-      return trimmed.length >= 3 ? trimmed : null;
-    }
-
-    const normalizedPrompt = normalizeAskPrompt(raw);
-    const normalizedPromptPresent = !!normalizedPrompt;
-
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[BROBOT-ASK-DEBUG] normalization', { normalizedPromptPresent });
-    }
+    const raw = await request.json().catch(() => null);
+    const bodyKeys = raw && typeof raw === 'object' ? Object.keys(raw as Record<string, unknown>) : [];
+    const normalizedPrompt = normalizePrompt(raw);
+    const promptLength = normalizedPrompt?.length ?? 0;
 
     if (!normalizedPrompt) {
-      return NextResponse.json(
-        { error: 'Missing case description' },
-        { status: 400 }
-      );
+      logBroBot('[BROBOT-ASK-START]', {
+        requestId,
+        hasAuth: false,
+        userType: 'guest',
+        bodyKeys,
+        promptLength,
+        hasPrompt: false,
+      });
+      return invalidRequestResponse();
     }
 
-    // Keep using the existing schema for validation (it accepts "prompt")
     const parsed = AskRequestSchema.safeParse({ prompt: normalizedPrompt });
-
     if (!parsed.success) {
-      return NextResponse.json(
-        { error: 'Invalid request', details: parsed.error.issues[0]?.message },
-        { status: 400 }
-      );
+      return invalidRequestResponse();
     }
 
-    const { prompt } = parsed.data;  // normalized + validated
-
-    // 2. Determine identity (user > guest) — now supports Bearer for iOS
+    const { prompt } = parsed.data;
     const user = await getOptionalUser(request);
 
-    // Authenticated Supabase user check + entitlement validation using centralized BroBot engine.
-    // If the caller is a logged-in user without BroBot access (per hasBroBotAccess from getMobileBroBotEntitlement),
-    // block with 403. This prevents bypassing the iOS Swift UI gate (and web UI gates).
-    // Guest users continue to use the existing free quota path (unchanged).
     if (user) {
-      const mobileEnt = await getMobileBroBotEntitlement(user.id);
-      if (!mobileEnt.hasBroBotAccess) {
-        return NextResponse.json(
-          {
-            error: 'BroBot access required',
-            hasBroBotAccess: false,
-          },
-          { status: 403 }
-        );
-      }
+      const mobileEntitlement = await getMobileBroBotEntitlement(user.id);
       subject = { type: 'user', id: user.id };
+
+      if (!mobileEntitlement.hasBroBotAccess) {
+        const response = limitReachedResponse(mobileEntitlement.dailyLimit);
+        return response;
+      }
     } else {
-      // Guest path
       let guestSession = getGuestSessionFromRequest(request);
 
       if (!guestSession) {
-        // Mint a fresh signed guest session for this browser
-        guestCookieToSet = createGuestSessionCookie();
-        // Re-parse the one we just created so we have the id
-        // (we know the format — extract guestId safely)
-        const match = guestCookieToSet.match(new RegExp(`${BROBOT_GUEST_COOKIE_NAME}=([^;]+)`));
-        if (match) {
-          const value = match[1];
-          const parts = value.split('.');
-          const guestId = parts[1]; // v1.guest_xxx....
-          if (guestId) {
-            guestSession = {
-              guestId,
-              issuedAt: Math.floor(Date.now() / 1000),
-              dayKey: new Date().toISOString().slice(0, 10),
-            };
-          }
-        }
+        const createdGuest = createGuestSession();
+        guestSession = createdGuest.session;
+        guestCookieToSet = createdGuest.cookie;
       }
 
-      if (guestSession) {
-        subject = { type: 'guest', id: guestSession.guestId };
-      }
+      subject = { type: 'guest', id: guestSession.guestId };
     }
 
-    if (!subject) {
-      // Should be impossible after the logic above
-      if (process.env.NODE_ENV !== 'production') {
-        console.log('[BROBOT-ASK-DEBUG] no subject established');
-      }
-      return NextResponse.json({ error: 'Unable to establish identity' }, { status: 500 });
-    }
+    logBroBot('[BROBOT-ASK-START]', {
+      requestId,
+      hasAuth: Boolean(user),
+      userType: user ? 'member' : 'guest',
+      bodyKeys,
+      promptLength: prompt.length,
+      hasPrompt: true,
+    });
 
-    // TEMP DEBUG (safe)
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[BROBOT-ASK-DEBUG] subject resolved', {
-        subjectType: subject.type,
-        userFound: !!user,
-      });
-    }
-
-    // 3. Entitlement check (centralized, the only place that decides)
     const entitlement = await getRemainingAIUses(subject);
+    const limit = entitlement.aiAccess.dailyCap;
+    const remainingBefore = entitlement.aiAccess.remainingToday;
+    const usedBefore =
+      limit != null && remainingBefore != null ? Math.max(0, limit - remainingBefore) : null;
+    const allowed = !entitlement.isLimitReached;
 
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[BROBOT-ASK-DEBUG] entitlement', {
-        isLimitReached: entitlement.isLimitReached,
-        remaining: entitlement.aiAccess?.remainingToday,
-      });
-    }
+    logBroBot('[BROBOT-QUOTA-CHECK]', {
+      requestId,
+      userType: subject.type,
+      subjectPrefix: subjectPrefix(subject),
+      usedBefore,
+      limit,
+      remainingBefore,
+      allowed,
+      reason: allowed ? null : 'daily_limit_reached',
+    });
 
-    if (entitlement.isLimitReached) {
+    if (!allowed) {
       await recordUsageEvent({
         subject,
         outcome: 'limit_hit',
         latencyMs: Date.now() - startedAt,
       });
 
-      const res = NextResponse.json(
-        {
-          error: 'Daily limit reached',
-          isLimitReached: true,
-          remaining: 0,
-          dailyCap: entitlement.aiAccess.dailyCap,
-        },
-        { status: 429 }
-      );
-
+      const response = limitReachedResponse(limit);
       if (guestCookieToSet) {
-        res.headers.append('Set-Cookie', guestCookieToSet);
+        response.headers.append('Set-Cookie', guestCookieToSet);
       }
-      return res;
+      return response;
     }
 
-    // 4. Proxy to the real CasePrep service (server-to-server, internal URL only)
-    const baseUrl = getCasePrepInternalBaseUrl();
-    const upstreamUrl = `${baseUrl}/case-prep`;
+    let baseUrl: string;
+    try {
+      baseUrl = getCasePrepInternalBaseUrl();
+    } catch (error) {
+      logBroBot('[BROBOT-ASK-GENERATION]', {
+        requestId,
+        provider: 'caseprep_proxy',
+        model: null,
+        hasApiKey: Boolean(process.env.OPENAI_API_KEY),
+        success: false,
+        message: error instanceof Error ? error.message : 'Missing generation configuration',
+      });
+      await recordUsageEvent({
+        subject,
+        outcome: 'failure',
+        latencyMs: Date.now() - startedAt,
+      });
+      return generationFailedResponse();
+    }
 
+    const upstreamUrl = `${baseUrl}/case-prep`;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 45_000);
 
     let upstreamResponse: Response;
 
+    logBroBot('[BROBOT-ASK-GENERATION]', {
+      requestId,
+      provider: 'caseprep_proxy',
+      model: null,
+      hasApiKey: Boolean(process.env.OPENAI_API_KEY),
+      success: null,
+      targetHost: new URL(upstreamUrl).host,
+    });
+
     try {
-      if (process.env.NODE_ENV !== 'production') {
-        console.log('[BROBOT-ASK-DEBUG] calling upstream', { upstreamUrl });
-      }
       upstreamResponse = await fetch(upstreamUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -279,23 +288,22 @@ export async function POST(request: Request) {
         signal: controller.signal,
         cache: 'no-store',
       });
-      if (process.env.NODE_ENV !== 'production') {
-        console.log('[BROBOT-ASK-DEBUG] upstream status', { status: upstreamResponse.status });
-      }
-    } catch (fetchErr) {
+    } catch (error) {
       clearTimeout(timeout);
-      console.error(`[brobot/ask] ${requestId} upstream fetch failed`, fetchErr);
-
+      logBroBot('[BROBOT-ASK-GENERATION]', {
+        requestId,
+        provider: 'caseprep_proxy',
+        model: null,
+        hasApiKey: Boolean(process.env.OPENAI_API_KEY),
+        success: false,
+        message: error instanceof Error ? error.message : 'Upstream fetch failed',
+      });
       await recordUsageEvent({
         subject,
         outcome: 'failure',
         latencyMs: Date.now() - startedAt,
       });
-
-      return NextResponse.json(
-        { error: 'BroBot service temporarily unavailable' },
-        { status: 502 }
-      );
+      return generationFailedResponse();
     } finally {
       clearTimeout(timeout);
     }
@@ -304,104 +312,143 @@ export async function POST(request: Request) {
 
     if (!upstreamResponse.ok) {
       const errorText = await upstreamResponse.text().catch(() => 'Unknown upstream error');
-      console.error(`[brobot/ask] ${requestId} upstream error`, {
+      logBroBot('[BROBOT-ASK-GENERATION]', {
+        requestId,
+        provider: 'caseprep_proxy',
+        model: null,
+        hasApiKey: Boolean(process.env.OPENAI_API_KEY),
+        success: false,
         status: upstreamResponse.status,
-        errorText: errorText.slice(0, 200), // used for diagnostics
-        latencyMs,
+        message: errorText.slice(0, 200),
       });
-
       await recordUsageEvent({
         subject,
         outcome: 'failure',
         latencyMs,
       });
-
-      return NextResponse.json(
-        { error: 'Failed to generate BroBot response', upstreamStatus: upstreamResponse.status },
-        { status: 502 }
-      );
+      return generationFailedResponse();
     }
 
-    // 5. Parse and validate upstream payload (same contract the old client expected)
     let upstreamJson: unknown;
     try {
       upstreamJson = await upstreamResponse.json();
     } catch {
-      await recordUsageEvent({ subject, outcome: 'failure', latencyMs });
-      return NextResponse.json({ error: 'Invalid response from BroBot service' }, { status: 502 });
+      logBroBot('[BROBOT-ASK-GENERATION]', {
+        requestId,
+        provider: 'caseprep_proxy',
+        model: null,
+        hasApiKey: Boolean(process.env.OPENAI_API_KEY),
+        success: false,
+        message: 'Invalid JSON from upstream',
+      });
+      await recordUsageEvent({
+        subject,
+        outcome: 'failure',
+        latencyMs,
+      });
+      return generationFailedResponse();
     }
 
-    // Type guard for unknown upstream data (replaces previous `any`)
-    const isValidBroBotResponse = (val: unknown): val is BroBotPayload =>
-      !!val &&
-      typeof val === 'object' &&
-      'pimpQuestions' in val &&
-      Array.isArray((val as Record<string, unknown>).pimpQuestions);
+    const isValidBroBotResponse = (value: unknown): value is BroBotPayload =>
+      Boolean(value) &&
+      typeof value === 'object' &&
+      'pimpQuestions' in value &&
+      Array.isArray((value as Record<string, unknown>).pimpQuestions);
 
     if (!isValidBroBotResponse(upstreamJson)) {
-      await recordUsageEvent({ subject, outcome: 'failure', latencyMs });
-      return NextResponse.json({ error: 'Malformed BroBot response' }, { status: 502 });
+      logBroBot('[BROBOT-ASK-GENERATION]', {
+        requestId,
+        provider: 'caseprep_proxy',
+        model: null,
+        hasApiKey: Boolean(process.env.OPENAI_API_KEY),
+        success: false,
+        message: 'Malformed upstream payload',
+      });
+      await recordUsageEvent({
+        subject,
+        outcome: 'failure',
+        latencyMs,
+      });
+      return generationFailedResponse();
     }
 
-    // 6. SUCCESS — this is the ONLY path that consumes a daily use
-    const ip: string | undefined = getClientIp(request) ?? undefined;
-    const userAgent: string | undefined = request.headers.get('user-agent') ?? undefined;
+    logBroBot('[BROBOT-ASK-GENERATION]', {
+      requestId,
+      provider: 'caseprep_proxy',
+      model: null,
+      hasApiKey: Boolean(process.env.OPENAI_API_KEY),
+      success: true,
+      status: upstreamResponse.status,
+    });
 
-    const newCount = await recordSuccessfulAIUse(
-      subject,
-      latencyMs,
-      {
+    const ip = getClientIp(request) ?? undefined;
+    const userAgent = request.headers.get('user-agent') ?? undefined;
+
+    let usedAfter: number;
+    try {
+      usedAfter = await recordSuccessfulAIUse(subject, latencyMs, {
         ipHash: hashForLogging(ip),
         userAgentHash: hashForLogging(userAgent),
-      }
-    );
+      });
+    } catch (error) {
+      logBroBot('[BROBOT-QUOTA-INCREMENT]', {
+        requestId,
+        userType: subject.type,
+        subjectPrefix: subjectPrefix(subject),
+        incremented: false,
+        usedBefore,
+        usedAfter: null,
+        remainingAfter: remainingBefore,
+        message: error instanceof Error ? error.message : 'Failed to record BroBot usage',
+      });
+      throw error;
+    }
+
+    const remainingAfter = limit != null ? Math.max(0, limit - usedAfter) : null;
+
+    logBroBot('[BROBOT-QUOTA-INCREMENT]', {
+      requestId,
+      userType: subject.type,
+      subjectPrefix: subjectPrefix(subject),
+      incremented: true,
+      usedBefore,
+      usedAfter,
+      remainingAfter,
+    });
 
     const responsePayload: BroBotAskResponse = {
       pimpQuestions: upstreamJson.pimpQuestions ?? [],
       otherUsefulFacts: upstreamJson.otherUsefulFacts ?? [],
       anatomy: upstreamJson.anatomy ?? null,
       meta: {
-        remaining: Math.max(0, (entitlement.aiAccess.dailyCap ?? 0) - newCount),
+        remaining: remainingAfter,
         isLimitReached: false,
       },
     };
 
-    const res = NextResponse.json(responsePayload);
+    const response = NextResponse.json(responsePayload);
 
-    // Attach fresh guest cookie if we created one this request
     if (guestCookieToSet) {
-      res.headers.append('Set-Cookie', guestCookieToSet);
+      response.headers.append('Set-Cookie', guestCookieToSet);
     }
 
-    // Lightweight structured log (foundation for Phase 2 metrics)
-    console.log(`[brobot/ask] ${requestId} success`, {
-      subjectType: subject.type,
-      subjectId: subject.type === 'user' ? subject.id.slice(0, 8) : subject.id,
-      latencyMs,
-      newDailyCount: newCount,
-      remaining: responsePayload.meta?.remaining,
-    });
-
-    return res;
-  } catch (err) {
-    const errorClass = err instanceof Error ? err.constructor.name : typeof err;
-    const errorMessage = err instanceof Error ? err.message : String(err);
-
-    if (process.env.NODE_ENV !== 'production') {
-      console.log('[BROBOT-ASK-DEBUG] route error', { errorClass, errorMessage });
+    return response;
+  } catch (error) {
+    if (subject) {
+      await recordUsageEvent({
+        subject,
+        outcome: 'failure',
+        latencyMs: Date.now() - startedAt,
+      });
     }
 
-    console.error(`[brobot/ask] ${requestId} unexpected error`, err);
-
-    await recordUsageEvent({
-      subject: subject ?? { type: 'guest', id: 'unknown' },
-      outcome: 'failure',
-      latencyMs: Date.now() - startedAt,
+    logBroBot('[BROBOT-ASK-UNEXPECTED]', {
+      requestId,
+      userType: subject?.type ?? 'unknown',
+      subjectPrefix: subject ? subjectPrefix(subject) : null,
+      message: error instanceof Error ? error.message : 'Unknown route error',
     });
 
-    return NextResponse.json(
-      { error: 'Unexpected error processing BroBot request' },
-      { status: 500 }
-    );
+    return generationFailedResponse();
   }
 }
