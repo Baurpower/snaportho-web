@@ -115,11 +115,11 @@ export function WorkspaceShell({
   }, [mobileDrawerOpen]);
 
   return (
-    <div className="w-full overflow-x-clip bg-slate-950">
-      <div className="flex min-w-0 w-full items-start">
+    <div className="w-full bg-slate-950">
+      <div className="flex min-w-0 w-full md:min-h-[calc(100vh-52px)] md:items-stretch">
         {/* Desktop-only sidebar rail (md+). Hidden on mobile.
             All original desktop collapse/hide/sticky/width/persistence behavior preserved exactly. */}
-        <div className="hidden md:block">
+        <div className="hidden shrink-0 md:block">
           {!sidebarHidden ? (
             <div
               className="sticky shrink-0 self-start"
@@ -155,7 +155,7 @@ export function WorkspaceShell({
         {/* Main content column. On mobile: full width (no sidebar squeeze).
             Mobile header is in-flow (no z-index conflict with global Nav).
             Safe-area padding for iOS bottom bar. overflow-x-clip preserved so child layout issues remain visible for later phases. */}
-        <div className="min-w-0 flex-1 overflow-x-clip pb-[calc(56px+env(safe-area-inset-bottom))] md:pb-[env(safe-area-inset-bottom)] md:pb-0">
+        <div className="min-w-0 flex-1 overflow-x-clip pb-[calc(56px+env(safe-area-inset-bottom))] md:pb-0">
           {/* Mobile-only workspace header.
               Hidden on mobile because the global Nav now provides the single "Workspace" top bar
               (rebranded on /work mobile routes) + hamburger that opens this drawer via custom event.

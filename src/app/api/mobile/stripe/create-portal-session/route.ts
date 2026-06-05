@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
-import { createBillingPortalSession, NoManageableStripeSubscriptionError } from '@/lib/stripe';
+import {
+  BillingPortalSessionFailedError,
+  createBillingPortalSession,
+  NoManageableStripeSubscriptionError,
+  SubscriptionNotManageableError,
+} from '@/lib/stripe';
 import { BROBOT_CONFIG as BroBotConfig } from '@/lib/config/brobot';
 
 /**
@@ -15,9 +20,27 @@ import { BROBOT_CONFIG as BroBotConfig } from '@/lib/config/brobot';
 
 const MOBILE_PORTAL_RETURN_URL = 'snaportho://subscription/portal-return';
 
+function portalErrorResponse(params: {
+  error: string;
+  code: 'UNAUTHORIZED' | 'NO_STRIPE_SUBSCRIPTION' | 'SUBSCRIPTION_NOT_MANAGEABLE' | 'PORTAL_SESSION_FAILED' | 'INTERNAL_ERROR';
+  status: 401 | 404 | 409 | 500 | 502;
+}) {
+  return NextResponse.json(
+    {
+      error: params.error,
+      code: params.code,
+    },
+    { status: params.status }
+  );
+}
+
 export async function POST(request: Request) {
   if (!BroBotConfig.PAID_ENABLED) {
-    return NextResponse.json({ error: 'Paid subscriptions are currently disabled' }, { status: 403 });
+    return portalErrorResponse({
+      error: 'Paid subscriptions are currently disabled',
+      code: 'INTERNAL_ERROR',
+      status: 500,
+    });
   }
 
   const supabase = await createClient();
@@ -38,14 +61,22 @@ export async function POST(request: Request) {
     : await supabase.auth.getUser();
 
   if (authError || !user) {
-    return NextResponse.json({ error: 'Authentication required', code: 'UNAUTHORIZED' }, { status: 401 });
+    return portalErrorResponse({
+      error: 'Authentication required',
+      code: 'UNAUTHORIZED',
+      status: 401,
+    });
   }
 
   try {
     const { url } = await createBillingPortalSession(user.id, MOBILE_PORTAL_RETURN_URL);
 
     if (!url) {
-      return NextResponse.json({ error: 'Failed to create billing portal session' }, { status: 500 });
+      return portalErrorResponse({
+        error: 'Failed to create billing portal session',
+        code: 'PORTAL_SESSION_FAILED',
+        status: 502,
+      });
     }
 
     if (process.env.NODE_ENV !== 'production') {
@@ -57,21 +88,40 @@ export async function POST(request: Request) {
     return NextResponse.json({ url });
   } catch (err) {
     if (err instanceof NoManageableStripeSubscriptionError) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.warn('[mobile/stripe/portal] no manageable subscription', {
-          userId: user.id.slice(0, 8),
-        });
-      }
-      return NextResponse.json(
-        { error: 'No active Stripe subscription found for this account.', code: 'NO_STRIPE_SUBSCRIPTION' },
-        { status: 404 }
-      );
+      console.warn('[mobile/stripe/portal] no_stripe_subscription', {
+        userId: user.id.slice(0, 8),
+      });
+      return portalErrorResponse({
+        error: 'No active Stripe subscription found for this account.',
+        code: 'NO_STRIPE_SUBSCRIPTION',
+        status: 404,
+      });
+    }
+
+    if (err instanceof SubscriptionNotManageableError) {
+      console.warn('[mobile/stripe/portal] subscription_not_manageable', {
+        userId: user.id.slice(0, 8),
+      });
+      return portalErrorResponse({
+        error: 'This Stripe subscription is already canceled and may no longer be manageable in the billing portal. Your access remains active until the renewal date shown.',
+        code: 'SUBSCRIPTION_NOT_MANAGEABLE',
+        status: 409,
+      });
+    }
+
+    if (err instanceof BillingPortalSessionFailedError) {
+      return portalErrorResponse({
+        error: 'Failed to create Stripe portal session',
+        code: 'PORTAL_SESSION_FAILED',
+        status: 502,
+      });
     }
 
     console.error('[mobile/stripe/portal] error', err);
-    return NextResponse.json(
-      { error: 'Failed to create Stripe portal session', code: 'PORTAL_SESSION_FAILED' },
-      { status: 500 }
-    );
+    return portalErrorResponse({
+      error: 'Failed to create Stripe portal session',
+      code: 'INTERNAL_ERROR',
+      status: 500,
+    });
   }
 }

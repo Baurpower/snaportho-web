@@ -8,11 +8,102 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-07-30.basil',
 });
 
-export class NoManageableStripeSubscriptionError extends Error {
+type BillingPortalErrorCode =
+  | 'NO_STRIPE_SUBSCRIPTION'
+  | 'SUBSCRIPTION_NOT_MANAGEABLE'
+  | 'PORTAL_SESSION_FAILED';
+
+class BillingPortalError extends Error {
+  code: BillingPortalErrorCode;
+
+  constructor(code: BillingPortalErrorCode, message: string) {
+    super(message);
+    this.name = 'BillingPortalError';
+    this.code = code;
+  }
+}
+
+export class NoManageableStripeSubscriptionError extends BillingPortalError {
   constructor() {
-    super('No active Stripe subscription found for this account.');
+    super('NO_STRIPE_SUBSCRIPTION', 'No active Stripe subscription found for this account.');
     this.name = 'NoManageableStripeSubscriptionError';
   }
+}
+
+export class SubscriptionNotManageableError extends BillingPortalError {
+  constructor() {
+    super(
+      'SUBSCRIPTION_NOT_MANAGEABLE',
+      'This Stripe subscription is already canceled and may no longer be manageable in the billing portal.'
+    );
+    this.name = 'SubscriptionNotManageableError';
+  }
+}
+
+export class BillingPortalSessionFailedError extends BillingPortalError {
+  constructor() {
+    super('PORTAL_SESSION_FAILED', 'Failed to create Stripe billing portal session.');
+    this.name = 'BillingPortalSessionFailedError';
+  }
+}
+
+function summarizeStripeId(value: string | null | undefined) {
+  if (!value) return null;
+  return `${value.slice(0, 4)}...${value.slice(-4)}`;
+}
+
+function summarizeStripeError(error: unknown) {
+  if (!(error instanceof Stripe.errors.StripeError)) {
+    return {
+      type: error instanceof Error ? error.name : typeof error,
+      code: null,
+      message: error instanceof Error ? error.message : String(error),
+    };
+  }
+
+  return {
+    type: error.type ?? error.name,
+    code: error.code ?? null,
+    message: error.message,
+  };
+}
+
+function isSubscriptionNotManageableStripeError(
+  error: unknown,
+  params: {
+    status: string | null;
+    currentPeriodEndInFuture: boolean;
+  }
+) {
+  if (!(error instanceof Stripe.errors.StripeError)) {
+    return false;
+  }
+
+  if (
+    params.status !== 'canceled' ||
+    !params.currentPeriodEndInFuture ||
+    error.type !== 'StripeInvalidRequestError'
+  ) {
+    return false;
+  }
+
+  const normalizedMessage = error.message.toLowerCase();
+  if (error.code === 'resource_missing' || normalizedMessage.includes('no such customer')) {
+    return false;
+  }
+
+  return (
+    normalizedMessage.includes('subscription') ||
+    normalizedMessage.includes('cancel') ||
+    normalizedMessage.includes('manage')
+  );
+}
+
+function logPortalDecision(
+  label: string,
+  details: Record<string, unknown>
+) {
+  console.info(`[stripe/portal] ${label}`, details);
 }
 
 type PortalSubscriptionRow = {
@@ -193,7 +284,10 @@ export async function createBillingPortalSession(
   const now = Date.now();
   const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
   const periodEndTs = sub?.current_period_end ? new Date(sub.current_period_end).getTime() : null;
-  const isStripeBacked = !!sub?.stripe_customer_id && sub?.provider !== 'apple';
+  const hasStripeCustomerId = Boolean(sub?.stripe_customer_id);
+  const hasStripeSubscriptionId = Boolean(sub?.stripe_subscription_id);
+  const isStripeBacked = hasStripeCustomerId && sub?.provider !== 'apple';
+  const hasFutureAccessWindow = periodEndTs != null && periodEndTs > now;
   const isManageable =
     !!sub &&
     isStripeBacked &&
@@ -201,11 +295,36 @@ export async function createBillingPortalSession(
       sub.status === 'active' ||
       sub.status === 'trialing' ||
       (sub.status === 'past_due' && periodEndTs != null && periodEndTs + graceMs > now) ||
-      (sub.cancel_at_period_end === true && periodEndTs != null && periodEndTs > now) ||
-      (sub.status === 'canceled' && periodEndTs != null && periodEndTs > now)
+      (sub.cancel_at_period_end === true && hasFutureAccessWindow) ||
+      (sub.status === 'canceled' && hasFutureAccessWindow)
     );
 
-  if (!isManageable || !sub?.stripe_customer_id) {
+  logPortalDecision('subscription_selected', {
+    userId: userId.slice(0, 8),
+    selectedRowExists: Boolean(sub),
+    provider: sub?.provider ?? null,
+    status: sub?.status ?? null,
+    hasStripeCustomerId,
+    hasStripeSubscriptionId,
+    currentPeriodEndInFuture: hasFutureAccessWindow,
+    cancelAtPeriodEnd: sub?.cancel_at_period_end ?? null,
+    environmentMode: process.env.STRIPE_SECRET_KEY?.startsWith('sk_live_')
+      ? 'live'
+      : process.env.STRIPE_SECRET_KEY?.startsWith('sk_test_')
+      ? 'test'
+      : 'unknown',
+  });
+
+  if (!sub || !hasStripeCustomerId || sub.provider === 'apple') {
+    throw new NoManageableStripeSubscriptionError();
+  }
+
+  if (!isManageable) {
+    throw new SubscriptionNotManageableError();
+  }
+
+  const customerId = sub.stripe_customer_id;
+  if (!customerId) {
     throw new NoManageableStripeSubscriptionError();
   }
 
@@ -218,12 +337,45 @@ export async function createBillingPortalSession(
     returnUrl = BROBOT_CONFIG.BILLING_SUCCESS_URL.replace('success=true', 'portal_return=true');
   }
 
-  const portal = await stripe.billingPortal.sessions.create({
-    customer: sub.stripe_customer_id,
-    return_url: returnUrl,
-  });
+  try {
+    logPortalDecision('portal_create_attempt', {
+      userId: userId.slice(0, 8),
+      customerId: summarizeStripeId(customerId),
+      subscriptionId: summarizeStripeId(sub.stripe_subscription_id),
+      status: sub.status,
+    });
 
-  return { url: portal.url };
+    const portal = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: returnUrl,
+    });
+
+    return { url: portal.url };
+  } catch (error) {
+    const summary = summarizeStripeError(error);
+    console.error('[stripe/portal] portal_create_failed', {
+      userId: userId.slice(0, 8),
+      status: sub.status,
+      provider: sub.provider ?? null,
+      hasStripeCustomerId,
+      hasStripeSubscriptionId,
+      currentPeriodEndInFuture: hasFutureAccessWindow,
+      stripeErrorType: summary.type,
+      stripeErrorCode: summary.code,
+      stripeErrorMessage: summary.message,
+    });
+
+    if (
+      isSubscriptionNotManageableStripeError(error, {
+        status: sub.status,
+        currentPeriodEndInFuture: hasFutureAccessWindow,
+      })
+    ) {
+      throw new SubscriptionNotManageableError();
+    }
+
+    throw new BillingPortalSessionFailedError();
+  }
 }
 
 /**

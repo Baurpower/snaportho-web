@@ -54,7 +54,7 @@ export const BOTTOM_NAV: NavItem[] = [
   {
     label: "Billing & Subscription",
     href: "/account/billing",
-    icon: Settings, // reuse Settings icon for simplicity (low-risk)
+    icon: Settings,
   },
 ];
 
@@ -121,7 +121,7 @@ export function WorkspaceSidebar({ onHide }: WorkspaceSidebarProps) {
       BOTTOM_NAV.filter((item) =>
         item.href === "/work/settings"
           ? permissions?.canManageProgramSettings ?? false
-          : true
+          : item.href !== "/account/billing"
       ),
     [permissions?.canManageProgramSettings]
   );
