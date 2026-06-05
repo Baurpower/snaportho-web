@@ -4,25 +4,7 @@ import {
   getNextRotationForMember,
 } from '@/lib/workspace/call/rotations'
 import { getNextCallForMembership } from '@/lib/workspace/call/calls'
-
-function getCurrentChiefGradYear(date = new Date()): number {
-  const year = date.getFullYear()
-  const julyFirst = new Date(year, 6, 1)
-  return date >= julyFirst ? year + 1 : year
-}
-
-function getPgyFromGradYear(
-  gradYear: number | null,
-  date = new Date()
-): number | null {
-  if (!gradYear) return null
-
-  const currentChiefGradYear = getCurrentChiefGradYear(date)
-  const pgy = 5 - (gradYear - currentChiefGradYear)
-
-  if (pgy < 1 || pgy > 5) return null
-  return pgy
-}
+import { getResidentStatusDetails } from '@/lib/workspace/pgy'
 
 export type MySummaryResponse = {
   membership: {
@@ -31,6 +13,9 @@ export type MySummaryResponse = {
     rosterId: string | null
     role: string | null
     gradYear: number | null
+    residentStatus: string
+    isGraduated: boolean
+    isActiveResident: boolean
     pgyYear: number | null
     trainingLevel: string | null
     displayName: string | null
@@ -108,8 +93,7 @@ export async function getMySummary(userId: string): Promise<MySummaryResponse> {
   ? membership.programs[0] ?? null
   : membership.programs ?? null
   const gradYear = membership.grad_year ?? null
-  const pgyYear = getPgyFromGradYear(gradYear)
-  const trainingLevel = pgyYear ? `PGY-${pgyYear}` : null
+  const status = getResidentStatusDetails(gradYear, today)
 
   return {
     membership: {
@@ -118,8 +102,11 @@ export async function getMySummary(userId: string): Promise<MySummaryResponse> {
       rosterId: membership.roster_id ?? null,
       role: membership.role,
       gradYear,
-      pgyYear,
-      trainingLevel,
+      residentStatus: status.statusLabel,
+      isGraduated: status.isGraduated,
+      isActiveResident: status.isActiveResident,
+      pgyYear: status.pgyYear,
+      trainingLevel: status.statusLabel === 'Unknown' ? null : status.statusLabel,
       displayName: membership.display_name,
       program: program
         ? {

@@ -1,5 +1,7 @@
 // src/lib/workspace/call/buildSchedulePacket.ts
 
+import { getResidentStatusDetails, resolvePgyFromSources } from "@/lib/workspace/pgy";
+
 type ScheduleSlotMode = "Primary" | "Both";
 type Slot = "Primary" | "Backup";
 type RuleStrictness = "never_break" | "avoid_breaking" | "bend_if_needed";
@@ -38,6 +40,7 @@ type RuleLike = {
 type ResidentLike = {
   membershipId: string;
   displayName: string;
+  gradYear?: number | null;
   trainingLevel?: string | null;
   pgyYear?: number | null;
 };
@@ -95,12 +98,26 @@ function isHardRule(rule: RuleLike) {
   return rule.is_hard_rule ?? rule.isHardRule ?? false;
 }
 
-function getResidentPgy(resident: ResidentLike) {
-  if (typeof resident.pgyYear === "number") return resident.pgyYear;
+function getResidentPgy(
+  resident: ResidentLike,
+  effectiveDate?: string | null
+) {
+  return resolvePgyFromSources({
+    gradYear: resident.gradYear ?? null,
+    effectiveDate: effectiveDate ?? undefined,
+    storedPgyYear: resident.pgyYear ?? null,
+    trainingLevel: resident.trainingLevel ?? null,
+  });
+}
 
-  const match = String(resident.trainingLevel ?? "").match(/(\d+)/);
-
-  return match ? Number(match[1]) : null;
+function getResidentStatus(
+  resident: ResidentLike,
+  effectiveDate?: string | null
+) {
+  return getResidentStatusDetails(
+    resident.gradYear ?? null,
+    effectiveDate ?? undefined
+  );
 }
 
 function asNumber(value: unknown, fallback: number) {
@@ -284,7 +301,17 @@ function evaluateCandidateForSlot({
     const ruleType = getRuleType(rule);
     const config = getRuleConfig(rule);
     const strictness = getRuleStrictness(rule);
-    const residentPgy = getResidentPgy(resident);
+    const residentStatus = getResidentStatus(resident, day.key);
+    const residentPgy = getResidentPgy(resident, day.key);
+
+    if (!residentStatus.isActiveResident) {
+      hardBlockers.push(
+        residentStatus.isGraduated
+          ? `${resident.displayName} is graduated and cannot take new call assignments.`
+          : `${resident.displayName} is missing a valid grad year and cannot be auto-assigned.`
+      );
+      break;
+    }
 
     if (
       ruleType === "restrict_call_type_by_pgy" ||

@@ -1,7 +1,7 @@
 import "server-only";
 
 import { createAdminClient } from "@/lib/supabase/admin";
-import { getPgyFromGradYear, getTrainingLevelFromPgy } from "@/lib/workspace/pgy";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 import {
   normalizeRuleCode,
   type CallValidationResident,
@@ -117,11 +117,13 @@ function getResidentDisplayName(row: ProgramRosterResidentRow) {
   return row.full_name?.trim() || joinedName || "Unknown Resident";
 }
 
-function toValidationResident(row: ProgramRosterResidentRow): CallValidationResident {
+function toValidationResident(
+  row: ProgramRosterResidentRow,
+  effectiveDate?: string | null
+): CallValidationResident {
   const residentName = getResidentDisplayName(row);
   const gradYear = row.grad_year ?? null;
-  const pgyYear = getPgyFromGradYear(gradYear);
-  const trainingLevel = getTrainingLevelFromPgy(pgyYear);
+  const status = getResidentStatusDetails(gradYear, effectiveDate);
 
   return {
     residentId: row.id,
@@ -130,11 +132,14 @@ function toValidationResident(row: ProgramRosterResidentRow): CallValidationResi
     programMembershipId: row.program_membership_id ?? null,
     residentName,
     displayName: residentName,
-    trainingLevel,
+    trainingLevel: status.statusLabel === "Unknown" ? null : status.statusLabel,
+    residentStatus: status.statusLabel,
     role: row.role ?? null,
-    pgyYear,
+    pgyYear: status.pgyYear,
     gradYear,
     classYear: gradYear,
+    isGraduated: status.isGraduated,
+    isActiveResident: status.isActiveResident,
   };
 }
 
@@ -254,8 +259,9 @@ async function loadValidationRulesForResolvedRuleSet(params: {
 async function loadValidationResidents(params: {
   supabase: SupabaseClient;
   programId: string;
+  effectiveDate?: string | null;
 }) {
-  const { supabase, programId } = params;
+  const { supabase, programId, effectiveDate } = params;
   const { data, error } = await supabase
     .from("program_roster")
     .select(
@@ -270,7 +276,9 @@ async function loadValidationResidents(params: {
     throw new Error(`Failed to load program call validation residents: ${error.message}`);
   }
 
-  return ((data ?? []) as ProgramRosterResidentRow[]).map(toValidationResident);
+  return ((data ?? []) as ProgramRosterResidentRow[]).map((row) =>
+    toValidationResident(row, effectiveDate)
+  );
 }
 
 async function loadValidationTimeOff(params: {
@@ -400,6 +408,7 @@ export async function loadProgramCallValidationContext(
   const residents = await loadValidationResidents({
     supabase,
     programId,
+    effectiveDate: options?.dateStart ?? options?.dateEnd ?? null,
   });
   const { residentIdByProgramMembershipId } = buildResidentIdentityMaps(residents);
   const timeOff = await loadValidationTimeOff({

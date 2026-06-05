@@ -5,6 +5,10 @@ import { getRotationAssignmentsForMemberInRange } from "@/lib/workspace/call/rot
 import { getCallAssignmentsForMembershipInRange } from "@/lib/workspace/call/calls";
 import { getScheduleEventsForUserInRange } from "@/lib/workspace/call/schedule-events";
 import { getProgramTimeOffMonth } from "@/lib/workspace/call/time-off";
+import {
+  getPgyFromGradYear,
+  getTrainingLevelFromPgy,
+} from "@/lib/workspace/pgy";
 
 function isValidDateString(value: string | null): value is string {
   return !!value && /^\d{4}-\d{2}-\d{2}$/.test(value);
@@ -31,23 +35,6 @@ function normalizeRotationRow(
   if (!rotation) return null;
   if (Array.isArray(rotation)) return rotation[0] ?? null;
   return rotation;
-}
-
-function getCurrentChiefGradYear(date = new Date()): number {
-  const year = date.getFullYear();
-  const julyFirst = new Date(year, 6, 1);
-  return date >= julyFirst ? year + 1 : year;
-}
-
-function getPgyFromGradYear(
-  gradYear: number | null,
-  date = new Date()
-): number | null {
-  if (!gradYear) return null;
-  const currentChiefGradYear = getCurrentChiefGradYear(date);
-  const pgy = 5 - (gradYear - currentChiefGradYear);
-  if (pgy < 1 || pgy > 5) return null;
-  return pgy;
 }
 
 export async function GET(request: NextRequest) {
@@ -104,8 +91,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const derivedPgyYear = getPgyFromGradYear(membership.grad_year ?? null);
-    const derivedTrainingLevel = derivedPgyYear ? `PGY-${derivedPgyYear}` : null;
+    const derivedPgyYear = getPgyFromGradYear(
+      membership.grad_year ?? null,
+      monthStart
+    );
+    const derivedTrainingLevel = getTrainingLevelFromPgy(derivedPgyYear);
 
     const [rotations, calls, events, timeOffPayload] = await Promise.all([
       getRotationAssignmentsForMemberInRange(

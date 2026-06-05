@@ -11,7 +11,10 @@ import {
   UserRound,
   Wand2,
 } from "lucide-react";
-import { calculatePgyForDateRange } from "@/lib/workspace/pgy";
+import {
+  calculatePgyForDateRange,
+  getResidentStatusDetails,
+} from "@/lib/workspace/pgy";
 
 type TimeOffType = "personal" | "conference" | "vacation" | "sick" | "other";
 
@@ -20,6 +23,12 @@ type ResidentOption = {
   programMembershipId: string | null;
   displayName: string;
   gradYear: number | null;
+  residentStatus?: string | null;
+  pgyYear?: number | null;
+  trainingLevel?: string | null;
+  isGraduated?: boolean | null;
+  isActiveResident?: boolean | null;
+  graduationDate?: string | null;
   isActive: boolean | null;
   rosterStartDate: string | null;
   rosterEndDate: string | null;
@@ -69,6 +78,9 @@ function isResidentActiveForRange(
   startDate: string,
   endDate: string
 ) {
+  const status = getResidentStatusDetails(resident.gradYear, startDate);
+
+  if (!status.isActiveResident) return false;
   if (resident.isActive === false) return false;
 
   if (resident.rosterStartDate || resident.rosterEndDate) {
@@ -84,7 +96,7 @@ function isResidentActiveForRange(
     return true;
   }
 
-  return true;
+  return false;
 }
 
 function formatDateLabel(dateString: string) {

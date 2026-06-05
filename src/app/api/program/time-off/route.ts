@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 import {
   canManageProgramTimeOff,
   createTimeOffEvent,
@@ -38,6 +39,19 @@ type ProgramRosterSetupRow = {
   active_start_date?: string | null;
   active_end_date?: string | null;
 };
+
+function getTimeOffStatusDisplay(gradYear: number | null, effectiveDate: string) {
+  const status = getResidentStatusDetails(gradYear, effectiveDate);
+
+  return {
+    residentStatus: status.statusLabel,
+    pgyYear: status.pgyYear,
+    trainingLevel: status.statusLabel === "Unknown" ? null : status.statusLabel,
+    isGraduated: status.isGraduated,
+    isActiveResident: status.isActiveResident,
+    graduationDate: status.graduationDate,
+  };
+}
 
 function logProgramTimeOffPermissionGate(params: {
   userId: string;
@@ -138,6 +152,8 @@ export async function GET() {
       );
     }
 
+    const effectiveDate = new Date().toISOString().slice(0, 10);
+
     return NextResponse.json(
       {
         canManageProgramTimeOff: resolvedPermission.canManage,
@@ -146,6 +162,7 @@ export async function GET() {
         programMembershipId: membership.id ?? null,
         membershipRole: resolvedPermission.membershipRole,
         residents: ((residentRows ?? []) as ProgramRosterSetupRow[]).map((resident) => ({
+          ...getTimeOffStatusDisplay(resident.grad_year ?? null, effectiveDate),
           rosterId: resident.id,
           programMembershipId: resident.program_membership_id ?? null,
           displayName:
@@ -298,6 +315,44 @@ export async function POST(request: NextRequest) {
     if (!targetRosterId) {
       return NextResponse.json(
         { error: "No roster row is linked to the selected resident." },
+        { status: 400 }
+      );
+    }
+
+    const { data: targetRoster, error: targetRosterError } = await supabase
+      .from("program_roster")
+      .select("id, grad_year")
+      .eq("id", targetRosterId)
+      .eq("program_id", membership.program_id)
+      .maybeSingle();
+
+    if (targetRosterError) {
+      return NextResponse.json(
+        { error: `Failed to resolve resident graduation status: ${targetRosterError.message}` },
+        { status: 500 }
+      );
+    }
+
+    if (!targetRoster) {
+      return NextResponse.json(
+        { error: "The selected resident does not belong to this program" },
+        { status: 404 }
+      );
+    }
+
+    const requestStatus = getResidentStatusDetails(
+      targetRoster.grad_year ?? null,
+      body.startDate
+    );
+
+    if (!requestStatus.isActiveResident) {
+      return NextResponse.json(
+        {
+          error:
+            requestStatus.isGraduated
+              ? "Graduated residents cannot receive new time-off requests."
+              : "Resident graduation status is unknown. Add a valid graduation year before creating time off.",
+        },
         { status: 400 }
       );
     }

@@ -40,8 +40,8 @@ function pgyLabel(
         pgyYear?: number | null;
       }
 ) {
-  if (resident.trainingLevel) return resident.trainingLevel;
   if (typeof resident.pgyYear === "number") return `PGY-${resident.pgyYear}`;
+  if (resident.trainingLevel) return resident.trainingLevel;
   return "Unknown";
 }
 

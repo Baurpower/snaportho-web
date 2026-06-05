@@ -52,10 +52,13 @@ export type CallValidationResident = {
   residentName?: string | null;
   displayName?: string | null;
   trainingLevel?: string | null;
+  residentStatus?: string | null;
   role?: string | null;
   pgyYear?: number | null;
   gradYear?: number | null;
   classYear?: number | null;
+  isGraduated?: boolean | null;
+  isActiveResident?: boolean | null;
 };
 
 export type CallValidationTimeOff = {
@@ -927,7 +930,35 @@ export function validatePgyRestrictionRule(input: CallValidationInput) {
       (context.residentId && residentByIdentity.get(context.residentId)) ||
       null;
 
-    if (!resident || typeof resident.pgyYear !== "number" || !context.normalizedCallType) {
+    if (!resident || !context.normalizedCallType) {
+      continue;
+    }
+
+    if (resident.isActiveResident === false) {
+      const residentName =
+        resident.residentName ?? resident.displayName ?? assignment.residentName ?? "Resident";
+      issues.push(
+        createValidationIssue({
+          code: "pgy_restriction",
+          ruleCode: "restrict_call_type_by_pgy",
+          severity: "error",
+          source: "rule",
+          message: resident.isGraduated
+            ? `${residentName} is graduated and is not eligible for ${context.normalizedCallType} call.`
+            : `${residentName} is missing a valid grad year and is not eligible for ${context.normalizedCallType} call.`,
+          slotId: context.slotId,
+          residentId: context.residentId,
+          rosterId: context.rosterId,
+          dateKey: context.normalizedDateKey,
+          callType: context.normalizedCallType,
+          assignmentId: assignment.callId ?? context.assignmentId,
+          metadata: null,
+        })
+      );
+      continue;
+    }
+
+    if (typeof resident.pgyYear !== "number") {
       continue;
     }
 

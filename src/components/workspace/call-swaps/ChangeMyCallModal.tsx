@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import RecipientPicker, { type CoverageRecipientOption } from "./RecipientPicker";
 import { useCreateSwapRequest } from "@/hooks/useCreateSwapRequest";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 import type {
   CreateSwapRequestInput,
   SwapRequestListItem,
@@ -133,8 +134,8 @@ function getResidentLastName(displayName: string) {
   return parts[parts.length - 1] ?? displayName;
 }
 
-function getCurrentAcademicYear() {
-  return new Date().getFullYear();
+function getVisibleMonthStart(year: number, monthIndex: number) {
+  return new Date(Date.UTC(year, monthIndex, 1)).toISOString().slice(0, 10);
 }
 
 function getLatestRequestForCall(
@@ -362,31 +363,7 @@ export default function ChangeMyCallModal({
     visibleYear,
   ]);
 
-  const currentYear = getCurrentAcademicYear();
   const effectiveRosterId = modalMyRosterId ?? currentRosterId;
-
-  const eligibleRecipients = useMemo<CoverageRecipientOption[]>(() => {
-    return modalResidents
-      .filter((resident) => {
-        if (!effectiveRosterId || resident.rosterId === effectiveRosterId) return false;
-        if (resident.gradYear === null) return false;
-        if (resident.gradYear < currentYear) return false;
-        return true;
-      })
-      .map((resident) => ({
-        rosterId: resident.rosterId,
-        programMembershipId: resident.programMembershipId,
-        displayName: resident.residentName,
-        trainingLevel: resident.trainingLevel,
-        pgyYear: resident.pgyYear,
-        gradYear: resident.gradYear,
-      }));
-  }, [currentYear, effectiveRosterId, modalResidents]);
-
-  const eligibleRecipientIds = useMemo(
-    () => new Set(eligibleRecipients.map((recipient) => recipient.rosterId)),
-    [eligibleRecipients]
-  );
 
   const callsByDate = useMemo(() => {
     const map = new Map<string, ProgramCallItem[]>();
@@ -417,6 +394,43 @@ export default function ChangeMyCallModal({
     [effectiveRosterId, modalCalls]
   );
 
+  const selectedMyCallFromCalls =
+    myCalls.find((call) => call.id === selectedMyCallId) ?? null;
+  const selectedMyCall = selectedMyCallFromCalls ?? selectedMyCallSnapshot;
+
+  const eligibleRecipients = useMemo<CoverageRecipientOption[]>(() => {
+    return modalResidents
+      .filter((resident) => {
+        if (!effectiveRosterId || resident.rosterId === effectiveRosterId) return false;
+        return getResidentStatusDetails(
+          resident.gradYear,
+          selectedMyCall?.callDate ??
+            selectedMyCall?.startDatetime?.slice(0, 10) ??
+            getVisibleMonthStart(visibleYear, visibleMonthIndex)
+        ).isActiveResident;
+      })
+      .map((resident) => ({
+        rosterId: resident.rosterId,
+        programMembershipId: resident.programMembershipId,
+        displayName: resident.residentName,
+        trainingLevel: resident.trainingLevel,
+        pgyYear: resident.pgyYear,
+        gradYear: resident.gradYear,
+      }));
+  }, [
+    effectiveRosterId,
+    modalResidents,
+    selectedMyCall?.callDate,
+    selectedMyCall?.startDatetime,
+    visibleMonthIndex,
+    visibleYear,
+  ]);
+
+  const eligibleRecipientIds = useMemo(
+    () => new Set(eligibleRecipients.map((recipient) => recipient.rosterId)),
+    [eligibleRecipients]
+  );
+
   const outgoingRequestsByCallId = useMemo(() => {
     const map = new Map<string, SwapRequestListItem>();
 
@@ -429,10 +443,6 @@ export default function ChangeMyCallModal({
 
     return map;
   }, [myCalls, outgoingRequests]);
-
-  const selectedMyCallFromCalls =
-    myCalls.find((call) => call.id === selectedMyCallId) ?? null;
-  const selectedMyCall = selectedMyCallFromCalls ?? selectedMyCallSnapshot;
   const selectedRecipient =
     eligibleRecipients.find(
       (recipient) => recipient.rosterId === selectedRecipientRosterId

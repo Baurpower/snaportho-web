@@ -3,8 +3,7 @@ import { createClient } from "@/utils/supabase/server";
 import { getProgramResidents } from "@/lib/workspace/call/calls";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
-  getPgyFromGradYear,
-  getTrainingLevelFromPgy,
+  getResidentStatusDetails,
 } from "@/lib/workspace/pgy";
 
 function isValidDateString(value: string | null): value is string {
@@ -232,9 +231,14 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const residents = (await getProgramResidents(activeMembership.program_id)).map(
+    const residents = (
+      await getProgramResidents(activeMembership.program_id, {
+        effectiveDate: monthStart,
+        includeGraduates: false,
+      })
+    ).map(
       (resident) => {
-        const pgyYear = getPgyFromGradYear(resident.gradYear, monthStart);
+        const status = getResidentStatusDetails(resident.gradYear, monthStart);
 
         return {
           residentId: resident.residentId,
@@ -242,8 +246,12 @@ export async function GET(request: NextRequest) {
           programMembershipId: resident.membershipId,
           residentName: resident.displayName,
           gradYear: resident.gradYear,
-          pgyYear,
-          trainingLevel: getTrainingLevelFromPgy(pgyYear),
+          residentStatus: status.statusLabel,
+          pgyYear: status.pgyYear,
+          trainingLevel: status.statusLabel === "Unknown" ? null : status.statusLabel,
+          isGraduated: status.isGraduated,
+          isActiveResident: status.isActiveResident,
+          graduationDate: status.graduationDate,
         };
       }
     );
@@ -265,11 +273,10 @@ export async function GET(request: NextRequest) {
             (row.program_membership_id
               ? rosterByMembershipId.get(row.program_membership_id) ?? null
               : null);
-          const gradYear = roster?.grad_year ?? null;
-          const pgyYear = effectiveDate
-            ? getPgyFromGradYear(gradYear, effectiveDate)
-            : null;
-          const trainingLevel = getTrainingLevelFromPgy(pgyYear);
+          const status = getResidentStatusDetails(
+            roster?.grad_year ?? null,
+            effectiveDate
+          );
 
           return {
             id: row.id,
@@ -280,9 +287,13 @@ export async function GET(request: NextRequest) {
             // Compatibility field kept for older consumers; roster-first UIs should use `rosterId`.
             membershipId: row.roster_id ?? row.program_membership_id,
             residentName: getRosterDisplayName(roster),
-            gradYear,
-            pgyYear,
-            trainingLevel,
+            gradYear: roster?.grad_year ?? null,
+            residentStatus: status.statusLabel,
+            pgyYear: status.pgyYear,
+            trainingLevel: status.statusLabel === "Unknown" ? null : status.statusLabel,
+            isGraduated: status.isGraduated,
+            isActiveResident: status.isActiveResident,
+            graduationDate: status.graduationDate,
             userId: null,
             callType: row.call_type,
             callDate: row.call_date ?? row.start_datetime?.slice(0, 10) ?? null,

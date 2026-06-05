@@ -176,13 +176,14 @@ type Props = {
 };
 
 function pgyLabel(resident: ResidentOption) {
-  if (resident.trainingLevel) return resident.trainingLevel;
   if (typeof resident.pgyYear === "number") return `PGY-${resident.pgyYear}`;
+  if (resident.trainingLevel) return resident.trainingLevel;
   return "Unknown";
 }
 
 function getResidentYearValue(resident: ResidentOption) {
   if (typeof resident.pgyYear === "number") return resident.pgyYear;
+  if (resident.gradYear !== null) return 99;
   const match = resident.trainingLevel?.match(/(\d+)/);
   if (match) return Number(match[1]);
   return 99;

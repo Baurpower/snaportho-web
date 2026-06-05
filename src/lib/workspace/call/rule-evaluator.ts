@@ -1,3 +1,5 @@
+import { resolvePgyFromSources } from "@/lib/workspace/pgy";
+
 export type RuleSeverity = "error" | "warning";
 
 export type EvaluatedCallType = "Primary" | "Backup";
@@ -18,6 +20,8 @@ export type RuleLike = {
 };
 
 export type ResidentLike = {
+  gradYear?: number | null;
+  effectiveDate?: string | Date | null;
   pgyYear?: number | null;
   trainingLevel?: string | null;
 };
@@ -215,12 +219,12 @@ export function getAdjacentWeekendDateKey(dateKey: string) {
 }
 
 export function getResidentPgyYear(resident: ResidentLike) {
-  if (typeof resident.pgyYear === "number") return resident.pgyYear;
-
-  const match = resident.trainingLevel?.match(/(\d+)/);
-  if (match) return Number(match[1]);
-
-  return null;
+  return resolvePgyFromSources({
+    gradYear: resident.gradYear ?? null,
+    effectiveDate: resident.effectiveDate ?? undefined,
+    storedPgyYear: resident.pgyYear ?? null,
+    trainingLevel: resident.trainingLevel ?? null,
+  });
 }
 
 export function getRequiredCallTypesFromRules<TRule extends RuleLike>(

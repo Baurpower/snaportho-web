@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { getProgramRotationAssignmentsInRange } from "@/lib/workspace/call/rotations";
+import {
+  getAcademicYearStart,
+  getResidentStatusDetails,
+} from "@/lib/workspace/pgy";
 
 type ProgramRosterRow = {
   id: string;
@@ -35,33 +39,8 @@ type ProgramRow = {
   is_active: boolean | null;
 };
 
-function getAcademicStartYear(date = new Date()) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  return month >= 6 ? year : year - 1;
-}
-
 function isValidAcademicYearStart(value: string | null): value is string {
   return !!value && /^\d{4}$/.test(value);
-}
-
-function getCurrentChiefGradYear(date = new Date()): number {
-  const year = date.getFullYear();
-  const julyFirst = new Date(year, 6, 1);
-  return date >= julyFirst ? year + 1 : year;
-}
-
-function getPgyFromGradYear(
-  gradYear: number | null,
-  date = new Date()
-): number | null {
-  if (!gradYear) return null;
-
-  const currentChiefGradYear = getCurrentChiefGradYear(date);
-  const pgy = 5 - (gradYear - currentChiefGradYear);
-
-  if (pgy < 1 || pgy > 5) return null;
-  return pgy;
 }
 
 export async function GET(request: NextRequest) {
@@ -107,10 +86,11 @@ export async function GET(request: NextRequest) {
 
     const academicYearStart = isValidAcademicYearStart(requestedAcademicYearStart)
       ? Number(requestedAcademicYearStart)
-      : getAcademicStartYear();
+      : (getAcademicYearStart() ?? new Date().getFullYear());
 
     const rangeStart = `${academicYearStart}-07-01`;
     const rangeEnd = `${academicYearStart + 1}-06-30`;
+    const effectiveDate = rangeStart;
 
     const [programResult, membersResult, rotationsResult, assignments] =
       await Promise.all([
@@ -183,7 +163,7 @@ export async function GET(request: NextRequest) {
     const programRow = (programResult.data ?? null) as ProgramRow | null;
 
     const members = ((membersResult.data ?? []) as ProgramRosterRow[]).map((row) => {
-  const pgyYear = getPgyFromGradYear(row.grad_year ?? null);
+  const status = getResidentStatusDetails(row.grad_year ?? null, effectiveDate);
 
   const fallbackName = [row.first_name, row.last_name]
     .filter(Boolean)
@@ -196,11 +176,15 @@ export async function GET(request: NextRequest) {
     rosterId: row.id,
     displayName: row.full_name ?? (fallbackName || "Unknown"),
     gradYear: row.grad_year ?? null,
-    pgyYear,
-    trainingLevel: pgyYear ? `PGY-${pgyYear}` : null,
+    residentStatus: status.statusLabel,
+    pgyYear: status.pgyYear,
+    trainingLevel: status.statusLabel === "Unknown" ? null : status.statusLabel,
     role: row.role ?? null,
     userId: row.claimed_by_user_id ?? null,
-    isActive: true,
+    isGraduated: status.isGraduated,
+    isActiveResident: status.isActiveResident,
+    graduationDate: status.graduationDate,
+    isActive: status.isActiveResident,
   };
 });
 

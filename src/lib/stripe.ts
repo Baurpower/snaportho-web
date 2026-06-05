@@ -8,6 +8,25 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-07-30.basil',
 });
 
+export class NoManageableStripeSubscriptionError extends Error {
+  constructor() {
+    super('No active Stripe subscription found for this account.');
+    this.name = 'NoManageableStripeSubscriptionError';
+  }
+}
+
+type PortalSubscriptionRow = {
+  status: string;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean | null;
+  canceled_at: string | null;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  provider: string | null;
+  plan_code: string | null;
+  updated_at: string | null;
+};
+
 /**
  * Ensures a Stripe Customer exists for the given user.
  * Creates one if necessary and stores the ID.
@@ -119,14 +138,75 @@ export async function createBillingPortalSession(
 ): Promise<{ url: string | null }> {
   const supabase = createAdminClient();
 
-  const { data: sub } = await supabase
+  const { data: initialSub, error } = await supabase
     .from('subscriptions')
-    .select('stripe_customer_id')
+    .select(`
+      status,
+      current_period_end,
+      cancel_at_period_end,
+      canceled_at,
+      stripe_customer_id,
+      stripe_subscription_id,
+      provider,
+      plan_code,
+      updated_at
+    `)
     .eq('user_id', userId)
-    .maybeSingle();
+    .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+    .in('status', ['active', 'trialing', 'past_due'])
+    .order('current_period_end', { ascending: false, nullsFirst: false })
+    .limit(1)
+    .maybeSingle<PortalSubscriptionRow>();
 
-  if (!sub?.stripe_customer_id) {
-    throw new Error('No Stripe customer found for user');
+  if (error) {
+    throw new Error('Failed to load Stripe subscription for portal access');
+  }
+
+  let sub = initialSub;
+
+  if (!sub) {
+    const { data: fallback, error: fallbackError } = await supabase
+      .from('subscriptions')
+      .select(`
+        status,
+        current_period_end,
+        cancel_at_period_end,
+        canceled_at,
+        stripe_customer_id,
+        stripe_subscription_id,
+        provider,
+        plan_code,
+        updated_at
+      `)
+      .eq('user_id', userId)
+      .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+      .order('current_period_end', { ascending: false, nullsFirst: false })
+      .limit(1)
+      .maybeSingle<PortalSubscriptionRow>();
+
+    if (fallbackError) {
+      throw new Error('Failed to load Stripe subscription for portal access');
+    }
+    sub = fallback;
+  }
+
+  const now = Date.now();
+  const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
+  const periodEndTs = sub?.current_period_end ? new Date(sub.current_period_end).getTime() : null;
+  const isStripeBacked = !!sub?.stripe_customer_id && sub?.provider !== 'apple';
+  const isManageable =
+    !!sub &&
+    isStripeBacked &&
+    (
+      sub.status === 'active' ||
+      sub.status === 'trialing' ||
+      (sub.status === 'past_due' && periodEndTs != null && periodEndTs + graceMs > now) ||
+      (sub.cancel_at_period_end === true && periodEndTs != null && periodEndTs > now) ||
+      (sub.status === 'canceled' && periodEndTs != null && periodEndTs > now)
+    );
+
+  if (!isManageable || !sub?.stripe_customer_id) {
+    throw new NoManageableStripeSubscriptionError();
   }
 
   // Use custom return URL (mobile) or fall back to web (with production safety check)

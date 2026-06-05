@@ -1,8 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import {
-  getPgyFromGradYear as getCanonicalPgyFromGradYear,
-  getTrainingLevelFromPgy,
-} from "@/lib/workspace/pgy";
+import { getPgyFromGradYear, getTrainingLevelFromPgy } from "@/lib/workspace/pgy";
 
 export type MonthlyCoverageResident = {
   membershipId: string | null;
@@ -77,13 +74,6 @@ function normalizeRotation(
   if (!rotation) return null;
   if (Array.isArray(rotation)) return rotation[0] ?? null;
   return rotation;
-}
-
-function getPgyFromGradYear(
-  gradYear: number | null,
-  activeMonthStartDate: string
-): number | null {
-  return getCanonicalPgyFromGradYear(gradYear, activeMonthStartDate);
 }
 
 function deriveLevel(gradYear: number | null, activeMonthStartDate: string): string {

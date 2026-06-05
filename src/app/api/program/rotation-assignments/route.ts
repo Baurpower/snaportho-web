@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import { requireRotationSettingsAccess } from "@/lib/workspace/rotations/permissions";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 
 type PostBody = {
   membershipId?: string | null;
@@ -208,6 +209,22 @@ export async function POST(request: NextRequest) {
     if (!roster) {
       return NextResponse.json(
         { error: "Resident roster record does not belong to this program." },
+        { status: 400 }
+      );
+    }
+
+    const rosterStatus = getResidentStatusDetails(
+      roster.grad_year ?? null,
+      body.startDate
+    );
+
+    if (!rosterStatus.isActiveResident) {
+      return NextResponse.json(
+        {
+          error: rosterStatus.isGraduated
+            ? "Graduated residents cannot receive new rotation assignments."
+            : "Resident graduation status is unknown. Add a valid graduation year before assigning rotations.",
+        },
         { status: 400 }
       );
     }

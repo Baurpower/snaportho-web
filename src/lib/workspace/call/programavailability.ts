@@ -6,8 +6,7 @@ import {
   getProgramRules,
 } from "@/lib/workspace/call/programcallrules";
 import {
-  getPgyFromGradYear,
-  getTrainingLevelFromPgy,
+  getResidentStatusDetails,
 } from "@/lib/workspace/pgy";
 import {
   countUniqueWeekendBuckets,
@@ -62,9 +61,13 @@ type AvailabilityResident = {
   rosterId: string;
   programMembershipId: string | null;
   displayName: string;
+  residentStatus: string;
   trainingLevel: string | null;
   pgyYear: number | null;
   gradYear: number | null;
+  isGraduated: boolean;
+  isActiveResident: boolean;
+  graduationDate: string | null;
 };
 
 export type ResidentAvailabilityDay = {
@@ -207,11 +210,13 @@ export async function getProgramAvailabilityMonth(params: {
   const supabase = await createClient();
   const { programId, monthStart, monthEnd } = params;
 
-  const evaluationDate = parseDateKey(monthStart);
-  const rawResidents = (await getProgramResidents(programId)) as RawResident[];
+  const rawResidents = (await getProgramResidents(programId, {
+    effectiveDate: monthStart,
+    includeGraduates: false,
+  })) as RawResident[];
 
   const residents: AvailabilityResident[] = rawResidents.map((resident) => {
-    const pgyYear = getPgyFromGradYear(resident.gradYear, evaluationDate);
+    const status = getResidentStatusDetails(resident.gradYear, monthStart);
 
     return {
       residentId: resident.residentId,
@@ -220,8 +225,12 @@ export async function getProgramAvailabilityMonth(params: {
       programMembershipId: resident.membershipId ?? null,
       displayName: resident.displayName,
       gradYear: resident.gradYear ?? null,
-      pgyYear,
-      trainingLevel: getTrainingLevelFromPgy(pgyYear),
+      residentStatus: status.statusLabel,
+      pgyYear: status.pgyYear,
+      trainingLevel: status.statusLabel === "Unknown" ? null : status.statusLabel,
+      isGraduated: status.isGraduated,
+      isActiveResident: status.isActiveResident,
+      graduationDate: status.graduationDate,
     };
   });
 

@@ -49,8 +49,12 @@ type SummaryResponse = {
     id: string;
     programId: string | null;
     role: string | null;
+    gradYear: number | null;
+    residentStatus?: string | null;
+    isGraduated?: boolean;
+    isActiveResident?: boolean;
+    pgyYear?: number | null;
     trainingLevel: string | null;
-    classYear: number | null;
     displayName: string | null;
     program: {
       id: string;
@@ -109,7 +113,7 @@ type MonthLiteResponse = {
     id: string;
     displayName: string | null;
     trainingLevel: string | null;
-    classYear: number | null;
+    gradYear?: number | null;
   } | null;
   rotations: Array<{
     id: string;
@@ -153,7 +157,7 @@ type RotationTimelineResponse = {
     id: string;
     displayName: string | null;
     trainingLevel: string | null;
-    classYear: number | null;
+    gradYear?: number | null;
   } | null;
   rotations: Array<{
     id: string;
@@ -195,6 +199,7 @@ type ProgramCallItem = {
   membershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
+  residentStatus?: string | null;
   classYear: number | null;
   userId: string | null;
   callType: string | null;

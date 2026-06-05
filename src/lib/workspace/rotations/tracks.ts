@@ -1,6 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { getProgramRotationAssignmentsInRange } from "@/lib/workspace/call/rotations";
-import { getPgyFromGradYear, getTrainingLevelFromPgy } from "@/lib/workspace/pgy";
+import {
+  getResidentStatusDetails,
+  type ResidentStatusLabel,
+} from "@/lib/workspace/pgy";
 
 type ProgramRow = {
   id: string;
@@ -104,11 +107,15 @@ export type RotationSettingsMember = {
   rosterId: string;
   displayName: string;
   gradYear: number | null;
+  residentStatus: ResidentStatusLabel;
   pgyYear: number | null;
   trainingLevel: string | null;
   role: string | null;
   userId: string | null;
   isActive: boolean;
+  isGraduated: boolean;
+  isActiveResident: boolean;
+  graduationDate: string | null;
 };
 
 export type RotationCatalogItem = {
@@ -264,7 +271,7 @@ function mapProgram(row: ProgramRow | null, fallbackProgramId?: string | null): 
 
 function mapMember(row: ProgramRosterRow, effectiveDate: string): RotationSettingsMember {
   const gradYear = row.grad_year ?? null;
-  const pgyYear = getPgyFromGradYear(gradYear, effectiveDate);
+  const status = getResidentStatusDetails(gradYear, effectiveDate);
 
   return {
     membershipId: row.id,
@@ -272,11 +279,15 @@ function mapMember(row: ProgramRosterRow, effectiveDate: string): RotationSettin
     rosterId: row.id,
     displayName: getRosterDisplayName(row),
     gradYear,
-    pgyYear,
-    trainingLevel: getTrainingLevelFromPgy(pgyYear),
+    residentStatus: status.statusLabel,
+    pgyYear: status.pgyYear,
+    trainingLevel: status.statusLabel === "Unknown" ? null : status.statusLabel,
     role: row.role ?? null,
     userId: row.claimed_by_user_id ?? null,
-    isActive: true,
+    isActive: status.isActiveResident,
+    isGraduated: status.isGraduated,
+    isActiveResident: status.isActiveResident,
+    graduationDate: status.graduationDate,
   };
 }
 
@@ -435,7 +446,9 @@ export async function listProgramMembers(
     throw new Error(`Failed to load program members: ${error.message}`);
   }
 
-  return ((data ?? []) as ProgramRosterRow[]).map((row) => mapMember(row, effectiveDate));
+  return ((data ?? []) as ProgramRosterRow[])
+    .map((row) => mapMember(row, effectiveDate))
+    .filter((member) => member.isActiveResident);
 }
 
 export async function listProgramRotations(

@@ -6,6 +6,7 @@ import type {
   SwapRosterEligibility,
   SwapRuleResult,
 } from "./types";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 
 const ACTIVE_DUPLICATE_STATUSES: SwapRequestStatus[] = [
   "pending_recipient",
@@ -75,6 +76,7 @@ export function validateRecipientEligible(params: {
   requesterProgramId: string;
   recipient: SwapRosterEligibility | null;
   today?: string | null;
+  effectiveDate?: string | null;
 }) {
   const errors: string[] = [];
 
@@ -95,11 +97,17 @@ export function validateRecipientEligible(params: {
     errors.push("Recipient must have a grad year before receiving coverage requests.");
   }
 
-  if (params.today && params.recipient.gradYear !== null) {
-    const currentYear = Number(params.today.slice(0, 4));
-    if (Number.isInteger(currentYear) && params.recipient.gradYear < currentYear) {
-      errors.push("Recipient cannot be graduated.");
-    }
+  const recipientStatus = getResidentStatusDetails(
+    params.recipient.gradYear ?? null,
+    params.effectiveDate ?? params.today ?? undefined
+  );
+
+  if (!recipientStatus.isActiveResident) {
+    errors.push(
+      recipientStatus.isGraduated
+        ? "Recipient cannot be graduated."
+        : "Recipient must have a valid grad year before receiving coverage requests."
+    );
   }
 
   return buildResult(errors);
@@ -110,6 +118,7 @@ export function validateRequesterEligibleForTrade(params: {
   requesterProgramId: string;
   requester: SwapRosterEligibility | null;
   today?: string | null;
+  effectiveDate?: string | null;
 }) {
   const errors: string[] = [];
 
@@ -130,11 +139,17 @@ export function validateRequesterEligibleForTrade(params: {
     errors.push("Requester must have a grad year before trading calls.");
   }
 
-  if (params.today && params.requester.gradYear !== null) {
-    const currentYear = Number(params.today.slice(0, 4));
-    if (Number.isInteger(currentYear) && params.requester.gradYear < currentYear) {
-      errors.push("Requester cannot be graduated.");
-    }
+  const requesterStatus = getResidentStatusDetails(
+    params.requester.gradYear ?? null,
+    params.effectiveDate ?? params.today ?? undefined
+  );
+
+  if (!requesterStatus.isActiveResident) {
+    errors.push(
+      requesterStatus.isGraduated
+        ? "Requester cannot be graduated."
+        : "Requester must have a valid grad year before trading calls."
+    );
   }
 
   return buildResult(errors);
@@ -434,12 +449,22 @@ export function validateCanCreateSwapRequest(params: {
       requesterProgramId: params.requesterProgramId,
       recipient: params.recipient,
       today: params.today,
+      effectiveDate:
+        params.requesterCall?.callDate ??
+        params.requesterCall?.startDatetime?.slice(0, 10) ??
+        params.today,
     }),
     validateRequesterEligibleForTrade({
       requestType: params.requestType,
       requesterProgramId: params.requesterProgramId,
       requester: params.requester,
       today: params.today,
+      effectiveDate:
+        params.recipientCall?.callDate ??
+        params.recipientCall?.startDatetime?.slice(0, 10) ??
+        params.requesterCall?.callDate ??
+        params.requesterCall?.startDatetime?.slice(0, 10) ??
+        params.today,
     }),
     validateCallNotInPast({
       requesterCall: params.requesterCall,

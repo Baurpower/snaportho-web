@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 import {
-  getPgyFromGradYear,
-  getTrainingLevelFromPgy,
+  getResidentStatusDetails,
   toEffectiveDate,
 } from "@/lib/workspace/pgy";
 
@@ -16,8 +15,12 @@ type NormalizedRosterPerson = {
   email: string | null;
   role: string;
   gradYear: number | null;
+  residentStatus: string;
   pgyYear: number | null;
   trainingLevel: string | null;
+  isGraduated: boolean;
+  isActiveResident: boolean;
+  graduationDate: string | null;
 };
 
 function isValidDateString(value: string | null): value is string {
@@ -94,11 +97,16 @@ export async function GET(request: NextRequest) {
     const roster: NormalizedRosterPerson[] = (data ?? []).map((row) => {
       const gradYear =
         typeof row.grad_year === "number" ? row.grad_year : null;
-
-      const pgyYear =
+      const status =
         row.role === "resident"
-          ? getPgyFromGradYear(gradYear, effectiveDate)
-          : null;
+          ? getResidentStatusDetails(gradYear, effectiveDate)
+          : {
+              statusLabel: "Unknown",
+              pgyYear: null,
+              isGraduated: false,
+              isActiveResident: false,
+              graduationDate: null,
+            };
 
       const displayName =
         row.full_name ||
@@ -117,12 +125,18 @@ export async function GET(request: NextRequest) {
         email: row.email ?? null,
         role: row.role,
         gradYear,
-        pgyYear,
-        trainingLevel: getTrainingLevelFromPgy(pgyYear),
+        residentStatus: status.statusLabel,
+        pgyYear: status.pgyYear,
+        trainingLevel: status.statusLabel === "Unknown" ? null : status.statusLabel,
+        isGraduated: status.isGraduated,
+        isActiveResident: status.isActiveResident,
+        graduationDate: status.graduationDate,
       };
     });
 
-    const residents = roster.filter((person) => person.role === "resident");
+    const residents = roster.filter(
+      (person) => person.role === "resident" && person.isActiveResident
+    );
 
     const residentsByPgy: Record<string, NormalizedRosterPerson[]> = {
       1: [],

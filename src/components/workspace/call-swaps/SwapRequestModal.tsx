@@ -6,6 +6,7 @@ import { CheckCircle2, Loader2, ShieldCheck, X } from "lucide-react";
 import { useCreateSwapRequest } from "@/hooks/useCreateSwapRequest";
 import RecipientPicker, { type CoverageRecipientOption } from "./RecipientPicker";
 import type { ProgramCallItem } from "@/components/workspace/call/callmonthcalendar";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 
 function formatCallDate(call: ProgramCallItem | null) {
   const dateString = call?.callDate ?? call?.startDatetime?.slice(0, 10) ?? null;
@@ -16,10 +17,6 @@ function formatCallDate(call: ProgramCallItem | null) {
     day: "numeric",
     year: "numeric",
   });
-}
-
-function getCurrentAcademicYear() {
-  return new Date().getFullYear();
 }
 
 export default function SwapRequestModal({
@@ -46,14 +43,12 @@ export default function SwapRequestModal({
   const [warnings, setWarnings] = useState<string[]>([]);
 
   const eligibleRecipients = useMemo(() => {
-    const currentYear = getCurrentAcademicYear();
+    const effectiveDate = call?.callDate ?? call?.startDatetime?.slice(0, 10) ?? undefined;
     return recipients.filter((recipient) => {
       if (!requesterRosterId || recipient.rosterId === requesterRosterId) return false;
-      if (recipient.gradYear === null) return false;
-      if (recipient.gradYear < currentYear) return false;
-      return true;
+      return getResidentStatusDetails(recipient.gradYear, effectiveDate).isActiveResident;
     });
-  }, [recipients, requesterRosterId]);
+  }, [call?.callDate, call?.startDatetime, recipients, requesterRosterId]);
 
   const filteredOutCount = recipients.length - eligibleRecipients.length;
 

@@ -1,108 +1,304 @@
 /* eslint-disable react/no-unescaped-entities */
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 
-export default function TermsOfServicePage() {
+const EFFECTIVE_DATE = "June 5, 2026";
+
+export const metadata: Metadata = {
+  title: "Terms of Use",
+  description:
+    "Read the SnapOrtho Terms of Use, including educational-use limitations, subscription terms, Apple auto-renewable subscription language, Stripe billing terms, and legal disclaimers.",
+  alternates: {
+    canonical: "/terms",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export default function TermsOfUsePage() {
   return (
-    <main className="min-h-screen bg-[#f9f7f4] text-navy px-6 sm:px-10 lg:px-24 py-16 space-y-24">
-      {/* Header */}
-      <section className="max-w-4xl mx-auto text-center space-y-6 pt-20">
-        <h1 className="text-5xl font-bold text-[#333] tracking-tight">Terms of Service</h1>
-        <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto">
-          Effective Date: {new Date().getFullYear()}
+    <main className="min-h-screen bg-[#f9f7f4] px-6 py-16 text-navy sm:px-10 lg:px-24">
+      <section className="mx-auto max-w-4xl space-y-6 pt-20 text-center">
+        <h1 className="text-5xl font-bold tracking-tight text-[#333]">
+          Terms of Use
+        </h1>
+        <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600">
+          Effective Date: {EFFECTIVE_DATE}
         </p>
       </section>
 
-      {/* Terms Content */}
-      <section className="max-w-4xl mx-auto text-left space-y-12 text-lg text-gray-700 leading-relaxed">
-        {/* Introduction */}
+      <section className="mx-auto mt-16 max-w-4xl space-y-12 text-lg leading-relaxed text-gray-700">
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">1. Introduction</h2>
+          <h2 className="text-2xl font-semibold text-[#333]">
+            1. Agreement to These Terms
+          </h2>
           <p>
-            SnapOrtho is a product of MyOrtho Solutions LLC ("we", "us", or "our"). By accessing or using the SnapOrtho application ("SnapOrtho" or "the App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the App.
+            SnapOrtho is a product of MyOrtho Solutions LLC. These Terms of Use
+            govern your access to and use of the SnapOrtho website, mobile
+            applications, educational content, Workspace tools, BroBot features,
+            and related services.
+          </p>
+          <p>
+            By accessing or using SnapOrtho, you agree to these Terms. If you
+            do not agree, do not use SnapOrtho.
           </p>
         </div>
 
-        {/* Use of the Service */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">2. Use of the Service</h2>
+          <h2 className="text-2xl font-semibold text-[#333]">
+            2. Educational Use Only
+          </h2>
           <p>
-            You may use SnapOrtho only for lawful purposes and in accordance with these Terms. You must be at least 18 years of age, or the age of majority in your jurisdiction, to use the App.
+            SnapOrtho is intended solely for educational and informational use.
+            It is not medical advice, diagnosis, or treatment, and it is not a
+            substitute for professional judgment.
+          </p>
+          <p>
+            Your use of SnapOrtho does not create a physician-patient
+            relationship, provider-patient relationship, or any other clinical
+            duty between you and SnapOrtho or MyOrtho Solutions LLC.
+          </p>
+          <p>
+            SnapOrtho is not a hospital, clinic, medical practice, or medical
+            care provider.
           </p>
         </div>
 
-        {/* Intellectual Property */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">3. Intellectual Property</h2>
+          <h2 className="text-2xl font-semibold text-[#333]">
+            3. Eligibility and User Responsibilities
+          </h2>
           <p>
-            All content, features, and functionality of SnapOrtho — including but not limited to text, images, animations, videos, educational materials, software code, design, and trademarks — are the exclusive property of MyOrtho Solutions LLC and are protected by U.S. and international copyright, trademark, and intellectual property laws.
+            You must be legally able to enter into this agreement and comply
+            with applicable law to use SnapOrtho. You are responsible for the
+            accuracy of information you submit and for your use of the platform.
+          </p>
+          <p>You agree not to:</p>
+          <ul className="list-disc space-y-2 pl-6">
+            <li>Use SnapOrtho for unlawful, harmful, or deceptive purposes.</li>
+            <li>
+              Rely on SnapOrtho as a substitute for medical, legal, or other
+              professional advice.
+            </li>
+            <li>
+              Interfere with platform security, scrape content, reverse
+              engineer, or attempt unauthorized access.
+            </li>
+            <li>
+              Share content or account access in a way that violates these Terms
+              or applicable law.
+            </li>
+          </ul>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold text-[#333]">
+            4. Accounts and Access
+          </h2>
+          <p>
+            Some features require an account. You are responsible for
+            maintaining the confidentiality of your login credentials and for
+            activity that occurs through your account.
           </p>
           <p>
-            <strong>You may not copy, reproduce, distribute, transmit, display, publish, or otherwise use any part of SnapOrtho’s content or materials without express written permission from MyOrtho Solutions LLC.</strong> This includes but is not limited to redistribution via screenshots, recordings, downloads, or third-party platforms.
-          </p>
-          <p>
-            Unauthorized use of SnapOrtho’s intellectual property is strictly prohibited and may result in legal action.
+            We may suspend or restrict access if we believe your account is
+            being used in violation of these Terms, poses a security risk, or
+            is required by law.
           </p>
         </div>
 
-        {/* Educational Purpose Only */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">4. Educational Purpose Only / No Medical Advice</h2>
+          <h2 className="text-2xl font-semibold text-[#333]">
+            5. Subscription Terms
+          </h2>
           <p>
-            SnapOrtho is intended for educational purposes only. The content provided through the App is not a substitute for professional medical advice, diagnosis, or treatment.
+            SnapOrtho may offer paid subscriptions, including plans such as
+            BroBot Unlimited. Available prices, features, and billing periods
+            are presented before purchase.
           </p>
           <p>
-            <strong>Nothing in SnapOrtho constitutes or should be interpreted as medical advice.</strong> You must not rely on SnapOrtho to make medical decisions. Always consult a licensed healthcare professional for diagnosis and treatment.
+            Some subscriptions renew automatically unless canceled before the
+            end of the current billing period. The timing of charges, renewal
+            intervals, and pricing shown at checkout control the subscription
+            you purchase.
           </p>
-        </div>
-
-        {/* Disclaimer */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">5. Disclaimer of Warranties</h2>
           <p>
-            SnapOrtho is provided on an {"as is"} and {"as available"} basis. We make no warranties, express or implied, regarding the reliability, accuracy, or availability of the App or its content.
-          </p>
-        </div>
-
-        {/* Limitation of Liability */}
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">6. Limitation of Liability</h2>
-          <p>
-            To the fullest extent permitted by law, MyOrtho Solutions LLC and its officers, employees, and affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation lost profits, data, use, or goodwill arising from or related to your use of SnapOrtho.
+            Promotional offers, trial periods, or plan options may change or be
+            discontinued at any time unless prohibited by law.
           </p>
         </div>
 
-        {/* Changes to Terms */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">7. Changes to Terms</h2>
+          <h2 className="text-2xl font-semibold text-[#333]">
+            6. Apple App Store Purchases
+          </h2>
           <p>
-            We may update these Terms from time to time. We will post any changes on this page with an updated effective date. By continuing to use SnapOrtho after such changes, you agree to the revised Terms.
+            If you subscribe through the iOS app, payment is charged to your
+            Apple ID account at confirmation of purchase.
+          </p>
+          <p>
+            Apple App Store subscriptions automatically renew unless auto-renew
+            is turned off at least 24 hours before the end of the current
+            period. Your account will be charged for renewal within the 24
+            hours before the end of the current period at the price shown to
+            you before purchase.
+          </p>
+          <p>
+            You can manage or cancel Apple subscriptions in your Apple account
+            settings after purchase. If supported in the app, you may also use a
+            restore purchases function to refresh access associated with prior
+            Apple purchases.
+          </p>
+          <p>
+            Apple billing, refunds, and payment methods are handled by Apple
+            under Apple&apos;s terms and policies.
           </p>
         </div>
 
-        {/* Governing Law */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">8. Governing Law</h2>
+          <h2 className="text-2xl font-semibold text-[#333]">
+            7. Web and Stripe Purchases
+          </h2>
           <p>
-            These Terms are governed by and construed in accordance with the laws of the Commonwealth of Virginia, United States, without regard to its conflict of law principles.
+            If you subscribe through the web or another external checkout,
+            payment processing may be handled by Stripe. Stripe may collect your
+            payment details directly under its own agreements and privacy
+            practices.
+          </p>
+          <p>
+            Web or Stripe subscriptions are managed separately from Apple
+            subscriptions. Canceling a Stripe or web subscription does not
+            cancel an Apple subscription, and canceling an Apple subscription
+            does not cancel a Stripe or web subscription.
+          </p>
+          <p>
+            Unless otherwise stated at checkout, web subscriptions may also
+            renew automatically until canceled in the applicable billing portal
+            or through the process presented at purchase.
           </p>
         </div>
 
-        {/* Contact Us */}
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[#333]">9. Contact Us</h2>
+          <h2 className="text-2xl font-semibold text-[#333]">
+            8. Cancellation and Access
+          </h2>
           <p>
-            If you have any questions or concerns about these Terms, please contact us at <a href="mailto:alexbaur123@gmail.com" className="text-blue-500 hover:text-blue-600">alexbaur123@gmail.com</a>.
+            If you cancel, you generally retain access through the end of the
+            current paid period unless otherwise stated at the time of purchase
+            or required by law.
+          </p>
+          <p>
+            Deleting the app does not automatically cancel a subscription.
+            Subscription management must be completed through the platform where
+            the subscription was purchased.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold text-[#333]">
+            9. Intellectual Property
+          </h2>
+          <p>
+            SnapOrtho and its content, software, text, graphics, design,
+            educational materials, trademarks, and related materials are owned
+            by MyOrtho Solutions LLC or its licensors and are protected by
+            intellectual property laws.
+          </p>
+          <p>
+            You may not copy, reproduce, distribute, sell, publicly display,
+            republish, or create derivative works from SnapOrtho content except
+            as expressly permitted in writing.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold text-[#333]">
+            10. Acceptable Use and Termination
+          </h2>
+          <p>
+            We may suspend, limit, or terminate access to SnapOrtho if we
+            reasonably believe you violated these Terms, created risk or harm,
+            misused the platform, or if continued access is not operationally
+            feasible.
+          </p>
+          <p>
+            Sections that by their nature should survive termination will
+            survive, including intellectual property, disclaimers, limitation of
+            liability, and dispute-related provisions.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold text-[#333]">
+            11. Disclaimers
+          </h2>
+          <p>
+            SnapOrtho is provided on an "as is" and "as available" basis. To
+            the fullest extent permitted by law, we disclaim warranties of any
+            kind, whether express, implied, or statutory, including implied
+            warranties of merchantability, fitness for a particular purpose,
+            non-infringement, accuracy, and availability.
+          </p>
+          <p>
+            We do not guarantee that SnapOrtho will be uninterrupted, error
+            free, secure, or suitable for your specific educational or clinical
+            needs.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold text-[#333]">
+            12. Limitation of Liability
+          </h2>
+          <p>
+            To the fullest extent permitted by law, MyOrtho Solutions LLC and
+            its affiliates, officers, employees, contractors, and licensors will
+            not be liable for any indirect, incidental, consequential, special,
+            exemplary, or punitive damages, or for any loss of profits,
+            revenues, data, goodwill, or business opportunities arising out of
+            or related to your use of SnapOrtho.
+          </p>
+          <p>
+            To the extent liability cannot be disclaimed, our total liability
+            for claims arising out of or relating to SnapOrtho will be limited
+            to the amount you paid us for the applicable service during the
+            twelve months before the event giving rise to the claim.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold text-[#333]">
+            13. Changes to These Terms
+          </h2>
+          <p>
+            We may update these Terms from time to time. When we do, we will
+            post the updated version here and revise the effective date.
+            Continued use of SnapOrtho after the updated Terms become effective
+            means you accept the revised Terms.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold text-[#333]">14. Contact</h2>
+          <p>
+            If you have questions about these Terms, please contact us at{" "}
+            <a
+              href="mailto:support@myortho-solutions.com"
+              className="text-blue-500 hover:text-blue-600"
+            >
+              support@myortho-solutions.com
+            </a>
+            .
           </p>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="max-w-4xl mx-auto text-center space-y-6 mt-16">
+      <section className="mx-auto mt-16 max-w-4xl text-center">
         <Link
           href="/"
-          className="inline-block bg-[#597498] text-white px-10 py-5 rounded-full font-semibold hover:bg-[#4e6886] transition text-lg shadow-lg"
+          className="inline-block rounded-full bg-[#597498] px-10 py-5 text-lg font-semibold text-white shadow-lg transition hover:bg-[#4e6886]"
         >
           Back to Home
         </Link>

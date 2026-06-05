@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
-import { createBillingPortalSession } from '@/lib/stripe';
+import { createBillingPortalSession, NoManageableStripeSubscriptionError } from '@/lib/stripe';
 import { BROBOT_CONFIG as BroBotConfig } from '@/lib/config/brobot';
 
 /**
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     : await supabase.auth.getUser();
 
   if (authError || !user) {
-    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    return NextResponse.json({ error: 'Authentication required', code: 'UNAUTHORIZED' }, { status: 401 });
   }
 
   try {
@@ -56,9 +56,21 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ url });
   } catch (err) {
+    if (err instanceof NoManageableStripeSubscriptionError) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('[mobile/stripe/portal] no manageable subscription', {
+          userId: user.id.slice(0, 8),
+        });
+      }
+      return NextResponse.json(
+        { error: 'No active Stripe subscription found for this account.', code: 'NO_STRIPE_SUBSCRIPTION' },
+        { status: 404 }
+      );
+    }
+
     console.error('[mobile/stripe/portal] error', err);
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : 'Failed to create Stripe portal session' },
+      { error: 'Failed to create Stripe portal session', code: 'PORTAL_SESSION_FAILED' },
       { status: 500 }
     );
   }

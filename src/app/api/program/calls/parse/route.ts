@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { parseCallUploadFile } from "@/lib/workspace/call/import-parser";
 import {
+  getPgyFromGradYear,
+  getTrainingLevelFromPgy,
+} from "@/lib/workspace/pgy";
+import {
   requireWorkspacePermission,
   WorkspacePermissionError,
 } from "@/lib/workspace/access-control";
@@ -12,6 +16,7 @@ type RosterRow = {
   first_name: string | null;
   last_name: string | null;
   program_membership_id: string | null;
+  grad_year: number | null;
   training_level: string | null;
   class_year: number | null;
 };
@@ -133,7 +138,9 @@ export async function POST(request: NextRequest) {
 
     const { data: rosterData, error: rosterError } = await supabase
       .from("program_roster")
-      .select("id, full_name, first_name, last_name, program_membership_id, training_level, class_year")
+      .select(
+        "id, full_name, first_name, last_name, program_membership_id, grad_year, training_level, class_year"
+      )
       .eq("program_id", access.accessContext.programId);
 
     if (rosterError) {
@@ -148,6 +155,10 @@ export async function POST(request: NextRequest) {
         match?.full_name ??
         [match?.first_name, match?.last_name].filter(Boolean).join(" ") ??
         null;
+      const matchedPgyYear = getPgyFromGradYear(match?.grad_year ?? null, row.callDate);
+      const matchedTrainingLevel =
+        getTrainingLevelFromPgy(matchedPgyYear) ?? match?.training_level ?? null;
+      const matchedClassYear = match?.grad_year ?? match?.class_year ?? null;
 
       return {
         ...row,
@@ -155,8 +166,10 @@ export async function POST(request: NextRequest) {
         matchedMembershipId: match?.program_membership_id ?? null,
         programMembershipId: match?.program_membership_id ?? null,
         matchedDisplayName: displayName,
-        matchedTrainingLevel: match?.training_level ?? null,
-        matchedClassYear: match?.class_year ?? null,
+        matchedGradYear: match?.grad_year ?? null,
+        matchedPgyYear,
+        matchedTrainingLevel,
+        matchedClassYear,
         status:
           row.errors.length > 0
             ? "needs_review"

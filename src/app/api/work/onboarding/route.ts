@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { hashInviteToken } from "@/lib/invites";
+import {
+  resolvePgyFromSources,
+  resolveTrainingLevelFromSources,
+} from "@/lib/workspace/pgy";
 
 type ProgramMode = "select" | "request";
 
@@ -65,27 +69,6 @@ type InvitePreview = {
       }[]
     | null;
 };
-
-function getAcademicYearEnd(date = new Date()) {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  return month >= 6 ? year + 1 : year;
-}
-
-function derivePgyYearFromGradYear(gradYear: number | null | undefined) {
-  if (!gradYear) return null;
-
-  const academicYearEnd = getAcademicYearEnd();
-  const pgy = academicYearEnd - gradYear + 5;
-
-  if (pgy < 1 || pgy > 10) return null;
-  return pgy;
-}
-
-function deriveTrainingLevel(pgyYear: number | null | undefined) {
-  if (!pgyYear || pgyYear < 1) return null;
-  return `PGY-${pgyYear}`;
-}
 
 function normalizeNullableNumber(value: unknown) {
   if (value === null || value === undefined || value === "") return null;
@@ -371,15 +354,22 @@ export async function GET(req: NextRequest) {
     }
 
     const resolvedGradYear =
-      profile?.grad_year ?? membership?.grad_year ?? null;
+      profile?.grad_year ??
+      membership?.grad_year ??
+      inviteContext?.rosterGradYear ??
+      null;
 
-    const resolvedPgyYear =
-      profile?.pgy_year ??
-      derivePgyYearFromGradYear(resolvedGradYear);
+    const resolvedPgyYear = resolvePgyFromSources({
+      gradYear: resolvedGradYear,
+      storedPgyYear: profile?.pgy_year ?? null,
+      trainingLevel: profile?.training_level ?? null,
+    });
 
-    const resolvedTrainingLevel =
-      profile?.training_level ??
-      deriveTrainingLevel(resolvedPgyYear);
+    const resolvedTrainingLevel = resolveTrainingLevelFromSources({
+      gradYear: resolvedGradYear,
+      storedPgyYear: profile?.pgy_year ?? null,
+      trainingLevel: profile?.training_level ?? null,
+    });
 
     return NextResponse.json({
       profile: {
@@ -584,16 +574,17 @@ export async function POST(req: Request) {
       existingProfile?.grad_year ??
       null;
 
-    const resolvedPgyYear =
-      derivePgyYearFromGradYear(resolvedGradYear) ??
-      inputPgyYear ??
-      existingProfile?.pgy_year ??
-      null;
+    const resolvedPgyYear = resolvePgyFromSources({
+      gradYear: resolvedGradYear,
+      storedPgyYear: inputPgyYear ?? existingProfile?.pgy_year ?? null,
+      trainingLevel: existingProfile?.training_level ?? null,
+    });
 
-    const resolvedTrainingLevel =
-      deriveTrainingLevel(resolvedPgyYear) ??
-      existingProfile?.training_level ??
-      null;
+    const resolvedTrainingLevel = resolveTrainingLevelFromSources({
+      gradYear: resolvedGradYear,
+      storedPgyYear: inputPgyYear ?? existingProfile?.pgy_year ?? null,
+      trainingLevel: existingProfile?.training_level ?? null,
+    });
 
     const now = new Date().toISOString();
     const today = now.slice(0, 10);

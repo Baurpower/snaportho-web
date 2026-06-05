@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 import { getActiveMembershipForUser } from '@/lib/workspace/memberships'
 import { getLightweightRotationAssignmentsForMemberInRange } from '@/lib/workspace/call/rotations'
+import {
+  getPgyFromGradYear,
+  getTrainingLevelFromPgy,
+} from '@/lib/workspace/pgy'
 
 function isValidDateString(value: string | null): value is string {
   return !!value && /^\d{4}-\d{2}-\d{2}$/.test(value)
@@ -149,44 +153,6 @@ function getExpandedFetchWindow(start: string, end: string) {
   }
 }
 
-/**
- * Returns the graduation year of the current chief class.
- *
- * Examples:
- * - Jan 2026 -> 2026
- * - Jun 2026 -> 2026
- * - Jul 2026 -> 2027
- * - Oct 2026 -> 2027
- */
-function getCurrentChiefGradYear(date = new Date()): number {
-  const year = date.getFullYear()
-  const julyFirst = new Date(year, 6, 1)
-  return date >= julyFirst ? year + 1 : year
-}
-
-/**
- * Assumes grad_year is the resident's graduation year.
- *
- * Examples:
- * - Oct 2025: grad 2026 -> PGY-5
- * - Jan 2026: grad 2026 -> PGY-5
- * - Jan 2026: grad 2027 -> PGY-4
- * - Jan 2026: grad 2030 -> PGY-1
- * - Aug 2026: grad 2027 -> PGY-5
- */
-function getPgyFromGradYear(
-  gradYear: number | null,
-  date = new Date()
-): number | null {
-  if (!gradYear) return null
-
-  const currentChiefGradYear = getCurrentChiefGradYear(date)
-  const pgy = 5 - (gradYear - currentChiefGradYear)
-
-  if (pgy < 1 || pgy > 5) return null
-  return pgy
-}
-
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
@@ -222,8 +188,8 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const derivedPgyYear = getPgyFromGradYear(membership.grad_year)
-    const derivedTrainingLevel = derivedPgyYear ? `PGY-${derivedPgyYear}` : null
+    const derivedPgyYear = getPgyFromGradYear(membership.grad_year, start)
+    const derivedTrainingLevel = getTrainingLevelFromPgy(derivedPgyYear)
 
     const { fetchStart, fetchEnd } = getExpandedFetchWindow(start, end)
 

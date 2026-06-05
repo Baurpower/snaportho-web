@@ -1,6 +1,11 @@
 import { createClient } from '@/utils/supabase/server'
 import { loadProgramCallValidationContext } from '@/lib/workspace/call/rule-loader'
 import {
+  type EffectiveDateInput,
+  getResidentStatusDetails,
+  type ResidentStatusLabel,
+} from '@/lib/workspace/pgy'
+import {
   buildResidentIdentityMaps,
   getCanonicalResidentId,
 } from '@/lib/workspace/call/resident-identity'
@@ -93,7 +98,17 @@ export type ProgramResidentOption = {
   membershipId: string | null
   displayName: string
   gradYear: number | null
+  residentStatus: ResidentStatusLabel
+  pgyYear: number | null
+  isGraduated: boolean
+  isActiveResident: boolean
+  graduationDate: string | null
   userId: string | null
+}
+
+type GetProgramResidentsOptions = {
+  effectiveDate?: EffectiveDateInput
+  includeGraduates?: boolean
 }
 
 export type ProgramResidentCallStats = {
@@ -700,7 +715,8 @@ export async function deleteCallAssignment(
 }
 
 export async function getProgramResidents(
-  programId: string
+  programId: string,
+  options: GetProgramResidentsOptions = {}
 ): Promise<ProgramResidentOption[]> {
   const supabase = await createClient()
 
@@ -725,18 +741,31 @@ export async function getProgramResidents(
   }
 
   const rows = (data ?? []) as ProgramRosterResidentRow[]
+  const includeGraduates = options.includeGraduates ?? true
+  const effectiveDate = options.effectiveDate
 
-  return rows.map((row) => ({
-    residentId: row.id,
-    rosterId: row.id,
-    membershipId: row.program_membership_id ?? null,
-    displayName:
-      row.full_name ??
-      [row.first_name, row.last_name].filter(Boolean).join(' ') ??
-      'Unknown Resident',
-    gradYear: row.grad_year ?? null,
-    userId: row.claimed_by_user_id ?? null,
-  }))
+  return rows
+    .map((row) => {
+      const status = getResidentStatusDetails(row.grad_year ?? null, effectiveDate)
+
+      return {
+        residentId: row.id,
+        rosterId: row.id,
+        membershipId: row.program_membership_id ?? null,
+        displayName:
+          row.full_name ??
+          [row.first_name, row.last_name].filter(Boolean).join(' ') ??
+          'Unknown Resident',
+        gradYear: row.grad_year ?? null,
+        residentStatus: status.statusLabel,
+        pgyYear: status.pgyYear,
+        isGraduated: status.isGraduated,
+        isActiveResident: status.isActiveResident,
+        graduationDate: status.graduationDate,
+        userId: row.claimed_by_user_id ?? null,
+      }
+    })
+    .filter((resident) => includeGraduates || resident.isActiveResident)
 }
 
 export async function getProgramCallStatsForMonth(

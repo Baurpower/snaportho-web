@@ -29,7 +29,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/terms" className="hover:text-sky">
-                  Terms of Service
+                  Terms of Use
                 </Link>
               </li>
               <li>

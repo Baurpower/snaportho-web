@@ -21,6 +21,7 @@ import {
 import { createClient } from "@/utils/supabase/client";
 import { useWorkspaceInfo } from "@/lib/workspace/use-workspace-info";
 import { buildPasswordResetRedirectUrl } from "@/lib/auth/password-reset";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 
 type ProfileForm = {
   full_name: string;
@@ -38,22 +39,6 @@ const fadeUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
 };
 
-function getAcademicStartYear(date = new Date()) {
-  const year = date.getFullYear();
-  const month = date.getMonth(); // 0-indexed
-  return month >= 6 ? year : year - 1; // July 1 rollover
-}
-
-function getPgyPreviewFromGradYear(gradYear: number | null | undefined) {
-  if (!gradYear) return null;
-
-  const academicStartYear = getAcademicStartYear();
-  const pgy = academicStartYear - gradYear + 6;
-
-  if (pgy < 0 || pgy > 10) return null;
-  return pgy;
-}
-
 function getPgyOneStartDateFromGradYear(gradYear: number | null | undefined) {
   if (!gradYear) return null;
   const startYear = gradYear - 5;
@@ -70,16 +55,25 @@ function formatLongDate(date: Date | null) {
 }
 
 function getPgyDisplayLabel(gradYear: number | null | undefined) {
-  const pgy = getPgyPreviewFromGradYear(gradYear);
-  if (pgy === null) return null;
-  return `PGY-${pgy}`;
+  const status = getResidentStatusDetails(gradYear ?? null);
+  return status.statusLabel === "Unknown" ? null : status.statusLabel;
 }
 
 function getPgyHelperText(gradYear: number | null | undefined) {
-  const pgy = getPgyPreviewFromGradYear(gradYear);
-  if (pgy === null) return "Enter your graduation year to preview your current PGY.";
+  const status = getResidentStatusDetails(gradYear ?? null);
+  if (status.statusLabel === "Unknown") {
+    return "Enter your graduation year to preview your current status.";
+  }
 
-  if (pgy === 0) {
+  if (status.isGraduated) {
+    return "Calculated automatically from your graduation year using a July 1 academic-year rollover.";
+  }
+
+  if (status.pgyYear === null) {
+    return "Enter your graduation year to preview your current status.";
+  }
+
+  if (status.pgyYear === 0) {
     const startDate = formatLongDate(getPgyOneStartDateFromGradYear(gradYear));
     return startDate ? `PGY-1 starts ${startDate}.` : "PGY-1 start date unavailable.";
   }

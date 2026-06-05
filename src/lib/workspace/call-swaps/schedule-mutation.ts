@@ -1,5 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { getPgyFromGradYear } from "@/lib/workspace/pgy";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 import { getSwapRequestWithDetailsById } from "./queries";
 import type { ShiftSwapRequest, SwapRequestListItem } from "./types";
 
@@ -346,13 +346,17 @@ export async function applyApprovedCoverageSwap(
       throw new Error("Recipient must have a grad year before approval.");
     }
 
-    const recipientPgy = getPgyFromGradYear(
+    const recipientStatus = getResidentStatusDetails(
       recipient.grad_year,
       requesterCall.call_date ?? requesterCall.start_datetime?.slice(0, 10) ?? undefined
     );
 
-    if (recipientPgy === null) {
-      throw new Error("Recipient appears to be graduated or outside the active training range.");
+    if (!recipientStatus.isActiveResident) {
+      throw new Error(
+        recipientStatus.isGraduated
+          ? "Recipient is graduated for the selected call date."
+          : "Recipient must have a valid grad year before approval."
+      );
     }
 
     const conflictingCall = await timedStep(
@@ -544,17 +548,21 @@ export async function applyApprovedTradeSwap(
       throw new Error("Both residents must have grad years before approval.");
     }
 
-    const requesterPgy = getPgyFromGradYear(
+    const requesterStatus = getResidentStatusDetails(
       requester.grad_year,
       recipientCall.call_date ?? recipientCall.start_datetime?.slice(0, 10) ?? undefined
     );
-    const recipientPgy = getPgyFromGradYear(
+    const recipientStatus = getResidentStatusDetails(
       recipient.grad_year,
       requesterCall.call_date ?? requesterCall.start_datetime?.slice(0, 10) ?? undefined
     );
 
-    if (requesterPgy === null || recipientPgy === null) {
-      throw new Error("One of the residents appears to be graduated or outside the active training range.");
+    if (!requesterStatus.isActiveResident || !recipientStatus.isActiveResident) {
+      throw new Error(
+        requesterStatus.isGraduated || recipientStatus.isGraduated
+          ? "One of the residents is graduated for the selected call date."
+          : "Both residents must have valid grad years before approval."
+      );
     }
 
     const [requesterConflict, recipientConflict] = await timedStep(

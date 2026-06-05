@@ -21,7 +21,7 @@ import {
   normalizeCallType,
   type RuleLike,
 } from "@/lib/workspace/call/rule-evaluator";
-import { getPgyFromGradYear } from "@/lib/workspace/pgy";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 import type { CalendarCallItem } from "@/lib/workspace/call-swaps/calendar-overlay-utils";
 import type { SwapRequestListItem } from "@/lib/workspace/call-swaps/types";
 
@@ -263,20 +263,27 @@ export function computeProjectedValidation(params: {
     }
 
     // 4. PGY eligibility
-    const pgyYear = getPgyFromGradYear(gradYear, callDate);
-    if (pgyYear !== null) {
-      const normalizedType = normalizeCallType(callType);
-      if (normalizedType) {
-        const pgyViolations = evaluatePgyEligibility({
-          resident: { pgyYear },
-          callType: normalizedType,
-          rules: programRules,
-        });
-        for (const v of pgyViolations) {
-          const msg = `${prefix} ${v.message}`;
-          if (v.severity === "error") errors.push(msg);
-          else warnings.push(msg);
-        }
+    const status = getResidentStatusDetails(gradYear, callDate);
+    if (!status.isActiveResident) {
+      errors.push(
+        status.isGraduated
+          ? `${prefix} is graduated and should not receive this call.`
+          : `${prefix} is missing a valid grad year for eligibility checks.`
+      );
+      return;
+    }
+
+    const normalizedType = normalizeCallType(callType);
+    if (normalizedType && typeof status.pgyYear === "number") {
+      const pgyViolations = evaluatePgyEligibility({
+        resident: { pgyYear: status.pgyYear },
+        callType: normalizedType,
+        rules: programRules,
+      });
+      for (const v of pgyViolations) {
+        const msg = `${prefix} ${v.message}`;
+        if (v.severity === "error") errors.push(msg);
+        else warnings.push(msg);
       }
     }
   }
