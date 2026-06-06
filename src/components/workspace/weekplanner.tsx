@@ -353,7 +353,7 @@ export function WeekPlannerPanel({
     }
 
     loadExistingWeekEvents();
-  }, [days]);
+  }, [days, category]);
 
   const selectedDates = useMemo(
     () => days.map((day) => day.date).filter((date) => drafts[date]?.selected),

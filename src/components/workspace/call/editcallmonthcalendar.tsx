@@ -1092,8 +1092,6 @@ export default function EditCallMonthCalendar({
     onDraftChangeRef.current(
       pendingChanges.length > 0 ? slotMapToDraftAssignments(slotMap) : null
     );
-  // slotMap and pendingChanges.length are the meaningful change signals.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slotMap, pendingChanges.length]);
 
   useEffect(() => {

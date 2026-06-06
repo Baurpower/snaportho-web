@@ -1015,7 +1015,6 @@ export function getSlotStatusForDay({
   const isRequired = isVisible && def.requiredWhenVisible !== false;
 
   if (process.env.NODE_ENV === "development") {
-    // eslint-disable-next-line no-console
     console.debug("[slot-status]", {
       slotId: def.id,
       slotName: def.label,

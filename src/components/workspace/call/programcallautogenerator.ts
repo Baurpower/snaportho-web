@@ -18,7 +18,6 @@ import {
   DEFAULT_SLOT_DEFINITIONS,
   getEffectiveRules,
   getSlotStatusForDay,
-  getVisibleCallSlotsForDay,
   type ProgramCallSlotDefinition,
 } from "@/lib/workspace/call/rule-definitions"; // Phase 9 alignment
 import {
@@ -1355,7 +1354,6 @@ function generateSingleCallSchedule({
       const primaryResident = current.primaryRosterId
         ? residentsById.get(current.primaryRosterId)
         : null;
-      // eslint-disable-next-line no-console
       console.debug("[auto-gen]", day.key, {
         primaryName: primaryResident?.displayName ?? null,
         primaryPgy: primaryResident?.pgyYear ?? null,
@@ -1384,7 +1382,6 @@ function generateSingleCallSchedule({
         nextAssignments[day.key] = current;
         updateStats(stats, picked.residentId, "Backup", day);
       } else if (process.env.NODE_ENV === "development" && hasCustomBackupDefs) {
-        // eslint-disable-next-line no-console
         console.debug("[auto-gen] backup slot visible but no eligible resident found:", day.key);
       }
     }

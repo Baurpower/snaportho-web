@@ -1940,7 +1940,7 @@ export default function ProgramRulesSheet({
     return () => {
       cancelled = true;
     };
-  }, [open]);
+  }, [open, onScheduleSlotModeChange]);
 
   function addRule() {
     if (selectedType === REQUIRED_DAILY_CALL_SLOTS_RULE) {

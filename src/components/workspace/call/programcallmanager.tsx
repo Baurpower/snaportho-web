@@ -563,6 +563,11 @@ export default function ProgramCallManager() {
   const [scheduleSlotMode, setScheduleSlotMode] =
     useState<ScheduleSlotMode>("Primary");
   const [rules, setRules] = useState<ProgramRule[]>([]);
+  // Ref keeps the latest rules value readable inside the loadMonth effect without
+  // making `rules` a reactive dependency (which would re-fetch the month on every
+  // auto-generate click, since loadLatestRules also calls setRules).
+  const rulesRef = useRef<ProgramRule[]>([]);
+  rulesRef.current = rules;
   const [slotDefinitions, setSlotDefinitions] = useState<ProgramCallSlotDefinition[]>([]);
   const [draftSaveState, setDraftSaveState] = useState<DraftSaveState>("idle");
   const [draftStatusMessage, setDraftStatusMessage] = useState<string | null>(null);
@@ -770,7 +775,7 @@ const rotationAssignmentsByRosterId =
         const inferredSlotMode =
           calls.some((call) => call.callType === "Backup") ? "Both" : "Primary";
         const defaultScheduleSlotMode =
-          getScheduleSlotModeFromRules(rules) ?? inferredSlotMode ?? "Primary";
+          getScheduleSlotModeFromRules(rulesRef.current) ?? inferredSlotMode ?? "Primary";
         const publishedBaseline = buildProgramCallDraftPayload({
           builderMonth,
           draftAssignments: nextAssignments,
