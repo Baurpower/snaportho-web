@@ -3,7 +3,7 @@
 import { getResidentStatusDetails, resolvePgyFromSources } from "@/lib/workspace/pgy";
 
 type ScheduleSlotMode = "Primary" | "Both";
-type Slot = "Primary" | "Backup";
+type Slot = "Primary" | "Backup" | "Buddy";
 type RuleStrictness = "never_break" | "avoid_breaking" | "bend_if_needed";
 
 type UnknownRecord = Record<string, unknown>;
@@ -38,12 +38,25 @@ type RuleLike = {
 };
 
 type ResidentLike = {
-  membershipId: string;
+  // Canonical scheduler identity (program_roster.id). Preferred over membershipId.
+  rosterId?: string | null;
+  residentId?: string | null;
+  // Legacy compatibility field; may equal rosterId in modern code, or may be the
+  // true program_memberships.id for pre-roster data. Do not use as a join key.
+  membershipId?: string | null;
   displayName: string;
   gradYear?: number | null;
   trainingLevel?: string | null;
   pgyYear?: number | null;
 };
+
+// Returns the canonical roster ID for a resident. Prefers rosterId/residentId,
+// falls back to membershipId only for legacy data where they were the same value.
+function getResidentKey(resident: ResidentLike): string {
+  return (
+    (resident.rosterId ?? resident.residentId ?? resident.membershipId) ?? ""
+  );
+}
 
 type CalendarDayLike = {
   key: string;
@@ -54,13 +67,17 @@ type CalendarDayLike = {
 type DraftAssignmentLike = {
   primaryRosterId?: string | null;
   backupRosterId?: string | null;
+  buddyRosterId?: string | null;
 };
 
 type DraftAssignments = Record<string, DraftAssignmentLike>;
 
 type ResidentTotal = ResidentLike & {
+  // Resolved canonical roster ID used as the join key throughout this file.
+  resolvedRosterId: string;
   monthPrimary: number;
   monthBackup: number;
+  monthBuddy: number;
   monthTotal: number;
   monthWeekend: number;
   assignedDates: string[];
@@ -172,10 +189,10 @@ function isAvailabilityItem(value: unknown): value is Exclude<AvailabilityItem, 
 
 function isUnavailableForDate(
   availabilityByResident: AvailabilityByResident,
-  membershipId: string,
+  rosterId: string,
   dateKey: string
 ) {
-  const residentAvailability = availabilityByResident[membershipId];
+  const residentAvailability = availabilityByResident[rosterId];
 
   if (!residentAvailability) return false;
 
@@ -223,8 +240,10 @@ function getResidentTotals({
   draftAssignments: DraftAssignments;
 }): ResidentTotal[] {
   return residents.map((resident) => {
+    const residentKey = getResidentKey(resident);
     let monthPrimary = 0;
     let monthBackup = 0;
+    let monthBuddy = 0;
     let monthWeekend = 0;
 
     const assignedDates: string[] = [];
@@ -232,26 +251,36 @@ function getResidentTotals({
     for (const day of monthDays) {
       const assignment = draftAssignments[day.key];
 
-      if (assignment?.primaryRosterId === resident.membershipId) {
+      if (assignment?.primaryRosterId === residentKey) {
         monthPrimary += 1;
         assignedDates.push(day.key);
         if (day.isWeekend) monthWeekend += 1;
       }
 
-      if (assignment?.backupRosterId === resident.membershipId) {
+      if (assignment?.backupRosterId === residentKey) {
         monthBackup += 1;
         assignedDates.push(day.key);
         if (day.isWeekend) monthWeekend += 1;
       }
+
+      if (assignment?.buddyRosterId === residentKey) {
+        monthBuddy += 1;
+        // Buddy does not count toward workload or assignedDates by default;
+        // the slot definition's countsTowardWorkload governs this in the scheduler.
+      }
     }
 
     return {
+      resolvedRosterId: residentKey,
+      rosterId: resident.rosterId ?? resident.residentId ?? resident.membershipId,
+      residentId: resident.residentId ?? resident.rosterId ?? resident.membershipId,
       membershipId: resident.membershipId,
       displayName: resident.displayName,
       trainingLevel: resident.trainingLevel,
-      pgyYear: resident.pgyYear,
+      pgyYear: getResidentPgy(resident),
       monthPrimary,
       monthBackup,
+      monthBuddy,
       monthTotal: monthPrimary + monthBackup,
       monthWeekend,
       assignedDates: Array.from(new Set(assignedDates)).sort(),
@@ -280,19 +309,21 @@ function evaluateCandidateForSlot({
   const bendableWarnings: string[] = [];
   const helpfulReasons: string[] = [];
 
-  if (!resident.membershipId) hardBlockers.push("Missing membership ID.");
+  const residentKey = resident.resolvedRosterId;
 
-  if (slot === "Primary" && resident.membershipId === assignment.backupRosterId) {
+  if (!residentKey) hardBlockers.push("Missing roster ID.");
+
+  if (slot === "Primary" && residentKey === assignment.backupRosterId) {
     hardBlockers.push("Already assigned as backup on the same date.");
   }
 
-  if (slot === "Backup" && resident.membershipId === assignment.primaryRosterId) {
+  if (slot === "Backup" && residentKey === assignment.primaryRosterId) {
     hardBlockers.push("Already assigned as primary on the same date.");
   }
 
   if (
-    resident.membershipId &&
-    isUnavailableForDate(availabilityByResident, resident.membershipId, day.key)
+    residentKey &&
+    isUnavailableForDate(availabilityByResident, residentKey, day.key)
   ) {
     hardBlockers.push("Resident is unavailable for this date.");
   }
@@ -460,7 +491,7 @@ function getRequiredSlots({
     dayName: string;
     isWeekend: boolean;
     slot: Slot;
-    currentMembershipId: string | null;
+    currentRosterId: string | null; // program_roster.id of whoever is currently assigned
   }> = [];
 
   for (const day of monthDays) {
@@ -471,7 +502,7 @@ function getRequiredSlots({
       dayName: day.dayName ?? "",
       isWeekend: Boolean(day.isWeekend),
       slot: "Primary",
-      currentMembershipId: assignment.primaryRosterId ?? null,
+      currentRosterId: assignment.primaryRosterId ?? null,
     });
 
     if (scheduleSlotMode === "Both") {
@@ -480,7 +511,7 @@ function getRequiredSlots({
         dayName: day.dayName ?? "",
         isWeekend: Boolean(day.isWeekend),
         slot: "Backup",
-        currentMembershipId: assignment.backupRosterId ?? null,
+        currentRosterId: assignment.backupRosterId ?? null,
       });
     }
   }
@@ -513,6 +544,11 @@ export function buildSchedulePacket(body: BuildSchedulePacketBody) {
     monthDays,
     draftAssignments: safeDraftAssignments,
   });
+  // Keyed by resolvedRosterId (program_roster.id). This is the canonical identifier
+  // used in all DraftDayAssignment fields (primaryRosterId / backupRosterId / buddyRosterId).
+  const residentTotalsByRosterId = new Map(
+    residentTotals.map((resident) => [resident.resolvedRosterId, resident] as const)
+  );
 
   const requiredSlots = getRequiredSlots({
     monthDays,
@@ -536,12 +572,13 @@ export function buildSchedulePacket(body: BuildSchedulePacketBody) {
 
     return {
       ...slotInfo,
-      isOpen: !slotInfo.currentMembershipId,
+      isOpen: !slotInfo.currentRosterId,
       candidates: candidates.map((candidate) => ({
+        rosterId: candidate.resolvedRosterId,
         membershipId: candidate.membershipId,
         displayName: candidate.displayName,
         trainingLevel: candidate.trainingLevel,
-        pgyYear: candidate.pgyYear,
+        pgyYear: getResidentPgy(candidate, slotInfo.dateKey),
         monthTotal: candidate.monthTotal,
         monthPrimary: candidate.monthPrimary,
         monthBackup: candidate.monthBackup,
@@ -589,19 +626,44 @@ export function buildSchedulePacket(body: BuildSchedulePacketBody) {
 
       historicalStats: Array.isArray(historicalStats) ? historicalStats : [],
 
-      schedule: monthDays.map((day) => ({
-        dateKey: day.key,
-        dayName: day.dayName,
-        isWeekend: Boolean(day.isWeekend),
-
-        primaryRosterId:
-          safeDraftAssignments[day.key]?.primaryRosterId ?? null,
-
-        backupRosterId:
+      schedule: monthDays.map((day) => {
+        const primaryRosterId = safeDraftAssignments[day.key]?.primaryRosterId ?? null;
+        const backupRosterId =
           normalizedSlotMode === "Both"
             ? safeDraftAssignments[day.key]?.backupRosterId ?? null
-            : null,
-      })),
+            : null;
+        const buddyRosterId = safeDraftAssignments[day.key]?.buddyRosterId ?? null;
+        const primaryResident = primaryRosterId
+          ? residentTotalsByRosterId.get(primaryRosterId)
+          : null;
+        const backupResident = backupRosterId
+          ? residentTotalsByRosterId.get(backupRosterId)
+          : null;
+        const buddyResident = buddyRosterId
+          ? residentTotalsByRosterId.get(buddyRosterId)
+          : null;
+
+        return {
+          dateKey: day.key,
+          dayName: day.dayName,
+          isWeekend: Boolean(day.isWeekend),
+
+          primaryRosterId,
+          primaryName: primaryResident?.displayName ?? null,
+          primaryPgyYear: primaryResident ? getResidentPgy(primaryResident, day.key) : null,
+
+          backupRosterId,
+          backupName: normalizedSlotMode === "Both" ? (backupResident?.displayName ?? null) : null,
+          backupPgyYear:
+            normalizedSlotMode === "Both" && backupResident
+              ? getResidentPgy(backupResident, day.key)
+              : null,
+
+          buddyRosterId,
+          buddyName: buddyResident?.displayName ?? null,
+          buddyPgyYear: buddyResident ? getResidentPgy(buddyResident, day.key) : null,
+        };
+      }),
 
       reviewedSlots,
 

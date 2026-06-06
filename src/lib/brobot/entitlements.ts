@@ -379,6 +379,12 @@ export async function getRemainingAIUses(subject: Subject) {
  * This shape is intentionally additive-friendly for future Apple IAP fields
  * (appleOriginalTransactionId, appleProductId, appleExpiresAt, entitlementSource, etc.)
  * without breaking existing web callers.
+ *
+ * Lifecycle fields (isCanceled, renewsAt, accessEndsAt, canManageStripe, canResubscribe)
+ * allow the iOS UI to distinguish:
+ *   - active + renewing  → show renewsAt, "Manage" CTA
+ *   - canceled/ending    → show accessEndsAt, "Resubscribe" CTA
+ *   - expired/free       → show free quota state, subscribe CTA
  */
 export interface MobileBroBotEntitlement {
   hasBroBotAccess: boolean;
@@ -395,6 +401,33 @@ export interface MobileBroBotEntitlement {
   usedToday: number | null;
   lastSyncedAt: string;
   serverTime: string;
+
+  // ── Subscription lifecycle fields ─────────────────────────────────────────
+  // These allow the iOS UI to display the correct label and CTA without
+  // re-deriving lifecycle state from raw status strings.
+  //
+  // Rule: subscriptionStatus='canceled' is NEVER treated as renewing, even if
+  //       current_period_end is in the future and cancel_at_period_end=false.
+  //       The two conditions are orthogonal — status is the authoritative signal.
+
+  /** True when subscriptionStatus === 'canceled'. Access may still be active via accessEndsAt. */
+  isCanceled: boolean;
+  /**
+   * Set only when the subscription is actively renewing (status='active' or 'trialing',
+   * cancelAtPeriodEnd=false, not canceled). Null otherwise.
+   * UI label: "Renews: <date>"
+   */
+  renewsAt: string | null;
+  /**
+   * Set when canceled or cancelAtPeriodEnd=true and current_period_end is in the future.
+   * Represents the last day of paid access. Null when already expired.
+   * UI label: "Ends: <date>" or "Access until: <date>"
+   */
+  accessEndsAt: string | null;
+  /** True when the user can open the Stripe billing portal (active/trialing/past_due Stripe sub). */
+  canManageStripe: boolean;
+  /** True when the user should be offered a resubscribe CTA (canceled Stripe sub). */
+  canResubscribe: boolean;
 
   // Additive server-owned free quota fields (for iOS + web dynamic UI)
   freeLimit?: number | null;
@@ -469,6 +502,69 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
   const cancelAtPeriodEnd = ent.cancelAtPeriodEnd ?? false;
   const isInGracePeriod = ent.isInGracePeriod ?? false;
 
+  // ── Lifecycle fields ──────────────────────────────────────────────────────
+  // isCanceled: status='canceled' is the authoritative signal. Do NOT derive
+  // this from cancel_at_period_end alone — that flag means "will cancel at end
+  // of period" but the sub is still active. A row with status='canceled' and
+  // cancel_at_period_end=false (as observed in the bug) must still be isCanceled=true.
+  const isCanceled = subscriptionStatus === 'canceled';
+
+  // isScheduledToCancel: active sub that will not renew (cancel_at_period_end=true)
+  const isScheduledToCancel = !isCanceled && cancelAtPeriodEnd;
+
+  const nowTs = Date.now();
+  const periodEndTs = currentPeriodEnd ? new Date(currentPeriodEnd).getTime() : null;
+  const periodEndIsFuture = periodEndTs != null && periodEndTs > nowTs;
+
+  // renewsAt: only when genuinely renewing — active/trialing, not canceled, not ending
+  const isStripeOrApple = mobileSource === 'stripe' || mobileSource === 'apple';
+  const isRenewing =
+    isStripeOrApple &&
+    !isCanceled &&
+    !isScheduledToCancel &&
+    (subscriptionStatus === 'active' || subscriptionStatus === 'trialing');
+  const renewsAt = isRenewing && currentPeriodEnd ? currentPeriodEnd : null;
+
+  // accessEndsAt: last day of paid access when canceled or scheduled to cancel
+  const accessEndsAt =
+    (isCanceled || isScheduledToCancel) && periodEndIsFuture && currentPeriodEnd
+      ? currentPeriodEnd
+      : null;
+
+  // canManageStripe: portal is useful for active/trialing/past_due (not canceled — portal
+  // may reject already-canceled subs and we don't want the user hitting a dead end)
+  const hasStripeLinkage =
+    mobileSource === 'stripe' &&
+    stripeCustomerId != null &&
+    stripeSubscriptionId != null;
+  const canManageStripe =
+    hasStripeLinkage &&
+    !isCanceled &&
+    (subscriptionStatus === 'active' ||
+      subscriptionStatus === 'trialing' ||
+      subscriptionStatus === 'past_due');
+
+  // canResubscribe: offer a "Resubscribe" CTA when the Stripe sub is canceled
+  // (access may still be valid through accessEndsAt, or may already be expired)
+  const canResubscribe = mobileSource === 'stripe' && isCanceled;
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[mobile-entitlement-mapper] lifecycle', {
+      userId: userId.slice(0, 8),
+      provider: ent.provider ?? null,
+      subscriptionStatus,
+      cancelAtPeriodEnd,
+      currentPeriodEnd,
+      isCanceled,
+      isScheduledToCancel,
+      isRenewing,
+      renewsAt,
+      accessEndsAt,
+      canManageStripe,
+      canResubscribe,
+    });
+  }
+
   const usedToday = ent.usedToday ?? (await getUsedCountToday({ type: 'user', id: userId }));
 
   // Free quota additive fields (server-owned, derived from the aligned central result + config)
@@ -500,6 +596,13 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     usedToday,
     lastSyncedAt: now,
     serverTime: now,
+
+    // Lifecycle fields — explicit so iOS never has to re-derive from raw status strings
+    isCanceled,
+    renewsAt,
+    accessEndsAt,
+    canManageStripe,
+    canResubscribe,
 
     // Additive server-owned fields for iOS
     freeLimit,

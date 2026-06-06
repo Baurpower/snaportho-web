@@ -25,6 +25,8 @@ function run() {
   assertEqual("2030 on 2026-06-30", getPgyFromGradYear(2030, "2026-06-30"), 1);
   assertEqual("2030 on 2026-07-01", getPgyFromGradYear(2030, "2026-07-01"), 2);
   assertEqual("2030 on 2026-07-15", getPgyFromGradYear(2030, "2026-07-15"), 2);
+  assertEqual("2030 on 2027-07-01", getPgyFromGradYear(2030, "2027-07-01"), 3);
+  assertEqual("2030 on 2029-07-01", getPgyFromGradYear(2030, "2029-07-01"), 5);
   assertEqual("2030 on 2030-07-01 label", getResidentStatusFromGradYear(2030, "2030-07-01"), "Grad");
   assertEqual("2030 on 2030-07-01 inactive", isActiveResidentFromGradYear(2030, "2030-07-01"), false);
 

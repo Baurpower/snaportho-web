@@ -16,10 +16,13 @@ import {
   getSlotValidationGuidance,
 } from "@/lib/workspace/call/validation-display";
 import {
-  getResidentColorToken,
   getRotationAssignmentForDate,
   getRotationDisplayLabel,
 } from "@/lib/workspace/call/resident-display";
+import {
+  getResidentColorClasses,
+  getResidentColorKey,
+} from "@/lib/workspace/call/resident-colors";
 import type {
   AssignmentFlagCategory,
   AssignmentFlagTone,
@@ -370,8 +373,8 @@ function DayChip({
 
   const firstFlag = selectedResidentAvailability?.flags?.[0] ?? null;
   const isDisabled = isBlocked && !active;
-  const primaryColor = getResidentColorToken(primaryResident?.residentId);
-  const backupColor = getResidentColorToken(backupResident?.residentId);
+  const primaryColor = getResidentColorClasses(getResidentColorKey(primaryResident));
+  const backupColor = getResidentColorClasses(getResidentColorKey(backupResident));
   const primaryRotationLabel = primaryResident
     ? getResidentRotationLabel(primaryResident, day.key)
     : "Tap to assign";
@@ -799,8 +802,8 @@ export default function ProgramCallAddView({
                         quickAssignResidentId === resident.membershipId;
                       const summary =
                         residentIssueSummary.get(resident.membershipId) ?? null;
-                      const residentColor = getResidentColorToken(
-                        resident.residentId
+                      const residentColor = getResidentColorClasses(
+                        getResidentColorKey(resident)
                       );
                       const rotationLabel =
                         resident.currentRotationLabel ?? "No rotation listed";

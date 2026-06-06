@@ -12,10 +12,12 @@ import {
   countUniqueWeekendBuckets,
   evaluateMonthlyLimitForResident,
   evaluatePgyEligibility,
+  evaluateRotationCallLimitForResident,
   evaluateRotationEligibility,
   evaluateSpacingForResident,
   evaluateWeekendLimitForResident,
   getWeekendBucket,
+  isWeekendDateKey,
 } from "@/lib/workspace/call/rule-evaluator";
 import { getTimeOffTypeLabel, type TimeOffType } from "@/lib/workspace/call/time-off";
 
@@ -269,6 +271,7 @@ export async function getProgramAvailabilityMonth(params: {
     .from("rotation_assignments")
     .select(`
       id,
+      roster_id,
       program_membership_id,
       rotation_id,
       start_date,
@@ -294,6 +297,7 @@ export async function getProgramAvailabilityMonth(params: {
     .from("call_assignments")
     .select(`
       id,
+      roster_id,
       program_membership_id,
       call_type,
       call_date
@@ -586,15 +590,76 @@ export async function getProgramAvailabilityMonth(params: {
         });
       }
 
+      // Per-rotation call-day limit (e.g. "Oncology residents: max 1 weekend Primary/month").
+      const rotationIdsForDay = day.rotationConflicts.map((c) => c.rotationId);
+      if (rotationIdsForDay.length > 0) {
+        // Count already-published weekend/weekday Primary call days for this resident.
+        const publishedCallDates = callsByResident.get(resident.residentId) ?? [];
+        const weekendPublishedCount = publishedCallDates.filter((d) => isWeekendDateKey(d)).length;
+        const weekdayPublishedCount = publishedCallDates.filter((d) => !isWeekendDateKey(d)).length;
+        const totalPublishedCount = publishedCallDates.length;
+        const thisDateIsWeekend = isWeekendDateKey(dateKey);
+
+        // Projected counts include this tentative date.
+        const alreadyHasCallOnDate = publishedCallDates.includes(dateKey);
+        const projectedWeekend = thisDateIsWeekend && !alreadyHasCallOnDate
+          ? weekendPublishedCount + 1
+          : weekendPublishedCount;
+        const projectedWeekday = !thisDateIsWeekend && !alreadyHasCallOnDate
+          ? weekdayPublishedCount + 1
+          : weekdayPublishedCount;
+        const projectedTotal = alreadyHasCallOnDate
+          ? totalPublishedCount
+          : totalPublishedCount + 1;
+
+        for (const violation of evaluateRotationCallLimitForResident({
+          rotationIds: rotationIdsForDay,
+          isWeekendDate: thisDateIsWeekend,
+          weekendCallDays: projectedWeekend,
+          weekdayCallDays: projectedWeekday,
+          totalCallDays: projectedTotal,
+          callType: "Primary",
+          rules,
+        })) {
+          const matchedIds = (violation.metadata?.matchedRotationIds as string[] | undefined) ?? [];
+          const matchedRotation = day.rotationConflicts.find(
+            (c) => c.rotationId && matchedIds.includes(c.rotationId)
+          );
+
+          day.isBlocked = day.isBlocked || violation.severity === "error";
+          day.isWarning = day.isWarning || violation.severity === "warning";
+
+          pushRuleBlockIfMissing(day, {
+            ruleId: violation.rule.id,
+            ruleType: violation.rule.rule_type ?? "",
+            ruleName: violation.rule.name ?? "",
+            message: matchedRotation
+              ? `${matchedRotation.rotationName}: ${violation.message}`
+              : violation.message,
+            isHardRule: violation.severity === "error",
+          });
+
+          pushFlagIfMissing(day, {
+            key: `rule-${violation.rule.id}-${dateKey}-rotation-call-limit`,
+            label: "Rotation Call Limit",
+            tone: violation.severity === "error" ? "rose" : "amber",
+            description: matchedRotation?.rotationName ?? violation.message,
+            category: "rule",
+          });
+        }
+      }
+
       const primaryPgyViolations = evaluatePgyEligibility({
         resident,
         callType: "Primary",
         rules,
+        effectiveDate: dateKey,
       });
       const backupPgyViolations = evaluatePgyEligibility({
         resident,
         callType: "Backup",
         rules,
+        effectiveDate: dateKey,
       });
       if (primaryPgyViolations.length > 0 && backupPgyViolations.length > 0) {
         const representativeViolation = primaryPgyViolations[0];

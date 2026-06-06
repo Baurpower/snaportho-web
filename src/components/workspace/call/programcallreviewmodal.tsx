@@ -17,11 +17,13 @@ import type {
   DraftDayAssignment,
   ExistingResidentStats,
   ProgramAvailabilityMonthResponse,
+  ProgramCallSlotDefinition,
   ProgramRule,
   ResidentOption,
 } from "@/components/workspace/call/programcalltypes";
 import { getFlagsForAssignedResident } from "@/components/workspace/call/programcallevaluator";
 import { getRequiredCallTypesFromRules } from "@/lib/workspace/call/rule-evaluator";
+import { getSlotStatusForDay } from "@/lib/workspace/call/rule-definitions";
 
 type Slot = "Primary" | "Backup" | "Buddy";
 type ScheduleSlotMode = "Primary" | "Both";
@@ -170,6 +172,7 @@ type Props = {
   rules: ProgramRule[];
   availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
   scheduleSlotMode: ScheduleSlotMode;
+  slotDefinitions?: ProgramCallSlotDefinition[];
   generationReport?: unknown;
   aiReviewContext: AIReviewContext;
   autoReviewToken?: number | null;
@@ -221,17 +224,65 @@ function getFlagText(flag: AssignmentFlag) {
   );
 }
 
+/**
+ * Returns whether any backup slot definition is visible for the given day.
+ * Uses hasAssignment=true so already-assigned backup is always shown.
+ */
+function isBackupVisibleForDay(
+  day: CalendarDay,
+  assignment: DraftDayAssignment | undefined,
+  residentLookup: Map<string, ResidentOption>,
+  backupDefs: ProgramCallSlotDefinition[]
+): boolean {
+  if (backupDefs.length === 0) return false;
+  const primaryResident = assignment?.primaryRosterId
+    ? residentLookup.get(assignment.primaryRosterId)
+    : null;
+  const primaryPgyYear = primaryResident?.pgyYear ?? null;
+  const dayOfWeek = day.date.getDay();
+  const hasAssignment = Boolean(assignment?.backupRosterId);
+  return backupDefs.some(
+    (def) => getSlotStatusForDay({ def, dayOfWeek, primaryPgyYear, hasAssignment }).isVisible
+  );
+}
+
+/**
+ * Returns whether any backup slot definition is required for the given day
+ * (ignoring whether it's already assigned — checks the "would it be required if empty?" state).
+ */
+function isBackupRequiredForDay(
+  day: CalendarDay,
+  assignment: DraftDayAssignment | undefined,
+  residentLookup: Map<string, ResidentOption>,
+  backupDefs: ProgramCallSlotDefinition[]
+): boolean {
+  if (backupDefs.length === 0) return false;
+  const primaryResident = assignment?.primaryRosterId
+    ? residentLookup.get(assignment.primaryRosterId)
+    : null;
+  const primaryPgyYear = primaryResident?.pgyYear ?? null;
+  const dayOfWeek = day.date.getDay();
+  return backupDefs.some(
+    (def) => getSlotStatusForDay({ def, dayOfWeek, primaryPgyYear, hasAssignment: false }).isRequired
+  );
+}
+
 function countUnfilledDays(
   monthDays: CalendarDay[],
   assignments: Record<string, DraftDayAssignment>,
   requiredCallTypes: Slot[],
-  scheduleSlotMode: ScheduleSlotMode
+  scheduleSlotMode: ScheduleSlotMode,
+  slotDefinitions: ProgramCallSlotDefinition[],
+  residentLookup: Map<string, ResidentOption>
 ) {
+  const backupDefs = slotDefinitions.filter((def) => def.callType === "Backup");
+  const hasConditionalBackup = backupDefs.some((def) => def.requiredMode === "conditional");
+
   const shouldCheckPrimary =
     requiredCallTypes.length > 0
       ? requiredCallTypes.includes("Primary")
       : scheduleSlotMode === "Primary" || scheduleSlotMode === "Both";
-  const shouldCheckBackup =
+  const globalBackupRequired =
     requiredCallTypes.length > 0
       ? requiredCallTypes.includes("Backup")
       : scheduleSlotMode !== "Primary";
@@ -239,10 +290,16 @@ function countUnfilledDays(
   return monthDays.filter((day) => {
     const assignment = assignments[day.key];
 
-    return (
-      (shouldCheckPrimary && !assignment?.primaryRosterId) ||
-      (shouldCheckBackup && !assignment?.backupRosterId)
-    );
+    if (shouldCheckPrimary && !assignment?.primaryRosterId) return true;
+
+    if (!assignment?.backupRosterId) {
+      if (hasConditionalBackup) {
+        return isBackupRequiredForDay(day, assignment, residentLookup, backupDefs);
+      }
+      return globalBackupRequired;
+    }
+
+    return false;
   }).length;
 }
 
@@ -447,6 +504,7 @@ export default function ProgramCallReviewModal({
   rules,
   availabilityByResident,
   scheduleSlotMode,
+  slotDefinitions = [],
   generationReport,
   aiReviewContext,
   autoReviewToken,
@@ -597,15 +655,26 @@ React.useEffect(() => {
     [rules]
   );
 
+  const backupDefs = useMemo(
+    () => slotDefinitions.filter((def) => def.callType === "Backup"),
+    [slotDefinitions]
+  );
+  const hasConditionalBackup = useMemo(
+    () => backupDefs.some((def) => def.requiredMode === "conditional"),
+    [backupDefs]
+  );
+
   const unfilledDays = useMemo(
     () =>
       countUnfilledDays(
         monthDays,
         draftAssignments,
         requiredCallTypes,
-        scheduleSlotMode
+        scheduleSlotMode,
+        slotDefinitions,
+        residentLookup
       ),
-    [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode]
+    [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode, slotDefinitions, residentLookup]
   );
 
   const totalFlags = useMemo(
@@ -613,34 +682,42 @@ React.useEffect(() => {
     [rows]
   );
 
-  const assignedSlots = useMemo(() => {
-    return monthDays.reduce((sum, day) => {
+  const { assignedSlots, expectedSlots } = useMemo(() => {
+    const shouldCountPrimaryGlobal =
+      requiredCallTypes.length > 0
+        ? requiredCallTypes.includes("Primary")
+        : scheduleSlotMode === "Primary" || scheduleSlotMode === "Both";
+    const globalBackupCounted =
+      requiredCallTypes.length > 0
+        ? requiredCallTypes.includes("Backup")
+        : scheduleSlotMode === "Both";
+
+    let assigned = 0;
+    let expected = 0;
+
+    for (const day of monthDays) {
       const assignment = draftAssignments[day.key];
-      if (!assignment) return sum;
 
-      const shouldCountPrimary =
-        requiredCallTypes.length > 0
-          ? requiredCallTypes.includes("Primary")
-          : scheduleSlotMode === "Primary" || scheduleSlotMode === "Both";
-      const shouldCountBackup =
-        requiredCallTypes.length > 0
-          ? requiredCallTypes.includes("Backup")
-          : scheduleSlotMode === "Both";
+      if (shouldCountPrimaryGlobal) {
+        expected += 1;
+        if (assignment?.primaryRosterId) assigned += 1;
+      }
 
-      return (
-        sum +
-        (shouldCountPrimary && assignment.primaryRosterId ? 1 : 0) +
-        (shouldCountBackup && assignment.backupRosterId ? 1 : 0)
-      );
-    }, 0);
-  }, [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode]);
+      // Per-day backup visibility for conditional defs; global flag otherwise.
+      if (hasConditionalBackup) {
+        const visible = isBackupVisibleForDay(day, assignment, residentLookup, backupDefs);
+        if (visible) {
+          expected += 1;
+          if (assignment?.backupRosterId) assigned += 1;
+        }
+      } else if (globalBackupCounted) {
+        expected += 1;
+        if (assignment?.backupRosterId) assigned += 1;
+      }
+    }
 
-  const expectedSlots =
-    requiredCallTypes.length > 0
-      ? monthDays.length * requiredCallTypes.length
-      : scheduleSlotMode === "Primary"
-      ? monthDays.length
-      : monthDays.length * 2;
+    return { assignedSlots: assigned, expectedSlots: expected };
+  }, [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode, hasConditionalBackup, backupDefs, residentLookup]);
 
   function getWarningsForDay(day: CalendarDay): DayWarning[] {
     const assignment = draftAssignments[day.key];
@@ -839,9 +916,9 @@ React.useEffect(() => {
                         P = Primary
                       </span>
 
-                      {scheduleSlotMode === "Both" ? (
+                      {scheduleSlotMode === "Both" || hasConditionalBackup ? (
                         <span className="rounded-full bg-violet-50 px-2.5 py-1 text-violet-700 ring-1 ring-violet-200">
-                          B = Backup
+                          B = Backup{hasConditionalBackup ? " (conditional)" : ""}
                         </span>
                       ) : null}
                     </div>
@@ -874,10 +951,16 @@ React.useEffect(() => {
                         ? residentLookup.get(assignment.backupRosterId)
                         : null;
 
+                      // Per-day backup visibility: conditional defs use PGY-of-primary check.
+                      const showBackupRow = hasConditionalBackup
+                        ? isBackupVisibleForDay(day, assignment, residentLookup, backupDefs)
+                        : scheduleSlotMode === "Both";
+                      const backupRequiredThisDay = hasConditionalBackup
+                        ? isBackupRequiredForDay(day, assignment, residentLookup, backupDefs)
+                        : scheduleSlotMode === "Both";
+
                       const isIncomplete =
-                        scheduleSlotMode === "Primary"
-                          ? !primary
-                          : !primary || !backup;
+                        !primary || (backupRequiredThisDay && !backup);
 
                       const warnings = getWarningsForDay(day);
                       const warningCount = warnings.reduce(
@@ -926,7 +1009,7 @@ React.useEffect(() => {
                               P: {shortName(primary)}
                             </div>
 
-                            {scheduleSlotMode === "Both" ? (
+                            {showBackupRow ? (
                               <div className="truncate rounded-lg bg-violet-50 px-2 py-1 text-[11px] font-semibold text-violet-900 ring-1 ring-violet-100">
                                 B: {shortName(backup)}
                               </div>

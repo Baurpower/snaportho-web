@@ -164,6 +164,8 @@ function getRuleIcon(type: RuleType) {
       return CheckCircle2;
     case "restrict_call_by_rotation":
       return AlertTriangle;
+    case "max_calls_for_rotation":
+      return BriefcaseMedical;
     default:
       return SlidersHorizontal;
   }
@@ -1109,6 +1111,138 @@ function RuleConfigEditor({
     );
   }
 
+  if (rule.type === "max_calls_for_rotation") {
+    const limitIds = Array.isArray(config.rotationCallLimitIds)
+      ? (config.rotationCallLimitIds as string[])
+      : [];
+    const dayScope =
+      typeof config.rotationCallLimitDayScope === "string"
+        ? (config.rotationCallLimitDayScope as "all" | "weekend_only" | "weekday_only")
+        : "weekend_only";
+    const limitCallTypes = Array.isArray(config.rotationCallLimitCallTypes)
+      ? (config.rotationCallLimitCallTypes as string[])
+      : ["Primary"];
+    const maxDays =
+      typeof config.rotationCallLimitMax === "number"
+        ? config.rotationCallLimitMax
+        : 1;
+
+    const dayScopeOptions: Array<{
+      value: "all" | "weekend_only" | "weekday_only";
+      label: string;
+    }> = [
+      { value: "weekend_only", label: "Weekend calls only" },
+      { value: "weekday_only", label: "Weekday calls only" },
+      { value: "all", label: "All call days" },
+    ];
+
+    const callTypeOptions = ["Primary", "Backup", "Buddy"] as const;
+
+    function toggleCallType(ct: string) {
+      const next = limitCallTypes.includes(ct)
+        ? limitCallTypes.filter((t) => t !== ct)
+        : [...limitCallTypes, ct];
+      updateConfig({ ...config, rotationCallLimitCallTypes: next.length > 0 ? next : [ct] });
+    }
+
+    // Human-readable preview of the rule.
+    const rotationNames = limitIds
+      .map((id) => {
+        const rot = rotationOptions.find((r) => r.id === id);
+        return rot ? getRotationDisplayName(rot) : id;
+      })
+      .join(", ");
+    const previewText =
+      limitIds.length > 0
+        ? `Residents on ${rotationNames || "selected rotation(s)"} may receive at most ${maxDays} ${
+            dayScope === "weekend_only" ? "weekend" : dayScope === "weekday_only" ? "weekday" : ""
+          } ${limitCallTypes.join("/")} call day${maxDays === 1 ? "" : "s"} per month.`
+        : null;
+
+    return (
+      <div className="space-y-4">
+        <div>
+          <span className="mb-1.5 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            Service / rotation
+          </span>
+          <RotationMultiSelect
+            options={rotationOptions}
+            selectedIds={limitIds}
+            onChange={(nextIds) =>
+              updateConfig({ ...config, rotationCallLimitIds: nextIds })
+            }
+          />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              Applies to
+            </span>
+            <div className="flex flex-col gap-1">
+              {dayScopeOptions.map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() =>
+                    updateConfig({ ...config, rotationCallLimitDayScope: opt.value })
+                  }
+                  className={`rounded-full px-3 py-1.5 text-left text-xs font-semibold transition ${
+                    dayScope === opt.value
+                      ? "bg-slate-950 text-white"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              Call types that count
+            </span>
+            <div className="flex flex-col gap-1">
+              {callTypeOptions.map((ct) => (
+                <TogglePill
+                  key={ct}
+                  active={limitCallTypes.includes(ct)}
+                  label={ct}
+                  onClick={() => toggleCallType(ct)}
+                  activeClassName="bg-sky-600 text-white"
+                  inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
+                />
+              ))}
+            </div>
+          </div>
+
+          <label className="block">
+            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              Maximum per month
+            </span>
+            <input
+              type="number"
+              min={0}
+              value={maxDays}
+              onChange={(e) =>
+                updateConfig({ ...config, rotationCallLimitMax: Number(e.target.value) })
+              }
+              className="w-full rounded-[0.95rem] border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+            />
+          </label>
+        </div>
+
+        {previewText ? (
+          <div className="rounded-[1rem] border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-800">
+            <p className="font-semibold text-sky-950">Rule preview</p>
+            <p className="mt-1">{previewText}</p>
+          </div>
+        ) : null}
+      </div>
+    );
+  }
+
   return null;
 }
 
@@ -1232,6 +1366,7 @@ function slotDraftToDefinition(rule: RuleDraft): ProgramCallSlotDefinition {
     countsTowardWorkload: typeof c.slotCountsTowardWorkload === "boolean" ? c.slotCountsTowardWorkload : true,
     maxPerMonth: typeof c.slotMaxPerMonth === "number" ? c.slotMaxPerMonth : null,
     sortOrder: typeof c.slotSortOrder === "number" ? c.slotSortOrder : 0,
+    requiredWhenVisible: typeof c.slotRequiredWhenVisible === "boolean" ? (c.slotRequiredWhenVisible as boolean) : true,
   };
 }
 
@@ -1252,6 +1387,7 @@ function updateSlotConfig(rule: RuleDraft, patch: Partial<ProgramCallSlotDefinit
       slotCountsTowardWorkload: merged.countsTowardWorkload,
       slotMaxPerMonth: merged.maxPerMonth,
       slotSortOrder: merged.sortOrder,
+      slotRequiredWhenVisible: merged.requiredWhenVisible,
     }),
   };
 }
@@ -1420,6 +1556,25 @@ function CallSlotCard({
             </label>
           )}
 
+          {/* Required when visible */}
+          <div className="flex items-center justify-between gap-3 rounded-[0.85rem] border border-slate-200 bg-slate-50 px-3 py-2.5 sm:col-span-2">
+            <div>
+              <p className="text-xs font-semibold text-slate-800">Required when visible</p>
+              <p className="text-[11px] text-slate-500 mt-0.5">
+                {slot.requiredWhenVisible
+                  ? "Auto-generation must fill this slot when visible. Validation flags it if empty."
+                  : "This slot is optional when visible. Auto-generation may fill it but validation ignores it if empty."}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onChange(updateSlotConfig(rule, { requiredWhenVisible: !slot.requiredWhenVisible }))}
+              className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition ${slot.requiredWhenVisible ? "bg-slate-900" : "bg-slate-300"}`}
+            >
+              <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition ${slot.requiredWhenVisible ? "translate-x-6" : "translate-x-1"}`} />
+            </button>
+          </div>
+
           {/* Counts toward workload */}
           <div className="flex items-center justify-between gap-3 rounded-[0.85rem] border border-slate-200 bg-slate-50 px-3 py-2.5 sm:col-span-2">
             <div>
@@ -1449,10 +1604,47 @@ function CallSlotCard({
 }
 
 const DEFAULT_SLOT_CONFIGS: Array<Partial<ProgramCallSlotDefinition> & { label: string }> = [
-  { label: "Primary", shortLabel: "1°", callType: "Primary", colorKey: "amber", requiredMode: "always", countsTowardWorkload: true, sortOrder: 0 },
-  { label: "Backup", shortLabel: "2°", callType: "Backup", colorKey: "sky", requiredMode: "optional", countsTowardWorkload: true, sortOrder: 1 },
-  { label: "Buddy", shortLabel: "B°", callType: "Buddy", colorKey: "violet", requiredMode: "conditional", countsTowardWorkload: false, sortOrder: 2 },
+  { label: "Primary", shortLabel: "1°", callType: "Primary", colorKey: "amber", requiredMode: "always", countsTowardWorkload: true, sortOrder: 0, requiredWhenVisible: true },
+  { label: "Backup", shortLabel: "2°", callType: "Backup", colorKey: "sky", requiredMode: "optional", countsTowardWorkload: true, sortOrder: 1, requiredWhenVisible: true },
+  { label: "Buddy", shortLabel: "B°", callType: "Buddy", colorKey: "violet", requiredMode: "conditional", countsTowardWorkload: false, sortOrder: 2, requiredWhenVisible: false },
 ];
+
+const WEEKEND_BUDDY_SHORTCUT_NAME = "Weekend Buddy Option";
+
+const WEEKEND_BUDDY_SHORTCUT_DEF: Partial<ProgramCallSlotDefinition> = {
+  label: "Buddy",
+  shortLabel: "B°",
+  callType: "Buddy",
+  colorKey: "violet",
+  requiredMode: "conditional",
+  daysOfWeek: [5, 6],
+  condition: {
+    type: "when_pgy_scheduled",
+    pgyYears: [4],
+    sourceSlotCallTypes: ["Primary"],
+  },
+  countsTowardWorkload: false,
+  sortOrder: 2,
+  requiredWhenVisible: false,
+};
+
+function isWeekendBuddyShortcutRule(rule: RuleDraft) {
+  if (rule.type !== "call_slot_definition") return false;
+  const slot = slotDraftToDefinition(rule);
+
+  return (
+    rule.name === WEEKEND_BUDDY_SHORTCUT_NAME &&
+    slot.label === "Buddy" &&
+    slot.shortLabel === "B°" &&
+    slot.callType === "Buddy" &&
+    slot.requiredMode === "conditional" &&
+    slot.countsTowardWorkload === false &&
+    slot.requiredWhenVisible === false &&
+    JSON.stringify([...(slot.daysOfWeek ?? [])].sort()) === JSON.stringify([5, 6]) &&
+    slot.condition?.type === "when_pgy_scheduled" &&
+    JSON.stringify([...(slot.condition?.pgyYears ?? [])].sort()) === JSON.stringify([4])
+  );
+}
 
 function makeSlotRule(preset?: Partial<ProgramCallSlotDefinition>): RuleDraft {
   const base: Partial<ProgramCallSlotDefinition> = preset ?? DEFAULT_SLOT_CONFIGS[0];
@@ -1477,6 +1669,13 @@ function makeSlotRule(preset?: Partial<ProgramCallSlotDefinition>): RuleDraft {
   };
 }
 
+function makeWeekendBuddyShortcutRule() {
+  return {
+    ...makeSlotRule(WEEKEND_BUDDY_SHORTCUT_DEF),
+    name: WEEKEND_BUDDY_SHORTCUT_NAME,
+  };
+}
+
 function CallSlotsSection({
   slots,
   onChange,
@@ -1485,11 +1684,21 @@ function CallSlotsSection({
   onChange: (next: RuleDraft[]) => void;
 }) {
   const [addPreset, setAddPreset] = React.useState<string>("Primary");
+  const weekendBuddyEnabled = slots.some(isWeekendBuddyShortcutRule);
 
   function addSlot() {
     const preset = DEFAULT_SLOT_CONFIGS.find((p) => p.label === addPreset) ?? DEFAULT_SLOT_CONFIGS[0];
     const existing = slots.length;
     onChange([...slots, makeSlotRule({ ...preset, sortOrder: existing })]);
+  }
+
+  function toggleWeekendBuddyShortcut() {
+    if (weekendBuddyEnabled) {
+      onChange(slots.filter((slot) => !isWeekendBuddyShortcutRule(slot)));
+      return;
+    }
+
+    onChange([...slots, makeWeekendBuddyShortcutRule()]);
   }
 
   function updateSlot(id: string, next: RuleDraft) {
@@ -1529,6 +1738,30 @@ function CallSlotsSection({
           ))}
         </div>
       )}
+
+      <div className="mt-3 rounded-[1rem] border border-violet-200 bg-violet-50/70 p-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <p className="text-sm font-semibold text-slate-900">Enable PGY-4 Weekend Buddy Option</p>
+            <p className="mt-1 text-xs text-slate-600">
+              When a PGY-4 resident is assigned Primary call on Friday or Saturday, an optional Buddy slot becomes available.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={toggleWeekendBuddyShortcut}
+            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition ${
+              weekendBuddyEnabled
+                ? "bg-violet-600 text-white hover:bg-violet-700"
+                : "border border-violet-200 bg-white text-violet-700 hover:bg-violet-100"
+            }`}
+          >
+            <Wand2 className="h-3.5 w-3.5" />
+            {weekendBuddyEnabled ? "Enabled" : "Enable"}
+          </button>
+        </div>
+      </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <select

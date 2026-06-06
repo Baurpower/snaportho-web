@@ -23,7 +23,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-type Slot = "Primary" | "Backup";
+type Slot = "Primary" | "Backup" | "Buddy";
 type JsonRecord = Record<string, unknown>;
 
 type WarningCategory =
@@ -300,9 +300,22 @@ function getOptionWarningSummary({
     (bodyRecord.availabilityByResident ??
       {}) as ProgramAvailabilityMonthResponse["availability"];
 
-  const residentLookup = new Map(
-    residents.map((resident) => [resident.membershipId, resident])
-  );
+  // Key by residentId (which equals rosterId in modern code) AND by membershipId
+  // as a fallback, so old data where the two differed still resolves correctly.
+  const residentLookup = new Map<string, ResidentOption>();
+  for (const resident of residents) {
+    if (resident.residentId) residentLookup.set(resident.residentId, resident);
+    if (resident.rosterId && resident.rosterId !== resident.residentId) {
+      residentLookup.set(resident.rosterId, resident);
+    }
+    if (
+      resident.membershipId &&
+      resident.membershipId !== resident.residentId &&
+      resident.membershipId !== resident.rosterId
+    ) {
+      residentLookup.set(resident.membershipId, resident);
+    }
+  }
 
   const warnings: WarningItem[] = [];
 
@@ -340,6 +353,7 @@ function getOptionWarningSummary({
 
     check(assignment.primaryRosterId, "Primary");
     check(assignment.backupRosterId, "Backup");
+    check(assignment.buddyRosterId, "Buddy");
   }
 
   const seen = new Set<string>();

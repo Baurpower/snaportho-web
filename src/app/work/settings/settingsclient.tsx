@@ -13,11 +13,13 @@ import {
   Search,
   Settings2,
   Shapes,
+  Stethoscope,
   Users,
   X,
 } from "lucide-react";
 import ProgramRotations from "@/components/workspace/settings/programrotations";
 import EditProgramRotations from "@/components/workspace/settings/editprogramrotations";
+import ProgramAttendingsManager from "@/components/workspace/settings/programattendingsmanager";
 import RotationSettingsSegmentedControl from "@/components/workspace/settings/rotationsettingssegmentedcontrol";
 import RotationTracksManager from "@/components/workspace/settings/rotationtracksmanager";
 import { isVisibleResidentForAcademicYear } from "@/lib/workspace/pgy";
@@ -561,6 +563,9 @@ export default function ProgramSettingsPage() {
   const [draftAssignments, setDraftAssignments] = useState<EditProgramRotationAssignment[]>([]);
   const [canManageRotationSettings, setCanManageRotationSettings] = useState(false);
   const isAdminMode = permissions?.mode === "admin";
+  const canManageAttendingsFallback =
+    Boolean(permissions?.canEditCallAssignments) ||
+    Boolean(permissions?.canManageProgramSettings);
 
   const [selectedRotationIds, setSelectedRotationIds] = useState<string[]>([]);
   const [rotationFilterOpen, setRotationFilterOpen] = useState(false);
@@ -1500,6 +1505,17 @@ export default function ProgramSettingsPage() {
                   </div>
                 )}
               </div>
+            </SectionShell>
+
+            <SectionShell
+              title="Program Attendings"
+              subtitle="Manage attending physicians for call coverage and future resident preferences."
+              icon={<Stethoscope className="h-5 w-5" />}
+            >
+              <ProgramAttendingsManager
+                canManageFallback={canManageAttendingsFallback}
+                onBanner={setBanner}
+              />
             </SectionShell>
           </div>
         </motion.div>

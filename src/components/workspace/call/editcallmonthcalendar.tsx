@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   DndContext,
   DragOverlay,
@@ -54,56 +54,10 @@ import {
   getWorstValidationSeverity,
 } from "@/lib/workspace/call/validation-display";
 import { getCallMutationValidation } from "@/lib/workspace/call/mutation-error";
-
-// ─── Local color system for this page ─────────────────────────────────────────
-// 24 perceptually-distinct colors ordered so the first 12 span the full hue
-// wheel with no near-hue repeats. Each resident receives a color by sorted
-// name position, so the first 12 visible residents are always maximally
-// distinct. A hash fallback handles calls whose rosters aren't in the current
-// list (e.g. legacy data).
-type EditColor = {
-  bg: string;
-  border: string;
-  text: string;
-  badge: string;
-  badgeText: string;
-};
-
-const EDIT_COLORS: EditColor[] = [
-  { bg: "bg-blue-200",    border: "border-blue-500",    text: "text-blue-900",    badge: "bg-blue-300",    badgeText: "text-blue-900" },
-  { bg: "bg-orange-200",  border: "border-orange-500",  text: "text-orange-900",  badge: "bg-orange-300",  badgeText: "text-orange-900" },
-  { bg: "bg-green-200",   border: "border-green-600",   text: "text-green-900",   badge: "bg-green-300",   badgeText: "text-green-900" },
-  { bg: "bg-red-200",     border: "border-red-500",     text: "text-red-900",     badge: "bg-red-300",     badgeText: "text-red-900" },
-  { bg: "bg-purple-200",  border: "border-purple-500",  text: "text-purple-900",  badge: "bg-purple-300",  badgeText: "text-purple-900" },
-  { bg: "bg-yellow-200",  border: "border-yellow-500",  text: "text-yellow-900",  badge: "bg-yellow-300",  badgeText: "text-yellow-900" },
-  { bg: "bg-teal-200",    border: "border-teal-500",    text: "text-teal-900",    badge: "bg-teal-300",    badgeText: "text-teal-900" },
-  { bg: "bg-pink-200",    border: "border-pink-500",    text: "text-pink-900",    badge: "bg-pink-300",    badgeText: "text-pink-900" },
-  { bg: "bg-stone-300",   border: "border-stone-600",   text: "text-stone-900",   badge: "bg-stone-400",   badgeText: "text-stone-900" },
-  { bg: "bg-lime-200",    border: "border-lime-600",    text: "text-lime-900",    badge: "bg-lime-300",    badgeText: "text-lime-900" },
-  { bg: "bg-indigo-200",  border: "border-indigo-500",  text: "text-indigo-900",  badge: "bg-indigo-300",  badgeText: "text-indigo-900" },
-  { bg: "bg-cyan-200",    border: "border-cyan-500",    text: "text-cyan-900",    badge: "bg-cyan-300",    badgeText: "text-cyan-900" },
-  // Secondary variants — safely reach here only in larger programs
-  { bg: "bg-violet-200",  border: "border-violet-500",  text: "text-violet-900",  badge: "bg-violet-300",  badgeText: "text-violet-900" },
-  { bg: "bg-amber-200",   border: "border-amber-600",   text: "text-amber-900",   badge: "bg-amber-300",   badgeText: "text-amber-900" },
-  { bg: "bg-emerald-200", border: "border-emerald-600", text: "text-emerald-900", badge: "bg-emerald-300", badgeText: "text-emerald-900" },
-  { bg: "bg-rose-200",    border: "border-rose-500",    text: "text-rose-900",    badge: "bg-rose-300",    badgeText: "text-rose-900" },
-  { bg: "bg-fuchsia-200", border: "border-fuchsia-500", text: "text-fuchsia-900", badge: "bg-fuchsia-300", badgeText: "text-fuchsia-900" },
-  { bg: "bg-sky-200",     border: "border-sky-500",     text: "text-sky-900",     badge: "bg-sky-300",     badgeText: "text-sky-900" },
-  { bg: "bg-slate-200",   border: "border-slate-500",   text: "text-slate-900",   badge: "bg-slate-300",   badgeText: "text-slate-900" },
-  { bg: "bg-zinc-300",    border: "border-zinc-600",    text: "text-zinc-900",    badge: "bg-zinc-400",    badgeText: "text-zinc-900" },
-  // Deeper variants for programs with 20+ residents
-  { bg: "bg-blue-300",    border: "border-blue-600",    text: "text-blue-950",    badge: "bg-blue-400",    badgeText: "text-blue-950" },
-  { bg: "bg-orange-300",  border: "border-orange-600",  text: "text-orange-950",  badge: "bg-orange-400",  badgeText: "text-orange-950" },
-  { bg: "bg-green-300",   border: "border-green-700",   text: "text-green-950",   badge: "bg-green-400",   badgeText: "text-green-950" },
-  { bg: "bg-red-300",     border: "border-red-600",     text: "text-red-950",     badge: "bg-red-400",     badgeText: "text-red-950" },
-];
-
-function hashForFallback(s: string): number {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-  return h;
-}
-// ─── end local color system ────────────────────────────────────────────────────
+import {
+  getResidentColorClasses,
+  type ResidentColorClasses,
+} from "@/lib/workspace/call/resident-colors";
 
 type ResidentOption = {
   rosterId: string;
@@ -642,7 +596,7 @@ function DraggableCallCard({
   slotId: string;
   onClick: () => void;
   disabled: boolean;
-  color: EditColor;
+  color: ResidentColorClasses;
 }) {
   const sourceSlot = deserializeSlotId(slotId);
   const residentId = call.rosterId ?? call.membershipId ?? null;
@@ -733,7 +687,7 @@ function DraggableResidentCard({
   count: number;
   validationIssues: CallValidationIssue[];
   disabled: boolean;
-  color: EditColor;
+  color: ResidentColorClasses;
 }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
@@ -1246,29 +1200,6 @@ export default function EditCallMonthCalendar({
         ),
       })),
     [filteredResidents]
-  );
-
-  // Sorted-order color assignment: residents are sorted by name and assigned
-  // EDIT_COLORS[0..n] so the first 12 visible residents always get the most
-  // distinct available hues (blue, orange, green, red, purple, yellow, ...).
-  const residentIndexMap = useMemo(() => {
-    const sorted = [...residents].sort((a, b) =>
-      a.residentName.localeCompare(b.residentName)
-    );
-    const map = new Map<string, number>();
-    sorted.forEach((r, i) => map.set(r.rosterId, i));
-    return map;
-  }, [residents]);
-
-  const getEditColor = useCallback(
-    (rosterId: string | null | undefined): EditColor => {
-      if (!rosterId) return EDIT_COLORS[0];
-      const idx = residentIndexMap.get(rosterId);
-      if (idx !== undefined) return EDIT_COLORS[idx % EDIT_COLORS.length];
-      // Hash fallback for calls whose rosters aren't in the current month list
-      return EDIT_COLORS[hashForFallback(rosterId) % EDIT_COLORS.length];
-    },
-    [residentIndexMap]
   );
 
   const slotItemsByDate = useMemo(() => {
@@ -2325,7 +2256,7 @@ export default function EditCallMonthCalendar({
               count={residentCounts.get(resident.rosterId) ?? 0}
               validationIssues={getResidentValidationIssues(resident.rosterId)}
               disabled={working || deleteMode}
-              color={getEditColor(resident.rosterId)}
+              color={getResidentColorClasses(resident.rosterId)}
             />
           ))}
         </div>
@@ -2627,7 +2558,9 @@ export default function EditCallMonthCalendar({
                                 call={slotCall}
                                 slotId={item.slotId}
                                 disabled={assignmentEditState.isDragDisabled}
-                                color={getEditColor(slotCall.rosterId ?? slotCall.membershipId)}
+                                color={getResidentColorClasses(
+                                  slotCall.rosterId ?? slotCall.membershipId
+                                )}
                                 onClick={() => {
                                   setSelectedDateKey(dateKey);
 
@@ -2667,7 +2600,9 @@ export default function EditCallMonthCalendar({
           <DragOverlay>
             {deleteMode ? null : activeDragCall ? (
               (() => {
-                const c = getEditColor(activeDragCall.rosterId ?? activeDragCall.membershipId);
+                const c = getResidentColorClasses(
+                  activeDragCall.rosterId ?? activeDragCall.membershipId
+                );
                 return (
                   <div className={`w-[220px] rounded-lg border-2 px-3 py-2.5 shadow-2xl ${c.bg} ${c.border}`}>
                     <div className="mb-1 flex items-center gap-1.5">
@@ -2686,7 +2621,7 @@ export default function EditCallMonthCalendar({
               })()
             ) : activeDragResident ? (
               (() => {
-                const c = getEditColor(activeDragResident.rosterId);
+                const c = getResidentColorClasses(activeDragResident.rosterId);
                 return (
                   <div className={`w-[220px] rounded-lg border-2 px-3 py-2.5 shadow-2xl ${c.bg} ${c.border}`}>
                     <p className={`text-[15px] font-bold leading-tight ${c.text}`}>

@@ -12,12 +12,14 @@ import {
   countUniqueWeekendBuckets,
   evaluateMonthlyLimitForResident,
   evaluatePgyEligibility,
+  evaluateRotationCallLimitForResident,
   evaluateRotationEligibility,
   evaluateSpacingForResident,
   evaluateWeekendLimitForResident,
   evaluateWeekendPairingForResident,
   getAdjacentWeekendDateKey,
   getWeekendBucket,
+  isWeekendDateKey,
 } from "@/lib/workspace/call/rule-evaluator";
 
 type EvaluateResidentForSlotParams = {
@@ -193,6 +195,7 @@ export function evaluateResidentForSlot(
     resident,
     callType: slot,
     rules,
+    effectiveDate: dateKey,
   })) {
     addRuleResult({
       rule: violation.rule,
@@ -326,8 +329,11 @@ export function evaluateResidentForSlot(
     });
   }
 
+  const rotationConflictIds =
+    availability?.rotationConflicts.map((conflict) => conflict.rotationId) ?? [];
+
   const rotationViolations = evaluateRotationEligibility({
-    rotationIds: availability?.rotationConflicts.map((conflict) => conflict.rotationId) ?? [],
+    rotationIds: rotationConflictIds,
     callType: slot,
     rules,
   });
@@ -367,6 +373,75 @@ export function evaluateResidentForSlot(
         category: "rotation",
       },
     });
+  }
+
+  // Per-rotation call-day limit (e.g. "Oncology residents get at most 1 weekend Primary/month").
+  // Only runs when the resident is on a rotation on this date.
+  if (rotationConflictIds.length > 0) {
+    const isWeekend = isWeekendDateKey(dateKey);
+    const weekendDates = assignedDates.filter((d) => isWeekendDateKey(d));
+    const weekdayDates = assignedDates.filter((d) => !isWeekendDateKey(d));
+
+    // Projected counts include the tentative new assignment.
+    const projectedWeekendDays =
+      isWeekend && !alreadyAssignedOnDate
+        ? weekendDates.length + 1
+        : weekendDates.length;
+    const projectedWeekdayDays =
+      !isWeekend && !alreadyAssignedOnDate
+        ? weekdayDates.length + 1
+        : weekdayDates.length;
+    const projectedTotalDays = alreadyAssignedOnDate
+      ? assignedDates.length
+      : assignedDates.length + 1;
+
+    for (const violation of evaluateRotationCallLimitForResident({
+      rotationIds: rotationConflictIds,
+      isWeekendDate: isWeekend,
+      weekendCallDays: projectedWeekendDays,
+      weekdayCallDays: projectedWeekdayDays,
+      totalCallDays: projectedTotalDays,
+      callType: slot,
+      rules,
+    })) {
+      const matchedIds = (
+        violation.metadata?.matchedRotationIds as string[] | undefined
+      ) ?? [];
+      const matchingRotation = availability?.rotationConflicts.find(
+        (c) => c.rotationId && matchedIds.includes(c.rotationId)
+      );
+
+      addRuleResult({
+        rule: violation.rule,
+        block: {
+          ruleId: violation.rule.id,
+          ruleType: violation.rule.rule_type,
+          ruleName: violation.rule.name,
+          message: matchingRotation
+            ? `${matchingRotation.rotationName}: ${violation.message}`
+            : violation.message,
+          isHardRule: violation.severity === "error",
+        },
+        flags,
+        blocks,
+        warnings,
+        setBlocked: () => {
+          blocked = true;
+        },
+        setWarning: () => {
+          warning = true;
+        },
+        flag: {
+          key: `rule-${violation.rule.id}-${dateKey}-${slot}-rotation-call-limit`,
+          label: "Rotation Call Limit",
+          tone: violation.severity === "error" ? "rose" : "amber",
+          description: matchingRotation
+            ? `${matchingRotation.rotationName}: ${violation.message}`
+            : violation.message,
+          category: "rule",
+        },
+      });
+    }
   }
 
   for (const violation of evaluateWeekendPairingForResident({

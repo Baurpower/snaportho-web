@@ -14,7 +14,13 @@ import {
   isResidentAllowedForSlot,
   getFlagsForAssignedResident,
 } from "@/components/workspace/call/programcallevaluator";
-import { getEffectiveRules } from "@/lib/workspace/call/rule-definitions"; // Phase 9 alignment
+import {
+  DEFAULT_SLOT_DEFINITIONS,
+  getEffectiveRules,
+  getSlotStatusForDay,
+  getVisibleCallSlotsForDay,
+  type ProgramCallSlotDefinition,
+} from "@/lib/workspace/call/rule-definitions"; // Phase 9 alignment
 import {
   countUniqueWeekendBuckets,
   evaluateMonthlyLimitForResident,
@@ -31,7 +37,7 @@ import {
   isRuleEnabled,
 } from "@/lib/workspace/call/rule-evaluator";
 
-type Slot = "Primary" | "Backup";
+type Slot = "Primary" | "Backup" | "Buddy";
 
 type GenerateParams = {
   monthDays: CalendarDay[];
@@ -43,18 +49,21 @@ type GenerateParams = {
   availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
   historicalStats: ExistingResidentStats[];
   slotMode?: QuickAssignSlotMode;
+  slotDefinitions?: ProgramCallSlotDefinition[];
 };
 
 type ResidentAutoStats = {
   resident: ResidentOption;
   monthPrimary: number;
   monthBackup: number;
+  monthBuddy: number;
   monthTotal: number;
   monthWeekend: number;
   monthWeekendPrimary: number;
   monthWeekendBackup: number;
   yearPrimary: number;
   yearBackup: number;
+  yearBuddy: number;
   yearTotal: number;
   yearWeekend: number;
   yearWeekendPrimary: number;
@@ -62,6 +71,7 @@ type ResidentAutoStats = {
 
   primaryDates: string[];
   backupDates: string[];
+  buddyDates: string[];
   assignedDates: string[];
 };
 
@@ -176,8 +186,11 @@ const BACKUP_WEIGHT = 0.25;
 const WEEKEND_PRIMARY_WEIGHT = 1;
 const WEEKEND_BACKUP_WEIGHT = 0.3;
 
-function getResidentYearValue(resident: ResidentOption) {
-  return getResidentPgyYear(resident) ?? 99;
+function getResidentYearValue(
+  resident: ResidentOption,
+  effectiveDate?: string | null
+) {
+  return getResidentPgyYear(resident, effectiveDate) ?? 99;
 }
 
 function getExpectedPgyBurdenMultiplier(resident: ResidentOption) {
@@ -306,6 +319,7 @@ function summarizeRuleWarningsForCombination({
 
     check(assignment.primaryRosterId, "Primary");
     check(assignment.backupRosterId, "Backup");
+    check(assignment.buddyRosterId, "Buddy");
   }
 
   return {
@@ -331,18 +345,21 @@ function buildInitialStats(
   resident,
   monthPrimary: 0,
   monthBackup: 0,
+  monthBuddy: 0,
   monthTotal: 0,
   monthWeekend: 0,
   monthWeekendPrimary: 0,
   monthWeekendBackup: 0,
   yearPrimary: baseline?.primaryCallsYear ?? 0,
   yearBackup: baseline?.backupCallsYear ?? 0,
+  yearBuddy: baseline?.buddyCallsYear ?? 0,
   yearTotal: baseline?.totalCallsYear ?? 0,
   yearWeekend: baseline?.weekendCallsYear ?? 0,
   yearWeekendPrimary: 0,
   yearWeekendBackup: 0,
   primaryDates: [],
   backupDates: [],
+  buddyDates: [],
   assignedDates: [],
 });
   }
@@ -354,7 +371,8 @@ function updateStats(
   stats: Map<string, ResidentAutoStats>,
   residentId: string,
   slot: Slot,
-  day: CalendarDay
+  day: CalendarDay,
+  countsTowardWorkload = true
 ) {
   const entry = stats.get(residentId);
   if (!entry) return;
@@ -363,24 +381,30 @@ function updateStats(
     entry.monthPrimary += 1;
     entry.yearPrimary += 1;
     entry.primaryDates.push(day.key);
-  } else {
+  } else if (slot === "Backup") {
     entry.monthBackup += 1;
     entry.yearBackup += 1;
     entry.backupDates.push(day.key);
+  } else {
+    entry.monthBuddy += 1;
+    entry.yearBuddy += 1;
+    entry.buddyDates.push(day.key);
   }
 
-  entry.monthTotal += 1;
-  entry.yearTotal += 1;
-  entry.assignedDates.push(day.key);
+  if (countsTowardWorkload) {
+    entry.monthTotal += 1;
+    entry.yearTotal += 1;
+    entry.assignedDates.push(day.key);
+  }
 
-  if (day.isWeekend) {
+  if (countsTowardWorkload && day.isWeekend) {
     entry.monthWeekend += 1;
     entry.yearWeekend += 1;
 
     if (slot === "Primary") {
       entry.monthWeekendPrimary += 1;
       entry.yearWeekendPrimary += 1;
-    } else {
+    } else if (slot === "Backup") {
       entry.monthWeekendBackup += 1;
       entry.yearWeekendBackup += 1;
     }
@@ -474,6 +498,7 @@ function analyzeCombinationDiagnostics({
 
     inspectResidentAssignment(assignment.primaryRosterId, "Primary");
     inspectResidentAssignment(assignment.backupRosterId, "Backup");
+    inspectResidentAssignment(assignment.buddyRosterId, "Buddy");
   }
 
   const hardErrors = issues.filter((issue) => issue.severity === "error");
@@ -497,8 +522,13 @@ function analyzeCombinationDiagnostics({
 function applyExistingAssignmentsToStats(
   stats: Map<string, ResidentAutoStats>,
   monthDays: CalendarDay[],
-  assignments: Record<string, DraftDayAssignment>
+  assignments: Record<string, DraftDayAssignment>,
+  slotDefinitions: ProgramCallSlotDefinition[]
 ) {
+  const buddyCountsTowardWorkload =
+    slotDefinitions.find((definition) => definition.callType === "Buddy")
+      ?.countsTowardWorkload ?? false;
+
   for (const day of monthDays) {
     const assignment = assignments[day.key];
     if (!assignment) continue;
@@ -509,6 +539,16 @@ function applyExistingAssignmentsToStats(
 
     if (assignment.backupRosterId) {
       updateStats(stats, assignment.backupRosterId, "Backup", day);
+    }
+
+    if (assignment.buddyRosterId) {
+      updateStats(
+        stats,
+        assignment.buddyRosterId,
+        "Buddy",
+        day,
+        buddyCountsTowardWorkload
+      );
     }
   }
 }
@@ -636,6 +676,7 @@ function getRulePenalty({
     resident,
     callType: slot,
     rules,
+    effectiveDate: day.key,
   })) {
     const hardMultiplier = violation.severity === "error" ? 10 : 1;
     penalty += 99999 * hardMultiplier;
@@ -787,7 +828,8 @@ function scoreResident({
 
   if (
     current?.primaryRosterId === resident.residentId ||
-    current?.backupRosterId === resident.residentId
+    current?.backupRosterId === resident.residentId ||
+    current?.buddyRosterId === resident.residentId
   ) {
     score += 99999;
   }
@@ -809,6 +851,191 @@ function scoreResident({
   });
 
   return score;
+}
+
+function getSecondarySlotContext({
+  day,
+  current,
+  residentsById,
+  slotDefinitions,
+}: {
+  day: CalendarDay;
+  current: DraftDayAssignment;
+  residentsById: Map<string, ResidentOption>;
+  slotDefinitions: ProgramCallSlotDefinition[];
+}) {
+  const primaryResident = current.primaryRosterId
+    ? residentsById.get(current.primaryRosterId)
+    : null;
+  const primaryPgyYear = primaryResident?.pgyYear ?? null;
+  const dayOfWeek = day.date.getDay();
+
+  const backupDefs = slotDefinitions.filter((def) => def.callType === "Backup");
+  const buddyDefs = slotDefinitions.filter((def) => def.callType === "Buddy");
+
+  const visibleBackupDefs = backupDefs.filter((def) => {
+    const { isVisible } = getSlotStatusForDay({
+      def,
+      dayOfWeek,
+      primaryPgyYear,
+      hasAssignment: Boolean(current.backupRosterId),
+    });
+    return isVisible;
+  });
+
+  const visibleBuddyDefs = buddyDefs.filter((def) => {
+    const { isVisible } = getSlotStatusForDay({
+      def,
+      dayOfWeek,
+      primaryPgyYear,
+      hasAssignment: Boolean(current.buddyRosterId),
+    });
+    return isVisible;
+  });
+
+  const backupDef = visibleBackupDefs[0] ?? null;
+  const buddyDef = visibleBuddyDefs[0] ?? null;
+
+  return {
+    backupDef,
+    buddyDef,
+    buddyCountsTowardWorkload: buddyDef?.countsTowardWorkload ?? false,
+  };
+}
+
+function scoreBuddyResident({
+  resident,
+  day,
+  stats,
+  generationVersion,
+  preferredPgyYears,
+}: {
+  resident: ResidentOption;
+  day: CalendarDay;
+  stats: Map<string, ResidentAutoStats>;
+  generationVersion: number;
+  preferredPgyYears: number[];
+}) {
+  const entry = stats.get(resident.residentId);
+  if (!entry) return Number.POSITIVE_INFINITY;
+
+  let score = 0;
+  const residentPgy = getResidentPgyYear(resident, day.key);
+
+  if (preferredPgyYears.length > 0) {
+    score += preferredPgyYears.includes(residentPgy ?? -1) ? -250 : 250;
+  }
+
+  score += entry.monthBuddy * 50;
+  score += entry.yearBuddy * 6;
+  score += entry.monthTotal * 8;
+  score += entry.monthWeekend * (day.isWeekend ? 10 : 0);
+  score += entry.assignedDates.length * 5;
+
+  score += seededNoise({
+    residentId: resident.residentId,
+    dateKey: day.key,
+    slot: "Buddy",
+    generationVersion,
+  });
+
+  return score;
+}
+
+function pickBestBuddyResident({
+  residents,
+  day,
+  current,
+  assignments,
+  rules,
+  availabilityByResident,
+  stats,
+  generationVersion,
+  slotDefinition,
+}: {
+  residents: ResidentOption[];
+  day: CalendarDay;
+  current: DraftDayAssignment;
+  assignments: Record<string, DraftDayAssignment>;
+  rules: ProgramRule[];
+  availabilityByResident: ProgramAvailabilityMonthResponse["availability"];
+  stats: Map<string, ResidentAutoStats>;
+  generationVersion: number;
+  slotDefinition: ProgramCallSlotDefinition;
+}) {
+  const preferredPgyYears =
+    slotDefinition.condition?.type === "when_pgy_scheduled"
+      ? slotDefinition.condition.pgyYears
+      : [];
+
+  const eligible = residents.filter((resident) => {
+    if (
+      resident.residentId === current.primaryRosterId ||
+      resident.residentId === current.backupRosterId ||
+      resident.residentId === current.buddyRosterId
+    ) {
+      return false;
+    }
+
+    if (
+      assignments[day.key]?.primaryRosterId === resident.residentId ||
+      assignments[day.key]?.backupRosterId === resident.residentId
+    ) {
+      return false;
+    }
+
+    if (
+      isResidentBlockedByRotationRule({
+        resident,
+        slot: "Buddy",
+        dateKey: day.key,
+        rules,
+      })
+    ) {
+      return false;
+    }
+
+    return isResidentAllowedForSlot({
+      resident,
+      slot: "Buddy",
+      dateKey: day.key,
+      assignments,
+      rules,
+      availabilityByResident,
+    });
+  });
+
+  if (eligible.length === 0) return null;
+
+  const ranked = eligible
+    .map((resident) => ({
+      resident,
+      evaluation: evaluateResidentForSlot({
+        resident,
+        slot: "Buddy",
+        dateKey: day.key,
+        assignments,
+        rules,
+        availabilityByResident,
+      }),
+      score: scoreBuddyResident({
+        resident,
+        day,
+        stats,
+        generationVersion,
+        preferredPgyYears,
+      }),
+    }))
+    .sort((a, b) => {
+      if (a.evaluation.warnings.length !== b.evaluation.warnings.length) {
+        return a.evaluation.warnings.length - b.evaluation.warnings.length;
+      }
+
+      if (a.score !== b.score) return a.score - b.score;
+      return a.resident.displayName.localeCompare(b.resident.displayName);
+    });
+
+  return ranked[0]?.resident ?? null;
 }
 
 function pickBestResident({
@@ -876,11 +1103,15 @@ function countOpenRequiredSlots({
   assignments,
   rules,
   slotMode,
+  slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
+  residentsById,
 }: {
   monthDays: CalendarDay[];
   assignments: Record<string, DraftDayAssignment>;
   rules: ProgramRule[];
   slotMode: QuickAssignSlotMode;
+  slotDefinitions?: ProgramCallSlotDefinition[];
+  residentsById?: Map<string, ResidentOption>;
 }) {
   let open = 0;
 
@@ -889,10 +1120,13 @@ function countOpenRequiredSlots({
     requiredCallTypes.length > 0
       ? requiredCallTypes.includes("Primary")
       : slotMode === "Primary" || slotMode === "Both";
-  const shouldCheckBackup =
+  const globalBackupRequired =
     requiredCallTypes.length > 0
       ? requiredCallTypes.includes("Backup")
       : slotMode === "Backup" || slotMode === "Both";
+
+  const customBackupDefs = slotDefinitions.filter((def) => def.callType === "Backup");
+  const hasCustomBackupDefs = customBackupDefs.length > 0;
 
   for (const day of monthDays) {
     const assignment = assignments[day.key];
@@ -901,8 +1135,27 @@ function countOpenRequiredSlots({
       open += 1;
     }
 
-    if (shouldCheckBackup && !assignment?.backupRosterId) {
-      open += 1;
+    if (!assignment?.backupRosterId) {
+      if (hasCustomBackupDefs) {
+        // Per-day conditional check: only count as open if this slot is visible AND required.
+        const primaryPgyYear =
+          assignment?.primaryRosterId && residentsById
+            ? (residentsById.get(assignment.primaryRosterId)?.pgyYear ?? null)
+            : null;
+        const dayOfWeek = day.date.getDay();
+        const hasRequiredOpenBackup = customBackupDefs.some((def) => {
+          const { isRequired } = getSlotStatusForDay({
+            def,
+            dayOfWeek,
+            primaryPgyYear,
+            hasAssignment: false,
+          });
+          return isRequired;
+        });
+        if (hasRequiredOpenBackup) open += 1;
+      } else if (globalBackupRequired) {
+        open += 1;
+      }
     }
   }
 
@@ -916,6 +1169,8 @@ function scoreGeneratedSchedule({
   rules,
   slotMode,
   diagnostics,
+  slotDefinitions,
+  residentsById,
 }: {
   stats: ResidentAutoStats[];
   assignments: Record<string, DraftDayAssignment>;
@@ -923,12 +1178,16 @@ function scoreGeneratedSchedule({
   rules: ProgramRule[];
   slotMode: QuickAssignSlotMode;
   diagnostics: CombinationDiagnostics;
+  slotDefinitions?: ProgramCallSlotDefinition[];
+  residentsById?: Map<string, ResidentOption>;
 }) {
   const openRequiredSlots = countOpenRequiredSlots({
     monthDays,
     assignments,
     rules,
     slotMode,
+    slotDefinitions,
+    residentsById,
   });
 
   const adjustedMonthBurdens = stats.map(getAdjustedMonthBurden);
@@ -986,8 +1245,14 @@ function generateSingleCallSchedule({
   availabilityByResident,
   historicalStats,
   slotMode = "Both",
+  slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
 }: GenerateParams) {
   const enabledRules = rules.filter(isRuleEnabled);
+  const effectiveSlotDefinitions =
+    slotDefinitions.length > 0 ? slotDefinitions : DEFAULT_SLOT_DEFINITIONS;
+  const residentsById = new Map(
+    residents.map((resident) => [resident.residentId, resident])
+  );
 
   const nextAssignments: Record<string, DraftDayAssignment> = {};
 
@@ -1014,7 +1279,12 @@ function generateSingleCallSchedule({
   const stats = buildInitialStats(residents, historicalStats);
 
   if (!forceRegenerate) {
-    applyExistingAssignmentsToStats(stats, monthDays, nextAssignments);
+    applyExistingAssignmentsToStats(
+      stats,
+      monthDays,
+      nextAssignments,
+      effectiveSlotDefinitions
+    );
   }
 
   const requiredCallTypes = getRequiredCallTypesFromRules(enabledRules);
@@ -1022,10 +1292,20 @@ function generateSingleCallSchedule({
     requiredCallTypes.length > 0
       ? requiredCallTypes.includes("Primary")
       : slotMode === "Primary" || slotMode === "Both";
-  const shouldFillBackup =
+
+  // Whether to attempt filling Backup from the global required_daily_call_slots rule.
+  // When custom slot definitions exist that define a Backup slot, per-day visibility
+  // overrides this for conditional slots (see getSecondarySlotContext below).
+  const globalBackupRequired =
     requiredCallTypes.length > 0
       ? requiredCallTypes.includes("Backup")
       : slotMode === "Backup" || slotMode === "Both";
+
+  // True when the program has defined custom Backup slot definitions with conditions.
+  // In that case, per-day evaluation takes over from the global flag.
+  const hasCustomBackupDefs = effectiveSlotDefinitions.some(
+    (def) => def.callType === "Backup"
+  );
 
   for (const day of monthDays) {
     const current = nextAssignments[day.key] ?? {
@@ -1053,7 +1333,39 @@ function generateSingleCallSchedule({
       }
     }
 
-    if (shouldFillBackup && !current.backupRosterId) {
+    // Phase 2: Determine which secondary slots are visible AFTER Primary is known.
+    const { backupDef, buddyDef, buddyCountsTowardWorkload } =
+      getSecondarySlotContext({
+        day,
+        current,
+        residentsById,
+        slotDefinitions: effectiveSlotDefinitions,
+      });
+
+    // Fill Backup when:
+    //   - custom slot defs: use per-day visibility from getSecondarySlotContext
+    //   - no custom slot defs: use legacy global flag (globalBackupRequired)
+    const shouldFillBackupThisDay = !current.backupRosterId && (
+      hasCustomBackupDefs
+        ? backupDef !== null  // visible per slot definition (required or optional)
+        : globalBackupRequired
+    );
+
+    if (process.env.NODE_ENV === "development" && hasCustomBackupDefs) {
+      const primaryResident = current.primaryRosterId
+        ? residentsById.get(current.primaryRosterId)
+        : null;
+      // eslint-disable-next-line no-console
+      console.debug("[auto-gen]", day.key, {
+        primaryName: primaryResident?.displayName ?? null,
+        primaryPgy: primaryResident?.pgyYear ?? null,
+        backupDefVisible: backupDef !== null,
+        shouldFillBackup: shouldFillBackupThisDay,
+        backupAssignedAfter: current.backupRosterId ?? "(none)",
+      });
+    }
+
+    if (shouldFillBackupThisDay) {
       const picked = pickBestResident({
         residents: residents.filter(
           (resident) => resident.residentId !== current.primaryRosterId
@@ -1071,6 +1383,35 @@ function generateSingleCallSchedule({
         current.backupRosterId = picked.residentId;
         nextAssignments[day.key] = current;
         updateStats(stats, picked.residentId, "Backup", day);
+      } else if (process.env.NODE_ENV === "development" && hasCustomBackupDefs) {
+        // eslint-disable-next-line no-console
+        console.debug("[auto-gen] backup slot visible but no eligible resident found:", day.key);
+      }
+    }
+
+    if (!current.buddyRosterId && buddyDef) {
+      const pickedBuddy = pickBestBuddyResident({
+        residents,
+        day,
+        current,
+        assignments: nextAssignments,
+        rules: enabledRules,
+        availabilityByResident,
+        stats,
+        generationVersion,
+        slotDefinition: buddyDef,
+      });
+
+      if (pickedBuddy) {
+        current.buddyRosterId = pickedBuddy.residentId;
+        nextAssignments[day.key] = current;
+        updateStats(
+          stats,
+          pickedBuddy.residentId,
+          "Buddy",
+          day,
+          buddyCountsTowardWorkload
+        );
       }
     }
 
@@ -1233,6 +1574,7 @@ export function generateCallSchedule({
   availabilityByResident,
   historicalStats,
   slotMode = "Both",
+  slotDefinitions = DEFAULT_SLOT_DEFINITIONS,
 }: GenerateParams) {
   // Phase 9 alignment: use canonical effective filter (disabled rules are excluded
   // from generation by default, matching validation behavior).
@@ -1242,6 +1584,11 @@ export function generateCallSchedule({
 
   const seen = new Set<string>();
   const combinations: GeneratedScheduleCombination[] = [];
+
+  // Build a resident lookup map once for use in per-day slot status evaluation.
+  const residentsById = new Map(
+    residents.map((resident) => [resident.residentId, resident])
+  );
 
   for (let attempt = 0; attempt < ATTEMPTS; attempt += 1) {
     const attemptVersion = generationVersion + attempt * 9973;
@@ -1256,6 +1603,7 @@ export function generateCallSchedule({
       availabilityByResident,
       historicalStats,
       slotMode,
+      slotDefinitions,
     });
 
     const signature = JSON.stringify(generated.assignments);
@@ -1268,6 +1616,8 @@ export function generateCallSchedule({
       assignments: generated.assignments,
       rules,
       slotMode,
+      slotDefinitions,
+      residentsById,
     });
 
     const diagnostics = analyzeCombinationDiagnostics({
@@ -1288,6 +1638,8 @@ export function generateCallSchedule({
       rules,
       slotMode,
       diagnostics,
+      slotDefinitions,
+      residentsById,
     });
 
     combinations.push({

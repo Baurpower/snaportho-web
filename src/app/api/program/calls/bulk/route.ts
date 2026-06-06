@@ -10,11 +10,76 @@ import {
   requireWorkspacePermission,
   WorkspacePermissionError,
 } from "@/lib/workspace/access-control";
+import type { CallValidationIssue } from "@/lib/workspace/call/validation";
+
+type RuleViolationSummary = {
+  ruleType: string;
+  ruleName: string | null;
+  residentName: string | null;
+  rosterId: string | null;
+  rotationName: string | null;
+  callType: string | null;
+  dates: string[];
+  maxAllowed: number;
+  message: string;
+};
+
+/**
+ * Groups per-slot rotation_call_limit issues into one summary per
+ * resident × rule × rotation, deduplicating dates.
+ */
+function buildRotationCallLimitViolations(
+  issues: CallValidationIssue[]
+): RuleViolationSummary[] {
+  const limitIssues = issues.filter(
+    (issue) => issue.code === "rotation_call_limit" && issue.severity === "error"
+  );
+  if (limitIssues.length === 0) return [];
+
+  const grouped = new Map<string, RuleViolationSummary>();
+
+  for (const issue of limitIssues) {
+    const meta = (issue.metadata ?? {}) as Record<string, unknown>;
+    const rotationName = (meta.rotationName as string | null) ?? null;
+    const maxAllowed = typeof meta.maxCallDays === "number" ? meta.maxCallDays : 1;
+    // residentName is now populated in metadata by validateRotationCallLimitRule.
+    const residentName = (meta.residentName as string | null) ?? null;
+    const groupKey = `${issue.rosterId ?? issue.residentId}__${issue.ruleCode}__${rotationName}`;
+
+    if (!grouped.has(groupKey)) {
+      grouped.set(groupKey, {
+        ruleType: issue.ruleCode ?? "max_calls_for_rotation",
+        ruleName: (meta.blockingRuleName as string | null) ?? null,
+        residentName,
+        rosterId: issue.rosterId ?? issue.residentId,
+        rotationName,
+        callType: issue.callType,
+        dates: [],
+        maxAllowed,
+        message: issue.message,
+      });
+    }
+
+    const summary = grouped.get(groupKey)!;
+    if (issue.dateKey && !summary.dates.includes(issue.dateKey)) {
+      summary.dates.push(issue.dateKey);
+    }
+    // If we get a non-null name later in the loop, fill it in.
+    if (!summary.residentName && residentName) {
+      summary.residentName = residentName;
+    }
+  }
+
+  return Array.from(grouped.values()).map((s) => ({
+    ...s,
+    dates: s.dates.sort(),
+  }));
+}
 
 type SaveRow = {
   residentName: string;
   callDate: string;
-  callType: "Primary" | "Backup";
+  callType: "Primary" | "Backup" | "Buddy";
   site?: string | null;
   isHomeCall?: boolean;
   notes?: string | null;
@@ -66,14 +131,14 @@ export async function POST(request: NextRequest) {
         (!row.matchedRosterId && !row.matchedMembershipId) ||
         !row.residentName?.trim() ||
         !isValidDateString(row.callDate) ||
-        !["Primary", "Backup"].includes(row.callType)
+        !["Primary", "Backup", "Buddy"].includes(row.callType)
     );
 
     if (invalidRow) {
       return NextResponse.json(
         {
           error:
-            "Every row must have a matchedRosterId (or legacy matchedMembershipId), residentName, valid callDate, and callType",
+            "Every row must have a matchedRosterId (or legacy matchedMembershipId), residentName, valid callDate, and callType (Primary, Backup, or Buddy)",
         },
         { status: 400 }
       );
@@ -147,6 +212,10 @@ export async function POST(request: NextRequest) {
       programId: access.accessContext.programId,
       touchedDates,
       deleteCallIds: rowsToDelete,
+      // Pass the full replacement range so the validation layer can correctly
+      // identify which existing rows on non-touched dates will also be deleted,
+      // enabling month-wide counting for max_calls_for_rotation rules.
+      replaceExistingForDates: replaceExistingForDates.filter(isValidDateString),
       upserts: rows.map((row, index) => {
         const slotKey = `${row.callDate}__${row.callType}`;
         const existing = existingRowsBySlot.get(slotKey);
@@ -169,10 +238,14 @@ export async function POST(request: NextRequest) {
         endpoint: "/api/program/calls/bulk",
         programId: access.accessContext.programId,
         userId: user.id,
+        incomingRowCount: rows.length,
+        replaceExistingForDateCount: replaceExistingForDates.length,
         rowRosterIds: resolvedTargets.map((target) => target.rosterId),
         rowProgramMembershipIds: resolvedTargets.map(
           (target) => target.programMembershipId
         ),
+        existingRowsConsidered: existingRowsBySlot.size,
+        rowsToDeleteCount: rowsToDelete.length,
         source: "browser-save-validation",
         timestamp: new Date().toISOString(),
       });
@@ -252,6 +325,38 @@ export async function POST(request: NextRequest) {
     }
 
     if (error instanceof ProgramCallScheduleValidationError) {
+      // Hard rule violations from max_calls_for_rotation get a structured response
+      // so the UI can show resident name, rotation, and exact dates rather than a
+      // generic "validation failed" message.
+      const ruleViolations = buildRotationCallLimitViolations(error.issues);
+
+      if (ruleViolations.length > 0) {
+        if (process.env.NODE_ENV !== "production") {
+          console.warn("[bulk] CALL_RULE_VIOLATION", {
+            count: ruleViolations.length,
+            violations: ruleViolations.map((v) => ({
+              rosterId: v.rosterId,
+              rotationName: v.rotationName,
+              dates: v.dates,
+              maxAllowed: v.maxAllowed,
+            })),
+          });
+        }
+
+        return NextResponse.json(
+          {
+            error: "CALL_RULE_VIOLATION",
+            message: "Schedule violates hard call rules.",
+            violations: ruleViolations,
+            // Also include the full validation payload so existing error-handling
+            // paths continue to work if the caller prefers to use them.
+            issues: error.issues,
+            validation: error.validation,
+          },
+          { status: 400 }
+        );
+      }
+
       return NextResponse.json(
         {
           error: "Schedule validation failed",

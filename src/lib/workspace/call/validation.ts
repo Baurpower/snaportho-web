@@ -8,6 +8,7 @@ import {
   getAdjacentWeekendDateKey,
   getRequiredCallTypesFromRules,
   getRuleSeverity,
+  isWeekendDateKey,
   normalizeCallType as normalizeEvaluatedCallType,
   normalizeCallTypeList,
   normalizeRuleCode as normalizeEvaluatorRuleCode,
@@ -17,6 +18,11 @@ import {
   buildResidentIdentityMaps,
   normalizeScheduleResidentId,
 } from "@/lib/workspace/call/resident-identity";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
+import {
+  extractSlotDefinitions,
+  getSlotStatusForDay,
+} from "@/lib/workspace/call/rule-definitions";
 
 export type ValidationSeverity = "error" | "warning" | "info";
 
@@ -871,14 +877,17 @@ export function validateWeekendRule(input: CallValidationInput) {
           )
         : null;
 
-      for (const violation of evaluateWeekendPairingForResident({
+      // Skip weekend pairing evaluation for Buddy and other non-Primary/Backup
+      // slot types; normalizeEvaluatedCallType returns null for them.
+      const pairingCallType = normalizeEvaluatedCallType(context.normalizedCallType);
+
+      for (const violation of (pairingCallType ? evaluateWeekendPairingForResident({
         residentId: residentKey,
         adjacentResidentId: adjacentAssignment ? residentKey : adjacentResidentId,
         dateKey,
-        callType:
-          normalizeEvaluatedCallType(context.normalizedCallType) ?? "Primary",
+        callType: pairingCallType,
         rules,
-      })) {
+      }) : [])) {
         if (adjacentAssignment) continue;
 
         issues.push(
@@ -934,7 +943,12 @@ export function validatePgyRestrictionRule(input: CallValidationInput) {
       continue;
     }
 
-    if (resident.isActiveResident === false) {
+    const residentStatus = getResidentStatusDetails(
+      resident.gradYear ?? null,
+      context.normalizedDateKey ?? undefined
+    );
+
+    if (!residentStatus.isActiveResident) {
       const residentName =
         resident.residentName ?? resident.displayName ?? assignment.residentName ?? "Resident";
       issues.push(
@@ -943,7 +957,7 @@ export function validatePgyRestrictionRule(input: CallValidationInput) {
           ruleCode: "restrict_call_type_by_pgy",
           severity: "error",
           source: "rule",
-          message: resident.isGraduated
+          message: residentStatus.isGraduated
             ? `${residentName} is graduated and is not eligible for ${context.normalizedCallType} call.`
             : `${residentName} is missing a valid grad year and is not eligible for ${context.normalizedCallType} call.`,
           slotId: context.slotId,
@@ -958,23 +972,29 @@ export function validatePgyRestrictionRule(input: CallValidationInput) {
       continue;
     }
 
-    if (typeof resident.pgyYear !== "number") {
+    if (typeof residentStatus.pgyYear !== "number") {
       continue;
     }
 
+    // normalizeEvaluatedCallType only recognises Primary/Backup; skip PGY
+    // evaluation entirely for Buddy and other custom slot types rather than
+    // misclassifying them as Primary, which would produce false violations.
+    const evaluatedCallType = normalizeEvaluatedCallType(context.normalizedCallType);
+    if (!evaluatedCallType) continue;
+
     const pgyViolations = evaluatePgyEligibility({
       resident,
-      callType:
-        normalizeEvaluatedCallType(context.normalizedCallType) ?? "Primary",
+      callType: evaluatedCallType,
       rules,
+      effectiveDate: context.normalizedDateKey,
     });
 
     for (const violation of pgyViolations) {
       const residentName =
         resident.residentName ?? resident.displayName ?? assignment.residentName ?? "Resident";
       const message = violation.message.includes("not allowed to take call")
-        ? `${residentName} is PGY-${resident.pgyYear} and is not eligible for call.`
-        : `${residentName} is PGY-${resident.pgyYear} and is not eligible for ${context.normalizedCallType} call.`;
+        ? `${residentName} is PGY-${residentStatus.pgyYear} and is not eligible for call.`
+        : `${residentName} is PGY-${residentStatus.pgyYear} and is not eligible for ${context.normalizedCallType} call.`;
 
       issues.push(
         createValidationIssue({
@@ -1243,6 +1263,312 @@ export function validateRotationConflictRule(input: CallValidationInput) {
   return issues;
 }
 
+/**
+ * Validates conditional slot definitions where requiredWhenVisible === true.
+ *
+ * For each date in touchedDates, finds the Primary resident's PGY year, evaluates
+ * which conditional slot definitions are visible (and required), then flags any
+ * that are missing. Slots with requiredWhenVisible === false are never flagged.
+ *
+ * This supplements validateRequiredSlotRule which only handles always-required slots
+ * from the required_daily_call_slots rule.
+ */
+export function validateConditionalRequiredSlots(input: CallValidationInput) {
+  const issues: CallValidationIssue[] = [];
+
+  const rulesRaw = input.rules ?? input.context?.rules ?? [];
+  // extractSlotDefinitions expects rules with rule_type or type field
+  const slotDefs = extractSlotDefinitions(
+    rulesRaw.map((r) => ({
+      id: normalizeString(r.id) ?? "",
+      name: normalizeString(r.name) ?? "",
+      rule_type: normalizeString(r.ruleType ?? r.ruleCode) ?? undefined,
+      type: normalizeString(r.ruleType ?? r.ruleCode) ?? undefined,
+      is_enabled: r.isEnabled !== false,
+      config: (r.config as Record<string, unknown>) ?? {},
+    }))
+  );
+
+  // Only handle conditional slot definitions with requiredWhenVisible=true.
+  const conditionalRequired = slotDefs.filter(
+    (def) => def.requiredMode === "conditional" && def.requiredWhenVisible !== false
+  );
+
+  if (conditionalRequired.length === 0) return issues;
+
+  const touchedDates = Array.isArray(input.context?.metadata?.touchedDates)
+    ? input.context?.metadata?.touchedDates
+        .map((value) => normalizeDateKey(value))
+        .filter((value): value is string => Boolean(value))
+    : [];
+
+  if (touchedDates.length === 0) return issues;
+
+  const activeAssignments = (input.assignments ?? []).filter(isActiveAssignment);
+
+  // Build lookup: dateKey → Primary roster ID
+  const primaryByDate = new Map<string, string>();
+  for (const assignment of activeAssignments) {
+    const ctx = getIntegrityAssignmentContext(assignment);
+    if (!ctx.normalizedDateKey || !ctx.residentId) continue;
+    if ((ctx.normalizedCallType ?? "").toLowerCase() === "primary") {
+      primaryByDate.set(ctx.normalizedDateKey, ctx.residentId);
+    }
+  }
+
+  // Build resident PGY lookup keyed by roster ID
+  const { residentByIdentity } = getResidentMaps(input);
+  const pgyByRosterId = new Map<string, number | null>();
+  for (const [id, resident] of residentByIdentity.entries()) {
+    const status = getResidentStatusDetails(resident.gradYear ?? null);
+    pgyByRosterId.set(id, status.pgyYear ?? null);
+  }
+
+  // Build active slot set for quick lookup
+  const activeSlotIds = new Set(
+    activeAssignments
+      .map((a) => getIntegrityAssignmentContext(a))
+      .filter((ctx): ctx is ReturnType<typeof getIntegrityAssignmentContext> & { slotId: string } =>
+        Boolean(ctx.slotId)
+      )
+      .map((ctx) => ctx.slotId)
+  );
+
+  for (const dateKey of touchedDates) {
+    const primaryRosterId = primaryByDate.get(dateKey) ?? null;
+    const primaryPgyYear = primaryRosterId ? (pgyByRosterId.get(primaryRosterId) ?? null) : null;
+
+    const date = new Date(`${dateKey}T00:00:00`);
+    const dayOfWeek = date.getDay();
+
+    for (const def of conditionalRequired) {
+      const { isRequired } = getSlotStatusForDay({
+        def,
+        dayOfWeek,
+        primaryPgyYear,
+        hasAssignment: false,
+      });
+
+      if (!isRequired) continue;
+
+      const callType = def.callType;
+      const slotId = serializeSlotId({ dateKey, callType });
+
+      if (activeSlotIds.has(slotId)) continue;
+
+      issues.push(
+        createValidationIssue({
+          code: "missing_required_slot",
+          ruleCode: "conditional_slot_required",
+          severity: "error",
+          source: "rule",
+          message: `Required ${callType} slot "${def.label}" is unassigned on ${dateKey} (condition: Primary PGY ${def.condition?.pgyYears?.join(" or ") ?? "?"}).`,
+          slotId,
+          residentId: null,
+          rosterId: null,
+          dateKey,
+          callType,
+          assignmentId: null,
+          metadata: {
+            slotDefinitionId: def.id,
+            slotLabel: def.label,
+            primaryRosterId,
+            primaryPgyYear,
+            conditionPgyYears: def.condition?.pgyYears ?? [],
+          },
+        })
+      );
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * Validates `max_calls_for_rotation` rules.
+ *
+ * For each rule, finds residents whose rotation assignment overlaps the call
+ * dates and counts how many relevant call days they have in the period.
+ * Issues a violation against every over-limit assignment so the UI can
+ * highlight the exact rows that need to be fixed.
+ *
+ * Identity resolution uses roster_id (program_roster.id) throughout.
+ * Legacy programMembershipId fallback is handled by the caller via
+ * `buildResidentIdentityMaps` before this function is reached.
+ */
+export function validateRotationCallLimitRule(input: CallValidationInput): CallValidationIssue[] {
+  const issues: CallValidationIssue[] = [];
+
+  const limitRules = resolveValidationRules(input.rules, ["max_calls_for_rotation"]);
+  if (limitRules.length === 0) return issues;
+
+  const activeAssignments = (input.assignments ?? []).filter(isActiveAssignment);
+  if (activeAssignments.length === 0) return issues;
+
+  const rotations = input.rotations ?? [];
+  if (rotations.length === 0) return issues;
+
+  const { residentByIdentity } = getResidentMaps(input);
+
+  // Build resident → rotation list
+  const rotationsByResident = new Map<string, CallValidationRotation[]>();
+  for (const rotation of rotations) {
+    const residentId =
+      normalizeRosterId(rotation.residentId) ??
+      normalizeRosterId(rotation.rosterId) ??
+      normalizeRosterId(rotation.membershipId);
+    if (!residentId || !rotation.rotationId || !rotation.startDate || !rotation.endDate) continue;
+    const existing = rotationsByResident.get(residentId) ?? [];
+    existing.push(rotation);
+    rotationsByResident.set(residentId, existing);
+  }
+
+  // Build resident → assignment contexts
+  type AssignmentEntry = {
+    assignment: CallDraftAssignment;
+    context: IntegrityAssignmentContext;
+    dateKey: string;
+    callType: string;
+    isWeekend: boolean;
+  };
+  const assignmentsByResident = new Map<string, AssignmentEntry[]>();
+  for (const assignment of activeAssignments) {
+    const context = getIntegrityAssignmentContext(assignment);
+    if (!context.normalizedDateKey || !context.normalizedCallType) continue;
+    const residentId = context.residentId ?? context.rosterId;
+    if (!residentId) continue;
+
+    const entry: AssignmentEntry = {
+      assignment,
+      context,
+      dateKey: context.normalizedDateKey,
+      callType: context.normalizedCallType,
+      isWeekend: isWeekendDateKey(context.normalizedDateKey),
+    };
+    const existing = assignmentsByResident.get(residentId) ?? [];
+    existing.push(entry);
+    assignmentsByResident.set(residentId, existing);
+  }
+
+  for (const limitRule of limitRules) {
+    const limitRotationIds = new Set(
+      (Array.isArray(limitRule.config.rotationCallLimitIds)
+        ? limitRule.config.rotationCallLimitIds
+        : []
+      ).filter((id): id is string => typeof id === "string" && id.trim().length > 0)
+    );
+    if (limitRotationIds.size === 0) continue;
+
+    const dayScope =
+      typeof limitRule.config.rotationCallLimitDayScope === "string"
+        ? limitRule.config.rotationCallLimitDayScope
+        : "all";
+
+    const limitCallTypes = (
+      Array.isArray(limitRule.config.rotationCallLimitCallTypes)
+        ? (limitRule.config.rotationCallLimitCallTypes as unknown[]).filter(
+            (t): t is string => typeof t === "string"
+          )
+        : ["Primary"]
+    );
+
+    const maxCallDays =
+      typeof limitRule.config.rotationCallLimitMax === "number" &&
+      Number.isFinite(limitRule.config.rotationCallLimitMax)
+        ? limitRule.config.rotationCallLimitMax
+        : 1;
+
+    for (const [residentId, residentRotations] of rotationsByResident.entries()) {
+      // Which of this resident's rotations match the rule?
+      const matchingRotations = residentRotations.filter(
+        (r) => r.rotationId && limitRotationIds.has(r.rotationId)
+      );
+      if (matchingRotations.length === 0) continue;
+
+      const residentEntries = assignmentsByResident.get(residentId) ?? [];
+
+      // Filter assignments to those that fall under the rule's scope.
+      const relevant = residentEntries.filter((entry) => {
+        // Call type scope
+        const callTypeMatches =
+          limitCallTypes.includes("any") ||
+          limitCallTypes.map((t) => t.toLowerCase()).includes(entry.callType.toLowerCase());
+        if (!callTypeMatches) return false;
+
+        // Day scope
+        if (dayScope === "weekend_only" && !entry.isWeekend) return false;
+        if (dayScope === "weekday_only" && entry.isWeekend) return false;
+
+        // Overlaps with at least one matching rotation period
+        return matchingRotations.some((rotation) => {
+          const start = normalizeDateKey(rotation.startDate);
+          const end = normalizeDateKey(rotation.endDate);
+          if (!start || !end) return false;
+          return entry.dateKey >= start && entry.dateKey <= end;
+        });
+      });
+
+      if (relevant.length <= maxCallDays) continue;
+
+      // Build a human-readable message for this violation.
+      const resident = residentByIdentity.get(residentId);
+      const residentName =
+        resident?.residentName ?? resident?.displayName ?? "Resident";
+
+      const matchedRotation = matchingRotations[0];
+      const rotationName =
+        matchedRotation?.rotationName ??
+        matchedRotation?.shortName ??
+        matchedRotation?.service ??
+        "the rotation";
+
+      const violationDates = relevant.map((e) => e.dateKey).sort();
+      const monthKey = violationDates[0]?.slice(0, 7) ?? "";
+      const scopeLabel =
+        dayScope === "weekend_only"
+          ? "weekend "
+          : dayScope === "weekday_only"
+          ? "weekday "
+          : "";
+      const callTypeLabel = limitCallTypes.filter((t) => t !== "any").join("/") || "call";
+      const message = `${rotationName} service limit: ${residentName} has ${relevant.length} ${scopeLabel}${callTypeLabel} call day${relevant.length === 1 ? "" : "s"} in ${monthKey}. Maximum allowed is ${maxCallDays}.`;
+
+      // Issue one violation per over-limit assignment so the UI can highlight each row.
+      for (const entry of relevant) {
+        issues.push(
+          createValidationIssue({
+            code: "rotation_call_limit",
+            ruleCode: limitRule.ruleCode ?? "max_calls_for_rotation",
+            severity: limitRule.severity,
+            source: "rule",
+            message,
+            slotId: entry.context.slotId,
+            residentId: entry.context.residentId,
+            rosterId: entry.context.rosterId,
+            dateKey: entry.dateKey,
+            callType: entry.callType,
+            assignmentId: entry.assignment.callId ?? entry.context.assignmentId,
+            metadata: {
+              blockingRuleId: limitRule.id,
+              blockingRuleName: limitRule.name,
+              residentName,
+              rotationName,
+              rotationId: matchedRotation?.rotationId ?? null,
+              maxCallDays,
+              actualCount: relevant.length,
+              violationDates,
+              dayScope,
+              callTypes: limitCallTypes,
+            },
+          })
+        );
+      }
+    }
+  }
+
+  return issues;
+}
+
 export function validateCallMonthDraft(input: CallValidationInput) {
   const normalizedInput: CallValidationInput = {
     assignments: input.assignments ?? [],
@@ -1256,12 +1582,14 @@ export function validateCallMonthDraft(input: CallValidationInput) {
   const issues = [
     ...validateIntegrity(normalizedInput),
     ...validateRequiredSlotRule(normalizedInput),
+    ...validateConditionalRequiredSlots(normalizedInput),
     ...validateSpacingRule(normalizedInput),
     ...validateMonthlyLimitRule(normalizedInput),
     ...validateWeekendRule(normalizedInput),
     ...validatePgyRestrictionRule(normalizedInput),
     ...validateTimeOffRule(normalizedInput),
     ...validateRotationConflictRule(normalizedInput),
+    ...validateRotationCallLimitRule(normalizedInput),
   ];
 
   return buildValidationResult(issues);

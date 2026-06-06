@@ -260,18 +260,98 @@ async function getProgramCallAssignmentsForDates(
   return (data ?? []) as ProgramCallAssignmentValidationRow[]
 }
 
+/**
+ * Loads call assignments for a continuous date range [dateStart, dateEnd] inclusive.
+ * Used when monthly rules require a full-month view of existing calls.
+ */
+async function getProgramCallAssignmentsForDateRange(
+  programId: string,
+  dateStart: string,
+  dateEnd: string
+) {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from('call_assignments')
+    .select(
+      'id, roster_id, program_membership_id, call_type, call_date, start_datetime, end_datetime'
+    )
+    .eq('program_id', programId)
+    .gte('call_date', dateStart)
+    .lte('call_date', dateEnd)
+
+  if (error) {
+    throw new Error(`Failed to load program calls for monthly validation: ${error.message}`)
+  }
+
+  return (data ?? []) as ProgramCallAssignmentValidationRow[]
+}
+
+/**
+ * Given a list of YYYY-MM-DD date strings, returns the start and end of every
+ * unique calendar month covered (one entry per month, sorted ascending).
+ */
+function getFullMonthRangesFromDates(
+  dates: string[]
+): Array<{ monthKey: string; start: string; end: string }> {
+  const monthKeys = new Set(
+    dates
+      .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
+      .map((d) => d.slice(0, 7))
+  )
+
+  return Array.from(monthKeys)
+    .sort()
+    .map((monthKey) => {
+      const [year, month] = monthKey.split('-').map(Number)
+      const start = `${monthKey}-01`
+      const lastDay = new Date(year, month, 0).getDate()
+      const end = `${monthKey}-${String(lastDay).padStart(2, '0')}`
+      return { monthKey, start, end }
+    })
+}
+
+/**
+ * Returns true if any active rule requires full-month call counting.
+ * Currently only max_calls_for_rotation needs this; its period is always
+ * "month" (the only supported value), so we skip the period check.
+ */
+function hasMonthlyCountRule(rules: Array<{ ruleType?: string | null; isEnabled?: boolean | null }>): boolean {
+  return rules.some(
+    (rule) =>
+      rule.ruleType === 'max_calls_for_rotation' && rule.isEnabled !== false
+  )
+}
+
 export async function validateProgramCallMutationDraft(params: {
   programId: string
   touchedDates: string[]
   upserts?: ProgramCallDraftMutationRow[]
   deleteCallIds?: string[]
+  /**
+   * The full set of dates whose existing assignments will be replaced/deleted
+   * by the incoming payload. Used to correctly compute which rows outside
+   * `touchedDates` will no longer exist in the resulting schedule (needed for
+   * month-wide rule counting when the assignment window is expanded).
+   *
+   * If omitted, falls back to `touchedDates`.
+   */
+  replaceExistingForDates?: string[]
 }) {
   const uniqueTouchedDates = uniqueStrings(params.touchedDates)
-  const validationDateStart = uniqueTouchedDates[0] ?? null
-  const validationDateEnd =
-    uniqueTouchedDates.length > 0
+  const replaceSet = new Set(
+    uniqueStrings(params.replaceExistingForDates ?? params.touchedDates)
+  )
+
+  // Use full-month bounds for date-windowed context so rotations and residents
+  // cover the entire months touched, even if only a subset of dates was modified.
+  const monthRanges = getFullMonthRangesFromDates(uniqueTouchedDates)
+  const validationDateStart = monthRanges[0]?.start ?? uniqueTouchedDates[0] ?? null
+  const validationDateEnd = monthRanges[monthRanges.length - 1]?.end ??
+    (uniqueTouchedDates.length > 0
       ? uniqueTouchedDates[uniqueTouchedDates.length - 1]
-      : null
+      : null)
+
   const validationContext = await loadProgramCallValidationContext(
     params.programId,
     null,
@@ -280,10 +360,36 @@ export async function validateProgramCallMutationDraft(params: {
       dateEnd: validationDateEnd,
     }
   )
-  const existingRows = await getProgramCallAssignmentsForDates(
+
+  // Narrow case: load only touched dates (fast path, sufficient for most rules).
+  const existingRowsForTouchedDates = await getProgramCallAssignmentsForDates(
     params.programId,
-    params.touchedDates
+    uniqueTouchedDates
   )
+
+  // Wide case: when monthly-count rules are active, we need the full months so
+  // existing calls on non-touched dates are visible to the validator.
+  let fullMonthRows: ProgramCallAssignmentValidationRow[] = []
+  const needsFullMonthExpansion = hasMonthlyCountRule(validationContext.rules)
+
+  if (needsFullMonthExpansion && monthRanges.length > 0) {
+    // Load calls for every full month in parallel (usually just one month).
+    const perMonth = await Promise.all(
+      monthRanges.map((range) =>
+        getProgramCallAssignmentsForDateRange(params.programId, range.start, range.end)
+      )
+    )
+    fullMonthRows = perMonth.flat()
+  }
+
+  // Merge: start with all touched-date rows plus (if expanded) full-month rows.
+  // Deduplicate by ID so rows in the intersection are not double-counted.
+  const touchedIds = new Set(existingRowsForTouchedDates.map((r) => r.id))
+  const deduplicatedRows: ProgramCallAssignmentValidationRow[] = [
+    ...existingRowsForTouchedDates,
+    ...fullMonthRows.filter((r) => !touchedIds.has(r.id)),
+  ]
+
   const { residentIdByProgramMembershipId } = buildResidentIdentityMaps(
     validationContext.residents
   )
@@ -293,12 +399,28 @@ export async function validateProgramCallMutationDraft(params: {
     ...row,
     id: row.id ?? `draft-${index}-${row.callDate ?? 'unknown'}-${row.callType ?? 'unknown'}`,
   }))
-  const upsertIds = new Set(
-    uniqueStrings(upserts.map((row) => row.id ?? null))
+  const upsertIds = new Set(uniqueStrings(upserts.map((row) => row.id ?? null)))
+
+  // Build the set of incoming slot keys so we can skip rows being replaced.
+  const incomingSlotKeys = new Set(
+    upserts
+      .filter((u) => u.callDate && u.callType)
+      .map((u) => `${u.callDate}__${u.callType}`)
   )
 
-  const remainingAssignments = existingRows
-    .filter((row) => !deleteIds.has(row.id) && !upsertIds.has(row.id))
+  const remainingAssignments = deduplicatedRows
+    .filter((row) => {
+      if (deleteIds.has(row.id)) return false
+      if (upsertIds.has(row.id)) return false
+      // Rows that are in the replace range but whose slot is not being filled
+      // by an incoming upsert will be deleted by the actual write.  Exclude
+      // them so the validator sees the correct post-publish state.
+      if (row.call_date && replaceSet.has(row.call_date)) {
+        const slotKey = `${row.call_date}__${row.call_type}`
+        if (!incomingSlotKeys.has(slotKey)) return false
+      }
+      return true
+    })
     .map(toCallDraftAssignment)
 
   const nextAssignments = [
@@ -314,8 +436,7 @@ export async function validateProgramCallMutationDraft(params: {
     const residentId =
       residentIdFromAssignment ??
       (assignment.programMembershipId
-        ? residentIdByProgramMembershipId.get(assignment.programMembershipId) ??
-          null
+        ? residentIdByProgramMembershipId.get(assignment.programMembershipId) ?? null
         : null)
 
     return {
@@ -328,20 +449,31 @@ export async function validateProgramCallMutationDraft(params: {
 
   if (process.env.NODE_ENV !== 'production') {
     const assignmentResidentIds = nextAssignments
-      .map((assignment) => assignment.rosterId ?? assignment.residentId ?? null)
-      .filter((value): value is string => Boolean(value))
+      .map((a) => a.rosterId ?? a.residentId ?? null)
+      .filter((v): v is string => Boolean(v))
     const loadedRosterIds = validationContext.residents
-      .map((resident) => resident.rosterId ?? resident.residentId ?? null)
-      .filter((value): value is string => Boolean(value))
+      .map((r) => r.rosterId ?? r.residentId ?? null)
+      .filter((v): v is string => Boolean(v))
+    const monthRuleCount = validationContext.rules.filter(
+      (r) => r.ruleType === 'max_calls_for_rotation' && r.isEnabled !== false
+    ).length
 
     console.info('[call-validation-draft]', {
       source: 'validateProgramCallMutationDraft',
       programId: params.programId,
       touchedDates: uniqueTouchedDates,
-      assignmentResidentIds,
+      touchedDateCount: uniqueTouchedDates.length,
+      expandedToFullMonth: needsFullMonthExpansion,
+      fullMonthRanges: monthRanges.map((r) => `${r.start}…${r.end}`),
+      existingRowsForTouchedDatesCount: existingRowsForTouchedDates.length,
+      fullMonthRowsCount: fullMonthRows.length,
+      deduplicatedRowCount: deduplicatedRows.length,
+      remainingAfterMergeCount: remainingAssignments.length,
+      incomingUpsertsCount: upserts.length,
+      nextAssignmentsCount: nextAssignments.length,
+      monthRuleCount,
+      assignmentResidentIds: assignmentResidentIds.slice(0, 20),
       loadedRosterCount: loadedRosterIds.length,
-      loadedRosterIds,
-      clientScope: 'admin',
       timestamp: new Date().toISOString(),
     })
   }
@@ -370,6 +502,7 @@ export async function assertValidProgramCallMutationDraft(params: {
   touchedDates: string[]
   upserts?: ProgramCallDraftMutationRow[]
   deleteCallIds?: string[]
+  replaceExistingForDates?: string[]
 }) {
   const validation = await validateProgramCallMutationDraft(params)
 
@@ -797,7 +930,12 @@ export async function getProgramCallStatsForMonth(
     return []
   }
 
-  const { data: calls, error: callsError } = await supabase
+  // Fetch rows where roster_id matches (modern rows) OR where roster_id is NULL
+  // but program_membership_id maps back to a known roster row (legacy rows).
+  // Using an OR filter ensures both ID generations are counted without double-counting:
+  // the aggregation loop below resolves every row to a single canonical rosterId.
+  const membershipIds = Array.from(rosterByMembershipId.keys())
+  let callsQuery = supabase
     .from('call_assignments')
     .select(`
       roster_id,
@@ -807,9 +945,18 @@ export async function getProgramCallStatsForMonth(
       start_datetime
     `)
     .eq('program_id', programId)
-    .in('roster_id', rosterIds)
     .gte('call_date', yearStart)
     .lte('call_date', yearEnd)
+
+  if (membershipIds.length > 0) {
+    callsQuery = callsQuery.or(
+      `roster_id.in.(${rosterIds.join(',')}),and(roster_id.is.null,program_membership_id.in.(${membershipIds.join(',')}))`
+    )
+  } else {
+    callsQuery = callsQuery.in('roster_id', rosterIds)
+  }
+
+  const { data: calls, error: callsError } = await callsQuery
 
   if (callsError) {
     throw new Error(`Failed to fetch program call stats: ${callsError.message}`)

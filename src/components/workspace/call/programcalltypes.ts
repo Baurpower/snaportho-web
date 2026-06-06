@@ -33,6 +33,7 @@ export {
   ruleToSlotDefinition,
   DEFAULT_SLOT_DEFINITIONS,
   getVisibleCallSlotsForDay,
+  getSlotStatusForDay,
 } from "@/lib/workspace/call/rule-definitions";
 
 export type ResidentOption = {

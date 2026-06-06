@@ -218,10 +218,13 @@ export function getAdjacentWeekendDateKey(dateKey: string) {
   return toDateKey(date);
 }
 
-export function getResidentPgyYear(resident: ResidentLike) {
+export function getResidentPgyYear(
+  resident: ResidentLike,
+  effectiveDate?: string | Date | null
+) {
   return resolvePgyFromSources({
     gradYear: resident.gradYear ?? null,
-    effectiveDate: resident.effectiveDate ?? undefined,
+    effectiveDate: effectiveDate ?? resident.effectiveDate ?? undefined,
     storedPgyYear: resident.pgyYear ?? null,
     trainingLevel: resident.trainingLevel ?? null,
   });
@@ -247,9 +250,10 @@ export function evaluatePgyEligibility<TRule extends RuleLike>(params: {
   resident: ResidentLike;
   callType: EvaluatedCallType;
   rules: TRule[] | null | undefined;
+  effectiveDate?: string | Date | null;
 }): RuleViolation<TRule>[] {
-  const { resident, callType, rules } = params;
-  const residentPgy = getResidentPgyYear(resident);
+  const { resident, callType, rules, effectiveDate } = params;
+  const residentPgy = getResidentPgyYear(resident, effectiveDate);
 
   if (typeof residentPgy !== "number") return [];
 
@@ -431,6 +435,123 @@ export function evaluateWeekendPairingForResident<TRule extends RuleLike>(params
       message: "Weekend pairing requires the same resident on both days",
       metadata: {
         adjacentResidentId,
+      },
+    });
+  }
+
+  return violations;
+}
+
+/**
+ * Evaluates whether a resident who is on a specific rotation has exceeded their
+ * call-day limit for the period under a `max_calls_for_rotation` rule.
+ *
+ * Call this *before* assigning the resident to a new slot.  Pass the
+ * **projected** counts (already including the tentative new assignment).
+ *
+ * @param rotationIds        Rotation IDs active for this resident on this date.
+ * @param isWeekendDate      Whether the candidate date is a weekend day.
+ * @param weekendCallDays    Projected weekend call-day count for the period.
+ * @param weekdayCallDays    Projected weekday call-day count for the period.
+ * @param totalCallDays      Projected total call-day count for the period.
+ * @param callType           The slot being evaluated (Primary / Backup / Buddy).
+ * @param rules              All active program rules.
+ */
+export function evaluateRotationCallLimitForResident<TRule extends RuleLike>(params: {
+  rotationIds: Array<string | null | undefined>;
+  isWeekendDate: boolean;
+  weekendCallDays: number;
+  weekdayCallDays: number;
+  totalCallDays: number;
+  callType: EvaluatedCallType;
+  rules: TRule[] | null | undefined;
+}): RuleViolation<TRule>[] {
+  const {
+    rotationIds,
+    isWeekendDate,
+    weekendCallDays,
+    weekdayCallDays,
+    totalCallDays,
+    callType,
+    rules,
+  } = params;
+
+  const normalizedRotationIds = new Set(
+    rotationIds
+      .map((value) => normalizeString(value))
+      .filter((value): value is string => Boolean(value))
+  );
+
+  if (normalizedRotationIds.size === 0) return [];
+
+  const violations: RuleViolation<TRule>[] = [];
+
+  for (const match of resolveMatchingRules(rules, ["max_calls_for_rotation"])) {
+    const limitRotationIds = new Set(
+      (Array.isArray(match.config.rotationCallLimitIds)
+        ? match.config.rotationCallLimitIds
+        : []
+      )
+        .map((value) => normalizeString(typeof value === "string" ? value : null))
+        .filter((value): value is string => Boolean(value))
+    );
+
+    const matchedRotationIds = [...normalizedRotationIds].filter((id) =>
+      limitRotationIds.has(id)
+    );
+    if (matchedRotationIds.length === 0) continue;
+
+    // Day-scope filter: the rule only fires on days it covers.
+    const dayScope =
+      typeof match.config.rotationCallLimitDayScope === "string"
+        ? match.config.rotationCallLimitDayScope
+        : "all";
+
+    if (dayScope === "weekend_only" && !isWeekendDate) continue;
+    if (dayScope === "weekday_only" && isWeekendDate) continue;
+
+    // Call-type filter.
+    const limitCallTypes = Array.isArray(match.config.rotationCallLimitCallTypes)
+      ? (match.config.rotationCallLimitCallTypes as string[])
+      : ["Primary"];
+
+    const appliesToThisCallType =
+      limitCallTypes.includes("any") ||
+      limitCallTypes.map((t) => t.toLowerCase()).includes(callType.toLowerCase());
+
+    if (!appliesToThisCallType) continue;
+
+    const maxCallDays =
+      typeof match.config.rotationCallLimitMax === "number" &&
+      Number.isFinite(match.config.rotationCallLimitMax)
+        ? match.config.rotationCallLimitMax
+        : 1;
+
+    const relevantCount =
+      dayScope === "weekend_only"
+        ? weekendCallDays
+        : dayScope === "weekday_only"
+        ? weekdayCallDays
+        : totalCallDays;
+
+    if (relevantCount <= maxCallDays) continue;
+
+    const scopeLabel =
+      dayScope === "weekend_only"
+        ? "weekend"
+        : dayScope === "weekday_only"
+        ? "weekday"
+        : "";
+
+    violations.push({
+      ...match,
+      message: `Rotation call limit: ${relevantCount - 1}/${maxCallDays} ${scopeLabel} ${callType} call day${maxCallDays === 1 ? "" : "s"} already used this month`,
+      metadata: {
+        maxCallDays,
+        currentCount: relevantCount,
+        dayScope,
+        limitCallTypes,
+        matchedRotationIds,
       },
     });
   }

@@ -57,6 +57,48 @@ export type CallAssignment = {
   notes: string | null
 }
 
+export type ProgramAttending = {
+  id: string
+  programId: string
+  fullName: string
+  displayName: string | null
+  isActive: boolean
+  createdBy: string | null
+  updatedBy: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type ProgramCallAttendingAssignment = {
+  id: string
+  programId: string
+  attendingId: string
+  attendingName: string
+  attendingDisplayName: string | null
+  coverageDate: string
+  coverageScope: string
+  isDefault: boolean
+  isActive: boolean
+  createdBy: string | null
+  updatedBy: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export type ProgramAttendingInput = {
+  fullName: string
+  displayName?: string | null
+  isActive?: boolean
+}
+
+export type ProgramAttendingMonthPayload = {
+  month: string
+  monthStart: string
+  monthEnd: string
+  attendings: ProgramAttending[]
+  assignments: ProgramCallAttendingAssignment[]
+}
+
 export type ScheduleEvent = {
   id: string
   event_type: string | null

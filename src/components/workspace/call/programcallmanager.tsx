@@ -39,6 +39,7 @@ import type {
 import {
   extractSlotDefinitions,
   DEFAULT_SLOT_DEFINITIONS,
+  getSlotStatusForDay,
 } from "@/components/workspace/call/programcalltypes";
 import {
   getFlagsForAssignedResident,
@@ -47,6 +48,7 @@ import {
 import {
   getCallMutationValidation,
   parseCallMutationResponse,
+  isCallMutationError,
 } from "@/lib/workspace/call/mutation-error";
 import {
   areProgramCallDraftPayloadsEqual,
@@ -61,6 +63,18 @@ import {
 
 type Slot = "Primary" | "Backup" | "Buddy";
 type ScheduleSlotMode = "Primary" | "Both";
+
+type RuleViolationDetail = {
+  ruleType: string;
+  ruleName: string | null;
+  residentName: string | null;
+  rosterId: string | null;
+  rotationName: string | null;
+  callType: string | null;
+  dates: string[];
+  maxAllowed: number;
+  message: string;
+};
 
 type RotationAssignmentLike = {
   rotationId?: string | null;
@@ -438,6 +452,18 @@ function buildRotationAssignmentsByRosterId(payload: CoveragePayload | null) {
   return rotationAssignmentsByRosterId;
 }
 
+function extractRuleViolations(err: unknown): RuleViolationDetail[] {
+  if (!isCallMutationError(err)) return [];
+  const payload = err.payload;
+  if (!payload || payload.error !== "CALL_RULE_VIOLATION") return [];
+  const violations = payload.violations;
+  if (!Array.isArray(violations)) return [];
+  return violations.filter(
+    (v): v is RuleViolationDetail =>
+      v && typeof v === "object" && typeof v.message === "string"
+  );
+}
+
 function buildProgramCallDraftPayload(params: {
   builderMonth: string;
   draftAssignments: Record<string, DraftDayAssignment>;
@@ -452,6 +478,49 @@ function buildProgramCallDraftPayload(params: {
     quickAssignSlotMode: params.quickAssignSlotMode,
     quickAssignResidentId: params.quickAssignResidentId || null,
   } satisfies ProgramCallScheduleDraftPayload;
+}
+
+/**
+ * Returns the set of filled, savable slot rows for a single day.
+ *
+ * Rules:
+ * - Primary: always savable when filled and resident is known.
+ * - Backup / Buddy: savable when filled and resident is known.
+ *   The canonical `getSlotStatusForDay` backward-compat rule guarantees that
+ *   any slot that already has a saved assignment returns `isVisible = true`
+ *   (`hasAssignment = true` path), so filled slots are always preserved.
+ *   Empty slots are never included — missing-required validation happens
+ *   server-side, not at save-button-enable time.
+ *
+ * `slotDefinitions` is accepted for future extensions (e.g. completely
+ * removing a slot type that is disabled in rules). Currently all filled
+ * slots are considered savable regardless of slot definitions.
+ */
+function getSavableSlotRowsForDay(
+  day: { key: string },
+  assignment: DraftDayAssignment | undefined,
+  residentsById: Map<string, ResidentOption>
+): Array<{ slot: Slot; resident: ResidentOption }> {
+  if (!assignment) return [];
+
+  const rows: Array<{ slot: Slot; resident: ResidentOption }> = [];
+
+  if (assignment.primaryRosterId) {
+    const resident = residentsById.get(assignment.primaryRosterId);
+    if (resident) rows.push({ slot: "Primary", resident });
+  }
+
+  if (assignment.backupRosterId) {
+    const resident = residentsById.get(assignment.backupRosterId);
+    if (resident) rows.push({ slot: "Backup", resident });
+  }
+
+  if (assignment.buddyRosterId) {
+    const resident = residentsById.get(assignment.buddyRosterId);
+    if (resident) rows.push({ slot: "Buddy", resident });
+  }
+
+  return rows;
 }
 
 export default function ProgramCallManager() {
@@ -469,6 +538,7 @@ export default function ProgramCallManager() {
   const [error, setError] = useState<string | null>(null);
   const [serverValidationResult, setServerValidationResult] =
     useState<CallValidationResult | null>(null);
+  const [ruleViolations, setRuleViolations] = useState<RuleViolationDetail[]>([]);
   const [statsCollapsed, setStatsCollapsed] = useState(false);
   const [draftAssignments, setDraftAssignments] = useState<
     Record<string, DraftDayAssignment>
@@ -477,6 +547,7 @@ export default function ProgramCallManager() {
     Record<string, DraftDayAssignment>
   >({});
   const [reviewOpen, setReviewOpen] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [generationReport, setGenerationReport] = useState<unknown>(null);
   const [aiAutoReviewToken, setAiAutoReviewToken] = useState<number | null>(null);
   const [showRulesSheet, setShowRulesSheet] = useState(false);
@@ -954,6 +1025,24 @@ const rotationAssignmentsByRosterId =
           normalizedBuddy !== day.buddyRosterId
         ) {
           changed = true;
+
+          if (process.env.NODE_ENV !== "production") {
+            console.info(
+              "[ProgramCallManager] normalizeAssignmentMap: upgraded stale ID on",
+              dateKey,
+              {
+                primary: day.primaryRosterId !== normalizedPrimary
+                  ? { was: day.primaryRosterId, now: normalizedPrimary }
+                  : null,
+                backup: day.backupRosterId !== normalizedBackup
+                  ? { was: day.backupRosterId, now: normalizedBackup }
+                  : null,
+                buddy: day.buddyRosterId !== normalizedBuddy
+                  ? { was: day.buddyRosterId, now: normalizedBuddy }
+                  : null,
+              }
+            );
+          }
         }
 
         next[dateKey] = {
@@ -1160,13 +1249,13 @@ const rotationAssignmentsByRosterId =
   }, [draftAssignments, historicalStats, monthDays, residents]);
 
   const aiReviewContext: AIReviewContext = useMemo(() => {
-    const expectedSlots =
-      scheduleSlotMode === "Primary" ? monthDays.length : monthDays.length * 2;
+    // Per-day backup visibility: respect conditional slot definitions.
+    const backupSlotDefs = slotDefinitions.filter((def) => def.callType === "Backup");
+    const hasConditionalBackupDefs = backupSlotDefs.some((def) => def.requiredMode === "conditional");
 
     let assignedSlots = 0;
-
-    const unfilledRequiredSlots: AIReviewContext["coverage"]["unfilledRequiredSlots"] =
-      [];
+    let expectedSlots = 0;
+    const unfilledRequiredSlots: AIReviewContext["coverage"]["unfilledRequiredSlots"] = [];
 
     const schedule = monthDays.map((day) => {
       const assignment = draftAssignments[day.key] ?? {
@@ -1183,11 +1272,9 @@ const rotationAssignmentsByRosterId =
         ? residentLookup.get(assignment.backupRosterId)
         : null;
 
+      // Primary always counts.
+      expectedSlots += 1;
       if (assignment.primaryRosterId) assignedSlots += 1;
-
-      if (scheduleSlotMode === "Both" && assignment.backupRosterId) {
-        assignedSlots += 1;
-      }
 
       if (!assignment.primaryRosterId) {
         unfilledRequiredSlots.push({
@@ -1198,7 +1285,35 @@ const rotationAssignmentsByRosterId =
         });
       }
 
-      if (scheduleSlotMode === "Both" && !assignment.backupRosterId) {
+      // Backup: use per-day slot status for conditional defs, global flag otherwise.
+      let backupVisible = false;
+      let backupRequired = false;
+
+      if (hasConditionalBackupDefs && backupSlotDefs.length > 0) {
+        const primaryPgyYear = primary?.pgyYear ?? null;
+        const dayOfWeek = day.date.getDay();
+        const hasBackupAssignment = Boolean(assignment.backupRosterId);
+        for (const def of backupSlotDefs) {
+          const { isVisible, isRequired } = getSlotStatusForDay({
+            def,
+            dayOfWeek,
+            primaryPgyYear,
+            hasAssignment: hasBackupAssignment,
+          });
+          if (isVisible) backupVisible = true;
+          if (isRequired) backupRequired = true;
+        }
+      } else if (scheduleSlotMode === "Both") {
+        backupVisible = true;
+        backupRequired = true;
+      }
+
+      if (backupVisible) {
+        expectedSlots += 1;
+        if (assignment.backupRosterId) assignedSlots += 1;
+      }
+
+      if (backupRequired && !assignment.backupRosterId) {
         unfilledRequiredSlots.push({
           dateKey: day.key,
           dayName: day.dayName,
@@ -1212,10 +1327,9 @@ const rotationAssignmentsByRosterId =
         dayName: day.dayName,
         isWeekend: day.isWeekend,
         primaryRosterId: assignment.primaryRosterId ?? null,
-        backupRosterId:
-          scheduleSlotMode === "Both" ? assignment.backupRosterId ?? null : null,
+        backupRosterId: backupVisible ? (assignment.backupRosterId ?? null) : null,
         primaryName: primary?.displayName ?? null,
-        backupName: scheduleSlotMode === "Both" ? backup?.displayName ?? null : null,
+        backupName: backupVisible ? (backup?.displayName ?? null) : null,
         primaryFlags: assignment.primaryRosterId
           ? getAssignedResidentFlags({
               residentId: assignment.primaryRosterId,
@@ -1225,7 +1339,7 @@ const rotationAssignmentsByRosterId =
             })
           : [],
         backupFlags:
-          scheduleSlotMode === "Both" && assignment.backupRosterId
+          backupVisible && assignment.backupRosterId
             ? getAssignedResidentFlags({
                 residentId: assignment.backupRosterId,
                 dateKey: day.key,
@@ -1253,6 +1367,7 @@ const rotationAssignmentsByRosterId =
     monthDays,
     draftAssignments,
     scheduleSlotMode,
+    slotDefinitions,
     residentLookup,
     getAssignedResidentFlags,
     rules,
@@ -1289,16 +1404,17 @@ const rotationAssignmentsByRosterId =
   );
 
   const hasSavableAssignments = useMemo(() => {
+    // True as soon as any day has at least one filled savable slot.
+    // Primary is the only slot that must exist for a day to be worth saving.
+    // Whether required secondary slots (Backup/Buddy) are filled is enforced
+    // by validation at submit time — not here. This ensures conditional-Backup
+    // schedules (where Backup is absent on PGY-3/4/5 days) are not incorrectly
+    // blocked from saving just because scheduleSlotMode === "Both".
     return monthDays.some((day) => {
-      const assignment = draftAssignments[day.key];
-
-      if (scheduleSlotMode === "Primary") {
-        return !!assignment?.primaryRosterId;
-      }
-
-      return !!assignment?.primaryRosterId && !!assignment?.backupRosterId;
+      const rows = getSavableSlotRowsForDay(day, draftAssignments[day.key], residentLookup);
+      return rows.some((r) => r.slot === "Primary");
     });
-  }, [draftAssignments, monthDays, scheduleSlotMode]);
+  }, [draftAssignments, monthDays, residentLookup]);
 
   const hasExistingSchedule = useMemo(() => {
     return existingCalls.length > 0;
@@ -1478,16 +1594,20 @@ const rotationAssignmentsByRosterId =
   }
 
   async function handleAutoGenerate(forceRegenerate = true) {
+    if (isGenerating) return;
     try {
       setError(null);
+      setIsGenerating(true);
 
-      const latestRules = await loadLatestRules();
+      const { rules: latestRules, slotDefinitions: latestSlotDefinitions } =
+        await loadLatestRules();
 
       const generated = generateCallSchedule({
         monthDays,
         residents: sortedResidents,
         existingAssignments: forceRegenerate ? {} : draftAssignments,
         rules: latestRules,
+        slotDefinitions: latestSlotDefinitions,
         generationVersion: Date.now(),
         forceRegenerate,
         availabilityByResident: programAvailability?.availability ?? {},
@@ -1501,10 +1621,15 @@ const rotationAssignmentsByRosterId =
       setAiAutoReviewToken(Date.now());
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to auto-generate schedule");
+    } finally {
+      setIsGenerating(false);
     }
   }
 
-  async function loadLatestRules() {
+  async function loadLatestRules(): Promise<{
+    rules: ProgramRule[];
+    slotDefinitions: ProgramCallSlotDefinition[];
+  }> {
     const ruleSetResponse = await fetch(
       `/api/program/call-rule-sets?ts=${Date.now()}`,
       {
@@ -1520,7 +1645,11 @@ const rotationAssignmentsByRosterId =
 
     if (!ruleSetId) {
       setRules([]);
-      return [];
+      setSlotDefinitions(DEFAULT_SLOT_DEFINITIONS);
+      return {
+        rules: [],
+        slotDefinitions: DEFAULT_SLOT_DEFINITIONS,
+      };
     }
 
     const response = await fetch(
@@ -1541,7 +1670,11 @@ const rotationAssignmentsByRosterId =
     setRules(latestRules.filter((r: ProgramRule) => r.rule_type !== "call_slot_definition"));
     setSlotDefinitions(latestSlotDefs.length > 0 ? latestSlotDefs : DEFAULT_SLOT_DEFINITIONS);
 
-    return latestRules.filter((r: ProgramRule) => r.rule_type !== "call_slot_definition");
+    return {
+      rules: latestRules.filter((r: ProgramRule) => r.rule_type !== "call_slot_definition"),
+      slotDefinitions:
+        latestSlotDefs.length > 0 ? latestSlotDefs : DEFAULT_SLOT_DEFINITIONS,
+    };
   }
 
   const deleteDraftForMonth = useCallback(async (monthStart: string) => {
@@ -1642,71 +1775,44 @@ const rotationAssignmentsByRosterId =
   }
 
   function buildSaveRows() {
+    if (process.env.NODE_ENV !== "production") {
+      // Canary check: warn if any resident has a real membershipId that differs
+      // from their rosterId. This would indicate the legacy membershipId is leaking
+      // into scheduler state and must be investigated before shipping.
+      for (const resident of residents) {
+        if (
+          resident.programMembershipId &&
+          resident.programMembershipId !== resident.residentId
+        ) {
+          console.warn(
+            "[ProgramCallManager] buildSaveRows: resident has distinct programMembershipId",
+            {
+              residentId: resident.residentId,
+              programMembershipId: resident.programMembershipId,
+              displayName: resident.displayName,
+            }
+          );
+        }
+      }
+    }
+
     return monthDays.flatMap((day) => {
-      const assignment = draftAssignments[day.key];
-      if (!assignment) return [];
+      const savableRows = getSavableSlotRowsForDay(
+        day,
+        draftAssignments[day.key],
+        residentLookup
+      );
 
-      const output: Array<{
-        residentName: string;
-        callDate: string;
-        callType: Slot;
-        site: string | null;
-        isHomeCall: boolean;
-        notes: string | null;
-        matchedRosterId: string;
-        matchedMembershipId: string | null;
-      }> = [];
-
-      if (assignment.primaryRosterId) {
-        const resident = residentLookup.get(assignment.primaryRosterId);
-
-        if (resident) {
-          output.push({
-            residentName: resident.displayName,
-            callDate: day.key,
-            callType: "Primary",
-            site: null,
-            isHomeCall: true,
-            notes: null,
-            matchedRosterId: resident.residentId,
-            matchedMembershipId: resident.programMembershipId ?? null,
-          });
-        }
-      }
-
-      if (assignment.backupRosterId) {
-        const resident = residentLookup.get(assignment.backupRosterId);
-        if (resident) {
-          output.push({
-            residentName: resident.displayName,
-            callDate: day.key,
-            callType: "Backup",
-            site: null,
-            isHomeCall: true,
-            notes: null,
-            matchedRosterId: resident.residentId,
-            matchedMembershipId: resident.programMembershipId ?? null,
-          });
-        }
-      }
-
-      if (assignment.buddyRosterId) {
-        const resident = residentLookup.get(assignment.buddyRosterId);
-        if (resident) {
-          output.push({
-            residentName: resident.displayName,
-            callDate: day.key,
-            callType: "Buddy",
-            site: null,
-            isHomeCall: true,
-            notes: null,
-            matchedRosterId: resident.residentId,
-            matchedMembershipId: resident.programMembershipId ?? null,
-          });
-        }
-      }
-
-      return output;
+      return savableRows.map(({ slot, resident }) => ({
+        residentName: resident.displayName,
+        callDate: day.key,
+        callType: slot,
+        site: null as string | null,
+        isHomeCall: true,
+        notes: null as string | null,
+        matchedRosterId: resident.residentId,
+        matchedMembershipId: resident.programMembershipId ?? null,
+      }));
     });
   }
 
@@ -1748,6 +1854,7 @@ const rotationAssignmentsByRosterId =
     try {
       setError(null);
       setServerValidationResult(null);
+      setRuleViolations([]);
 
       const rows = buildSaveRows();
 
@@ -1758,6 +1865,12 @@ const rotationAssignmentsByRosterId =
 
       await saveRows(rows, "Failed to save generated schedule");
     } catch (err) {
+      const violations = extractRuleViolations(err);
+      if (violations.length > 0) {
+        setRuleViolations(violations);
+        setError("Schedule violates hard call rules. See details below.");
+        return;
+      }
       const validation = getCallMutationValidation(err);
       setServerValidationResult(validation);
       setError(
@@ -1774,11 +1887,18 @@ const rotationAssignmentsByRosterId =
     try {
       setError(null);
       setServerValidationResult(null);
+      setRuleViolations([]);
 
       const rows = buildSaveRows();
 
       await saveRows(rows, "Failed to save edited schedule");
     } catch (err) {
+      const violations = extractRuleViolations(err);
+      if (violations.length > 0) {
+        setRuleViolations(violations);
+        setError("Schedule violates hard call rules. See details below.");
+        return;
+      }
       const validation = getCallMutationValidation(err);
       setServerValidationResult(validation);
       setError(
@@ -1796,8 +1916,8 @@ const rotationAssignmentsByRosterId =
     : null;
 
   useEffect(() => {
-    if (!serverValidationResult) return;
     setServerValidationResult(null);
+    setRuleViolations([]);
   }, [
     builderMonth,
     draftAssignments,
@@ -1990,6 +2110,7 @@ const rotationAssignmentsByRosterId =
                   <button
                     type="button"
                     disabled={
+                      isGenerating ||
                       residentLoading ||
                       availabilityLoading ||
                       callsLoading ||
@@ -1998,8 +2119,12 @@ const rotationAssignmentsByRosterId =
                     onClick={() => handleAutoGenerate(true)}
                     className="inline-flex h-[46px] items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 text-sm font-semibold text-sky-900 transition hover:bg-sky-100 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    <Wand2 className="h-4 w-4" />
-                    Auto generate
+                    {isGenerating ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Wand2 className="h-4 w-4" />
+                    )}
+                    {isGenerating ? "Generating..." : "Auto generate"}
                   </button>
 
                   <button
@@ -2093,6 +2218,48 @@ const rotationAssignmentsByRosterId =
             {error ? (
               <div className="mt-6 rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
                 {error}
+              </div>
+            ) : null}
+
+            {ruleViolations.length > 0 ? (
+              <div className="mt-4 rounded-[1rem] border border-rose-200 bg-rose-50 px-4 py-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full bg-rose-600 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white">
+                    Hard rule violation
+                  </span>
+                  <span className="font-semibold text-rose-900">
+                    Schedule blocked by call rules
+                  </span>
+                </div>
+
+                <div className="mt-3 space-y-2">
+                  {ruleViolations.map((violation, index) => (
+                    <div
+                      key={index}
+                      className="rounded-[0.85rem] border border-rose-200 bg-white px-3 py-2.5"
+                    >
+                      <p className="font-semibold text-rose-900">
+                        {violation.rotationName
+                          ? `${violation.rotationName} rule violation`
+                          : violation.ruleName ?? "Rule violation"}
+                        {violation.residentName ? ` · ${violation.residentName}` : ""}
+                      </p>
+                      <p className="mt-1 text-xs text-rose-700">{violation.message}</p>
+                      {violation.dates.length > 0 ? (
+                        <p className="mt-1 text-[11px] text-rose-500">
+                          Affected dates:{" "}
+                          {violation.dates
+                            .map((d) => new Date(`${d}T00:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" }))
+                            .join(", ")}
+                        </p>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+
+                <p className="mt-3 text-xs text-rose-600">
+                  Fix the assignments above, then try saving again.
+                </p>
               </div>
             ) : null}
 
@@ -2210,12 +2377,54 @@ const rotationAssignmentsByRosterId =
         draftAssignments={draftAssignments}
         historicalStats={historicalStats}
         rules={rules}
+        slotDefinitions={slotDefinitions}
         availabilityByResident={programAvailability?.availability ?? {}}
         scheduleSlotMode={scheduleSlotMode}
         aiReviewContext={aiReviewContext}
         generationReport={generationReport}
         autoReviewToken={aiAutoReviewToken}
       />
+
+      {isGenerating ? (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm">
+          <div className="w-full max-w-sm rounded-[2rem] border border-slate-200 bg-white p-8 shadow-2xl">
+            <div className="flex flex-col items-center text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-sky-50 ring-2 ring-sky-100">
+                <Wand2 className="h-6 w-6 text-sky-700" />
+              </div>
+
+              <h2 className="mt-4 text-lg font-bold text-slate-950">
+                Generating call schedule
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Checking rules, availability, spacing, and fairness.
+              </p>
+
+              <div className="mt-6 w-full space-y-2 text-left">
+                {[
+                  "Loading rules",
+                  "Checking resident availability",
+                  "Assigning primary calls",
+                  "Applying conditional backup / buddy rules",
+                  "Reviewing violations",
+                ].map((step) => (
+                  <div
+                    key={step}
+                    className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2 text-sm text-slate-600"
+                  >
+                    <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin text-sky-500" />
+                    {step}
+                  </div>
+                ))}
+              </div>
+
+              <p className="mt-6 text-xs text-slate-400">
+                This usually takes a few seconds. Please wait.
+              </p>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }

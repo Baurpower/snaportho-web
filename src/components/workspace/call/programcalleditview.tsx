@@ -14,10 +14,13 @@ import type { CallValidationResult } from "@/lib/workspace/call/validation";
 import { serializeSlotId } from "@/lib/workspace/call/validation";
 import { getSlotValidationGuidance } from "@/lib/workspace/call/validation-display";
 import {
-  getResidentColorToken,
   getRotationAssignmentForDate,
   getRotationDisplayLabel,
 } from "@/lib/workspace/call/resident-display";
+import {
+  getResidentColorClasses,
+  getResidentColorKey,
+} from "@/lib/workspace/call/resident-colors";
 import type {
   AssignmentFlag,
   CalendarDay,
@@ -429,7 +432,7 @@ function AssignmentCard({
   onOpenFlag: (flag: DisplayFlag) => void;
 }) {
   const filled = !!residentName;
-  const residentColor = getResidentColorToken(residentColorKey);
+  const residentColor = getResidentColorClasses(residentColorKey);
   const slotMark = shortLabel;
 
   // Slot color classes for the empty-state chip
@@ -655,7 +658,7 @@ function DayCell({
               slotColorKey={slotDef.colorKey}
               residentName={resident?.displayName ?? null}
               secondaryText={resident ? getResidentRotationLabel(resident, day.key) : ""}
-              residentColorKey={resident?.residentId ?? null}
+              residentColorKey={getResidentColorKey(resident)}
               flags={displayFlags}
               changed={slotChanged(slotDef.callType, current, original)}
               removed={slotRemoved(slotDef.callType, current, original)}
