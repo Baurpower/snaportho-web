@@ -304,8 +304,8 @@ function summarizeRuleWarningsForCombination({
       }
     }
 
-    check(assignment.primaryMembershipId, "Primary");
-    check(assignment.backupMembershipId, "Backup");
+    check(assignment.primaryRosterId, "Primary");
+    check(assignment.backupRosterId, "Backup");
   }
 
   return {
@@ -472,8 +472,8 @@ function analyzeCombinationDiagnostics({
       }
     }
 
-    inspectResidentAssignment(assignment.primaryMembershipId, "Primary");
-    inspectResidentAssignment(assignment.backupMembershipId, "Backup");
+    inspectResidentAssignment(assignment.primaryRosterId, "Primary");
+    inspectResidentAssignment(assignment.backupRosterId, "Backup");
   }
 
   const hardErrors = issues.filter((issue) => issue.severity === "error");
@@ -503,12 +503,12 @@ function applyExistingAssignmentsToStats(
     const assignment = assignments[day.key];
     if (!assignment) continue;
 
-    if (assignment.primaryMembershipId) {
-      updateStats(stats, assignment.primaryMembershipId, "Primary", day);
+    if (assignment.primaryRosterId) {
+      updateStats(stats, assignment.primaryRosterId, "Primary", day);
     }
 
-    if (assignment.backupMembershipId) {
-      updateStats(stats, assignment.backupMembershipId, "Backup", day);
+    if (assignment.backupRosterId) {
+      updateStats(stats, assignment.backupRosterId, "Backup", day);
     }
   }
 }
@@ -645,8 +645,8 @@ function getRulePenalty({
   const pairedAssignment = pairedDateKey ? assignments[pairedDateKey] : null;
   const pairedResidentId =
     slot === "Primary"
-      ? pairedAssignment?.primaryMembershipId ?? null
-      : pairedAssignment?.backupMembershipId ?? null;
+      ? pairedAssignment?.primaryRosterId ?? null
+      : pairedAssignment?.backupRosterId ?? null;
 
   for (const violation of evaluateWeekendPairingForResident({
     residentId: resident.residentId,
@@ -786,8 +786,8 @@ function scoreResident({
   const current = assignments[day.key];
 
   if (
-    current?.primaryMembershipId === resident.residentId ||
-    current?.backupMembershipId === resident.residentId
+    current?.primaryRosterId === resident.residentId ||
+    current?.backupRosterId === resident.residentId
   ) {
     score += 99999;
   }
@@ -897,11 +897,11 @@ function countOpenRequiredSlots({
   for (const day of monthDays) {
     const assignment = assignments[day.key];
 
-    if (shouldCheckPrimary && !assignment?.primaryMembershipId) {
+    if (shouldCheckPrimary && !assignment?.primaryRosterId) {
       open += 1;
     }
 
-    if (shouldCheckBackup && !assignment?.backupMembershipId) {
+    if (shouldCheckBackup && !assignment?.backupRosterId) {
       open += 1;
     }
   }
@@ -993,18 +993,21 @@ function generateSingleCallSchedule({
 
   for (const day of monthDays) {
     const existing = existingAssignments[day.key] ?? {
-      primaryMembershipId: null,
-      backupMembershipId: null,
+      primaryRosterId: null,
+      backupRosterId: null,
+      buddyRosterId: null,
     };
 
     nextAssignments[day.key] = forceRegenerate
       ? {
-          primaryMembershipId: null,
-          backupMembershipId: null,
+          primaryRosterId: null,
+          backupRosterId: null,
+          buddyRosterId: null,
         }
       : {
-          primaryMembershipId: existing.primaryMembershipId ?? null,
-          backupMembershipId: existing.backupMembershipId ?? null,
+          primaryRosterId: existing.primaryRosterId ?? null,
+          backupRosterId: existing.backupRosterId ?? null,
+          buddyRosterId: existing.buddyRosterId ?? null,
         };
   }
 
@@ -1026,11 +1029,12 @@ function generateSingleCallSchedule({
 
   for (const day of monthDays) {
     const current = nextAssignments[day.key] ?? {
-      primaryMembershipId: null,
-      backupMembershipId: null,
+      primaryRosterId: null,
+      backupRosterId: null,
+      buddyRosterId: null,
     };
 
-    if (shouldFillPrimary && !current.primaryMembershipId) {
+    if (shouldFillPrimary && !current.primaryRosterId) {
       const picked = pickBestResident({
         residents,
         slot: "Primary",
@@ -1043,16 +1047,16 @@ function generateSingleCallSchedule({
       });
 
       if (picked) {
-        current.primaryMembershipId = picked.residentId;
+        current.primaryRosterId = picked.residentId;
         nextAssignments[day.key] = current;
         updateStats(stats, picked.residentId, "Primary", day);
       }
     }
 
-    if (shouldFillBackup && !current.backupMembershipId) {
+    if (shouldFillBackup && !current.backupRosterId) {
       const picked = pickBestResident({
         residents: residents.filter(
-          (resident) => resident.residentId !== current.primaryMembershipId
+          (resident) => resident.residentId !== current.primaryRosterId
         ),
         slot: "Backup",
         day,
@@ -1064,7 +1068,7 @@ function generateSingleCallSchedule({
       });
 
       if (picked) {
-        current.backupMembershipId = picked.residentId;
+        current.backupRosterId = picked.residentId;
         nextAssignments[day.key] = current;
         updateStats(stats, picked.residentId, "Backup", day);
       }

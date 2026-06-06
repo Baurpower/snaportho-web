@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   DndContext,
   DragOverlay,
   PointerSensor,
   closestCenter,
+  pointerWithin,
   useDraggable,
   useDroppable,
   useSensor,
@@ -17,16 +18,20 @@ import { CSS } from "@dnd-kit/utilities";
 import {
   CalendarDays,
   Check,
-  Clock3,
   GripVertical,
   PencilLine,
-  PhoneCall,
   Search,
   Trash2,
   UserRound,
   X,
 } from "lucide-react";
 import type { ProgramCallItem } from "./callmonthcalendar";
+import type { ProgramCallSlotDefinition } from "@/lib/workspace/call/rule-definitions";
+import {
+  DEFAULT_SLOT_DEFINITIONS,
+  getVisibleCallSlotsForDay,
+} from "@/lib/workspace/call/rule-definitions";
+import type { DraftDayAssignment } from "@/components/workspace/call/programcalltypes";
 import {
   type CallValidationResident,
   type CallValidationIssue,
@@ -50,12 +55,188 @@ import {
 } from "@/lib/workspace/call/validation-display";
 import { getCallMutationValidation } from "@/lib/workspace/call/mutation-error";
 
+// ─── Local color system for this page ─────────────────────────────────────────
+// 24 perceptually-distinct colors ordered so the first 12 span the full hue
+// wheel with no near-hue repeats. Each resident receives a color by sorted
+// name position, so the first 12 visible residents are always maximally
+// distinct. A hash fallback handles calls whose rosters aren't in the current
+// list (e.g. legacy data).
+type EditColor = {
+  bg: string;
+  border: string;
+  text: string;
+  badge: string;
+  badgeText: string;
+};
+
+const EDIT_COLORS: EditColor[] = [
+  { bg: "bg-blue-200",    border: "border-blue-500",    text: "text-blue-900",    badge: "bg-blue-300",    badgeText: "text-blue-900" },
+  { bg: "bg-orange-200",  border: "border-orange-500",  text: "text-orange-900",  badge: "bg-orange-300",  badgeText: "text-orange-900" },
+  { bg: "bg-green-200",   border: "border-green-600",   text: "text-green-900",   badge: "bg-green-300",   badgeText: "text-green-900" },
+  { bg: "bg-red-200",     border: "border-red-500",     text: "text-red-900",     badge: "bg-red-300",     badgeText: "text-red-900" },
+  { bg: "bg-purple-200",  border: "border-purple-500",  text: "text-purple-900",  badge: "bg-purple-300",  badgeText: "text-purple-900" },
+  { bg: "bg-yellow-200",  border: "border-yellow-500",  text: "text-yellow-900",  badge: "bg-yellow-300",  badgeText: "text-yellow-900" },
+  { bg: "bg-teal-200",    border: "border-teal-500",    text: "text-teal-900",    badge: "bg-teal-300",    badgeText: "text-teal-900" },
+  { bg: "bg-pink-200",    border: "border-pink-500",    text: "text-pink-900",    badge: "bg-pink-300",    badgeText: "text-pink-900" },
+  { bg: "bg-stone-300",   border: "border-stone-600",   text: "text-stone-900",   badge: "bg-stone-400",   badgeText: "text-stone-900" },
+  { bg: "bg-lime-200",    border: "border-lime-600",    text: "text-lime-900",    badge: "bg-lime-300",    badgeText: "text-lime-900" },
+  { bg: "bg-indigo-200",  border: "border-indigo-500",  text: "text-indigo-900",  badge: "bg-indigo-300",  badgeText: "text-indigo-900" },
+  { bg: "bg-cyan-200",    border: "border-cyan-500",    text: "text-cyan-900",    badge: "bg-cyan-300",    badgeText: "text-cyan-900" },
+  // Secondary variants — safely reach here only in larger programs
+  { bg: "bg-violet-200",  border: "border-violet-500",  text: "text-violet-900",  badge: "bg-violet-300",  badgeText: "text-violet-900" },
+  { bg: "bg-amber-200",   border: "border-amber-600",   text: "text-amber-900",   badge: "bg-amber-300",   badgeText: "text-amber-900" },
+  { bg: "bg-emerald-200", border: "border-emerald-600", text: "text-emerald-900", badge: "bg-emerald-300", badgeText: "text-emerald-900" },
+  { bg: "bg-rose-200",    border: "border-rose-500",    text: "text-rose-900",    badge: "bg-rose-300",    badgeText: "text-rose-900" },
+  { bg: "bg-fuchsia-200", border: "border-fuchsia-500", text: "text-fuchsia-900", badge: "bg-fuchsia-300", badgeText: "text-fuchsia-900" },
+  { bg: "bg-sky-200",     border: "border-sky-500",     text: "text-sky-900",     badge: "bg-sky-300",     badgeText: "text-sky-900" },
+  { bg: "bg-slate-200",   border: "border-slate-500",   text: "text-slate-900",   badge: "bg-slate-300",   badgeText: "text-slate-900" },
+  { bg: "bg-zinc-300",    border: "border-zinc-600",    text: "text-zinc-900",    badge: "bg-zinc-400",    badgeText: "text-zinc-900" },
+  // Deeper variants for programs with 20+ residents
+  { bg: "bg-blue-300",    border: "border-blue-600",    text: "text-blue-950",    badge: "bg-blue-400",    badgeText: "text-blue-950" },
+  { bg: "bg-orange-300",  border: "border-orange-600",  text: "text-orange-950",  badge: "bg-orange-400",  badgeText: "text-orange-950" },
+  { bg: "bg-green-300",   border: "border-green-700",   text: "text-green-950",   badge: "bg-green-400",   badgeText: "text-green-950" },
+  { bg: "bg-red-300",     border: "border-red-600",     text: "text-red-950",     badge: "bg-red-400",     badgeText: "text-red-950" },
+];
+
+function hashForFallback(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+}
+// ─── end local color system ────────────────────────────────────────────────────
+
 type ResidentOption = {
   rosterId: string;
   programMembershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
+  /** Explicit PGY year from the API. Used for conditional buddy-slot visibility. */
+  pgyYear?: number | null;
+  currentRotationLabel?: string | null;
 };
+
+/**
+ * Parses "PGY-1", "PGY1", "pgy2" etc. from a trainingLevel string.
+ * Fallback when pgyYear is not explicitly set on the resident or call.
+ */
+function parsePgyFromTrainingLevel(trainingLevel: string | null | undefined): number | null {
+  if (!trainingLevel) return null;
+  const match = trainingLevel.match(/pgy-?(\d+)/i);
+  return match ? parseInt(match[1], 10) : null;
+}
+
+/** Formats a Date as a short relative string: "just now", "2 min ago", "3h ago". */
+function formatRelativeTime(date: Date): string {
+  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (seconds < 45) return "just now";
+  if (seconds < 90) return "1 min ago";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+/**
+ * Converts the current slotMap to a DraftDayAssignment record keyed by YYYY-MM-DD.
+ * Used to persist draft state to the backend draft API after each mutation.
+ */
+function slotMapToDraftAssignments(
+  slotMap: Map<string, ProgramCallItem | null>
+): Record<string, DraftDayAssignment> {
+  const result: Record<string, DraftDayAssignment> = {};
+  for (const [slotId, call] of slotMap.entries()) {
+    if (!call?.callDate) continue;
+    const { dateKey, callType } = deserializeSlotId(slotId);
+    const rosterId = call.rosterId ?? call.membershipId ?? null;
+    if (!rosterId) continue;
+    if (!result[dateKey]) {
+      result[dateKey] = { primaryRosterId: null, backupRosterId: null, buddyRosterId: null };
+    }
+    const ct = callType.toLowerCase();
+    if (ct === "primary") result[dateKey].primaryRosterId = rosterId;
+    else if (ct === "backup") result[dateKey].backupRosterId = rosterId;
+    else if (ct === "buddy") result[dateKey].buddyRosterId = rosterId;
+  }
+  return result;
+}
+
+/**
+ * Reconstructs slotMap and pendingChanges from a previously saved DraftDayAssignment
+ * record. Compares against the initialSlotMap (published schedule) to determine
+ * what kind of change each restored slot represents (create / replace / delete).
+ */
+function reconstructFromDraft(
+  draftAssignments: Record<string, DraftDayAssignment>,
+  initialSlotMap: Map<string, ProgramCallItem | null>,
+  residentLookup: Map<string, ResidentOption>
+): {
+  slotMap: Map<string, ProgramCallItem | null>;
+  pendingChanges: PendingChange[];
+} {
+  const nextSlotMap = new Map(initialSlotMap);
+  const nextPendingChanges: PendingChange[] = [];
+  let changeCount = 0;
+
+  for (const [dateKey, draftDay] of Object.entries(draftAssignments)) {
+    const slots: Array<{ callType: string; rosterId: string | null }> = [
+      { callType: "Primary", rosterId: draftDay.primaryRosterId },
+      { callType: "Backup", rosterId: draftDay.backupRosterId },
+      { callType: "Buddy", rosterId: draftDay.buddyRosterId },
+    ];
+
+    for (const { callType, rosterId } of slots) {
+      const slotId = serializeSlotId({ dateKey, callType });
+      const publishedCall = initialSlotMap.get(slotId) ?? null;
+      const publishedRosterId = publishedCall
+        ? (publishedCall.rosterId ?? publishedCall.membershipId ?? null)
+        : null;
+
+      if (rosterId === publishedRosterId) continue; // no change from published
+
+      if (rosterId && publishedCall) {
+        // Draft has a different resident than published → restore as replace
+        const resident = residentLookup.get(rosterId);
+        if (!resident) continue;
+        const nextCall = createOptimisticCall(resident, { dateKey, callType });
+        nextSlotMap.set(slotId, nextCall);
+        nextPendingChanges.push({
+          id: `restore-${++changeCount}`,
+          kind: "replace",
+          slotId,
+          callId: publishedCall.id,
+          fromRosterId: publishedRosterId,
+          resident,
+        });
+      } else if (rosterId && !publishedCall) {
+        // Draft adds a resident where published is empty → restore as create
+        const resident = residentLookup.get(rosterId);
+        if (!resident) continue;
+        const nextCall = createOptimisticCall(resident, { dateKey, callType });
+        nextSlotMap.set(slotId, nextCall);
+        nextPendingChanges.push({
+          id: `restore-${++changeCount}`,
+          kind: "create",
+          slotId,
+          slot: { dateKey, callType },
+          resident,
+          tempCallId: nextCall.id,
+        });
+      } else if (!rosterId && publishedCall) {
+        // Draft removes a resident that published has → restore as delete
+        nextSlotMap.set(slotId, null);
+        nextPendingChanges.push({
+          id: `restore-${++changeCount}`,
+          kind: "delete",
+          slotId,
+          callId: publishedCall.id,
+        });
+      }
+    }
+  }
+
+  return { slotMap: nextSlotMap, pendingChanges: nextPendingChanges };
+}
 
 function buildValidationResidents(
   residents: ResidentOption[]
@@ -75,6 +256,7 @@ export type ProgramCallSlot = {
   key: string;
   label: string;
   color?: string;
+  shortLabel?: string;
 };
 
 type ActiveSlotAction =
@@ -95,19 +277,22 @@ type CallSlotId = {
 };
 
 type DragCallData = {
-  kind: "call";
+  kind: "assignment";
   call: ProgramCallItem;
   sourceSlotId: string;
+  sourceSlot: CallSlotId;
+  residentId: string | null;
 };
 
 type DragResidentData = {
-  kind: "resident";
+  kind: "pool-resident";
   resident: ResidentOption;
 };
 
 type SlotDroppableData = {
   kind: "slot";
   slotId: string;
+  slot: CallSlotId;
   call: ProgramCallItem | null;
   dateKey: string;
   callType: string;
@@ -163,6 +348,19 @@ type PendingChange =
       callId: string;
     };
 
+
+function buildPoolResidentDndId(rosterId: string) {
+  return `pool-resident:${rosterId}`;
+}
+
+function buildAssignmentDndId(slotId: string) {
+  return `assignment:${slotId}`;
+}
+
+function buildSlotDndId(slotId: string) {
+  return `slot:${slotId}`;
+}
+
 function toDateKey(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -217,29 +415,6 @@ function isSameMonth(date: Date, year: number, monthIndex: number) {
   return date.getFullYear() === year && date.getMonth() === monthIndex;
 }
 
-function getCallTone(call: ProgramCallItem) {
-  if (call.isMine) {
-    return {
-      card: "border-sky-300 bg-sky-50",
-      chip: "bg-sky-600 text-white",
-      text: "text-sky-950",
-    };
-  }
-
-  if (call.isHomeCall) {
-    return {
-      card: "border-violet-200 bg-violet-50",
-      chip: "bg-violet-600 text-white",
-      text: "text-violet-950",
-    };
-  }
-
-  return {
-    card: "border-slate-200 bg-slate-50",
-    chip: "bg-slate-900 text-white",
-    text: "text-slate-900",
-  };
-}
 
 function formatShortDate(dateString: string | null | undefined) {
   if (!dateString) return "—";
@@ -249,57 +424,58 @@ function formatShortDate(dateString: string | null | undefined) {
   });
 }
 
-function formatCompactResidentName(name: string | null | undefined) {
-  const parts =
-    name
-      ?.trim()
-      .split(/\s+/)
-      .filter(Boolean) ?? [];
 
-  if (parts.length <= 1) return name?.trim() || "Unknown";
 
-  const firstInitial = parts[0]?.[0]?.toUpperCase();
-  const lastName = parts[parts.length - 1];
 
-  if (!firstInitial || !lastName) return name?.trim() || "Unknown";
-  return `${firstInitial}. ${lastName}`;
+/**
+ * Returns the short role label shown in the slot badge.
+ * Legacy "Weekday" / "Weekend" call types map to "Primary".
+ */
+function getSlotRoleLabel(callType: string | null | undefined): string {
+  const lower = normalizeCallType(callType).toLowerCase();
+  if (lower === "primary" || lower === "weekday" || lower === "weekend") return "Primary";
+  if (lower === "backup") return "Backup";
+  if (lower === "buddy") return "Bud";
+  // Custom slot types: cap at 6 chars
+  const raw = (callType ?? "").trim();
+  return raw.slice(0, 6) || "Slot";
 }
 
-function formatSlotShortLabel(label: string | null | undefined) {
-  const normalized = normalizeCallType(label);
-  const lower = normalized.toLowerCase();
-
-  if (lower === "primary") return "1°";
-  if (lower === "backup") return "2°";
-
-  return normalized.replace(/[^A-Za-z0-9]/g, "").slice(0, 3).toUpperCase() || "SLT";
+/** Tailwind badge classes keyed by call type. */
+function getRoleBadgeClass(callType: string | null | undefined): string {
+  const lower = normalizeCallType(callType).toLowerCase();
+  if (lower === "primary" || lower === "weekday" || lower === "weekend") {
+    return "bg-amber-100 text-amber-700";
+  }
+  if (lower === "backup") return "bg-sky-100 text-sky-700";
+  if (lower === "buddy") return "bg-violet-100 text-violet-700";
+  return "bg-slate-100 text-slate-600";
 }
 
 function normalizeSlotKey(value: string | null | undefined) {
   return normalizeCallType(value).toLowerCase();
 }
 
+/** Derive slot list from existing calls (legacy fallback when no slotDefinitions provided). */
 function getDefaultCallSlots(calls: ProgramCallItem[]) {
-  const hasBackup = calls.some(
-    (call) => normalizeSlotKey(call.callType) === "backup"
-  );
+  const hasBackup = calls.some((call) => normalizeSlotKey(call.callType) === "backup");
+  const hasBuddy = calls.some((call) => normalizeSlotKey(call.callType) === "buddy");
 
   return [
-    {
-      key: "Primary",
-      label: "Primary",
-      color: "amber",
-    },
-    ...(hasBackup
-      ? [
-          {
-            key: "Backup",
-            label: "Backup",
-            color: "sky",
-          },
-        ]
-      : []),
+    { key: "Primary", label: "Primary", color: "amber" },
+    ...(hasBuddy ? [{ key: "Buddy", label: "Buddy", color: "violet" }] : []),
+    ...(hasBackup ? [{ key: "Backup", label: "Backup", color: "sky" }] : []),
   ];
+}
+
+/** Convert slot definitions to ProgramCallSlot[] (ALL slots, for building the global slotMap). */
+function slotDefsToCallSlots(defs: ProgramCallSlotDefinition[]): ProgramCallSlot[] {
+  return defs.map((def) => ({
+    key: def.callType,
+    label: def.label,
+    color: def.colorKey,
+    shortLabel: def.shortLabel,
+  }));
 }
 
 function buildSlotMap(
@@ -360,6 +536,9 @@ function createOptimisticCall(
     membershipId: resident.rosterId,
     residentName: resident.residentName,
     trainingLevel: resident.trainingLevel,
+    // Propagate pgyYear so slotItemsByDate can evaluate conditional buddy visibility
+    // immediately after drag, before the change is saved to the database.
+    pgyYear: resident.pgyYear ?? parsePgyFromTrainingLevel(resident.trainingLevel) ?? undefined,
     classYear: existingCall?.classYear ?? null,
     userId: existingCall?.userId ?? null,
     callType: normalizeCallType(slot.callType),
@@ -411,33 +590,81 @@ function buildDraftAssignmentsFromSlotMap(
   return assignments;
 }
 
+function getAssignmentEditState(params: {
+  call: ProgramCallItem | null | undefined;
+  inMonth: boolean;
+  canEdit: boolean;
+  working: boolean;
+  deleteMode: boolean;
+}) {
+  const { call, inMonth, canEdit, working, deleteMode } = params;
+  const hasAssignment = Boolean(call);
+  const hasCallDate = Boolean(call?.callDate);
+  const isPast =
+    typeof call?.callDate === "string"
+      ? call.callDate < toDateKey(new Date())
+      : false;
+  const legacyQuickEditEligible = call ? isEditableQuickCall(call) : false;
+
+  const disabledReason =
+    !canEdit
+      ? "cannot-edit"
+      : !inMonth
+      ? "outside-month"
+      : deleteMode
+      ? "delete-mode"
+      : working
+      ? "saving"
+      : !hasAssignment
+      ? "no-assignment"
+      : !hasCallDate
+      ? "missing-call-date"
+      : null;
+
+  return {
+    disabledReason,
+    isDragDisabled: disabledReason !== null,
+    hasAssignment,
+    hasCallDate,
+    isPast,
+    legacyQuickEditEligible,
+  };
+}
+
 function DraggableCallCard({
   call,
   slotId,
   onClick,
   disabled,
+  color,
 }: {
   call: ProgramCallItem;
   slotId: string;
   onClick: () => void;
   disabled: boolean;
+  color: EditColor;
 }) {
-  const tone = getCallTone(call);
-  const slotBadge = formatSlotShortLabel(call.callType);
+  const sourceSlot = deserializeSlotId(slotId);
+  const residentId = call.rosterId ?? call.membershipId ?? null;
 
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
-      id: `call:${call.id}`,
+      id: buildAssignmentDndId(slotId),
       data: {
-        kind: "call",
+        kind: "assignment",
         call,
         sourceSlotId: slotId,
+        sourceSlot,
+        residentId,
       } satisfies DragCallData,
       disabled,
     });
 
   const style = {
     transform: CSS.Transform.toString(transform),
+    touchAction: "none" as const,
+    WebkitUserSelect: "none" as const,
+    userSelect: "none" as const,
   };
   const dragProps = disabled
     ? {}
@@ -446,47 +673,52 @@ function DraggableCallCard({
         ...listeners,
       };
 
+  const roleLabel = getSlotRoleLabel(call.callType);
+  const roleBadgeClass = getRoleBadgeClass(call.callType);
+
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={disabled ? -1 : 0}
       ref={setNodeRef}
       style={style}
       onClick={(event) => {
         event.stopPropagation();
         onClick();
       }}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onClick();
+        }
+      }}
       {...dragProps}
       className={[
-        "flex h-full w-full min-h-0 max-w-full items-center gap-1.5 overflow-hidden rounded-md border px-1.5 py-1 text-left transition",
-        tone.card,
+        "flex h-full w-full min-h-0 max-w-full select-none flex-col justify-center overflow-hidden rounded-md border px-1.5 py-0.5 text-left transition",
+        `${color.bg} ${color.border}`,
         disabled
           ? "cursor-default opacity-70"
-          : "cursor-grab active:cursor-grabbing hover:border-amber-300",
+          : "cursor-grab active:cursor-grabbing hover:brightness-95",
         isDragging ? "opacity-40 shadow-lg" : "",
       ].join(" ")}
     >
-      <div className={`shrink-0 rounded px-1 py-0.5 text-[9px] font-bold leading-none ${tone.chip}`}>
-        {slotBadge}
-      </div>
-
-      <div className="min-w-0 flex-1 truncate">
-        <p className={`truncate text-[10px] font-semibold leading-4 md:text-[11px] ${tone.text}`}>
-          {formatCompactResidentName(call.residentName)}
+      {/* Name row — resident name takes priority, role badge sits to the right */}
+      <div className="flex min-w-0 items-center gap-1">
+        <p className={`min-w-0 flex-1 truncate text-[11px] font-semibold leading-none ${color.text}`}>
+          {call.residentName?.trim() || "Unknown"}
         </p>
+        <span className={`shrink-0 rounded px-1 py-0.5 text-[8px] font-bold leading-none ${roleBadgeClass}`}>
+          {roleLabel}
+        </span>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1">
-        {call.trainingLevel ? (
-          <span className="hidden shrink-0 text-[9px] leading-3 text-slate-500 xl:inline">
-            {call.trainingLevel}
-          </span>
-        ) : null}
-        {!isEditableQuickCall(call) ? (
-          <Clock3 className="h-2.5 w-2.5 shrink-0 text-slate-400" />
-        ) : null}
-        <GripVertical className="h-3 w-3 shrink-0 text-slate-400" />
-      </div>
-    </button>
+      {/* Secondary row: training level — hidden at smaller breakpoints to preserve space */}
+      {call.trainingLevel ? (
+        <p className="mt-0.5 hidden truncate text-[9px] leading-none text-slate-400 xl:block">
+          {call.trainingLevel}
+        </p>
+      ) : null}
+    </div>
   );
 }
 
@@ -495,17 +727,19 @@ function DraggableResidentCard({
   count,
   validationIssues,
   disabled,
+  color,
 }: {
   resident: ResidentOption;
   count: number;
   validationIssues: CallValidationIssue[];
   disabled: boolean;
+  color: EditColor;
 }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
-      id: `resident:${resident.rosterId}`,
+      id: buildPoolResidentDndId(resident.rosterId),
       data: {
-        kind: "resident",
+        kind: "pool-resident",
         resident,
       } satisfies DragResidentData,
       disabled,
@@ -513,6 +747,9 @@ function DraggableResidentCard({
 
   const style = {
     transform: CSS.Transform.toString(transform),
+    touchAction: "none" as const,
+    WebkitUserSelect: "none" as const,
+    userSelect: "none" as const,
   };
   const dragProps = disabled
     ? {}
@@ -521,13 +758,9 @@ function DraggableResidentCard({
         ...listeners,
       };
   const residentIssueSeverity = getWorstValidationSeverity(validationIssues);
-  const residentIssueClass =
-    residentIssueSeverity === "error"
-      ? "ring-1 ring-rose-200 border-rose-200 bg-rose-50/60"
-      : residentIssueSeverity === "warning"
-      ? "ring-1 ring-amber-200 border-amber-200 bg-amber-50/60"
-      : "";
+  const hasIssue = residentIssueSeverity === "error" || residentIssueSeverity === "warning";
   const residentIssueTitle = getValidationTooltip(validationIssues);
+  const rotationLabel = resident.currentRotationLabel ?? "No rotation listed";
 
   return (
     <div
@@ -535,27 +768,41 @@ function DraggableResidentCard({
       style={style}
       {...dragProps}
       title={residentIssueTitle}
-      className={`rounded-md border border-slate-200 bg-white px-2 py-1.5 shadow-sm transition ${
+      className={`select-none rounded-md border px-2 py-1.5 shadow-sm transition ${
+        hasIssue
+          ? residentIssueSeverity === "error"
+            ? "border-rose-300 bg-rose-50"
+            : "border-amber-300 bg-amber-50"
+          : `${color.border} ${color.bg}`
+      } ${
         disabled
           ? "cursor-default opacity-70"
-          : "cursor-grab hover:border-amber-300 hover:shadow-md active:cursor-grabbing"
-      } ${residentIssueClass} ${isDragging ? "opacity-40 shadow-lg" : ""}`}
+          : "cursor-grab hover:brightness-95 hover:shadow-md active:cursor-grabbing"
+      } ${isDragging ? "opacity-40 shadow-lg" : ""}`}
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="truncate text-[11px] font-semibold leading-4 text-slate-950">
-            {formatCompactResidentName(resident.residentName)}
+          <div className="flex items-center gap-1">
+            <GripVertical className="h-3.5 w-3.5 shrink-0 text-slate-500" />
+            <p className={`truncate text-[11px] font-semibold leading-4 ${color.text}`}>
+              {resident.residentName?.trim() || "Unknown"}
+            </p>
+          </div>
+          <p className="mt-0.5 truncate text-[10px] leading-3 text-slate-500">
+            {rotationLabel}
           </p>
-          <p className="mt-0.5 text-[10px] leading-3 text-slate-500">
-            {resident.trainingLevel ?? "Resident"}
-          </p>
+          {resident.trainingLevel ? (
+            <p className="mt-0.5 text-[10px] leading-3 text-slate-500">
+              {resident.trainingLevel}
+            </p>
+          ) : null}
         </div>
 
         <div className="flex shrink-0 items-center gap-1">
           {validationIssues.length > 0 ? (
             <span
               title={residentIssueTitle}
-              className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em] ${
+              className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold ${
                 residentIssueSeverity === "error"
                   ? "bg-rose-600 text-white"
                   : "bg-amber-500 text-white"
@@ -564,7 +811,7 @@ function DraggableResidentCard({
               {validationIssues.length}
             </span>
           ) : null}
-          <div className="rounded-full bg-slate-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.08em] text-slate-600">
+          <div className={`rounded-full px-1.5 py-0.5 text-[9px] font-bold ${color.badge} ${color.badgeText}`}>
             {count}
           </div>
         </div>
@@ -588,6 +835,8 @@ function SlotDropZone({
   validationTitle,
   onClick,
   children,
+  canEditAssignments,
+  working,
 }: {
   slotId: string;
   dateKey: string;
@@ -603,16 +852,30 @@ function SlotDropZone({
   validationTitle?: string;
   onClick: () => void;
   children: React.ReactNode;
+  canEditAssignments: boolean;
+  working: boolean;
 }) {
+  const editState = getAssignmentEditState({
+    call,
+    inMonth,
+    canEdit: canEditAssignments,
+    working,
+    deleteMode,
+  });
   const canDrop =
     inMonth &&
     !deleteMode &&
-    (!call || isEditableQuickCall(call));
+    (!call || !editState.isDragDisabled);
+
   const { isOver, setNodeRef } = useDroppable({
-    id: slotId,
+    id: buildSlotDndId(slotId),
     data: {
       kind: "slot",
       slotId,
+      slot: {
+        dateKey,
+        callType,
+      },
       call,
       dateKey,
       callType,
@@ -635,10 +898,19 @@ function SlotDropZone({
   const slotIssueTitle = validationTitle ?? getValidationTooltip(slotIssues);
 
   return (
-    <button
+    // Using div instead of button avoids invalid nested-button HTML
+    // (DraggableCallCard is also a button). Keyboard access preserved via role/tabIndex/onKeyDown.
+    <div
       ref={setNodeRef}
-      type="button"
+      role="button"
+      tabIndex={inMonth && !deleteMode ? 0 : -1}
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       className={[
         "relative flex h-full min-h-0 w-full flex-col overflow-hidden rounded-md border px-1.5 py-1 text-left transition",
         call
@@ -646,7 +918,7 @@ function SlotDropZone({
           : "border-dashed border-slate-200 bg-slate-50/80",
         !call && canDrop ? "cursor-pointer hover:border-amber-300 hover:bg-amber-50/60" : "",
         !call && !canDrop ? "cursor-default opacity-70" : "",
-        deleteMode && call && isEditableQuickCall(call)
+        deleteMode && call && !editState.isDragDisabled
           ? deleteSelected
             ? "border-rose-400 bg-rose-100 ring-2 ring-rose-300"
             : "border-rose-200 bg-rose-50 hover:border-rose-400 hover:bg-rose-100"
@@ -692,7 +964,7 @@ function SlotDropZone({
           {targetStateLabel}
         </div>
       ) : null}
-    </button>
+    </div>
   );
 }
 
@@ -708,6 +980,11 @@ export default function EditCallMonthCalendar({
   onDelete,
   onCreate,
   callSlots,
+  slotDefinitions,
+  initialDraftAssignments,
+  onDraftChange,
+  draftSaveStatus = "idle",
+  draftLastSavedAt,
 }: {
   year: number;
   monthIndex: number;
@@ -733,6 +1010,23 @@ export default function EditCallMonthCalendar({
     programMembershipId?: string | null;
   }) => Promise<void> | void;
   callSlots?: ProgramCallSlot[];
+  slotDefinitions?: ProgramCallSlotDefinition[];
+  /**
+   * Pre-populated draft assignments restored from the backend draft API.
+   * When provided, the calendar reconstructs its pending-change state so the
+   * user sees their unsaved work immediately on page load / edit-mode re-entry.
+   */
+  initialDraftAssignments?: Record<string, DraftDayAssignment> | null;
+  /**
+   * Called after each slotMap mutation (create / replace / move / swap / delete)
+   * with the new draft assignment record, or null when changes are discarded.
+   * The parent (callhubclient) debounces this and persists to the backend draft API.
+   */
+  onDraftChange?: (assignments: Record<string, DraftDayAssignment> | null) => void;
+  /** Save lifecycle status — drives the draft status badge. */
+  draftSaveStatus?: "idle" | "pending" | "saving" | "saved" | "error" | "conflict";
+  /** Timestamp of the last successful autosave — drives "saved X ago" text. */
+  draftLastSavedAt?: Date | null;
 }) {
   const [selectedDateKey, setSelectedDateKey] = useState<string | null>(null);
   const [activeSlotAction, setActiveSlotAction] = useState<ActiveSlotAction>(null);
@@ -745,6 +1039,8 @@ export default function EditCallMonthCalendar({
   const [residentSearch, setResidentSearch] = useState("");
   const [activeDragCall, setActiveDragCall] = useState<ProgramCallItem | null>(null);
   const [activeDragResident, setActiveDragResident] = useState<ResidentOption | null>(null);
+  const canEditAssignments =
+    Boolean(onCreate) && Boolean(onDelete) && Boolean(onSwitch) && Boolean(onSwap);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -760,10 +1056,29 @@ export default function EditCallMonthCalendar({
   );
 
   const todayKey = toDateKey(new Date());
-  const resolvedCallSlots = useMemo(
-    () => (callSlots && callSlots.length > 0 ? callSlots : getDefaultCallSlots(calls)),
-    [callSlots, calls]
-  );
+
+  // resolvedCallSlots = ALL possible slots for this program.
+  // Used to populate the slotMap so every slot type has a drop target.
+  // Visibility per day is handled separately in slotItemsByDate.
+  const resolvedCallSlots = useMemo((): ProgramCallSlot[] => {
+    if (slotDefinitions && slotDefinitions.length > 0) {
+      return slotDefsToCallSlots(slotDefinitions);
+    }
+    if (callSlots && callSlots.length > 0) return callSlots;
+    return getDefaultCallSlots(calls);
+  }, [slotDefinitions, callSlots, calls]);
+
+  // Lookup from callType (lowercase) → slot definition (for per-day condition checks).
+  const slotDefByCallType = useMemo(() => {
+    const map = new Map<string, ProgramCallSlotDefinition>();
+    const defs = slotDefinitions && slotDefinitions.length > 0
+      ? slotDefinitions
+      : DEFAULT_SLOT_DEFINITIONS;
+    for (const def of defs) {
+      map.set(def.callType.toLowerCase(), def);
+    }
+    return map;
+  }, [slotDefinitions]);
   const initialSlotMap = useMemo(
     () => buildSlotMap(weeks, resolvedCallSlots, calls),
     [weeks, resolvedCallSlots, calls]
@@ -776,6 +1091,56 @@ export default function EditCallMonthCalendar({
   const [deleteSelectedCallIds, setDeleteSelectedCallIds] = useState<string[]>([]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const pendingIdRef = useRef(0);
+
+  // Stable ref for onDraftChange so the autosave effect does not re-fire when
+  // the parent re-renders with a new function identity.
+  const onDraftChangeRef = useRef(onDraftChange);
+  useEffect(() => {
+    onDraftChangeRef.current = onDraftChange;
+  });
+
+  // Track whether this is the initial render so we don't autosave on mount.
+  const draftAutosaveReady = useRef(false);
+
+  // ─── Draft restoration ─────────────────────────────────────────────────────
+  // On mount (or when initialDraftAssignments first arrives), reconstruct pending
+  // state from the saved backend draft so the user sees their unsaved work.
+  useEffect(() => {
+    if (!initialDraftAssignments || Object.keys(initialDraftAssignments).length === 0) {
+      draftAutosaveReady.current = true;
+      return;
+    }
+
+    const residentLookup = new Map<string, ResidentOption>();
+    for (const r of residents) residentLookup.set(r.rosterId, r);
+
+    const { slotMap: nextSlotMap, pendingChanges: nextPendingChanges } =
+      reconstructFromDraft(initialDraftAssignments, initialSlotMap, residentLookup);
+
+    if (nextPendingChanges.length > 0) {
+      setBaselineSlotMap(initialSlotMap);
+      setSlotMap(nextSlotMap);
+      setPendingChanges(nextPendingChanges);
+    }
+
+    // Allow autosave only AFTER restoration is complete so we don't immediately
+    // re-write a draft equal to what we just loaded.
+    draftAutosaveReady.current = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // intentionally runs once on mount
+
+  // ─── Draft autosave ────────────────────────────────────────────────────────
+  // After each slotMap mutation, notify the parent so it can debounce-persist
+  // the current draft to the backend.
+  useEffect(() => {
+    if (!draftAutosaveReady.current) return;
+    if (!onDraftChangeRef.current) return;
+    onDraftChangeRef.current(
+      pendingChanges.length > 0 ? slotMapToDraftAssignments(slotMap) : null
+    );
+  // slotMap and pendingChanges.length are the meaningful change signals.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slotMap, pendingChanges.length]);
 
   useEffect(() => {
     if (pendingChanges.length === 0) {
@@ -883,33 +1248,103 @@ export default function EditCallMonthCalendar({
     [filteredResidents]
   );
 
+  // Sorted-order color assignment: residents are sorted by name and assigned
+  // EDIT_COLORS[0..n] so the first 12 visible residents always get the most
+  // distinct available hues (blue, orange, green, red, purple, yellow, ...).
+  const residentIndexMap = useMemo(() => {
+    const sorted = [...residents].sort((a, b) =>
+      a.residentName.localeCompare(b.residentName)
+    );
+    const map = new Map<string, number>();
+    sorted.forEach((r, i) => map.set(r.rosterId, i));
+    return map;
+  }, [residents]);
+
+  const getEditColor = useCallback(
+    (rosterId: string | null | undefined): EditColor => {
+      if (!rosterId) return EDIT_COLORS[0];
+      const idx = residentIndexMap.get(rosterId);
+      if (idx !== undefined) return EDIT_COLORS[idx % EDIT_COLORS.length];
+      // Hash fallback for calls whose rosters aren't in the current month list
+      return EDIT_COLORS[hashForFallback(rosterId) % EDIT_COLORS.length];
+    },
+    [residentIndexMap]
+  );
+
   const slotItemsByDate = useMemo(() => {
     const map = new Map<string, SlotRenderItem[]>();
 
     for (const week of weeks) {
       for (const date of week) {
         const dateKey = toDateKey(date);
-        const items = resolvedCallSlots.map((slot) => {
-          const slotId = serializeSlotId({
-            dateKey,
-            callType: slot.key,
-          });
+        const dayOfWeek = date.getDay();
+        const inMonth = isSameMonth(date, year, monthIndex);
 
-          return {
-            slot,
+        // Find the Primary call for this date to evaluate conditional visibility.
+        // Buddy visibility must be derived from draft assignments so conditional buddy
+        // slots appear before save — pgyYear is set on optimistic calls by createOptimisticCall.
+        const primarySlotId = serializeSlotId({ dateKey, callType: "Primary" });
+        const primaryCall = slotMap.get(primarySlotId) ?? null;
+        const primaryCallPgyYear =
+          primaryCall?.pgyYear ??
+          parsePgyFromTrainingLevel(primaryCall?.trainingLevel) ??
+          null;
+
+        // Which call types already have a saved assignment on this day?
+        const assignedCallTypeKeys = new Set<string>();
+        for (const slot of resolvedCallSlots) {
+          const sid = serializeSlotId({ dateKey, callType: slot.key });
+          if (slotMap.get(sid)) {
+            assignedCallTypeKeys.add(slot.key.toLowerCase());
+          }
+        }
+
+        // Determine which slots are visible on this specific day.
+        const visibleSlotKeys = new Set<string>();
+        if (slotDefinitions && slotDefinitions.length > 0) {
+          const visibleDefs = getVisibleCallSlotsForDay({
+            dayOfWeek,
+            primaryCallPgyYear,
+            assignedCallTypeKeys,
+            slotDefinitions,
+          });
+          for (const def of visibleDefs) {
+            visibleSlotKeys.add(def.callType.toLowerCase());
+          }
+        } else {
+          // No slot definitions: show all slots that the resolvedCallSlots list contains.
+          for (const slot of resolvedCallSlots) {
+            visibleSlotKeys.add(slot.key.toLowerCase());
+          }
+        }
+
+        const items: SlotRenderItem[] = [];
+        for (const slot of resolvedCallSlots) {
+          if (!visibleSlotKeys.has(slot.key.toLowerCase())) continue;
+
+          const slotId = serializeSlotId({ dateKey, callType: slot.key });
+
+          // Enrich slot with shortLabel from definition if available.
+          const def = slotDefByCallType.get(slot.key.toLowerCase());
+          const enrichedSlot: ProgramCallSlot = def
+            ? { ...slot, shortLabel: def.shortLabel, color: def.colorKey }
+            : slot;
+
+          items.push({
+            slot: enrichedSlot,
             slotId,
             call: slotMap.get(slotId) ?? null,
-            inMonth: isSameMonth(date, year, monthIndex),
+            inMonth,
             isToday: dateKey === todayKey,
-          };
-        });
+          });
+        }
 
         map.set(dateKey, items);
       }
     }
 
     return map;
-  }, [monthIndex, resolvedCallSlots, slotMap, todayKey, weeks, year]);
+  }, [monthIndex, resolvedCallSlots, slotMap, todayKey, weeks, year, slotDefinitions, slotDefByCallType]);
 
   function closeModal() {
     setActiveSlotAction(null);
@@ -1057,7 +1492,6 @@ export default function EditCallMonthCalendar({
   function queueReplace(call: ProgramCallItem, slotId: string, resident: ResidentOption) {
     clearServerValidation();
     const nextCall = createOptimisticCall(resident, deserializeSlotId(slotId), call);
-
     setSlotMap((previous) => {
       const next = new Map(previous);
       next.set(slotId, nextCall);
@@ -1117,7 +1551,6 @@ export default function EditCallMonthCalendar({
     }
 
     const nextCall = createOptimisticCall(resident, targetSlot, sourceCall);
-
     setSlotMap((previous) => {
       const next = new Map(previous);
       next.set(sourceSlotId, null);
@@ -1327,9 +1760,18 @@ export default function EditCallMonthCalendar({
 
   function confirmDeleteSelection() {
     clearServerValidation();
-    const selectedSlots = selectedDeleteAssignments.filter(({ call }) =>
-      isEditableQuickCall(call)
-    );
+    // Pass deleteMode:false so the editState check evaluates actual editability,
+    // not the delete-mode drag-disable flag (which would filter out everything).
+    const selectedSlots = selectedDeleteAssignments.filter(({ call }) => {
+      const editState = getAssignmentEditState({
+        call,
+        inMonth: true,
+        canEdit: canEditAssignments,
+        working,
+        deleteMode: false,
+      });
+      return !editState.isDragDisabled;
+    });
 
     if (selectedSlots.length === 0) {
       setShowDeleteConfirm(false);
@@ -1349,12 +1791,14 @@ export default function EditCallMonthCalendar({
   function handleDiscardChanges() {
     closeModal();
     resetPendingState();
+    // Signal parent to delete the backend draft so the user starts fresh next time.
+    onDraftChangeRef.current?.(null);
   }
 
-  async function handleSaveChanges() {
+  async function handlePublishChanges() {
     if (!hasPendingChanges) return;
     if (draftValidation.hasErrors) {
-      setLocalError("Fix blocking schedule errors before saving.");
+      setLocalError("Fix blocking schedule errors before publishing.");
       return;
     }
 
@@ -1364,29 +1808,6 @@ export default function EditCallMonthCalendar({
     try {
       setWorking(true);
       setLocalError(null);
-
-      if (process.env.NODE_ENV !== "production") {
-        console.info("[edit-mode-call-save]", {
-          source: "edit-mode",
-          pendingChanges: pendingSnapshot.map((change) => ({
-            kind: change.kind,
-            residentName:
-              "resident" in change ? change.resident.residentName : null,
-            rosterId: "resident" in change ? change.resident.rosterId : null,
-            programMembershipId:
-              "resident" in change ? change.resident.programMembershipId : null,
-            slot:
-              "slot" in change
-                ? change.slot
-                : "targetSlotId" in change
-                ? deserializeSlotId(change.targetSlotId)
-                : null,
-          })),
-          loadedResidentCount: validationResidents.length,
-          loadedResidentIds: validationResidents.map((resident) => resident.rosterId),
-          timestamp: new Date().toISOString(),
-        });
-      }
 
       for (const change of pendingSnapshot) {
         if (change.kind === "create") {
@@ -1459,6 +1880,8 @@ export default function EditCallMonthCalendar({
       setDeleteSelectedCallIds([]);
       setDeleteMode(false);
       setShowDeleteConfirm(false);
+      // Draft has been promoted to the live schedule — clear it from the backend.
+      onDraftChangeRef.current?.(null);
     } catch (err) {
       const serverValidation = getCallMutationValidation(err);
 
@@ -1485,9 +1908,18 @@ export default function EditCallMonthCalendar({
 
       if (activeSlotAction.type === "replace") {
         const selectedCall = activeSlotAction.call;
+        const editState = getAssignmentEditState({
+          call: selectedCall,
+          inMonth: true,
+          canEdit: canEditAssignments,
+          working,
+          deleteMode,
+        });
 
-        if (!isEditableQuickCall(selectedCall)) {
-          throw new Error("This timed call should be edited from the full call editor.");
+        if (editState.isDragDisabled) {
+          throw new Error(
+            `This assignment is locked for edit mode: ${editState.disabledReason ?? "unknown"}`
+          );
         }
 
         const selectedCallRosterId = selectedCall.rosterId ?? selectedCall.membershipId;
@@ -1565,8 +1997,18 @@ export default function EditCallMonthCalendar({
   }
 
   function openReplaceModal(call: ProgramCallItem) {
-    if (!isEditableQuickCall(call)) {
-      setLocalError("Timed calls should be edited in the full workflow.");
+    const editState = getAssignmentEditState({
+      call,
+      inMonth: true,
+      canEdit: canEditAssignments,
+      working,
+      deleteMode,
+    });
+
+    if (editState.isDragDisabled) {
+      setLocalError(
+        `This assignment is locked for edit mode: ${editState.disabledReason ?? "unknown"}`
+      );
       return;
     }
 
@@ -1598,15 +2040,29 @@ export default function EditCallMonthCalendar({
 
     if (!overData.canDrop) return;
 
-    if (sourceData.kind === "call") {
+    if (sourceData.kind === "assignment") {
       const sourceCall = sourceData.call;
       const sourceSlotId = sourceData.sourceSlotId;
+      const sourceEditState = getAssignmentEditState({
+        call: sourceCall,
+        inMonth: true,
+        canEdit: canEditAssignments,
+        working,
+        deleteMode,
+      });
 
       if (sourceSlotId === overData.slotId) return;
-      if (!isEditableQuickCall(sourceCall)) return;
+      if (sourceEditState.isDragDisabled) return;
 
       if (overData.call) {
-        if (!isEditableQuickCall(overData.call)) return;
+        const targetEditState = getAssignmentEditState({
+          call: overData.call,
+          inMonth: overData.inMonth,
+          canEdit: canEditAssignments,
+          working,
+          deleteMode,
+        });
+        if (targetEditState.isDragDisabled) return;
         setLocalError(null);
         queueSwap(sourceCall, sourceSlotId, overData.call, overData.slotId);
         return;
@@ -1651,7 +2107,14 @@ export default function EditCallMonthCalendar({
     }
 
     if (overData.call) {
-      if (!isEditableQuickCall(overData.call)) return;
+      const targetEditState = getAssignmentEditState({
+        call: overData.call,
+        inMonth: overData.inMonth,
+        canEdit: canEditAssignments,
+        working,
+        deleteMode,
+      });
+      if (targetEditState.isDragDisabled) return;
       setLocalError(null);
       queueReplace(overData.call, overData.slotId, resident);
       return;
@@ -1669,10 +2132,9 @@ export default function EditCallMonthCalendar({
     }
 
     const data = event.active.data.current as DragCallData | DragResidentData | undefined;
-
     if (!data) return;
 
-    if (data.kind === "call") {
+    if (data.kind === "assignment") {
       setActiveDragCall(data.call);
       setActiveDragResident(null);
       return;
@@ -1681,6 +2143,9 @@ export default function EditCallMonthCalendar({
     setActiveDragCall(null);
     setActiveDragResident(data.resident);
   }
+
+  // handleDragOver intentionally left empty — dnd-kit handles live feedback internally.
+  function handleDragOver() {}
 
   function handleDragEnd(event: DragEndEvent) {
     if (deleteMode) {
@@ -1700,6 +2165,11 @@ export default function EditCallMonthCalendar({
 
     if (!sourceData || !overData || overData.kind !== "slot") return;
     handleDropOnSlot(overData, sourceData);
+  }
+
+  function handleDragCancel() {
+    setActiveDragCall(null);
+    setActiveDragResident(null);
   }
 
   if (loading) {
@@ -1793,9 +2263,15 @@ export default function EditCallMonthCalendar({
 
         <DndContext
           sensors={sensors}
-          collisionDetection={closestCenter}
+          collisionDetection={(args) => {
+            const pointerHits = pointerWithin(args);
+            if (pointerHits.length > 0) return pointerHits;
+            return closestCenter(args);
+          }}
           onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
+          onDragCancel={handleDragCancel}
         >
           <div className="space-y-1.5">
   <aside className="border-b border-slate-200 bg-slate-50 px-2.5 py-2">
@@ -1849,6 +2325,7 @@ export default function EditCallMonthCalendar({
               count={residentCounts.get(resident.rosterId) ?? 0}
               validationIssues={getResidentValidationIssues(resident.rosterId)}
               disabled={working || deleteMode}
+              color={getEditColor(resident.rosterId)}
             />
           ))}
         </div>
@@ -1861,38 +2338,74 @@ export default function EditCallMonthCalendar({
 
   <div className="min-w-0">
     <div className="overflow-x-hidden px-1.5 pb-1.5 pt-1 md:px-2">
-      <div className="sticky top-0 z-20 mb-1 flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-white/95 px-2 py-1.5 shadow-sm backdrop-blur">
-        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-          {pendingChanges.length} pending changes
-        </span>
-        <button
-          type="button"
-          onClick={() => void handleSaveChanges()}
-          disabled={!hasPendingChanges || working || draftValidation.hasErrors}
-          className="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <PencilLine className="h-3.5 w-3.5" />
-          {working ? "Saving..." : "Save changes"}
-        </button>
-        <button
-          type="button"
-          onClick={handleDiscardChanges}
-          disabled={!hasPendingChanges || working}
-          className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          <X className="h-3.5 w-3.5" />
-          Discard changes
-        </button>
-        {deleteMode && deleteSelectedCallIds.length > 0 ? (
+      <div className="sticky top-0 z-20 mb-1 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white/95 px-2 py-1.5 shadow-sm backdrop-blur">
+        {/* ── Draft status badge ─────────────────────────────────────────── */}
+        {(() => {
+          const n = pendingChanges.length;
+          const changeLabel = n === 1 ? "1 unpublished change" : `${n} unpublished changes`;
+          if (draftSaveStatus === "conflict") {
+            return (
+              <span className="rounded-full bg-rose-100 px-2.5 py-1 text-[11px] font-semibold text-rose-700">
+                Draft changed elsewhere — reload to review
+              </span>
+            );
+          }
+          if (draftSaveStatus === "error") {
+            return (
+              <span className="rounded-full bg-rose-100 px-2.5 py-1 text-[11px] font-semibold text-rose-700">
+                Draft save failed — retrying
+              </span>
+            );
+          }
+          if (draftSaveStatus === "saving" || draftSaveStatus === "pending") {
+            return (
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-500">
+                Autosaving draft…
+              </span>
+            );
+          }
+          if (n === 0) {
+            return (
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-500">
+                No unpublished changes
+              </span>
+            );
+          }
+          if (draftSaveStatus === "saved" && draftLastSavedAt) {
+            return (
+              <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700">
+                Draft autosaved {formatRelativeTime(draftLastSavedAt)} · {changeLabel}
+              </span>
+            );
+          }
+          return (
+            <span className="rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-700">
+              {changeLabel}
+            </span>
+          );
+        })()}
+
+        {/* ── Actions ───────────────────────────────────────────────────── */}
+        <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setShowDeleteConfirm(true)}
-            className="inline-flex items-center gap-1 rounded-full bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-rose-700"
+            onClick={() => void handlePublishChanges()}
+            disabled={!hasPendingChanges || working || draftValidation.hasErrors || draftSaveStatus === "conflict"}
+            className="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            <Trash2 className="h-3.5 w-3.5" />
-            Delete selected ({deleteSelectedCallIds.length})
+            <PencilLine className="h-3.5 w-3.5" />
+            {working ? "Publishing..." : "Publish changes"}
           </button>
-        ) : null}
+          <button
+            type="button"
+            onClick={handleDiscardChanges}
+            disabled={!hasPendingChanges || working}
+            className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            <X className="h-3.5 w-3.5" />
+            Discard changes
+          </button>
+        </div>
       </div>
 
       {hasDisplayValidation ? (
@@ -1919,8 +2432,8 @@ export default function EditCallMonthCalendar({
               {displayValidationSource === "server"
                 ? "Server rejected this schedule"
                 : validationSummary.hasErrors
-                ? "Fix errors before saving"
-                : "Warnings will not block save"}
+                ? "Fix errors before publishing"
+                : "Warnings will not block publish"}
             </span>
             <span className="text-slate-700">
               {validationSummary.counts.error} error
@@ -2002,42 +2515,54 @@ export default function EditCallMonthCalendar({
               const dateKey = toDateKey(date);
               const inMonth = isSameMonth(date, year, monthIndex);
               const isToday = dateKey === todayKey;
+              const isWeekend = date.getDay() === 0 || date.getDay() === 6;
               const dayItems = slotItemsByDate.get(dateKey) ?? [];
-              const dayCallCount = dayItems.filter((item) => !!item.call).length;
 
               return (
                 <div
                   key={dateKey}
                   className={[
-                    "flex h-[90px] min-h-0 flex-col overflow-hidden rounded-md border px-1 py-0.5 text-left transition md:h-[96px] xl:h-[104px]",
-                    inMonth
+                    "flex h-[108px] min-h-0 flex-col overflow-hidden rounded-md border px-1 py-0.5 text-left transition md:h-[124px] xl:h-[136px]",
+                    inMonth && isWeekend
+                      ? "border-slate-200 bg-orange-50/40"
+                      : inMonth
                       ? "border-slate-200 bg-white"
-                      : "border-transparent bg-slate-50/60",
-                    isToday && inMonth ? "ring-2 ring-amber-300" : "",
+                      : "border-transparent bg-slate-50/40",
+                    isToday && inMonth ? "ring-2 ring-amber-400 bg-amber-50/40" : "",
                     selectedDateKey === dateKey ? "ring-2 ring-sky-300" : "",
                   ].join(" ")}
                 >
-                  <div className="mb-0.5 flex items-start justify-between gap-1">
+                  <div className="mb-0.5 flex items-center justify-between gap-1">
                     <span
                       className={[
-                        "text-[10px] font-semibold",
-                        inMonth ? "text-slate-700" : "text-slate-300",
+                        "text-[10px] font-bold leading-none",
+                        isToday && inMonth
+                          ? "rounded-full bg-amber-500 px-1.5 py-0.5 text-white"
+                          : inMonth
+                          ? isWeekend ? "text-orange-700" : "text-slate-700"
+                          : "text-slate-300",
                       ].join(" ")}
                     >
                       {date.getDate()}
                     </span>
-
-                    <div className="inline-flex items-center gap-1 rounded-full bg-slate-900 px-1 py-0.5 text-[8px] font-bold text-white shadow-sm">
-                      <PhoneCall className="h-2.5 w-2.5" />
-                      {dayCallCount}
-                    </div>
+                    {isWeekend && inMonth ? (
+                      <span className="text-[8px] font-semibold uppercase tracking-wide text-orange-400">
+                        {date.getDay() === 6 ? "Sa" : "Su"}
+                      </span>
+                    ) : null}
                   </div>
 
                     <div className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-hidden">
                       {dayItems.map((item) => {
                         const slotKey = normalizeCallType(item.slot.key);
                         const slotCall = item.call;
-                        const slotBadge = formatSlotShortLabel(item.slot.key);
+                        const assignmentEditState = getAssignmentEditState({
+                          call: slotCall,
+                          inMonth,
+                          canEdit: canEditAssignments,
+                          working,
+                          deleteMode,
+                        });
                         const isDeleteSelected = item.call
                           ? deleteSelectedCallIds.includes(item.call.id)
                           : false;
@@ -2069,16 +2594,18 @@ export default function EditCallMonthCalendar({
                             pendingStyle={getPendingStyle(item.slotId, item.call?.id)}
                             validationIssues={slotValidationIssues}
                             validationTitle={slotValidationTitle}
+                            canEditAssignments={canEditAssignments}
+                            working={working}
                             onClick={() => {
                               setSelectedDateKey(dateKey);
 
                               if (item.call) {
                                 if (deleteMode) {
-                                  if (isEditableQuickCall(item.call)) {
+                                  if (!assignmentEditState.isDragDisabled) {
                                     toggleDeleteSelection(item.call.id);
                                   } else {
                                     setLocalError(
-                                      "Timed calls should be edited in the full workflow."
+                                      `This assignment is locked for edit mode: ${assignmentEditState.disabledReason ?? "unknown"}`
                                     );
                                   }
                                   return;
@@ -2099,11 +2626,8 @@ export default function EditCallMonthCalendar({
                               <DraggableCallCard
                                 call={slotCall}
                                 slotId={item.slotId}
-                                disabled={
-                                  deleteMode ||
-                                  working ||
-                                  !isEditableQuickCall(slotCall)
-                                }
+                                disabled={assignmentEditState.isDragDisabled}
+                                color={getEditColor(slotCall.rosterId ?? slotCall.membershipId)}
                                 onClick={() => {
                                   setSelectedDateKey(dateKey);
 
@@ -2116,13 +2640,14 @@ export default function EditCallMonthCalendar({
                                 }}
                               />
                             ) : (
-                              <div className="flex h-full min-h-0 items-center gap-1.5 overflow-hidden">
-                                <div className="shrink-0 rounded bg-slate-200 px-1 py-0.5 text-[9px] font-bold leading-none text-slate-700">
-                                  {slotBadge}
-                                </div>
-                                <div className="min-w-0 flex-1 truncate text-[10px] font-medium text-slate-400">
+                              // Open slot: "Open" + role badge — matches the occupied card's layout
+                              <div className="flex h-full w-full items-center gap-1 overflow-hidden px-0.5">
+                                <span className="min-w-0 flex-1 truncate text-[10px] font-medium text-slate-400">
                                   Open
-                                </div>
+                                </span>
+                                <span className={`shrink-0 rounded px-1 py-0.5 text-[8px] font-bold leading-none opacity-60 ${getRoleBadgeClass(item.slot.key)}`}>
+                                  {getSlotRoleLabel(item.slot.key)}
+                                </span>
                               </div>
                             )}
                           </SlotDropZone>
@@ -2141,29 +2666,38 @@ export default function EditCallMonthCalendar({
 
           <DragOverlay>
             {deleteMode ? null : activeDragCall ? (
-              <div
-                className={`w-[200px] rounded-lg border px-2.5 py-2 shadow-2xl ${getCallTone(
-                  activeDragCall
-                ).card}`}
-              >
-                <p
-                  className={`truncate text-sm font-semibold ${getCallTone(activeDragCall).text}`}
-                >
-                  {formatCompactResidentName(activeDragCall.residentName)}
-                </p>
-                <p className="mt-1 text-xs text-slate-500">
-                  {activeDragCall.trainingLevel ?? activeDragCall.callType ?? "Call"}
-                </p>
-              </div>
+              (() => {
+                const c = getEditColor(activeDragCall.rosterId ?? activeDragCall.membershipId);
+                return (
+                  <div className={`w-[220px] rounded-lg border-2 px-3 py-2.5 shadow-2xl ${c.bg} ${c.border}`}>
+                    <div className="mb-1 flex items-center gap-1.5">
+                      <p className={`flex-1 text-[15px] font-bold leading-tight ${c.text}`}>
+                        {activeDragCall.residentName?.trim() || "Unknown"}
+                      </p>
+                      <span className={`shrink-0 rounded px-1.5 py-0.5 text-[9px] font-bold ${getRoleBadgeClass(activeDragCall.callType)}`}>
+                        {getSlotRoleLabel(activeDragCall.callType)}
+                      </span>
+                    </div>
+                    {activeDragCall.trainingLevel ? (
+                      <p className="text-[10px] text-slate-500">{activeDragCall.trainingLevel}</p>
+                    ) : null}
+                  </div>
+                );
+              })()
             ) : activeDragResident ? (
-              <div className="w-[200px] rounded-lg border border-slate-200 bg-white px-2.5 py-2 shadow-2xl">
-                <p className="truncate text-sm font-semibold text-slate-950">
-                  {formatCompactResidentName(activeDragResident.residentName)}
-                </p>
-                <p className="mt-1 text-xs text-slate-500">
-                  {activeDragResident.trainingLevel ?? "Resident"}
-                </p>
-              </div>
+              (() => {
+                const c = getEditColor(activeDragResident.rosterId);
+                return (
+                  <div className={`w-[220px] rounded-lg border-2 px-3 py-2.5 shadow-2xl ${c.bg} ${c.border}`}>
+                    <p className={`text-[15px] font-bold leading-tight ${c.text}`}>
+                      {activeDragResident.residentName?.trim() || "Unknown"}
+                    </p>
+                    <p className="mt-0.5 text-[10px] text-slate-500">
+                      {activeDragResident.currentRotationLabel ?? activeDragResident.trainingLevel ?? "Resident"}
+                    </p>
+                  </div>
+                );
+              })()
             ) : null}
           </DragOverlay>
         </DndContext>
@@ -2281,7 +2815,7 @@ export default function EditCallMonthCalendar({
                 >
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-slate-900">
-                      {formatCompactResidentName(call.residentName)}
+                      {call.residentName?.trim() || "Unknown"}
                     </p>
                     <p className="mt-0.5 text-xs text-slate-500">
                       {formatShortDate(slot.dateKey)} • {normalizeCallType(slot.callType)}

@@ -2,7 +2,7 @@ import { resolvePgyFromSources } from "@/lib/workspace/pgy";
 
 export type RuleSeverity = "error" | "warning";
 
-export type EvaluatedCallType = "Primary" | "Backup";
+export type EvaluatedCallType = "Primary" | "Backup" | "Buddy";
 
 export type RuleLike = {
   id?: string | null;

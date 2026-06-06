@@ -15,6 +15,11 @@ import {
   getResidentValidationDisplay,
   getSlotValidationGuidance,
 } from "@/lib/workspace/call/validation-display";
+import {
+  getResidentColorToken,
+  getRotationAssignmentForDate,
+  getRotationDisplayLabel,
+} from "@/lib/workspace/call/resident-display";
 import type {
   AssignmentFlagCategory,
   AssignmentFlagTone,
@@ -63,6 +68,15 @@ function getResidentDayAvailability(
 ): ResidentAvailabilityForDate | null {
   if (!membershipId) return null;
   return availabilityByResident[membershipId]?.[dateKey] ?? null;
+}
+
+function getResidentRotationLabel(
+  resident: ResidentOption | null | undefined,
+  effectiveDate: string
+) {
+  return getRotationDisplayLabel(
+    getRotationAssignmentForDate(resident?.rotationAssignments, effectiveDate)
+  );
 }
 
 function getToneBadgeClass(tone: AvailabilityFlag["tone"]) {
@@ -271,6 +285,7 @@ type AddViewProps = {
   draftAssignments: Record<string, DraftDayAssignment>;
   originalAssignments: Record<string, DraftDayAssignment>;
   rules: ProgramRule[];
+  slotDefinitions?: import("@/lib/workspace/call/rule-definitions").ProgramCallSlotDefinition[];
   availabilityByResident: ResidentAvailabilityMap;
   loading: boolean;
   saving: boolean;
@@ -328,22 +343,22 @@ function DayChip({
   };
   onClick: () => void;
 }) {
-  const primaryResident = assignment?.primaryMembershipId
-    ? residentLookup.get(assignment.primaryMembershipId)
+  const primaryResident = assignment?.primaryRosterId
+    ? residentLookup.get(assignment.primaryRosterId)
     : null;
 
-  const backupResident = assignment?.backupMembershipId
-    ? residentLookup.get(assignment.backupMembershipId)
+  const backupResident = assignment?.backupRosterId
+    ? residentLookup.get(assignment.backupRosterId)
     : null;
 
   const selectedForPrimary =
     !!selectedResidentId &&
-    assignment?.primaryMembershipId === selectedResidentId &&
+    assignment?.primaryRosterId === selectedResidentId &&
     (quickAssignSlotMode === "Primary" || quickAssignSlotMode === "Both");
 
   const selectedForBackup =
     !!selectedResidentId &&
-    assignment?.backupMembershipId === selectedResidentId &&
+    assignment?.backupRosterId === selectedResidentId &&
     (quickAssignSlotMode === "Backup" || quickAssignSlotMode === "Both");
 
   const active = selectedForPrimary || selectedForBackup;
@@ -355,6 +370,14 @@ function DayChip({
 
   const firstFlag = selectedResidentAvailability?.flags?.[0] ?? null;
   const isDisabled = isBlocked && !active;
+  const primaryColor = getResidentColorToken(primaryResident?.residentId);
+  const backupColor = getResidentColorToken(backupResident?.residentId);
+  const primaryRotationLabel = primaryResident
+    ? getResidentRotationLabel(primaryResident, day.key)
+    : "Tap to assign";
+  const backupRotationLabel = backupResident
+    ? getResidentRotationLabel(backupResident, day.key)
+    : "Tap to assign";
 
   return (
     <button
@@ -424,7 +447,7 @@ function DayChip({
           className={`rounded-lg px-1.5 py-1 ${
             active && quickAssignSlotMode !== "Backup"
               ? "bg-white/10"
-              : "bg-slate-50"
+              : `${primaryResident ? `${primaryColor.background} ${primaryColor.subtleBorder}` : "bg-slate-50 border border-slate-100"}`
           } ${primaryValidation?.className ?? ""}`}
         >
           <div className="flex items-center justify-between gap-1">
@@ -453,10 +476,21 @@ function DayChip({
             className={`mt-0.5 truncate text-[11px] font-semibold ${
               active && quickAssignSlotMode !== "Backup"
                 ? "text-white"
+                : primaryResident
+                ? primaryColor.text
                 : "text-slate-900"
             }`}
           >
             {primaryResident?.displayName ?? "Open"}
+          </p>
+          <p
+            className={`mt-0.5 truncate text-[10px] ${
+              active && quickAssignSlotMode !== "Backup"
+                ? "text-slate-300"
+                : "text-slate-500"
+            }`}
+          >
+            {primaryRotationLabel}
           </p>
           {primaryValidation?.shortMessage ? (
             <p className="mt-0.5 truncate text-[10px] text-slate-500">
@@ -470,7 +504,7 @@ function DayChip({
           className={`rounded-lg px-1.5 py-1 ${
             active && quickAssignSlotMode !== "Primary"
               ? "bg-white/10"
-              : "bg-slate-50"
+              : `${backupResident ? `${backupColor.background} ${backupColor.subtleBorder}` : "bg-slate-50 border border-slate-100"}`
           } ${backupValidation?.className ?? ""}`}
         >
           <div className="flex items-center justify-between gap-1">
@@ -499,10 +533,21 @@ function DayChip({
             className={`mt-0.5 truncate text-[11px] font-semibold ${
               active && quickAssignSlotMode !== "Primary"
                 ? "text-white"
+                : backupResident
+                ? backupColor.text
                 : "text-slate-900"
             }`}
           >
             {backupResident?.displayName ?? "Open"}
+          </p>
+          <p
+            className={`mt-0.5 truncate text-[10px] ${
+              active && quickAssignSlotMode !== "Primary"
+                ? "text-slate-300"
+                : "text-slate-500"
+            }`}
+          >
+            {backupRotationLabel}
           </p>
           {backupValidation?.shortMessage ? (
             <p className="mt-0.5 truncate text-[10px] text-slate-500">
@@ -632,7 +677,7 @@ export default function ProgramCallAddView({
 
   const totalCompleteDays = monthDays.filter((day) => {
     const a = draftAssignments[day.key];
-    return a?.primaryMembershipId && a?.backupMembershipId;
+    return a?.primaryRosterId && a?.backupRosterId;
   }).length;
 
   return (
@@ -754,6 +799,11 @@ export default function ProgramCallAddView({
                         quickAssignResidentId === resident.membershipId;
                       const summary =
                         residentIssueSummary.get(resident.membershipId) ?? null;
+                      const residentColor = getResidentColorToken(
+                        resident.residentId
+                      );
+                      const rotationLabel =
+                        resident.currentRotationLabel ?? "No rotation listed";
                       const residentValidation = validation
                         ? getResidentValidationDisplay(
                             validation,
@@ -771,29 +821,24 @@ export default function ProgramCallAddView({
                           title={residentValidation?.tooltip}
                           className={`flex items-start justify-between gap-3 rounded-xl border px-3 py-2.5 text-left transition ${
                             selected
-                              ? "border-slate-950 bg-slate-950 text-white"
+                              ? `${residentColor.border} ${residentColor.background} ring-2 ring-slate-950 ring-offset-1`
                               : residentValidation?.className
                               ? residentValidation.className
                               : summary?.blockedDays
                               ? "border-rose-200 bg-rose-50 hover:bg-rose-100/60"
                               : summary?.warningDays
                               ? "border-amber-200 bg-amber-50 hover:bg-amber-100/60"
-                              : "border-slate-200 bg-white hover:bg-slate-50"
+                              : `${residentColor.subtleBorder} ${residentColor.mutedBackground} hover:bg-white`
                           }`}
                         >
                           <div className="min-w-0">
-                            <p
-                              className={`truncate text-sm font-semibold ${
-                                selected ? "text-white" : "text-slate-900"
-                              }`}
-                            >
+                            <p className={`truncate text-sm font-semibold ${residentColor.text}`}>
                               {resident.displayName}
                             </p>
-                            <p
-                              className={`mt-0.5 text-xs ${
-                                selected ? "text-slate-300" : "text-slate-500"
-                              }`}
-                            >
+                            <p className="mt-0.5 text-xs text-slate-500">
+                              {rotationLabel}
+                            </p>
+                            <p className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold ${residentColor.badge} ${residentColor.badgeText}`}>
                               {pgyLabel(resident)}
                             </p>
 
@@ -801,25 +846,13 @@ export default function ProgramCallAddView({
                             (summary.blockedDays > 0 || summary.warningDays > 0) ? (
                               <div className="mt-2 flex flex-wrap gap-1.5">
                                 {summary.blockedDays > 0 ? (
-                                  <span
-                                    className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                                      selected
-                                        ? "bg-white/10 text-white"
-                                        : "bg-rose-100 text-rose-700"
-                                    }`}
-                                  >
+                                  <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold bg-rose-100 text-rose-700">
                                     {summary.blockedDays} blocked
                                   </span>
                                 ) : null}
 
                                 {summary.warningDays > 0 ? (
-                                  <span
-                                    className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
-                                      selected
-                                        ? "bg-white/10 text-white"
-                                        : "bg-amber-100 text-amber-700"
-                                    }`}
-                                  >
+                                  <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold bg-amber-100 text-amber-700">
                                     {summary.warningDays} warning
                                   </span>
                                 ) : null}
@@ -844,7 +877,7 @@ export default function ProgramCallAddView({
                           <div
                             className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
                               selected
-                                ? "border-white/20 bg-white/10 text-white"
+                                ? `${residentColor.border} ${residentColor.badge} ${residentColor.badgeText}`
                                 : "border-slate-200 bg-slate-50 text-transparent"
                             }`}
                           >
@@ -956,10 +989,10 @@ export default function ProgramCallAddView({
                         const current = draftAssignments[day.key];
                         const original = originalAssignments[day.key];
                         const isChanged =
-                          (current?.primaryMembershipId ?? null) !==
-                            (original?.primaryMembershipId ?? null) ||
-                          (current?.backupMembershipId ?? null) !==
-                            (original?.backupMembershipId ?? null);
+                          (current?.primaryRosterId ?? null) !==
+                            (original?.primaryRosterId ?? null) ||
+                          (current?.backupRosterId ?? null) !==
+                            (original?.backupRosterId ?? null);
 
                         const selectedResidentAvailability = selectedResident
                           ? getResidentDayAvailability(

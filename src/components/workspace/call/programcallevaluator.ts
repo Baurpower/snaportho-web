@@ -46,8 +46,8 @@ function getAssignedDatesForResident(
   return Object.entries(assignments)
     .filter(
       ([, assignment]) =>
-        assignment?.primaryMembershipId === residentId ||
-        assignment?.backupMembershipId === residentId
+        assignment?.primaryRosterId === residentId ||
+        assignment?.backupRosterId === residentId
     )
     .map(([dateKey]) => dateKey)
     .sort();
@@ -186,8 +186,8 @@ export function evaluateResidentForSlot(
   const adjacentAssignment = adjacentDateKey ? assignments[adjacentDateKey] : null;
   const adjacentResidentId =
     slot === "Primary"
-      ? adjacentAssignment?.primaryMembershipId ?? null
-      : adjacentAssignment?.backupMembershipId ?? null;
+      ? adjacentAssignment?.primaryRosterId ?? null
+      : adjacentAssignment?.backupRosterId ?? null;
 
   for (const violation of evaluatePgyEligibility({
     resident,

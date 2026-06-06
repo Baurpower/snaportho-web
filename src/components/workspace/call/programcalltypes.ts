@@ -3,13 +3,13 @@
  * DO NOT duplicate RuleType / RuleConfig / ProgramRule here.
  * Adding a new rule type only requires changes in rule-definitions.ts + evaluator branches.
  */
-import type { CallTypeOption } from "@/lib/workspace/call/rule-definitions";
-
 export type {
   CallTypeOption as CallType,
   RuleType,
   RuleConfig,
   ProgramRule,
+  ProgramCallSlotDefinition,
+  SlotCondition,
 } from "@/lib/workspace/call/rule-definitions";
 
 // Re-export the constants and definitions for consumers that need them
@@ -29,6 +29,10 @@ export {
   isSingletonRuleType,
   getDefaultRuleScope,
   DEFAULT_RULE_SCOPE,
+  extractSlotDefinitions,
+  ruleToSlotDefinition,
+  DEFAULT_SLOT_DEFINITIONS,
+  getVisibleCallSlotsForDay,
 } from "@/lib/workspace/call/rule-definitions";
 
 export type ResidentOption = {
@@ -42,24 +46,42 @@ export type ResidentOption = {
   trainingLevel: string | null;
   pgyYear: number | null;
   gradYear: number | null;
+  residentStatus?: string | null;
+  currentRotationLabel?: string | null;
+  currentRotationName?: string | null;
+  rotationAssignments?: Array<{
+    rotationId?: string | null;
+    rotation_id?: string | null;
+    startDate?: string | null;
+    start_date?: string | null;
+    endDate?: string | null;
+    end_date?: string | null;
+    rotationName?: string | null;
+    rotation_name?: string | null;
+    rotationShortName?: string | null;
+    rotation_short_name?: string | null;
+    teamLabel?: string | null;
+    team_label?: string | null;
+    siteLabel?: string | null;
+    site_label?: string | null;
+  }>;
 };
 
 export type ExistingResidentStats = {
   residentId: string;
   rosterId?: string | null;
-  // Legacy compatibility field; stats are keyed by `residentId`.
   membershipId: string;
   totalCallsYear: number;
   weekendCallsYear: number;
   primaryCallsYear: number;
   backupCallsYear: number;
+  buddyCallsYear: number;
 };
 
 export type DraftDayAssignment = {
-  // Legacy field names: these values store canonical resident ids (program_roster.id),
-  // not program_memberships.id.
-  primaryMembershipId: string | null;
-  backupMembershipId: string | null;
+  primaryRosterId: string | null;
+  backupRosterId: string | null;
+  buddyRosterId: string | null;
 };
 
 export type CalendarDay = {
@@ -75,14 +97,15 @@ export type MonthCall = {
   residentId: string | null;
   rosterId?: string | null;
   programMembershipId?: string | null;
-  // Legacy compatibility field; month calls should use `residentId`.
   membershipId: string | null;
   residentName: string;
   trainingLevel: string | null;
+  residentStatus?: string | null;
+  currentRotationLabel?: string | null;
   pgyYear: number | null;
   gradYear: number | null;
   userId: string | null;
-  callType: CallTypeOption | null;
+  callType: string | null;
   callDate: string | null;
   startDatetime: string | null;
   endDatetime: string | null;
@@ -120,7 +143,7 @@ export type AssignmentFlag = {
   category?: AssignmentFlagCategory;
 };
 
-export type QuickAssignSlotMode = "Primary" | "Backup" | "Both";
+export type QuickAssignSlotMode = "Primary" | "Backup" | "Buddy" | "Both";
 
 export type TimeOffConflict = {
   eventId: string;
@@ -185,10 +208,12 @@ export type ResidentSchedulingContext = {
   availability?: ResidentAvailabilityForDate;
   monthPrimary: number;
   monthBackup: number;
+  monthBuddy: number;
   monthTotal: number;
   monthWeekend: number;
   yearPrimary: number;
   yearBackup: number;
+  yearBuddy: number;
   yearTotal: number;
   yearWeekend: number;
   spacingFlags: number;
@@ -206,10 +231,12 @@ export type ResidentSchedulingStats = {
   resident: ResidentOption;
   monthPrimary: number;
   monthBackup: number;
+  monthBuddy: number;
   monthTotal: number;
   monthWeekend: number;
   yearPrimary: number;
   yearBackup: number;
+  yearBuddy: number;
   yearTotal: number;
   yearWeekend: number;
   spacingFlags: number;

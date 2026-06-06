@@ -52,8 +52,8 @@ type CalendarDayLike = {
 };
 
 type DraftAssignmentLike = {
-  primaryMembershipId?: string | null;
-  backupMembershipId?: string | null;
+  primaryRosterId?: string | null;
+  backupRosterId?: string | null;
 };
 
 type DraftAssignments = Record<string, DraftAssignmentLike>;
@@ -232,13 +232,13 @@ function getResidentTotals({
     for (const day of monthDays) {
       const assignment = draftAssignments[day.key];
 
-      if (assignment?.primaryMembershipId === resident.membershipId) {
+      if (assignment?.primaryRosterId === resident.membershipId) {
         monthPrimary += 1;
         assignedDates.push(day.key);
         if (day.isWeekend) monthWeekend += 1;
       }
 
-      if (assignment?.backupMembershipId === resident.membershipId) {
+      if (assignment?.backupRosterId === resident.membershipId) {
         monthBackup += 1;
         assignedDates.push(day.key);
         if (day.isWeekend) monthWeekend += 1;
@@ -282,11 +282,11 @@ function evaluateCandidateForSlot({
 
   if (!resident.membershipId) hardBlockers.push("Missing membership ID.");
 
-  if (slot === "Primary" && resident.membershipId === assignment.backupMembershipId) {
+  if (slot === "Primary" && resident.membershipId === assignment.backupRosterId) {
     hardBlockers.push("Already assigned as backup on the same date.");
   }
 
-  if (slot === "Backup" && resident.membershipId === assignment.primaryMembershipId) {
+  if (slot === "Backup" && resident.membershipId === assignment.primaryRosterId) {
     hardBlockers.push("Already assigned as primary on the same date.");
   }
 
@@ -471,7 +471,7 @@ function getRequiredSlots({
       dayName: day.dayName ?? "",
       isWeekend: Boolean(day.isWeekend),
       slot: "Primary",
-      currentMembershipId: assignment.primaryMembershipId ?? null,
+      currentMembershipId: assignment.primaryRosterId ?? null,
     });
 
     if (scheduleSlotMode === "Both") {
@@ -480,7 +480,7 @@ function getRequiredSlots({
         dayName: day.dayName ?? "",
         isWeekend: Boolean(day.isWeekend),
         slot: "Backup",
-        currentMembershipId: assignment.backupMembershipId ?? null,
+        currentMembershipId: assignment.backupRosterId ?? null,
       });
     }
   }
@@ -594,12 +594,12 @@ export function buildSchedulePacket(body: BuildSchedulePacketBody) {
         dayName: day.dayName,
         isWeekend: Boolean(day.isWeekend),
 
-        primaryMembershipId:
-          safeDraftAssignments[day.key]?.primaryMembershipId ?? null,
+        primaryRosterId:
+          safeDraftAssignments[day.key]?.primaryRosterId ?? null,
 
-        backupMembershipId:
+        backupRosterId:
           normalizedSlotMode === "Both"
-            ? safeDraftAssignments[day.key]?.backupMembershipId ?? null
+            ? safeDraftAssignments[day.key]?.backupRosterId ?? null
             : null,
       })),
 

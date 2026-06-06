@@ -9,6 +9,11 @@ import {
   getPickerResidentGuidance,
   getSlotValidationGuidance,
 } from "@/lib/workspace/call/validation-display";
+import {
+  getResidentColorToken,
+  getRotationAssignmentForDate,
+  getRotationDisplayLabel,
+} from "@/lib/workspace/call/resident-display";
 
 type ResidentPickerSheetProps = {
   open: boolean;
@@ -184,6 +189,9 @@ export default function ResidentPickerSheet({
                         {residents.map((resident) => {
                           const isSelected =
                             currentMembershipId === resident.membershipId;
+                          const residentColor = getResidentColorToken(
+                            resident.residentId
+                          );
                           const residentValidation = validation
                             ? getPickerResidentGuidance(
                                 validation,
@@ -191,6 +199,14 @@ export default function ResidentPickerSheet({
                                 activeSlotId
                               )
                             : null;
+                          const rotationLabel = activeDateKey
+                            ? getRotationDisplayLabel(
+                                getRotationAssignmentForDate(
+                                  resident.rotationAssignments,
+                                  activeDateKey
+                                )
+                              )
+                            : (resident.currentRotationLabel ?? "No rotation listed");
 
                           return (
                             <button
@@ -202,17 +218,20 @@ export default function ResidentPickerSheet({
                               title={residentValidation?.tooltip}
                               className={`flex w-full items-center justify-between gap-3 rounded-[1rem] border px-4 py-3 text-left transition ${
                                 isSelected
-                                  ? "border-sky-300 bg-sky-50"
+                                  ? `${residentColor.border} ${residentColor.background}`
                                   : residentValidation?.className
                                   ? residentValidation.className
-                                  : "border-slate-200 bg-white hover:bg-slate-50"
+                                  : `${residentColor.subtleBorder} ${residentColor.mutedBackground} hover:bg-white`
                               }`}
                             >
                               <div className="min-w-0">
-                                <p className="truncate text-sm font-semibold text-slate-900">
+                                <p className={`truncate text-sm font-semibold ${residentColor.text}`}>
                                   {resident.displayName}
                                 </p>
                                 <p className="mt-0.5 text-xs text-slate-500">
+                                  {rotationLabel}
+                                </p>
+                                <p className={`mt-1 inline-flex rounded-full px-2 py-0.5 text-[10px] font-semibold ${residentColor.badge} ${residentColor.badgeText}`}>
                                   {pgyLabel(resident)}
                                 </p>
                                 {residentValidation?.shortMessage ? (
@@ -235,7 +254,7 @@ export default function ResidentPickerSheet({
                                   </span>
                                 ) : null}
                                 {isSelected ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-sky-100 px-2.5 py-1 text-xs font-semibold text-sky-700">
+                                  <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${residentColor.badge} ${residentColor.badgeText}`}>
                                     <Check className="h-3.5 w-3.5" />
                                     Selected
                                   </span>

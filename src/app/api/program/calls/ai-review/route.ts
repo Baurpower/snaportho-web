@@ -338,8 +338,8 @@ function getOptionWarningSummary({
       }
     }
 
-    check(assignment.primaryMembershipId, "Primary");
-    check(assignment.backupMembershipId, "Backup");
+    check(assignment.primaryRosterId, "Primary");
+    check(assignment.backupRosterId, "Backup");
   }
 
   const seen = new Set<string>();

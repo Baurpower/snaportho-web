@@ -186,6 +186,14 @@ export function MobileProgramCallAgenda({
 
 // Local tone helper (mirrors the one in CallDayDetailsContent for visual consistency)
 function getCallTone(call: ProgramCallItem) {
+  if (call.callType?.toLowerCase() === "buddy") {
+    return {
+      card: call.isMine ? "border-violet-300 bg-violet-50" : "border-violet-200 bg-violet-50/60",
+      chip: "bg-violet-600 text-white",
+      accent: "bg-violet-500",
+      text: "text-violet-950",
+    };
+  }
   if (call.isMine) {
     return {
       card: "border-sky-300 bg-sky-50",

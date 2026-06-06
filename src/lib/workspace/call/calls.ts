@@ -119,6 +119,7 @@ export type ProgramResidentCallStats = {
   weekendCallsYear: number
   primaryCallsYear: number
   backupCallsYear: number
+  buddyCallsYear: number
 }
 
 type ProgramRosterResidentRow = {
@@ -827,6 +828,7 @@ export async function getProgramCallStatsForMonth(
       weekendCallsYear: 0,
       primaryCallsYear: 0,
       backupCallsYear: 0,
+      buddyCallsYear: 0,
     })
   }
 
@@ -841,7 +843,12 @@ export async function getProgramCallStatsForMonth(
     const entry = statsMap.get(residentKey)
     if (!entry) continue
 
-    entry.totalCallsYear += 1
+    if (row.call_type === 'Buddy') {
+      entry.buddyCallsYear += 1
+      // Buddy does not count toward totalCallsYear by default.
+    } else {
+      entry.totalCallsYear += 1
+    }
 
     if (row.call_type === 'Primary') {
       entry.primaryCallsYear += 1

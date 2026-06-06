@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -35,6 +35,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { parseCallMutationResponse } from "@/lib/workspace/call/mutation-error";
 import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 import type { SwapRequestListItem } from "@/lib/workspace/call-swaps/types";
+import type { ProgramCallSlotDefinition } from "@/lib/workspace/call/rule-definitions";
+import { extractSlotDefinitions, DEFAULT_SLOT_DEFINITIONS } from "@/lib/workspace/call/rule-definitions";
+import type { DraftDayAssignment } from "@/components/workspace/call/programcalltypes";
+import { PROGRAM_CALL_DRAFT_SCHEMA_VERSION } from "@/lib/workspace/call/drafts";
 
 const ChangeMyCallModal = dynamic(
   () => import("@/components/workspace/call-swaps/ChangeMyCallModal"),
@@ -63,7 +67,53 @@ type ResidentOption = {
   trainingLevel: string | null;
   pgyYear: number | null;
   gradYear: number | null;
+  currentRotationLabel: string | null;
 };
+
+type RotationAssignmentItem = {
+  rosterId?: string | null;
+  roster_id?: string | null;
+  rotation?: { name?: string | null; shortName?: string | null; short_name?: string | null } | null;
+  rotationName?: string | null;
+  rotation_name?: string | null;
+  rotationShortName?: string | null;
+  rotation_short_name?: string | null;
+  startDate?: string | null;
+  start_date?: string | null;
+  endDate?: string | null;
+  end_date?: string | null;
+};
+
+function buildRotationLabelsByRosterId(
+  items: RotationAssignmentItem[],
+  monthStart: string
+): Map<string, string> {
+  const labels = new Map<string, string>();
+
+  for (const item of items) {
+    const rosterId = item.rosterId ?? item.roster_id;
+    if (!rosterId || labels.has(rosterId)) continue;
+
+    const start = item.startDate ?? item.start_date;
+    const end = item.endDate ?? item.end_date;
+    if (start && start > monthStart) continue;
+    if (end && end < monthStart) continue;
+
+    const label =
+      item.rotation?.shortName ??
+      item.rotation?.short_name ??
+      item.rotation?.name ??
+      item.rotationShortName ??
+      item.rotation_short_name ??
+      item.rotationName ??
+      item.rotation_name ??
+      null;
+
+    if (label) labels.set(rosterId, label);
+  }
+
+  return labels;
+}
 
 type SuccessModalState = {
   title: string;
@@ -113,7 +163,7 @@ function formatLongDate(dateString: string | null | undefined) {
 }
 
 function isEditableQuickCall(call: ProgramCallItem) {
-  return !call.startDatetime && !call.endDatetime && !!call.callDate;
+  return !!call.callDate;
 }
 
 function StatCard({
@@ -249,9 +299,28 @@ export default function CallHubPage() {
   const [googleStatusModalOpen, setGoogleStatusModalOpen] = useState(false);
 
   const [data, setData] = useState<ProgramCallsMonthResponse | null>(null);
+  const [rotationLabelsByRosterId, setRotationLabelsByRosterId] = useState<Map<string, string>>(new Map());
   const [selectedDateKey, setSelectedDateKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [editingCalendar, setEditingCalendar] = useState(false);
+  const [slotDefinitions, setSlotDefinitions] = useState<ProgramCallSlotDefinition[]>(DEFAULT_SLOT_DEFINITIONS);
+  // ─── Draft state ─────────────────────────────────────────────────────────────
+  // Backend draft assignments for the edit calendar.
+  const [calendarDraft, setCalendarDraft] = useState<Record<string, DraftDayAssignment> | null>(null);
+  // updatedAt token from the last successful GET/PUT — used for optimistic locking.
+  const [draftUpdatedAt, setDraftUpdatedAt] = useState<string | null>(null);
+  // Whether a draft exists for the current month (drives pre-edit-mode indicator).
+  const [draftExistsForMonth, setDraftExistsForMonth] = useState(false);
+  // Save lifecycle status for the badge.
+  const [draftSaveStatus, setDraftSaveStatus] = useState<
+    "idle" | "pending" | "saving" | "saved" | "error" | "conflict"
+  >("idle");
+  // Timestamp of the last successful autosave (for "saved X ago" display).
+  const [draftLastSavedAt, setDraftLastSavedAt] = useState<Date | null>(null);
+  const draftSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Ref that always holds the latest draftUpdatedAt so the debounced save callback
+  // sends the correct optimistic-locking token without needing it as a dep.
+  const draftUpdatedAtRef = useRef<string | null>(null);
 
   // Mobile-only UI state (Phase 3). Does not affect desktop or export/scope logic.
   const [mobileCallView, setMobileCallView] = useState<"mine" | "program">("mine");
@@ -301,6 +370,180 @@ export default function CallHubPage() {
   );
 
 
+  // Load program call slot definitions from the rules API once on mount.
+  // These drive which slot rows are visible in the drag-drop edit calendar.
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadSlotDefinitions() {
+      try {
+        const ruleSetResponse = await fetch("/api/program/call-rule-sets", {
+          credentials: "include",
+        });
+        if (!ruleSetResponse.ok) return;
+
+        const ruleSetPayload = await ruleSetResponse.json().catch(() => null);
+        const ruleSetId = ruleSetPayload?.defaultRuleSetId;
+        if (!ruleSetId) return;
+
+        const rulesResponse = await fetch(
+          `/api/program/call-rules?ruleSetId=${encodeURIComponent(ruleSetId)}`,
+          { credentials: "include" }
+        );
+        if (!rulesResponse.ok) return;
+
+        const rulesPayload = await rulesResponse.json().catch(() => null);
+        const rules = Array.isArray(rulesPayload?.rules) ? rulesPayload.rules : [];
+        const defs = extractSlotDefinitions(rules);
+
+        if (!cancelled) {
+          setSlotDefinitions(defs.length > 0 ? defs : DEFAULT_SLOT_DEFINITIONS);
+        }
+      } catch {
+        // Non-blocking: fall back to defaults
+      }
+    }
+
+    loadSlotDefinitions();
+    return () => { cancelled = true; };
+  }, []);
+
+  // Keep the ref in sync so the debounced save always sends the current token.
+  useEffect(() => {
+    draftUpdatedAtRef.current = draftUpdatedAt;
+  });
+
+  // ─── Edit-calendar draft: load on month change + full hydrate when editing ──
+  // Runs on month change (to show pre-edit indicator) and when edit mode opens
+  // (to restore draft state into the calendar).
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadCalendarDraft() {
+      try {
+        const response = await fetch(
+          `/api/program/calls/draft?monthStart=${encodeURIComponent(monthStart)}`,
+          { credentials: "include", cache: "no-store" }
+        );
+        if (!response.ok) {
+          if (!cancelled) {
+            setCalendarDraft(null);
+            setDraftExistsForMonth(false);
+            setDraftUpdatedAt(null);
+          }
+          return;
+        }
+        const payload = await response.json().catch(() => null);
+        if (cancelled) return;
+
+        const hasDraft = Boolean(payload?.hasDraft);
+        setDraftExistsForMonth(hasDraft);
+
+        if (!editingCalendar) return; // lightweight check only when not in edit mode
+
+        const draft = payload?.draft;
+        const validSchema = draft?.schemaVersion === PROGRAM_CALL_DRAFT_SCHEMA_VERSION;
+        const validMonth = draft?.payload?.month === monthStart.slice(0, 7);
+
+        if (hasDraft && validSchema && validMonth && draft?.payload?.assignments) {
+          setCalendarDraft(
+            draft.payload.assignments as Record<string, DraftDayAssignment>
+          );
+          setDraftUpdatedAt(draft.updatedAt ?? null);
+          setDraftSaveStatus("saved");
+          setDraftLastSavedAt(draft.updatedAt ? new Date(draft.updatedAt) : null);
+        } else {
+          setCalendarDraft(null);
+          setDraftUpdatedAt(null);
+          setDraftSaveStatus("idle");
+          setDraftLastSavedAt(null);
+        }
+      } catch {
+        if (!cancelled) {
+          setCalendarDraft(null);
+          setDraftExistsForMonth(false);
+          setDraftUpdatedAt(null);
+        }
+      }
+    }
+
+    loadCalendarDraft();
+    return () => { cancelled = true; };
+  }, [editingCalendar, monthStart]);
+
+  // ─── Edit-calendar draft: debounced autosave ────────────────────────────────
+  // Called by EditCallMonthCalendar after each slotMap mutation.
+  // null means "no pending changes" → delete the draft.
+  const handleCalendarDraftChange = useCallback(
+    (assignments: Record<string, DraftDayAssignment> | null) => {
+      // Mark as "pending" immediately so the badge updates before the debounce fires.
+      setDraftSaveStatus(assignments ? "pending" : "idle");
+
+      if (draftSaveTimerRef.current) {
+        clearTimeout(draftSaveTimerRef.current);
+      }
+
+      draftSaveTimerRef.current = setTimeout(async () => {
+        try {
+          if (!assignments) {
+            // Clear draft — discard or successful publish
+            setDraftSaveStatus("saving");
+            await fetch(
+              `/api/program/calls/draft?monthStart=${encodeURIComponent(monthStart)}`,
+              { method: "DELETE", credentials: "include" }
+            );
+            setDraftSaveStatus("idle");
+            setDraftLastSavedAt(null);
+            setDraftUpdatedAt(null);
+            setDraftExistsForMonth(false);
+          } else {
+            // Persist the current draft state
+            setDraftSaveStatus("saving");
+            const response = await fetch("/api/program/calls/draft", {
+              method: "PUT",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                monthStart,
+                schemaVersion: PROGRAM_CALL_DRAFT_SCHEMA_VERSION,
+                publishedScheduleUpdatedAt: null,
+                previousDraftUpdatedAt: draftUpdatedAtRef.current, // optimistic-locking token
+                payload: {
+                  month: monthStart.slice(0, 7),
+                  assignments,
+                  scheduleSlotMode: "Both",
+                  quickAssignSlotMode: "Primary",
+                  quickAssignResidentId: null,
+                },
+              }),
+            });
+
+            if (response.status === 409) {
+              // Another session updated the draft — stop autosaving.
+              setDraftSaveStatus("conflict");
+              return;
+            }
+
+            if (!response.ok) {
+              setDraftSaveStatus("error");
+              return;
+            }
+
+            const saved = await response.json().catch(() => null);
+            const newUpdatedAt = saved?.draft?.updatedAt ?? null;
+            setDraftUpdatedAt(newUpdatedAt);
+            setDraftLastSavedAt(new Date());
+            setDraftSaveStatus("saved");
+            setDraftExistsForMonth(true);
+          }
+        } catch {
+          setDraftSaveStatus("error");
+        }
+      }, 900);
+    },
+    [monthStart]
+  );
+
   useEffect(() => {
     let cancelled = false;
 
@@ -338,6 +581,39 @@ export default function CallHubPage() {
     }
 
     loadCalls();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [monthStart, monthEnd]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadRotations() {
+      try {
+        const response = await fetch(
+          `/api/program/rotation-assignments?monthStart=${encodeURIComponent(monthStart)}&monthEnd=${encodeURIComponent(monthEnd)}`,
+          { credentials: "include", cache: "no-store" }
+        );
+        if (!response.ok) return;
+        const payload = await response.json().catch(() => null);
+        const items: RotationAssignmentItem[] = Array.isArray(payload?.coverage)
+          ? payload.coverage
+          : Array.isArray(payload?.assignments)
+          ? payload.assignments
+          : Array.isArray(payload?.rotationAssignments)
+          ? payload.rotationAssignments
+          : [];
+        if (!cancelled) {
+          setRotationLabelsByRosterId(buildRotationLabelsByRosterId(items, monthStart));
+        }
+      } catch {
+        // Rotation labels are best-effort; silently ignore failures.
+      }
+    }
+
+    loadRotations();
 
     return () => {
       cancelled = true;
@@ -538,7 +814,10 @@ useEffect(() => {
     const map = new Map<string, ResidentOption>();
 
     for (const resident of data?.residents ?? []) {
-      map.set(resident.rosterId, resident);
+      map.set(resident.rosterId, {
+        ...resident,
+        currentRotationLabel: rotationLabelsByRosterId.get(resident.rosterId) ?? null,
+      });
     }
 
     for (const call of calls) {
@@ -552,13 +831,14 @@ useEffect(() => {
         trainingLevel: call.trainingLevel,
         pgyYear: call.pgyYear ?? null,
         gradYear: call.gradYear ?? null,
+        currentRotationLabel: rotationLabelsByRosterId.get(rosterId) ?? null,
       });
     }
 
     return Array.from(map.values()).sort((a, b) =>
       a.residentName.localeCompare(b.residentName)
     );
-  }, [calls, data?.residents]);
+  }, [calls, data?.residents, rotationLabelsByRosterId]);
 
   async function refreshSwapRequests() {
     await swapRequests.refresh();
@@ -1402,6 +1682,11 @@ async function stopGoogleSync() {
     {editingCalendar ? "Exit Edit" : "Edit"}
   </button>
 ) : null}
+{canShowAdminCallActions && !editingCalendar && draftExistsForMonth ? (
+  <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-700">
+    Unsaved draft
+  </span>
+) : null}
 
 {canShowAdminCallActions ? (
   <button
@@ -1468,6 +1753,11 @@ async function stopGoogleSync() {
                         onSwap={handleSwap}
                         onDelete={handleDelete}
                         onCreate={handleCreate}
+                        slotDefinitions={slotDefinitions}
+                        initialDraftAssignments={calendarDraft}
+                        onDraftChange={handleCalendarDraftChange}
+                        draftSaveStatus={draftSaveStatus}
+                        draftLastSavedAt={draftLastSavedAt}
                       />
                     ) : (
                       <CallMonthCalendar

@@ -23,7 +23,7 @@ import type {
 import { getFlagsForAssignedResident } from "@/components/workspace/call/programcallevaluator";
 import { getRequiredCallTypesFromRules } from "@/lib/workspace/call/rule-evaluator";
 
-type Slot = "Primary" | "Backup";
+type Slot = "Primary" | "Backup" | "Buddy";
 type ScheduleSlotMode = "Primary" | "Both";
 
 type ReviewRow = {
@@ -142,8 +142,8 @@ type AIReviewContext = {
     dateKey: string;
     dayName: string;
     isWeekend: boolean;
-    primaryMembershipId: string | null;
-    backupMembershipId: string | null;
+    primaryRosterId: string | null;
+    backupRosterId: string | null;
     primaryName: string | null;
     backupName: string | null;
     primaryFlags: AssignmentFlag[];
@@ -240,8 +240,8 @@ function countUnfilledDays(
     const assignment = assignments[day.key];
 
     return (
-      (shouldCheckPrimary && !assignment?.primaryMembershipId) ||
-      (shouldCheckBackup && !assignment?.backupMembershipId)
+      (shouldCheckPrimary && !assignment?.primaryRosterId) ||
+      (shouldCheckBackup && !assignment?.backupRosterId)
     );
   }).length;
 }
@@ -325,8 +325,8 @@ function buildReviewRows({
       row.flags += flags.length;
     }
 
-    apply(assignment.primaryMembershipId, "Primary");
-    apply(assignment.backupMembershipId, "Backup");
+    apply(assignment.primaryRosterId, "Primary");
+    apply(assignment.backupRosterId, "Backup");
   }
 
   return Array.from(rows.values()).sort((a, b) => {
@@ -629,8 +629,8 @@ React.useEffect(() => {
 
       return (
         sum +
-        (shouldCountPrimary && assignment.primaryMembershipId ? 1 : 0) +
-        (shouldCountBackup && assignment.backupMembershipId ? 1 : 0)
+        (shouldCountPrimary && assignment.primaryRosterId ? 1 : 0) +
+        (shouldCountBackup && assignment.backupRosterId ? 1 : 0)
       );
     }, 0);
   }, [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode]);
@@ -648,8 +648,8 @@ React.useEffect(() => {
 
     const warnings: DayWarning[] = [];
 
-    if (assignment.primaryMembershipId) {
-      const resident = residentLookup.get(assignment.primaryMembershipId);
+    if (assignment.primaryRosterId) {
+      const resident = residentLookup.get(assignment.primaryRosterId);
       if (resident) {
         const flags = getFlagsForAssignedResident({
           resident,
@@ -671,8 +671,8 @@ React.useEffect(() => {
       }
     }
 
-    if (assignment.backupMembershipId) {
-      const resident = residentLookup.get(assignment.backupMembershipId);
+    if (assignment.backupRosterId) {
+      const resident = residentLookup.get(assignment.backupRosterId);
       if (resident) {
         const flags = getFlagsForAssignedResident({
           resident,
@@ -867,11 +867,11 @@ React.useEffect(() => {
                       }
 
                       const assignment = draftAssignments[day.key];
-                      const primary = assignment?.primaryMembershipId
-                        ? residentLookup.get(assignment.primaryMembershipId)
+                      const primary = assignment?.primaryRosterId
+                        ? residentLookup.get(assignment.primaryRosterId)
                         : null;
-                      const backup = assignment?.backupMembershipId
-                        ? residentLookup.get(assignment.backupMembershipId)
+                      const backup = assignment?.backupRosterId
+                        ? residentLookup.get(assignment.backupRosterId)
                         : null;
 
                       const isIncomplete =

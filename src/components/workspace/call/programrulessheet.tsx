@@ -23,6 +23,7 @@ import {
   RULE_DEFINITIONS,
   RuleType,
   RuleDraft,
+  ProgramCallSlotDefinition,
   createDefaultRuleDraft,
   getRuleDefinition,
   sanitizeRuleConfig,
@@ -1196,6 +1197,363 @@ function RuleCard({
   );
 }
 
+// ─── Call Slots Section ────────────────────────────────────────────────────────
+
+const SLOT_COLORS = [
+  { key: "amber",  label: "Amber",  bg: "bg-amber-100",  ring: "ring-amber-400",  text: "text-amber-800"  },
+  { key: "sky",    label: "Sky",    bg: "bg-sky-100",    ring: "ring-sky-400",    text: "text-sky-800"    },
+  { key: "violet", label: "Violet", bg: "bg-violet-100", ring: "ring-violet-400", text: "text-violet-800" },
+  { key: "emerald",label: "Emerald",bg: "bg-emerald-100",ring: "ring-emerald-400",text: "text-emerald-800"},
+  { key: "rose",   label: "Rose",   bg: "bg-rose-100",   ring: "ring-rose-400",   text: "text-rose-800"   },
+  { key: "slate",  label: "Slate",  bg: "bg-slate-200",  ring: "ring-slate-400",  text: "text-slate-700"  },
+];
+
+const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+function slotBgClass(colorKey: string) {
+  return SLOT_COLORS.find((c) => c.key === colorKey)?.bg ?? "bg-slate-100";
+}
+
+function slotRingClass(colorKey: string) {
+  return SLOT_COLORS.find((c) => c.key === colorKey)?.ring ?? "ring-slate-300";
+}
+
+function slotDraftToDefinition(rule: RuleDraft): ProgramCallSlotDefinition {
+  const c = rule.config;
+  return {
+    id: rule.id,
+    label: (c.slotLabel as string) ?? rule.name ?? "Slot",
+    shortLabel: (c.slotShortLabel as string) ?? "—",
+    callType: (c.slotCallType as string) ?? "Primary",
+    colorKey: (c.slotColorKey as string) ?? "amber",
+    requiredMode: (c.slotRequiredMode as "always" | "optional" | "conditional") ?? "always",
+    daysOfWeek: Array.isArray(c.slotDaysOfWeek) ? (c.slotDaysOfWeek as number[]) : undefined,
+    condition: c.slotCondition as ProgramCallSlotDefinition["condition"],
+    countsTowardWorkload: typeof c.slotCountsTowardWorkload === "boolean" ? c.slotCountsTowardWorkload : true,
+    maxPerMonth: typeof c.slotMaxPerMonth === "number" ? c.slotMaxPerMonth : null,
+    sortOrder: typeof c.slotSortOrder === "number" ? c.slotSortOrder : 0,
+  };
+}
+
+function updateSlotConfig(rule: RuleDraft, patch: Partial<ProgramCallSlotDefinition>): RuleDraft {
+  const def = slotDraftToDefinition(rule);
+  const merged = { ...def, ...patch };
+  return {
+    ...rule,
+    name: merged.label,
+    config: sanitizeRuleConfig("call_slot_definition", {
+      slotLabel: merged.label,
+      slotShortLabel: merged.shortLabel,
+      slotCallType: merged.callType,
+      slotColorKey: merged.colorKey,
+      slotRequiredMode: merged.requiredMode,
+      slotDaysOfWeek: merged.daysOfWeek,
+      slotCondition: merged.condition,
+      slotCountsTowardWorkload: merged.countsTowardWorkload,
+      slotMaxPerMonth: merged.maxPerMonth,
+      slotSortOrder: merged.sortOrder,
+    }),
+  };
+}
+
+function CallSlotCard({
+  rule,
+  onChange,
+  onDelete,
+}: {
+  rule: RuleDraft;
+  onChange: (next: RuleDraft) => void;
+  onDelete: () => void;
+}) {
+  const slot = slotDraftToDefinition(rule);
+  const pgyYears = slot.condition?.pgyYears ?? [];
+
+  return (
+    <div className={`rounded-[1.15rem] border border-slate-200 bg-white p-4 shadow-sm`}>
+      <div className="flex items-start justify-between gap-3">
+        <div className={`h-9 w-9 shrink-0 flex items-center justify-center rounded-xl text-xs font-bold ${slotBgClass(slot.colorKey)} ring-1 ${slotRingClass(slot.colorKey)}`}>
+          {slot.shortLabel || "—"}
+        </div>
+
+        <div className="flex-1 min-w-0 grid gap-3 sm:grid-cols-2">
+          {/* Label + short label */}
+          <label className="block">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">Slot name</span>
+            <input
+              value={slot.label}
+              onChange={(e) => onChange(updateSlotConfig(rule, { label: e.target.value }))}
+              placeholder="e.g. Primary"
+              className="w-full rounded-[0.85rem] border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+            />
+          </label>
+
+          <label className="block">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">Short label</span>
+            <input
+              value={slot.shortLabel}
+              onChange={(e) => onChange(updateSlotConfig(rule, { shortLabel: e.target.value }))}
+              placeholder="1°"
+              maxLength={4}
+              className="w-full rounded-[0.85rem] border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+            />
+          </label>
+
+          {/* Call type + color */}
+          <label className="block">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">Call type</span>
+            <select
+              value={slot.callType}
+              onChange={(e) => onChange(updateSlotConfig(rule, { callType: e.target.value }))}
+              className="w-full rounded-[0.85rem] border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+            >
+              <option value="Primary">Primary</option>
+              <option value="Backup">Backup</option>
+              <option value="Buddy">Buddy</option>
+            </select>
+          </label>
+
+          <label className="block">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">Color</span>
+            <div className="flex flex-wrap gap-2 pt-0.5">
+              {SLOT_COLORS.map((c) => (
+                <button
+                  key={c.key}
+                  type="button"
+                  title={c.label}
+                  onClick={() => onChange(updateSlotConfig(rule, { colorKey: c.key }))}
+                  className={`h-7 w-7 rounded-full transition ${c.bg} ring-offset-1 ${slot.colorKey === c.key ? `ring-2 ${c.ring}` : "hover:ring-1 ring-slate-300"}`}
+                />
+              ))}
+            </div>
+          </label>
+
+          {/* Required mode */}
+          <label className="block sm:col-span-2">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">When to show</span>
+            <div className="flex flex-wrap gap-2">
+              {(["always", "optional", "conditional"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => onChange(updateSlotConfig(rule, { requiredMode: mode }))}
+                  className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition capitalize ${
+                    slot.requiredMode === mode
+                      ? "bg-slate-950 text-white"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  {mode === "always" ? "Every day" : mode === "optional" ? "Optional" : "Conditional"}
+                </button>
+              ))}
+            </div>
+            {slot.requiredMode === "always" && (
+              <p className="mt-1.5 text-[11px] text-slate-400">This slot appears on every day of the schedule.</p>
+            )}
+            {slot.requiredMode === "optional" && (
+              <p className="mt-1.5 text-[11px] text-slate-400">This slot is available but not required. It appears when an assignment exists.</p>
+            )}
+            {slot.requiredMode === "conditional" && (
+              <p className="mt-1.5 text-[11px] text-slate-400">This slot appears when a specific condition is met on that day.</p>
+            )}
+          </label>
+
+          {/* Days of week (for always/conditional) */}
+          {(slot.requiredMode === "always" || slot.requiredMode === "conditional") && (
+            <label className="block sm:col-span-2">
+              <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">
+                Days of week <span className="normal-case font-normal text-slate-400">(leave blank for all days)</span>
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {DAY_LABELS.map((label, index) => {
+                  const active = slot.daysOfWeek ? slot.daysOfWeek.includes(index) : false;
+                  return (
+                    <button
+                      key={index}
+                      type="button"
+                      onClick={() => {
+                        const current = slot.daysOfWeek ?? [];
+                        const next = active ? current.filter((d) => d !== index) : [...current, index];
+                        onChange(updateSlotConfig(rule, { daysOfWeek: next.length > 0 ? next : undefined }));
+                      }}
+                      className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                        active ? "bg-slate-950 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </label>
+          )}
+
+          {/* Condition (PGY-based) for conditional mode */}
+          {slot.requiredMode === "conditional" && (
+            <label className="block sm:col-span-2">
+              <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">
+                Appears when which PGY year is assigned to primary?
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {[1, 2, 3, 4, 5].map((pgy) => {
+                  const active = pgyYears.includes(pgy);
+                  return (
+                    <button
+                      key={pgy}
+                      type="button"
+                      onClick={() => {
+                        const next = active ? pgyYears.filter((y) => y !== pgy) : [...pgyYears, pgy];
+                        onChange(updateSlotConfig(rule, {
+                          condition: next.length > 0
+                            ? { type: "when_pgy_scheduled", pgyYears: next, sourceSlotCallTypes: ["Primary"] }
+                            : undefined,
+                        }));
+                      }}
+                      className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                        active ? "bg-violet-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      }`}
+                    >
+                      PGY-{pgy}
+                    </button>
+                  );
+                })}
+              </div>
+            </label>
+          )}
+
+          {/* Counts toward workload */}
+          <div className="flex items-center justify-between gap-3 rounded-[0.85rem] border border-slate-200 bg-slate-50 px-3 py-2.5 sm:col-span-2">
+            <div>
+              <p className="text-xs font-semibold text-slate-800">Counts toward workload</p>
+              <p className="text-[11px] text-slate-500 mt-0.5">Include in fairness balancing and call totals.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => onChange(updateSlotConfig(rule, { countsTowardWorkload: !slot.countsTowardWorkload }))}
+              className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition ${slot.countsTowardWorkload ? "bg-slate-900" : "bg-slate-300"}`}
+            >
+              <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition ${slot.countsTowardWorkload ? "translate-x-6" : "translate-x-1"}`} />
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={onDelete}
+          className="ml-1 shrink-0 rounded-full border border-slate-200 bg-white p-2 text-slate-400 transition hover:bg-slate-50 hover:text-rose-600"
+        >
+          <Trash2 className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+const DEFAULT_SLOT_CONFIGS: Array<Partial<ProgramCallSlotDefinition> & { label: string }> = [
+  { label: "Primary", shortLabel: "1°", callType: "Primary", colorKey: "amber", requiredMode: "always", countsTowardWorkload: true, sortOrder: 0 },
+  { label: "Backup", shortLabel: "2°", callType: "Backup", colorKey: "sky", requiredMode: "optional", countsTowardWorkload: true, sortOrder: 1 },
+  { label: "Buddy", shortLabel: "B°", callType: "Buddy", colorKey: "violet", requiredMode: "conditional", countsTowardWorkload: false, sortOrder: 2 },
+];
+
+function makeSlotRule(preset?: Partial<ProgramCallSlotDefinition>): RuleDraft {
+  const base: Partial<ProgramCallSlotDefinition> = preset ?? DEFAULT_SLOT_CONFIGS[0];
+  return {
+    id: makeId(),
+    name: base.label ?? "Slot",
+    type: "call_slot_definition",
+    enabled: true,
+    isHardRule: false,
+    config: sanitizeRuleConfig("call_slot_definition", {
+      slotLabel: base.label ?? "Primary",
+      slotShortLabel: base.shortLabel ?? "1°",
+      slotCallType: base.callType ?? "Primary",
+      slotColorKey: base.colorKey ?? "amber",
+      slotRequiredMode: base.requiredMode ?? "always",
+      slotDaysOfWeek: base.daysOfWeek,
+      slotCondition: base.condition,
+      slotCountsTowardWorkload: base.countsTowardWorkload ?? true,
+      slotMaxPerMonth: base.maxPerMonth,
+      slotSortOrder: base.sortOrder ?? 0,
+    }),
+  };
+}
+
+function CallSlotsSection({
+  slots,
+  onChange,
+}: {
+  slots: RuleDraft[];
+  onChange: (next: RuleDraft[]) => void;
+}) {
+  const [addPreset, setAddPreset] = React.useState<string>("Primary");
+
+  function addSlot() {
+    const preset = DEFAULT_SLOT_CONFIGS.find((p) => p.label === addPreset) ?? DEFAULT_SLOT_CONFIGS[0];
+    const existing = slots.length;
+    onChange([...slots, makeSlotRule({ ...preset, sortOrder: existing })]);
+  }
+
+  function updateSlot(id: string, next: RuleDraft) {
+    onChange(slots.map((s) => (s.id === id ? next : s)));
+  }
+
+  function deleteSlot(id: string) {
+    onChange(slots.filter((s) => s.id !== id));
+  }
+
+  return (
+    <div className="rounded-[1.35rem] border border-slate-200 bg-slate-50 p-4">
+      <div className="flex items-center gap-2 mb-1">
+        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-violet-100">
+          <CalendarRange className="h-4 w-4 text-violet-700" />
+        </div>
+        <div>
+          <p className="text-sm font-bold text-slate-950">Call Locations / Slots</p>
+          <p className="text-xs text-slate-500">Define which assignment slots appear on the schedule calendar each day.</p>
+        </div>
+      </div>
+
+      {slots.length === 0 ? (
+        <div className="mt-3 rounded-[1rem] border border-dashed border-slate-200 bg-white px-4 py-5 text-center">
+          <p className="text-sm font-semibold text-slate-700">No slots defined</p>
+          <p className="mt-1 text-xs text-slate-500">Add at least a Primary slot. The calendar uses defaults (Primary + Backup) when none are configured.</p>
+        </div>
+      ) : (
+        <div className="mt-3 space-y-3">
+          {slots.map((slot) => (
+            <CallSlotCard
+              key={slot.id}
+              rule={slot}
+              onChange={(next) => updateSlot(slot.id, next)}
+              onDelete={() => deleteSlot(slot.id)}
+            />
+          ))}
+        </div>
+      )}
+
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <select
+          value={addPreset}
+          onChange={(e) => setAddPreset(e.target.value)}
+          className="rounded-full border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 outline-none"
+        >
+          {DEFAULT_SLOT_CONFIGS.map((p) => (
+            <option key={p.label} value={p.label}>{p.label}</option>
+          ))}
+          <option value="custom">Custom</option>
+        </select>
+        <button
+          type="button"
+          onClick={addSlot}
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 transition hover:bg-slate-50"
+        >
+          <Plus className="h-3.5 w-3.5" />
+          Add slot
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function toFrontendRule(rule: RulesResponse["rules"][number]): RuleDraft {
   return {
     id: rule.id,
@@ -1618,6 +1976,17 @@ async function submitProposedRuleType() {
       </div>
     ) : null}
 
+    <CallSlotsSection
+      slots={rules.filter((r) => r.type === "call_slot_definition")}
+      onChange={(nextSlots) => {
+        setRules((prev) => [
+          ...prev.filter((r) => r.type !== "call_slot_definition"),
+          ...nextSlots,
+        ]);
+      }}
+    />
+
+    <div className="mt-4">
     <ScheduleSlotModePicker
   value={scheduleSlotMode}
   onChange={(mode) => {
@@ -1625,6 +1994,7 @@ async function submitProposedRuleType() {
     setRules((prev) => upsertRequiredDailySlotsRule(prev, mode));
   }}
 />
+    </div>
 
 <div className="mt-4">
   <PgyCallPoolBuilder
@@ -1655,7 +2025,9 @@ async function submitProposedRuleType() {
 
       <div className="mt-4 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
         {RULE_DEFINITIONS.filter(
-          (definition) => definition.type !== REQUIRED_DAILY_CALL_SLOTS_RULE
+          (definition) =>
+            definition.type !== REQUIRED_DAILY_CALL_SLOTS_RULE &&
+            definition.type !== "call_slot_definition"
         ).map((definition) => (
           <RuleTypePickerCard
             key={definition.type}
@@ -1699,6 +2071,7 @@ async function submitProposedRuleType() {
       ) : (
   rules
     .filter((rule) => {
+      if (rule.type === "call_slot_definition") return false;
       if (rule.type !== "restrict_call_type_by_pgy") return true;
       return !rule.name.toLowerCase().includes("call pool");
     })

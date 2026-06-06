@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ProgramCallReviewModal from "@/components/workspace/call/programcallreviewmodal";
 import { generateCallSchedule } from "@/components/workspace/call/programcallautogenerator";
 import {
@@ -30,10 +30,15 @@ import type {
   MonthCall,
   MonthResponse,
   ProgramAvailabilityMonthResponse,
+  ProgramCallSlotDefinition,
   ProgramRule,
   QuickAssignSlotMode,
   ResidentOption,
   ResidentSchedulingStats,
+} from "@/components/workspace/call/programcalltypes";
+import {
+  extractSlotDefinitions,
+  DEFAULT_SLOT_DEFINITIONS,
 } from "@/components/workspace/call/programcalltypes";
 import {
   getFlagsForAssignedResident,
@@ -43,13 +48,31 @@ import {
   getCallMutationValidation,
   parseCallMutationResponse,
 } from "@/lib/workspace/call/mutation-error";
+import {
+  areProgramCallDraftPayloadsEqual,
+  normalizeDraftAssignments,
+  PROGRAM_CALL_DRAFT_SCHEMA_VERSION,
+  type ProgramCallScheduleDraftPayload,
+} from "@/lib/workspace/call/drafts";
+import {
+  getRotationAssignmentForDate,
+  getRotationDisplayLabel,
+} from "@/lib/workspace/call/resident-display";
 
-type Slot = "Primary" | "Backup";
+type Slot = "Primary" | "Backup" | "Buddy";
 type ScheduleSlotMode = "Primary" | "Both";
 
 type RotationAssignmentLike = {
   rotationId?: string | null;
   rotation_id?: string | null;
+  rotationName?: string | null;
+  rotation_name?: string | null;
+  rotationShortName?: string | null;
+  rotation_short_name?: string | null;
+  teamLabel?: string | null;
+  team_label?: string | null;
+  siteLabel?: string | null;
+  site_label?: string | null;
   startDate?: string | null;
   start_date?: string | null;
   endDate?: string | null;
@@ -92,11 +115,18 @@ type CoverageItem = {
   rotation_id?: string | null;
   rotation?: {
     id?: string | null;
+    name?: string | null;
+    shortName?: string | null;
+    short_name?: string | null;
   } | null;
   startDate?: string | null;
   start_date?: string | null;
   endDate?: string | null;
   end_date?: string | null;
+  siteLabel?: string | null;
+  site_label?: string | null;
+  teamLabel?: string | null;
+  team_label?: string | null;
 };
 
 type CoveragePayload = {
@@ -122,8 +152,8 @@ type AIReviewContext = {
     dateKey: string;
     dayName: string;
     isWeekend: boolean;
-    primaryMembershipId: string | null;
-    backupMembershipId: string | null;
+    primaryRosterId: string | null;
+    backupRosterId: string | null;
     primaryName: string | null;
     backupName: string | null;
     primaryFlags: AssignmentFlag[];
@@ -138,6 +168,23 @@ type AIReviewContext = {
     yearWeekend: number;
   }[];
 };
+
+type ProgramCallDraftApiResponse = {
+  hasDraft?: boolean;
+  invalidDraftFound?: boolean;
+  latestPublishedScheduleUpdatedAt?: string | null;
+  draft?: {
+    id: string;
+    monthStart: string;
+    schemaVersion: number;
+    updatedAt: string;
+    publishedScheduleUpdatedAt: string | null;
+    hasPublishedScheduleChangedSinceDraft?: boolean;
+    payload: ProgramCallScheduleDraftPayload | null;
+  } | null;
+};
+
+type DraftSaveState = "idle" | "saving" | "saved" | "error";
 
 function getScheduleSlotModeFromRules(rules: ProgramRule[]): ScheduleSlotMode | null {
   const requiredSlotsRule = rules.find(
@@ -263,35 +310,79 @@ function getAssignedDatesForResident(
   return Object.entries(assignments)
     .filter(
       ([, assignment]) =>
-        assignment?.primaryMembershipId === residentId ||
-        assignment?.backupMembershipId === residentId
+        assignment?.primaryRosterId === residentId ||
+        assignment?.backupRosterId === residentId ||
+        assignment?.buddyRosterId === residentId
     )
     .map(([dateKey]) => dateKey)
     .sort();
 }
 
+function hasMeaningfulDraftAssignments(
+  assignments: Record<string, DraftDayAssignment> | null | undefined
+): boolean {
+  if (!assignments) return false;
+  return Object.values(assignments).some(
+    (day) => Boolean(day?.primaryRosterId || day?.backupRosterId || day?.buddyRosterId)
+  );
+}
+
 function buildAssignmentsFromCalls(calls: MonthCall[]) {
   const nextAssignments: Record<string, DraftDayAssignment> = {};
+
+  if (process.env.NODE_ENV !== "production" && calls.length > 0) {
+    const s = calls[0];
+    console.log("[DEBUG] buildAssignmentsFromCalls raw calls[0]", {
+      id: s.id,
+      residentId: s.residentId,
+      rosterId: s.rosterId,
+      membershipId: s.membershipId,
+      callDate: s.callDate,
+      callType: s.callType,
+      callTypeType: typeof s.callType,
+      residentName: s.residentName,
+    });
+  }
 
   for (const call of calls) {
     if (!call.callDate || !call.callType) continue;
 
     const current = nextAssignments[call.callDate] ?? {
-      primaryMembershipId: null,
-      backupMembershipId: null,
+      primaryRosterId: null,
+      backupRosterId: null,
+      buddyRosterId: null,
     };
 
-    const residentId = call.residentId ?? call.rosterId ?? call.membershipId;
+    // Canonical identifier is roster_id. Fall back to residentId, then membershipId.
+    const residentId = call.rosterId ?? call.residentId ?? call.membershipId;
+    const ct = (call.callType as string).toLowerCase().trim();
 
-    if (call.callType === "Primary") {
-      current.primaryMembershipId = residentId;
-    }
-
-    if (call.callType === "Backup") {
-      current.backupMembershipId = residentId;
+    if (ct === "buddy") {
+      current.buddyRosterId = residentId;
+    } else if (ct === "backup") {
+      current.backupRosterId = residentId;
+    } else {
+      // "primary", "weekday", "weekend", and any legacy type → primary slot
+      current.primaryRosterId = residentId;
     }
 
     nextAssignments[call.callDate] = current;
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    const days = Object.keys(nextAssignments);
+    const filled = days.filter(
+      (k) => nextAssignments[k]?.primaryRosterId || nextAssignments[k]?.backupRosterId || nextAssignments[k]?.buddyRosterId
+    ).length;
+    const empty = days.length - filled;
+    const firstDay = days[0];
+    console.log("[DEBUG] buildAssignmentsFromCalls result", {
+      totalDays: days.length,
+      filledSlots: filled,
+      emptySlots: empty,
+      sampleDay: firstDay,
+      sampleAssignment: firstDay ? nextAssignments[firstDay] : null,
+    });
   }
 
   return nextAssignments;
@@ -323,6 +414,18 @@ function buildRotationAssignmentsByRosterId(payload: CoveragePayload | null) {
     current.push({
       rotationId,
       rotation_id: rotationId,
+      rotationName:
+        item.rotation?.name ?? item.rotation?.shortName ?? item.rotation?.short_name ?? null,
+      rotation_name:
+        item.rotation?.name ?? item.rotation?.shortName ?? item.rotation?.short_name ?? null,
+      rotationShortName:
+        item.rotation?.shortName ?? item.rotation?.short_name ?? item.rotation?.name ?? null,
+      rotation_short_name:
+        item.rotation?.shortName ?? item.rotation?.short_name ?? item.rotation?.name ?? null,
+      teamLabel: item.teamLabel ?? item.team_label ?? null,
+      team_label: item.teamLabel ?? item.team_label ?? null,
+      siteLabel: item.siteLabel ?? item.site_label ?? null,
+      site_label: item.siteLabel ?? item.site_label ?? null,
       startDate,
       start_date: startDate,
       endDate,
@@ -333,6 +436,22 @@ function buildRotationAssignmentsByRosterId(payload: CoveragePayload | null) {
   }
 
   return rotationAssignmentsByRosterId;
+}
+
+function buildProgramCallDraftPayload(params: {
+  builderMonth: string;
+  draftAssignments: Record<string, DraftDayAssignment>;
+  scheduleSlotMode: ScheduleSlotMode;
+  quickAssignSlotMode: QuickAssignSlotMode;
+  quickAssignResidentId: string;
+}) {
+  return {
+    month: params.builderMonth,
+    assignments: normalizeDraftAssignments(params.draftAssignments),
+    scheduleSlotMode: params.scheduleSlotMode,
+    quickAssignSlotMode: params.quickAssignSlotMode,
+    quickAssignResidentId: params.quickAssignResidentId || null,
+  } satisfies ProgramCallScheduleDraftPayload;
 }
 
 export default function ProgramCallManager() {
@@ -365,7 +484,7 @@ export default function ProgramCallManager() {
   const [pickerSearch, setPickerSearch] = useState("");
   const [pickerSlot, setPickerSlot] = useState<{
     dateKey: string;
-    slot: Slot;
+    slot: string;
   } | null>(null);
   const [quickAssignResidentId, setQuickAssignResidentId] = useState("");
   const [quickAssignSlotMode, setQuickAssignSlotMode] =
@@ -373,6 +492,19 @@ export default function ProgramCallManager() {
   const [scheduleSlotMode, setScheduleSlotMode] =
     useState<ScheduleSlotMode>("Primary");
   const [rules, setRules] = useState<ProgramRule[]>([]);
+  const [slotDefinitions, setSlotDefinitions] = useState<ProgramCallSlotDefinition[]>([]);
+  const [draftSaveState, setDraftSaveState] = useState<DraftSaveState>("idle");
+  const [draftStatusMessage, setDraftStatusMessage] = useState<string | null>(null);
+  const [draftReady, setDraftReady] = useState(false);
+  const [draftRecordExists, setDraftRecordExists] = useState(false);
+  const [invalidDraftFound, setInvalidDraftFound] = useState(false);
+  const [draftConflictMessage, setDraftConflictMessage] = useState<string | null>(null);
+  const [latestPublishedScheduleUpdatedAt, setLatestPublishedScheduleUpdatedAt] =
+    useState<string | null>(null);
+  const [publishedBaselineDraftPayload, setPublishedBaselineDraftPayload] =
+    useState<ProgramCallScheduleDraftPayload | null>(null);
+  const [lastSavedDraftPayload, setLastSavedDraftPayload] =
+    useState<ProgramCallScheduleDraftPayload | null>(null);
 
   const monthDays = useMemo(() => getMonthDays(builderMonth), [builderMonth]);
   const calendarGrid = useMemo(() => getCalendarGrid(builderMonth), [builderMonth]);
@@ -400,7 +532,9 @@ export default function ProgramCallManager() {
 
       const rulesPayload = await rulesResponse.json();
       const nextRules = Array.isArray(rulesPayload?.rules) ? rulesPayload.rules : [];
-      setRules(nextRules);
+      const nextSlotDefs = extractSlotDefinitions(nextRules);
+      setRules(nextRules.filter((r: ProgramRule) => r.rule_type !== "call_slot_definition"));
+      setSlotDefinitions(nextSlotDefs.length > 0 ? nextSlotDefs : DEFAULT_SLOT_DEFINITIONS);
 
       const persistedSlotMode = getScheduleSlotModeFromRules(nextRules);
       if (persistedSlotMode) {
@@ -475,7 +609,16 @@ const rotationAssignmentsByRosterId =
           pgyYear: typeof item.pgyYear === "number" ? item.pgyYear : null,
           gradYear: typeof item.gradYear === "number" ? item.gradYear : null,
           rotationAssignments: rotationAssignmentsByRosterId.get(rosterId) ?? [],
+          currentRotationLabel: null,
+          currentRotationName: null,
         };
+
+        const monthRotation = getRotationAssignmentForDate(
+          resident.rotationAssignments,
+          monthStart
+        );
+        resident.currentRotationLabel = getRotationDisplayLabel(monthRotation);
+        resident.currentRotationName = resident.currentRotationLabel;
 
         return resident;
       })
@@ -511,13 +654,27 @@ const rotationAssignmentsByRosterId =
       try {
         setCallsLoading(true);
         setError(null);
+        setDraftReady(false);
+        setDraftConflictMessage(null);
+        setDraftStatusMessage(null);
+        setDraftSaveState("idle");
+        setInvalidDraftFound(false);
 
         const { monthStart, monthEnd } = getMonthRange(builderMonth);
 
-        const response = await fetch(
-          `/api/program/calls/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
-          { credentials: "include" }
-        );
+        const [response, draftResponse] = await Promise.all([
+          fetch(
+            `/api/program/calls/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
+            { credentials: "include" }
+          ),
+          fetch(
+            `/api/program/calls/draft?monthStart=${encodeURIComponent(monthStart)}`,
+            {
+              credentials: "include",
+              cache: "no-store",
+            }
+          ),
+        ]);
 
         if (!response.ok) {
           const payload = await response.json().catch(() => null);
@@ -526,26 +683,114 @@ const rotationAssignmentsByRosterId =
 
         const payload: MonthResponse = await response.json();
 
+        // Draft API is best-effort — failure (e.g. table not yet migrated, 403, 500)
+        // must not abort loading the published call schedule.
+        let draftPayload: ProgramCallDraftApiResponse | null = null;
+        if (draftResponse.ok) {
+          draftPayload = await draftResponse.json().catch(() => null) as ProgramCallDraftApiResponse | null;
+        } else if (process.env.NODE_ENV !== "production") {
+          console.warn("[ProgramCallManager] Draft API unavailable:", draftResponse.status, draftResponse.statusText);
+        }
+
         if (cancelled) return;
 
         const calls = Array.isArray(payload.calls) ? payload.calls : [];
         const nextAssignments = buildAssignmentsFromCalls(calls);
         const inferredSlotMode =
           calls.some((call) => call.callType === "Backup") ? "Both" : "Primary";
+        const defaultScheduleSlotMode =
+          getScheduleSlotModeFromRules(rules) ?? inferredSlotMode ?? "Primary";
+        const publishedBaseline = buildProgramCallDraftPayload({
+          builderMonth,
+          draftAssignments: nextAssignments,
+          scheduleSlotMode: defaultScheduleSlotMode,
+          quickAssignSlotMode: "Primary",
+          quickAssignResidentId: "",
+        });
 
         setExistingCalls(calls);
-        setDraftAssignments(nextAssignments);
         setOriginalAssignments(nextAssignments);
-        setQuickAssignResidentId("");
-        setScheduleSlotMode((current) => {
-          const persistedMode = getScheduleSlotModeFromRules(rules);
-          return persistedMode ?? inferredSlotMode ?? current;
-        });
+        setPublishedBaselineDraftPayload(publishedBaseline);
+        setLatestPublishedScheduleUpdatedAt(
+          draftPayload?.latestPublishedScheduleUpdatedAt ?? null
+        );
+
+        const restoredDraft = draftPayload?.draft?.payload ?? null;
+        const { monthStart: draftMonthStart } = getMonthRange(builderMonth);
+
+        const hasValidDraft =
+          Boolean(restoredDraft) &&
+          draftPayload?.draft?.schemaVersion === PROGRAM_CALL_DRAFT_SCHEMA_VERSION &&
+          restoredDraft?.month === builderMonth;
+
+        const draftHasAssignments = hasMeaningfulDraftAssignments(
+          restoredDraft?.assignments
+        );
+
+        if (hasValidDraft && draftHasAssignments && restoredDraft) {
+          setDraftAssignments(restoredDraft.assignments);
+          setQuickAssignResidentId(restoredDraft.quickAssignResidentId ?? "");
+          setQuickAssignSlotMode(restoredDraft.quickAssignSlotMode);
+          setScheduleSlotMode(restoredDraft.scheduleSlotMode);
+          setLastSavedDraftPayload(restoredDraft);
+          setDraftRecordExists(true);
+          setDraftSaveState("saved");
+          setDraftStatusMessage(
+            draftPayload?.draft?.updatedAt
+              ? `Restored draft from ${new Date(
+                  draftPayload.draft.updatedAt
+                ).toLocaleString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}`
+              : "Restored saved draft"
+          );
+          if (draftPayload?.draft?.hasPublishedScheduleChangedSinceDraft) {
+            setDraftConflictMessage(
+              "The published schedule changed after this draft was created. Review carefully before publishing."
+            );
+          }
+        } else {
+          setDraftAssignments(nextAssignments);
+          setQuickAssignResidentId("");
+          setQuickAssignSlotMode("Primary");
+          setScheduleSlotMode(defaultScheduleSlotMode);
+          setLastSavedDraftPayload(null);
+          setDraftRecordExists(false);
+
+          // A valid draft exists but it has no assignments — it's a stale blank draft.
+          // Delete it so it cannot keep overwriting the published schedule on future loads.
+          if (hasValidDraft && !draftHasAssignments) {
+            void fetch(
+              `/api/program/calls/draft?monthStart=${encodeURIComponent(draftMonthStart)}`,
+              { method: "DELETE", credentials: "include" }
+            ).catch(() => {
+              // Non-blocking cleanup; ignore failures.
+            });
+          }
+
+          if (draftPayload?.invalidDraftFound) {
+            setInvalidDraftFound(true);
+            setDraftStatusMessage("An older draft could not be restored safely.");
+          }
+        }
+
+        if (!hasValidDraft || !draftHasAssignments) {
+          setScheduleSlotMode(defaultScheduleSlotMode);
+        }
+
+        setDraftReady(true);
       } catch (err) {
         if (!cancelled) {
           setExistingCalls([]);
           setDraftAssignments({});
           setOriginalAssignments({});
+          setPublishedBaselineDraftPayload(null);
+          setLastSavedDraftPayload(null);
+          setDraftRecordExists(false);
+          setDraftReady(false);
           setError(err instanceof Error ? err.message : "Failed to load month");
         }
       } finally {
@@ -649,8 +894,81 @@ const rotationAssignmentsByRosterId =
   );
 
   const residentLookup = useMemo(() => {
-    return new Map(residents.map((resident) => [resident.residentId, resident]));
+    const map = new Map<string, ResidentOption>();
+    for (const resident of residents) {
+      map.set(resident.residentId, resident);
+      // Also key by programMembershipId for calls where roster_id was NULL in the DB
+      // and only program_membership_id was stored on the assignment.
+      if (
+        resident.programMembershipId &&
+        resident.programMembershipId !== resident.residentId
+      ) {
+        map.set(resident.programMembershipId, resident);
+      }
+    }
+    return map;
   }, [residents]);
+
+  // Track which month's draft IDs have already been normalized to roster IDs so we
+  // only run once per month load, not on every re-render.
+  const normalizedForMonthRef = useRef<string | null>(null);
+
+  // Normalize draft assignment IDs to roster IDs after residents load.
+  // Old drafts may store program_membership_id values; the bi-keyed residentLookup
+  // can resolve them, and we upgrade in-place to canonical program_roster.id (rosterId).
+  useEffect(() => {
+    if (!draftReady || residentLookup.size === 0) return;
+    if (normalizedForMonthRef.current === builderMonth) return;
+
+    normalizedForMonthRef.current = builderMonth;
+
+    function normalizeAssignmentMap(
+      prev: Record<string, DraftDayAssignment>
+    ): Record<string, DraftDayAssignment> | null {
+      let changed = false;
+      const next: Record<string, DraftDayAssignment> = {};
+
+      for (const [dateKey, day] of Object.entries(prev)) {
+        const primaryResident = day.primaryRosterId ? residentLookup.get(day.primaryRosterId) : null;
+        const backupResident = day.backupRosterId ? residentLookup.get(day.backupRosterId) : null;
+        const buddyResident = day.buddyRosterId ? residentLookup.get(day.buddyRosterId) : null;
+
+        const normalizedPrimary =
+          primaryResident && primaryResident.residentId !== day.primaryRosterId
+            ? primaryResident.residentId
+            : day.primaryRosterId;
+
+        const normalizedBackup =
+          backupResident && backupResident.residentId !== day.backupRosterId
+            ? backupResident.residentId
+            : day.backupRosterId;
+
+        const normalizedBuddy =
+          buddyResident && buddyResident.residentId !== day.buddyRosterId
+            ? buddyResident.residentId
+            : day.buddyRosterId;
+
+        if (
+          normalizedPrimary !== day.primaryRosterId ||
+          normalizedBackup !== day.backupRosterId ||
+          normalizedBuddy !== day.buddyRosterId
+        ) {
+          changed = true;
+        }
+
+        next[dateKey] = {
+          primaryRosterId: normalizedPrimary,
+          backupRosterId: normalizedBackup,
+          buddyRosterId: normalizedBuddy ?? null,
+        };
+      }
+
+      return changed ? next : null;
+    }
+
+    setDraftAssignments((prev) => normalizeAssignmentMap(prev) ?? prev);
+    setOriginalAssignments((prev) => normalizeAssignmentMap(prev) ?? prev);
+  }, [builderMonth, draftReady, residentLookup]);
 
   const getAssignedResidentFlags = useCallback(
     (params: {
@@ -667,8 +985,10 @@ const rotationAssignmentsByRosterId =
       const assignmentForDay = params.assignments[params.dateKey];
 
       const slot: Slot =
-        assignmentForDay?.primaryMembershipId === params.residentId
+        assignmentForDay?.primaryRosterId === params.residentId
           ? "Primary"
+          : assignmentForDay?.buddyRosterId === params.residentId
+          ? "Buddy"
           : "Backup";
 
       return getFlagsForAssignedResident({
@@ -724,10 +1044,12 @@ const rotationAssignmentsByRosterId =
         resident,
         monthPrimary: 0,
         monthBackup: 0,
+        monthBuddy: 0,
         monthTotal: 0,
         monthWeekend: 0,
         yearPrimary: baseline?.primaryCallsYear ?? 0,
         yearBackup: baseline?.backupCallsYear ?? 0,
+        yearBuddy: baseline?.buddyCallsYear ?? 0,
         yearTotal: baseline?.totalCallsYear ?? 0,
         yearWeekend: baseline?.weekendCallsYear ?? 0,
         spacingFlags: 0,
@@ -738,35 +1060,35 @@ const rotationAssignmentsByRosterId =
       const assignment = draftAssignments[day.key];
       if (!assignment) continue;
 
-      if (assignment.primaryMembershipId) {
-        const entry = perResident.get(assignment.primaryMembershipId);
-
+      if (assignment.primaryRosterId) {
+        const entry = perResident.get(assignment.primaryRosterId);
         if (entry) {
           entry.monthPrimary += 1;
           entry.monthTotal += 1;
           entry.yearPrimary += 1;
           entry.yearTotal += 1;
-
-          if (day.isWeekend) {
-            entry.monthWeekend += 1;
-            entry.yearWeekend += 1;
-          }
+          if (day.isWeekend) { entry.monthWeekend += 1; entry.yearWeekend += 1; }
         }
       }
 
-      if (assignment.backupMembershipId) {
-        const entry = perResident.get(assignment.backupMembershipId);
-
+      if (assignment.backupRosterId) {
+        const entry = perResident.get(assignment.backupRosterId);
         if (entry) {
           entry.monthBackup += 1;
           entry.monthTotal += 1;
           entry.yearBackup += 1;
           entry.yearTotal += 1;
+          if (day.isWeekend) { entry.monthWeekend += 1; entry.yearWeekend += 1; }
+        }
+      }
 
-          if (day.isWeekend) {
-            entry.monthWeekend += 1;
-            entry.yearWeekend += 1;
-          }
+      if (assignment.buddyRosterId) {
+        const entry = perResident.get(assignment.buddyRosterId);
+        if (entry) {
+          entry.monthBuddy += 1;
+          entry.yearBuddy += 1;
+          // Buddy does not count toward monthTotal/yearTotal by default.
+          // Slot definition's countsTowardWorkload controls this in Phase 3.
         }
       }
     }
@@ -825,7 +1147,7 @@ const rotationAssignmentsByRosterId =
 
     const fullyBuiltDays = monthDays.filter((day) => {
       const assignment = draftAssignments[day.key];
-      return assignment?.primaryMembershipId && assignment?.backupMembershipId;
+      return assignment?.primaryRosterId && assignment?.backupRosterId;
     }).length;
 
     return {
@@ -848,25 +1170,26 @@ const rotationAssignmentsByRosterId =
 
     const schedule = monthDays.map((day) => {
       const assignment = draftAssignments[day.key] ?? {
-        primaryMembershipId: null,
-        backupMembershipId: null,
+        primaryRosterId: null,
+        backupRosterId: null,
+        buddyRosterId: null,
       };
 
-      const primary = assignment.primaryMembershipId
-        ? residentLookup.get(assignment.primaryMembershipId)
+      const primary = assignment.primaryRosterId
+        ? residentLookup.get(assignment.primaryRosterId)
         : null;
 
-      const backup = assignment.backupMembershipId
-        ? residentLookup.get(assignment.backupMembershipId)
+      const backup = assignment.backupRosterId
+        ? residentLookup.get(assignment.backupRosterId)
         : null;
 
-      if (assignment.primaryMembershipId) assignedSlots += 1;
+      if (assignment.primaryRosterId) assignedSlots += 1;
 
-      if (scheduleSlotMode === "Both" && assignment.backupMembershipId) {
+      if (scheduleSlotMode === "Both" && assignment.backupRosterId) {
         assignedSlots += 1;
       }
 
-      if (!assignment.primaryMembershipId) {
+      if (!assignment.primaryRosterId) {
         unfilledRequiredSlots.push({
           dateKey: day.key,
           dayName: day.dayName,
@@ -875,7 +1198,7 @@ const rotationAssignmentsByRosterId =
         });
       }
 
-      if (scheduleSlotMode === "Both" && !assignment.backupMembershipId) {
+      if (scheduleSlotMode === "Both" && !assignment.backupRosterId) {
         unfilledRequiredSlots.push({
           dateKey: day.key,
           dayName: day.dayName,
@@ -888,23 +1211,23 @@ const rotationAssignmentsByRosterId =
         dateKey: day.key,
         dayName: day.dayName,
         isWeekend: day.isWeekend,
-        primaryMembershipId: assignment.primaryMembershipId ?? null,
-        backupMembershipId:
-          scheduleSlotMode === "Both" ? assignment.backupMembershipId ?? null : null,
+        primaryRosterId: assignment.primaryRosterId ?? null,
+        backupRosterId:
+          scheduleSlotMode === "Both" ? assignment.backupRosterId ?? null : null,
         primaryName: primary?.displayName ?? null,
         backupName: scheduleSlotMode === "Both" ? backup?.displayName ?? null : null,
-        primaryFlags: assignment.primaryMembershipId
+        primaryFlags: assignment.primaryRosterId
           ? getAssignedResidentFlags({
-              residentId: assignment.primaryMembershipId,
+              residentId: assignment.primaryRosterId,
               dateKey: day.key,
               assignments: draftAssignments,
               rules,
             })
           : [],
         backupFlags:
-          scheduleSlotMode === "Both" && assignment.backupMembershipId
+          scheduleSlotMode === "Both" && assignment.backupRosterId
             ? getAssignedResidentFlags({
-                residentId: assignment.backupMembershipId,
+                residentId: assignment.backupRosterId,
                 dateKey: day.key,
                 assignments: draftAssignments,
                 rules,
@@ -947,15 +1270,33 @@ const rotationAssignmentsByRosterId =
     );
   }, [computedStats.residentRows, quickAssignResidentId]);
 
+  const currentDraftPayload = useMemo(
+    () =>
+      buildProgramCallDraftPayload({
+        builderMonth,
+        draftAssignments,
+        scheduleSlotMode,
+        quickAssignSlotMode,
+        quickAssignResidentId,
+      }),
+    [
+      builderMonth,
+      draftAssignments,
+      scheduleSlotMode,
+      quickAssignSlotMode,
+      quickAssignResidentId,
+    ]
+  );
+
   const hasSavableAssignments = useMemo(() => {
     return monthDays.some((day) => {
       const assignment = draftAssignments[day.key];
 
       if (scheduleSlotMode === "Primary") {
-        return !!assignment?.primaryMembershipId;
+        return !!assignment?.primaryRosterId;
       }
 
-      return !!assignment?.primaryMembershipId && !!assignment?.backupMembershipId;
+      return !!assignment?.primaryRosterId && !!assignment?.backupRosterId;
     });
   }, [draftAssignments, monthDays, scheduleSlotMode]);
 
@@ -963,11 +1304,20 @@ const rotationAssignmentsByRosterId =
     return existingCalls.length > 0;
   }, [existingCalls]);
 
+  const hasDraftChanges = useMemo(() => {
+    if (!publishedBaselineDraftPayload) return false;
+    return !areProgramCallDraftPayloadsEqual(
+      currentDraftPayload,
+      publishedBaselineDraftPayload
+    );
+  }, [currentDraftPayload, publishedBaselineDraftPayload]);
+
   const filteredPickerResidents = useMemo(() => {
     if (!pickerSlot) return [];
 
+    const slotLower = pickerSlot.slot.toLowerCase();
     const source =
-      pickerSlot.slot === "Primary"
+      slotLower === "primary"
         ? selectableResidentsBySlot.Primary
         : selectableResidentsBySlot.Backup;
 
@@ -975,7 +1325,9 @@ const rotationAssignmentsByRosterId =
     if (!query) return source;
 
     return source.filter((resident) => {
-      const label = `${resident.displayName} ${pgyLabel(resident)}`.toLowerCase();
+      const label = `${resident.displayName} ${pgyLabel(resident)} ${
+        resident.currentRotationLabel ?? ""
+      }`.toLowerCase();
       return label.includes(query);
     });
   }, [pickerSlot, pickerSearch, selectableResidentsBySlot]);
@@ -999,8 +1351,9 @@ const rotationAssignmentsByRosterId =
   ) {
     setDraftAssignments((prev) => {
       const current = prev[dateKey] ?? {
-        primaryMembershipId: null,
-        backupMembershipId: null,
+        primaryRosterId: null,
+        backupRosterId: null,
+        buddyRosterId: null,
       };
 
       return {
@@ -1017,11 +1370,27 @@ const rotationAssignmentsByRosterId =
     setDraftAssignments({});
   }
 
-  function resetEditDraft() {
+  async function resetEditDraft() {
     setDraftAssignments(originalAssignments);
+    setQuickAssignResidentId("");
+    setQuickAssignSlotMode("Primary");
+    if (publishedBaselineDraftPayload) {
+      setScheduleSlotMode(publishedBaselineDraftPayload.scheduleSlotMode);
+    }
+    try {
+      await deleteDraftForMonth(getMonthRange(builderMonth).monthStart);
+      setDraftRecordExists(false);
+      setLastSavedDraftPayload(null);
+      setDraftSaveState("idle");
+      setDraftStatusMessage("Draft discarded");
+    } catch (draftError) {
+      console.error("Failed to discard call draft", draftError);
+      setDraftSaveState("error");
+      setDraftStatusMessage("Draft discard failed");
+    }
   }
 
-  function openPicker(dateKey: string, slot: Slot) {
+  function openPicker(dateKey: string, slot: string) {
     setPickerSlot({ dateKey, slot });
     setPickerSearch("");
     setPickerOpen(true);
@@ -1036,14 +1405,13 @@ const rotationAssignmentsByRosterId =
   function assignResidentToPickerSlot(membershipId: string | null) {
     if (!pickerSlot) return;
 
-    if (pickerSlot.slot === "Primary") {
-      updateDayAssignment(pickerSlot.dateKey, {
-        primaryMembershipId: membershipId,
-      });
+    const slotLower = pickerSlot.slot.toLowerCase();
+    if (slotLower === "primary") {
+      updateDayAssignment(pickerSlot.dateKey, { primaryRosterId: membershipId });
+    } else if (slotLower === "buddy") {
+      updateDayAssignment(pickerSlot.dateKey, { buddyRosterId: membershipId });
     } else {
-      updateDayAssignment(pickerSlot.dateKey, {
-        backupMembershipId: membershipId,
-      });
+      updateDayAssignment(pickerSlot.dateKey, { backupRosterId: membershipId });
     }
 
     closePicker();
@@ -1057,24 +1425,20 @@ const rotationAssignmentsByRosterId =
 
     setDraftAssignments((prev) => {
       const current = prev[dateKey] ?? {
-        primaryMembershipId: null,
-        backupMembershipId: null,
+        primaryRosterId: null,
+        backupRosterId: null,
+        buddyRosterId: null,
       };
 
       const next = { ...current };
 
-      const togglePrimary =
-        quickAssignSlotMode === "Primary" || quickAssignSlotMode === "Both";
-
-      const toggleBackup =
-        quickAssignSlotMode === "Backup" || quickAssignSlotMode === "Both";
+      const togglePrimary = quickAssignSlotMode === "Primary" || quickAssignSlotMode === "Both";
+      const toggleBackup = quickAssignSlotMode === "Backup" || quickAssignSlotMode === "Both";
+      const toggleBuddy = quickAssignSlotMode === "Buddy";
 
       if (togglePrimary) {
-        const isCurrentlySelected =
-          current.primaryMembershipId === resident.residentId;
-
-        if (isCurrentlySelected) {
-          next.primaryMembershipId = null;
+        if (current.primaryRosterId === resident.residentId) {
+          next.primaryRosterId = null;
         } else {
           const allowed = isResidentAllowedForSlot({
             resident,
@@ -1084,19 +1448,13 @@ const rotationAssignmentsByRosterId =
             rules,
             availabilityByResident: programAvailability?.availability ?? {},
           });
-
-          if (allowed) {
-            next.primaryMembershipId = resident.residentId;
-          }
+          if (allowed) next.primaryRosterId = resident.residentId;
         }
       }
 
       if (toggleBackup) {
-        const isCurrentlySelected =
-          current.backupMembershipId === resident.residentId;
-
-        if (isCurrentlySelected) {
-          next.backupMembershipId = null;
+        if (current.backupRosterId === resident.residentId) {
+          next.backupRosterId = null;
         } else {
           const allowed = isResidentAllowedForSlot({
             resident,
@@ -1106,17 +1464,16 @@ const rotationAssignmentsByRosterId =
             rules,
             availabilityByResident: programAvailability?.availability ?? {},
           });
-
-          if (allowed) {
-            next.backupMembershipId = resident.residentId;
-          }
+          if (allowed) next.backupRosterId = resident.residentId;
         }
       }
 
-      return {
-        ...prev,
-        [dateKey]: next,
-      };
+      if (toggleBuddy) {
+        next.buddyRosterId =
+          current.buddyRosterId === resident.residentId ? null : resident.residentId;
+      }
+
+      return { ...prev, [dateKey]: next };
     });
   }
 
@@ -1180,18 +1537,70 @@ const rotationAssignmentsByRosterId =
 
     const payload = await response.json();
     const latestRules = Array.isArray(payload?.rules) ? payload.rules : [];
+    const latestSlotDefs = extractSlotDefinitions(latestRules);
+    setRules(latestRules.filter((r: ProgramRule) => r.rule_type !== "call_slot_definition"));
+    setSlotDefinitions(latestSlotDefs.length > 0 ? latestSlotDefs : DEFAULT_SLOT_DEFINITIONS);
 
-    setRules(latestRules);
-    return latestRules;
+    return latestRules.filter((r: ProgramRule) => r.rule_type !== "call_slot_definition");
   }
+
+  const deleteDraftForMonth = useCallback(async (monthStart: string) => {
+    const response = await fetch(
+      `/api/program/calls/draft?monthStart=${encodeURIComponent(monthStart)}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      const payload = await response.json().catch(() => null);
+      throw new Error(payload?.error ?? "Failed to delete schedule draft");
+    }
+  }, []);
+
+  const persistDraftForMonth = useCallback(
+    async (params: {
+      monthStart: string;
+      payload: ProgramCallScheduleDraftPayload;
+    }) => {
+      const response = await fetch("/api/program/calls/draft", {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          monthStart: params.monthStart,
+          payload: params.payload,
+          schemaVersion: PROGRAM_CALL_DRAFT_SCHEMA_VERSION,
+          publishedScheduleUpdatedAt: latestPublishedScheduleUpdatedAt,
+        }),
+      });
+
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null);
+        throw new Error(payload?.error ?? "Failed to save schedule draft");
+      }
+
+      return (await response.json()) as ProgramCallDraftApiResponse;
+    },
+    [latestPublishedScheduleUpdatedAt]
+  );
 
   async function refreshMonthData() {
     const { monthStart, monthEnd } = getMonthRange(builderMonth);
 
-    const monthResponse = await fetch(
-      `/api/program/calls/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
-      { credentials: "include" }
-    );
+    const [monthResponse, draftResponse] = await Promise.all([
+      fetch(
+        `/api/program/calls/month?monthStart=${monthStart}&monthEnd=${monthEnd}`,
+        { credentials: "include" }
+      ),
+      fetch(`/api/program/calls/draft?monthStart=${encodeURIComponent(monthStart)}`, {
+        credentials: "include",
+        cache: "no-store",
+      }),
+    ]);
 
     if (!monthResponse.ok) {
       const payload = await monthResponse.json().catch(() => null);
@@ -1199,12 +1608,37 @@ const rotationAssignmentsByRosterId =
     }
 
     const refreshed: MonthResponse = await monthResponse.json();
+    // Draft metadata is best-effort on refresh too.
+    let refreshedDraftMeta: ProgramCallDraftApiResponse | null = null;
+    if (draftResponse.ok) {
+      refreshedDraftMeta = await draftResponse.json().catch(() => null) as ProgramCallDraftApiResponse | null;
+    }
     const calls = Array.isArray(refreshed.calls) ? refreshed.calls : [];
     const nextAssignments = buildAssignmentsFromCalls(calls);
 
     setExistingCalls(calls);
     setDraftAssignments(nextAssignments);
     setOriginalAssignments(nextAssignments);
+    const defaultScheduleSlotMode =
+      getScheduleSlotModeFromRules(rules) ??
+      (calls.some((call) => call.callType === "Backup") ? "Both" : "Primary");
+    const baseline = buildProgramCallDraftPayload({
+      builderMonth,
+      draftAssignments: nextAssignments,
+      scheduleSlotMode: defaultScheduleSlotMode,
+      quickAssignSlotMode: "Primary",
+      quickAssignResidentId: "",
+    });
+    setPublishedBaselineDraftPayload(baseline);
+    setLastSavedDraftPayload(null);
+    setDraftRecordExists(false);
+    setDraftReady(true);
+    setDraftSaveState("idle");
+    setDraftStatusMessage(null);
+    setDraftConflictMessage(null);
+    setLatestPublishedScheduleUpdatedAt(
+      refreshedDraftMeta?.latestPublishedScheduleUpdatedAt ?? null
+    );
   }
 
   function buildSaveRows() {
@@ -1223,8 +1657,8 @@ const rotationAssignmentsByRosterId =
         matchedMembershipId: string | null;
       }> = [];
 
-      if (assignment.primaryMembershipId) {
-        const resident = residentLookup.get(assignment.primaryMembershipId);
+      if (assignment.primaryRosterId) {
+        const resident = residentLookup.get(assignment.primaryRosterId);
 
         if (resident) {
           output.push({
@@ -1240,14 +1674,29 @@ const rotationAssignmentsByRosterId =
         }
       }
 
-      if (assignment.backupMembershipId) {
-        const resident = residentLookup.get(assignment.backupMembershipId);
-
+      if (assignment.backupRosterId) {
+        const resident = residentLookup.get(assignment.backupRosterId);
         if (resident) {
           output.push({
             residentName: resident.displayName,
             callDate: day.key,
             callType: "Backup",
+            site: null,
+            isHomeCall: true,
+            notes: null,
+            matchedRosterId: resident.residentId,
+            matchedMembershipId: resident.programMembershipId ?? null,
+          });
+        }
+      }
+
+      if (assignment.buddyRosterId) {
+        const resident = residentLookup.get(assignment.buddyRosterId);
+        if (resident) {
+          output.push({
+            residentName: resident.displayName,
+            callDate: day.key,
+            callType: "Buddy",
             site: null,
             isHomeCall: true,
             notes: null,
@@ -1282,6 +1731,12 @@ const rotationAssignmentsByRosterId =
         }),
       });
       await parseCallMutationResponse(response, fallbackError);
+
+      await deleteDraftForMonth(getMonthRange(builderMonth).monthStart).catch(
+        (draftError) => {
+          console.error("Failed to clear call draft after publish", draftError);
+        }
+      );
 
       await refreshMonthData();
     } finally {
@@ -1351,6 +1806,87 @@ const rotationAssignmentsByRosterId =
     programAvailability,
   ]);
 
+  useEffect(() => {
+    if (!draftReady || !publishedBaselineDraftPayload) {
+      return;
+    }
+
+    const monthStart = getMonthRange(builderMonth).monthStart;
+
+    const saveTimeout = window.setTimeout(async () => {
+      try {
+        if (!hasDraftChanges) {
+          if (!draftRecordExists && !lastSavedDraftPayload) {
+            setDraftSaveState("idle");
+            return;
+          }
+
+          setDraftSaveState("saving");
+          await deleteDraftForMonth(monthStart);
+          setDraftRecordExists(false);
+          setLastSavedDraftPayload(null);
+          setDraftSaveState("idle");
+          setDraftStatusMessage("Draft cleared");
+          return;
+        }
+
+        if (
+          lastSavedDraftPayload &&
+          areProgramCallDraftPayloadsEqual(currentDraftPayload, lastSavedDraftPayload)
+        ) {
+          return;
+        }
+
+        // Guard: never persist a draft that has no real assignments.
+        // This prevents a blank draft from permanently overwriting the published schedule.
+        if (!hasMeaningfulDraftAssignments(currentDraftPayload.assignments)) {
+          setDraftSaveState("idle");
+          return;
+        }
+
+        setDraftSaveState("saving");
+        const saved = await persistDraftForMonth({
+          monthStart,
+          payload: currentDraftPayload,
+        });
+        setDraftRecordExists(true);
+        setLastSavedDraftPayload(currentDraftPayload);
+        setDraftSaveState("saved");
+        setDraftStatusMessage(
+          saved.draft?.updatedAt
+            ? `Draft saved ${new Date(saved.draft.updatedAt).toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+              })}`
+            : "Draft saved"
+        );
+      } catch (draftError) {
+        console.error("Failed to persist call draft", draftError);
+        setDraftSaveState("error");
+        setDraftStatusMessage(
+          draftError instanceof Error
+            ? `Draft save failed: ${draftError.message}`
+            : "Draft save failed"
+        );
+      }
+    }, 900);
+
+    return () => {
+      window.clearTimeout(saveTimeout);
+    };
+  }, [
+    builderMonth,
+    currentDraftPayload,
+    deleteDraftForMonth,
+    draftReady,
+    draftRecordExists,
+    hasDraftChanges,
+    lastSavedDraftPayload,
+    latestPublishedScheduleUpdatedAt,
+    persistDraftForMonth,
+    publishedBaselineDraftPayload,
+  ]);
+
   return (
     <>
       <div className="space-y-6">
@@ -1372,6 +1908,37 @@ const rotationAssignmentsByRosterId =
             {availabilityLoading ? (
               <div className="mb-6 rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
                 Loading program availability...
+              </div>
+            ) : null}
+
+            {draftStatusMessage || draftConflictMessage || invalidDraftFound ? (
+              <div
+                className={`mb-6 rounded-[1rem] border px-4 py-3 text-sm ${
+                  draftSaveState === "error" || draftConflictMessage || invalidDraftFound
+                    ? "border-amber-200 bg-amber-50 text-amber-800"
+                    : draftSaveState === "saving"
+                    ? "border-sky-200 bg-sky-50 text-sky-800"
+                    : "border-emerald-200 bg-emerald-50 text-emerald-800"
+                }`}
+              >
+                <div className="flex flex-wrap items-center gap-2">
+                  {draftSaveState === "saving" ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : null}
+                  <span className="font-semibold">
+                    {draftSaveState === "saving"
+                      ? "Saving draft..."
+                      : draftStatusMessage ?? "Draft status updated"}
+                  </span>
+                </div>
+                {draftConflictMessage ? (
+                  <p className="mt-1">{draftConflictMessage}</p>
+                ) : null}
+                {invalidDraftFound ? (
+                  <p className="mt-1">
+                    A stale or invalid draft was ignored to protect the published schedule.
+                  </p>
+                ) : null}
               </div>
             ) : null}
 
@@ -1449,11 +2016,11 @@ const rotationAssignmentsByRosterId =
             <div className="mt-6 space-y-6">
               <div className="rounded-[1.6rem] border border-slate-200 bg-white shadow-sm">
                 <div className="p-3 md:p-4">
-                  {callsLoading ? (
+                  {callsLoading || (hasExistingSchedule && residentLoading) ? (
                     <div className="rounded-[1.3rem] border border-slate-200 bg-white px-5 py-16 text-center">
                       <Loader2 className="mx-auto h-6 w-6 animate-spin text-slate-500" />
                       <p className="mt-3 text-sm text-slate-500">
-                        Loading month schedule...
+                        {callsLoading ? "Loading month schedule..." : "Loading residents..."}
                       </p>
                     </div>
                   ) : hasExistingSchedule ? (
@@ -1465,6 +2032,7 @@ const rotationAssignmentsByRosterId =
                       residentLookup={residentLookup}
                       getAssignmentFlags={getAssignedResidentFlags}
                       rules={rules}
+                      slotDefinitions={slotDefinitions}
                       onOpenPicker={openPicker}
                       pgyRows={computedStats.pgyRows}
                       statsLoading={statsLoading}
@@ -1486,6 +2054,7 @@ const rotationAssignmentsByRosterId =
                       originalAssignments={originalAssignments}
                       validation={serverValidationResult}
                       rules={rules}
+                      slotDefinitions={slotDefinitions}
                       availabilityByResident={programAvailability?.availability ?? {}}
                       loading={callsLoading}
                       saving={saving}
@@ -1592,13 +2161,14 @@ const rotationAssignmentsByRosterId =
         searchValue={pickerSearch}
         onSearchChange={setPickerSearch}
         groupedResidents={pickerGroupedResidents}
-        currentMembershipId={
-          pickerSlot
-            ? pickerSlot.slot === "Primary"
-              ? draftAssignments[pickerSlot.dateKey]?.primaryMembershipId ?? null
-              : draftAssignments[pickerSlot.dateKey]?.backupMembershipId ?? null
-            : null
-        }
+        currentMembershipId={(() => {
+          if (!pickerSlot) return null;
+          const sl = pickerSlot.slot.toLowerCase();
+          const a = draftAssignments[pickerSlot.dateKey];
+          if (sl === "primary") return a?.primaryRosterId ?? null;
+          if (sl === "buddy") return a?.buddyRosterId ?? null;
+          return a?.backupRosterId ?? null;
+        })()}
         onSelectResident={(membershipId: string) =>
           assignResidentToPickerSlot(membershipId)
         }

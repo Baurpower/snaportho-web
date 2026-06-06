@@ -1,6 +1,6 @@
 // lib/workspace/call/rule-definitions.ts
 
-export type CallTypeOption = "Primary" | "Backup";
+export type CallTypeOption = "Primary" | "Backup" | "Buddy";
 
 export type RuleType =
   | "required_daily_call_slots"
@@ -9,7 +9,28 @@ export type RuleType =
   | "max_weekends_per_month"
   | "restrict_call_type_by_pgy"
   | "weekend_pairing"
-  | "restrict_call_by_rotation";
+  | "restrict_call_by_rotation"
+  | "call_slot_definition";
+
+export type SlotCondition = {
+  type: "when_pgy_scheduled";
+  pgyYears: number[];
+  sourceSlotCallTypes?: string[];
+};
+
+export type ProgramCallSlotDefinition = {
+  id: string;
+  label: string;
+  shortLabel: string;
+  callType: string;
+  colorKey: string;
+  requiredMode: "always" | "optional" | "conditional";
+  daysOfWeek?: number[];
+  condition?: SlotCondition;
+  countsTowardWorkload: boolean;
+  maxPerMonth?: number | null;
+  sortOrder?: number;
+};
 
 export type RuleConfig = {
   requiredCallTypes?: CallTypeOption[];
@@ -28,6 +49,18 @@ export type RuleConfig = {
   rotationIds?: string[];
   blockAllCall?: boolean;
   restrictedCallTypes?: CallTypeOption[];
+
+  // call_slot_definition fields
+  slotLabel?: string;
+  slotShortLabel?: string;
+  slotCallType?: string;
+  slotColorKey?: string;
+  slotRequiredMode?: "always" | "optional" | "conditional";
+  slotDaysOfWeek?: number[];
+  slotCondition?: SlotCondition;
+  slotCountsTowardWorkload?: boolean;
+  slotMaxPerMonth?: number | null;
+  slotSortOrder?: number;
 };
 
 export type RuleFieldDefinition =
@@ -278,6 +311,26 @@ export const RULE_DEFINITIONS: RuleDefinition[] = [
     },
   ],
 },
+  {
+    type: "call_slot_definition",
+    label: "Call slot",
+    description:
+      "Defines a call slot visible on the schedule calendar (Primary, Backup, Buddy, or custom).",
+    category: "eligibility",
+    defaultName: "Call slot",
+    defaultEnabled: true,
+    defaultIsHardRule: false,
+    defaultConfig: {
+      slotLabel: "Primary",
+      slotShortLabel: "1°",
+      slotCallType: "Primary",
+      slotColorKey: "amber",
+      slotRequiredMode: "always",
+      slotCountsTowardWorkload: true,
+      slotSortOrder: 0,
+    },
+    fields: [],
+  },
 ];
 
 function sanitizeStringIdArray(value: unknown, fallback: string[]): string[] {
@@ -469,6 +522,26 @@ export function sanitizeRuleConfig(
   );
 }
 
+  if (type === "call_slot_definition") {
+    next.slotLabel = typeof source.slotLabel === "string" ? source.slotLabel.trim() : (definition.defaultConfig.slotLabel ?? "Primary");
+    next.slotShortLabel = typeof source.slotShortLabel === "string" ? source.slotShortLabel.trim() : (definition.defaultConfig.slotShortLabel ?? "1°");
+    next.slotCallType = typeof source.slotCallType === "string" ? source.slotCallType.trim() : (definition.defaultConfig.slotCallType ?? "Primary");
+    next.slotColorKey = typeof source.slotColorKey === "string" ? source.slotColorKey.trim() : (definition.defaultConfig.slotColorKey ?? "amber");
+    const validModes = ["always", "optional", "conditional"] as const;
+    next.slotRequiredMode = validModes.includes(source.slotRequiredMode as typeof validModes[number])
+      ? (source.slotRequiredMode as "always" | "optional" | "conditional")
+      : "always";
+    if (Array.isArray(source.slotDaysOfWeek)) {
+      next.slotDaysOfWeek = source.slotDaysOfWeek.filter((d) => typeof d === "number" && d >= 0 && d <= 6);
+    }
+    if (source.slotCondition && typeof source.slotCondition === "object") {
+      next.slotCondition = source.slotCondition as SlotCondition;
+    }
+    next.slotCountsTowardWorkload = typeof source.slotCountsTowardWorkload === "boolean" ? source.slotCountsTowardWorkload : true;
+    if (typeof source.slotMaxPerMonth === "number") next.slotMaxPerMonth = source.slotMaxPerMonth;
+    next.slotSortOrder = typeof source.slotSortOrder === "number" ? source.slotSortOrder : 0;
+  }
+
   return next;
 }
 
@@ -560,6 +633,7 @@ export function validateRuleDraft(rule: RuleDraft): string[] {
  * All current rule types are treated as singletons (one per rule_set).
  * If you add a future multi-instance rule type, remove it from this set.
  */
+// call_slot_definition is intentionally absent — multiple slot definitions can coexist.
 export const SINGLETON_RULE_TYPES: ReadonlySet<RuleType> = new Set<RuleType>([
   "required_daily_call_slots",
   "min_days_between_assignments",
@@ -697,3 +771,123 @@ export function mergeSingletonRuleIntoList(
   next[idx] = merged;
   return next;
 }
+
+/**
+ * Returns the ordered set of slot definitions that should be visible on a given calendar day.
+ *
+ * Visibility rules (in priority order):
+ *  4. Always show if the slot already has an assignment (backward-compat for old schedules).
+ *  1. Show if requiredMode === "always".
+ *  2. Show if requiredMode === "optional" (slot is available but not mandatory).
+ *  3. Show if requiredMode === "conditional" AND the condition currently evaluates true.
+ *
+ * The daysOfWeek filter on a slot definition further restricts non-always slots.
+ */
+export function getVisibleCallSlotsForDay({
+  dayOfWeek,
+  primaryCallPgyYear,
+  assignedCallTypeKeys,
+  slotDefinitions,
+}: {
+  /** 0 = Sunday … 6 = Saturday. undefined = no day-of-week filtering. */
+  dayOfWeek?: number;
+  /** pgyYear of the resident currently in the Primary slot (for condition evaluation). */
+  primaryCallPgyYear?: number | null;
+  /** Lowercase callType strings that already have an assignment on this day. */
+  assignedCallTypeKeys?: ReadonlySet<string>;
+  slotDefinitions: ProgramCallSlotDefinition[];
+}): ProgramCallSlotDefinition[] {
+  const assigned = assignedCallTypeKeys ?? new Set<string>();
+  const result: ProgramCallSlotDefinition[] = [];
+
+  for (const def of slotDefinitions) {
+    const callTypeLower = def.callType.toLowerCase();
+    const hasAssignment = assigned.has(callTypeLower);
+
+    // Rule 4: always show when there is already a saved assignment in this slot.
+    if (hasAssignment) {
+      result.push(def);
+      continue;
+    }
+
+    // Days-of-week filter: skip this slot on days it is not configured for.
+    if (def.daysOfWeek && def.daysOfWeek.length > 0 && dayOfWeek !== undefined) {
+      if (!def.daysOfWeek.includes(dayOfWeek)) continue;
+    }
+
+    if (def.requiredMode === "always" || def.requiredMode === "optional") {
+      // Rules 1 & 2: always-required slots and optional (but visible) slots.
+      result.push(def);
+    } else if (def.requiredMode === "conditional") {
+      // Rule 3: only show when the configured condition is satisfied.
+      const cond = def.condition;
+      if (!cond) continue;
+
+      if (
+        cond.type === "when_pgy_scheduled" &&
+        primaryCallPgyYear != null &&
+        cond.pgyYears.includes(primaryCallPgyYear)
+      ) {
+        result.push(def);
+      }
+    }
+  }
+
+  return result;
+}
+
+/** Convert a call_slot_definition ProgramRule to a ProgramCallSlotDefinition. */
+export function ruleToSlotDefinition(rule: {
+  id: string;
+  name: string;
+  is_enabled?: boolean;
+  config: RuleConfig;
+}): ProgramCallSlotDefinition {
+  const c = rule.config;
+  return {
+    id: rule.id,
+    label: c.slotLabel ?? rule.name ?? "Slot",
+    shortLabel: c.slotShortLabel ?? "—",
+    callType: c.slotCallType ?? "Primary",
+    colorKey: c.slotColorKey ?? "amber",
+    requiredMode: c.slotRequiredMode ?? "always",
+    daysOfWeek: c.slotDaysOfWeek,
+    condition: c.slotCondition,
+    countsTowardWorkload: c.slotCountsTowardWorkload ?? true,
+    maxPerMonth: c.slotMaxPerMonth ?? null,
+    sortOrder: c.slotSortOrder ?? 0,
+  };
+}
+
+/** Extract and sort slot definitions from a list of program rules. */
+export function extractSlotDefinitions(
+  rules: Array<{ rule_type?: string; type?: string; id: string; name: string; is_enabled?: boolean; config: RuleConfig }>
+): ProgramCallSlotDefinition[] {
+  return rules
+    .filter((r) => (r.rule_type ?? r.type) === "call_slot_definition" && r.is_enabled !== false)
+    .map(ruleToSlotDefinition)
+    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+}
+
+export const DEFAULT_SLOT_DEFINITIONS: ProgramCallSlotDefinition[] = [
+  {
+    id: "__default_primary",
+    label: "Primary",
+    shortLabel: "1°",
+    callType: "Primary",
+    colorKey: "amber",
+    requiredMode: "always",
+    countsTowardWorkload: true,
+    sortOrder: 0,
+  },
+  {
+    id: "__default_backup",
+    label: "Backup",
+    shortLabel: "2°",
+    callType: "Backup",
+    colorKey: "sky",
+    requiredMode: "optional",
+    countsTowardWorkload: true,
+    sortOrder: 1,
+  },
+];

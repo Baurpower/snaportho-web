@@ -23,7 +23,19 @@ export type ProgramCallItem = {
   isMine: boolean;
 };
 
+function isBuddyCall(call: ProgramCallItem) {
+  return call.callType?.toLowerCase() === "buddy";
+}
+
 function getCallTone(call: ProgramCallItem) {
+  if (isBuddyCall(call)) {
+    return {
+      card: call.isMine ? "border-violet-300 bg-violet-50" : "border-violet-200 bg-violet-50/60",
+      chip: "bg-violet-600 text-white",
+      text: "text-violet-950",
+    };
+  }
+
   if (call.isMine) {
     return {
       card: "border-sky-300 bg-sky-50",
@@ -45,6 +57,19 @@ function getCallTone(call: ProgramCallItem) {
     chip: "bg-slate-900 text-white",
     text: "text-slate-900",
   };
+}
+
+function formatCallTypeLabel(callType: string | null, allCallsForDay: ProgramCallItem[]): string {
+  if (!callType) return "Call";
+  const ct = callType.toLowerCase();
+  if (ct === "buddy") {
+    const primary = allCallsForDay.find((c) => c.callType?.toLowerCase() === "primary");
+    if (primary) return `Buddy Call with ${primary.residentName}`;
+    return "Buddy Call";
+  }
+  if (ct === "primary") return "Primary Call";
+  if (ct === "backup") return "Backup Call";
+  return callType;
 }
 
 type Props = {
@@ -112,6 +137,7 @@ export default function CallDayDetailsContent({
         const pendingRequest = pendingSwapRequestsByCallId?.get(call.id) ?? null;
         const isLoading = adminDecision.loadingRequestId === pendingRequest?.id;
         const statusMessage = pendingRequest ? messageByRequestId[pendingRequest.id] : "";
+        const isBuddy = isBuddyCall(call);
 
         return (
           <div
@@ -124,11 +150,17 @@ export default function CallDayDetailsContent({
                   {call.residentName}
                 </p>
                 <p className="mt-1 text-sm text-slate-600">
-                  {call.callType ?? "Call"}
+                  {formatCallTypeLabel(call.callType, calls)}
                 </p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
+                {isBuddy ? (
+                  <span className="rounded-full bg-violet-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-violet-700 ring-1 ring-violet-200">
+                    Buddy
+                  </span>
+                ) : null}
+
                 {call.isMine ? (
                   <span className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] ${tone.chip}`}>
                     Mine

@@ -181,6 +181,7 @@ export async function GET(request: NextRequest) {
       new Map(merged.map((row) => [row.id, row])).values()
     );
 
+
     const rosterIds = Array.from(
       new Set(deduped.map((row) => row.roster_id).filter(Boolean))
     ) as string[];
