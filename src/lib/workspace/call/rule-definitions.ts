@@ -1,4 +1,5 @@
 // lib/workspace/call/rule-definitions.ts
+import type { BuddyDateState } from "@/lib/workspace/call/buddy-requirements";
 
 export type CallTypeOption = "Primary" | "Backup" | "Buddy";
 
@@ -1089,6 +1090,7 @@ export function getVisibleCallSlotsForDay({
   primaryCallPgyYear,
   assignedCallTypeKeys,
   slotDefinitions,
+  buddyDateState,
 }: {
   /** 0 = Sunday … 6 = Saturday. undefined = no day-of-week filtering. */
   dayOfWeek?: number;
@@ -1097,6 +1099,7 @@ export function getVisibleCallSlotsForDay({
   /** Lowercase callType strings that already have an assignment on this day. */
   assignedCallTypeKeys?: ReadonlySet<string>;
   slotDefinitions: ProgramCallSlotDefinition[];
+  buddyDateState?: BuddyDateState | null;
 }): ProgramCallSlotDefinition[] {
   const assigned = assignedCallTypeKeys ?? new Set<string>();
   const result: ProgramCallSlotDefinition[] = [];
@@ -1114,6 +1117,13 @@ export function getVisibleCallSlotsForDay({
     // Days-of-week filter: skip this slot on days it is not configured for.
     if (def.daysOfWeek && def.daysOfWeek.length > 0 && dayOfWeek !== undefined) {
       if (!def.daysOfWeek.includes(dayOfWeek)) continue;
+    }
+
+    if (def.callType === "Buddy" && buddyDateState) {
+      if (buddyDateState.isRequired || buddyDateState.selectedBuddyRosterId) {
+        result.push(def);
+      }
+      continue;
     }
 
     if (def.requiredMode === "always" || def.requiredMode === "optional") {
@@ -1161,11 +1171,13 @@ export function getSlotStatusForDay({
   dayOfWeek,
   primaryPgyYear,
   hasAssignment = false,
+  buddyDateState,
 }: {
   def: ProgramCallSlotDefinition;
   dayOfWeek?: number;
   primaryPgyYear?: number | null;
   hasAssignment?: boolean;
+  buddyDateState?: BuddyDateState | null;
 }): SlotStatusResult {
   let isVisible = false;
   let reason = "hidden";
@@ -1173,6 +1185,9 @@ export function getSlotStatusForDay({
   if (hasAssignment) {
     isVisible = true;
     reason = "has_assignment";
+  } else if (def.callType === "Buddy" && buddyDateState) {
+    isVisible = buddyDateState.isRequired;
+    reason = buddyDateState.reason;
   } else if (def.requiredMode === "always" || def.requiredMode === "optional") {
     if (def.daysOfWeek && def.daysOfWeek.length > 0 && dayOfWeek !== undefined) {
       isVisible = def.daysOfWeek.includes(dayOfWeek);

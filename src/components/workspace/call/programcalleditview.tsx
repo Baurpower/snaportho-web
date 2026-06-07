@@ -35,6 +35,8 @@ import {
   DEFAULT_SLOT_DEFINITIONS,
   getVisibleCallSlotsForDay,
 } from "@/components/workspace/call/programcalltypes";
+import { getBuddyDateStatesForMonth } from "@/lib/workspace/call/buddy-requirements";
+import { getResidentPgyYear } from "@/lib/workspace/call/rule-evaluator";
 
 type DisplayFlag = {
   key: string;
@@ -594,13 +596,32 @@ function DayCell({
   const primaryResident = current?.primaryRosterId
     ? residentLookup.get(current.primaryRosterId)
     : null;
-  const primaryCallPgyYear = primaryResident?.pgyYear ?? null;
+  const primaryCallPgyYear = primaryResident
+    ? getResidentPgyYear(primaryResident, day.key)
+    : null;
+  const buddyDateState =
+    getBuddyDateStatesForMonth({
+      year: day.date.getFullYear(),
+      month: day.date.getMonth() + 1,
+      residents: Array.from(residentLookup.values()),
+      rotations: Array.from(residentLookup.values()).flatMap((resident) =>
+        (resident.rotationAssignments ?? []).map((assignment) => ({
+          residentId: resident.residentId,
+          rosterId: resident.residentId,
+          ...assignment,
+        }))
+      ),
+      rules,
+      slotDefinitions: effectiveDefs,
+      assignments: draftAssignments,
+    }).find((state) => state.dateKey === day.key) ?? null;
 
   const visibleSlots = getVisibleCallSlotsForDay({
     dayOfWeek: day.date.getDay(),
     primaryCallPgyYear,
     assignedCallTypeKeys,
     slotDefinitions: effectiveDefs,
+    buddyDateState,
   });
 
   return (

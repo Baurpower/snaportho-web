@@ -60,6 +60,12 @@ import {
   getRotationAssignmentForDate,
   getRotationDisplayLabel,
 } from "@/lib/workspace/call/resident-display";
+import {
+  debugCallGenerationMonth,
+  type CallGenerationDebugReport,
+} from "@/lib/workspace/call/debugCallGeneration";
+import { getBuddyDateStatesForMonth } from "@/lib/workspace/call/buddy-requirements";
+import { getResidentPgyYear } from "@/lib/workspace/call/rule-evaluator";
 
 type Slot = "Primary" | "Backup" | "Buddy";
 type ScheduleSlotMode = "Primary" | "Both";
@@ -549,6 +555,8 @@ export default function ProgramCallManager() {
   const [reviewOpen, setReviewOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationReport, setGenerationReport] = useState<unknown>(null);
+  const [callGenerationDebugReport, setCallGenerationDebugReport] =
+    useState<CallGenerationDebugReport | null>(null);
   const [aiAutoReviewToken, setAiAutoReviewToken] = useState<number | null>(null);
   const [showRulesSheet, setShowRulesSheet] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -1257,6 +1265,27 @@ const rotationAssignmentsByRosterId =
     // Per-day backup visibility: respect conditional slot definitions.
     const backupSlotDefs = slotDefinitions.filter((def) => def.callType === "Backup");
     const hasConditionalBackupDefs = backupSlotDefs.some((def) => def.requiredMode === "conditional");
+    const firstDay = monthDays[0];
+    const buddyDateStateByDate = new Map(
+      (firstDay
+        ? getBuddyDateStatesForMonth({
+            year: firstDay.date.getFullYear(),
+            month: firstDay.date.getMonth() + 1,
+            residents,
+            rotations: residents.flatMap((resident) =>
+              (resident.rotationAssignments ?? []).map((assignment) => ({
+                residentId: resident.residentId,
+                rosterId: resident.residentId,
+                ...assignment,
+              }))
+            ),
+            rules,
+            slotDefinitions,
+            assignments: draftAssignments,
+          })
+        : []
+      ).map((state) => [state.dateKey, state])
+    );
 
     let assignedSlots = 0;
     let expectedSlots = 0;
@@ -1276,6 +1305,7 @@ const rotationAssignmentsByRosterId =
       const backup = assignment.backupRosterId
         ? residentLookup.get(assignment.backupRosterId)
         : null;
+      const buddyState = buddyDateStateByDate.get(day.key) ?? null;
 
       // Primary always counts.
       expectedSlots += 1;
@@ -1295,10 +1325,13 @@ const rotationAssignmentsByRosterId =
       let backupRequired = false;
 
       if (hasConditionalBackupDefs && backupSlotDefs.length > 0) {
-        const primaryPgyYear = primary?.pgyYear ?? null;
+        const primaryPgyYear = primary
+          ? getResidentPgyYear(primary, day.key)
+          : null;
         const dayOfWeek = day.date.getDay();
         const hasBackupAssignment = Boolean(assignment.backupRosterId);
         for (const def of backupSlotDefs) {
+          if (buddyState?.isRequired || assignment.buddyRosterId) continue;
           const { isVisible, isRequired } = getSlotStatusForDay({
             def,
             dayOfWeek,
@@ -1308,7 +1341,11 @@ const rotationAssignmentsByRosterId =
           if (isVisible) backupVisible = true;
           if (isRequired) backupRequired = true;
         }
-      } else if (scheduleSlotMode === "Both") {
+      } else if (
+        scheduleSlotMode === "Both" &&
+        !buddyState?.isRequired &&
+        !assignment.buddyRosterId
+      ) {
         backupVisible = true;
         backupRequired = true;
       }
@@ -1325,6 +1362,19 @@ const rotationAssignmentsByRosterId =
           isWeekend: day.isWeekend,
           slot: "Backup",
         });
+      }
+
+      if (buddyState?.isRequired || assignment.buddyRosterId) {
+        expectedSlots += 1;
+        if (assignment.buddyRosterId) assignedSlots += 1;
+        if (buddyState?.isRequired && !assignment.buddyRosterId) {
+          unfilledRequiredSlots.push({
+            dateKey: day.key,
+            dayName: day.dayName,
+            isWeekend: day.isWeekend,
+            slot: "Buddy",
+          });
+        }
       }
 
       return {
@@ -1371,6 +1421,7 @@ const rotationAssignmentsByRosterId =
     builderMonth,
     monthDays,
     draftAssignments,
+    residents,
     scheduleSlotMode,
     slotDefinitions,
     residentLookup,
@@ -1619,6 +1670,36 @@ const rotationAssignmentsByRosterId =
         historicalStats,
         slotMode: scheduleSlotMode,
       });
+
+      if (process.env.NODE_ENV !== "production") {
+        const [yearValue, monthValue] = builderMonth.split("-").map(Number);
+        const debugReport = debugCallGenerationMonth({
+          year: yearValue,
+          month: monthValue,
+          residents: sortedResidents,
+          rotations: sortedResidents.flatMap((resident) =>
+            (resident.rotationAssignments ?? []).map((assignment) => ({
+              residentId: resident.residentId,
+              rosterId: resident.residentId,
+              residentName: resident.displayName,
+              ...assignment,
+            }))
+          ),
+          rules: latestRules,
+          slotDefinitions: latestSlotDefinitions,
+          generatedAssignments: {
+            assignments: generated.assignments,
+            generationDebug:
+              (generated.generationReport as { generationDebug?: unknown } | null)
+                ?.generationDebug ?? null,
+          },
+        });
+        setCallGenerationDebugReport(debugReport);
+        console.log("[CALL_GEN_DEBUG]", debugReport);
+        console.table([debugReport.summary]);
+      } else {
+        setCallGenerationDebugReport(null);
+      }
 
       setDraftAssignments(generated.assignments);
       setGenerationReport(generated.generationReport ?? null);
@@ -2388,6 +2469,7 @@ const rotationAssignmentsByRosterId =
         aiReviewContext={aiReviewContext}
         generationReport={generationReport}
         autoReviewToken={aiAutoReviewToken}
+        debugReport={callGenerationDebugReport}
       />
 
       {isGenerating ? (

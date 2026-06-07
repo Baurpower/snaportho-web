@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertTriangle,
   CheckCircle2,
+  Copy,
   Loader2,
   RefreshCcw,
   ShieldCheck,
@@ -22,7 +23,9 @@ import type {
   ResidentOption,
 } from "@/components/workspace/call/programcalltypes";
 import { getFlagsForAssignedResident } from "@/components/workspace/call/programcallevaluator";
+import { getBuddyDateStatesForMonth, type BuddyDateState } from "@/lib/workspace/call/buddy-requirements";
 import { getRequiredCallTypesFromRules } from "@/lib/workspace/call/rule-evaluator";
+import { getResidentPgyYear } from "@/lib/workspace/call/rule-evaluator";
 import { getSlotStatusForDay } from "@/lib/workspace/call/rule-definitions";
 
 type Slot = "Primary" | "Backup" | "Buddy";
@@ -176,6 +179,7 @@ type Props = {
   generationReport?: unknown;
   aiReviewContext: AIReviewContext;
   autoReviewToken?: number | null;
+  debugReport?: unknown;
 };
 
 function pgyLabel(resident: ResidentOption) {
@@ -232,13 +236,17 @@ function isBackupVisibleForDay(
   day: CalendarDay,
   assignment: DraftDayAssignment | undefined,
   residentLookup: Map<string, ResidentOption>,
-  backupDefs: ProgramCallSlotDefinition[]
+  backupDefs: ProgramCallSlotDefinition[],
+  buddyDateState: BuddyDateState | null
 ): boolean {
   if (backupDefs.length === 0) return false;
+  if (buddyDateState?.isRequired || assignment?.buddyRosterId) return false;
   const primaryResident = assignment?.primaryRosterId
     ? residentLookup.get(assignment.primaryRosterId)
     : null;
-  const primaryPgyYear = primaryResident?.pgyYear ?? null;
+  const primaryPgyYear = primaryResident
+    ? getResidentPgyYear(primaryResident, day.key)
+    : null;
   const dayOfWeek = day.date.getDay();
   const hasAssignment = Boolean(assignment?.backupRosterId);
   return backupDefs.some(
@@ -254,13 +262,17 @@ function isBackupRequiredForDay(
   day: CalendarDay,
   assignment: DraftDayAssignment | undefined,
   residentLookup: Map<string, ResidentOption>,
-  backupDefs: ProgramCallSlotDefinition[]
+  backupDefs: ProgramCallSlotDefinition[],
+  buddyDateState: BuddyDateState | null
 ): boolean {
   if (backupDefs.length === 0) return false;
+  if (buddyDateState?.isRequired || assignment?.buddyRosterId) return false;
   const primaryResident = assignment?.primaryRosterId
     ? residentLookup.get(assignment.primaryRosterId)
     : null;
-  const primaryPgyYear = primaryResident?.pgyYear ?? null;
+  const primaryPgyYear = primaryResident
+    ? getResidentPgyYear(primaryResident, day.key)
+    : null;
   const dayOfWeek = day.date.getDay();
   return backupDefs.some(
     (def) => getSlotStatusForDay({ def, dayOfWeek, primaryPgyYear, hasAssignment: false }).isRequired
@@ -273,10 +285,12 @@ function countUnfilledDays(
   requiredCallTypes: Slot[],
   scheduleSlotMode: ScheduleSlotMode,
   slotDefinitions: ProgramCallSlotDefinition[],
-  residentLookup: Map<string, ResidentOption>
+  residentLookup: Map<string, ResidentOption>,
+  buddyDateStateByDate: Map<string, BuddyDateState>
 ) {
   const backupDefs = slotDefinitions.filter((def) => def.callType === "Backup");
   const hasConditionalBackup = backupDefs.some((def) => def.requiredMode === "conditional");
+  const buddyDefs = slotDefinitions.filter((def) => def.callType === "Buddy");
 
   const shouldCheckPrimary =
     requiredCallTypes.length > 0
@@ -289,14 +303,41 @@ function countUnfilledDays(
 
   return monthDays.filter((day) => {
     const assignment = assignments[day.key];
+    const buddyDateState = buddyDateStateByDate.get(day.key) ?? null;
 
     if (shouldCheckPrimary && !assignment?.primaryRosterId) return true;
 
     if (!assignment?.backupRosterId) {
       if (hasConditionalBackup) {
-        return isBackupRequiredForDay(day, assignment, residentLookup, backupDefs);
+        return isBackupRequiredForDay(
+          day,
+          assignment,
+          residentLookup,
+          backupDefs,
+          buddyDateState
+        );
       }
-      return globalBackupRequired;
+      if (globalBackupRequired && !buddyDateState?.isRequired && !assignment?.buddyRosterId) {
+        return true;
+      }
+    }
+
+    if (!assignment?.buddyRosterId && buddyDefs.length > 0) {
+      const primaryResident = assignment?.primaryRosterId
+        ? residentLookup.get(assignment.primaryRosterId)
+        : null;
+      const primaryPgyYear = primaryResident
+        ? getResidentPgyYear(primaryResident, day.key)
+        : null;
+      return buddyDefs.some((def) =>
+        getSlotStatusForDay({
+          def,
+          dayOfWeek: day.date.getDay(),
+          primaryPgyYear,
+          hasAssignment: false,
+          buddyDateState,
+        }).isRequired
+      );
     }
 
     return false;
@@ -508,11 +549,13 @@ export default function ProgramCallReviewModal({
   generationReport,
   aiReviewContext,
   autoReviewToken,
+  debugReport,
 }: Props) {
   const [selectedOptionRank, setSelectedOptionRank] = useState(1);
   const [selectedWarnings, setSelectedWarnings] = useState<DayWarning[] | null>(
     null
   );
+  const [copiedDebug, setCopiedDebug] = useState(false);
 
   const [reviewLoading, setReviewLoading] = useState(false);
 const [reviewError, setReviewError] = useState<string | null>(null);
@@ -659,6 +702,28 @@ React.useEffect(() => {
     () => slotDefinitions.filter((def) => def.callType === "Backup"),
     [slotDefinitions]
   );
+  const buddyDateStateByDate = useMemo(() => {
+    const firstDay = monthDays[0];
+    if (!firstDay) return new Map<string, BuddyDateState>();
+
+    const states = getBuddyDateStatesForMonth({
+      year: firstDay.date.getFullYear(),
+      month: firstDay.date.getMonth() + 1,
+      residents,
+      rotations: residents.flatMap((resident) =>
+        (resident.rotationAssignments ?? []).map((assignment) => ({
+          residentId: resident.residentId,
+          rosterId: resident.residentId,
+          ...assignment,
+        }))
+      ),
+      rules,
+      slotDefinitions,
+      assignments: draftAssignments,
+    });
+
+    return new Map(states.map((state) => [state.dateKey, state]));
+  }, [monthDays, residents, rules, slotDefinitions, draftAssignments]);
   const hasConditionalBackup = useMemo(
     () => backupDefs.some((def) => def.requiredMode === "conditional"),
     [backupDefs]
@@ -672,9 +737,18 @@ React.useEffect(() => {
         requiredCallTypes,
         scheduleSlotMode,
         slotDefinitions,
-        residentLookup
+        residentLookup,
+        buddyDateStateByDate
       ),
-    [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode, slotDefinitions, residentLookup]
+    [
+      monthDays,
+      draftAssignments,
+      requiredCallTypes,
+      scheduleSlotMode,
+      slotDefinitions,
+      residentLookup,
+      buddyDateStateByDate,
+    ]
   );
 
   const totalFlags = useMemo(
@@ -705,19 +779,45 @@ React.useEffect(() => {
 
       // Per-day backup visibility for conditional defs; global flag otherwise.
       if (hasConditionalBackup) {
-        const visible = isBackupVisibleForDay(day, assignment, residentLookup, backupDefs);
+        const visible = isBackupVisibleForDay(
+          day,
+          assignment,
+          residentLookup,
+          backupDefs,
+          buddyDateStateByDate.get(day.key) ?? null
+        );
         if (visible) {
           expected += 1;
           if (assignment?.backupRosterId) assigned += 1;
         }
       } else if (globalBackupCounted) {
+        if (
+          !buddyDateStateByDate.get(day.key)?.isRequired &&
+          !assignment?.buddyRosterId
+        ) {
+          expected += 1;
+          if (assignment?.backupRosterId) assigned += 1;
+        }
+      }
+
+      const buddyDateState = buddyDateStateByDate.get(day.key) ?? null;
+      if (buddyDateState?.isRequired || assignment?.buddyRosterId) {
         expected += 1;
-        if (assignment?.backupRosterId) assigned += 1;
+        if (assignment?.buddyRosterId) assigned += 1;
       }
     }
 
     return { assignedSlots: assigned, expectedSlots: expected };
-  }, [monthDays, draftAssignments, requiredCallTypes, scheduleSlotMode, hasConditionalBackup, backupDefs, residentLookup]);
+  }, [
+    monthDays,
+    draftAssignments,
+    requiredCallTypes,
+    scheduleSlotMode,
+    hasConditionalBackup,
+    backupDefs,
+    residentLookup,
+    buddyDateStateByDate,
+  ]);
 
   function getWarningsForDay(day: CalendarDay): DayWarning[] {
     const assignment = draftAssignments[day.key];
@@ -950,17 +1050,43 @@ React.useEffect(() => {
                       const backup = assignment?.backupRosterId
                         ? residentLookup.get(assignment.backupRosterId)
                         : null;
+                      const buddy = assignment?.buddyRosterId
+                        ? residentLookup.get(assignment.buddyRosterId)
+                        : null;
+                      const buddyDateState =
+                        buddyDateStateByDate.get(day.key) ?? null;
 
                       // Per-day backup visibility: conditional defs use PGY-of-primary check.
                       const showBackupRow = hasConditionalBackup
-                        ? isBackupVisibleForDay(day, assignment, residentLookup, backupDefs)
-                        : scheduleSlotMode === "Both";
+                        ? isBackupVisibleForDay(
+                            day,
+                            assignment,
+                            residentLookup,
+                            backupDefs,
+                            buddyDateState
+                          )
+                        : scheduleSlotMode === "Both" &&
+                          !buddyDateState?.isRequired &&
+                          !assignment?.buddyRosterId;
                       const backupRequiredThisDay = hasConditionalBackup
-                        ? isBackupRequiredForDay(day, assignment, residentLookup, backupDefs)
-                        : scheduleSlotMode === "Both";
+                        ? isBackupRequiredForDay(
+                            day,
+                            assignment,
+                            residentLookup,
+                            backupDefs,
+                            buddyDateState
+                          )
+                        : scheduleSlotMode === "Both" &&
+                          !buddyDateState?.isRequired &&
+                          !assignment?.buddyRosterId;
+                      const showBuddyRow = Boolean(
+                        buddyDateState?.isRequired || assignment?.buddyRosterId
+                      );
 
                       const isIncomplete =
-                        !primary || (backupRequiredThisDay && !backup);
+                        !primary ||
+                        (backupRequiredThisDay && !backup) ||
+                        (showBuddyRow && !buddy);
 
                       const warnings = getWarningsForDay(day);
                       const warningCount = warnings.reduce(
@@ -1012,6 +1138,12 @@ React.useEffect(() => {
                             {showBackupRow ? (
                               <div className="truncate rounded-lg bg-violet-50 px-2 py-1 text-[11px] font-semibold text-violet-900 ring-1 ring-violet-100">
                                 B: {shortName(backup)}
+                              </div>
+                            ) : null}
+
+                            {showBuddyRow ? (
+                              <div className="truncate rounded-lg bg-fuchsia-50 px-2 py-1 text-[11px] font-semibold text-fuchsia-900 ring-1 ring-fuchsia-100">
+                                Bud: {shortName(buddy)}
                               </div>
                             ) : null}
                           </div>
@@ -1161,6 +1293,27 @@ React.useEffect(() => {
                 </p>
 
                 <div className="flex flex-wrap justify-end gap-3">
+                  {process.env.NODE_ENV !== "production" && debugReport ? (
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        try {
+                          await navigator.clipboard.writeText(
+                            JSON.stringify(debugReport, null, 2)
+                          );
+                          setCopiedDebug(true);
+                          window.setTimeout(() => setCopiedDebug(false), 1500);
+                        } catch (error) {
+                          console.error("Failed to copy call generation debug report", error);
+                        }
+                      }}
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                    >
+                      <Copy className="h-4 w-4" />
+                      {copiedDebug ? "Copied debug report" : "Copy debug report"}
+                    </button>
+                  ) : null}
+
                   <button
                     type="button"
                     onClick={onClose}

@@ -15,10 +15,16 @@ import {
   resolveMatchingRules,
 } from "@/lib/workspace/call/rule-evaluator";
 import {
+  BUDDY_PRIMARY_PARTNER_PGY,
+  getBuddyDateStatesForMonth,
+  isBuddyEligibleRotationName,
+} from "@/lib/workspace/call/buddy-requirements";
+import {
   buildResidentIdentityMaps,
   normalizeScheduleResidentId,
 } from "@/lib/workspace/call/resident-identity";
 import { getResidentStatusDetails } from "@/lib/workspace/pgy";
+import type { ProgramRule } from "@/components/workspace/call/programcalltypes";
 import {
   extractSlotDefinitions,
   getSlotStatusForDay,
@@ -1333,6 +1339,11 @@ export function validateConditionalRequiredSlots(input: CallValidationInput) {
       )
       .map((ctx) => ctx.slotId)
   );
+  const buddyStateByDate = buildBuddyDateStateLookup(
+    input,
+    slotDefs,
+    activeAssignments
+  );
 
   for (const dateKey of touchedDates) {
     const primaryRosterId = primaryByDate.get(dateKey) ?? null;
@@ -1340,6 +1351,7 @@ export function validateConditionalRequiredSlots(input: CallValidationInput) {
 
     const date = new Date(`${dateKey}T00:00:00`);
     const dayOfWeek = date.getDay();
+    const buddyDateState = buddyStateByDate.get(dateKey) ?? null;
 
     for (const def of conditionalRequired) {
       const { isRequired } = getSlotStatusForDay({
@@ -1347,6 +1359,7 @@ export function validateConditionalRequiredSlots(input: CallValidationInput) {
         dayOfWeek,
         primaryPgyYear,
         hasAssignment: false,
+        buddyDateState: def.callType === "Buddy" ? buddyDateState : undefined,
       });
 
       if (!isRequired) continue;
@@ -1362,7 +1375,10 @@ export function validateConditionalRequiredSlots(input: CallValidationInput) {
           ruleCode: "conditional_slot_required",
           severity: "error",
           source: "rule",
-          message: `Required ${callType} slot "${def.label}" is unassigned on ${dateKey} (condition: Primary PGY ${def.condition?.pgyYears?.join(" or ") ?? "?"}).`,
+          message:
+            callType === "Buddy"
+              ? `Required Buddy slot "${def.label}" is unassigned on ${dateKey} because an eligible PGY-1 on Gen Ortho/Pager still needs Buddy days.`
+              : `Required ${callType} slot "${def.label}" is unassigned on ${dateKey} (condition: Primary PGY ${def.condition?.pgyYears?.join(" or ") ?? "?"}).`,
           slotId,
           residentId: null,
           rosterId: null,
@@ -1375,7 +1391,302 @@ export function validateConditionalRequiredSlots(input: CallValidationInput) {
             primaryRosterId,
             primaryPgyYear,
             conditionPgyYears: def.condition?.pgyYears ?? [],
+            buddyReason: buddyDateState?.reason ?? null,
           },
+        })
+      );
+    }
+  }
+
+  return issues;
+}
+
+function buildBuddyDateStateLookup(
+  input: CallValidationInput,
+  slotDefs: ReturnType<typeof extractSlotDefinitions>,
+  activeAssignments: CallDraftAssignment[]
+) {
+  const touchedDates = Array.isArray(input.context?.metadata?.touchedDates)
+    ? input.context?.metadata?.touchedDates
+        .map((value) => normalizeDateKey(value))
+        .filter((value): value is string => Boolean(value))
+    : [];
+
+  const monthKey = touchedDates[0] ?? null;
+  if (!monthKey) return new Map<string, ReturnType<typeof getBuddyDateStatesForMonth>[number]>();
+
+  const [year, month] = monthKey.split("-").map(Number);
+  const assignmentsByDate: Record<string, { primaryRosterId: string | null; backupRosterId: string | null; buddyRosterId: string | null }> = {};
+
+  for (const assignment of activeAssignments) {
+    const ctx = getIntegrityAssignmentContext(assignment);
+    if (!ctx.normalizedDateKey) continue;
+    assignmentsByDate[ctx.normalizedDateKey] ??= {
+      primaryRosterId: null,
+      backupRosterId: null,
+      buddyRosterId: null,
+    };
+
+    if (ctx.normalizedCallType === "Primary") {
+      assignmentsByDate[ctx.normalizedDateKey].primaryRosterId = ctx.residentId;
+    } else if (ctx.normalizedCallType === "Backup") {
+      assignmentsByDate[ctx.normalizedDateKey].backupRosterId = ctx.residentId;
+    } else if (ctx.normalizedCallType === "Buddy") {
+      assignmentsByDate[ctx.normalizedDateKey].buddyRosterId = ctx.residentId;
+    }
+  }
+
+  const residents = (input.residents ?? input.context?.residents ?? []).map((resident) => ({
+    residentId:
+      normalizeString(resident.rosterId) ??
+      normalizeString(resident.residentId) ??
+      normalizeString(resident.membershipId) ??
+      "",
+    rosterId:
+      normalizeString(resident.rosterId) ??
+      normalizeString(resident.residentId) ??
+      normalizeString(resident.membershipId) ??
+      null,
+    membershipId: normalizeString(resident.membershipId) ?? "",
+    programMembershipId: normalizeString(resident.programMembershipId) ?? null,
+    displayName:
+      normalizeString(resident.displayName) ??
+      normalizeString(resident.residentName) ??
+      "Unknown Resident",
+    trainingLevel: normalizeString(resident.trainingLevel),
+    pgyYear: null,
+    gradYear: null,
+    rotationAssignments: [],
+  }));
+
+  const rotations = (input.rotations ?? input.context?.rotations ?? []).map((rotation) => ({
+    residentId:
+      normalizeString(rotation.rosterId) ??
+      normalizeString(rotation.residentId) ??
+      normalizeString(rotation.membershipId) ??
+      null,
+    rosterId:
+      normalizeString(rotation.rosterId) ??
+      normalizeString(rotation.residentId) ??
+      normalizeString(rotation.membershipId) ??
+      null,
+    rotationId: normalizeString(rotation.rotationId),
+    rotationName: normalizeString(rotation.rotationName),
+    shortName: normalizeString(rotation.shortName),
+    startDate: normalizeDateKey(rotation.startDate),
+    endDate: normalizeDateKey(rotation.endDate),
+  }));
+
+  const rules = (input.rules ?? input.context?.rules ?? []).map((rule) => ({
+    id: normalizeString(rule.id) ?? "",
+    name: normalizeString(rule.name) ?? "",
+    rule_type: normalizeString(rule.ruleType ?? rule.ruleCode) ?? "call_slot_definition",
+    is_enabled: rule.isEnabled !== false,
+    is_hard_rule: rule.isHardRule !== false,
+    config: (rule.config as Record<string, unknown>) ?? {},
+  })) as unknown as ProgramRule[];
+
+  const states = getBuddyDateStatesForMonth({
+    year,
+    month,
+    residents,
+    rotations,
+    rules,
+    slotDefinitions: slotDefs,
+    assignments: assignmentsByDate,
+  });
+
+  return new Map(states.map((state) => [state.dateKey, state]));
+}
+
+export function validateBuddyAssignments(input: CallValidationInput) {
+  const issues: CallValidationIssue[] = [];
+  const rulesRaw = input.rules ?? input.context?.rules ?? [];
+  const slotDefs = extractSlotDefinitions(
+    rulesRaw.map((r) => ({
+      id: normalizeString(r.id) ?? "",
+      name: normalizeString(r.name) ?? "",
+      rule_type: normalizeString(r.ruleType ?? r.ruleCode) ?? undefined,
+      type: normalizeString(r.ruleType ?? r.ruleCode) ?? undefined,
+      is_enabled: r.isEnabled !== false,
+      config: (r.config as Record<string, unknown>) ?? {},
+    }))
+  );
+  const buddyDef = slotDefs.find((def) => def.callType === "Buddy");
+  if (!buddyDef) return issues;
+
+  const activeAssignments = (input.assignments ?? []).filter(isActiveAssignment);
+  const buddyStateByDate = buildBuddyDateStateLookup(input, slotDefs, activeAssignments);
+  const residents = input.residents ?? input.context?.residents ?? [];
+  const residentByRosterId = new Map(
+    residents.map((resident) => [
+      normalizeString(resident.rosterId) ??
+        normalizeString(resident.residentId) ??
+        normalizeString(resident.membershipId) ??
+        "",
+      resident,
+    ])
+  );
+  const primaryByDate = new Map<string, string>();
+  const backupByDate = new Map<string, string>();
+  const buddyByDate = new Map<string, { rosterId: string; assignmentId: string | null }>();
+
+  for (const assignment of activeAssignments) {
+    const ctx = getIntegrityAssignmentContext(assignment);
+    if (!ctx.normalizedDateKey || !ctx.residentId) continue;
+    if (ctx.normalizedCallType === "Primary") {
+      primaryByDate.set(ctx.normalizedDateKey, ctx.residentId);
+    } else if (ctx.normalizedCallType === "Backup") {
+      backupByDate.set(ctx.normalizedDateKey, ctx.residentId);
+    } else if (ctx.normalizedCallType === "Buddy") {
+      buddyByDate.set(ctx.normalizedDateKey, {
+        rosterId: ctx.residentId,
+        assignmentId: assignment.callId ?? ctx.assignmentId,
+      });
+    }
+  }
+
+  for (const [dateKey, buddyAssignment] of buddyByDate.entries()) {
+    const date = new Date(`${dateKey}T00:00:00`);
+    const dayOfWeek = date.getDay();
+    const buddyResident = residentByRosterId.get(buddyAssignment.rosterId) ?? null;
+    const primaryRosterId = primaryByDate.get(dateKey) ?? null;
+    const primaryResident = primaryRosterId ? residentByRosterId.get(primaryRosterId) ?? null : null;
+    const primaryPgy = primaryResident
+      ? getResidentStatusDetails(primaryResident.gradYear ?? null).pgyYear ?? null
+      : null;
+    const buddyState = buddyStateByDate.get(dateKey) ?? null;
+    const buddyRotation = (input.rotations ?? input.context?.rotations ?? []).find((rotation) => {
+      const rosterId =
+        normalizeString(rotation.rosterId) ??
+        normalizeString(rotation.residentId) ??
+        normalizeString(rotation.membershipId);
+      const startDate = normalizeDateKey(rotation.startDate);
+      const endDate = normalizeDateKey(rotation.endDate);
+      return (
+        rosterId === buddyAssignment.rosterId &&
+        (!startDate || startDate <= dateKey) &&
+        (!endDate || endDate >= dateKey)
+      );
+    });
+
+    if (dayOfWeek !== 5 && dayOfWeek !== 6) {
+      issues.push(
+        createValidationIssue({
+          code: "invalid_buddy_date",
+          ruleCode: "buddy_day_of_week",
+          severity: "error",
+          source: "rule",
+          message: `Buddy call on ${dateKey} must be Friday or Saturday.`,
+          slotId: serializeSlotId({ dateKey, callType: "Buddy" }),
+          residentId: buddyAssignment.rosterId,
+          rosterId: buddyAssignment.rosterId,
+          dateKey,
+          callType: "Buddy",
+          assignmentId: buddyAssignment.assignmentId,
+          metadata: null,
+        })
+      );
+    }
+
+    const buddyPgy = buddyResident
+      ? getResidentStatusDetails(buddyResident.gradYear ?? null).pgyYear ?? null
+      : null;
+    if (buddyPgy !== 1) {
+      issues.push(
+        createValidationIssue({
+          code: "invalid_buddy_pgy",
+          ruleCode: "buddy_requires_pgy1",
+          severity: "error",
+          source: "rule",
+          message: `Buddy slot on ${dateKey} must be assigned to a PGY-1 resident.`,
+          slotId: serializeSlotId({ dateKey, callType: "Buddy" }),
+          residentId: buddyAssignment.rosterId,
+          rosterId: buddyAssignment.rosterId,
+          dateKey,
+          callType: "Buddy",
+          assignmentId: buddyAssignment.assignmentId,
+          metadata: null,
+        })
+      );
+    }
+
+    const rotationLabel =
+      normalizeString(buddyRotation?.shortName) ??
+      normalizeString(buddyRotation?.rotationName) ??
+      null;
+    if (!isBuddyEligibleRotationName(rotationLabel)) {
+      issues.push(
+        createValidationIssue({
+          code: "invalid_buddy_rotation",
+          ruleCode: "buddy_requires_gen_ortho_pager",
+          severity: "error",
+          source: "rule",
+          message: `Buddy slot on ${dateKey} requires the Buddy resident to be on Gen Ortho/Pager.`,
+          slotId: serializeSlotId({ dateKey, callType: "Buddy" }),
+          residentId: buddyAssignment.rosterId,
+          rosterId: buddyAssignment.rosterId,
+          dateKey,
+          callType: "Buddy",
+          assignmentId: buddyAssignment.assignmentId,
+          metadata: { rotation: rotationLabel },
+        })
+      );
+    }
+
+    if (primaryPgy !== BUDDY_PRIMARY_PARTNER_PGY) {
+      issues.push(
+        createValidationIssue({
+          code: "invalid_buddy_primary_partner",
+          ruleCode: "buddy_requires_pgy4_primary",
+          severity: "error",
+          source: "rule",
+          message: `Buddy slot on ${dateKey} requires a PGY-${BUDDY_PRIMARY_PARTNER_PGY} Primary resident.`,
+          slotId: serializeSlotId({ dateKey, callType: "Buddy" }),
+          residentId: buddyAssignment.rosterId,
+          rosterId: buddyAssignment.rosterId,
+          dateKey,
+          callType: "Buddy",
+          assignmentId: buddyAssignment.assignmentId,
+          metadata: { primaryRosterId, primaryPgy },
+        })
+      );
+    }
+
+    if (backupByDate.has(dateKey)) {
+      issues.push(
+        createValidationIssue({
+          code: "buddy_day_backup_conflict",
+          ruleCode: "buddy_disables_backup",
+          severity: "error",
+          source: "rule",
+          message: `Backup should not be assigned on Buddy day ${dateKey}.`,
+          slotId: serializeSlotId({ dateKey, callType: "Backup" }),
+          residentId: backupByDate.get(dateKey) ?? null,
+          rosterId: backupByDate.get(dateKey) ?? null,
+          dateKey,
+          callType: "Backup",
+          assignmentId: null,
+          metadata: null,
+        })
+      );
+    }
+
+    if (!buddyState?.isRequired) {
+      issues.push(
+        createValidationIssue({
+          code: "buddy_not_required_for_date",
+          ruleCode: "buddy_requirement_mismatch",
+          severity: "warning",
+          source: "rule",
+          message: `Buddy slot on ${dateKey} is filled even though no PGY-1 Buddy requirement is active for that date.`,
+          slotId: serializeSlotId({ dateKey, callType: "Buddy" }),
+          residentId: buddyAssignment.rosterId,
+          rosterId: buddyAssignment.rosterId,
+          dateKey,
+          callType: "Buddy",
+          assignmentId: buddyAssignment.assignmentId,
+          metadata: null,
         })
       );
     }
@@ -1583,6 +1894,7 @@ export function validateCallMonthDraft(input: CallValidationInput) {
     ...validateIntegrity(normalizedInput),
     ...validateRequiredSlotRule(normalizedInput),
     ...validateConditionalRequiredSlots(normalizedInput),
+    ...validateBuddyAssignments(normalizedInput),
     ...validateSpacingRule(normalizedInput),
     ...validateMonthlyLimitRule(normalizedInput),
     ...validateWeekendRule(normalizedInput),

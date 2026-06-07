@@ -134,7 +134,8 @@ export function createDefaultOrthoRulePreset(
     })
   );
 
-  // Buddy: Fri/Sat only, conditional on PGY-4 in primary
+  // Buddy: Fri/Sat only. Visibility is determined by the PGY-1 Gen Ortho/Pager
+  // monthly Buddy requirement helper rather than by Primary PGY alone.
   drafts.push(
     makeSlotDraft("slot-buddy", {
       label: "Buddy",
@@ -146,11 +147,6 @@ export function createDefaultOrthoRulePreset(
       sortOrder: 2,
       requiredWhenVisible: false,
       daysOfWeek: [5, 6], // Fri, Sat
-      condition: {
-        type: "when_pgy_scheduled",
-        pgyYears: [4],
-        sourceSlotCallTypes: ["Primary"],
-      },
     })
   );
 

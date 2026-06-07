@@ -1875,7 +1875,7 @@ const DEFAULT_SLOT_CONFIGS: Array<Partial<ProgramCallSlotDefinition> & { label: 
   { label: "Buddy", shortLabel: "B°", callType: "Buddy", colorKey: "violet", requiredMode: "conditional", countsTowardWorkload: false, sortOrder: 2, requiredWhenVisible: false },
 ];
 
-const WEEKEND_BUDDY_SHORTCUT_NAME = "Weekend Buddy Option";
+const WEEKEND_BUDDY_SHORTCUT_NAME = "Buddy Call Rule";
 
 const WEEKEND_BUDDY_SHORTCUT_DEF: Partial<ProgramCallSlotDefinition> = {
   label: "Buddy",
@@ -1884,11 +1884,6 @@ const WEEKEND_BUDDY_SHORTCUT_DEF: Partial<ProgramCallSlotDefinition> = {
   colorKey: "violet",
   requiredMode: "conditional",
   daysOfWeek: [5, 6],
-  condition: {
-    type: "when_pgy_scheduled",
-    pgyYears: [4],
-    sourceSlotCallTypes: ["Primary"],
-  },
   countsTowardWorkload: false,
   sortOrder: 2,
   requiredWhenVisible: false,
@@ -1906,9 +1901,7 @@ function isWeekendBuddyShortcutRule(rule: RuleDraft) {
     slot.requiredMode === "conditional" &&
     slot.countsTowardWorkload === false &&
     slot.requiredWhenVisible === false &&
-    JSON.stringify([...(slot.daysOfWeek ?? [])].sort()) === JSON.stringify([5, 6]) &&
-    slot.condition?.type === "when_pgy_scheduled" &&
-    JSON.stringify([...(slot.condition?.pgyYears ?? [])].sort()) === JSON.stringify([4])
+    JSON.stringify([...(slot.daysOfWeek ?? [])].sort()) === JSON.stringify([5, 6])
   );
 }
 
@@ -2008,9 +2001,9 @@ function CallSlotsSection({
       <div className="mt-3 rounded-[1rem] border border-violet-200 bg-violet-50/70 p-3">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-slate-900">Enable PGY-4 Weekend Buddy Option</p>
+            <p className="text-sm font-semibold text-slate-900">Enable Buddy Call Rule</p>
             <p className="mt-1 text-xs text-slate-600">
-              When a PGY-4 resident is assigned Primary call on Friday or Saturday, an optional Buddy slot becomes available.
+              PGY-1 residents on Gen Ortho/Pager need 2 Buddy days per month on Friday or Saturday. Buddy days pair that PGY-1 with a PGY-4 Primary and do not require Backup.
             </p>
           </div>
 
