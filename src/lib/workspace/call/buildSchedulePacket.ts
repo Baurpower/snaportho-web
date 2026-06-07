@@ -1,6 +1,12 @@
 // src/lib/workspace/call/buildSchedulePacket.ts
 
 import { getResidentStatusDetails, resolvePgyFromSources } from "@/lib/workspace/pgy";
+import {
+  DEFAULT_SLOT_DEFINITIONS,
+  extractSlotDefinitions,
+  getSlotStatusForDay,
+} from "@/lib/workspace/call/rule-definitions";
+import { getBuddyDateStatesForMonth } from "@/lib/workspace/call/buddy-requirements";
 
 type ScheduleSlotMode = "Primary" | "Both";
 type Slot = "Primary" | "Backup" | "Buddy";
@@ -48,6 +54,22 @@ type ResidentLike = {
   gradYear?: number | null;
   trainingLevel?: string | null;
   pgyYear?: number | null;
+  rotationAssignments?: Array<{
+    rotationId?: string | null;
+    rotation_id?: string | null;
+    startDate?: string | null;
+    start_date?: string | null;
+    endDate?: string | null;
+    end_date?: string | null;
+    rotationName?: string | null;
+    rotation_name?: string | null;
+    rotationShortName?: string | null;
+    rotation_short_name?: string | null;
+    teamLabel?: string | null;
+    team_label?: string | null;
+    siteLabel?: string | null;
+    site_label?: string | null;
+  }>;
 };
 
 // Returns the canonical roster ID for a resident. Prefers rosterId/residentId,
@@ -479,11 +501,15 @@ function getCandidatesForSlot(params: {
 
 function getRequiredSlots({
   monthDays,
+  residents,
   draftAssignments,
+  rules,
   scheduleSlotMode,
 }: {
   monthDays: CalendarDayLike[];
+  residents: ResidentLike[];
   draftAssignments: DraftAssignments;
+  rules: RuleLike[];
   scheduleSlotMode: ScheduleSlotMode;
 }) {
   const slots: Array<{
@@ -493,30 +519,84 @@ function getRequiredSlots({
     slot: Slot;
     currentRosterId: string | null; // program_roster.id of whoever is currently assigned
   }> = [];
+  const slotDefinitions = extractSlotDefinitions(rules as never[]);
+  const effectiveSlotDefinitions =
+    slotDefinitions.length > 0
+      ? slotDefinitions
+      : normalizedSlotModeToDefaultDefs(scheduleSlotMode);
+  const firstDay = monthDays[0];
+  const buddyDateStateByDate = new Map(
+    (firstDay
+      ? getBuddyDateStatesForMonth({
+          year: new Date(`${firstDay.key}T00:00:00`).getFullYear(),
+          month: new Date(`${firstDay.key}T00:00:00`).getMonth() + 1,
+          residents: residents as never[],
+          rotations: residents.flatMap((resident) =>
+            Array.isArray((resident).rotationAssignments)
+              ? resident.rotationAssignments.map((assignment) => ({
+                  residentId: resident.residentId ?? resident.rosterId ?? resident.membershipId ?? null,
+                  rosterId: resident.rosterId ?? resident.residentId ?? resident.membershipId ?? null,
+                  ...assignment,
+                }))
+              : []
+          ),
+          rules: rules as never[],
+          slotDefinitions: effectiveSlotDefinitions,
+          assignments: draftAssignments as never,
+        })
+      : []
+    ).map((state) => [state.dateKey, state])
+  );
 
   for (const day of monthDays) {
     const assignment = draftAssignments[day.key] ?? {};
+    const primaryResident =
+      assignment.primaryRosterId
+        ? residents.find(
+            (resident) =>
+              (resident.rosterId ?? resident.residentId ?? resident.membershipId) ===
+              assignment.primaryRosterId
+          ) ?? null
+        : null;
+    const primaryPgyYear = primaryResident ? getResidentPgy(primaryResident, day.key) : null;
+    const buddyDateState = buddyDateStateByDate.get(day.key) ?? null;
+    const dayOfWeek = new Date(`${day.key}T00:00:00`).getDay();
 
-    slots.push({
-      dateKey: day.key,
-      dayName: day.dayName ?? "",
-      isWeekend: Boolean(day.isWeekend),
-      slot: "Primary",
-      currentRosterId: assignment.primaryRosterId ?? null,
-    });
+    for (const def of effectiveSlotDefinitions) {
+      const currentRosterId =
+        def.callType === "Primary"
+          ? assignment.primaryRosterId ?? null
+          : def.callType === "Backup"
+          ? assignment.backupRosterId ?? null
+          : def.callType === "Buddy"
+          ? assignment.buddyRosterId ?? null
+          : null;
+      const { isRequired } = getSlotStatusForDay({
+        def,
+        dayOfWeek,
+        primaryPgyYear,
+        hasAssignment: Boolean(currentRosterId),
+        buddyDateState: def.callType === "Buddy" ? buddyDateState : undefined,
+      });
 
-    if (scheduleSlotMode === "Both") {
+      if (!isRequired) continue;
+
       slots.push({
         dateKey: day.key,
         dayName: day.dayName ?? "",
         isWeekend: Boolean(day.isWeekend),
-        slot: "Backup",
-        currentRosterId: assignment.backupRosterId ?? null,
+        slot: def.callType as Slot,
+        currentRosterId,
       });
     }
   }
 
   return slots;
+}
+
+function normalizedSlotModeToDefaultDefs(scheduleSlotMode: ScheduleSlotMode) {
+  if (scheduleSlotMode === "Both") return DEFAULT_SLOT_DEFINITIONS;
+  return DEFAULT_SLOT_DEFINITIONS.filter((def) => def.callType === "Primary");
 }
 
 export function buildSchedulePacket(body: BuildSchedulePacketBody) {
@@ -552,7 +632,9 @@ export function buildSchedulePacket(body: BuildSchedulePacketBody) {
 
   const requiredSlots = getRequiredSlots({
     monthDays,
+    residents,
     draftAssignments: safeDraftAssignments,
+    rules: safeRules,
     scheduleSlotMode: normalizedSlotMode,
   });
 

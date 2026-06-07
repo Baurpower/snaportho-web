@@ -34,6 +34,7 @@ import {
   getRotationAssignmentForDate,
   getRotationDisplayLabel,
 } from "@/lib/workspace/call/resident-display";
+import { getResidentStatusDetails } from "@/lib/workspace/pgy";
 
 type Slot = "Primary" | "Backup" | "Buddy";
 
@@ -78,6 +79,43 @@ type GenerationDebugPayload = {
   rejectedAssignmentsByType?: Record<string, number>;
   rejectionReasonsByType?: Record<string, Record<string, number>>;
   daySlotOutcomes?: Record<string, Partial<Record<Slot, GenerationDaySlotDebug>>>;
+  phaseTimings?: Array<{
+    phase: string;
+    durationMs: number;
+    details?: string;
+  }>;
+  buddyPass?: {
+    residentsDetected?: Array<{
+      residentId: string;
+      residentName: string;
+      requiredBuddyDays: number;
+      maxBuddyDays: number;
+      assignedBuddyDays: number;
+      remainingNeeded: number;
+      remainingCapacity: number;
+    }>;
+    visibleBuddySlotCount?: number;
+    attemptedAssignments?: number;
+    skippedAssignments?: Array<{
+      residentId: string;
+      residentName: string;
+      phase?: "required" | "optional";
+      dateKey: string | null;
+      reason: string;
+    }>;
+    finalBuddyCounts?: Array<{
+      residentId: string;
+      residentName: string;
+      assignedBuddyDays: number;
+      requiredBuddyDays: number;
+      maxBuddyDays: number;
+    }>;
+    loopExitReasons?: Array<{
+      phase: "required" | "optional";
+      iterations: number;
+      reason: string;
+    }>;
+  };
 };
 
 type GeneratedAssignmentsInput =
@@ -132,6 +170,70 @@ type DebugReportDay = {
   finalStatus: Record<Slot, "filled" | "open" | "not-required">;
 };
 
+type DebugReportBuddyPass = {
+  pgy1ResidentsDetected: Array<{
+    residentId: string;
+    residentName: string;
+    requiredBuddyDays: number;
+    maxBuddyDays: number;
+    assignedBuddyDays: number;
+    remainingNeeded: number;
+    remainingCapacity: number;
+    reason: string;
+  }>;
+  availableBuddySlotCount: number;
+  attemptedAssignments: number;
+  skippedAssignments: Array<{
+    residentId: string;
+    residentName: string;
+    phase: "required" | "optional";
+    dateKey: string | null;
+    reason: string;
+  }>;
+  finalBuddyCounts: Array<{
+    residentId: string;
+    residentName: string;
+    assignedBuddyDays: number;
+    requiredBuddyDays: number;
+    maxBuddyDays: number;
+  }>;
+  loopExitReasons: Array<{
+    phase: "required" | "optional";
+    iterations: number;
+    reason: string;
+  }>;
+};
+
+type BuddySlotFillAuditRow = {
+  date: string;
+  slotId: string | null;
+  slotKey: "Buddy";
+  visibility: "hidden" | "optional" | "required";
+  generatorAttemptedAssignment: boolean;
+  generatorAssignmentSuccessful: boolean;
+  eligiblePgy1Candidates: string[];
+  candidateAudit: Array<{
+    residentId: string;
+    residentName: string;
+    gradYear: number | null;
+    computedPgyOnDate: number | null;
+    statusOnDate: string;
+    activeOnDate: boolean;
+    rotationOnDate: string | null;
+    eligibleForBuddy: boolean;
+    exclusionReason: string | null;
+  }>;
+  rejectedPgy1Candidates: Array<{
+    resident: string;
+    reasons: string[];
+  }>;
+  selectedResident: string | null;
+  finalPersistedBuddyRosterId: string | null;
+  dynamicSlotAssignmentValue: string | null;
+  reviewModalWillRender: string;
+  reason: string;
+};
+
 export type CallGenerationDebugReport = {
   month: string;
   programId: string | null;
@@ -154,6 +256,16 @@ export type CallGenerationDebugReport = {
   residentsByPgy: Record<string, DebugReportResident[]>;
   rotationsByResident: Record<string, string[]>;
   buddyRequirements: BuddyRequirement[];
+  buddyPass: DebugReportBuddyPass;
+  phaseTimings: Array<{
+    phase: string;
+    durationMs: number;
+    details?: string;
+  }>;
+  buddySlotFillAudit: {
+    generatorPass: BuddySlotFillAuditRow[];
+    finalDraftPass: BuddySlotFillAuditRow[];
+  };
   days: DebugReportDay[];
   summary: {
     requiredPrimary: number;
@@ -267,6 +379,37 @@ function pushReason(target: string[], value: string | null | undefined) {
 function formatResidentLabel(resident: ResidentOption, effectiveDate: string) {
   const pgy = getResidentPgyYear(resident, effectiveDate);
   return `${resident.displayName}${pgy ? ` (PGY-${pgy})` : ""}`;
+}
+
+function buildBuddyCandidateAudit(
+  residents: ResidentOption[],
+  dateKey: string,
+  buddyPool: { eligible: string[]; blocked: DebugReportBlockedResident[] }
+) {
+  const blockedById = new Map(
+    buddyPool.blocked.map((resident) => [resident.residentId, resident.reasons])
+  );
+
+  return residents.map((resident) => {
+    const status = getResidentStatusDetails(resident.gradYear ?? null, dateKey);
+    const rotationOnDate = getRotationLabelForDate(resident, dateKey);
+    const eligibleForBuddy = buddyPool.eligible.includes(
+      formatResidentLabel(resident, dateKey)
+    );
+    const blockedReasons = blockedById.get(resident.residentId) ?? [];
+
+    return {
+      residentId: resident.residentId,
+      residentName: resident.displayName,
+      gradYear: resident.gradYear ?? null,
+      computedPgyOnDate: getResidentPgyYear(resident, dateKey),
+      statusOnDate: status.statusLabel,
+      activeOnDate: status.isActiveResident,
+      rotationOnDate,
+      eligibleForBuddy,
+      exclusionReason: blockedReasons[0] ?? null,
+    };
+  });
 }
 
 function buildEligiblePoolForSlot(params: {
@@ -424,7 +567,7 @@ function buildEligiblePoolForSlot(params: {
 
     if (reasons.length > 0) {
       blocked.push({
-        resident: resident.displayName,
+        resident: formatResidentLabel(resident, dateKey),
         residentId: resident.residentId,
         reasons,
       });
@@ -470,7 +613,7 @@ function getBackupReason(params: {
 
   const primaryPgy = getResidentPgyYear(primaryResident, dateKey);
   const buddyActive = Boolean(
-    buddyState?.isRequired || buddyState?.selectedBuddyRosterId
+    buddyState?.isVisible || buddyState?.selectedBuddyRosterId
   );
   if (buddyActive) {
     return "Backup not required because Buddy day is active";
@@ -529,8 +672,20 @@ function getBuddyReason(params: {
     return "Buddy not required because this is not Friday or Saturday.";
   }
 
+  if (
+    generationSlotDebug?.considered &&
+    !generationSlotDebug.successful &&
+    generationSlotDebug.reason
+  ) {
+    return generationSlotDebug.reason;
+  }
+
   if (buddyState.eligibleRequirementRosterIds.length === 0) {
-    return "Buddy not created because no PGY-1 on Gen Ortho/Pager still needs Buddy days.";
+    if (buddyState.visibleEligibleRosterIds.length > 0) {
+      return "Buddy slot visible for optional PGY-1 coverage, but no resident still needs required Buddy days.";
+    }
+
+    return "Buddy not created because no PGY-1 on Gen Ortho/Pager can take this Buddy date.";
   }
 
   if (buddyState.selectedBuddyRosterId) {
@@ -666,6 +821,51 @@ export function debugCallGenerationMonth(params: {
   const buddyRequirementByRosterId = new Map(
     buddyRequirements.map((requirement) => [requirement.pgy1RosterId, requirement])
   );
+  const buddyPass: DebugReportBuddyPass = {
+    pgy1ResidentsDetected: buddyRequirements.map((requirement) => ({
+      residentId: requirement.pgy1RosterId,
+      residentName: requirement.residentName,
+      requiredBuddyDays: requirement.requiredBuddyDays,
+      maxBuddyDays: requirement.maxBuddyDays,
+      assignedBuddyDays: requirement.assignedDates.length,
+      remainingNeeded: requirement.remainingNeeded,
+      remainingCapacity: requirement.remainingCapacity,
+      reason: requirement.reason,
+    })),
+    availableBuddySlotCount:
+      generationDebug?.buddyPass?.visibleBuddySlotCount ??
+      new Set(
+        buddyRequirements.flatMap((requirement) => requirement.eligibleDates)
+      ).size,
+    attemptedAssignments: generationDebug?.buddyPass?.attemptedAssignments ?? 0,
+    skippedAssignments:
+      generationDebug?.buddyPass?.skippedAssignments?.map((entry) => ({
+        residentId: entry.residentId,
+        residentName: entry.residentName,
+        phase: entry.phase ?? "optional",
+        dateKey: entry.dateKey,
+        reason: entry.reason,
+      })) ?? [],
+    finalBuddyCounts:
+      generationDebug?.buddyPass?.finalBuddyCounts?.map((entry) => ({
+        residentId: entry.residentId,
+        residentName: entry.residentName,
+        assignedBuddyDays: entry.assignedBuddyDays,
+        requiredBuddyDays: entry.requiredBuddyDays,
+        maxBuddyDays: entry.maxBuddyDays,
+      })) ??
+      buddyRequirements.map((requirement) => ({
+        residentId: requirement.pgy1RosterId,
+        residentName: requirement.residentName,
+        assignedBuddyDays: requirement.assignedDates.length,
+        requiredBuddyDays: requirement.requiredBuddyDays,
+        maxBuddyDays: requirement.maxBuddyDays,
+      })),
+    loopExitReasons: generationDebug?.buddyPass?.loopExitReasons ?? [],
+  };
+  const buddySlotDefinitions = slotDefinitions.filter(
+    (definition) => definition.callType === "Buddy"
+  );
   const buddyDateStateByDate = new Map(
     getBuddyDateStatesForMonth({
       year,
@@ -723,7 +923,7 @@ export function debugCallGenerationMonth(params: {
     );
 
     const backupRequired =
-      !buddyDateState?.isRequired &&
+      !buddyDateState?.isVisible &&
       !assignment?.buddyRosterId &&
       backupDefs.some((definition) =>
         getSlotStatusForDay({
@@ -878,6 +1078,65 @@ export function debugCallGenerationMonth(params: {
     };
   });
 
+  const buddySlotFillAuditRows: BuddySlotFillAuditRow[] = monthDates.map(
+    ({ key: dateKey }) => {
+      const assignment = assignments[dateKey];
+      const buddyDateState = buddyDateStateByDate.get(dateKey) ?? null;
+      const buddyDefinition = buddySlotDefinitions[0] ?? null;
+      const generationDayDebug = generationDebug?.daySlotOutcomes?.[dateKey] ?? null;
+      const buddySlotDebug = generationDayDebug?.Buddy ?? null;
+      const buddyPool = buildEligiblePoolForSlot({
+        slot: "Buddy",
+        dateKey,
+        dayOfWeek: new Date(`${dateKey}T00:00:00`).getDay(),
+        assignments,
+        residents,
+        rules: effectiveRules,
+      });
+      const visible = Boolean(buddyDateState?.isVisible || assignment?.buddyRosterId);
+
+      return {
+        date: dateKey,
+        slotId: buddyDefinition?.id ?? null,
+        slotKey: "Buddy",
+        visibility: !visible
+          ? "hidden"
+          : buddyDateState?.isRequired
+          ? "required"
+          : "optional",
+        generatorAttemptedAssignment: buddySlotDebug?.attempted ?? false,
+        generatorAssignmentSuccessful: buddySlotDebug?.successful ?? false,
+        eligiblePgy1Candidates: buddyPool.eligible,
+        candidateAudit: buildBuddyCandidateAudit(residents, dateKey, buddyPool),
+        rejectedPgy1Candidates: buddyPool.blocked.map((resident) => ({
+          resident: resident.resident,
+          reasons: resident.reasons,
+        })),
+        selectedResident: assignment?.buddyRosterId
+          ? residentLookup.get(assignment.buddyRosterId)?.displayName ??
+            assignment.buddyRosterId
+          : null,
+        finalPersistedBuddyRosterId: assignment?.buddyRosterId ?? null,
+        dynamicSlotAssignmentValue: null,
+        reviewModalWillRender: visible
+          ? `Bud: ${
+              assignment?.buddyRosterId
+                ? residentLookup.get(assignment.buddyRosterId)?.displayName ??
+                  assignment.buddyRosterId
+                : "Open"
+            }`
+          : "Hidden",
+        reason:
+          buddySlotDebug?.reason ??
+          buddyDateState?.reason ??
+          "Buddy slot hidden.",
+      };
+    }
+  );
+  const visibleBuddySlotFillAudit = buddySlotFillAuditRows.filter(
+    (row) => row.visibility !== "hidden" || row.finalPersistedBuddyRosterId !== null
+  );
+
   const summary = {
     requiredPrimary,
     filledPrimary,
@@ -904,6 +1163,12 @@ export function debugCallGenerationMonth(params: {
     residentsByPgy,
     rotationsByResident,
     buddyRequirements,
+    buddyPass,
+    phaseTimings: generationDebug?.phaseTimings ?? [],
+    buddySlotFillAudit: {
+      generatorPass: visibleBuddySlotFillAudit,
+      finalDraftPass: visibleBuddySlotFillAudit,
+    },
     days,
     summary,
     generatorDebug: generationDebug,
@@ -939,6 +1204,17 @@ export function debugCallGenerationMonth(params: {
       }))
     );
     console.table(
+      buddyPass.pgy1ResidentsDetected.map((resident) => ({
+        resident: resident.residentName,
+        requiredBuddyDays: resident.requiredBuddyDays,
+        maxBuddyDays: resident.maxBuddyDays,
+        assignedBuddyDays: resident.assignedBuddyDays,
+        remainingNeeded: resident.remainingNeeded,
+        remainingCapacity: resident.remainingCapacity,
+        reason: resident.reason,
+      }))
+    );
+    console.table(
       days
         .filter(
           (day) =>
@@ -951,6 +1227,68 @@ export function debugCallGenerationMonth(params: {
           buddy: day.finalStatus.Buddy,
           buddyReason: day.buddyReason,
         }))
+    );
+    console.table(
+      days
+        .flatMap((day) =>
+          day.blockedResidentsBySlot.Backup
+            .filter((resident) => resident.resident.includes("(PGY-5)"))
+            .map((resident) => ({
+              date: day.date,
+              resident: resident.resident,
+              reasons: resident.reasons.join(" | "),
+            }))
+        )
+    );
+    console.table(
+      buddyPass.skippedAssignments.map((entry) => ({
+        resident: entry.residentName,
+        phase: entry.phase,
+        date: entry.dateKey ?? "(none)",
+        reason: entry.reason,
+      }))
+    );
+    console.table(
+      (generationDebug?.phaseTimings ?? []).map((entry) => ({
+        phase: entry.phase,
+        durationMs: entry.durationMs,
+        details: entry.details ?? "",
+      }))
+    );
+    console.table(
+      buddyPass.loopExitReasons.map((entry) => ({
+        phase: entry.phase,
+        iterations: entry.iterations,
+        reason: entry.reason,
+      }))
+    );
+    console.table(
+      visibleBuddySlotFillAudit.map((entry) => ({
+        date: entry.date,
+        visibility: entry.visibility,
+        attempted: entry.generatorAttemptedAssignment,
+        successful: entry.generatorAssignmentSuccessful,
+        selectedResident: entry.selectedResident ?? "(open)",
+        persistedBuddyRosterId: entry.finalPersistedBuddyRosterId ?? "(null)",
+        dynamicSlotAssignmentValue: entry.dynamicSlotAssignmentValue ?? "(null)",
+        reviewModalWillRender: entry.reviewModalWillRender,
+        reason: entry.reason,
+      }))
+    );
+    console.table(
+      visibleBuddySlotFillAudit.flatMap((entry) =>
+        entry.candidateAudit.map((candidate) => ({
+          date: entry.date,
+          resident: candidate.residentName,
+          gradYear: candidate.gradYear,
+          computedPgyOnDate: candidate.computedPgyOnDate,
+          statusOnDate: candidate.statusOnDate,
+          activeOnDate: candidate.activeOnDate,
+          rotationOnDate: candidate.rotationOnDate ?? "No rotation listed",
+          eligibleForBuddy: candidate.eligibleForBuddy,
+          exclusionReason: candidate.exclusionReason ?? "",
+        }))
+      )
     );
   }
 

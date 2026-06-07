@@ -240,7 +240,7 @@ function isBackupVisibleForDay(
   buddyDateState: BuddyDateState | null
 ): boolean {
   if (backupDefs.length === 0) return false;
-  if (buddyDateState?.isRequired || assignment?.buddyRosterId) return false;
+  if (buddyDateState?.isVisible || assignment?.buddyRosterId) return false;
   const primaryResident = assignment?.primaryRosterId
     ? residentLookup.get(assignment.primaryRosterId)
     : null;
@@ -266,7 +266,7 @@ function isBackupRequiredForDay(
   buddyDateState: BuddyDateState | null
 ): boolean {
   if (backupDefs.length === 0) return false;
-  if (buddyDateState?.isRequired || assignment?.buddyRosterId) return false;
+  if (buddyDateState?.isVisible || assignment?.buddyRosterId) return false;
   const primaryResident = assignment?.primaryRosterId
     ? residentLookup.get(assignment.primaryRosterId)
     : null;
@@ -792,7 +792,7 @@ React.useEffect(() => {
         }
       } else if (globalBackupCounted) {
         if (
-          !buddyDateStateByDate.get(day.key)?.isRequired &&
+          !buddyDateStateByDate.get(day.key)?.isVisible &&
           !assignment?.buddyRosterId
         ) {
           expected += 1;
@@ -801,7 +801,7 @@ React.useEffect(() => {
       }
 
       const buddyDateState = buddyDateStateByDate.get(day.key) ?? null;
-      if (buddyDateState?.isRequired || assignment?.buddyRosterId) {
+      if (buddyDateState?.isVisible || assignment?.buddyRosterId) {
         expected += 1;
         if (assignment?.buddyRosterId) assigned += 1;
       }
@@ -1066,7 +1066,7 @@ React.useEffect(() => {
                             buddyDateState
                           )
                         : scheduleSlotMode === "Both" &&
-                          !buddyDateState?.isRequired &&
+                          !buddyDateState?.isVisible &&
                           !assignment?.buddyRosterId;
                       const backupRequiredThisDay = hasConditionalBackup
                         ? isBackupRequiredForDay(
@@ -1077,10 +1077,10 @@ React.useEffect(() => {
                             buddyDateState
                           )
                         : scheduleSlotMode === "Both" &&
-                          !buddyDateState?.isRequired &&
+                          !buddyDateState?.isVisible &&
                           !assignment?.buddyRosterId;
                       const showBuddyRow = Boolean(
-                        buddyDateState?.isRequired || assignment?.buddyRosterId
+                        buddyDateState?.isVisible || assignment?.buddyRosterId
                       );
 
                       const isIncomplete =

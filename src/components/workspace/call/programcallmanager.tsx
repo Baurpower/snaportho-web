@@ -1331,7 +1331,7 @@ const rotationAssignmentsByRosterId =
         const dayOfWeek = day.date.getDay();
         const hasBackupAssignment = Boolean(assignment.backupRosterId);
         for (const def of backupSlotDefs) {
-          if (buddyState?.isRequired || assignment.buddyRosterId) continue;
+          if (buddyState?.isVisible || assignment.buddyRosterId) continue;
           const { isVisible, isRequired } = getSlotStatusForDay({
             def,
             dayOfWeek,
@@ -1343,7 +1343,7 @@ const rotationAssignmentsByRosterId =
         }
       } else if (
         scheduleSlotMode === "Both" &&
-        !buddyState?.isRequired &&
+        !buddyState?.isVisible &&
         !assignment.buddyRosterId
       ) {
         backupVisible = true;
@@ -1364,7 +1364,7 @@ const rotationAssignmentsByRosterId =
         });
       }
 
-      if (buddyState?.isRequired || assignment.buddyRosterId) {
+      if (buddyState?.isVisible || assignment.buddyRosterId) {
         expectedSlots += 1;
         if (assignment.buddyRosterId) assignedSlots += 1;
         if (buddyState?.isRequired && !assignment.buddyRosterId) {

@@ -52,7 +52,8 @@ function getAssignedDatesForResident(
     .filter(
       ([, assignment]) =>
         assignment?.primaryRosterId === residentId ||
-        assignment?.backupRosterId === residentId
+        assignment?.backupRosterId === residentId ||
+        assignment?.buddyRosterId === residentId
     )
     .map(([dateKey]) => dateKey)
     .sort();
@@ -76,6 +77,15 @@ function countBackupAssignmentsForResident(
   ).length;
 }
 
+function countBuddyAssignmentsForResident(
+  residentId: string,
+  assignments: Record<string, DraftDayAssignment>
+): number {
+  return Object.values(assignments).filter(
+    (a) => a?.buddyRosterId === residentId
+  ).length;
+}
+
 function getAvailabilityDay(
   availabilityByResident: ResidentAvailabilityMap,
   residentId: string,
@@ -89,15 +99,22 @@ function getAvailabilityBlocks(
 ) {
   if (!availability) return [] as RuleEvaluationBlock[];
 
-  if (Array.isArray(availability.blocks) && availability.blocks.length > 0) {
-    return availability.blocks;
+  const approvedTimeOff = availability.timeOffConflicts.filter(
+    (conflict) => conflict.approvalStatus === "approved"
+  );
+
+  if (approvedTimeOff.length === 0) {
+    return [] as RuleEvaluationBlock[];
   }
 
-  if (Array.isArray(availability.ruleBlocks)) {
-    return availability.ruleBlocks.filter((block) => block.isHardRule);
-  }
-
-  return [] as RuleEvaluationBlock[];
+  return approvedTimeOff.map((conflict) => ({
+    ruleType: "time_off",
+    ruleName: "Approved time off",
+    message: conflict.title
+      ? `Approved time off: ${conflict.title}`
+      : "Approved time off",
+    isHardRule: true,
+  }));
 }
 
 function getAvailabilityWarnings(
@@ -105,15 +122,22 @@ function getAvailabilityWarnings(
 ) {
   if (!availability) return [] as RuleEvaluationBlock[];
 
-  if (Array.isArray(availability.warnings) && availability.warnings.length > 0) {
-    return availability.warnings;
+  const requestedTimeOff = availability.timeOffConflicts.filter(
+    (conflict) => conflict.approvalStatus === "requested"
+  );
+
+  if (requestedTimeOff.length === 0) {
+    return [] as RuleEvaluationBlock[];
   }
 
-  if (Array.isArray(availability.ruleBlocks)) {
-    return availability.ruleBlocks.filter((block) => !block.isHardRule);
-  }
-
-  return [] as RuleEvaluationBlock[];
+  return requestedTimeOff.map((conflict) => ({
+    ruleType: "time_off",
+    ruleName: "Requested time off",
+    message: conflict.title
+      ? `Requested time off: ${conflict.title}`
+      : "Requested time off",
+    isHardRule: false,
+  }));
 }
 
 function pushFlag(flags: AssignmentFlag[], next: AssignmentFlag) {
@@ -193,8 +217,8 @@ export function evaluateResidentForSlot(
       pushBlock(warnings, item);
     }
 
-    if (availability.isBlocked) blocked = true;
-    if (availability.isWarning) warning = true;
+    if (getAvailabilityBlocks(availability).length > 0) blocked = true;
+    if (getAvailabilityWarnings(availability).length > 0) warning = true;
   }
 
   const alreadyAssignedOnDate = assignedDates.includes(dateKey);
@@ -509,7 +533,7 @@ export function evaluateResidentForSlot(
         ? countPrimaryAssignmentsForResident(residentId, assignments)
         : slot === "Backup"
         ? countBackupAssignmentsForResident(residentId, assignments)
-        : 0;
+        : countBuddyAssignmentsForResident(residentId, assignments);
     const projectedSlotCount = alreadyAssignedOnDate ? currentSlotCount : currentSlotCount + 1;
 
     for (const violation of evaluateMonthlyLoadTargetForResident({

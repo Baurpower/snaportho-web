@@ -42,7 +42,7 @@ const buddySlotDefinition: ProgramCallSlotDefinition = {
   countsTowardWorkload: false,
   sortOrder: 2,
   daysOfWeek: [5, 6],
-  condition: null,
+  condition: undefined,
 };
 
 const backupSlotDefinition: ProgramCallSlotDefinition = {
@@ -78,6 +78,18 @@ const rules: ProgramRule[] = [
       slotDaysOfWeek: [5, 6],
       slotCountsTowardWorkload: false,
       slotSortOrder: 2,
+    },
+  } as ProgramRule,
+  {
+    id: "buddy-max-rule",
+    name: "PGY-1 Buddy max",
+    rule_type: "monthly_load_target_by_pgy",
+    is_enabled: true,
+    is_hard_rule: true,
+    config: {
+      targetPgyYears: [1],
+      targetCallType: "Buddy",
+      targetHardMaxCalls: 3,
     },
   } as ProgramRule,
 ];
@@ -135,6 +147,11 @@ assert.equal(
   2,
   "PGY-1 on Gen Ortho/Pager requires two Buddy days"
 );
+assert.equal(
+  buddyRequirements[0]?.maxBuddyDays,
+  3,
+  "PGY-1 Buddy max follows the configured monthly load cap"
+);
 assert.ok(
   buddyRequirements[0]?.eligibleDates.every((dateKey) => {
     const day = new Date(`${dateKey}T00:00:00`).getDay();
@@ -157,6 +174,28 @@ assert.equal(
   satisfiedStates.filter((state) => state.isRequired).length,
   0,
   "No additional Buddy slots are required after two Buddy assignments"
+);
+assert.equal(
+  satisfiedStates.some(
+    (state) => state.dateKey === "2026-07-17" && state.isVisible && !state.isRequired
+  ),
+  true,
+  "Buddy can remain visible as an optional slot after the required minimum is met"
+);
+
+const satisfiedRequirements = getBuddyRequirementsForMonth({
+  year: 2026,
+  month: 7,
+  residents,
+  rotations: [],
+  rules,
+  slotDefinitions: [buddySlotDefinition],
+  assignments: baseAssignments,
+});
+assert.equal(
+  satisfiedRequirements[0]?.remainingCapacity,
+  1,
+  "Remaining Buddy capacity tracks optional Buddy slots beyond the required minimum"
 );
 
 const openStates = getBuddyDateStatesForMonth({

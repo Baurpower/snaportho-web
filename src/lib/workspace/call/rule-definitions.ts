@@ -1120,7 +1120,7 @@ export function getVisibleCallSlotsForDay({
     }
 
     if (def.callType === "Buddy" && buddyDateState) {
-      if (buddyDateState.isRequired || buddyDateState.selectedBuddyRosterId) {
+      if (buddyDateState.isVisible || buddyDateState.selectedBuddyRosterId) {
         result.push(def);
       }
       continue;
@@ -1186,7 +1186,7 @@ export function getSlotStatusForDay({
     isVisible = true;
     reason = "has_assignment";
   } else if (def.callType === "Buddy" && buddyDateState) {
-    isVisible = buddyDateState.isRequired;
+    isVisible = buddyDateState.isVisible;
     reason = buddyDateState.reason;
   } else if (def.requiredMode === "always" || def.requiredMode === "optional") {
     if (def.daysOfWeek && def.daysOfWeek.length > 0 && dayOfWeek !== undefined) {
@@ -1258,15 +1258,19 @@ export function ruleToSlotDefinition(rule: {
   config: RuleConfig;
 }): ProgramCallSlotDefinition {
   const c = rule.config;
+  const callType = c.slotCallType ?? "Primary";
+  const isBuddySlot = callType === "Buddy";
   return {
     id: rule.id,
     label: c.slotLabel ?? rule.name ?? "Slot",
     shortLabel: c.slotShortLabel ?? "—",
-    callType: c.slotCallType ?? "Primary",
+    callType,
     colorKey: c.slotColorKey ?? "amber",
     requiredMode: c.slotRequiredMode ?? "always",
-    daysOfWeek: c.slotDaysOfWeek,
-    condition: c.slotCondition,
+    daysOfWeek: isBuddySlot ? (c.slotDaysOfWeek ?? [5, 6]) : c.slotDaysOfWeek,
+    // Buddy visibility is derived from the canonical buddy requirements engine,
+    // not from any saved slotCondition that may still reflect older logic.
+    condition: isBuddySlot ? undefined : c.slotCondition,
     countsTowardWorkload: c.slotCountsTowardWorkload ?? true,
     maxPerMonth: c.slotMaxPerMonth ?? null,
     sortOrder: c.slotSortOrder ?? 0,

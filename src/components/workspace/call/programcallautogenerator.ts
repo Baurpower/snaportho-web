@@ -139,6 +139,43 @@ type GenerationDebug = {
   rejectedAssignmentsByType: Record<string, number>;
   rejectionReasonsByType: Record<string, Record<string, number>>;
   daySlotOutcomes: Record<string, Partial<Record<Slot, GenerationDaySlotDebug>>>;
+  phaseTimings: Array<{
+    phase: string;
+    durationMs: number;
+    details?: string;
+  }>;
+  buddyPass: {
+    residentsDetected: Array<{
+      residentId: string;
+      residentName: string;
+      requiredBuddyDays: number;
+      maxBuddyDays: number;
+      assignedBuddyDays: number;
+      remainingNeeded: number;
+      remainingCapacity: number;
+    }>;
+    visibleBuddySlotCount: number;
+    attemptedAssignments: number;
+    skippedAssignments: Array<{
+      residentId: string;
+      residentName: string;
+      phase: "required" | "optional";
+      dateKey: string | null;
+      reason: string;
+    }>;
+    finalBuddyCounts: Array<{
+      residentId: string;
+      residentName: string;
+      assignedBuddyDays: number;
+      requiredBuddyDays: number;
+      maxBuddyDays: number;
+    }>;
+    loopExitReasons: Array<{
+      phase: "required" | "optional";
+      iterations: number;
+      reason: string;
+    }>;
+  };
 };
 
 type ResidentWithRotation = ResidentOption & {
@@ -165,6 +202,15 @@ function createGenerationDebug(): GenerationDebug {
     rejectedAssignmentsByType: {},
     rejectionReasonsByType: {},
     daySlotOutcomes: {},
+    phaseTimings: [],
+    buddyPass: {
+      residentsDetected: [],
+      visibleBuddySlotCount: 0,
+      attemptedAssignments: 0,
+      skippedAssignments: [],
+      finalBuddyCounts: [],
+      loopExitReasons: [],
+    },
   };
 }
 
@@ -207,6 +253,19 @@ function recordDaySlotDebug(
     ...details,
   };
   debug.daySlotOutcomes[dateKey] = currentDay;
+}
+
+function recordPhaseTiming(
+  debug: GenerationDebug,
+  phase: string,
+  startedAt: number,
+  details?: string
+) {
+  debug.phaseTimings.push({
+    phase,
+    durationMs: Date.now() - startedAt,
+    details,
+  });
 }
 
 function getResidentRotationId(resident: ResidentOption, dateKey: string) {
@@ -267,6 +326,7 @@ const PRIMARY_WEIGHT = 1;
 const BACKUP_WEIGHT = 0.25;
 const WEEKEND_PRIMARY_WEIGHT = 1;
 const WEEKEND_BACKUP_WEIGHT = 0.3;
+const MAX_BUDDY_PHASE_ITERATIONS = 250;
 
 function getResidentYearValue(
   resident: ResidentOption,
@@ -1084,7 +1144,7 @@ function getSecondarySlotContext({
   const backupDef = visibleBackupDefs[0] ?? null;
   const buddyDef = visibleBuddyDefs[0] ?? null;
   const buddyActive = Boolean(
-    buddyDateState?.isRequired || current.buddyRosterId
+    buddyDateState?.isVisible || current.buddyRosterId
   );
 
   return {
@@ -1307,7 +1367,7 @@ function countOpenRequiredSlots({
           primaryResident ? getResidentPgyYear(primaryResident, day.key) : null;
         const dayOfWeek = day.date.getDay();
         const hasRequiredOpenBackup = customBackupDefs.some((def) => {
-          if (buddyDateState?.isRequired || assignment?.buddyRosterId) {
+          if (buddyDateState?.isVisible || assignment?.buddyRosterId) {
             return false;
           }
           const { isRequired } = getSlotStatusForDay({
@@ -1319,7 +1379,7 @@ function countOpenRequiredSlots({
           return isRequired;
         });
         if (hasRequiredOpenBackup) open += 1;
-      } else if (globalBackupRequired && !buddyDateState?.isRequired && !assignment?.buddyRosterId) {
+      } else if (globalBackupRequired && !buddyDateState?.isVisible && !assignment?.buddyRosterId) {
         open += 1;
       }
     }
@@ -1478,6 +1538,7 @@ function generateSingleCallSchedule({
   }
 
   const monthDayByKey = new Map(monthDays.map((day) => [day.key, day]));
+  const buddyRequirementsStartedAt = Date.now();
   const buddyRequirements = getBuddyRequirementsForMonth({
     year: monthDays[0]?.date.getFullYear() ?? new Date().getFullYear(),
     month: (monthDays[0]?.date.getMonth() ?? new Date().getMonth()) + 1,
@@ -1493,61 +1554,166 @@ function generateSingleCallSchedule({
     slotDefinitions: effectiveSlotDefinitions,
     assignments: nextAssignments,
   });
+  recordPhaseTiming(
+    generationDebug,
+    "buddy_requirements",
+    buddyRequirementsStartedAt,
+    `${buddyRequirements.length} requirement(s)`
+  );
+  generationDebug.buddyPass.residentsDetected = buddyRequirements.map(
+    (requirement) => ({
+      residentId: requirement.pgy1RosterId,
+      residentName: requirement.residentName,
+      requiredBuddyDays: requirement.requiredBuddyDays,
+      maxBuddyDays: requirement.maxBuddyDays,
+      assignedBuddyDays: requirement.assignedDates.length,
+      remainingNeeded: requirement.remainingNeeded,
+      remainingCapacity: requirement.remainingCapacity,
+    })
+  );
+  generationDebug.buddyPass.visibleBuddySlotCount = new Set(
+    buddyRequirements.flatMap((requirement) => requirement.eligibleDates)
+  ).size;
 
-  for (const requirement of buddyRequirements) {
-    let remaining = requirement.remainingNeeded;
+  const buddyCountsTowardWorkload =
+    effectiveSlotDefinitions.find((definition) => definition.callType === "Buddy")
+      ?.countsTowardWorkload ?? false;
+  let buddyDateStateCache: Map<string, BuddyDateState> | null = null;
+
+  function getLiveBuddyDateStateMap() {
+    if (buddyDateStateCache) return buddyDateStateCache;
+
+    buddyDateStateCache = getBuddyDateStateMap(
+      monthDays,
+      residents,
+      enabledRules,
+      effectiveSlotDefinitions,
+      nextAssignments
+    );
+
+    return buddyDateStateCache;
+  }
+
+  function invalidateBuddyDateStateMap() {
+    buddyDateStateCache = null;
+  }
+
+  function getAssignedBuddyCount(residentId: string, eligibleDates: string[]) {
+    const eligibleDateSet = new Set(eligibleDates);
+    return Object.entries(nextAssignments).filter(
+      ([dateKey, assignment]) =>
+        eligibleDateSet.has(dateKey) && assignment.buddyRosterId === residentId
+    ).length;
+  }
+
+  function assignBuddyForRequirement(
+    requirement: (typeof buddyRequirements)[number],
+    phase: "required" | "optional"
+  ) {
     const buddyResident = residentsById.get(requirement.pgy1RosterId);
-    if (!buddyResident) continue;
+    if (!buddyResident) {
+      generationDebug.buddyPass.skippedAssignments.push({
+        residentId: requirement.pgy1RosterId,
+        residentName: requirement.residentName,
+        phase,
+        dateKey: null,
+        reason: "Resident was not loaded into the generator pool.",
+      });
+      return false;
+    }
 
-    while (remaining > 0) {
-      incrementDebugCounter(
-        generationDebug.candidateSlotsConsideredByType,
-        "Buddy"
-      );
-      incrementDebugCounter(
-        generationDebug.candidateAssignmentsAttemptedByType,
-        "Buddy"
-      );
-      const candidateDates = requirement.eligibleDates
-        .map((dateKey) => {
-          const day = monthDayByKey.get(dateKey);
-          if (!day) return null;
+    const targetCount =
+      phase === "required"
+        ? requirement.requiredBuddyDays
+        : requirement.maxBuddyDays;
+    const currentAssigned = getAssignedBuddyCount(
+      requirement.pgy1RosterId,
+      requirement.eligibleDates
+    );
 
-          const current = nextAssignments[dateKey] ?? {
-            primaryRosterId: null,
-            backupRosterId: null,
-            buddyRosterId: null,
-          };
+    if (currentAssigned >= targetCount) {
+      return false;
+    }
 
-          if (current.buddyRosterId && current.buddyRosterId !== buddyResident.residentId) {
-            return null;
-          }
+    incrementDebugCounter(
+      generationDebug.candidateSlotsConsideredByType,
+      "Buddy"
+    );
+    incrementDebugCounter(
+      generationDebug.candidateAssignmentsAttemptedByType,
+      "Buddy"
+    );
+    generationDebug.buddyPass.attemptedAssignments += 1;
 
-          const buddyAllowed = isResidentAllowedForSlot({
-            resident: buddyResident,
-            slot: "Buddy",
+    const skippedReasons: Array<{ dateKey: string; reason: string }> = [];
+    const candidateDates = requirement.eligibleDates
+      .map((dateKey) => {
+        const day = monthDayByKey.get(dateKey);
+        if (!day) {
+          skippedReasons.push({ dateKey, reason: "Missing month day." });
+          return null;
+        }
+
+        const current = nextAssignments[dateKey] ?? {
+          primaryRosterId: null,
+          backupRosterId: null,
+          buddyRosterId: null,
+        };
+
+        if (current.buddyRosterId === buddyResident.residentId) {
+          skippedReasons.push({
             dateKey,
-            assignments: nextAssignments,
-            rules: enabledRules,
-            availabilityByResident,
+            reason: "Buddy slot already assigned to this resident.",
           });
-          if (!buddyAllowed) return null;
+          return null;
+        }
 
-          const existingPrimary =
-            current.primaryRosterId ? residentsById.get(current.primaryRosterId) ?? null : null;
-          const existingPrimaryPgy = existingPrimary
-            ? getResidentPgyYear(existingPrimary, dateKey)
-            : null;
+        if (current.buddyRosterId && current.buddyRosterId !== buddyResident.residentId) {
+          skippedReasons.push({
+            dateKey,
+            reason: "Buddy slot already assigned.",
+          });
+          return null;
+        }
 
-          if (
-            existingPrimary &&
-            existingPrimaryPgy !== BUDDY_PRIMARY_PARTNER_PGY &&
-            !forceRegenerate
-          ) {
-            return null;
-          }
+        const buddyEvaluation = evaluateResidentForSlot({
+          resident: buddyResident,
+          slot: "Buddy",
+          dateKey,
+          assignments: nextAssignments,
+          rules: enabledRules,
+          availabilityByResident,
+        });
+        if (!buddyEvaluation.allowed) {
+          skippedReasons.push({
+            dateKey,
+            reason:
+              buddyEvaluation.blocks.map((block) => block.message).join("; ") ||
+              "Blocked by Buddy eligibility rules.",
+          });
+          return null;
+        }
 
-          const partner = existingPrimaryPgy === BUDDY_PRIMARY_PARTNER_PGY
+        const existingPrimary =
+          current.primaryRosterId ? residentsById.get(current.primaryRosterId) ?? null : null;
+        const existingPrimaryPgy = existingPrimary
+          ? getResidentPgyYear(existingPrimary, dateKey)
+          : null;
+
+        if (
+          existingPrimary &&
+          existingPrimaryPgy !== BUDDY_PRIMARY_PARTNER_PGY &&
+          !forceRegenerate
+        ) {
+          skippedReasons.push({
+            dateKey,
+            reason: `Existing Primary is PGY-${existingPrimaryPgy ?? "unknown"}, not PGY-${BUDDY_PRIMARY_PARTNER_PGY}.`,
+          });
+          return null;
+        }
+
+        const partner =
+          existingPrimaryPgy === BUDDY_PRIMARY_PARTNER_PGY
             ? existingPrimary
             : selectBuddyPrimaryPartner({
                 residents,
@@ -1569,99 +1735,337 @@ function generateSingleCallSchedule({
                 generationVersion,
               });
 
-          if (!partner) return null;
+        if (!partner) {
+          skippedReasons.push({
+            dateKey,
+            reason: `No eligible PGY-${BUDDY_PRIMARY_PARTNER_PGY} Primary partner available.`,
+          });
+          return null;
+        }
 
-          const partnerStats = stats.get(partner.residentId);
-
-          return {
-            day,
-            current,
-            partner,
-            score:
-              (partnerStats?.monthBuddy ?? 0) * 100 +
-              (partnerStats?.monthPrimary ?? 0) * 25 +
-              (current.primaryRosterId ? 0 : 10) +
-              (current.backupRosterId ? 20 : 0),
-          };
-        })
-        .filter(
-          (
-            entry
-          ): entry is {
-            day: CalendarDay;
-            current: DraftDayAssignment;
-            partner: ResidentOption;
-            score: number;
-          } => Boolean(entry)
-        )
-        .sort((left, right) => {
-          if (left.score !== right.score) return left.score - right.score;
-          return left.day.key.localeCompare(right.day.key);
+        const partnerStats = stats.get(partner.residentId);
+        const randomizedRank = seededNoise({
+          residentId: buddyResident.residentId,
+          dateKey,
+          slot: "Buddy",
+          generationVersion,
         });
 
-      const selected = candidateDates[0];
-
-      if (!selected) {
-        incrementDebugCounter(
-          generationDebug.rejectedAssignmentsByType,
-          "Buddy"
-        );
-        incrementDebugReason(
-          generationDebug.rejectionReasonsByType,
-          "Buddy",
-          `No eligible Friday/Saturday dates remain for ${requirement.residentName}`
-        );
-        break;
-      }
-
-      const { day, current, partner } = selected;
-      const nextCurrent = {
-        ...current,
-        primaryRosterId: current.primaryRosterId ?? partner.residentId,
-        backupRosterId: null,
-        buddyRosterId: buddyResident.residentId,
-      };
-
-      if (!current.primaryRosterId) {
-        updateStats(stats, partner.residentId, "Primary", day);
-      }
-      if (!current.buddyRosterId) {
-        const buddyCountsTowardWorkload =
-          effectiveSlotDefinitions.find((definition) => definition.callType === "Buddy")
-            ?.countsTowardWorkload ?? false;
-        updateStats(
-          stats,
-          buddyResident.residentId,
-          "Buddy",
+        return {
           day,
-          buddyCountsTowardWorkload
-        );
-      }
+          current,
+          partner,
+          score:
+            randomizedRank * 1000 +
+            (partnerStats?.monthPrimary ?? 0) * 25 +
+            (current.primaryRosterId ? 0 : 10) +
+            (current.backupRosterId ? 20 : 0),
+        };
+      })
+      .filter(
+        (
+          entry
+        ): entry is {
+          day: CalendarDay;
+          current: DraftDayAssignment;
+          partner: ResidentOption;
+          score: number;
+        } => Boolean(entry)
+      )
+      .sort((left, right) => {
+        if (left.score !== right.score) return left.score - right.score;
+        return left.day.key.localeCompare(right.day.key);
+      });
 
-      nextAssignments[day.key] = nextCurrent;
+    const selected = candidateDates[0];
+    if (!selected) {
+      const reason =
+        skippedReasons[0]?.reason ??
+        `No eligible Buddy dates remain for ${requirement.residentName}.`;
       incrementDebugCounter(
-        generationDebug.successfulAssignmentsByType,
+        generationDebug.rejectedAssignmentsByType,
         "Buddy"
       );
+      incrementDebugReason(
+        generationDebug.rejectionReasonsByType,
+        "Buddy",
+        reason
+      );
+      if (skippedReasons.length > 0) {
+        for (const skipped of skippedReasons) {
+          generationDebug.buddyPass.skippedAssignments.push({
+            residentId: requirement.pgy1RosterId,
+            residentName: requirement.residentName,
+            phase,
+            dateKey: skipped.dateKey,
+            reason: skipped.reason,
+          });
+        }
+      } else {
+        generationDebug.buddyPass.skippedAssignments.push({
+          residentId: requirement.pgy1RosterId,
+          residentName: requirement.residentName,
+          phase,
+          dateKey: null,
+          reason,
+        });
+      }
+      return false;
+    }
+
+    const { day, current, partner } = selected;
+    const nextCurrent = {
+      ...current,
+      primaryRosterId: current.primaryRosterId ?? partner.residentId,
+      backupRosterId: null,
+      buddyRosterId: buddyResident.residentId,
+    };
+
+    if (!current.primaryRosterId) {
+      updateStats(stats, partner.residentId, "Primary", day);
+    }
+    if (!current.buddyRosterId) {
+      updateStats(
+        stats,
+        buddyResident.residentId,
+        "Buddy",
+        day,
+        buddyCountsTowardWorkload
+      );
+    }
+
+    nextAssignments[day.key] = nextCurrent;
+    invalidateBuddyDateStateMap();
+    incrementDebugCounter(
+      generationDebug.successfulAssignmentsByType,
+      "Buddy"
+    );
+    recordDaySlotDebug(generationDebug, day.key, "Buddy", {
+      considered: true,
+      attempted: true,
+      successful: true,
+      reason: `Selected ${phase} Buddy date for ${buddyResident.displayName} with PGY-4 partner ${partner.displayName}`,
+      eligibleResidentIds: [buddyResident.residentId],
+    });
+    return true;
+  }
+
+  function assignBuddyToExistingPrimaryDay(day: CalendarDay) {
+    const current = nextAssignments[day.key] ?? {
+      primaryRosterId: null,
+      backupRosterId: null,
+      buddyRosterId: null,
+    };
+    if (!current.primaryRosterId || current.buddyRosterId) {
+      return false;
+    }
+
+    const primaryResident = residentsById.get(current.primaryRosterId) ?? null;
+    const primaryPgy = primaryResident
+      ? getResidentPgyYear(primaryResident, day.key)
+      : null;
+    if (primaryPgy !== BUDDY_PRIMARY_PARTNER_PGY) {
+      return false;
+    }
+
+    const liveBuddyState = getLiveBuddyDateStateMap().get(day.key) ?? null;
+
+    if (!liveBuddyState?.isVisible) {
+      return false;
+    }
+
+    const candidateRosterIds =
+      liveBuddyState.eligibleRequirementRosterIds.length > 0
+        ? liveBuddyState.eligibleRequirementRosterIds
+        : liveBuddyState.visibleEligibleRosterIds;
+
+    if (candidateRosterIds.length === 0) {
       recordDaySlotDebug(generationDebug, day.key, "Buddy", {
         considered: true,
         attempted: true,
-        successful: true,
-        reason: `Selected Buddy date for ${buddyResident.displayName} with PGY-4 partner ${partner.displayName}`,
-        eligibleResidentIds: [buddyResident.residentId],
+        successful: false,
+        reason: "Buddy visible but no PGY-1 candidate still has Buddy capacity.",
       });
-
-      remaining -= 1;
+      return false;
     }
+
+    const candidateResidents = candidateRosterIds
+      .map((residentId) => residentsById.get(residentId) ?? null)
+      .filter((resident): resident is ResidentOption => Boolean(resident));
+
+    if (candidateResidents.length === 0) {
+      recordDaySlotDebug(generationDebug, day.key, "Buddy", {
+        considered: true,
+        attempted: true,
+        successful: false,
+        reason: "Buddy visible but candidate resident records were not loaded.",
+      });
+      return false;
+    }
+
+    const buddyPool = inspectCandidatePool({
+      residents: candidateResidents,
+      slot: "Buddy",
+      day,
+      current,
+      assignments: nextAssignments,
+      rules: enabledRules,
+      availabilityByResident,
+    });
+    incrementDebugCounter(
+      generationDebug.candidateSlotsConsideredByType,
+      "Buddy"
+    );
+    incrementDebugCounter(
+      generationDebug.candidateAssignmentsAttemptedByType,
+      "Buddy"
+    );
+    generationDebug.buddyPass.attemptedAssignments += 1;
+    recordDaySlotDebug(generationDebug, day.key, "Buddy", {
+      considered: true,
+      attempted: true,
+      eligibleResidentIds: buddyPool.eligible.map((resident) => resident.residentId),
+      blockedResidents: buddyPool.blocked,
+    });
+
+    const picked = pickBestResident({
+      residents: candidateResidents,
+      slot: "Buddy",
+      day,
+      assignments: nextAssignments,
+      rules: enabledRules,
+      availabilityByResident,
+      stats,
+      generationVersion,
+    });
+
+    if (!picked) {
+      incrementDebugCounter(
+        generationDebug.rejectedAssignmentsByType,
+        "Buddy"
+      );
+      const reason =
+        buddyPool.blocked[0]?.reasons[0] ??
+        "Buddy visible after Primary assignment, but no candidate could be scheduled.";
+      incrementDebugReason(
+        generationDebug.rejectionReasonsByType,
+        "Buddy",
+        reason
+      );
+      recordDaySlotDebug(generationDebug, day.key, "Buddy", {
+        successful: false,
+        reason,
+      });
+      return false;
+    }
+
+    current.buddyRosterId = picked.residentId;
+    current.backupRosterId = null;
+    nextAssignments[day.key] = current;
+    invalidateBuddyDateStateMap();
+    updateStats(
+      stats,
+      picked.residentId,
+      "Buddy",
+      day,
+      buddyCountsTowardWorkload
+    );
+    incrementDebugCounter(
+      generationDebug.successfulAssignmentsByType,
+      "Buddy"
+    );
+    recordDaySlotDebug(generationDebug, day.key, "Buddy", {
+      successful: true,
+      reason: `Assigned ${picked.displayName} after Primary settled with ${primaryResident?.displayName ?? current.primaryRosterId} as PGY-4 Primary.`,
+      eligibleResidentIds: [picked.residentId],
+    });
+    return true;
   }
 
-  const buddyDateStateByDate = getBuddyDateStateMap(
-    monthDays,
-    residents,
-    enabledRules,
-    effectiveSlotDefinitions,
-    nextAssignments
+  const buddyPrepassStartedAt = Date.now();
+  for (const phase of ["required", "optional"] as const) {
+    let progress = true;
+    let iterationCount = 0;
+
+    while (progress && iterationCount < MAX_BUDDY_PHASE_ITERATIONS) {
+      progress = false;
+      iterationCount += 1;
+      const orderedRequirements = [...buddyRequirements].sort((left, right) => {
+        const leftAssigned = getAssignedBuddyCount(
+          left.pgy1RosterId,
+          left.eligibleDates
+        );
+        const rightAssigned = getAssignedBuddyCount(
+          right.pgy1RosterId,
+          right.eligibleDates
+        );
+        const leftTarget =
+          phase === "required" ? left.requiredBuddyDays : left.maxBuddyDays;
+        const rightTarget =
+          phase === "required" ? right.requiredBuddyDays : right.maxBuddyDays;
+        const leftRemaining = Math.max(0, leftTarget - leftAssigned);
+        const rightRemaining = Math.max(0, rightTarget - rightAssigned);
+
+        if (leftRemaining !== rightRemaining) {
+          return rightRemaining - leftRemaining;
+        }
+
+        const leftSeed = seededNoise({
+          residentId: left.pgy1RosterId,
+          dateKey: monthDays[0]?.key ?? "month",
+          slot: "Buddy",
+          generationVersion,
+        });
+        const rightSeed = seededNoise({
+          residentId: right.pgy1RosterId,
+          dateKey: monthDays[0]?.key ?? "month",
+          slot: "Buddy",
+          generationVersion,
+        });
+
+        if (leftSeed !== rightSeed) return leftSeed - rightSeed;
+        return left.residentName.localeCompare(right.residentName);
+      });
+
+      for (const requirement of orderedRequirements) {
+        if (assignBuddyForRequirement(requirement, phase)) {
+          progress = true;
+        }
+      }
+    }
+
+    generationDebug.buddyPass.loopExitReasons.push({
+      phase,
+      iterations: iterationCount,
+      reason: progress
+        ? `Stopped after reaching max iterations (${MAX_BUDDY_PHASE_ITERATIONS}).`
+        : "Stopped because no further Buddy assignments could be made.",
+    });
+  }
+  recordPhaseTiming(
+    generationDebug,
+    "buddy_prepass",
+    buddyPrepassStartedAt,
+    generationDebug.buddyPass.loopExitReasons
+      .map((entry) => `${entry.phase}:${entry.iterations}`)
+      .join(", ")
   );
+
+  generationDebug.buddyPass.finalBuddyCounts = buddyRequirements.map(
+    (requirement) => ({
+      residentId: requirement.pgy1RosterId,
+      residentName: requirement.residentName,
+      assignedBuddyDays: getAssignedBuddyCount(
+        requirement.pgy1RosterId,
+        requirement.eligibleDates
+      ),
+      requiredBuddyDays: requirement.requiredBuddyDays,
+      maxBuddyDays: requirement.maxBuddyDays,
+    })
+  );
+
+  const assignmentPassStartedAt = Date.now();
+  const buddyDateStateByDate = getLiveBuddyDateStateMap();
 
   const requiredCallTypes = getRequiredCallTypesFromRules(enabledRules);
   const shouldFillPrimary =
@@ -1759,6 +2163,8 @@ function generateSingleCallSchedule({
         });
       }
     }
+
+    assignBuddyToExistingPrimaryDay(day);
 
     // Phase 2: Determine which secondary slots are visible AFTER Primary is known.
     const { backupDef, buddyDef } =
@@ -1918,10 +2324,38 @@ function generateSingleCallSchedule({
           `Assigned ${residentsById.get(current.buddyRosterId)?.displayName ?? current.buddyRosterId}`,
         eligibleResidentIds: [current.buddyRosterId],
       });
+    } else if (buddyDef) {
+      const buddyState = buddyDateStateByDate.get(day.key) ?? null;
+      const buddyPool = inspectCandidatePool({
+        residents,
+        slot: "Buddy",
+        day,
+        current,
+        assignments: nextAssignments,
+        rules: enabledRules,
+        availabilityByResident,
+      });
+      recordDaySlotDebug(generationDebug, day.key, "Buddy", {
+        considered: true,
+        attempted: false,
+        successful: false,
+        reason:
+          buddyState?.isRequired
+            ? "Buddy day remained open after the PGY-1 Buddy pass."
+            : "Optional Buddy slot remained open after all eligible PGY-1 residents were assigned or blocked.",
+        eligibleResidentIds: buddyPool.eligible.map((resident) => resident.residentId),
+        blockedResidents: buddyPool.blocked,
+      });
     }
 
     nextAssignments[day.key] = current;
   }
+  recordPhaseTiming(
+    generationDebug,
+    "primary_backup_buddy_fill",
+    assignmentPassStartedAt,
+    `${monthDays.length} day(s)`
+  );
 
   return {
     assignments: nextAssignments,
