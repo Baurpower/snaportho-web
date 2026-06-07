@@ -10,7 +10,9 @@ import type {
 } from "@/components/workspace/call/programcalltypes";
 import {
   countUniqueWeekendBuckets,
+  evaluateDayOfWeekPreferenceForResident,
   evaluateMonthlyLimitForResident,
+  evaluateMonthlyLoadTargetForResident,
   evaluatePgyEligibility,
   evaluateRotationCallLimitForResident,
   evaluateRotationEligibility,
@@ -18,6 +20,7 @@ import {
   evaluateWeekendLimitForResident,
   evaluateWeekendPairingForResident,
   getAdjacentWeekendDateKey,
+  getResidentPgyYear,
   getWeekendBucket,
   isWeekendDateKey,
 } from "@/lib/workspace/call/rule-evaluator";
@@ -53,6 +56,24 @@ function getAssignedDatesForResident(
     )
     .map(([dateKey]) => dateKey)
     .sort();
+}
+
+function countPrimaryAssignmentsForResident(
+  residentId: string,
+  assignments: Record<string, DraftDayAssignment>
+): number {
+  return Object.values(assignments).filter(
+    (a) => a?.primaryRosterId === residentId
+  ).length;
+}
+
+function countBackupAssignmentsForResident(
+  residentId: string,
+  assignments: Record<string, DraftDayAssignment>
+): number {
+  return Object.values(assignments).filter(
+    (a) => a?.backupRosterId === residentId
+  ).length;
 }
 
 function getAvailabilityDay(
@@ -329,6 +350,7 @@ export function evaluateResidentForSlot(
     });
   }
 
+  const residentPgyYear = getResidentPgyYear(resident, dateKey);
   const rotationConflictIds =
     availability?.rotationConflicts.map((conflict) => conflict.rotationId) ?? [];
 
@@ -336,6 +358,7 @@ export function evaluateResidentForSlot(
     rotationIds: rotationConflictIds,
     callType: slot,
     rules,
+    residentPgyYear,
   });
   for (const violation of rotationViolations) {
     const matchingRotation =
@@ -473,6 +496,87 @@ export function evaluateResidentForSlot(
         key: `rule-${violation.rule.id}-${dateKey}-weekend-pairing-${slot}`,
         label: "Weekend Pairing",
         tone: violation.severity === "error" ? "rose" : "amber",
+        description: violation.message,
+        category: "rule",
+      },
+    });
+  }
+
+  // Monthly load target by PGY — per-PGY hard/soft max per slot type.
+  if (slot === "Primary" || slot === "Backup" || slot === "Buddy") {
+    const currentSlotCount =
+      slot === "Primary"
+        ? countPrimaryAssignmentsForResident(residentId, assignments)
+        : slot === "Backup"
+        ? countBackupAssignmentsForResident(residentId, assignments)
+        : 0;
+    const projectedSlotCount = alreadyAssignedOnDate ? currentSlotCount : currentSlotCount + 1;
+
+    for (const violation of evaluateMonthlyLoadTargetForResident({
+      residentPgyYear,
+      callType: slot,
+      projectedCount: projectedSlotCount,
+      rules,
+    })) {
+      addRuleResult({
+        rule: violation.rule,
+        block: {
+          ruleId: violation.rule.id,
+          ruleType: violation.rule.rule_type,
+          ruleName: violation.rule.name,
+          message: violation.message,
+          isHardRule: violation.severity === "error",
+        },
+        flags,
+        blocks,
+        warnings,
+        setBlocked: () => {
+          blocked = true;
+        },
+        setWarning: () => {
+          warning = true;
+        },
+        flag: {
+          key: `rule-${violation.rule.id}-${dateKey}-${slot}-load-target`,
+          label: "Monthly Load Target",
+          tone: violation.severity === "error" ? "rose" : "amber",
+          description: violation.message,
+          category: "rule",
+        },
+      });
+    }
+  }
+
+  // Day-of-week preference — soft rule (always warning, never block).
+  for (const violation of evaluateDayOfWeekPreferenceForResident({
+    dateKey,
+    callType: slot,
+    rotationIds: rotationConflictIds,
+    residentPgyYear,
+    rules,
+  })) {
+    addRuleResult({
+      rule: violation.rule,
+      block: {
+        ruleId: violation.rule.id,
+        ruleType: violation.rule.rule_type,
+        ruleName: violation.rule.name,
+        message: violation.message,
+        isHardRule: false,
+      },
+      flags,
+      blocks,
+      warnings,
+      setBlocked: () => {
+        blocked = true;
+      },
+      setWarning: () => {
+        warning = true;
+      },
+      flag: {
+        key: `rule-${violation.rule.id}-${dateKey}-${slot}-dow-pref`,
+        label: "Day Preference",
+        tone: "amber",
         description: violation.message,
         category: "rule",
       },

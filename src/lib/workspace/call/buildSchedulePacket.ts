@@ -151,7 +151,7 @@ function asSlotArray(value: unknown): Slot[] {
   if (!Array.isArray(value)) return [];
 
   return value.filter(
-    (item): item is Slot => item === "Primary" || item === "Backup"
+    (item): item is Slot => item === "Primary" || item === "Backup" || item === "Buddy"
   );
 }
 

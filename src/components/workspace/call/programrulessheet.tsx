@@ -18,11 +18,14 @@ import {
   AlertTriangle,
   CheckCircle2,
   Wand2,
+  BarChart3,
+  CalendarDays,
 } from "lucide-react";
 import {
   RULE_DEFINITIONS,
   RuleType,
   RuleDraft,
+  CallTypeOption,
   ProgramCallSlotDefinition,
   createDefaultRuleDraft,
   getRuleDefinition,
@@ -166,6 +169,10 @@ function getRuleIcon(type: RuleType) {
       return AlertTriangle;
     case "max_calls_for_rotation":
       return BriefcaseMedical;
+    case "monthly_load_target_by_pgy":
+      return BarChart3;
+    case "day_of_week_preference":
+      return CalendarDays;
     default:
       return SlidersHorizontal;
   }
@@ -277,52 +284,71 @@ function syncSlotModeIntoRequiredRule(
 // during the transition). The old behavior was destructive; the new one is not.
 const upsertRequiredDailySlotsRule = syncSlotModeIntoRequiredRule;
 
-type CallPoolCapability = "none" | "primary" | "backup" | "both";
+type ActiveSlotOption = { callType: string; label: string };
 
 const PGY_YEARS = [1, 2, 3, 4, 5];
 
-function getAllowedCallTypesFromCapability(
-  capability: CallPoolCapability
-): ("Primary" | "Backup")[] {
-  if (capability === "primary") return ["Primary"];
-  if (capability === "backup") return ["Backup"];
-  if (capability === "both") return ["Primary", "Backup"];
-  return [];
+function getActiveSlotOptionsFromRules(rules: RuleDraft[]): ActiveSlotOption[] {
+  const slotRules = rules.filter((r) => r.type === "call_slot_definition" && r.enabled);
+  if (slotRules.length === 0) return [];
+
+  const seen = new Set<string>();
+  const result: ActiveSlotOption[] = [];
+  for (const rule of slotRules) {
+    const callType = typeof rule.config?.slotCallType === "string" ? rule.config.slotCallType : "";
+    const label = typeof rule.config?.slotLabel === "string" ? rule.config.slotLabel : callType;
+    if (!callType || seen.has(callType)) continue;
+    seen.add(callType);
+    result.push({ callType, label });
+  }
+  return result;
 }
 
-function getCapabilityFromAllowedCallTypes(
-  allowedCallTypes: unknown
-): CallPoolCapability {
-  if (!Array.isArray(allowedCallTypes)) return "both";
-
-  const hasPrimary = allowedCallTypes.includes("Primary");
-  const hasBackup = allowedCallTypes.includes("Backup");
-
-  if (hasPrimary && hasBackup) return "both";
-  if (hasPrimary) return "primary";
-  if (hasBackup) return "backup";
-  return "none";
-}
-
-function getPgyCallPoolCapability(
-  rules: RuleDraft[],
-  pgyYear: number
-): CallPoolCapability {
+function getPgyAllowedCallTypes(rules: RuleDraft[], pgyYear: number): string[] | null {
   const matchingRule = rules.find((rule) => {
     if (rule.type !== "restrict_call_type_by_pgy") return false;
-
-    const restrictedPgyYears = Array.isArray(rule.config?.restrictedPgyYears)
+    const years = Array.isArray(rule.config?.restrictedPgyYears)
       ? rule.config.restrictedPgyYears.map(Number)
       : [];
-
-    return restrictedPgyYears.includes(pgyYear);
+    return years.includes(pgyYear);
   });
 
-  if (!matchingRule) return "both";
+  if (!matchingRule) return null; // null = unrestricted (all allowed)
+  return Array.isArray(matchingRule.config?.allowedCallTypes)
+    ? (matchingRule.config.allowedCallTypes as string[])
+    : [];
+}
 
-  return getCapabilityFromAllowedCallTypes(
-    matchingRule.config?.allowedCallTypes
-  );
+function setPgyAllowedCallTypes(
+  rules: RuleDraft[],
+  pgyYear: number,
+  allowedCallTypes: string[] | null
+): RuleDraft[] {
+  const withoutPgy = removePgyFromCallPoolRules(rules, pgyYear);
+
+  if (allowedCallTypes === null) return withoutPgy; // no restriction
+
+  const nextRule: RuleDraft = {
+    id: makeId(),
+    name: `PGY-${pgyYear} call pool`,
+    type: "restrict_call_type_by_pgy",
+    enabled: true,
+    isHardRule: true,
+    config: sanitizeRuleConfig("restrict_call_type_by_pgy", {
+      restrictedPgyYears: [pgyYear],
+      allowedCallTypes: allowedCallTypes as CallTypeOption[],
+    }),
+  };
+
+  return [nextRule, ...withoutPgy];
+}
+
+function getPgyAllowedSummary(allowedCallTypes: string[] | null, allCallTypes: string[]): string {
+  if (allowedCallTypes === null) return "Full call pool";
+  if (allowedCallTypes.length === 0) return "Not in call pool";
+  if (allowedCallTypes.length >= allCallTypes.length && allCallTypes.length > 0) return "Full call pool";
+  if (allowedCallTypes.length === 1) return `${allowedCallTypes[0]} only`;
+  return allowedCallTypes.join(" + ");
 }
 
 function removePgyFromCallPoolRules(rules: RuleDraft[], pgyYear: number) {
@@ -353,24 +379,7 @@ function removePgyFromCallPoolRules(rules: RuleDraft[], pgyYear: number) {
     .filter((rule): rule is RuleDraft => Boolean(rule));
 }
 
-function createPgyCallPoolRule(
-  pgyYear: number,
-  capability: CallPoolCapability
-): RuleDraft {
-  const allowedCallTypes = getAllowedCallTypesFromCapability(capability);
 
-  return {
-    id: makeId(),
-    name: `PGY-${pgyYear} call pool`,
-    type: "restrict_call_type_by_pgy",
-    enabled: true,
-    isHardRule: true,
-    config: {
-      restrictedPgyYears: [pgyYear],
-      allowedCallTypes,
-    },
-  };
-}
 function convertAIRuleToDraft(aiRule: AIRuleResponse["rules"][number]): RuleDraft | null {
   const frontendType = mapAIRuleTypeToFrontendType(aiRule.rule_type);
   if (!frontendType) return null;
@@ -725,36 +734,37 @@ function PgyCallPoolBuilder({
   onChange: (next: RuleDraft[]) => void;
   scheduleSlotMode: ScheduleSlotMode;
 }) {
-  function updatePgyCapability(
-  pgyYear: number,
-  capability: CallPoolCapability
-) {
-  const withoutPgy = removePgyFromCallPoolRules(rules, pgyYear);
+  const activeSlotOptions = useMemo((): ActiveSlotOption[] => {
+    const fromSlots = getActiveSlotOptionsFromRules(rules);
+    if (fromSlots.length > 0) return fromSlots;
+    // Fallback when no slot definitions are configured
+    const fallback: ActiveSlotOption[] = [{ callType: "Primary", label: "Primary" }];
+    if (scheduleSlotMode === "Both") fallback.push({ callType: "Backup", label: "Backup" });
+    return fallback;
+  }, [rules, scheduleSlotMode]);
 
-  if (capability === "both") {
-    onChange(withoutPgy);
-    return;
+  const allCallTypes = useMemo(() => activeSlotOptions.map((s) => s.callType), [activeSlotOptions]);
+
+  function handleToggleSlot(pgyYear: number, callType: string) {
+    const current = getPgyAllowedCallTypes(rules, pgyYear);
+    // null = all allowed → treat as full set
+    const currentSet = new Set(current === null ? allCallTypes : current);
+
+    if (currentSet.has(callType)) {
+      currentSet.delete(callType);
+    } else {
+      currentSet.add(callType);
+    }
+
+    const nextAllowed = allCallTypes.filter((t) => currentSet.has(t));
+    // All call types selected → remove restriction (null)
+    const next = nextAllowed.length >= allCallTypes.length ? null : nextAllowed;
+    onChange(setPgyAllowedCallTypes(rules, pgyYear, next));
   }
 
-  const nextRule = createPgyCallPoolRule(pgyYear, capability);
-  onChange([nextRule, ...withoutPgy]);
-}
-
-  const options: Array<{
-  value: CallPoolCapability;
-  label: string;
-}> =
-  scheduleSlotMode === "Primary"
-    ? [
-        { value: "none", label: "None" },
-        { value: "primary", label: "Primary" },
-      ]
-    : [
-        { value: "none", label: "None" },
-        { value: "primary", label: "Primary" },
-        { value: "backup", label: "Backup" },
-        { value: "both", label: "Both" },
-      ];
+  function handleSetNone(pgyYear: number) {
+    onChange(setPgyAllowedCallTypes(rules, pgyYear, []));
+  }
 
   return (
     <div className="rounded-[1.15rem] border border-slate-200 bg-white p-4 shadow-sm">
@@ -773,7 +783,9 @@ function PgyCallPoolBuilder({
 
       <div className="mt-4 space-y-2">
         {PGY_YEARS.map((pgyYear) => {
-          const activeCapability = getPgyCallPoolCapability(rules, pgyYear);
+          const allowed = getPgyAllowedCallTypes(rules, pgyYear);
+          const isNone = allowed !== null && allowed.length === 0;
+          const summary = getPgyAllowedSummary(allowed, allCallTypes);
 
           return (
             <div
@@ -784,40 +796,35 @@ function PgyCallPoolBuilder({
                 <span className="rounded-full bg-slate-950 px-2.5 py-1 text-xs font-bold text-white">
                   PGY-{pgyYear}
                 </span>
-
-                <span className="text-xs text-slate-500">
-                  {activeCapability === "none"
-                    ? "Not in call pool"
-                    : activeCapability === "primary"
-                    ? "Primary call only"
-                    : activeCapability === "backup"
-                    ? "Backup call only"
-                    : "Full call pool"}
-                </span>
+                <span className="text-xs text-slate-500">{summary}</span>
               </div>
 
-              <div
-  className={`grid gap-1 rounded-full border border-slate-200 bg-white p-1 ${
-    scheduleSlotMode === "Primary" ? "grid-cols-2" : "grid-cols-4"
-  }`}
->
-                {options.map((option) => {
-                  const selected = activeCapability === option.value;
-
+              <div className="flex flex-wrap gap-1">
+                <button
+                  type="button"
+                  onClick={() => handleSetNone(pgyYear)}
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                    isNone
+                      ? "bg-slate-950 text-white shadow-sm"
+                      : "text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+                  }`}
+                >
+                  None
+                </button>
+                {activeSlotOptions.map(({ callType, label }) => {
+                  const isSelected = !isNone && (allowed === null || allowed.includes(callType));
                   return (
                     <button
-                      key={`${pgyYear}-${option.value}`}
+                      key={callType}
                       type="button"
-                      onClick={() =>
-                        updatePgyCapability(pgyYear, option.value)
-                      }
+                      onClick={() => handleToggleSlot(pgyYear, callType)}
                       className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                        selected
+                        isSelected
                           ? "bg-slate-950 text-white shadow-sm"
                           : "text-slate-500 hover:bg-slate-100 hover:text-slate-800"
                       }`}
                     >
-                      {option.label}
+                      {label}
                     </button>
                   );
                 })}
@@ -959,10 +966,10 @@ function RuleConfigEditor({
       ? (config.restrictedPgyYears as number[])
       : [];
     const allowedCallTypes = Array.isArray(config.allowedCallTypes)
-      ? (config.allowedCallTypes as ("Primary" | "Backup")[])
+      ? (config.allowedCallTypes as string[])
       : ["Backup"];
 
-    function toggleCallType(callType: "Primary" | "Backup") {
+    function toggleCallType(callType: string) {
       const exists = allowedCallTypes.includes(callType);
       const next = exists
         ? allowedCallTypes.filter((value) => value !== callType)
@@ -973,6 +980,12 @@ function RuleConfigEditor({
         allowedCallTypes: next.length > 0 ? next : [callType],
       });
     }
+
+    const callTypeToggleStyles: Record<string, { active: string }> = {
+      Primary: { active: "bg-sky-600 text-white" },
+      Backup: { active: "bg-violet-600 text-white" },
+      Buddy: { active: "bg-emerald-600 text-white" },
+    };
 
     return (
       <div className="grid gap-4 md:grid-cols-2">
@@ -998,20 +1011,16 @@ function RuleConfigEditor({
             Allowed call types
           </span>
           <div className="flex flex-wrap gap-2">
-            <TogglePill
-              active={allowedCallTypes.includes("Primary")}
-              label="Primary"
-              onClick={() => toggleCallType("Primary")}
-              activeClassName="bg-sky-600 text-white"
-              inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
-            />
-            <TogglePill
-              active={allowedCallTypes.includes("Backup")}
-              label="Backup"
-              onClick={() => toggleCallType("Backup")}
-              activeClassName="bg-violet-600 text-white"
-              inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
-            />
+            {(["Primary", "Backup", "Buddy"] as const).map((ct) => (
+              <TogglePill
+                key={ct}
+                active={allowedCallTypes.includes(ct)}
+                label={ct}
+                onClick={() => toggleCallType(ct)}
+                activeClassName={callTypeToggleStyles[ct]?.active ?? "bg-slate-700 text-white"}
+                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -1062,6 +1071,9 @@ function RuleConfigEditor({
       : [];
     const blockAllCall =
       typeof config.blockAllCall === "boolean" ? config.blockAllCall : true;
+    const restrictedPgyYears = Array.isArray(config.restrictedPgyYears)
+      ? (config.restrictedPgyYears as number[])
+      : [];
 
     return (
       <div className="space-y-4">
@@ -1106,6 +1118,260 @@ function RuleConfigEditor({
               />
             </button>
           </div>
+        </div>
+
+        <div>
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            Limit to PGY years{" "}
+            <span className="normal-case font-normal text-slate-400">
+              (leave empty to block all PGY levels)
+            </span>
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {[1, 2, 3, 4, 5].map((pgy) => (
+              <TogglePill
+                key={pgy}
+                active={restrictedPgyYears.includes(pgy)}
+                label={`PGY-${pgy}`}
+                onClick={() => {
+                  const next = restrictedPgyYears.includes(pgy)
+                    ? restrictedPgyYears.filter((y) => y !== pgy)
+                    : [...restrictedPgyYears, pgy];
+                  updateConfig({ ...config, restrictedPgyYears: next });
+                }}
+                activeClassName="bg-slate-950 text-white"
+                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
+              />
+            ))}
+          </div>
+          <p className="mt-1.5 text-[11px] text-slate-400">
+            {restrictedPgyYears.length === 0
+              ? "Applies to all PGY levels."
+              : `Only applies to PGY-${restrictedPgyYears.sort().join(", PGY-")}.`}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (rule.type === "monthly_load_target_by_pgy") {
+    const targetPgyYears = Array.isArray(config.targetPgyYears)
+      ? (config.targetPgyYears as number[])
+      : [];
+    const targetCallType =
+      typeof config.targetCallType === "string" ? config.targetCallType : "Primary";
+    const targetMinCalls =
+      typeof config.targetMinCalls === "number" ? config.targetMinCalls : 0;
+    const targetMaxCalls =
+      typeof config.targetMaxCalls === "number" ? config.targetMaxCalls : 8;
+    const targetHardMaxCalls =
+      typeof config.targetHardMaxCalls === "number" ? config.targetHardMaxCalls : 10;
+
+    const callTypeOptions = ["Primary", "Backup", "Buddy", "any"] as const;
+
+    return (
+      <div className="space-y-4">
+        <div>
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            PGY years
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {[1, 2, 3, 4, 5].map((pgy) => (
+              <TogglePill
+                key={pgy}
+                active={targetPgyYears.includes(pgy)}
+                label={`PGY-${pgy}`}
+                onClick={() => {
+                  const next = targetPgyYears.includes(pgy)
+                    ? targetPgyYears.filter((y) => y !== pgy)
+                    : [...targetPgyYears, pgy];
+                  updateConfig({ ...config, targetPgyYears: next });
+                }}
+                activeClassName="bg-slate-950 text-white"
+                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
+              />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            Applies to call type
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {callTypeOptions.map((ct) => (
+              <TogglePill
+                key={ct}
+                active={targetCallType === ct}
+                label={ct === "any" ? "Any slot" : ct}
+                onClick={() => updateConfig({ ...config, targetCallType: ct })}
+                activeClassName="bg-sky-600 text-white"
+                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          <label className="block">
+            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              Soft minimum
+            </span>
+            <input
+              type="number"
+              min={0}
+              value={targetMinCalls}
+              onChange={(e) =>
+                updateConfig({ ...config, targetMinCalls: Number(e.target.value) })
+              }
+              className="w-full rounded-[0.95rem] border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+            />
+            <p className="mt-1 text-[11px] text-slate-400">Warning if below this</p>
+          </label>
+
+          <label className="block">
+            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              Soft maximum
+            </span>
+            <input
+              type="number"
+              min={0}
+              value={targetMaxCalls}
+              onChange={(e) =>
+                updateConfig({ ...config, targetMaxCalls: Number(e.target.value) })
+              }
+              className="w-full rounded-[0.95rem] border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+            />
+            <p className="mt-1 text-[11px] text-slate-400">Warning if above this</p>
+          </label>
+
+          <label className="block">
+            <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+              Hard maximum
+            </span>
+            <input
+              type="number"
+              min={0}
+              value={targetHardMaxCalls}
+              onChange={(e) =>
+                updateConfig({ ...config, targetHardMaxCalls: Number(e.target.value) })
+              }
+              className="w-full rounded-[0.95rem] border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition focus:border-sky-300 focus:ring-2 focus:ring-sky-100"
+            />
+            <p className="mt-1 text-[11px] text-slate-400">Block if above this</p>
+          </label>
+        </div>
+      </div>
+    );
+  }
+
+  if (rule.type === "day_of_week_preference") {
+    const preferenceDaysOfWeek = Array.isArray(config.preferenceDaysOfWeek)
+      ? (config.preferenceDaysOfWeek as number[])
+      : [];
+    const preferenceCallTypes = Array.isArray(config.preferenceCallTypes)
+      ? (config.preferenceCallTypes as string[])
+      : ["Primary"];
+    const preferenceRotationIds = Array.isArray(config.preferenceRotationIds)
+      ? (config.preferenceRotationIds as string[])
+      : [];
+    const preferencePgyYears = Array.isArray(config.preferencePgyYears)
+      ? (config.preferencePgyYears as number[])
+      : [];
+
+    const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    return (
+      <div className="space-y-4">
+        <div>
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            Days to minimize
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {dayLabels.map((label, index) => (
+              <TogglePill
+                key={index}
+                active={preferenceDaysOfWeek.includes(index)}
+                label={label}
+                onClick={() => {
+                  const next = preferenceDaysOfWeek.includes(index)
+                    ? preferenceDaysOfWeek.filter((d) => d !== index)
+                    : [...preferenceDaysOfWeek, index];
+                  updateConfig({ ...config, preferenceDaysOfWeek: next });
+                }}
+                activeClassName="bg-amber-600 text-white"
+                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
+              />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            Call types
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {(["Primary", "Backup", "Buddy"] as const).map((ct) => (
+              <TogglePill
+                key={ct}
+                active={preferenceCallTypes.includes(ct)}
+                label={ct}
+                onClick={() => {
+                  const next = preferenceCallTypes.includes(ct)
+                    ? preferenceCallTypes.filter((t) => t !== ct)
+                    : [...preferenceCallTypes, ct];
+                  updateConfig({
+                    ...config,
+                    preferenceCallTypes: next.length > 0 ? next : [ct],
+                  });
+                }}
+                activeClassName="bg-sky-600 text-white"
+                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
+              />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            Limit to PGY years{" "}
+            <span className="normal-case font-normal text-slate-400">
+              (empty = all PGY levels)
+            </span>
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {[1, 2, 3, 4, 5].map((pgy) => (
+              <TogglePill
+                key={pgy}
+                active={preferencePgyYears.includes(pgy)}
+                label={`PGY-${pgy}`}
+                onClick={() => {
+                  const next = preferencePgyYears.includes(pgy)
+                    ? preferencePgyYears.filter((y) => y !== pgy)
+                    : [...preferencePgyYears, pgy];
+                  updateConfig({ ...config, preferencePgyYears: next });
+                }}
+                activeClassName="bg-slate-950 text-white"
+                inactiveClassName="bg-slate-100 text-slate-700 hover:bg-slate-200"
+              />
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">
+            Limit to rotations{" "}
+            <span className="normal-case font-normal text-slate-400">
+              (empty = all rotations)
+            </span>
+          </span>
+          <RotationMultiSelect
+            options={rotationOptions}
+            selectedIds={preferenceRotationIds}
+            onChange={(nextIds) =>
+              updateConfig({ ...config, preferenceRotationIds: nextIds })
+            }
+          />
         </div>
       </div>
     );

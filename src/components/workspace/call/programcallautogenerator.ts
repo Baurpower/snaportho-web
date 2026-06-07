@@ -22,7 +22,9 @@ import {
 } from "@/lib/workspace/call/rule-definitions"; // Phase 9 alignment
 import {
   countUniqueWeekendBuckets,
+  evaluateDayOfWeekPreferenceForResident,
   evaluateMonthlyLimitForResident,
+  evaluateMonthlyLoadTargetForResident,
   evaluatePgyEligibility,
   evaluateRotationEligibility,
   evaluateSpacingForResident,
@@ -623,10 +625,14 @@ function getRulePenalty({
     projectedWeekendPrimary * WEEKEND_PRIMARY_WEIGHT +
     projectedWeekendBackup * WEEKEND_BACKUP_WEIGHT;
 
+  const residentPgy = getResidentYearValue(resident, day.key);
+  const residentPgyForFilter = residentPgy < 99 ? residentPgy : null;
+
   for (const violation of evaluateRotationEligibility({
     rotationIds: [getResidentRotationId(resident, day.key)],
     callType: slot,
     rules,
+    residentPgyYear: residentPgyForFilter,
   })) {
     penalty += 999999 * (violation.severity === "error" ? 10 : 1);
   }
@@ -679,6 +685,35 @@ function getRulePenalty({
   })) {
     const hardMultiplier = violation.severity === "error" ? 10 : 1;
     penalty += 99999 * hardMultiplier;
+  }
+
+  // Monthly load target by PGY — per-PGY hard/soft max.
+  if (slot === "Primary" || slot === "Backup") {
+    const currentSlotCount =
+      slot === "Primary" ? entry.monthPrimary : entry.monthBackup;
+    const projectedSlotCount = currentSlotCount + 1;
+
+    for (const violation of evaluateMonthlyLoadTargetForResident({
+      residentPgyYear: residentPgyForFilter,
+      callType: slot,
+      projectedCount: projectedSlotCount,
+      rules,
+    })) {
+      const hardMultiplier = violation.severity === "error" ? 10 : 1;
+      penalty += 50000 * hardMultiplier;
+    }
+  }
+
+  // Day-of-week preference — soft penalty for scheduling on disfavored weekdays.
+  for (const violation of evaluateDayOfWeekPreferenceForResident({
+    dateKey: day.key,
+    callType: slot,
+    rotationIds: [getResidentRotationId(resident, day.key)],
+    residentPgyYear: residentPgyForFilter,
+    rules,
+  })) {
+    // Always soft — add a modest penalty so the generator avoids these days when possible.
+    penalty += 80 * softSlotWeight * (violation.severity === "error" ? 10 : 1);
   }
 
   const pairedDateKey = getAdjacentWeekendDateKey(day.key);

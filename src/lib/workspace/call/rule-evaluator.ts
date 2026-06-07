@@ -64,7 +64,7 @@ export function normalizeCallType(
 ): EvaluatedCallType | null {
   const normalized = normalizeString(value);
 
-  if (normalized === "Primary" || normalized === "Backup") {
+  if (normalized === "Primary" || normalized === "Backup" || normalized === "Buddy") {
     return normalized;
   }
 
@@ -563,8 +563,10 @@ export function evaluateRotationEligibility<TRule extends RuleLike>(params: {
   rotationIds: Array<string | null | undefined>;
   callType: EvaluatedCallType;
   rules: TRule[] | null | undefined;
+  /** When provided, only fires rules whose restrictedPgyYears includes this PGY (or have no PGY filter). */
+  residentPgyYear?: number | null;
 }): RuleViolation<TRule>[] {
-  const { rotationIds, callType, rules } = params;
+  const { rotationIds, callType, rules, residentPgyYear = null } = params;
   const normalizedRotationIds = new Set(
     rotationIds
       .map((value) => normalizeString(value))
@@ -588,6 +590,13 @@ export function evaluateRotationEligibility<TRule extends RuleLike>(params: {
 
     if (!hasBlockedRotation) continue;
 
+    // Per-PGY filtering: if restrictedPgyYears is set and non-empty,
+    // only apply this rotation block to residents in those PGY years.
+    const rulePgyYears = normalizeNumericList(match.config.restrictedPgyYears);
+    if (rulePgyYears.length > 0 && residentPgyYear !== null) {
+      if (!rulePgyYears.includes(residentPgyYear)) continue;
+    }
+
     const blockAllCall = match.config.blockAllCall === true;
     const restrictedCallTypes = normalizeCallTypeList(
       match.config.restrictedCallTypes
@@ -603,6 +612,135 @@ export function evaluateRotationEligibility<TRule extends RuleLike>(params: {
         blockedRotationIds: [...blockedRotationIds],
         callType,
       },
+    });
+  }
+
+  return violations;
+}
+
+/**
+ * Evaluates whether a resident's projected monthly call count exceeds per-PGY
+ * targets defined by `monthly_load_target_by_pgy` rules.
+ *
+ * @param residentPgyYear  Resolved PGY year for this resident on this date.
+ * @param callType         Slot type being assigned (Primary / Backup / Buddy).
+ * @param projectedCount   Projected call count *after* the tentative assignment.
+ */
+export function evaluateMonthlyLoadTargetForResident<TRule extends RuleLike>(params: {
+  residentPgyYear: number | null;
+  callType: EvaluatedCallType;
+  projectedCount: number;
+  rules: TRule[] | null | undefined;
+}): RuleViolation<TRule>[] {
+  const { residentPgyYear, callType, projectedCount, rules } = params;
+
+  if (residentPgyYear === null) return [];
+
+  const violations: RuleViolation<TRule>[] = [];
+
+  for (const match of resolveMatchingRules(rules, ["monthly_load_target_by_pgy"])) {
+    const targetPgyYears = normalizeNumericList(match.config.targetPgyYears);
+    if (targetPgyYears.length > 0 && !targetPgyYears.includes(residentPgyYear)) continue;
+
+    // Filter by call type: "any" matches all, otherwise must match current slot.
+    const targetCallType =
+      typeof match.config.targetCallType === "string"
+        ? match.config.targetCallType
+        : "Primary";
+    if (targetCallType !== "any" && targetCallType !== callType) continue;
+
+    const hardMax =
+      typeof match.config.targetHardMaxCalls === "number"
+        ? match.config.targetHardMaxCalls
+        : null;
+    const softMax =
+      typeof match.config.targetMaxCalls === "number"
+        ? match.config.targetMaxCalls
+        : null;
+
+    if (hardMax !== null && projectedCount > hardMax) {
+      violations.push({
+        ...match,
+        // Force hard severity regardless of rule.is_hard_rule to ensure blocking.
+        severity: "error",
+        message: `PGY-${residentPgyYear} monthly ${callType} hard maximum is ${hardMax} (projected: ${projectedCount})`,
+        metadata: { residentPgyYear, projectedCount, hardMax, callType },
+      });
+    } else if (softMax !== null && projectedCount > softMax) {
+      violations.push({
+        ...match,
+        severity: "warning",
+        message: `PGY-${residentPgyYear} monthly ${callType} soft maximum is ${softMax} (projected: ${projectedCount})`,
+        metadata: { residentPgyYear, projectedCount, softMax, callType },
+      });
+    }
+  }
+
+  return violations;
+}
+
+/**
+ * Evaluates whether assigning a resident to `callType` on the given date
+ * conflicts with a `day_of_week_preference` soft rule.
+ *
+ * Always returns at most one violation per matching rule (with severity "warning").
+ */
+export function evaluateDayOfWeekPreferenceForResident<TRule extends RuleLike>(params: {
+  dateKey: string;
+  callType: EvaluatedCallType;
+  rotationIds: Array<string | null | undefined>;
+  residentPgyYear?: number | null;
+  rules: TRule[] | null | undefined;
+}): RuleViolation<TRule>[] {
+  const { dateKey, callType, rotationIds, residentPgyYear = null, rules } = params;
+
+  const dayOfWeek = new Date(`${dateKey}T00:00:00`).getDay();
+
+  const normalizedRotationIds = new Set(
+    rotationIds
+      .map((v) => normalizeString(v))
+      .filter((v): v is string => Boolean(v))
+  );
+
+  const violations: RuleViolation<TRule>[] = [];
+
+  for (const match of resolveMatchingRules(rules, ["day_of_week_preference"])) {
+    const days = Array.isArray(match.config.preferenceDaysOfWeek)
+      ? (match.config.preferenceDaysOfWeek as number[])
+      : [];
+    if (!days.includes(dayOfWeek)) continue;
+
+    const prefCallTypes = Array.isArray(match.config.preferenceCallTypes)
+      ? (match.config.preferenceCallTypes as string[])
+      : ["Primary"];
+    if (!prefCallTypes.includes(callType)) continue;
+
+    // PGY filter
+    const prefPgyYears = normalizeNumericList(match.config.preferencePgyYears);
+    if (prefPgyYears.length > 0 && residentPgyYear !== null) {
+      if (!prefPgyYears.includes(residentPgyYear)) continue;
+    }
+
+    // Rotation filter: if set, only fires when resident is on one of those rotations.
+    const prefRotationIds = new Set(
+      (Array.isArray(match.config.preferenceRotationIds)
+        ? (match.config.preferenceRotationIds as string[])
+        : []
+      ).filter(Boolean)
+    );
+    if (
+      prefRotationIds.size > 0 &&
+      ![...normalizedRotationIds].some((id) => prefRotationIds.has(id))
+    ) {
+      continue;
+    }
+
+    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    violations.push({
+      ...match,
+      severity: "warning",
+      message: `Soft preference: avoid ${callType} call on ${dayNames[dayOfWeek] ?? "this day"}`,
+      metadata: { dayOfWeek, callType, residentPgyYear },
     });
   }
 

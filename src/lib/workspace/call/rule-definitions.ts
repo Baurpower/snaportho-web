@@ -11,7 +11,9 @@ export type RuleType =
   | "weekend_pairing"
   | "restrict_call_by_rotation"
   | "call_slot_definition"
-  | "max_calls_for_rotation";
+  | "max_calls_for_rotation"
+  | "monthly_load_target_by_pgy"
+  | "day_of_week_preference";
 
 export type SlotCondition = {
   type: "when_pgy_scheduled";
@@ -88,6 +90,28 @@ export type RuleConfig = {
   rotationCallLimitMax?: number;
   /** Period over which the limit is measured. Only "month" is supported. */
   rotationCallLimitPeriod?: "month";
+
+  // monthly_load_target_by_pgy fields
+  /** PGY years this monthly target applies to (empty = all PGY years). */
+  targetPgyYears?: number[];
+  /** Which call slot type this target measures: "Primary" | "Backup" | "any". */
+  targetCallType?: string;
+  /** Soft minimum: generate a warning when resident is below this count. */
+  targetMinCalls?: number;
+  /** Soft maximum: generate a warning when resident exceeds this count. */
+  targetMaxCalls?: number;
+  /** Hard maximum: block/flag when resident exceeds this count (never allow). */
+  targetHardMaxCalls?: number;
+
+  // day_of_week_preference fields
+  /** Days of week to soft-avoid for call: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat. */
+  preferenceDaysOfWeek?: number[];
+  /** Call types this preference applies to. */
+  preferenceCallTypes?: string[];
+  /** Optional: only apply when resident is on one of these rotation IDs. */
+  preferenceRotationIds?: string[];
+  /** Optional: only apply to residents in these PGY years. */
+  preferencePgyYears?: number[];
 };
 
 export type RuleFieldDefinition =
@@ -146,6 +170,15 @@ export type RuleDefinition = {
 
 export const CALL_TYPE_OPTIONS: CallTypeOption[] = ["Primary", "Backup"];
 export const PGY_YEAR_OPTIONS = [1, 2, 3, 4, 5];
+export const DAY_OF_WEEK_OPTIONS = [
+  { value: 0, label: "Sun" },
+  { value: 1, label: "Mon" },
+  { value: 2, label: "Tue" },
+  { value: 3, label: "Wed" },
+  { value: 4, label: "Thu" },
+  { value: 5, label: "Fri" },
+  { value: 6, label: "Sat" },
+];
 
 export const RULE_DEFINITIONS: RuleDefinition[] = [
   {
@@ -404,7 +437,112 @@ export const RULE_DEFINITIONS: RuleDefinition[] = [
       },
     ],
   },
+  {
+    type: "monthly_load_target_by_pgy",
+    label: "Monthly load target by PGY",
+    description:
+      "Sets per-PGY-level monthly call targets. The soft max triggers a warning; the hard max blocks assignment. Use this to encode \"PGY-1: target 2-3, max 4\" style targets.",
+    category: "volume",
+    defaultName: "Monthly load target",
+    defaultEnabled: true,
+    defaultIsHardRule: false,
+    defaultConfig: {
+      targetPgyYears: [1],
+      targetCallType: "Primary",
+      targetMinCalls: 2,
+      targetMaxCalls: 4,
+      targetHardMaxCalls: 4,
+    },
+    fields: [
+      {
+        key: "targetPgyYears",
+        label: "PGY years",
+        type: "pgy_multi_select",
+        options: PGY_YEAR_OPTIONS,
+        description: "PGY levels this target applies to.",
+      },
+      {
+        key: "targetHardMaxCalls",
+        label: "Hard maximum",
+        type: "number",
+        min: 0,
+        step: 1,
+        description: "Never exceed this many calls per month (hard block).",
+      },
+      {
+        key: "targetMaxCalls",
+        label: "Soft maximum",
+        type: "number",
+        min: 0,
+        step: 1,
+        description: "Warn when a resident exceeds this count (soft).",
+      },
+      {
+        key: "targetMinCalls",
+        label: "Soft minimum",
+        type: "number",
+        min: 0,
+        step: 1,
+        description: "Warn when a resident falls below this count (soft).",
+      },
+    ],
+  },
+  {
+    type: "day_of_week_preference",
+    label: "Day-of-week preference",
+    description:
+      "Soft preference to minimize call on specific weekdays. Optionally scoped to certain rotations or PGY levels. Use for rules like \"minimize Tue/Thu primary call for PGY-2 residents on Hand or Foot & Ankle.\"",
+    category: "eligibility",
+    defaultName: "Avoid weekday call",
+    defaultEnabled: true,
+    defaultIsHardRule: false,
+    defaultConfig: {
+      preferenceDaysOfWeek: [2, 4],
+      preferenceCallTypes: ["Primary"],
+      preferenceRotationIds: [],
+      preferencePgyYears: [],
+    },
+    fields: [
+      {
+        key: "preferenceDaysOfWeek",
+        label: "Days to minimize",
+        type: "text_list",
+        description: "0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat.",
+      },
+      {
+        key: "preferenceCallTypes",
+        label: "Call types",
+        type: "call_type_multi_select",
+        options: CALL_TYPE_OPTIONS,
+        description: "Which call types to soft-minimize on those days.",
+      },
+      {
+        key: "preferenceRotationIds",
+        label: "Limit to rotations (optional)",
+        type: "rotation_multi_select",
+        description: "Only applies when resident is on one of these rotations. Leave empty to apply to all rotations.",
+      },
+      {
+        key: "preferencePgyYears",
+        label: "Limit to PGY years (optional)",
+        type: "pgy_multi_select",
+        options: PGY_YEAR_OPTIONS,
+        description: "Only applies to these PGY levels. Leave empty to apply to all.",
+      },
+    ],
+  },
 ];
+
+function sanitizeDayOfWeekArray(value: unknown, fallback: number[]): number[] {
+  if (!Array.isArray(value)) return fallback;
+  return Array.from(
+    new Set(
+      value
+        .map((d) => (typeof d === "number" ? d : Number(d)))
+        .filter((d) => Number.isInteger(d) && d >= 0 && d <= 6)
+    )
+  ).sort((a, b) => a - b);
+}
 
 function sanitizeStringIdArray(value: unknown, fallback: string[]): string[] {
   if (!Array.isArray(value)) return fallback;
@@ -512,7 +650,7 @@ function sanitizeCallTypeArray(
     new Set(
       value.filter(
         (item): item is CallTypeOption =>
-          item === "Primary" || item === "Backup"
+          item === "Primary" || item === "Backup" || item === "Buddy"
       )
     )
   );
@@ -593,6 +731,9 @@ export function sanitizeRuleConfig(
     source.restrictedCallTypes,
     [...(definition.defaultConfig.restrictedCallTypes ?? ["Primary", "Backup"])]
   );
+  // Optional: restrict this rotation block to specific PGY years.
+  // Empty array (default) means the block applies to ALL PGY years.
+  next.restrictedPgyYears = sanitizePgyArray(source.restrictedPgyYears ?? [], []);
 }
 
   if (type === "max_calls_for_rotation") {
@@ -638,6 +779,28 @@ export function sanitizeRuleConfig(
     if (typeof source.slotMaxPerMonth === "number") next.slotMaxPerMonth = source.slotMaxPerMonth;
     next.slotSortOrder = typeof source.slotSortOrder === "number" ? source.slotSortOrder : 0;
     next.slotRequiredWhenVisible = typeof source.slotRequiredWhenVisible === "boolean" ? source.slotRequiredWhenVisible : true;
+  }
+
+  if (type === "monthly_load_target_by_pgy") {
+    next.targetPgyYears = sanitizePgyArray(source.targetPgyYears ?? [], []);
+    const validCallTypes = ["Primary", "Backup", "Buddy", "any"];
+    next.targetCallType =
+      typeof source.targetCallType === "string" && validCallTypes.includes(source.targetCallType)
+        ? source.targetCallType
+        : "Primary";
+    next.targetMinCalls = sanitizeNumber(source.targetMinCalls, 0, 0);
+    next.targetMaxCalls = sanitizeNumber(source.targetMaxCalls, 8, 0);
+    next.targetHardMaxCalls = sanitizeNumber(source.targetHardMaxCalls, 10, 0);
+  }
+
+  if (type === "day_of_week_preference") {
+    next.preferenceDaysOfWeek = sanitizeDayOfWeekArray(source.preferenceDaysOfWeek ?? [], [2, 4]);
+    const rawPrefCallTypes = Array.isArray(source.preferenceCallTypes)
+      ? (source.preferenceCallTypes as unknown[]).filter((t): t is string => typeof t === "string")
+      : ["Primary"];
+    next.preferenceCallTypes = rawPrefCallTypes.length > 0 ? rawPrefCallTypes : ["Primary"];
+    next.preferenceRotationIds = sanitizeStringIdArray(source.preferenceRotationIds ?? [], []);
+    next.preferencePgyYears = sanitizePgyArray(source.preferencePgyYears ?? [], []);
   }
 
   return next;
@@ -718,6 +881,44 @@ export function validateRuleDraft(rule: RuleDraft): string[] {
   }
 }
 
+  if (rule.type === "monthly_load_target_by_pgy") {
+    if (
+      !Array.isArray(rule.config.targetPgyYears) ||
+      rule.config.targetPgyYears.length === 0
+    ) {
+      errors.push("At least one PGY year is required.");
+    }
+    if (
+      typeof rule.config.targetHardMaxCalls === "number" &&
+      typeof rule.config.targetMaxCalls === "number" &&
+      rule.config.targetHardMaxCalls < rule.config.targetMaxCalls
+    ) {
+      errors.push("Hard maximum must be ≥ soft maximum.");
+    }
+    if (
+      typeof rule.config.targetMinCalls === "number" &&
+      typeof rule.config.targetMaxCalls === "number" &&
+      rule.config.targetMinCalls > rule.config.targetMaxCalls
+    ) {
+      errors.push("Soft minimum must be ≤ soft maximum.");
+    }
+  }
+
+  if (rule.type === "day_of_week_preference") {
+    if (
+      !Array.isArray(rule.config.preferenceDaysOfWeek) ||
+      rule.config.preferenceDaysOfWeek.length === 0
+    ) {
+      errors.push("At least one day of week is required.");
+    }
+    if (
+      !Array.isArray(rule.config.preferenceCallTypes) ||
+      rule.config.preferenceCallTypes.length === 0
+    ) {
+      errors.push("At least one call type is required.");
+    }
+  }
+
   return errors;
 }
 
@@ -731,8 +932,9 @@ export function validateRuleDraft(rule: RuleDraft): string[] {
  * All current rule types are treated as singletons (one per rule_set).
  * If you add a future multi-instance rule type, remove it from this set.
  */
-// call_slot_definition and max_calls_for_rotation are intentionally absent —
-// programs may define multiple slot definitions and multiple rotation limits.
+// call_slot_definition, max_calls_for_rotation, monthly_load_target_by_pgy,
+// and day_of_week_preference are intentionally absent — programs may define
+// multiple instances of each.
 export const SINGLETON_RULE_TYPES: ReadonlySet<RuleType> = new Set<RuleType>([
   "required_daily_call_slots",
   "min_days_between_assignments",
