@@ -228,3 +228,4 @@ console.log('\nCase 8: Stripe trialing');
 console.log(`\n${'─'.repeat(55)}`);
 console.log(`  ${passed} passed, ${failed} failed`);
 if (failed > 0) process.exit(1);
+export {};

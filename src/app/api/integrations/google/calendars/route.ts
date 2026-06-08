@@ -1,27 +1,26 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 
-import { createClient } from "@/utils/supabase/server";
-import { getGoogleOAuthClient } from "@/lib/google/calendar";
+import { getAuthorizedGoogleOAuthClient } from "@/lib/google/calendar";
+import { requireGoogleApiUser } from "@/lib/google/auth";
+import {
+  googleConnectionAuditDetails,
+  logGoogleAudit,
+} from "@/lib/google/audit";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const supabase = await createClient();
+    const { user, admin } = await requireGoogleApiUser("google.calendars.list");
 
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
+    if (!user) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const { data: connection, error: connectionError } = await supabase
+    const { data: connection, error: connectionError } = await admin
       .from("user_calendar_connections")
-      .select("access_token, refresh_token, calendar_id")
+      .select("id, user_id, provider_account_email, access_token, refresh_token, calendar_id")
       .eq("user_id", user.id)
       .eq("provider", "google")
       .maybeSingle();
@@ -33,12 +32,12 @@ export async function GET() {
       );
     }
 
-    const oauth2Client = getGoogleOAuthClient();
+    logGoogleAudit(
+      "calendars.connection",
+      googleConnectionAuditDetails(connection)
+    );
 
-    oauth2Client.setCredentials({
-      access_token: connection.access_token,
-      refresh_token: connection.refresh_token,
-    });
+    const oauth2Client = getAuthorizedGoogleOAuthClient(connection);
 
     const calendar = google.calendar({
       version: "v3",

@@ -1,27 +1,26 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 
-import { createClient } from "@/utils/supabase/server";
-import { getGoogleOAuthClient } from "@/lib/google/calendar";
+import { getAuthorizedGoogleOAuthClient } from "@/lib/google/calendar";
+import { requireGoogleApiUser } from "@/lib/google/auth";
+import {
+  googleConnectionAuditDetails,
+  logGoogleAudit,
+} from "@/lib/google/audit";
 
 export const dynamic = "force-dynamic";
 
 export async function POST() {
   try {
-    const supabase = await createClient();
+    const { user, admin } = await requireGoogleApiUser("google.calendars.create");
 
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
+    if (!user) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const { data: connection, error: connectionError } = await supabase
+    const { data: connection, error: connectionError } = await admin
       .from("user_calendar_connections")
-      .select("access_token, refresh_token")
+      .select("id, user_id, provider_account_email, access_token, refresh_token")
       .eq("user_id", user.id)
       .eq("provider", "google")
       .maybeSingle();
@@ -33,12 +32,12 @@ export async function POST() {
       );
     }
 
-    const oauth2Client = getGoogleOAuthClient();
+    logGoogleAudit(
+      "calendar_create.connection",
+      googleConnectionAuditDetails(connection)
+    );
 
-    oauth2Client.setCredentials({
-      access_token: connection.access_token,
-      refresh_token: connection.refresh_token,
-    });
+    const oauth2Client = getAuthorizedGoogleOAuthClient(connection);
 
     const calendar = google.calendar({
       version: "v3",
@@ -60,13 +59,14 @@ export async function POST() {
       throw new Error("Google did not return a calendar ID.");
     }
 
-    const { error: updateError } = await supabase
+    const { error: updateError } = await admin
       .from("user_calendar_connections")
       .update({
         calendar_id: calendarId,
         updated_at: new Date().toISOString(),
       })
       .eq("user_id", user.id)
+      .eq("id", connection.id)
       .eq("provider", "google");
 
     if (updateError) {

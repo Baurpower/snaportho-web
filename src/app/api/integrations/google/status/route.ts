@@ -1,22 +1,25 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server";
+import { requireGoogleApiUser } from "@/lib/google/auth";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import {
+  googleConnectionAuditDetails,
+  logGoogleAudit,
+} from "@/lib/google/audit";
 
 export async function GET() {
   try {
-    const supabase = await createClient();
+    const { user, admin } = await requireGoogleApiUser("google.status");
 
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
+    if (!user) {
       return NextResponse.json({ connected: false }, { status: 200 });
     }
 
-    const { data: connection } = await supabase
+    const membership = await getActiveMembershipForUser(user.id);
+    const programId = membership?.program_id ?? null;
+
+    const { data: connection } = await admin
       .from("user_calendar_connections")
-      .select("provider_account_email, calendar_id, updated_at")
+      .select("id, user_id, provider_account_email, calendar_id, updated_at")
       .eq("user_id", user.id)
       .eq("provider", "google")
       .maybeSingle();
@@ -34,20 +37,40 @@ export async function GET() {
       });
     }
 
-    const { data: syncSetting } = await supabase
-      .from("user_calendar_sync_settings")
-      .select("enabled, updated_at")
-      .eq("user_id", user.id)
-      .eq("provider", "google")
-      .maybeSingle();
+    logGoogleAudit(
+      "status.connection",
+      googleConnectionAuditDetails(connection)
+    );
 
-    const { data: syncedEvents } = await supabase
+    const { data: syncSetting } = programId
+      ? await admin
+      .from("user_calendar_sync_settings")
+      .select("id, user_id, program_id, connection_id, enabled, updated_at")
+      .eq("user_id", user.id)
+      .eq("program_id", programId)
+      .eq("connection_id", connection.id)
+      .eq("provider", "google")
+      .maybeSingle()
+      : { data: null };
+
+    logGoogleAudit("status.settings", {
+      settingsId: syncSetting?.id ?? null,
+      selectedCalendarId: connection.calendar_id ?? null,
+      userId: user.id,
+      programId,
+    });
+
+    const { data: syncedEvents } = programId
+      ? await admin
       .from("synced_call_events")
       .select("id, synced_at, provider_calendar_id")
       .eq("user_id", user.id)
+      .eq("program_id", programId)
+      .eq("connection_id", connection.id)
       .eq("provider", "google")
       .eq("sync_target", "user")
-      .order("synced_at", { ascending: false });
+      .order("synced_at", { ascending: false })
+      : { data: [] };
 
     const lastSyncedAt = syncedEvents?.[0]?.synced_at ?? null;
     const lastSyncedCount = syncedEvents?.length ?? 0;

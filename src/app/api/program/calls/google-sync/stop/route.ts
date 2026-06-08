@@ -2,7 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
 
 import { createClient } from "@/utils/supabase/server";
-import { getGoogleOAuthClient } from "@/lib/google/calendar";
+import { getAuthorizedGoogleOAuthClient } from "@/lib/google/calendar";
+import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
+import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  googleConnectionAuditDetails,
+  logGoogleAudit,
+} from "@/lib/google/audit";
 
 type StopSyncBody = {
   removeEvents?: boolean;
@@ -38,9 +44,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
-    const { data: connection, error: connectionError } = await supabase
+    logGoogleAudit("endpoint.auth", {
+      endpoint: "program.calls.google-sync.stop",
+      userId: user.id,
+      userEmail: user.email ?? null,
+    });
+
+    const membership = await getActiveMembershipForUser(user.id);
+    if (!membership?.program_id) {
+      return NextResponse.json({ error: "No active membership" }, { status: 400 });
+    }
+
+    const admin = createAdminClient();
+    const { data: connection, error: connectionError } = await admin
       .from("user_calendar_connections")
-      .select("access_token, refresh_token, calendar_id")
+      .select("id, user_id, provider_account_email, access_token, refresh_token, calendar_id")
       .eq("user_id", user.id)
       .eq("provider", "google")
       .single();
@@ -52,24 +70,47 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await supabase.from("user_calendar_sync_settings").upsert(
+    logGoogleAudit(
+      "stop.connection",
+      googleConnectionAuditDetails(connection)
+    );
+
+    const { data: syncSetting, error: settingError } = await admin
+      .from("user_calendar_sync_settings").upsert(
       {
         user_id: user.id,
+        program_id: membership.program_id,
+        connection_id: connection.id,
         provider: "google",
         enabled: false,
         updated_at: new Date().toISOString(),
       },
-      { onConflict: "user_id,provider" }
-    );
+      { onConflict: "user_id,program_id,provider" }
+    )
+      .select("id, user_id, program_id")
+      .single();
+
+    if (settingError) {
+      throw new Error(settingError.message);
+    }
+
+    logGoogleAudit("stop.settings", {
+      settingsId: syncSetting.id,
+      selectedCalendarId: connection.calendar_id,
+      userId: syncSetting.user_id,
+      programId: syncSetting.program_id,
+    });
 
     let removedCount = 0;
     let attemptedCount = 0;
 
     if (removeEvents) {
-      const { data: syncedEvents, error: syncedEventsError } = await supabase
+      const { data: syncedEvents, error: syncedEventsError } = await admin
         .from("synced_call_events")
         .select("id, provider_event_id, provider_calendar_id")
         .eq("user_id", user.id)
+        .eq("program_id", membership.program_id)
+        .eq("connection_id", connection.id)
         .eq("provider", "google")
         .eq("sync_target", "user");
 
@@ -80,11 +121,7 @@ export async function POST(request: NextRequest) {
       const rows = (syncedEvents ?? []) as SyncedEventRow[];
       attemptedCount = rows.filter((row) => row.provider_event_id).length;
 
-      const oauth2Client = getGoogleOAuthClient();
-      oauth2Client.setCredentials({
-        access_token: connection.access_token,
-        refresh_token: connection.refresh_token,
-      });
+      const oauth2Client = getAuthorizedGoogleOAuthClient(connection);
 
       const calendar = google.calendar({
         version: "v3",
@@ -127,10 +164,13 @@ export async function POST(request: NextRequest) {
       const idsToDelete = rows.map((event) => event.id);
 
       if (idsToDelete.length > 0) {
-        const { error: deleteRowsError } = await supabase
+        const { error: deleteRowsError } = await admin
           .from("synced_call_events")
           .delete()
-          .in("id", idsToDelete);
+          .in("id", idsToDelete)
+          .eq("user_id", user.id)
+          .eq("program_id", membership.program_id)
+          .eq("connection_id", connection.id);
 
         if (deleteRowsError) {
           throw new Error(deleteRowsError.message);

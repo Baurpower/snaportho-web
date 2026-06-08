@@ -3,8 +3,13 @@ import { google, calendar_v3 } from "googleapis";
 
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
-import { getGoogleOAuthClient } from "@/lib/google/calendar";
+import { getAuthorizedGoogleOAuthClient } from "@/lib/google/calendar";
 import { classifyGoogleCalendarError } from "@/lib/google/errors";
+import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  googleConnectionAuditDetails,
+  logGoogleAudit,
+} from "@/lib/google/audit";
 import {
   requireWorkspacePermission,
   WorkspacePermissionError,
@@ -72,6 +77,23 @@ async function deleteGoogleEventSafely({
 
 export async function POST(request: NextRequest) {
   try {
+    const supabase = await createClient();
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    logGoogleAudit("endpoint.auth", {
+      endpoint: "program.calls.google-sync",
+      userId: user.id,
+      userEmail: user.email ?? null,
+    });
+
     const body = await request.json();
 
     const scope = (body.scope ?? "mine") as SyncScope;
@@ -90,17 +112,6 @@ export async function POST(request: NextRequest) {
         { error: "monthStart and monthEnd are required" },
         { status: 400 }
       );
-    }
-
-    const supabase = await createClient();
-
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
     const activeMembership = await getActiveMembershipForUser(user.id);
@@ -126,7 +137,8 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const { data: connection, error: connectionError } = await supabase
+    const admin = createAdminClient();
+    const { data: connection, error: connectionError } = await admin
       .from("user_calendar_connections")
       .select("*")
       .eq("user_id", user.id)
@@ -140,12 +152,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const oauth2Client = getGoogleOAuthClient();
+    logGoogleAudit(
+      "sync.connection",
+      googleConnectionAuditDetails(connection)
+    );
 
-    oauth2Client.setCredentials({
-      access_token: connection.access_token,
-      refresh_token: connection.refresh_token,
-    });
+    const oauth2Client = getAuthorizedGoogleOAuthClient(connection);
 
     const calendar = google.calendar({
       version: "v3",
@@ -167,13 +179,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { error: updateConnectionError } = await supabase
+    const { error: updateConnectionError } = await admin
       .from("user_calendar_connections")
       .update({
         calendar_id: targetCalendarId,
         updated_at: new Date().toISOString(),
       })
       .eq("user_id", user.id)
+      .eq("id", connection.id)
       .eq("provider", "google");
 
     if (updateConnectionError) {
@@ -219,12 +232,14 @@ export async function POST(request: NextRequest) {
     const currentCallIds = new Set(currentCalls.map((call) => call.id));
 
     const { data: existingSyncRows, error: existingSyncRowsError } =
-      await supabase
+      await admin
         .from("synced_call_events")
         .select(
           "id, call_assignment_id, provider_event_id, provider_calendar_id"
         )
         .eq("user_id", user.id)
+        .eq("program_id", activeMembership.program_id)
+        .eq("connection_id", connection.id)
         .eq("provider", "google")
         .eq("sync_target", "user");
 
@@ -262,10 +277,13 @@ export async function POST(request: NextRequest) {
       .filter((id): id is string => Boolean(id));
 
     if (staleRowIds.length > 0) {
-      const { error: staleDeleteError } = await supabase
+      const { error: staleDeleteError } = await admin
         .from("synced_call_events")
         .delete()
-        .in("id", staleRowIds);
+        .in("id", staleRowIds)
+        .eq("user_id", user.id)
+        .eq("program_id", activeMembership.program_id)
+        .eq("connection_id", connection.id);
 
       if (staleDeleteError) {
         throw new Error(staleDeleteError.message);
@@ -294,12 +312,14 @@ export async function POST(request: NextRequest) {
         .filter(Boolean)
         .join("\n");
 
-      const { data: existingSync } = await supabase
+      const { data: existingSync } = await admin
         .from("synced_call_events")
         .select("provider_event_id, provider_calendar_id")
         .eq("call_assignment_id", call.id)
         .eq("provider", "google")
         .eq("user_id", user.id)
+        .eq("program_id", activeMembership.program_id)
+        .eq("connection_id", connection.id)
         .eq("sync_target", "user")
         .maybeSingle<ExistingSyncRow>();
 
@@ -371,12 +391,13 @@ export async function POST(request: NextRequest) {
 
       syncedEvents.push(googleEventId);
 
-      const { error: upsertSyncError } = await supabase
+      const { error: upsertSyncError } = await admin
         .from("synced_call_events")
         .upsert(
           {
             call_assignment_id: call.id,
             user_id: user.id,
+            connection_id: connection.id,
             provider: "google",
             provider_event_id: googleEventId,
             provider_calendar_id: targetCalendarId,
@@ -386,7 +407,8 @@ export async function POST(request: NextRequest) {
             sync_enabled: syncMode === "automatic",
           },
           {
-            onConflict: "call_assignment_id,provider,sync_target,user_id",
+            onConflict:
+              "user_id,connection_id,program_id,call_assignment_id,provider,sync_target",
           }
         );
 
@@ -395,11 +417,13 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const { error: syncSettingsError } = await supabase
+    const { data: syncSetting, error: syncSettingsError } = await admin
       .from("user_calendar_sync_settings")
       .upsert(
         {
           user_id: user.id,
+          program_id: activeMembership.program_id,
+          connection_id: connection.id,
           provider: "google",
           enabled: syncMode === "automatic",
           scope,
@@ -409,13 +433,22 @@ export async function POST(request: NextRequest) {
           updated_at: new Date().toISOString(),
         },
         {
-          onConflict: "user_id,provider",
+          onConflict: "user_id,program_id,provider",
         }
-      );
+      )
+      .select("id, user_id, program_id")
+      .single();
 
     if (syncSettingsError) {
       throw new Error(syncSettingsError.message);
     }
+
+    logGoogleAudit("sync.settings", {
+      settingsId: syncSetting.id,
+      selectedCalendarId: targetCalendarId,
+      userId: syncSetting.user_id,
+      programId: syncSetting.program_id,
+    });
 
     return NextResponse.json(
       {

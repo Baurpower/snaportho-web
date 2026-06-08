@@ -160,7 +160,7 @@ export async function POST(req: NextRequest) {
         name: person.full_name,
         gradYear: person.grad_year,
         email: person.email,
-        inviteLink: `${baseUrl}/join?token=${encodeURIComponent(rawToken)}`,
+        inviteLink: `${baseUrl}/work/join?token=${encodeURIComponent(rawToken)}`,
         expiresAt: expiresAt.toISOString(),
       });
     }

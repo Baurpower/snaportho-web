@@ -1,12 +1,16 @@
 import { google, calendar_v3 } from "googleapis";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getWorkspaceAccessContext } from "@/lib/workspace/access-control";
-import { getGoogleOAuthClient } from "@/lib/google/calendar";
+import { getAuthorizedGoogleOAuthClient } from "@/lib/google/calendar";
 import {
   classifyGoogleCalendarError,
   getGoogleErrorStatus,
   type GoogleCalendarErrorClass,
 } from "@/lib/google/errors";
+import {
+  googleConnectionAuditDetails,
+  logGoogleAudit,
+} from "@/lib/google/audit";
 
 type CalendarScope = "mine" | "program";
 
@@ -150,6 +154,8 @@ function classifyScope(value: string | null | undefined): CalendarScope | null {
 
 async function inferScopeFromExistingRows(params: {
   userId: string;
+  programId: string;
+  connectionId: string;
   programMembershipId: string | null;
 }) {
   const supabase = createAdminClient();
@@ -165,6 +171,8 @@ async function inferScopeFromExistingRows(params: {
       `
     )
     .eq("user_id", params.userId)
+    .eq("program_id", params.programId)
+    .eq("connection_id", params.connectionId)
     .eq("provider", "google")
     .eq("sync_target", "user");
 
@@ -287,8 +295,9 @@ export async function reconcileGoogleCalendarForUser(
 
   const { data: syncSettings, error: syncSettingsError } = await supabase
     .from("user_calendar_sync_settings")
-    .select("enabled, scope")
+    .select("id, user_id, program_id, connection_id, enabled, scope")
     .eq("user_id", userId)
+    .eq("program_id", accessContext.programId)
     .eq("provider", "google")
     .maybeSingle();
 
@@ -309,7 +318,7 @@ export async function reconcileGoogleCalendarForUser(
 
   const { data: connection, error: connectionError } = await supabase
     .from("user_calendar_connections")
-    .select("access_token, refresh_token, calendar_id")
+    .select("id, user_id, provider_account_email, access_token, refresh_token, calendar_id")
     .eq("user_id", userId)
     .eq("provider", "google")
     .maybeSingle();
@@ -329,11 +338,35 @@ export async function reconcileGoogleCalendarForUser(
     };
   }
 
+  if (syncSettings.connection_id !== connection.id) {
+    return {
+      skipped: true,
+      reason: "Google sync settings belong to a different connection",
+      created: 0,
+      updated: 0,
+      deleted: 0,
+      errors: [],
+    };
+  }
+
+  logGoogleAudit(
+    "reconcile.connection",
+    googleConnectionAuditDetails(connection)
+  );
+  logGoogleAudit("reconcile.settings", {
+    settingsId: syncSettings.id,
+    selectedCalendarId: connection.calendar_id,
+    userId,
+    programId: accessContext.programId,
+  });
+
   const scope =
     options?.scope ??
     classifyScope(syncSettings?.scope) ??
     (await inferScopeFromExistingRows({
       userId,
+      programId: accessContext.programId,
+      connectionId: connection.id,
       programMembershipId: membership.id,
     }));
 
@@ -341,6 +374,8 @@ export async function reconcileGoogleCalendarForUser(
     .from("synced_call_events")
     .select("id, call_assignment_id, provider_event_id, provider_calendar_id")
     .eq("user_id", userId)
+    .eq("program_id", accessContext.programId)
+    .eq("connection_id", connection.id)
     .eq("provider", "google")
     .eq("sync_target", "user");
 
@@ -371,11 +406,7 @@ export async function reconcileGoogleCalendarForUser(
       .map((row) => [row.call_assignment_id as string, row])
   );
 
-  const oauth2Client = getGoogleOAuthClient();
-  oauth2Client.setCredentials({
-    access_token: connection.access_token,
-    refresh_token: connection.refresh_token,
-  });
+  const oauth2Client = getAuthorizedGoogleOAuthClient(connection);
 
   const calendar = google.calendar({
     version: "v3",
@@ -443,7 +474,10 @@ export async function reconcileGoogleCalendarForUser(
           synced_at: nowIso,
           sync_enabled: true,
         })
-        .eq("id", row.id);
+        .eq("id", row.id)
+        .eq("user_id", userId)
+        .eq("program_id", accessContext.programId)
+        .eq("connection_id", connection.id);
     } catch (error) {
       const errorClass = classifyGoogleCalendarError(error);
 
@@ -463,6 +497,7 @@ export async function reconcileGoogleCalendarForUser(
                 id: row.id,
                 call_assignment_id: call.id,
                 user_id: userId,
+                connection_id: connection.id,
                 provider: "google",
                 provider_event_id: createdEvent.data.id ?? null,
                 provider_calendar_id: connection.calendar_id,
@@ -472,7 +507,8 @@ export async function reconcileGoogleCalendarForUser(
                 sync_enabled: true,
               },
               {
-                onConflict: "call_assignment_id,provider,sync_target,user_id",
+                onConflict:
+                  "user_id,connection_id,program_id,call_assignment_id,provider,sync_target",
               }
             );
           continue;
@@ -519,6 +555,7 @@ export async function reconcileGoogleCalendarForUser(
           {
             call_assignment_id: call.id,
             user_id: userId,
+            connection_id: connection.id,
             provider: "google",
             provider_event_id: createdEvent.data.id ?? null,
             provider_calendar_id: connection.calendar_id,
@@ -528,7 +565,8 @@ export async function reconcileGoogleCalendarForUser(
             sync_enabled: true,
           },
           {
-            onConflict: "call_assignment_id,provider,sync_target,user_id",
+            onConflict:
+              "user_id,connection_id,program_id,call_assignment_id,provider,sync_target",
           }
         );
 
@@ -547,7 +585,10 @@ export async function reconcileGoogleCalendarForUser(
     await supabase
       .from("synced_call_events")
       .delete()
-      .in("id", Array.from(staleRowIdsToDelete));
+      .in("id", Array.from(staleRowIdsToDelete))
+      .eq("user_id", userId)
+      .eq("program_id", accessContext.programId)
+      .eq("connection_id", connection.id);
   }
 
   const hasErrors = errors.length > 0;
@@ -561,6 +602,8 @@ export async function reconcileGoogleCalendarForUser(
       updated_at: nowIso,
     })
     .eq("user_id", userId)
+    .eq("program_id", accessContext.programId)
+    .eq("connection_id", connection.id)
     .eq("provider", "google");
 
   logSync("reconcile.finish", {

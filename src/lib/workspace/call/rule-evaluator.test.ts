@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Unit tests for rule-evaluator.ts (new functions) and rule-definitions.ts (new sanitizers).
  *
@@ -436,3 +435,4 @@ function run() {
 }
 
 run();
+export {};

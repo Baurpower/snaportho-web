@@ -39,6 +39,7 @@ import type { ProgramCallSlotDefinition } from "@/lib/workspace/call/rule-defini
 import { extractSlotDefinitions, DEFAULT_SLOT_DEFINITIONS } from "@/lib/workspace/call/rule-definitions";
 import type { DraftDayAssignment } from "@/components/workspace/call/programcalltypes";
 import { PROGRAM_CALL_DRAFT_SCHEMA_VERSION } from "@/lib/workspace/call/drafts";
+import { useAuth } from "@/context/AuthContext";
 
 const ChangeMyCallModal = dynamic(
   () => import("@/components/workspace/call-swaps/ChangeMyCallModal"),
@@ -292,6 +293,7 @@ export default function CallHubPage() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { user } = useAuth();
   const { permissions, isAdmin } = useWorkspacePermissions();
 
   const [googleSyncStatus, setGoogleSyncStatus] =
@@ -620,8 +622,28 @@ export default function CallHubPage() {
     };
   }, [monthStart, monthEnd]);
 
-  useEffect(() => {
+useEffect(() => {
   let cancelled = false;
+  const queryKey = [
+    "google-calendar-sync",
+    user?.id ?? null,
+    data?.programId ?? null,
+  ];
+
+  console.info("[google-calendar-audit] modal.query_key", { queryKey });
+
+  setGoogleConnected(false);
+  setGoogleAccountEmail(null);
+  setGoogleSynced(false);
+  setGoogleSyncStatus(null);
+  setGoogleCalendars([]);
+  setSelectedGoogleCalendarId("primary");
+
+  if (!user?.id) {
+    return () => {
+      cancelled = true;
+    };
+  }
 
   async function checkGoogleStatus() {
     const response = await fetch("/api/integrations/google/status", {
@@ -656,7 +678,7 @@ export default function CallHubPage() {
   return () => {
     cancelled = true;
   };
-}, []);
+}, [user?.id, data?.programId]);
 
 useEffect(() => {
   if (!searchParams) return;
@@ -697,6 +719,8 @@ useEffect(() => {
   }
 
   finishGoogleConnect();
+// loadGoogleCalendars is intentionally invoked only after the OAuth return.
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [searchParams, router]);
 
 useEffect(() => {
@@ -964,6 +988,13 @@ useEffect(() => {
 async function loadGoogleCalendars() {
   try {
     setGoogleCalendarsLoading(true);
+    console.info("[google-calendar-audit] modal.query_key", {
+      queryKey: [
+        "google-calendar-calendars",
+        user?.id ?? null,
+        data?.programId ?? null,
+      ],
+    });
 
     const response = await fetch("/api/integrations/google/calendars", {
       credentials: "include",
@@ -993,6 +1024,45 @@ async function loadGoogleCalendars() {
     );
   } finally {
     setGoogleCalendarsLoading(false);
+  }
+}
+
+async function disconnectGoogleCalendar() {
+  try {
+    setGoogleStopping(true);
+    setGoogleSyncError(null);
+
+    const response = await fetch("/api/integrations/google/disconnect", {
+      method: "DELETE",
+      credentials: "include",
+      cache: "no-store",
+    });
+    const payload = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      throw new Error(payload?.error ?? "Failed to disconnect Google Calendar");
+    }
+
+    setGoogleConnected(false);
+    setGoogleAccountEmail(null);
+    setGoogleSynced(false);
+    setGoogleSyncStatus(null);
+    setGoogleCalendars([]);
+    setSelectedGoogleCalendarId("primary");
+    setGoogleSyncModalOpen(false);
+    setGoogleStatusModalOpen(false);
+    setSuccessModal({
+      title: "Google Calendar Disconnected",
+      message: "This SnapOrtho account is no longer connected to Google.",
+    });
+  } catch (err) {
+    setGoogleSyncError(
+      err instanceof Error
+        ? err.message
+        : "Failed to disconnect Google Calendar"
+    );
+  } finally {
+    setGoogleStopping(false);
   }
 }
 
@@ -2291,6 +2361,15 @@ async function stopGoogleSync() {
               Stop Google Sync
             </button>
           ) : null}
+
+          <button
+            type="button"
+            onClick={disconnectGoogleCalendar}
+            disabled={googleStopping || googleSyncing}
+            className="inline-flex w-full items-center justify-center rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {googleStopping ? "Disconnecting..." : "Disconnect Google Account"}
+          </button>
         </div>
       ) : (
         <div className="mt-6 rounded-2xl border border-sky-200 bg-sky-50 px-4 py-4">

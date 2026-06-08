@@ -1,11 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { google } from "googleapis";
-import { createClient } from "@/utils/supabase/server";
 import {
   decodeGoogleOAuthState,
   getGoogleOAuthClient,
   GOOGLE_OAUTH_STATE_COOKIE,
 } from "@/lib/google/calendar";
+import { hashGoogleOAuthNonce, requireGoogleApiUser } from "@/lib/google/auth";
+import {
+  googleConnectionAuditDetails,
+  logGoogleAudit,
+} from "@/lib/google/audit";
 
 export async function GET(request: NextRequest) {
   const clearStateCookie = (response: NextResponse) => {
@@ -57,22 +61,42 @@ export async function GET(request: NextRequest) {
 
     nextPath = parsedState.next;
 
-    const supabase = await createClient();
+    const { user, admin } = await requireGoogleApiUser("google.callback");
 
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
+    logGoogleAudit("oauth.callback_state", {
+      stateUserId: parsedState.userId,
+      authenticatedUserId: user?.id ?? null,
+      authenticatedEmail: user?.email ?? null,
+    });
 
-    if (error || !user || user.id !== parsedState.userId) {
+    if (!user || user.id !== parsedState.userId) {
       return clearStateCookie(NextResponse.redirect(
         new URL("/work/call?google=auth_failed", request.url)
       ));
     }
 
-    const { data: existingConnection } = await supabase
+    const consumedAt = new Date().toISOString();
+    const { data: consumedState, error: consumeError } = await admin
+      .from("google_oauth_states")
+      .update({ consumed_at: consumedAt })
+      .eq("nonce_hash", hashGoogleOAuthNonce(parsedState.nonce))
+      .eq("user_id", user.id)
+      .is("consumed_at", null)
+      .gt("expires_at", consumedAt)
+      .select("nonce_hash")
+      .maybeSingle();
+
+    if (consumeError || !consumedState) {
+      return clearStateCookie(
+        NextResponse.redirect(
+          new URL("/work/call?google=invalid_state", request.url)
+        )
+      );
+    }
+
+    const { data: existingConnection } = await admin
       .from("user_calendar_connections")
-      .select("refresh_token, calendar_id")
+      .select("id, user_id, provider_account_email, refresh_token, calendar_id")
       .eq("user_id", user.id)
       .eq("provider", "google")
       .maybeSingle();
@@ -89,33 +113,79 @@ export async function GET(request: NextRequest) {
     });
 
     const profile = await oauth2.userinfo.get();
+    const googleAccountEmail = profile.data.email?.trim().toLowerCase() ?? null;
+    const existingGoogleAccountEmail =
+      existingConnection?.provider_account_email?.trim().toLowerCase() ?? null;
+    const sameGoogleAccount =
+      Boolean(googleAccountEmail) &&
+      googleAccountEmail === existingGoogleAccountEmail;
 
     const tokenExpiry = tokens.expiry_date
       ? new Date(tokens.expiry_date).toISOString()
       : null;
 
-    const { error: upsertError } = await supabase
+    const { data: connection, error: upsertError } = await admin
       .from("user_calendar_connections")
       .upsert(
         {
           user_id: user.id,
           provider: "google",
-          provider_account_email: profile.data.email ?? null,
+          provider_account_email: googleAccountEmail,
           access_token: tokens.access_token ?? null,
           refresh_token:
-            tokens.refresh_token ?? existingConnection?.refresh_token ?? null,
+            tokens.refresh_token ??
+            (sameGoogleAccount ? existingConnection?.refresh_token : null) ??
+            null,
           token_expiry: tokenExpiry,
-          calendar_id: existingConnection?.calendar_id ?? "primary",
+          calendar_id:
+            sameGoogleAccount && existingConnection?.calendar_id
+              ? existingConnection.calendar_id
+              : "primary",
           updated_at: new Date().toISOString(),
         },
         {
           onConflict: "user_id,provider",
         }
-      );
+      )
+      .select("id, user_id, provider_account_email")
+      .single();
 
     if (upsertError) {
       throw new Error(upsertError.message);
     }
+
+    if (existingConnection && !sameGoogleAccount) {
+      const { error: eventCleanupError } = await admin
+        .from("synced_call_events")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("connection_id", connection.id);
+      const { error: settingsCleanupError } = await admin
+        .from("user_calendar_sync_settings")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("connection_id", connection.id);
+
+      if (eventCleanupError || settingsCleanupError) {
+        throw new Error(
+          eventCleanupError?.message ??
+            settingsCleanupError?.message ??
+            "Failed to reset prior Google account state"
+        );
+      }
+
+      logGoogleAudit("oauth.google_account_changed", {
+        connectionId: connection.id,
+        ownerUserId: user.id,
+        previousGoogleAccountEmail: existingGoogleAccountEmail,
+        googleAccountEmail,
+      });
+    }
+
+    logGoogleAudit(
+      "oauth.connection_bound",
+      googleConnectionAuditDetails(connection)
+    );
 
     return clearStateCookie(NextResponse.redirect(new URL(nextPath, request.url)));
   } catch (error) {

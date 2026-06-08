@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server";
 import {
   createGoogleOAuthNonce,
   encodeGoogleOAuthState,
@@ -8,17 +7,14 @@ import {
   GOOGLE_OAUTH_STATE_MAX_AGE_SECONDS,
   sanitizeGoogleOAuthNextPath,
 } from "@/lib/google/calendar";
+import { hashGoogleOAuthNonce, requireGoogleApiUser } from "@/lib/google/auth";
+import { logGoogleAudit } from "@/lib/google/audit";
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const { user, admin } = await requireGoogleApiUser("google.connect");
 
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    if (error || !user) {
+    if (!user) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
@@ -27,10 +23,26 @@ export async function GET(request: NextRequest) {
     );
     const expiresAt =
       Date.now() + GOOGLE_OAUTH_STATE_MAX_AGE_SECONDS * 1000;
+    const nonce = createGoogleOAuthNonce();
     const state = encodeGoogleOAuthState({
-      nonce: createGoogleOAuthNonce(),
+      nonce,
       userId: user.id,
       next,
+      expiresAt,
+    });
+    const { error: stateError } = await admin.from("google_oauth_states").insert({
+      nonce_hash: hashGoogleOAuthNonce(nonce),
+      user_id: user.id,
+      expires_at: new Date(expiresAt).toISOString(),
+    });
+
+    if (stateError) {
+      throw new Error(`Failed to persist OAuth state: ${stateError.message}`);
+    }
+
+    logGoogleAudit("oauth.redirect", {
+      stateUserId: user.id,
+      userEmail: user.email ?? null,
       expiresAt,
     });
 
