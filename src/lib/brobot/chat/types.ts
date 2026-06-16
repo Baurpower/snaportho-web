@@ -1,0 +1,179 @@
+import { z } from 'zod';
+
+export const BROBOT_CHAT_MODES = [
+  'auto',
+  'or_prep',
+  'oite',
+  'clinic',
+  'consult',
+  'fracture_call',
+  'research',
+  'general',
+] as const;
+
+export const BROBOT_RESPONSE_DEPTHS = ['quick', 'standard', 'deep'] as const;
+
+export const BROBOT_TRAINING_LEVELS = [
+  'med_student',
+  'pgy1',
+  'pgy2',
+  'pgy3',
+  'pgy4',
+  'pgy5',
+  'attending',
+] as const;
+
+export const BroBotChatModeSchema = z.enum(BROBOT_CHAT_MODES);
+export const BroBotResponseDepthSchema = z.enum(BROBOT_RESPONSE_DEPTHS);
+export const BroBotTrainingLevelSchema = z.enum(BROBOT_TRAINING_LEVELS);
+export const BroBotChatSourceSchema = z.enum([
+  'manual',
+  'suggested_question',
+  'clarification_question',
+  'branch_selection',
+  'answer_now',
+  'example_prompt',
+]);
+export const BroBotIntentSourceSchema = z.enum(['local', 'llm', 'fallback']);
+
+export type BroBotChatMode = z.infer<typeof BroBotChatModeSchema>;
+export type BroBotResponseDepth = z.infer<typeof BroBotResponseDepthSchema>;
+export type BroBotTrainingLevel = z.infer<typeof BroBotTrainingLevelSchema>;
+export type BroBotChatSource = z.infer<typeof BroBotChatSourceSchema>;
+export type BroBotIntentSource = z.infer<typeof BroBotIntentSourceSchema>;
+
+export const BroBotChatSubintentSchema = z.enum([
+  'landmarks',
+  'surgical_steps',
+  'diagnostic_sequence',
+  'implant_options',
+  'brand_comparison',
+  'anatomy_at_risk',
+  'attending_questions',
+  'treatment_algorithm',
+  'quiz',
+  'workup',
+  'evidence_critique',
+  'initial_consult',
+  'presentation_help',
+  'imaging_review',
+  'differential',
+  'treatment_plan',
+  'operative_indications',
+  'complication',
+  'postop_problem',
+  'fracture',
+  'infection',
+  'urgent_red_flags',
+  'overview',
+  'other',
+]);
+
+export const BroBotChatAmbiguitySchema = z.enum(['low', 'moderate', 'high']);
+export const BroBotConsultConfidenceSchema = z.enum(['low', 'moderate', 'high']);
+export const BroBotProcedureCategorySchema = z.enum([
+  'fracture_orif',
+  'arthroplasty',
+  'arthroscopy',
+  'soft_tissue_release',
+  'tendon_ligament_repair',
+  'spine_procedure',
+  'hand_procedure',
+  'infection_consult',
+  'postop_complication',
+  'arthroplasty_consult',
+  'sports_injury',
+  'pediatric_fracture',
+  'general_topic',
+  'unknown',
+]);
+
+export type BroBotChatSubintent = z.infer<typeof BroBotChatSubintentSchema>;
+export type BroBotChatAmbiguity = z.infer<typeof BroBotChatAmbiguitySchema>;
+export type BroBotConsultConfidence = z.infer<typeof BroBotConsultConfidenceSchema>;
+export type BroBotProcedureCategory = z.infer<typeof BroBotProcedureCategorySchema>;
+
+export const BroBotBranchOptionSchema = z.object({
+  id: z.string().trim().min(1).max(80),
+  label: z.string().trim().min(1).max(80),
+  description: z.string().trim().max(180).optional(),
+  category: z.string().trim().max(80).optional(),
+});
+
+export type BroBotBranchOption = z.infer<typeof BroBotBranchOptionSchema>;
+
+export const BroBotChatMessageSchema = z.object({
+  role: z.enum(['system', 'user', 'assistant']),
+  content: z.string().trim().min(1),
+});
+
+export type BroBotChatMessage = z.infer<typeof BroBotChatMessageSchema>;
+
+export const BROBOT_CHAT_MESSAGE_MAX_LENGTH = 8000;
+
+export const BroBotChatRequestSchema = z.object({
+  conversationId: z.string().uuid().optional(),
+  message: z.string().trim().min(1).max(BROBOT_CHAT_MESSAGE_MAX_LENGTH),
+  mode: BroBotChatModeSchema.default('auto'),
+  responseDepth: BroBotResponseDepthSchema.default('standard'),
+  trainingLevel: BroBotTrainingLevelSchema.default('pgy2'),
+  source: BroBotChatSourceSchema.default('manual'),
+  sourceMessageId: z.string().uuid().optional(),
+  selectedBranchId: z.string().trim().min(1).max(80).optional(),
+  selectedBranchLabel: z.string().trim().min(1).max(80).optional(),
+  intentMode: BroBotChatModeSchema.exclude(['auto']).optional(),
+  intentSubintent: BroBotChatSubintentSchema.optional(),
+  intentProcedureOrTopic: z.string().trim().max(160).optional(),
+  intentProcedureCategory: BroBotProcedureCategorySchema.optional(),
+  intentAmbiguity: BroBotChatAmbiguitySchema.optional(),
+  intentReasonForBranching: z.string().trim().max(300).optional(),
+  intentSource: BroBotIntentSourceSchema.optional(),
+  answerNow: z.boolean().optional(),
+});
+
+export type BroBotChatRequest = z.infer<typeof BroBotChatRequestSchema>;
+
+export const BroBotChatOutputSchema = z.object({
+  goal: z.string().optional(),
+  selectedFocus: z.string().optional(),
+  answer: z.string(),
+  priorityPoints: z.array(z.string()),
+  knowledgeGaps: z.array(z.string()),
+  whatMostResidentsMiss: z.array(z.string()).optional(),
+  suggestedQuestions: z.array(z.string()),
+  nextLearningBranches: z.array(BroBotBranchOptionSchema).optional(),
+  tags: z.array(z.string()),
+  detectedMode: BroBotChatModeSchema,
+  confidence: z.number().min(0).max(1),
+  needsClarification: z.boolean().optional(),
+  clarifyingQuestions: z.array(z.string()).optional(),
+  assumedContext: z.string().optional(),
+  consultConfidence: BroBotConsultConfidenceSchema.optional(),
+  missingInformation: z.array(z.string()).optional(),
+});
+
+export type BroBotChatOutput = z.infer<typeof BroBotChatOutputSchema>;
+
+export const BroBotChatIntentSchema = z.object({
+  mode: BroBotChatModeSchema.exclude(['auto']),
+  subintent: BroBotChatSubintentSchema,
+  procedureCategory: BroBotProcedureCategorySchema,
+  procedureOrTopic: z.string(),
+  goal: z.string().optional(),
+  ambiguity: BroBotChatAmbiguitySchema,
+  assumedContext: z.string(),
+  missingContext: z.array(z.string()),
+  clarifyingQuestions: z.array(z.string()),
+  branchOptions: z.array(BroBotBranchOptionSchema).optional(),
+  answerImmediately: z.boolean().optional(),
+  requiresBranchSelection: z.boolean().optional(),
+  reasonForBranching: z.string().optional(),
+  confidence: z.number().min(0).max(1),
+});
+
+export type BroBotChatIntent = z.infer<typeof BroBotChatIntentSchema>;
+
+export type BroBotModelMessage = {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+};

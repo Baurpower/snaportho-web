@@ -19,6 +19,7 @@ import { createClient } from '@/utils/supabase/client';
 import { useAuth } from '@/context/AuthContext';
 import Nav from '@/components/Nav';
 import AccountDropdown from '@/components/accountdropdown';
+import BroBotProductTabs from '@/components/brobot/BroBotProductTabs';
 
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // Direct browser calls to the external CasePrep API have been eliminated.
@@ -382,6 +383,10 @@ export default function BroBotMember() {
             )}
           </div>
         )}
+      </div>
+
+      <div className="px-6 pb-6 text-center">
+        <BroBotProductTabs />
       </div>
 
       <BroBotHeader />
