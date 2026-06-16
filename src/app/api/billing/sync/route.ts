@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
-import { stripe } from '@/lib/stripe';
+import { getStripe } from '@/lib/stripe';
 import { syncSubscriptionFromStripe } from '@/lib/stripe';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 
@@ -21,6 +21,7 @@ export async function POST() {
   }
 
   try {
+    const stripe = getStripe();
     // Look up any existing subscription row for this user + plan to get Stripe IDs
     const { data: subRow } = await supabase
       .from('subscriptions')

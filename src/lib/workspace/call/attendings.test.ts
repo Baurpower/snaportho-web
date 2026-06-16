@@ -1,13 +1,17 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-
-const {
+import {
   canManageProgramAttendings,
   DEFAULT_PROGRAM_ATTENDING_SCOPE,
+  getAttendingDisplayName,
+  getAttendingLastName,
+  getAttendingShortName,
   getMonthRange,
+  isValidDateString,
+  isValidMonthKey,
+  normalizeProgramAttendingCoverageSlotInput,
   normalizeProgramAttendingInput,
   normalizeProgramAttendingMonthAssignments,
   normalizeProgramScopedRole,
-} = require("./attendings-shared.ts") as typeof import("./attendings-shared");
+} from "./attendings-shared";
 
 function assertEqual<T>(label: string, actual: T, expected: T) {
   if (actual !== expected) {
@@ -61,7 +65,46 @@ function run() {
   });
   assertOk("valid attending input", normalizedInput);
   assertEqual("full name trimmed", normalizedInput?.fullName, "Jane Doe, MD");
+  assertEqual("first name parsed from full name", normalizedInput?.firstName, "Jane");
+  assertEqual("last name parsed from full name", normalizedInput?.lastName, "MD");
   assertEqual("display name trimmed", normalizedInput?.displayName, "Dr. Doe");
+
+  const structuredInput = normalizeProgramAttendingInput({
+    firstName: "  Dan ",
+    lastName: " Lee  ",
+  });
+  assertOk("structured attending input", structuredInput);
+  assertEqual("structured full name derived", structuredInput?.fullName, "Dan Lee");
+  assertEqual("structured display name derived", structuredInput?.displayName, "Dan Lee");
+
+  assertEqual(
+    "display helper prefers display name",
+    getAttendingDisplayName({
+      firstName: "Dan",
+      lastName: "Lee",
+      fullName: "Daniel Lee",
+      displayName: "Dan Lee",
+    }),
+    "Dan Lee"
+  );
+  assertEqual(
+    "last name helper uses structured field",
+    getAttendingLastName({ firstName: "Mike", lastName: "Lee" }),
+    "Lee"
+  );
+  assertEqual(
+    "short name defaults to last name",
+    getAttendingShortName({ firstName: "Dan", lastName: "Lee" }),
+    "Lee"
+  );
+  assertEqual(
+    "short name disambiguates with first initial",
+    getAttendingShortName(
+      { firstName: "Dan", lastName: "Lee" },
+      { disambiguate: true }
+    ),
+    "D. Lee"
+  );
 
   assertNull(
     "blank attending rejected",
@@ -147,6 +190,97 @@ function run() {
       "2026-06"
     )
   );
+
+  assertOk(
+    "different slots can both be assigned on the same day",
+    normalizeProgramAttendingMonthAssignments(
+      [
+        {
+          coverageDate: "2026-06-10",
+          attendingId: "att-1",
+          slotId: "slot-ortho",
+        },
+        {
+          coverageDate: "2026-06-10",
+          attendingId: "att-2",
+          slotId: "slot-hand",
+        },
+      ],
+      "2026-06"
+    )
+  );
+
+  assertOk(
+    "same attending can cover different slots on the same day",
+    normalizeProgramAttendingMonthAssignments(
+      [
+        {
+          coverageDate: "2026-06-10",
+          attendingId: "att-1",
+          slotId: "slot-ortho",
+        },
+        {
+          coverageDate: "2026-06-10",
+          attendingId: "att-1",
+          slotId: "slot-hand",
+        },
+      ],
+      "2026-06"
+    )
+  );
+
+  assertNull(
+    "multiple defaults for the same slot rejected",
+    normalizeProgramAttendingMonthAssignments(
+      [
+        {
+          coverageDate: "2026-06-10",
+          attendingId: "att-1",
+          slotId: "slot-ortho",
+        },
+        {
+          coverageDate: "2026-06-10",
+          attendingId: "att-2",
+          slotId: "slot-ortho",
+        },
+      ],
+      "2026-06"
+    )
+  );
+
+  assertNull(
+    "duplicate same slot rejected even when not default",
+    normalizeProgramAttendingMonthAssignments(
+      [
+        {
+          coverageDate: "2026-06-10",
+          attendingId: "att-1",
+          slotId: "slot-ortho",
+          isDefault: false,
+        },
+        {
+          coverageDate: "2026-06-10",
+          attendingId: "att-2",
+          slotId: "slot-ortho",
+          isDefault: false,
+        },
+      ],
+      "2026-06"
+    )
+  );
+
+  assertEqual("valid month accepted", isValidMonthKey("2026-12"), true);
+  assertEqual("invalid month rejected", isValidMonthKey("2026-13"), false);
+  assertEqual("valid leap date accepted", isValidDateString("2028-02-29"), true);
+  assertEqual("invalid date rejected", isValidDateString("2026-02-30"), false);
+
+  const normalizedSlot = normalizeProgramAttendingCoverageSlotInput({
+    name: "  hand  ",
+    abbreviation: " hand ",
+    sortOrder: 2,
+  });
+  assertEqual("slot name trimmed", normalizedSlot?.name, "hand");
+  assertEqual("slot abbreviation normalized", normalizedSlot?.abbreviation, "HAND");
 }
 
 run();

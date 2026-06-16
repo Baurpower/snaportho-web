@@ -1,8 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-});
+import { getStripe } from '@/lib/stripe';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end();
@@ -14,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    const stripe = getStripe();
     // 1. Create a Stripe PaymentIntent
     const pi = await stripe.paymentIntents.create({
       amount,

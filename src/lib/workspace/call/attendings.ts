@@ -1,19 +1,26 @@
 import { createClient } from "@/utils/supabase/server";
 import type {
   ProgramAttending,
+  ProgramAttendingCoverageSlot,
   ProgramAttendingInput,
   ProgramAttendingMonthPayload,
   ProgramCallAttendingAssignment,
 } from "@/lib/workspace/call/types";
 import {
+  composeProgramAttendingFullName,
   DEFAULT_PROGRAM_ATTENDING_SCOPE,
   getMonthRange,
+  parseProgramAttendingFullName,
   type ProgramAttendingMonthAssignmentInput,
 } from "@/lib/workspace/call/attendings-shared";
 
 export {
   canManageProgramAttendings,
+  composeProgramAttendingFullName,
   DEFAULT_PROGRAM_ATTENDING_SCOPE,
+  getAttendingDisplayName,
+  getAttendingLastName,
+  getAttendingShortName,
   getMonthRange,
   isValidDateString,
   isValidMonthKey,
@@ -27,6 +34,8 @@ type ProgramAttendingRow = {
   id: string;
   program_id: string;
   full_name: string;
+  first_name: string | null;
+  last_name: string | null;
   display_name: string | null;
   is_active: boolean;
   created_by: string | null;
@@ -43,6 +52,7 @@ type ProgramCallAttendingAssignmentRow = {
   coverage_scope: string;
   is_default: boolean;
   is_active: boolean;
+  slot_id?: string | null;
   created_by: string | null;
   updated_by: string | null;
   created_at: string;
@@ -51,11 +61,15 @@ type ProgramCallAttendingAssignmentRow = {
     | {
         id: string;
         full_name: string;
+        first_name: string | null;
+        last_name: string | null;
         display_name: string | null;
       }
     | {
         id: string;
         full_name: string;
+        first_name: string | null;
+        last_name: string | null;
         display_name: string | null;
       }[]
     | null;
@@ -72,6 +86,8 @@ function mapProgramAttending(row: ProgramAttendingRow): ProgramAttending {
     id: row.id,
     programId: row.program_id,
     fullName: row.full_name,
+    firstName: row.first_name,
+    lastName: row.last_name,
     displayName: row.display_name,
     isActive: row.is_active,
     createdBy: row.created_by,
@@ -91,6 +107,8 @@ function mapProgramCallAttendingAssignment(
     programId: row.program_id,
     attendingId: row.attending_id,
     attendingName: attending?.full_name ?? "Unknown Attending",
+    attendingFirstName: attending?.first_name ?? null,
+    attendingLastName: attending?.last_name ?? null,
     attendingDisplayName: attending?.display_name ?? null,
     coverageDate: row.coverage_date,
     coverageScope: row.coverage_scope,
@@ -111,10 +129,12 @@ export async function listProgramAttendings(
   const { data, error } = await supabase
     .from("program_attendings")
     .select(
-      "id, program_id, full_name, display_name, is_active, created_by, updated_by, created_at, updated_at"
+      "id, program_id, full_name, first_name, last_name, display_name, is_active, created_by, updated_by, created_at, updated_at"
     )
     .eq("program_id", programId)
     .order("is_active", { ascending: false })
+    .order("last_name", { ascending: true, nullsFirst: false })
+    .order("first_name", { ascending: true, nullsFirst: false })
     .order("display_name", { ascending: true, nullsFirst: false })
     .order("full_name", { ascending: true });
 
@@ -137,6 +157,8 @@ export async function createProgramAttending(params: {
     .insert({
       program_id: params.programId,
       full_name: params.input.fullName,
+      first_name: params.input.firstName,
+      last_name: params.input.lastName,
       display_name: params.input.displayName ?? null,
       is_active: params.input.isActive ?? true,
       created_by: params.userId,
@@ -144,7 +166,7 @@ export async function createProgramAttending(params: {
       updated_at: new Date().toISOString(),
     })
     .select(
-      "id, program_id, full_name, display_name, is_active, created_by, updated_by, created_at, updated_at"
+      "id, program_id, full_name, first_name, last_name, display_name, is_active, created_by, updated_by, created_at, updated_at"
     )
     .single();
 
@@ -167,13 +189,29 @@ export async function updateProgramAttending(params: {
     updated_at: new Date().toISOString(),
   };
 
-  if (typeof params.input.fullName === "string") {
+  const firstName =
+    typeof params.input.firstName === "string" ? params.input.firstName.trim() : "";
+  const lastName =
+    typeof params.input.lastName === "string" ? params.input.lastName.trim() : "";
+
+  if (params.input.firstName !== undefined || params.input.lastName !== undefined) {
+    if (!firstName || !lastName) {
+      throw new Error("firstName and lastName are required.");
+    }
+
+    updates.first_name = firstName;
+    updates.last_name = lastName;
+    updates.full_name = composeProgramAttendingFullName(firstName, lastName);
+  } else if (typeof params.input.fullName === "string") {
     const fullName = params.input.fullName.trim();
-    if (!fullName) {
-      throw new Error("fullName cannot be empty.");
+    const parsed = parseProgramAttendingFullName(fullName);
+    if (!fullName || !parsed.firstName || !parsed.lastName) {
+      throw new Error("firstName and lastName are required.");
     }
 
     updates.full_name = fullName;
+    updates.first_name = parsed.firstName;
+    updates.last_name = parsed.lastName;
   }
 
   if (params.input.displayName !== undefined) {
@@ -194,7 +232,7 @@ export async function updateProgramAttending(params: {
     .eq("id", params.attendingId)
     .eq("program_id", params.programId)
     .select(
-      "id, program_id, full_name, display_name, is_active, created_by, updated_by, created_at, updated_at"
+      "id, program_id, full_name, first_name, last_name, display_name, is_active, created_by, updated_by, created_at, updated_at"
     )
     .maybeSingle();
 
@@ -224,6 +262,37 @@ export async function deactivateProgramAttending(params: {
   });
 }
 
+export async function listProgramAttendingCoverageSlots(
+  programId: string
+): Promise<ProgramAttendingCoverageSlot[]> {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("program_attending_coverage_slots")
+    .select(
+      "id, program_id, name, abbreviation, color, is_active, sort_order, description, created_at, updated_at"
+    )
+    .eq("program_id", programId)
+    .eq("is_active", true)
+    .order("sort_order", { ascending: true })
+    .order("name", { ascending: true });
+
+  if (error) {
+    throw new Error(`Failed to load coverage slots: ${error.message}`);
+  }
+
+  return (data ?? []).map((row) => ({
+    id: row.id,
+    programId: row.program_id,
+    name: row.name,
+    abbreviation: row.abbreviation,
+    color: row.color,
+    isActive: row.is_active,
+    sortOrder: row.sort_order ?? 0,
+    description: row.description,
+  }));
+}
+
 export async function listMonthAttendingAssignments(
   programId: string,
   month: string
@@ -231,37 +300,42 @@ export async function listMonthAttendingAssignments(
   const supabase = await createClient();
   const { monthStart, monthEnd } = getMonthRange(month);
 
-  const [attendingsResult, assignmentsResult] = await Promise.all([
+  const [attendingsResult, slotsResult] = await Promise.all([
     listProgramAttendings(programId),
-    supabase
-      .from("program_call_attending_assignments")
-      .select(
-        `
-          id,
-          program_id,
-          attending_id,
-          coverage_date,
-          coverage_scope,
-          is_default,
-          is_active,
-          created_by,
-          updated_by,
-          created_at,
-          updated_at,
-          program_attendings!program_call_attending_assignments_attending_id_fkey (
-            id,
-            full_name,
-            display_name
-          )
-        `
-      )
-      .eq("program_id", programId)
-      .eq("is_active", true)
-      .gte("coverage_date", monthStart)
-      .lte("coverage_date", monthEnd)
-      .order("coverage_date", { ascending: true })
-      .order("coverage_scope", { ascending: true }),
+    listProgramAttendingCoverageSlots(programId),
   ]);
+
+  const assignmentsResult = await supabase
+    .from("program_call_attending_assignments")
+    .select(
+      `
+        id,
+        program_id,
+        attending_id,
+        coverage_date,
+        coverage_scope,
+        is_default,
+        is_active,
+        slot_id,
+        created_by,
+        updated_by,
+        created_at,
+        updated_at,
+        program_attendings!program_call_attending_assignments_attending_id_fkey (
+          id,
+          full_name,
+          first_name,
+          last_name,
+          display_name
+        )
+      `
+    )
+    .eq("program_id", programId)
+    .eq("is_active", true)
+    .gte("coverage_date", monthStart)
+    .lte("coverage_date", monthEnd)
+    .order("coverage_date", { ascending: true })
+    .order("coverage_scope", { ascending: true });
 
   if (assignmentsResult.error) {
     throw new Error(
@@ -269,14 +343,29 @@ export async function listMonthAttendingAssignments(
     );
   }
 
+  // Build slot lookup from the separately fetched slots (avoids relationship cache issues in the join)
+  const slotById = new Map<string, ProgramAttendingCoverageSlot>();
+  slotsResult.forEach((slot) => slotById.set(slot.id, slot));
+
+  const assignments = ((assignmentsResult.data ?? []) as unknown as ProgramCallAttendingAssignmentRow[]).map((row) => {
+    const base = mapProgramCallAttendingAssignment(row);
+    const slot = row.slot_id ? slotById.get(row.slot_id) : null;
+    return {
+      ...base,
+      slotId: row.slot_id ?? null,
+      slotName: slot?.name ?? null,
+      slotAbbreviation: slot?.abbreviation ?? null,
+      slotColor: slot?.color ?? null,
+    };
+  });
+
   return {
     month,
     monthStart,
     monthEnd,
     attendings: attendingsResult,
-    assignments: ((assignmentsResult.data ?? []) as ProgramCallAttendingAssignmentRow[]).map(
-      mapProgramCallAttendingAssignment
-    ),
+    slots: slotsResult,
+    assignments,
   };
 }
 
@@ -287,113 +376,26 @@ export async function upsertMonthAttendingAssignments(params: {
   assignments: ProgramAttendingMonthAssignmentInput[];
 }): Promise<ProgramAttendingMonthPayload> {
   const supabase = await createClient();
-  const { monthStart, monthEnd } = getMonthRange(params.month);
+  const { monthStart } = getMonthRange(params.month);
 
-  const attendingIds = Array.from(
-    new Set(params.assignments.map((assignment) => assignment.attendingId))
+  const { error } = await supabase.rpc(
+    "replace_program_call_attending_assignments_month",
+    {
+      target_program_id: params.programId,
+      target_month_start: monthStart,
+      replacement_assignments: params.assignments.map((assignment) => ({
+        coverage_date: assignment.coverageDate,
+        attending_id: assignment.attendingId,
+        slot_id: assignment.slotId ?? null,
+        coverage_scope:
+          assignment.coverageScope ?? DEFAULT_PROGRAM_ATTENDING_SCOPE,
+        is_default: assignment.isDefault ?? true,
+      })),
+    }
   );
 
-  if (attendingIds.length > 0) {
-    const { data: validAttendings, error: attendingError } = await supabase
-      .from("program_attendings")
-      .select("id")
-      .eq("program_id", params.programId)
-      .eq("is_active", true)
-      .in("id", attendingIds);
-
-    if (attendingError) {
-      throw new Error(
-        `Failed to validate attending assignments: ${attendingError.message}`
-      );
-    }
-
-    const validIds = new Set((validAttendings ?? []).map((row) => String(row.id)));
-    const invalidId = attendingIds.find((id) => !validIds.has(id));
-
-    if (invalidId) {
-      throw new Error("One or more attendings do not belong to this program.");
-    }
-  }
-
-  const nextKeys = new Set(
-    params.assignments.map(
-      (assignment) =>
-        `${assignment.coverageDate}__${assignment.coverageScope ?? DEFAULT_PROGRAM_ATTENDING_SCOPE}__${assignment.attendingId}__${assignment.isDefault ? "1" : "0"}`
-    )
-  );
-
-  const { data: existingRows, error: existingError } = await supabase
-    .from("program_call_attending_assignments")
-    .select("id, coverage_date, coverage_scope, attending_id, is_default")
-    .eq("program_id", params.programId)
-    .gte("coverage_date", monthStart)
-    .lte("coverage_date", monthEnd)
-    .eq("is_active", true);
-
-  if (existingError) {
-    throw new Error(
-      `Failed to load existing month attending assignments: ${existingError.message}`
-    );
-  }
-
-  const deactivateIds = ((existingRows ?? []) as Array<{
-    id: string;
-    coverage_date: string;
-    coverage_scope: string;
-    attending_id: string;
-    is_default: boolean;
-  }>)
-    .filter((row) => {
-      const key = `${row.coverage_date}__${row.coverage_scope}__${row.attending_id}__${row.is_default ? "1" : "0"}`;
-      return !nextKeys.has(key);
-    })
-    .map((row) => row.id);
-
-  if (deactivateIds.length > 0) {
-    const { error: deactivateError } = await supabase
-      .from("program_call_attending_assignments")
-      .update({
-        is_active: false,
-        updated_by: params.userId,
-        updated_at: new Date().toISOString(),
-      })
-      .in("id", deactivateIds)
-      .eq("program_id", params.programId);
-
-    if (deactivateError) {
-      throw new Error(
-        `Failed to retire month attending assignments: ${deactivateError.message}`
-      );
-    }
-  }
-
-  if (params.assignments.length > 0) {
-    const { error: upsertError } = await supabase
-      .from("program_call_attending_assignments")
-      .upsert(
-        params.assignments.map((assignment) => ({
-          program_id: params.programId,
-          attending_id: assignment.attendingId,
-          coverage_date: assignment.coverageDate,
-          coverage_scope:
-            assignment.coverageScope ?? DEFAULT_PROGRAM_ATTENDING_SCOPE,
-          is_default: assignment.isDefault ?? true,
-          is_active: true,
-          created_by: params.userId,
-          updated_by: params.userId,
-          updated_at: new Date().toISOString(),
-        })),
-        {
-          onConflict:
-            "program_id,coverage_date,coverage_scope,attending_id,is_default",
-        }
-      );
-
-    if (upsertError) {
-      throw new Error(
-        `Failed to save month attending assignments: ${upsertError.message}`
-      );
-    }
+  if (error) {
+    throw new Error(`Failed to save month attending assignments: ${error.message}`);
   }
 
   return listMonthAttendingAssignments(params.programId, params.month);

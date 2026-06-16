@@ -5,6 +5,7 @@ import { PhoneCall, Home } from "lucide-react";
 import { MobileCardShell } from "@/components/workspace/mobile/mobilecardshell";
 import { MobileSectionHeader } from "@/components/workspace/mobile/mobilesectionheader";
 import type { ProgramCallItem } from "@/components/workspace/call/callmonthcalendar";
+import type { DayAttendingCoverageSummary } from "@/lib/workspace/call/attending-coverage-display";
 
 export interface MobileProgramCallAgendaProps {
   calls: ProgramCallItem[];
@@ -16,6 +17,7 @@ export interface MobileProgramCallAgendaProps {
   onDayClick?: (dateKey: string) => void;
   /** Optional loading state */
   loading?: boolean;
+  attendingCoverageByDate?: Map<string, DayAttendingCoverageSummary>;
 }
 
 /**
@@ -33,6 +35,7 @@ export function MobileProgramCallAgenda({
   viewMode,
   onDayClick,
   loading = false,
+  attendingCoverageByDate,
 }: MobileProgramCallAgendaProps) {
   // Group + sort per day (defensive copy + sort so isMine is always first)
   const days = useMemo(() => {
@@ -106,6 +109,7 @@ export function MobileProgramCallAgenda({
 
       {days.map(({ date, calls: dayCalls }) => {
         const dateObj = new Date(`${date}T00:00:00`);
+        const attendingCoverage = attendingCoverageByDate?.get(date) ?? null;
         const dayLabel = dateObj.toLocaleDateString("en-US", {
           weekday: "short",
           month: "short",
@@ -115,11 +119,14 @@ export function MobileProgramCallAgenda({
         return (
           <div key={date} className="space-y-1.5">
             {/* Date header - compact */}
-            <div className="flex items-center justify-between px-1">
-              <span className="text-xs font-semibold text-slate-600">
-                {dayLabel}
-              </span>
-              <span className="text-[10px] text-slate-400">
+            <div className="flex items-center justify-between gap-3 px-1">
+              <div className="min-w-0">
+                <span className="text-xs font-semibold text-slate-600">
+                  {dayLabel}
+                </span>
+                <MobileAgendaAttendingSummary summary={attendingCoverage} />
+              </div>
+              <span className="shrink-0 text-[10px] text-slate-400">
                 {dayCalls.length} assignment{dayCalls.length === 1 ? "" : "s"}
               </span>
             </div>
@@ -181,6 +188,29 @@ export function MobileProgramCallAgenda({
         );
       })}
     </div>
+  );
+}
+
+function MobileAgendaAttendingSummary({
+  summary,
+}: {
+  summary: DayAttendingCoverageSummary | null;
+}) {
+  if (!summary || summary.chips.length === 0) return null;
+
+  const firstChip = summary.chips[0];
+  const overflowCount = summary.chips.length - 1;
+  const label =
+    overflowCount > 0 ? `${firstChip.label} +${overflowCount}` : firstChip.label;
+  const prefix = overflowCount > 0 ? "Attendings" : "Attending";
+
+  return (
+    <p
+      className="mt-0.5 truncate text-[10px] font-semibold text-slate-500"
+      title={summary.title}
+    >
+      {prefix}: {label}
+    </p>
   );
 }
 

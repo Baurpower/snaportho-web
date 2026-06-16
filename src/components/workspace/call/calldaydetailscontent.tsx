@@ -5,6 +5,7 @@ import { Home, MapPin, PhoneCall, StickyNote, UserRound } from "lucide-react";
 import { useAdminSwapDecision } from "@/hooks/useAdminSwapDecision";
 import SwapRequestStatusBadge from "@/components/workspace/call-swaps/SwapRequestStatusBadge";
 import type { SwapRequestListItem } from "@/lib/workspace/call-swaps/types";
+import type { DayAttendingCoverageSummary } from "@/lib/workspace/call/attending-coverage-display";
 
 export type ProgramCallItem = {
   id: string;
@@ -74,6 +75,7 @@ function formatCallTypeLabel(callType: string | null, allCallsForDay: ProgramCal
 
 type Props = {
   calls: ProgramCallItem[];
+  attendingCoverage?: DayAttendingCoverageSummary | null;
   pendingSwapRequestsByCallId?: Map<string, SwapRequestListItem>;
   canApprovePendingRequests?: boolean;
   onPendingRequestUpdated?: () => void | Promise<void>;
@@ -82,6 +84,7 @@ type Props = {
 
 export default function CallDayDetailsContent({
   calls,
+  attendingCoverage,
   pendingSwapRequestsByCallId,
   canApprovePendingRequests = false,
   onPendingRequestUpdated,
@@ -124,14 +127,19 @@ export default function CallDayDetailsContent({
 
   if (calls.length === 0) {
     return (
-      <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-8 text-center text-sm text-slate-500">
-        No calls scheduled for this day.
+      <div className="space-y-3">
+        <AttendingCoverageSection summary={attendingCoverage ?? null} />
+        <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-8 text-center text-sm text-slate-500">
+          No calls scheduled for this day.
+        </div>
       </div>
     );
   }
 
   return (
     <div className="space-y-3">
+      <AttendingCoverageSection summary={attendingCoverage ?? null} />
+
       {calls.map((call) => {
         const tone = getCallTone(call);
         const pendingRequest = pendingSwapRequestsByCallId?.get(call.id) ?? null;
@@ -336,5 +344,93 @@ export default function CallDayDetailsContent({
         );
       })}
     </div>
+  );
+}
+
+function AttendingCoverageSection({
+  summary,
+}: {
+  summary: DayAttendingCoverageSummary | null;
+}) {
+  if (!summary || (summary.assignments.length === 0 && summary.missingSlots.length === 0)) {
+    return null;
+  }
+
+  return (
+    <section className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+            Attending Coverage
+          </p>
+          <p className="mt-1 text-sm text-slate-600">
+            Faculty coverage for this call day.
+          </p>
+        </div>
+        {summary.missingSlots.length > 0 ? (
+          <span className="rounded-full border border-amber-300 bg-amber-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-amber-900">
+            Missing
+          </span>
+        ) : (
+          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-emerald-700">
+            Complete
+          </span>
+        )}
+      </div>
+
+      <div className="mt-4 space-y-2">
+        {summary.assignments.map((assignment) => (
+          <div
+            key={assignment.id}
+            className="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5"
+          >
+            <div className="flex min-w-0 items-center gap-2">
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full bg-slate-300"
+                style={
+                  assignment.slotColor
+                    ? { backgroundColor: assignment.slotColor }
+                    : undefined
+                }
+              />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold text-slate-950">
+                  {assignment.slotName ?? assignment.slotAbbreviation ?? "Coverage"}
+                </p>
+                <p className="truncate text-xs text-slate-500">
+                  Assigned
+                </p>
+              </div>
+            </div>
+            <p className="min-w-0 shrink truncate text-right text-sm font-semibold text-slate-800">
+              {assignment.attendingDisplayName?.trim() || assignment.attendingName}
+            </p>
+          </div>
+        ))}
+
+        {summary.missingSlots.map((slot) => (
+          <div
+            key={slot.id}
+            className="flex items-center justify-between gap-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2.5"
+          >
+            <div className="flex min-w-0 items-center gap-2">
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full bg-amber-400"
+                style={slot.color ? { backgroundColor: slot.color } : undefined}
+              />
+              <div className="min-w-0">
+                <p className="truncate text-sm font-bold text-slate-950">
+                  {slot.name}
+                </p>
+                <p className="truncate text-xs text-amber-700">
+                  No attending assigned
+                </p>
+              </div>
+            </div>
+            <p className="shrink-0 text-sm font-bold text-amber-800">Missing</p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

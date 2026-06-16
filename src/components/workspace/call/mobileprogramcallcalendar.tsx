@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { PhoneCall } from "lucide-react";
 import type { ProgramCallItem } from "@/components/workspace/call/callmonthcalendar";
+import type { DayAttendingCoverageSummary } from "@/lib/workspace/call/attending-coverage-display";
 
 export interface MobileProgramCallCalendarProps {
   year: number;
@@ -10,6 +10,7 @@ export interface MobileProgramCallCalendarProps {
   calls: ProgramCallItem[];
   loading?: boolean;
   onSelectDate?: (dateKey: string) => void;
+  attendingCoverageByDate?: Map<string, DayAttendingCoverageSummary>;
 }
 
 /**
@@ -29,6 +30,7 @@ export function MobileProgramCallCalendar({
   calls,
   loading = false,
   onSelectDate,
+  attendingCoverageByDate,
 }: MobileProgramCallCalendarProps) {
   const weeks = useMemo(
     () => buildCalendarWeeksSunday(year, monthIndex),
@@ -81,6 +83,7 @@ export function MobileProgramCallCalendar({
               const inMonth = isSameMonth(date, year, monthIndex);
               const isToday = key === todayKey;
               const dayCalls = callsByDate.get(key) ?? [];
+              const attendingCoverage = attendingCoverageByDate?.get(key) ?? null;
               const myCalls = dayCalls.filter((c) => c.isMine);
               const hasMyCall = myCalls.length > 0;
 
@@ -114,12 +117,9 @@ export function MobileProgramCallCalendar({
                       {date.getDate()}
                     </span>
 
-                    {dayCalls.length > 0 && inMonth && (
-                      <span className="inline-flex items-center gap-0.5 rounded-full bg-slate-800 px-1 py-px text-[8px] font-bold text-white">
-                        <PhoneCall className="h-2 w-2" />
-                        {dayCalls.length}
-                      </span>
-                    )}
+                    {inMonth ? (
+                      <MobileAttendingCoverageChip summary={attendingCoverage} />
+                    ) : null}
                   </div>
 
                   {inMonth && displayCalls.length > 0 && (
@@ -159,6 +159,34 @@ export function MobileProgramCallCalendar({
         ))}
       </div>
     </div>
+  );
+}
+
+function MobileAttendingCoverageChip({
+  summary,
+}: {
+  summary: DayAttendingCoverageSummary | null;
+}) {
+  if (!summary || summary.chips.length === 0) return null;
+
+  const firstChip = summary.chips[0];
+  const overflowCount = summary.chips.length - 1;
+  const label = overflowCount > 0 ? `${firstChip.label} +${overflowCount}` : firstChip.label;
+
+  return (
+    <span
+      className="inline-flex max-w-[48px] items-center gap-0.5 rounded-full border border-slate-200 bg-slate-100 px-1 py-px text-[8px] font-bold leading-none text-slate-700"
+      title={summary.title}
+      aria-label={`Attending coverage: ${summary.title || "None"}`}
+    >
+      {firstChip.color ? (
+        <span
+          className="h-1.5 w-1.5 shrink-0 rounded-full"
+          style={{ backgroundColor: firstChip.color }}
+        />
+      ) : null}
+      <span className="truncate">{label}</span>
+    </span>
   );
 }
 

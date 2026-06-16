@@ -58,6 +58,10 @@ import {
   getResidentColorClasses,
   type ResidentColorClasses,
 } from "@/lib/workspace/call/resident-colors";
+import type {
+  AttendingCoverageChip,
+  DayAttendingCoverageSummary,
+} from "@/lib/workspace/call/attending-coverage-display";
 
 type ResidentOption = {
   rosterId: string;
@@ -301,6 +305,61 @@ type PendingChange =
       slotId: string;
       callId: string;
     };
+
+function ReadOnlyAttendingCoverageChips({
+  summary,
+}: {
+  summary: DayAttendingCoverageSummary | null;
+}) {
+  if (!summary || summary.chips.length === 0) return null;
+
+  const visibleChips =
+    summary.chips.length <= 2
+      ? summary.chips
+      : [
+          summary.chips[0],
+          {
+            key: `${summary.date}-overflow`,
+            label: `+${summary.chips.length - 1}`,
+            title: summary.title,
+            color: null,
+            status: "overflow" as const,
+          },
+        ];
+
+  return (
+    <div
+      className="flex min-w-0 flex-1 flex-wrap justify-end gap-0.5"
+      title={summary.title}
+      aria-label={`Attending coverage: ${summary.title || "None"}`}
+    >
+      {visibleChips.map((chip) => (
+        <ReadOnlyAttendingCoverageChip key={chip.key} chip={chip} />
+      ))}
+    </div>
+  );
+}
+
+function ReadOnlyAttendingCoverageChip({
+  chip,
+}: {
+  chip: AttendingCoverageChip;
+}) {
+  return (
+    <span
+      className="inline-flex max-w-[78px] items-center gap-0.5 rounded-full border border-slate-200 bg-slate-50 px-1 py-0.5 text-[8px] font-bold leading-none text-slate-700"
+      title={chip.title}
+    >
+      {chip.color && chip.status === "assigned" ? (
+        <span
+          className="h-1.5 w-1.5 shrink-0 rounded-full"
+          style={{ backgroundColor: chip.color }}
+        />
+      ) : null}
+      <span className="truncate">{chip.label}</span>
+    </span>
+  );
+}
 
 
 function buildPoolResidentDndId(rosterId: string) {
@@ -939,6 +998,7 @@ export default function EditCallMonthCalendar({
   onDraftChange,
   draftSaveStatus = "idle",
   draftLastSavedAt,
+  attendingCoverageByDate,
 }: {
   year: number;
   monthIndex: number;
@@ -981,6 +1041,7 @@ export default function EditCallMonthCalendar({
   draftSaveStatus?: "idle" | "pending" | "saving" | "saved" | "error" | "conflict";
   /** Timestamp of the last successful autosave — drives "saved X ago" text. */
   draftLastSavedAt?: Date | null;
+  attendingCoverageByDate?: Map<string, DayAttendingCoverageSummary>;
 }) {
   const [selectedDateKey, setSelectedDateKey] = useState<string | null>(null);
   const [activeSlotAction, setActiveSlotAction] = useState<ActiveSlotAction>(null);
@@ -2446,6 +2507,7 @@ export default function EditCallMonthCalendar({
               const isToday = dateKey === todayKey;
               const isWeekend = date.getDay() === 0 || date.getDay() === 6;
               const dayItems = slotItemsByDate.get(dateKey) ?? [];
+              const attendingCoverage = attendingCoverageByDate?.get(dateKey) ?? null;
 
               return (
                 <div
@@ -2474,7 +2536,9 @@ export default function EditCallMonthCalendar({
                     >
                       {date.getDate()}
                     </span>
-                    {isWeekend && inMonth ? (
+                    {inMonth ? (
+                      <ReadOnlyAttendingCoverageChips summary={attendingCoverage} />
+                    ) : isWeekend ? (
                       <span className="text-[8px] font-semibold uppercase tracking-wide text-orange-400">
                         {date.getDay() === 6 ? "Sa" : "Su"}
                       </span>

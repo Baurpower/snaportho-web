@@ -8,7 +8,9 @@ import {
 } from "@/lib/workspace/call/attendings";
 
 type UpdateBody = {
-  fullName?: string;
+  fullName?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
   displayName?: string | null;
   isActive?: boolean;
 };
@@ -67,6 +69,8 @@ export async function PATCH(
     const attending =
       body.isActive === false &&
       body.fullName === undefined &&
+      body.firstName === undefined &&
+      body.lastName === undefined &&
       body.displayName === undefined
         ? await deactivateProgramAttending({
             programId: membership.program_id,

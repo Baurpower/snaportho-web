@@ -1,9 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-07-30.basil",
-});
+import { getStripe } from "@/lib/stripe";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const pi = String(req.query.pi || "").trim();
@@ -13,6 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    const stripe = getStripe();
     const intent = await stripe.paymentIntents.retrieve(pi);
 
     return res.status(200).json({

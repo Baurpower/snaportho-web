@@ -1,9 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-07-30.basil",
-});
+import { getStripe } from "@/lib/stripe";
 
 function cleanString(v: unknown, maxLen: number) {
   const s = String(v ?? "").trim();
@@ -14,6 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   try {
+    const stripe = getStripe();
     const amount = Number(req.body.amount);
     if (!Number.isInteger(amount) || amount < 100 || amount > 500_000) {
       return res.status(400).json({ error: "Invalid amount (must be 100–500000 cents)." });

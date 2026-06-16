@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
 
     if (!input) {
       return NextResponse.json(
-        { error: "A valid fullName is required." },
+        { error: "First name and last name are required." },
         { status: 400 }
       );
     }

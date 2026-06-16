@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
-import { stripe } from '@/lib/stripe';
+import { getStripe } from '@/lib/stripe';
 import { getRemainingAIUses } from '@/lib/brobot/entitlements';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import type Stripe from 'stripe';
@@ -50,6 +50,7 @@ export async function GET() {
   };
 
   try {
+    const stripe = getStripe();
     // Supabase subscriptions row
     const { data: subRow } = await supabase
       .from('subscriptions')

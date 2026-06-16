@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   CheckCircle2,
+  CalendarDays,
   Download,
   ChevronLeft,
   ChevronRight,
@@ -40,6 +41,13 @@ import { extractSlotDefinitions, DEFAULT_SLOT_DEFINITIONS } from "@/lib/workspac
 import type { DraftDayAssignment } from "@/components/workspace/call/programcalltypes";
 import { PROGRAM_CALL_DRAFT_SCHEMA_VERSION } from "@/lib/workspace/call/drafts";
 import { useAuth } from "@/context/AuthContext";
+import {
+  buildAttendingCoverageSummaryByDate,
+} from "@/lib/workspace/call/attending-coverage-display";
+import type {
+  ProgramAttendingCoverageSlot,
+  ProgramCallAttendingAssignment,
+} from "@/lib/workspace/call/types";
 
 const ChangeMyCallModal = dynamic(
   () => import("@/components/workspace/call-swaps/ChangeMyCallModal"),
@@ -59,6 +67,14 @@ type ProgramCallsMonthResponse = {
   myRosterId: string | null;
   residents: ResidentOption[];
   calls: ProgramCallItem[];
+};
+
+type ProgramAttendingCoverageMonthResponse = {
+  month: string;
+  monthStart: string;
+  monthEnd: string;
+  slots: ProgramAttendingCoverageSlot[];
+  assignments: ProgramCallAttendingAssignment[];
 };
 
 type ResidentOption = {
@@ -301,6 +317,9 @@ export default function CallHubPage() {
   const [googleStatusModalOpen, setGoogleStatusModalOpen] = useState(false);
 
   const [data, setData] = useState<ProgramCallsMonthResponse | null>(null);
+  const [attendingCoverageData, setAttendingCoverageData] =
+    useState<ProgramAttendingCoverageMonthResponse | null>(null);
+  const [attendingCoverageError, setAttendingCoverageError] = useState<string | null>(null);
   const [rotationLabelsByRosterId, setRotationLabelsByRosterId] = useState<Map<string, string>>(new Map());
   const [selectedDateKey, setSelectedDateKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -592,6 +611,54 @@ export default function CallHubPage() {
   useEffect(() => {
     let cancelled = false;
 
+    async function loadAttendingCoverage() {
+      try {
+        setAttendingCoverageError(null);
+        const month = monthStart.slice(0, 7);
+        const response = await fetch(
+          `/api/program/call-attending-assignments/month?month=${encodeURIComponent(month)}`,
+          {
+            credentials: "include",
+            cache: "no-store",
+          }
+        );
+        const payload = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          throw new Error(payload?.error ?? "Failed to load attending coverage");
+        }
+
+        if (!cancelled) {
+          setAttendingCoverageData({
+            month: payload?.month ?? month,
+            monthStart: payload?.monthStart ?? monthStart,
+            monthEnd: payload?.monthEnd ?? monthEnd,
+            slots: Array.isArray(payload?.slots) ? payload.slots : [],
+            assignments: Array.isArray(payload?.assignments)
+              ? payload.assignments
+              : [],
+          });
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setAttendingCoverageData(null);
+          setAttendingCoverageError(
+            err instanceof Error ? err.message : "Failed to load attending coverage"
+          );
+        }
+      }
+    }
+
+    loadAttendingCoverage();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [monthStart, monthEnd]);
+
+  useEffect(() => {
+    let cancelled = false;
+
     async function loadRotations() {
       try {
         const response = await fetch(
@@ -809,6 +876,26 @@ useEffect(() => {
   const selectedDayCalls = useMemo(
     () => (selectedDateKey ? callsByDate.get(selectedDateKey) ?? [] : []),
     [callsByDate, selectedDateKey]
+  );
+  const attendingCoverageByDate = useMemo(() => {
+    return buildAttendingCoverageSummaryByDate({
+      assignments: attendingCoverageData?.assignments ?? [],
+      slots: attendingCoverageData?.slots ?? [],
+      monthStart,
+      monthEnd,
+    });
+  }, [
+    attendingCoverageData?.assignments,
+    attendingCoverageData?.slots,
+    monthEnd,
+    monthStart,
+  ]);
+  const selectedDayAttendingCoverage = useMemo(
+    () =>
+      selectedDateKey
+        ? attendingCoverageByDate.get(selectedDateKey) ?? null
+        : null,
+    [attendingCoverageByDate, selectedDateKey]
   );
   const callsById = useMemo(() => {
     return new Map(calls.map((call) => [call.id, call]));
@@ -1758,15 +1845,23 @@ async function stopGoogleSync() {
   </span>
 ) : null}
 
+<button
+  type="button"
+  onClick={() => router.push("/work/call/attending-coverage")}
+  className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-2 text-sm font-semibold text-teal-950 transition hover:border-teal-300 hover:bg-teal-100"
+>
+  <CalendarDays className="h-4 w-4" />
+  Attending Coverage
+</button>
 {canShowAdminCallActions ? (
-  <button
-    type="button"
-    onClick={() => router.push("/work/call/add")}
-    className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
-  >
-    <Plus className="h-4 w-4" />
-    Add Call
-  </button>
+    <button
+      type="button"
+      onClick={() => router.push("/work/call/add")}
+      className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-950 transition hover:border-sky-300 hover:bg-sky-100"
+    >
+      <Plus className="h-4 w-4" />
+      Add Call
+    </button>
 ) : null}
 </div>
               </div>
@@ -1828,6 +1923,7 @@ async function stopGoogleSync() {
                         onDraftChange={handleCalendarDraftChange}
                         draftSaveStatus={draftSaveStatus}
                         draftLastSavedAt={draftLastSavedAt}
+                        attendingCoverageByDate={attendingCoverageByDate}
                       />
                     ) : (
                       <CallMonthCalendar
@@ -1839,6 +1935,7 @@ async function stopGoogleSync() {
                         pendingSwapRequestsByCallId={
                           swapRequests.canReviewAdmin ? pendingAdminRequestsByCallId : undefined
                         }
+                        attendingCoverageByDate={attendingCoverageByDate}
                       />
                     )}
                   </div>
@@ -1869,6 +1966,7 @@ async function stopGoogleSync() {
                       setSelectedDateKey(dateKey);
                     }}
                     loading={loading}
+                    attendingCoverageByDate={attendingCoverageByDate}
                   />
                 ) : (
                   /* Program view: mobile-optimized compact calendar (not the desktop grid) */
@@ -1877,6 +1975,7 @@ async function stopGoogleSync() {
                     monthIndex={visibleMonth.monthIndex}
                     calls={calls}
                     loading={loading}
+                    attendingCoverageByDate={attendingCoverageByDate}
                     onSelectDate={(dateKey) => {
                       setSelectedDateKey(dateKey);
                     }}
@@ -1888,6 +1987,12 @@ async function stopGoogleSync() {
             {swapRequests.error ? (
               <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
                 {swapRequests.error}
+              </div>
+            ) : null}
+
+            {attendingCoverageError ? (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm text-amber-800">
+                Attending coverage could not be loaded. Resident call assignments are still available.
               </div>
             ) : null}
 
@@ -1943,6 +2048,7 @@ async function stopGoogleSync() {
         {() => (
           <CallDayDetailsContent
             calls={selectedDayCalls}
+            attendingCoverage={selectedDayAttendingCoverage}
             pendingSwapRequestsByCallId={
               swapRequests.canReviewAdmin ? pendingAdminRequestsByCallId : undefined
             }

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { PhoneCall, ArrowLeft, Loader2 } from "lucide-react";
+import { PhoneCall, ArrowLeft, Loader2, CalendarDays } from "lucide-react";
 import { useRouter } from "next/navigation";
 import AddProgramCall from "@/components/workspace/call/addprogramcall";
 import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
@@ -65,14 +65,24 @@ export default function AddCallPage() {
                   Add Program Call
                 </h1>
 
-                <button
-                  type="button"
-                  onClick={() => router.push("/work/call")}
-                  className="group mt-5 inline-flex items-center gap-2.5 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-black/20 ring-1 ring-white/20 backdrop-blur transition-all hover:bg-white/15 hover:ring-white/30"
-                >
-                  <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
-                  Back to Call
-                </button>
+                <div className="mt-5 flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => router.push("/work/call")}
+                    className="group inline-flex items-center gap-2.5 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-black/20 ring-1 ring-white/20 backdrop-blur transition-all hover:bg-white/15 hover:ring-white/30"
+                  >
+                    <ArrowLeft className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+                    Back to Call
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => router.push("/work/call/attending-coverage")}
+                    className="group inline-flex items-center gap-2.5 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-black/20 ring-1 ring-white/20 backdrop-blur transition-all hover:bg-white/15 hover:ring-white/30"
+                  >
+                    <CalendarDays className="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+                    Attending Coverage
+                  </button>
+                </div>
               </div>
 
             </div>

@@ -44,6 +44,7 @@ export async function GET(request: NextRequest) {
           monthStart: null,
           monthEnd: null,
           attendings: [],
+          slots: [],
           assignments: [],
         },
         { status: 200 }
@@ -148,7 +149,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "assignments must be an array of { coverageDate, attendingId, coverageScope?, isDefault? } within the requested month.",
+            "assignments must be an array of { coverageDate, attendingId, slotId?, coverageScope?, isDefault? } within the requested month.",
         },
         { status: 400 }
       );

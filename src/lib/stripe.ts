@@ -4,9 +4,23 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { getAppBaseUrl } from '@/lib/config/app-url'; // Centralized production-safe URL resolution
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-07-30.basil',
-});
+let stripeClient: Stripe | null = null;
+
+export function getStripe(): Stripe {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+
+  if (!secretKey) {
+    throw new Error('STRIPE_SECRET_KEY is not configured');
+  }
+
+  if (!stripeClient) {
+    stripeClient = new Stripe(secretKey, {
+      apiVersion: '2025-07-30.basil',
+    });
+  }
+
+  return stripeClient;
+}
 
 type BillingPortalErrorCode =
   | 'NO_STRIPE_SUBSCRIPTION'
@@ -124,6 +138,7 @@ type PortalSubscriptionRow = {
  */
 export async function getOrCreateStripeCustomer(userId: string, email?: string): Promise<string> {
   const supabase = createAdminClient();
+  const stripe = getStripe();
 
   const { data: sub } = await supabase
     .from('subscriptions')
@@ -168,6 +183,7 @@ export async function createBroBotCheckoutSession(
   customSuccessUrl?: string,
   customCancelUrl?: string
 ): Promise<{ url: string | null }> {
+  const stripe = getStripe();
   const priceId =
     interval === 'year'
       ? BROBOT_CONFIG.YEARLY_PRICE_ID
@@ -228,6 +244,7 @@ export async function createBillingPortalSession(
   customReturnUrl?: string
 ): Promise<{ url: string | null }> {
   const supabase = createAdminClient();
+  const stripe = getStripe();
 
   const { data: initialSub, error } = await supabase
     .from('subscriptions')

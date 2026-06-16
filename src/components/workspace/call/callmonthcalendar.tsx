@@ -1,8 +1,12 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { CalendarDays, PhoneCall } from "lucide-react";
+import { CalendarDays } from "lucide-react";
 import type { SwapRequestListItem } from "@/lib/workspace/call-swaps/types";
+import type {
+  AttendingCoverageChip,
+  DayAttendingCoverageSummary,
+} from "@/lib/workspace/call/attending-coverage-display";
 
 export type ProgramCallItem = {
   programId?: string | null;
@@ -109,6 +113,68 @@ function getPendingLabel(request: SwapRequestListItem) {
   return recipientName ? `-> ${recipientName}` : "Pending swap";
 }
 
+function AttendingCoverageChips({
+  summary,
+}: {
+  summary: DayAttendingCoverageSummary | null;
+}) {
+  if (!summary || summary.chips.length === 0) return null;
+
+  const visibleChips =
+    summary.chips.length <= 2
+      ? summary.chips
+      : [
+          summary.chips[0],
+          {
+            key: `${summary.date}-overflow`,
+            label: `+${summary.chips.length - 1}`,
+            title: summary.title,
+            color: null,
+            status: "overflow" as const,
+          },
+        ];
+
+  return (
+    <div
+      className="flex max-w-[78%] flex-wrap justify-end gap-1"
+      title={summary.title}
+      aria-label={`Attending coverage: ${summary.title || "None"}`}
+    >
+      {visibleChips.map((chip) => (
+        <AttendingCoverageChipView key={chip.key} chip={chip} />
+      ))}
+    </div>
+  );
+}
+
+function AttendingCoverageChipView({ chip }: { chip: AttendingCoverageChip }) {
+  if (chip.status === "overflow") {
+    return (
+      <span
+        className="inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-1.5 py-0.5 text-[9px] font-bold leading-none text-slate-700"
+        title={chip.title}
+      >
+        {chip.label}
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className="inline-flex max-w-[104px] items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[9px] font-bold leading-none text-slate-800"
+      title={chip.title}
+    >
+      {chip.color ? (
+        <span
+          className="h-1.5 w-1.5 shrink-0 rounded-full"
+          style={{ backgroundColor: chip.color }}
+        />
+      ) : null}
+      <span className="truncate">{chip.label}</span>
+    </span>
+  );
+}
+
 export default function CallMonthCalendar({
   year,
   monthIndex,
@@ -116,6 +182,7 @@ export default function CallMonthCalendar({
   loading,
   onSelectDate,
   pendingSwapRequestsByCallId,
+  attendingCoverageByDate,
 }: {
   year: number;
   monthIndex: number;
@@ -123,6 +190,7 @@ export default function CallMonthCalendar({
   loading?: boolean;
   onSelectDate?: (dateKey: string) => void;
   pendingSwapRequestsByCallId?: Map<string, SwapRequestListItem>;
+  attendingCoverageByDate?: Map<string, DayAttendingCoverageSummary>;
 }) {
   const weeks = useMemo(
     () => buildCalendarWeeksSunday(year, monthIndex),
@@ -214,6 +282,7 @@ export default function CallMonthCalendar({
                 const inMonth = isSameMonth(date, year, monthIndex);
                 const isToday = key === todayKey;
                 const dayCalls = callsByDate.get(key) ?? [];
+                const attendingCoverage = attendingCoverageByDate?.get(key) ?? null;
                 const myCalls = dayCalls.filter((call) => call.isMine);
                 const otherCalls = dayCalls.filter((call) => !call.isMine);
                 const visibleCalls = [...myCalls, ...otherCalls];
@@ -241,11 +310,8 @@ export default function CallMonthCalendar({
                         {date.getDate()}
                       </span>
 
-                      {dayCalls.length > 0 && inMonth ? (
-                        <div className="inline-flex items-center gap-1 rounded-full bg-slate-900 px-1.5 py-0.5 text-[9px] font-bold text-white shadow-sm">
-                          <PhoneCall className="h-2.5 w-2.5" />
-                          {dayCalls.length}
-                        </div>
+                      {inMonth ? (
+                        <AttendingCoverageChips summary={attendingCoverage} />
                       ) : null}
                     </div>
 
@@ -273,8 +339,8 @@ export default function CallMonthCalendar({
                                 : ""
                             }`}
                           >
-                            <div className="flex items-start justify-between gap-1.5">
-                              <div className="min-w-0">
+                            <div className="flex items-start justify-between gap-1">
+                              <div className="min-w-0 flex-1">
                                 <p className={`truncate text-[10px] font-semibold ${tone.text}`}>
                                   {call.residentName}
                                 </p>
@@ -288,10 +354,6 @@ export default function CallMonthCalendar({
                                   className={`shrink-0 rounded-full px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-[0.12em] ${tone.chip}`}
                                 >
                                   Mine
-                                </span>
-                              ) : call.trainingLevel ? (
-                                <span className="shrink-0 rounded-full bg-white px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.12em] text-slate-500 ring-1 ring-slate-200">
-                                  {call.trainingLevel}
                                 </span>
                               ) : null}
                             </div>

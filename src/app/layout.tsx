@@ -3,9 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Script from "next/script";
 
-import Nav from "../components/Nav";
-import ClientProvider from "../components/ClientProvider";
-import Footer from "../components/Footer";
+import ClientLayout from "./client-layout";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://snap-ortho.com"), // ✅ enables proper canonical generation
@@ -103,11 +101,7 @@ export default function RootLayout({
       </head>
 
       <body className="flex flex-col min-h-screen bg-cream text-midnight">
-        <ClientProvider>
-          <Nav />
-          <main className="flex-1 w-full">{children}</main>
-          <Footer />
-        </ClientProvider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

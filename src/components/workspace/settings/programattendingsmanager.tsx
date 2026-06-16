@@ -12,6 +12,11 @@ import {
 } from "lucide-react";
 import SettingsModal from "@/components/workspace/settings/settingsmodal";
 import type { ProgramAttending } from "@/lib/workspace/call/types";
+import {
+  composeProgramAttendingFullName,
+  getAttendingDisplayName,
+  parseProgramAttendingFullName,
+} from "@/lib/workspace/call/attendings-shared";
 
 type ProgramAttendingsResponse = {
   programId?: string | null;
@@ -38,11 +43,11 @@ type AttendingModalProps = {
   attending: ProgramAttending | null;
   saving: boolean;
   onClose: () => void;
-  onSave: (payload: { displayName: string }) => Promise<void> | void;
+  onSave: (payload: { firstName: string; lastName: string }) => Promise<void> | void;
 };
 
 function formatAttendingName(attending: ProgramAttending) {
-  return attending.displayName?.trim() || attending.fullName.trim() || "Unnamed Attending";
+  return getAttendingDisplayName(attending);
 }
 
 function sortAttendings(attendings: ProgramAttending[]) {
@@ -154,27 +159,33 @@ function AttendingModal({
   onClose,
   onSave,
 }: AttendingModalProps) {
-  const [displayName, setDisplayName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open) return;
-    setDisplayName(attending ? formatAttendingName(attending) : "");
+    const parsed = parseProgramAttendingFullName(
+      attending ? formatAttendingName(attending) : ""
+    );
+    setFirstName(attending?.firstName ?? parsed.firstName);
+    setLastName(attending?.lastName ?? parsed.lastName);
     setError(null);
   }, [attending, open]);
 
   if (!open) return null;
 
   async function handleSubmit() {
-    const trimmedDisplayName = displayName.trim();
+    const trimmedFirstName = firstName.trim();
+    const trimmedLastName = lastName.trim();
 
-    if (!trimmedDisplayName) {
-      setError("Display name is required.");
+    if (!trimmedFirstName || !trimmedLastName) {
+      setError("First name and last name are required.");
       return;
     }
 
     setError(null);
-    await onSave({ displayName: trimmedDisplayName });
+    await onSave({ firstName: trimmedFirstName, lastName: trimmedLastName });
   }
 
   return (
@@ -202,21 +213,34 @@ function AttendingModal({
 
         <div className="overflow-y-auto px-5 pb-5 pt-5 md:px-6 md:pb-6">
           <div className="space-y-4">
-            <div>
-              <label className="mb-2 block text-sm font-medium text-slate-200">
-                Display name
-              </label>
-              <input
-                value={displayName}
-                onChange={(event) => setDisplayName(event.target.value)}
-                placeholder="Dr. Jane Doe"
-                className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-sky-300/30 focus:ring-2 focus:ring-sky-300/15"
-              />
-              <p className="mt-2 text-xs text-slate-400">
-                Phase 1 attendings currently store display and full name together, so this
-                value is saved as the canonical attending name.
-              </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-200">
+                  First name
+                </label>
+                <input
+                  value={firstName}
+                  onChange={(event) => setFirstName(event.target.value)}
+                  placeholder="Dan"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-sky-300/30 focus:ring-2 focus:ring-sky-300/15"
+                />
+              </div>
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-200">
+                  Last name
+                </label>
+                <input
+                  value={lastName}
+                  onChange={(event) => setLastName(event.target.value)}
+                  placeholder="Lee"
+                  className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-sky-300/30 focus:ring-2 focus:ring-sky-300/15"
+                />
+              </div>
             </div>
+            <p className="text-xs text-slate-400">
+              Display name is derived as first name plus last name for consistent
+              calendar labels.
+            </p>
           </div>
 
           {error ? (
@@ -341,11 +365,15 @@ export default function ProgramAttendingsManager({
     }
   }
 
-  async function saveAttending(payload: { displayName: string }) {
-    const trimmedDisplayName = payload.displayName.trim();
+  async function saveAttending(payload: { firstName: string; lastName: string }) {
+    const firstName = payload.firstName.trim();
+    const lastName = payload.lastName.trim();
+    const fullName = composeProgramAttendingFullName(firstName, lastName);
     const requestBody = {
-      displayName: trimmedDisplayName,
-      fullName: trimmedDisplayName,
+      firstName,
+      lastName,
+      displayName: fullName,
+      fullName,
     };
 
     await runMutation(

@@ -3,9 +3,21 @@ import OpenAI from "openai";
 import { createClient } from "@/utils/supabase/server";
 import { getActiveMembershipForUser } from "@/lib/workspace/memberships";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+let openaiClient: OpenAI | null = null;
+
+function getOpenAI(): OpenAI {
+  const apiKey = process.env.OPENAI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY is not configured");
+  }
+
+  if (!openaiClient) {
+    openaiClient = new OpenAI({ apiKey });
+  }
+
+  return openaiClient;
+}
 
 /**
  * NOTE: This list is intentionally broader than the current executable RuleType union
@@ -74,6 +86,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const openai = getOpenAI();
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.1,

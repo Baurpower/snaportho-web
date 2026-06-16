@@ -61,6 +61,8 @@ export type ProgramAttending = {
   id: string
   programId: string
   fullName: string
+  firstName: string | null
+  lastName: string | null
   displayName: string | null
   isActive: boolean
   createdBy: string | null
@@ -69,26 +71,45 @@ export type ProgramAttending = {
   updatedAt: string
 }
 
+export type ProgramAttendingInput = {
+  fullName?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  displayName?: string | null
+  isActive?: boolean
+}
+
+export type ProgramAttendingCoverageSlot = {
+  id: string
+  programId: string
+  name: string
+  abbreviation: string
+  color: string | null
+  isActive: boolean
+  sortOrder: number
+  description: string | null
+}
+
 export type ProgramCallAttendingAssignment = {
   id: string
   programId: string
   attendingId: string
   attendingName: string
+  attendingFirstName?: string | null
+  attendingLastName?: string | null
   attendingDisplayName: string | null
   coverageDate: string
   coverageScope: string
   isDefault: boolean
   isActive: boolean
+  slotId?: string | null
+  slotName?: string | null
+  slotAbbreviation?: string | null
+  slotColor?: string | null
   createdBy: string | null
   updatedBy: string | null
   createdAt: string
   updatedAt: string
-}
-
-export type ProgramAttendingInput = {
-  fullName: string
-  displayName?: string | null
-  isActive?: boolean
 }
 
 export type ProgramAttendingMonthPayload = {
@@ -96,6 +117,7 @@ export type ProgramAttendingMonthPayload = {
   monthStart: string
   monthEnd: string
   attendings: ProgramAttending[]
+  slots: ProgramAttendingCoverageSlot[]
   assignments: ProgramCallAttendingAssignment[]
 }
 

@@ -19,9 +19,21 @@ import type {
 
 export const runtime = "nodejs";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+let openaiClient: OpenAI | null = null;
+
+function getOpenAI(): OpenAI {
+  const apiKey = process.env.OPENAI_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY is not configured");
+  }
+
+  if (!openaiClient) {
+    openaiClient = new OpenAI({ apiKey });
+  }
+
+  return openaiClient;
+}
 
 type Slot = "Primary" | "Backup" | "Buddy";
 type JsonRecord = Record<string, unknown>;
@@ -831,6 +843,7 @@ const { schedulePacket } = buildSchedulePacket(body);
       topOptions
     );
 
+    const openai = getOpenAI();
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.05,

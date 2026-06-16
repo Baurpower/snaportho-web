@@ -54,7 +54,9 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith('/mycases/playbook/') ||
     pathname.startsWith('/api/mycases/')
 
-  if (!user && !isAuthPage && !isPublicBroBotPath && !isPublicMyCasesPlaybookPath) {
+  const isPublicMyCasesLandingPath = pathname === '/mycases/landing'
+
+  if (!user && !isAuthPage && !isPublicBroBotPath && !isPublicMyCasesPlaybookPath && !isPublicMyCasesLandingPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/sign-in'
 
