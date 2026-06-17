@@ -10,10 +10,13 @@ export default function SignUpClient() {
   const searchParams = useSearchParams();
 
   const rawRedirectTo = searchParams?.get("redirectTo");
+  const legacyFrom = searchParams?.get("from");
 
   const redirectTo =
     rawRedirectTo && rawRedirectTo.startsWith("/")
       ? rawRedirectTo
+      : legacyFrom === "brobot"
+        ? "/brobot/chat"
       : "/work";
 
   const [email, setEmail] = useState("");

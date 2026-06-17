@@ -19,6 +19,8 @@ type ResetResponse = { data: object | null; error: AuthError | null };
 
 interface AuthContextType {
   user: User | null;
+  loading: boolean;
+  status: "loading" | "authenticated" | "unauthenticated";
   signIn: (email: string, password: string) => Promise<AuthResponse>;
   signUp: (email: string, password: string) => Promise<AuthResponse>;
   resetPassword: (
@@ -33,6 +35,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const supabase = useMemo(() => createClient(), []);
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -43,8 +46,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         error,
       } = await supabase.auth.getUser();
 
-      if (!error && isMounted) {
-        setUser(user ?? null);
+      if (isMounted) {
+        setUser(!error ? user ?? null : null);
+        setLoading(false);
       }
     };
 
@@ -55,6 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (isMounted) {
         setUser(session?.user ?? null);
+        setLoading(false);
       }
     });
 
@@ -81,9 +86,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error };
   };
 
+  const status: AuthContextType["status"] = loading
+    ? "loading"
+    : user
+      ? "authenticated"
+      : "unauthenticated";
+
   return (
     <AuthContext.Provider
-      value={{ user, signIn, signUp, resetPassword, signOut }}
+      value={{ user, loading, status, signIn, signUp, resetPassword, signOut }}
     >
       {children}
     </AuthContext.Provider>

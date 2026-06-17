@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   FormEvent,
   KeyboardEvent,
@@ -21,6 +22,11 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { useAuth } from '@/context/AuthContext';
+import {
+  clearPendingBroBotRequest,
+  readPendingBroBotRequest,
+  savePendingBroBotRequest,
+} from '@/lib/brobot/pending-request';
 import type {
   BroBotChatMode,
   BroBotChatSource,
@@ -345,7 +351,8 @@ function synthesizeDisplayAnswer(priorityPoints: string[]) {
 }
 
 export default function BroBotChatPage() {
-  const { user } = useAuth();
+  const router = useRouter();
+  const { user, loading: authLoading, status: authStatus } = useAuth();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [input, setInput] = useState('');
@@ -356,6 +363,7 @@ export default function BroBotChatPage() {
   const [error, setError] = useState<ChatError | null>(null);
   const [usage, setUsage] = useState<UsageSnapshot | null>(null);
   const [pendingIntent, setPendingIntent] = useState<PendingIntent | null>(null);
+  const [restoredPendingPrompt, setRestoredPendingPrompt] = useState(false);
   const listEndRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -372,6 +380,11 @@ export default function BroBotChatPage() {
     let isMounted = true;
 
     async function loadUsage() {
+      if (authStatus !== 'authenticated') {
+        setUsage(null);
+        return;
+      }
+
       try {
         const res = await fetch('/api/me/entitlements');
         const body = await res.json();
@@ -394,7 +407,39 @@ export default function BroBotChatPage() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [authStatus]);
+
+  useEffect(() => {
+    if (authStatus !== 'authenticated') return;
+
+    const pending = readPendingBroBotRequest();
+    if (!pending) return;
+
+    setInput(pending.prompt);
+    setMode(pending.mode);
+    setResponseDepth(pending.responseDepth);
+    setTrainingLevel(pending.trainingLevel);
+    setRestoredPendingPrompt(true);
+    setError(null);
+    clearPendingBroBotRequest();
+
+    requestAnimationFrame(() => textareaRef.current?.focus());
+  }, [authStatus]);
+
+  function redirectToSignInWithPendingRequest(message: string) {
+    savePendingBroBotRequest({
+      prompt: message,
+      mode,
+      responseDepth,
+      trainingLevel,
+      sourceRoute:
+        typeof window !== 'undefined'
+          ? `${window.location.pathname}${window.location.search}`
+          : '/brobot/chat',
+    });
+    setError({ type: 'auth' });
+    router.push('/auth/sign-in?redirectTo=/brobot/chat&intent=brobot');
+  }
 
   async function sendMessage(
     rawMessage?: string,
@@ -418,6 +463,7 @@ export default function BroBotChatPage() {
     if (optimisticUserMessage) {
       setMessages((current) => [...current, optimisticUserMessage]);
     }
+    setRestoredPendingPrompt(false);
     setInput('');
     setError(null);
     setLoading(true);
@@ -445,7 +491,7 @@ export default function BroBotChatPage() {
           );
 
           if (intentRes.status === 401) {
-            setError({ type: 'auth' });
+            redirectToSignInWithPendingRequest(message);
             return;
           }
 
@@ -512,7 +558,7 @@ export default function BroBotChatPage() {
         );
 
         if (res.status === 401) {
-          setError({ type: 'auth' });
+          redirectToSignInWithPendingRequest(message);
           return;
         }
 
@@ -632,7 +678,7 @@ export default function BroBotChatPage() {
             <BroBotEmptyState
               disabled={loading}
               onPickPrompt={(prompt) => void sendMessage(prompt, 'example_prompt')}
-              userId={user?.id ?? null}
+              showSignInNotice={!authLoading && !user}
             />
           ) : (
             <BroBotMessageList
@@ -657,6 +703,29 @@ export default function BroBotChatPage() {
           {error && (
             <div className="mt-5">
               <BroBotChatError error={error} onRetry={() => setError(null)} />
+            </div>
+          )}
+
+          {restoredPendingPrompt && !loading && !error && (
+            <div className="mt-5 rounded-2xl border border-teal-200 bg-white p-4 shadow-sm">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h2 className="text-sm font-bold text-midnight">Ready to continue BroBot</h2>
+                  <p className="mt-1 text-sm leading-5 text-slate-600">
+                    Your pending prompt is back in the composer.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRestoredPendingPrompt(false);
+                    textareaRef.current?.focus();
+                  }}
+                  className="rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
+                >
+                  Continue BroBot
+                </button>
+              </div>
             </div>
           )}
 
@@ -800,15 +869,15 @@ function BroBotIntentCard({
 function BroBotEmptyState({
   disabled,
   onPickPrompt,
-  userId,
+  showSignInNotice,
 }: {
   disabled: boolean;
   onPickPrompt: (prompt: string) => void;
-  userId: string | null;
+  showSignInNotice: boolean;
 }) {
   return (
     <div className="mx-auto max-w-3xl py-8 sm:py-12">
-      {!userId && (
+      {showSignInNotice && (
         <div className="mb-5 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
           BroBot Chat requires sign-in. You can explore prompts here, then sign in when you are ready to send.
         </div>
@@ -1322,7 +1391,7 @@ function BroBotChatError({ error, onRetry }: { error: ChatError; onRetry: () => 
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link
-                href="/auth/sign-in?redirectTo=/brobot/chat"
+                href="/auth/sign-in?redirectTo=/brobot/chat&intent=brobot"
                 className="rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
               >
                 Sign in

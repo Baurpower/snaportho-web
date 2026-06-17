@@ -12,7 +12,7 @@ interface Props {
 
 export default function SignInClient({ redirectTo }: Props) {
   const router = useRouter();
-  const { user, signIn } = useAuth();
+  const { user, loading, signIn } = useAuth();
 
   const safeRedirectTo = redirectTo || "/work";
 
@@ -21,10 +21,10 @@ export default function SignInClient({ redirectTo }: Props) {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       router.replace(safeRedirectTo);
     }
-  }, [user, safeRedirectTo, router]);
+  }, [loading, user, safeRedirectTo, router]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -44,7 +44,7 @@ export default function SignInClient({ redirectTo }: Props) {
   return (
     <div className="max-w-md mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg">
       <h2 className="text-2xl font-semibold mb-4 text-center text-navy">
-        Sign In
+        {safeRedirectTo.startsWith('/brobot') ? 'Sign in to continue BroBot' : 'Sign In'}
       </h2>
 
       {errorMsg ? (

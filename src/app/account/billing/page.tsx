@@ -9,7 +9,7 @@ import type { BroBotEntitlement } from '@/lib/brobot/entitlements';
 // ─── Main content ─────────────────────────────────────────────────────────────
 
 function BillingContent() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -21,6 +21,8 @@ function BillingContent() {
   const canceled = searchParams?.get('canceled') === 'true';
 
   useEffect(() => {
+    if (authLoading) return;
+
     if (!user) {
       const currentFullPath = window.location.pathname + window.location.search;
 
@@ -92,7 +94,7 @@ function BillingContent() {
       isMounted = false;
       if (pollInterval) clearInterval(pollInterval);
     };
-  }, [user, router, searchParams]);
+  }, [authLoading, user, router, searchParams]);
 
   const handleUpgrade = async (interval: 'month' | 'year') => {
     try {
@@ -118,7 +120,7 @@ function BillingContent() {
     }
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
         <div className="text-sm text-gray-500">Loading your plan...</div>

@@ -171,7 +171,7 @@ export default function BroBotBasic() {
      {/* Sign Up Button */}
 <div className="absolute top-24 right-6">
   <Link
-    href="/auth/sign-up?from=brobot"
+    href="/auth/sign-up?redirectTo=/brobot/chat"
     className="inline-block rounded-full bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-teal-700"
   >
     Sign Up
@@ -357,7 +357,7 @@ function GuestQuotaCard({ guestUsage }: { guestUsage: { remainingToday: number |
 
         <div className="flex flex-col sm:flex-row gap-3">
           <Link
-            href="/auth/sign-up?from=brobot"
+            href="/auth/sign-up?redirectTo=/brobot/chat"
             className="inline-flex flex-1 items-center justify-center rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-teal-700 transition-colors"
           >
             Create an account

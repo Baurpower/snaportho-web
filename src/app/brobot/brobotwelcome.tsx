@@ -7,26 +7,36 @@ import { useAuth } from '@/context/AuthContext';
 
 export default function BroBotWelcome() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   // If already signed in elsewhere in the app, go straight to BroBot
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       router.replace('/brobot');
     }
-  }, [user, router]);
+  }, [loading, user, router]);
 
   const handleLogin = () => {
-    router.push(`/auth/sign-in?redirectTo=/brobot`);
+    router.push(`/auth/sign-in?redirectTo=/brobot/chat&intent=brobot`);
   };
 
   const handleSignUp = () => {
-    router.push(`/auth/sign-up?redirectTo=/brobot`);
+    router.push(`/auth/sign-up?redirectTo=/brobot/chat`);
   };
 
   const handleGuest = () => {
     router.push('/brobot/basic');
   };
+
+  if (loading) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] px-6">
+        <div className="rounded-2xl border border-slate-200 bg-white px-6 py-5 text-sm font-medium text-slate-600 shadow-sm">
+          Loading BroBot...
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] px-6">

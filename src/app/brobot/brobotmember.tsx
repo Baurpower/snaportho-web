@@ -100,13 +100,13 @@ type UsageMeta = {
 
 export default function BroBotMember() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const supabase = useMemo(() => createClient(), []);
 
   // Redirect guests
   useEffect(() => {
-    if (!user) router.replace('/guest');
-  }, [user, router]);
+    if (!authLoading && !user) router.replace('/brobot');
+  }, [authLoading, user, router]);
 
   // Form & response state
   const [prompt, setPrompt] = useState('');
@@ -339,7 +339,18 @@ export default function BroBotMember() {
     }
   }
 
-  if (!user) return null;
+  if (authLoading || !user) {
+    return (
+      <div className="min-h-screen bg-[#fefcf7] text-[#1A1C2C]">
+        <Nav />
+        <main className="flex min-h-[60vh] items-center justify-center px-6 pt-24">
+          <div className="rounded-2xl border border-slate-200 bg-white px-6 py-5 text-sm font-medium text-slate-600 shadow-sm">
+            Loading BroBot...
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#fefcf7] text-[#1A1C2C]">
