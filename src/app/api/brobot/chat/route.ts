@@ -411,6 +411,14 @@ type RankedBranchOption = BroBotBranchOption & {
   rankScore?: number;
 };
 
+type BranchRankingContext = {
+  userMessage: string;
+  mode: BroBotChatMode;
+  trainingLevel: BroBotChatRequest['trainingLevel'];
+  history: BroBotModelMessage[];
+  intent: BroBotChatIntent;
+};
+
 function slugifyBranchId(value: string): string {
   const slug = value
     .toLowerCase()
@@ -428,6 +436,43 @@ function normalizeQuestionText(value: string): string {
   const trimmed = value.replace(/\s+/g, ' ').trim();
   if (!trimmed) return '';
   return trimmed.endsWith('?') ? trimmed : `${trimmed.replace(/[.]+$/, '')}?`;
+}
+
+function normalizeBranchKey(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/\b(what|which|how|why|when|does|do|are|is|the|a|an|this|that|should|i|me|my)\b/g, ' ')
+    .replace(/[^\w\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function tokenSet(value: string): Set<string> {
+  return new Set(
+    normalizeBranchKey(value)
+      .split(' ')
+      .filter((token) => token.length > 2)
+  );
+}
+
+function jaccardSimilarity(a: string, b: string): number {
+  const aTokens = tokenSet(a);
+  const bTokens = tokenSet(b);
+  if (aTokens.size === 0 || bTokens.size === 0) return 0;
+
+  let intersection = 0;
+  aTokens.forEach((token) => {
+    if (bTokens.has(token)) intersection += 1;
+  });
+
+  return intersection / (aTokens.size + bTokens.size - intersection);
+}
+
+function conversationText(history: BroBotModelMessage[]): string {
+  return history
+    .slice(-8)
+    .map((message) => message.content)
+    .join('\n');
 }
 
 function inferBranchCategory(question: string, fallback = 'Clinical Decision Making'): string {
@@ -487,10 +532,99 @@ function scoreBranchQuestion(row: BranchQuestionRow): number {
   return success * 0.5 + clickRate * 35 + Math.min(usage, 100) * 0.1 + recency * 5;
 }
 
+function modeCategoryFit(category: string, mode: BroBotChatMode): number {
+  const normalizedMode = mode === 'fracture_call' ? 'consult' : mode === 'auto' ? 'general' : mode;
+  const lower = category.toLowerCase();
+
+  if (normalizedMode === 'or_prep') {
+    return /\b(approach|anatomy|technique|implant|reduction|complication|pimp)\b/.test(lower) ? 1 : 0.35;
+  }
+
+  if (normalizedMode === 'oite') {
+    return /\b(board|classification|decision|indication|complication|controvers)\b/.test(lower) ? 1 : 0.25;
+  }
+
+  if (normalizedMode === 'consult') {
+    return /\b(decision|indication|classification|pimp|complication|anatomy)\b/.test(lower) ? 1 : 0.35;
+  }
+
+  if (normalizedMode === 'research') {
+    return /\b(evidence|controvers|statistics|pimp)\b/.test(lower) ? 1 : 0.2;
+  }
+
+  return 0.65;
+}
+
+function levelCategoryFit(category: string, trainingLevel: BroBotChatRequest['trainingLevel']): number {
+  const lower = category.toLowerCase();
+
+  if (trainingLevel === 'med_student' || trainingLevel === 'pgy1') {
+    return /\b(anatomy|classification|decision|indication)\b/.test(lower) ? 1 : 0.55;
+  }
+
+  if (trainingLevel === 'pgy4' || trainingLevel === 'pgy5' || trainingLevel === 'attending') {
+    return /\b(technique|implant|reduction|complication|evidence|controvers|pimp)\b/.test(lower) ? 1 : 0.55;
+  }
+
+  return 0.75;
+}
+
+function contextRelevanceScore(branch: RankedBranchOption, context: BranchRankingContext): number {
+  const branchText = `${branch.label} ${branch.description ?? ''} ${branch.category ?? ''}`;
+  const topicText = `${context.userMessage} ${context.intent.procedureOrTopic} ${context.intent.goal ?? ''}`;
+  const overlap = jaccardSimilarity(branchText, topicText);
+
+  return Math.min(1, overlap * 2.5);
+}
+
+function noveltyPenalty(branch: RankedBranchOption, context: BranchRankingContext): number {
+  const text = `${context.userMessage}\n${conversationText(context.history)}`;
+  const candidates = text
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  const maxSimilarity = candidates.reduce(
+    (max, candidate) => Math.max(max, jaccardSimilarity(branch.label, candidate)),
+    0
+  );
+
+  if (maxSimilarity >= 0.72) return 45;
+  if (maxSimilarity >= 0.55) return 24;
+  if (maxSimilarity >= 0.4) return 10;
+  return 0;
+}
+
+function scoreBranchOption(
+  branch: RankedBranchOption,
+  context?: BranchRankingContext
+): RankedBranchOption {
+  if (!context) return branch;
+
+  const category = branch.category || inferBranchCategory(branch.label);
+  const historicalScore = branch.rankScore ?? 50;
+  const educationalValue = /pimp|attending|complication|anatomy|implant|reduction|evidence|classification|decision/i.test(
+    `${category} ${branch.label}`
+  )
+    ? 18
+    : 10;
+  const modeAlignment = modeCategoryFit(category, context.mode) * 18;
+  const levelFit = levelCategoryFit(category, context.trainingLevel) * 14;
+  const contextFit = contextRelevanceScore(branch, context) * 22;
+  const novelty = 20 - noveltyPenalty(branch, context);
+
+  return {
+    ...branch,
+    category,
+    rankScore: historicalScore * 0.35 + educationalValue + modeAlignment + levelFit + contextFit + novelty,
+  };
+}
+
 function mergeBranchOptions(
   primary: RankedBranchOption[],
   secondary: BroBotBranchOption[],
-  max = 5
+  max = 5,
+  context?: BranchRankingContext
 ): RankedBranchOption[] {
   const seen = new Set<string>();
   const mergedOptions: RankedBranchOption[] = [
@@ -504,6 +638,8 @@ function mergeBranchOptions(
     })),
   ];
 
+  const categoryCounts = new Map<string, number>();
+
   return mergedOptions
     .map((branch): RankedBranchOption => ({
       ...branch,
@@ -511,13 +647,24 @@ function mergeBranchOptions(
       label: normalizeQuestionText(branch.label),
       category: branch.category || inferBranchCategory(branch.label),
     }))
+    .map((branch) => scoreBranchOption(branch, context))
     .filter((branch) => {
-      const key = branch.label.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+      const key = normalizeBranchKey(branch.label);
       if (!key || seen.has(key)) return false;
+      for (const existing of seen) {
+        if (jaccardSimilarity(key, existing) >= 0.68) return false;
+      }
       seen.add(key);
       return true;
     })
     .sort((a, b) => (b.rankScore ?? 0) - (a.rankScore ?? 0))
+    .filter((branch) => {
+      const category = branch.category || inferBranchCategory(branch.label);
+      const count = categoryCounts.get(category) ?? 0;
+      if (count >= 2) return false;
+      categoryCounts.set(category, count + 1);
+      return true;
+    })
     .slice(0, max);
 }
 

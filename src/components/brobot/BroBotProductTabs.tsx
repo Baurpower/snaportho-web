@@ -16,11 +16,15 @@ const tabs = [
   },
 ];
 
-export default function BroBotProductTabs() {
+export default function BroBotProductTabs({ compact = false }: { compact?: boolean }) {
   const pathname = usePathname();
 
   return (
-    <div className="inline-flex rounded-full border border-slate-200 bg-white p-1 shadow-sm">
+    <div
+      className={`inline-flex rounded-full border border-slate-200 bg-white shadow-sm ${
+        compact ? 'p-0.5' : 'p-1'
+      }`}
+    >
       {tabs.map((tab) => {
         const isActive =
           tab.href === '/brobot'
@@ -33,7 +37,9 @@ export default function BroBotProductTabs() {
             href={tab.href}
             aria-current={isActive ? 'page' : undefined}
             className={[
-              'rounded-full px-4 py-2 text-sm font-semibold transition',
+              compact
+                ? 'rounded-full px-3 py-1.5 text-xs font-semibold transition'
+                : 'rounded-full px-4 py-2 text-sm font-semibold transition',
               isActive
                 ? 'bg-teal-600 text-white shadow-sm'
                 : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900',
