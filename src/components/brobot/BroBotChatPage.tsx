@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import {
   FormEvent,
   KeyboardEvent,
+  memo,
   useCallback,
   type ReactNode,
   type RefObject,
@@ -19,6 +20,7 @@ import {
   SparklesIcon,
   ExclamationCircleIcon,
   CheckCircleIcon,
+  ClipboardDocumentIcon,
 } from '@heroicons/react/24/outline';
 
 import { useAuth } from '@/context/AuthContext';
@@ -35,6 +37,7 @@ import type {
 } from '@/lib/brobot/chat';
 import BroBotMarkdown from './BroBotMarkdown';
 import BroBotProductTabs from './BroBotProductTabs';
+import { useChatScrollController } from './useChatScrollController';
 
 type BroBotChatResponse = {
   conversationId: string;
@@ -92,6 +95,8 @@ type ChatMessage =
       role: 'assistant';
       content: string;
       response: BroBotChatResponse;
+      status?: 'pending' | 'streaming' | 'complete' | 'error';
+      errorMessage?: string;
     };
 
 type ChatError =
@@ -152,6 +157,15 @@ const COMPOSER_MIN_HEIGHT_INACTIVE = 52;
 const COMPOSER_MIN_HEIGHT_ACTIVE = 84;
 const COMPOSER_MAX_HEIGHT_MOBILE = 160;
 const COMPOSER_MAX_HEIGHT_DESKTOP = 220;
+const BROBOT_STREAMING_ENABLED =
+  process.env.NEXT_PUBLIC_BROBOT_STREAMING_ENABLED === 'true';
+
+type StreamEvent =
+  | { event: 'start'; data: { assistantMessageId?: string; conversationId?: string } }
+  | { event: 'delta'; data: { content?: string } }
+  | { event: 'metadata'; data: unknown }
+  | { event: 'done'; data: { assistantMessageId?: string; conversationId?: string } }
+  | { event: 'error'; data: { message?: string } };
 
 function isBroBotChatResponse(value: unknown): value is BroBotChatResponse {
   if (!value || typeof value !== 'object') return false;
@@ -233,6 +247,66 @@ function normalizeChatResponse(value: unknown): BroBotChatResponse | null {
         : undefined,
     missingInformation: normalizeTextArray(candidate.missingInformation, 8),
   };
+}
+
+function createStreamingPlaceholder(id: string, conversationId: string | null): BroBotChatResponse {
+  return {
+    conversationId: conversationId ?? '',
+    messageId: id,
+    goal: '',
+    selectedFocus: '',
+    answer: '',
+    priorityPoints: [],
+    knowledgeGaps: [],
+    whatMostResidentsMiss: [],
+    suggestedQuestions: [],
+    nextLearningBranches: [],
+    tags: [],
+    detectedMode: 'general',
+    confidence: undefined,
+    needsClarification: false,
+    clarifyingQuestions: [],
+    assumedContext: '',
+    missingInformation: [],
+  };
+}
+
+function parseStreamEvents(buffer: string): { events: StreamEvent[]; rest: string } {
+  const events: StreamEvent[] = [];
+  const parts = buffer.split('\n\n');
+  const rest = parts.pop() ?? '';
+
+  for (const part of parts) {
+    const lines = part.split('\n');
+    const eventLine = lines.find((line) => line.startsWith('event:'));
+    const dataLine = lines.find((line) => line.startsWith('data:'));
+    const event = eventLine?.replace(/^event:\s*/, '').trim();
+    const rawData = dataLine?.replace(/^data:\s*/, '') ?? '{}';
+
+    if (
+      event !== 'start' &&
+      event !== 'delta' &&
+      event !== 'metadata' &&
+      event !== 'done' &&
+      event !== 'error'
+    ) {
+      continue;
+    }
+
+    try {
+      events.push({
+        event,
+        data: JSON.parse(rawData),
+      } as StreamEvent);
+    } catch {
+      events.push({
+        event: 'error',
+        data: { message: 'BroBot returned a malformed stream event.' },
+      });
+    }
+  }
+
+  return { events, rest };
 }
 
 function normalizeBranchOptions(value: unknown): BranchOption[] {
@@ -364,7 +438,7 @@ export default function BroBotChatPage() {
   const [usage, setUsage] = useState<UsageSnapshot | null>(null);
   const [pendingIntent, setPendingIntent] = useState<PendingIntent | null>(null);
   const [restoredPendingPrompt, setRestoredPendingPrompt] = useState(false);
-  const listEndRef = useRef<HTMLDivElement | null>(null);
+  const messagesViewportRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const latestAssistant = useMemo(
@@ -372,9 +446,28 @@ export default function BroBotChatPage() {
     [messages]
   );
 
-  useEffect(() => {
-    listEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }, [messages, loading, error]);
+  const scrollContentVersion = useMemo(
+    () =>
+      [
+        messages.length,
+        messages[messages.length - 1]?.id ?? 'empty',
+        loading ? 'loading' : 'idle',
+        error?.type ?? 'no-error',
+        pendingIntent ? pendingIntent.userMessageId : 'no-intent',
+        latestAssistant?.role === 'assistant'
+          ? `${latestAssistant.id}:${latestAssistant.content.length}:${latestAssistant.status ?? 'complete'}:${latestAssistant.response.nextLearningBranches?.length ?? 0}:${latestAssistant.response.suggestedQuestions.length}`
+          : 'no-assistant',
+      ].join('|'),
+    [messages, loading, error, pendingIntent, latestAssistant]
+  );
+
+  const {
+    showNewMessagesButton,
+    scrollToBottom,
+  } = useChatScrollController({
+    viewportRef: messagesViewportRef,
+    contentVersion: scrollContentVersion,
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -467,6 +560,7 @@ export default function BroBotChatPage() {
     setInput('');
     setError(null);
     setLoading(true);
+    let streamingAssistantId: string | null = null;
 
     try {
       if (source === 'manual' || source === 'example_prompt') {
@@ -523,6 +617,21 @@ export default function BroBotChatPage() {
         }
       }
 
+      streamingAssistantId = BROBOT_STREAMING_ENABLED ? crypto.randomUUID() : null;
+      if (streamingAssistantId) {
+        const assistantId = streamingAssistantId;
+        setMessages((current) => [
+          ...current,
+          {
+            id: assistantId,
+            role: 'assistant',
+            content: '',
+            response: createStreamingPlaceholder(assistantId, conversationId),
+            status: 'pending',
+          },
+        ]);
+      }
+
       const res = await fetch('/api/brobot/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -545,16 +654,151 @@ export default function BroBotChatPage() {
           intentReasonForBranching: pendingIntent?.intent.reasonForBranching,
           intentSource: pendingIntent?.intent.source,
           answerNow,
+          stream: Boolean(streamingAssistantId),
         }),
       });
+
+      if (streamingAssistantId && res.headers.get('content-type')?.includes('text/event-stream')) {
+        if (!res.ok || !res.body) {
+          throw new Error('BroBot streaming response was not available.');
+        }
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const parsed = parseStreamEvents(buffer);
+          buffer = parsed.rest;
+
+          for (const streamEvent of parsed.events) {
+            if (streamEvent.event === 'start') {
+              if (streamEvent.data.conversationId) {
+                setConversationId(streamEvent.data.conversationId);
+              }
+              setMessages((current) =>
+                current.map((chatMessage) =>
+                  chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
+                    ? {
+                        ...chatMessage,
+                        status: 'streaming',
+                        response: {
+                          ...chatMessage.response,
+                          conversationId:
+                            streamEvent.data.conversationId ?? chatMessage.response.conversationId,
+                          messageId:
+                            streamEvent.data.assistantMessageId ?? chatMessage.response.messageId,
+                        },
+                      }
+                    : chatMessage
+                )
+              );
+              continue;
+            }
+
+            if (streamEvent.event === 'delta') {
+              const delta = streamEvent.data.content ?? '';
+              if (!delta) continue;
+
+              setMessages((current) =>
+                current.map((chatMessage) =>
+                  chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
+                    ? {
+                        ...chatMessage,
+                        content: `${chatMessage.content}${delta}`,
+                        status: 'streaming',
+                        response: {
+                          ...chatMessage.response,
+                          answer: `${chatMessage.response.answer}${delta}`,
+                        },
+                      }
+                    : chatMessage
+                )
+              );
+              continue;
+            }
+
+            if (streamEvent.event === 'metadata') {
+              const normalizedMetadata = normalizeChatResponse(streamEvent.data);
+              if (!normalizedMetadata) continue;
+
+              setConversationId(normalizedMetadata.conversationId);
+              const remainingFreeUses = normalizedMetadata.remainingFreeUses;
+              if (typeof remainingFreeUses === 'number' || remainingFreeUses === null) {
+                setUsage((current) =>
+                  current
+                    ? { ...current, remainingToday: remainingFreeUses ?? current.remainingToday }
+                    : {
+                        unlimited: remainingFreeUses === null,
+                        dailyCap: null,
+                        remainingToday: remainingFreeUses,
+                      }
+                );
+              }
+
+              setMessages((current) =>
+                current.map((chatMessage) =>
+                  chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
+                    ? {
+                        ...chatMessage,
+                        content: normalizedMetadata.answer,
+                        response: normalizedMetadata,
+                        status: 'complete',
+                      }
+                    : chatMessage
+                )
+              );
+              continue;
+            }
+
+            if (streamEvent.event === 'done') {
+              setMessages((current) =>
+                current.map((chatMessage) =>
+                  chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
+                    ? { ...chatMessage, status: 'complete' }
+                    : chatMessage
+                )
+              );
+              continue;
+            }
+
+            if (streamEvent.event === 'error') {
+              setMessages((current) =>
+                current.map((chatMessage) =>
+                  chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
+                    ? {
+                        ...chatMessage,
+                        status: 'error',
+                        errorMessage:
+                          streamEvent.data.message ??
+                          'Response interrupted. Please retry if you need the full answer.',
+                      }
+                    : chatMessage
+                )
+              );
+            }
+          }
+        }
+
+        setPendingIntent(null);
+        return;
+      }
 
       const body = await res.json().catch(() => null);
 
       if (!res.ok) {
         setMessages((current) =>
           optimisticUserMessage
-            ? current.filter((chatMessage) => chatMessage.id !== optimisticUserMessage.id)
-            : current
+            ? current.filter(
+                (chatMessage) =>
+                  chatMessage.id !== optimisticUserMessage.id &&
+                  chatMessage.id !== streamingAssistantId
+              )
+            : current.filter((chatMessage) => chatMessage.id !== streamingAssistantId)
         );
 
         if (res.status === 401) {
@@ -583,8 +827,12 @@ export default function BroBotChatPage() {
       if (!normalizedBody) {
         setMessages((current) =>
           optimisticUserMessage
-            ? current.filter((chatMessage) => chatMessage.id !== optimisticUserMessage.id)
-            : current
+            ? current.filter(
+                (chatMessage) =>
+                  chatMessage.id !== optimisticUserMessage.id &&
+                  chatMessage.id !== streamingAssistantId
+              )
+            : current.filter((chatMessage) => chatMessage.id !== streamingAssistantId)
         );
         setError({ type: 'unexpected', message: 'BroBot returned an unexpected response.' });
         return;
@@ -605,26 +853,70 @@ export default function BroBotChatPage() {
         );
       }
 
-      setMessages((current) => [
-        ...current,
-        {
-          id: normalizedBody.messageId,
-          role: 'assistant',
-          content: normalizedBody.answer,
-          response: normalizedBody,
-        },
-      ]);
+      setMessages((current) => {
+        if (streamingAssistantId) {
+          return current.map((chatMessage) =>
+            chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
+              ? {
+                  ...chatMessage,
+                  content: normalizedBody.answer,
+                  response: normalizedBody,
+                  status: 'complete',
+                }
+              : chatMessage
+          );
+        }
+
+        return [
+          ...current,
+          {
+            id: normalizedBody.messageId,
+            role: 'assistant',
+            content: normalizedBody.answer,
+            response: normalizedBody,
+            status: 'complete',
+          },
+        ];
+      });
       setPendingIntent(null);
     } catch {
       setMessages((current) =>
-        optimisticUserMessage
-          ? current.filter((chatMessage) => chatMessage.id !== optimisticUserMessage.id)
-          : current
+        current
+          .map((chatMessage) =>
+            streamingAssistantId &&
+            chatMessage.id === streamingAssistantId &&
+            chatMessage.role === 'assistant' &&
+            chatMessage.content
+              ? {
+                  ...chatMessage,
+                  status: 'error' as const,
+                  errorMessage: 'Response interrupted. Please retry if you need the full answer.',
+                }
+              : chatMessage
+          )
+          .filter((chatMessage) => {
+            if (optimisticUserMessage && chatMessage.id === optimisticUserMessage.id) {
+              return Boolean(
+                streamingAssistantId &&
+                  current.some(
+                    (candidate) =>
+                      candidate.id === streamingAssistantId &&
+                      candidate.role === 'assistant' &&
+                      candidate.content
+                  )
+              );
+            }
+
+            if (streamingAssistantId && chatMessage.id === streamingAssistantId) {
+              return chatMessage.role === 'assistant' && Boolean(chatMessage.content);
+            }
+
+            return true;
+          })
       );
       setError({ type: 'network' });
     } finally {
       setLoading(false);
-      textareaRef.current?.focus();
     }
   }
 
@@ -652,102 +944,119 @@ export default function BroBotChatPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fefcf7] text-[#1A1C2C]">
-      <main className="mx-auto flex min-h-screen w-full max-w-[1100px] flex-col px-4 pb-6 pt-24 sm:px-6 lg:px-8">
-        <header className="flex flex-col gap-5 border-b border-slate-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
-          <div className="space-y-3">
-            <BroBotProductTabs />
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-teal-700">
-                BroBot
-              </p>
-              <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-midnight sm:text-4xl">
-                BroBot Chat
-              </h1>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
-                Ask open-ended ortho questions, prep faster, and find what you may be missing.
-              </p>
+    <div className="fixed inset-0 z-10 overflow-hidden bg-[#fefcf7] text-[#1A1C2C]">
+      <main className="mx-auto flex h-full w-full max-w-[1120px] flex-col box-border px-4 pt-20 sm:px-6 sm:pt-24 lg:px-8">
+        <header className="shrink-0 border-b border-slate-200/80 pb-4 sm:pb-5">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="space-y-3">
+              <BroBotProductTabs />
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-teal-700">
+                  BroBot
+                </p>
+                <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-midnight sm:text-4xl">
+                  BroBot Chat
+                </h1>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+                  Ask open-ended ortho questions, prep faster, and find what you may be missing.
+                </p>
+              </div>
+            </div>
+
+            <BroBotUsageBanner usage={usage} />
+          </div>
+        </header>
+
+        <section className="relative flex min-h-0 flex-1 flex-col">
+          <div
+            ref={messagesViewportRef}
+            className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 py-5 [scrollbar-gutter:stable] sm:px-2 sm:py-6"
+          >
+            <div className="mx-auto flex min-h-full w-full max-w-4xl flex-col">
+              <div className="flex-1">
+                {messages.length === 0 && !loading ? (
+                  <BroBotEmptyState
+                    disabled={loading}
+                    onPickPrompt={(prompt) => void sendMessage(prompt, 'example_prompt')}
+                    showSignInNotice={!authLoading && !user}
+                  />
+                ) : (
+                  <BroBotMessageList
+                    messages={messages}
+                    onPickClarification={(question, sourceMessageId) =>
+                      void sendMessage(question, 'clarification_question', sourceMessageId)
+                    }
+                  />
+                )}
+
+                {pendingIntent && !loading && (
+                  <BroBotIntentCard
+                    pendingIntent={pendingIntent}
+                    onSelectBranch={(branch) => continueFromIntent(branch)}
+                    onAnswerNow={() => continueFromIntent(undefined, true)}
+                  />
+                )}
+
+                {loading && <LoadingMessage />}
+
+                {error && (
+                  <div className="mt-5">
+                    <BroBotChatError error={error} onRetry={() => setError(null)} />
+                  </div>
+                )}
+
+                {restoredPendingPrompt && !loading && !error && (
+                  <div className="mt-5 rounded-xl border border-teal-200 bg-white p-4 shadow-sm">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <h2 className="text-sm font-bold text-midnight">Ready to continue BroBot</h2>
+                        <p className="mt-1 text-sm leading-5 text-slate-600">
+                          Your pending prompt is back in the composer.
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setRestoredPendingPrompt(false);
+                          textareaRef.current?.focus();
+                        }}
+                        className="rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
+                      >
+                        Continue BroBot
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {latestAssistant?.role === 'assistant' && !loading && (
+                  <BroBotNextLearningBranches
+                    branches={latestAssistant.response.nextLearningBranches ?? []}
+                    fallbackQuestions={latestAssistant.response.suggestedQuestions}
+                    mode={latestAssistant.response.detectedMode}
+                    sourceMessageId={latestAssistant.response.messageId}
+                    onPickBranch={(branch, sourceMessageId) =>
+                      void sendMessage(
+                        branch.label,
+                        'branch_selection',
+                        sourceMessageId,
+                        branch
+                      )
+                    }
+                  />
+                )}
+              </div>
             </div>
           </div>
 
-          <BroBotUsageBanner usage={usage} />
-        </header>
-
-        <section className="flex-1 pb-10 pt-6 sm:pb-12">
-          {messages.length === 0 && !loading ? (
-            <BroBotEmptyState
-              disabled={loading}
-              onPickPrompt={(prompt) => void sendMessage(prompt, 'example_prompt')}
-              showSignInNotice={!authLoading && !user}
-            />
-          ) : (
-            <BroBotMessageList
-              messages={messages}
-              loading={loading}
-              onPickClarification={(question, sourceMessageId) =>
-                void sendMessage(question, 'clarification_question', sourceMessageId)
-              }
-            />
+          {showNewMessagesButton && (
+            <button
+              type="button"
+              onClick={() => scrollToBottom('smooth')}
+              className="absolute bottom-4 left-1/2 z-30 -translate-x-1/2 rounded-full border border-teal-200 bg-white px-4 py-2 text-sm font-bold text-teal-700 shadow-lg shadow-slate-900/10 transition hover:bg-teal-50"
+            >
+              New messages ↓
+            </button>
           )}
-
-          {pendingIntent && !loading && (
-            <BroBotIntentCard
-              pendingIntent={pendingIntent}
-              onSelectBranch={(branch) => continueFromIntent(branch)}
-              onAnswerNow={() => continueFromIntent(undefined, true)}
-            />
-          )}
-
-          {loading && <LoadingMessage />}
-
-          {error && (
-            <div className="mt-5">
-              <BroBotChatError error={error} onRetry={() => setError(null)} />
-            </div>
-          )}
-
-          {restoredPendingPrompt && !loading && !error && (
-            <div className="mt-5 rounded-2xl border border-teal-200 bg-white p-4 shadow-sm">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <h2 className="text-sm font-bold text-midnight">Ready to continue BroBot</h2>
-                  <p className="mt-1 text-sm leading-5 text-slate-600">
-                    Your pending prompt is back in the composer.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setRestoredPendingPrompt(false);
-                    textareaRef.current?.focus();
-                  }}
-                  className="rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
-                >
-                  Continue BroBot
-                </button>
-              </div>
-            </div>
-          )}
-
-          {latestAssistant?.role === 'assistant' && !loading && (
-            <BroBotNextLearningBranches
-              branches={latestAssistant.response.nextLearningBranches ?? []}
-              fallbackQuestions={latestAssistant.response.suggestedQuestions}
-              mode={latestAssistant.response.detectedMode}
-              loading={loading}
-              sourceMessageId={latestAssistant.response.messageId}
-              onPickBranch={(branch, sourceMessageId) =>
-                void sendMessage(
-                  branch.label,
-                  'branch_selection',
-                  sourceMessageId,
-                  branch
-                )
-              }
-            />
-          )}
-
-          <div ref={listEndRef} />
         </section>
 
         <BroBotChatComposer
@@ -914,45 +1223,77 @@ function BroBotEmptyState({
   );
 }
 
-function BroBotMessageList({
+const BroBotMessageList = memo(function BroBotMessageList({
   messages,
-  loading,
   onPickClarification,
 }: {
   messages: ChatMessage[];
-  loading: boolean;
   onPickClarification: (question: string, sourceMessageId: string) => void;
 }) {
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {messages.map((message) =>
         message.role === 'user' ? (
-          <div key={message.id} className="flex justify-end">
-            <div className="max-w-[88%] rounded-2xl rounded-br-md bg-teal-600 px-4 py-3 text-sm leading-6 text-white shadow-sm sm:max-w-[76%]">
-              {message.content}
-            </div>
-          </div>
+          <UserMessage key={message.id} content={message.content} />
         ) : (
-          <div key={message.id} className="flex justify-start">
-            <BroBotAssistantResponse
-              response={message.response}
-              loading={loading}
-              onPickClarification={onPickClarification}
-            />
-          </div>
+          <AssistantMessage
+            key={message.id}
+            response={message.response}
+            status={message.status}
+            errorMessage={message.errorMessage}
+            onPickClarification={onPickClarification}
+          />
         )
       )}
     </div>
   );
-}
+});
 
-function BroBotAssistantResponse({
+const UserMessage = memo(function UserMessage({ content }: { content: string }) {
+  return (
+    <div className="flex justify-end">
+      <div className="max-w-[88%] rounded-2xl rounded-br-md bg-teal-600 px-4 py-3 text-sm leading-6 text-white shadow-sm sm:max-w-[72%]">
+        {content}
+      </div>
+    </div>
+  );
+});
+
+const AssistantMessage = memo(function AssistantMessage({
   response,
-  loading,
+  status,
+  errorMessage,
   onPickClarification,
 }: {
   response: BroBotChatResponse;
-  loading: boolean;
+  status?: 'pending' | 'streaming' | 'complete' | 'error';
+  errorMessage?: string;
+  onPickClarification: (question: string, sourceMessageId: string) => void;
+}) {
+  return (
+    <div className="group flex justify-start">
+      <div className="w-full max-w-3xl">
+        <BroBotAssistantResponse
+          response={response}
+          status={status}
+          errorMessage={errorMessage}
+          onPickClarification={onPickClarification}
+        />
+        <MessageActions text={response.answer} />
+      </div>
+    </div>
+  );
+});
+
+function BroBotAssistantResponse({
+  response,
+  status,
+  errorMessage,
+  onPickClarification,
+}: {
+  response: BroBotChatResponse;
+  status?: 'pending' | 'streaming' | 'complete' | 'error';
+  errorMessage?: string;
   onPickClarification: (question: string, sourceMessageId: string) => void;
 }) {
   const isOrPrep = response.detectedMode === 'or_prep';
@@ -969,13 +1310,13 @@ function BroBotAssistantResponse({
       : 'What to Learn Next?';
 
   return (
-    <article className="w-full max-w-3xl rounded-2xl rounded-bl-md border border-slate-200 bg-white p-5 shadow-sm">
+    <article className="w-full rounded-2xl rounded-bl-md border border-slate-200/80 bg-white/95 p-4 shadow-sm sm:p-5">
       <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 pb-3">
-        <span className="rounded-full bg-teal-50 px-3 py-1 text-xs font-semibold text-teal-700">
+        <span className="rounded-full bg-teal-50 px-2.5 py-1 text-xs font-semibold text-teal-700">
           {formatMode(response.detectedMode)}
         </span>
         {response.selectedFocus && (
-          <span className="rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700">
+          <span className="rounded-full bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-700">
             Focus: {response.selectedFocus}
           </span>
         )}
@@ -986,7 +1327,7 @@ function BroBotAssistantResponse({
         )}
       </div>
 
-      <div className="mt-4 space-y-5">
+      <div className="mt-4 space-y-6">
         {response.goal && (
           <StructuredSection title="Your Goal">
             <p className="text-sm font-semibold leading-6 text-midnight">{response.goal}</p>
@@ -994,14 +1335,30 @@ function BroBotAssistantResponse({
         )}
 
         <StructuredSection title="Direct Answer">
-          <BroBotMarkdown>{response.answer}</BroBotMarkdown>
+          {response.answer ? (
+            <BroBotMarkdown>{response.answer}</BroBotMarkdown>
+          ) : (
+            <p className="text-sm leading-6 text-slate-500">
+              BroBot is starting the answer...
+            </p>
+          )}
+          {status === 'streaming' && (
+            <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-teal-700">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-teal-500" />
+              Streaming
+            </div>
+          )}
+          {status === 'error' && (
+            <div className="mt-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800">
+              {errorMessage ?? 'Response interrupted. Please retry if you need the full answer.'}
+            </div>
+          )}
         </StructuredSection>
 
         {((response.clarifyingQuestions?.length ?? 0) > 0 ||
           isUsefulAssumedContext(response.assumedContext)) && (
           <ClarificationBlock
             response={response}
-            loading={loading}
             onPickClarification={onPickClarification}
           />
         )}
@@ -1037,6 +1394,33 @@ function BroBotAssistantResponse({
   );
 }
 
+const MessageActions = memo(function MessageActions({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function copyMessage() {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopied(false);
+    }
+  }
+
+  return (
+    <div className="mt-2 flex min-h-8 items-center gap-2 pl-1 opacity-100 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
+      <button
+        type="button"
+        onClick={copyMessage}
+        className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-xs font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-slate-800"
+      >
+        <ClipboardDocumentIcon className="h-4 w-4" />
+        {copied ? 'Copied' : 'Copy'}
+      </button>
+    </div>
+  );
+});
+
 function StructuredSection({
   title,
   children,
@@ -1054,11 +1438,9 @@ function StructuredSection({
 
 function ClarificationBlock({
   response,
-  loading,
   onPickClarification,
 }: {
   response: BroBotChatResponse;
-  loading: boolean;
   onPickClarification: (question: string, sourceMessageId: string) => void;
 }) {
   const questions = response.clarifyingQuestions ?? [];
@@ -1083,7 +1465,6 @@ function ClarificationBlock({
             <button
               key={question}
               type="button"
-              disabled={loading}
               onClick={() => onPickClarification(question, response.messageId)}
               className="rounded-full border border-amber-200 bg-white px-3 py-2 text-left text-xs font-semibold leading-4 text-amber-800 shadow-sm transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-50"
             >
@@ -1152,14 +1533,12 @@ function BroBotNextLearningBranches({
   branches,
   fallbackQuestions,
   mode,
-  loading,
   sourceMessageId,
   onPickBranch,
 }: {
   branches: BranchOption[];
   fallbackQuestions: string[];
   mode: string;
-  loading: boolean;
   sourceMessageId: string;
   onPickBranch: (branch: BranchOption, sourceMessageId: string) => void;
 }) {
@@ -1176,16 +1555,15 @@ function BroBotNextLearningBranches({
   return (
     <div className="mt-5 rounded-2xl border border-teal-100 bg-teal-50/40 p-3">
       <h3 className="mb-2 text-xs font-bold uppercase tracking-wide text-teal-700">
-        Next Learning Branch
+        Common Next Questions
       </h3>
       <div className="flex flex-wrap gap-2">
         {branchChips.map((branch) => (
           <button
             key={branch.id}
             type="button"
-            disabled={loading}
             onClick={() => onPickBranch(branch, sourceMessageId)}
-            className="min-h-10 rounded-full border border-teal-200 bg-white px-3.5 py-2.5 text-left text-sm font-semibold leading-5 text-teal-700 shadow-sm transition hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="min-h-9 rounded-full border border-teal-200 bg-white px-3 py-2 text-left text-xs font-semibold leading-5 text-teal-700 shadow-sm transition hover:bg-teal-50 sm:text-sm"
           >
             <span className="mr-1.5 text-[10px] font-bold uppercase tracking-wide text-teal-500">
               {branch.category ?? inferChipCategory(branch.label)}

@@ -117,113 +117,113 @@ const CATEGORY_FALLBACKS = new Set<BroBotProcedureCategory>([
 
 export const MODE_BRANCH_LIBRARY: Record<Exclude<BroBotChatMode, 'auto' | 'fracture_call'>, BroBotBranchOption[]> = {
   or_prep: [
-    { id: 'landmarks', label: 'Landmarks', description: 'Positioning, incision, portals, and approach cues.', category: 'OR Prep' },
-    { id: 'surgical_steps', label: 'Surgical Steps', description: 'Stepwise flow and decision points.', category: 'OR Prep' },
-    { id: 'anatomy_at_risk', label: 'Anatomy At Risk', description: 'Structures to protect and where they are encountered.', category: 'OR Prep' },
-    { id: 'implants', label: 'Implants', description: 'Implant choices, reduction goals, and backup plans.', category: 'OR Prep' },
-    { id: 'complications', label: 'Complications', description: 'Pitfalls and how to avoid them.', category: 'OR Prep' },
-    { id: 'attending_questions', label: 'Attending Questions', description: 'What to ask before incision and what they may ask you.', category: 'OR Prep' },
+    { id: 'key_landmarks', label: 'What landmarks should I find first?', description: 'Positioning, incision, portals, and approach cues.', category: 'Surgical Approach' },
+    { id: 'surgical_steps', label: 'What are the key operative steps?', description: 'Stepwise flow and decision points.', category: 'OR Technique' },
+    { id: 'anatomy_at_risk', label: 'What anatomy is most at risk?', description: 'Structures to protect and where they are encountered.', category: 'Anatomy' },
+    { id: 'implants', label: 'What implants should I know?', description: 'Implant choices, reduction goals, and backup plans.', category: 'Implant Selection' },
+    { id: 'complications', label: 'What complications get tested most?', description: 'Pitfalls and how to avoid them.', category: 'Complications' },
+    { id: 'attending_questions', label: 'What will the attending ask?', description: 'What to ask before incision and what they may ask you.', category: 'Pimp Questions' },
   ],
   consult: [
-    { id: 'missing_information', label: 'Missing Information', description: 'What data you need before calling up.', category: 'Consult' },
-    { id: 'presentation_help', label: 'Presentation Help', description: 'How to present the consult clearly.', category: 'Consult' },
-    { id: 'imaging_review', label: 'Imaging Review', description: 'Views, classification, and imaging pitfalls.', category: 'Consult' },
-    { id: 'differential', label: 'Differential', description: 'What else this could be and why it matters.', category: 'Consult' },
-    { id: 'operative_indications', label: 'Operative Indications', description: 'What pushes this toward surgery.', category: 'Consult' },
-    { id: 'attending_questions', label: 'Attending Questions', description: 'Questions to anticipate from your senior or attending.', category: 'Consult' },
+    { id: 'missing_information', label: 'What information am I missing?', description: 'What data you need before calling up.', category: 'Clinical Decision Making' },
+    { id: 'presentation_help', label: 'How should I present this consult?', description: 'How to present the consult clearly.', category: 'Pimp Questions' },
+    { id: 'imaging_review', label: 'What imaging findings matter?', description: 'Views, classification, and imaging pitfalls.', category: 'Classification Systems' },
+    { id: 'differential', label: 'What else could this be?', description: 'What else this could be and why it matters.', category: 'Clinical Decision Making' },
+    { id: 'operative_indications', label: 'What makes this operative?', description: 'What pushes this toward surgery.', category: 'Indications' },
+    { id: 'attending_questions', label: 'What will my senior ask?', description: 'Questions to anticipate from your senior or attending.', category: 'Pimp Questions' },
   ],
   oite: [
-    { id: 'high_yield_review', label: 'High Yield Review', description: 'The fastest board-relevant overview.', category: 'OITE' },
-    { id: 'classification', label: 'Classification', description: 'Classification systems and thresholds.', category: 'OITE' },
-    { id: 'treatment_algorithm', label: 'Treatment Algorithm', description: 'Testable management sequence.', category: 'OITE' },
-    { id: 'test_traps', label: 'Test Traps', description: 'Common wrong-answer traps.', category: 'OITE' },
-    { id: 'quiz_me', label: 'Quiz Me', description: 'Turn this into questions.', category: 'OITE' },
-    { id: 'compare_diagnoses', label: 'Compare Diagnoses', description: 'Differentiate similar diagnoses.', category: 'OITE' },
+    { id: 'high_yield_review', label: 'What are the board-style pearls?', description: 'The fastest board-relevant overview.', category: 'Board Review' },
+    { id: 'classification', label: 'What classification should I know?', description: 'Classification systems and thresholds.', category: 'Classification Systems' },
+    { id: 'treatment_algorithm', label: 'What treatment algorithm gets tested?', description: 'Testable management sequence.', category: 'Clinical Decision Making' },
+    { id: 'test_traps', label: 'What traps show up on OITE?', description: 'Common wrong-answer traps.', category: 'Board Review' },
+    { id: 'quiz_me', label: 'Can you quiz me on this?', description: 'Turn this into questions.', category: 'Board Review' },
+    { id: 'compare_diagnoses', label: 'What diagnoses look similar?', description: 'Differentiate similar diagnoses.', category: 'Controversies' },
   ],
   clinic: [
-    { id: 'differential', label: 'Differential', description: 'Most likely diagnoses and must-not-miss causes.', category: 'Clinic' },
-    { id: 'physical_exam', label: 'Physical Exam', description: 'Exam maneuvers and interpretation.', category: 'Clinic' },
-    { id: 'imaging', label: 'Imaging', description: 'Initial studies and what to look for.', category: 'Clinic' },
-    { id: 'nonoperative_treatment', label: 'Nonoperative Treatment', description: 'First-line treatment and rehab framing.', category: 'Clinic' },
-    { id: 'surgical_indications', label: 'Surgical Indications', description: 'When to escalate toward surgery.', category: 'Clinic' },
+    { id: 'differential', label: 'What diagnoses should I consider?', description: 'Most likely diagnoses and must-not-miss causes.', category: 'Clinical Decision Making' },
+    { id: 'physical_exam', label: 'What exam findings matter most?', description: 'Exam maneuvers and interpretation.', category: 'Anatomy' },
+    { id: 'imaging', label: 'What imaging should I order?', description: 'Initial studies and what to look for.', category: 'Clinical Decision Making' },
+    { id: 'nonoperative_treatment', label: 'What nonoperative options work?', description: 'First-line treatment and rehab framing.', category: 'Rehabilitation' },
+    { id: 'surgical_indications', label: 'When should I recommend surgery?', description: 'When to escalate toward surgery.', category: 'Indications' },
   ],
   research: [
-    { id: 'study_critique', label: 'Study Critique', description: 'Design, bias, and evidence quality.', category: 'Research' },
-    { id: 'statistics', label: 'Statistics', description: 'Stats interpretation without hand-waving.', category: 'Research' },
-    { id: 'limitations', label: 'Limitations', description: 'What weakens applicability.', category: 'Research' },
-    { id: 'clinical_takeaway', label: 'Clinical Takeaway', description: 'What changes in practice, if anything.', category: 'Research' },
-    { id: 'journal_club', label: 'Journal Club', description: 'Discussion questions and critique structure.', category: 'Research' },
+    { id: 'study_critique', label: 'How strong is this study?', description: 'Design, bias, and evidence quality.', category: 'Evidence' },
+    { id: 'statistics', label: 'What statistics should I understand?', description: 'Stats interpretation without hand-waving.', category: 'Evidence' },
+    { id: 'limitations', label: 'What are the main limitations?', description: 'What weakens applicability.', category: 'Evidence' },
+    { id: 'clinical_takeaway', label: 'Does this change practice?', description: 'What changes in practice, if anything.', category: 'Controversies' },
+    { id: 'journal_club', label: 'What should I ask in journal club?', description: 'Discussion questions and critique structure.', category: 'Pimp Questions' },
   ],
   general: [
-    { id: 'explain', label: 'Explain', description: 'Clean conceptual explanation.', category: 'General' },
-    { id: 'compare', label: 'Compare', description: 'Contrast similar diagnoses, approaches, or decisions.', category: 'General' },
-    { id: 'quiz', label: 'Quiz', description: 'Convert the topic into active recall.', category: 'General' },
-    { id: 'clinical_application', label: 'Clinical Application', description: 'Apply the concept to patient care or call.', category: 'General' },
-    { id: 'or_relevance', label: 'OR Relevance', description: 'Why this matters in the operating room.', category: 'General' },
+    { id: 'explain', label: 'How should I understand this?', description: 'Clean conceptual explanation.', category: 'Clinical Decision Making' },
+    { id: 'compare', label: 'What should I compare this with?', description: 'Contrast similar diagnoses, approaches, or decisions.', category: 'Controversies' },
+    { id: 'quiz', label: 'Can you quiz me on this?', description: 'Convert the topic into active recall.', category: 'Board Review' },
+    { id: 'clinical_application', label: 'How does this change management?', description: 'Apply the concept to patient care or call.', category: 'Clinical Decision Making' },
+    { id: 'or_relevance', label: 'Why does this matter in the OR?', description: 'Why this matters in the operating room.', category: 'OR Technique' },
   ],
 };
 
 const CATEGORY_BRANCH_TEMPLATES: Partial<Record<BroBotProcedureCategory, BroBotBranchOption[]>> = {
   fracture_orif: [
-    { id: 'general_or_flow', label: 'General OR flow', description: 'Positioning, setup, sequence, and closure.', category: 'OR Prep' },
-    { id: 'fracture_pattern_classification', label: 'Fracture pattern/classification', description: 'Pattern recognition and how it changes the plan.', category: 'OR Prep' },
-    { id: 'approach_exposure', label: 'Approach and exposure', description: 'Incision, interval, anatomy, and structures at risk.', category: 'OR Prep' },
-    { id: 'reduction_strategy', label: 'Reduction strategy', description: 'Reduction sequence, clamps, provisional fixation, and goals.', category: 'OR Prep' },
-    { id: 'implant_fixation_options', label: 'Implant/fixation options', description: 'Construct choices, backup plans, and decision points.', category: 'OR Prep' },
-    { id: 'fluoro_intraop_checks', label: 'Fluoro/intraop checks', description: 'Views, alignment, hardware position, and final safety checks.', category: 'OR Prep' },
-    { id: 'pitfalls_complications', label: 'Pitfalls/complications', description: 'What commonly goes wrong and how to prevent it.', category: 'OR Prep' },
-    { id: 'attending_questions', label: 'Attending questions', description: 'Questions to ask and anticipate before incision.', category: 'OR Prep' },
+    { id: 'general_or_flow', label: 'How does the case flow start to finish?', description: 'Positioning, setup, sequence, and closure.', category: 'OR Technique' },
+    { id: 'fracture_pattern_classification', label: 'How does the fracture pattern change the plan?', description: 'Pattern recognition and how it changes the plan.', category: 'Classification Systems' },
+    { id: 'approach_exposure', label: 'What approach and anatomy should I know?', description: 'Incision, interval, anatomy, and structures at risk.', category: 'Surgical Approach' },
+    { id: 'reduction_strategy', label: 'How would you reduce this fracture?', description: 'Reduction sequence, clamps, provisional fixation, and goals.', category: 'Reduction Pearls' },
+    { id: 'implant_fixation_options', label: 'What fixation options should I know?', description: 'Construct choices, backup plans, and decision points.', category: 'Implant Selection' },
+    { id: 'fluoro_intraop_checks', label: 'What fluoro checks matter most?', description: 'Views, alignment, hardware position, and final safety checks.', category: 'OR Technique' },
+    { id: 'pitfalls_complications', label: 'What complications should I avoid?', description: 'What commonly goes wrong and how to prevent it.', category: 'Complications' },
+    { id: 'attending_questions', label: "What are the attending's favorite questions?", description: 'Questions to ask and anticipate before incision.', category: 'Pimp Questions' },
   ],
   arthroplasty: [
-    { id: 'exposure_approach', label: 'Exposure/approach', description: 'Positioning, incision, interval, releases, and exposure goals.', category: 'OR Prep' },
-    { id: 'implant_planning', label: 'Implant planning', description: 'Implant selection, templating, constraint, and backup options.', category: 'OR Prep' },
-    { id: 'bone_preparation', label: 'Bone preparation', description: 'Cuts, reaming, version, fixation, and bone-loss decisions.', category: 'OR Prep' },
-    { id: 'trialing_balancing', label: 'Trialing/balancing', description: 'Stability, soft-tissue balance, ROM, and final checks.', category: 'OR Prep' },
-    { id: 'complications', label: 'Complications', description: 'Intraoperative and early postop problems to anticipate.', category: 'OR Prep' },
-    { id: 'postop_restrictions', label: 'Postop restrictions', description: 'Precautions, rehab limits, weight bearing, and follow-up.', category: 'OR Prep' },
-    { id: 'attending_questions', label: 'Attending questions', description: 'Planning questions and intraoperative decision prompts.', category: 'OR Prep' },
+    { id: 'exposure_approach', label: 'What exposure gets you out of trouble?', description: 'Positioning, incision, interval, releases, and exposure goals.', category: 'Surgical Approach' },
+    { id: 'implant_planning', label: 'How should I think about implants?', description: 'Implant selection, templating, constraint, and backup options.', category: 'Implant Selection' },
+    { id: 'bone_preparation', label: 'What bone prep details matter?', description: 'Cuts, reaming, version, fixation, and bone-loss decisions.', category: 'OR Technique' },
+    { id: 'trialing_balancing', label: 'How do I assess balance and stability?', description: 'Stability, soft-tissue balance, ROM, and final checks.', category: 'OR Technique' },
+    { id: 'complications', label: 'What complications should I anticipate?', description: 'Intraoperative and early postop problems to anticipate.', category: 'Complications' },
+    { id: 'postop_restrictions', label: 'What postop restrictions matter?', description: 'Precautions, rehab limits, weight bearing, and follow-up.', category: 'Postoperative Management' },
+    { id: 'attending_questions', label: 'What will the attending ask?', description: 'Planning questions and intraoperative decision prompts.', category: 'Pimp Questions' },
   ],
   arthroscopy: [
-    { id: 'setup_positioning', label: 'Setup/positioning', description: 'Position, equipment, traction, pump, and timeout priorities.', category: 'OR Prep' },
-    { id: 'portal_placement', label: 'Portal placement', description: 'Portal landmarks, trajectory, and nearby structures.', category: 'OR Prep' },
-    { id: 'diagnostic_sequence', label: 'Diagnostic sequence', description: 'Systematic joint survey and documentation flow.', category: 'OR Prep' },
-    { id: 'structures_to_inspect', label: 'Structures to inspect', description: 'Key anatomy, pathology, and common missed lesions.', category: 'OR Prep' },
-    { id: 'instrument_workflow', label: 'Instrument workflow', description: 'Scope/instrument handling and treatment sequence.', category: 'OR Prep' },
-    { id: 'complications_pitfalls', label: 'Complications/pitfalls', description: 'Fluid, nerve, chondral, and visualization pitfalls.', category: 'OR Prep' },
-    { id: 'attending_questions', label: 'Attending questions', description: 'Questions to ask about setup, portals, and plan.', category: 'OR Prep' },
+    { id: 'setup_positioning', label: 'How should I set up the case?', description: 'Position, equipment, traction, pump, and timeout priorities.', category: 'OR Technique' },
+    { id: 'portal_placement', label: 'Where should the portals go?', description: 'Portal landmarks, trajectory, and nearby structures.', category: 'Surgical Approach' },
+    { id: 'diagnostic_sequence', label: 'What is the diagnostic sequence?', description: 'Systematic joint survey and documentation flow.', category: 'OR Technique' },
+    { id: 'structures_to_inspect', label: 'What structures are commonly missed?', description: 'Key anatomy, pathology, and common missed lesions.', category: 'Anatomy' },
+    { id: 'instrument_workflow', label: 'How should I handle the instruments?', description: 'Scope/instrument handling and treatment sequence.', category: 'OR Technique' },
+    { id: 'complications_pitfalls', label: 'What complications should I avoid?', description: 'Fluid, nerve, chondral, and visualization pitfalls.', category: 'Complications' },
+    { id: 'attending_questions', label: 'What will the attending ask?', description: 'Questions to ask about setup, portals, and plan.', category: 'Pimp Questions' },
   ],
   soft_tissue_release: [
-    { id: 'landmarks', label: 'Landmarks', description: 'Surface anatomy and localization cues.', category: 'OR Prep' },
-    { id: 'incision_interval', label: 'Incision/interval', description: 'Skin incision, dissection plane, and exposure.', category: 'OR Prep' },
-    { id: 'structure_at_risk', label: 'Structure at risk', description: 'Nearby nerves, vessels, tendons, and how to protect them.', category: 'OR Prep' },
-    { id: 'release_endpoint', label: 'Release endpoint', description: 'How to know the release is complete and safe.', category: 'OR Prep' },
-    { id: 'pitfalls', label: 'Pitfalls', description: 'Incomplete release, wrong plane, instability, or iatrogenic injury.', category: 'OR Prep' },
-    { id: 'postop_considerations', label: 'Postop considerations', description: 'Dressing, motion, restrictions, and follow-up.', category: 'OR Prep' },
+    { id: 'landmarks', label: 'What landmarks should I identify?', description: 'Surface anatomy and localization cues.', category: 'Surgical Approach' },
+    { id: 'incision_interval', label: 'Where is the safe interval?', description: 'Skin incision, dissection plane, and exposure.', category: 'Surgical Approach' },
+    { id: 'structure_at_risk', label: 'What structure is most at risk?', description: 'Nearby nerves, vessels, tendons, and how to protect them.', category: 'Anatomy' },
+    { id: 'release_endpoint', label: 'How do I know the release is complete?', description: 'How to know the release is complete and safe.', category: 'OR Technique' },
+    { id: 'pitfalls', label: 'What pitfalls cause failure?', description: 'Incomplete release, wrong plane, instability, or iatrogenic injury.', category: 'Complications' },
+    { id: 'postop_considerations', label: 'What postop plan matters?', description: 'Dressing, motion, restrictions, and follow-up.', category: 'Postoperative Management' },
   ],
   tendon_ligament_repair: [
-    { id: 'exposure_tunnels_or_anchors', label: 'Exposure/tunnels/anchors', description: 'Approach, tunnel or anchor placement, and anatomic targets.', category: 'OR Prep' },
-    { id: 'graft_or_repair_choice', label: 'Graft/repair choice', description: 'Graft, suture, anchor, or augmentation decisions.', category: 'OR Prep' },
-    { id: 'fixation_construct', label: 'Fixation construct', description: 'Construct sequence, fixation method, and backup options.', category: 'OR Prep' },
-    { id: 'tensioning_final_checks', label: 'Tensioning/final checks', description: 'Tension, ROM, stability, and imaging or arthroscopic checks.', category: 'OR Prep' },
-    { id: 'rehab_restrictions', label: 'Rehab restrictions', description: 'Early motion, weight bearing, bracing, and failure risks.', category: 'OR Prep' },
-    { id: 'pitfalls_complications', label: 'Pitfalls/complications', description: 'Common technical errors and complications.', category: 'OR Prep' },
-    { id: 'attending_questions', label: 'Attending questions', description: 'Plan-confirming questions to ask before starting.', category: 'OR Prep' },
+    { id: 'exposure_tunnels_or_anchors', label: 'Where do tunnels or anchors go?', description: 'Approach, tunnel or anchor placement, and anatomic targets.', category: 'OR Technique' },
+    { id: 'graft_or_repair_choice', label: 'How do I choose graft or repair?', description: 'Graft, suture, anchor, or augmentation decisions.', category: 'Implant Selection' },
+    { id: 'fixation_construct', label: 'What fixation construct should I know?', description: 'Construct sequence, fixation method, and backup options.', category: 'Implant Selection' },
+    { id: 'tensioning_final_checks', label: 'How do I tension and check it?', description: 'Tension, ROM, stability, and imaging or arthroscopic checks.', category: 'OR Technique' },
+    { id: 'rehab_restrictions', label: 'What rehab restrictions matter?', description: 'Early motion, weight bearing, bracing, and failure risks.', category: 'Rehabilitation' },
+    { id: 'pitfalls_complications', label: 'What complications should I avoid?', description: 'Common technical errors and complications.', category: 'Complications' },
+    { id: 'attending_questions', label: 'What will the attending ask?', description: 'Plan-confirming questions to ask before starting.', category: 'Pimp Questions' },
   ],
   spine_procedure: [
-    { id: 'levels_approach', label: 'Levels/approach', description: 'Localization, exposure, and approach-specific anatomy.', category: 'OR Prep' },
-    { id: 'neural_structures', label: 'Neural structures', description: 'Cord, roots, dura, and structures at risk.', category: 'OR Prep' },
-    { id: 'decompression_or_fixation_goal', label: 'Decompression/fixation goal', description: 'Primary surgical objective and decision points.', category: 'OR Prep' },
-    { id: 'imaging_navigation_checks', label: 'Imaging/navigation checks', description: 'Localization, hardware position, and final confirmation.', category: 'OR Prep' },
-    { id: 'complications', label: 'Complications', description: 'Neurologic, dural, vascular, infection, and positioning risks.', category: 'OR Prep' },
-    { id: 'attending_questions', label: 'Attending questions', description: 'Questions to clarify levels, plan, and bailout options.', category: 'OR Prep' },
+    { id: 'levels_approach', label: 'How do I confirm levels and approach?', description: 'Localization, exposure, and approach-specific anatomy.', category: 'Surgical Approach' },
+    { id: 'neural_structures', label: 'What neural structures are at risk?', description: 'Cord, roots, dura, and structures at risk.', category: 'Anatomy' },
+    { id: 'decompression_or_fixation_goal', label: 'What is the decompression or fixation goal?', description: 'Primary surgical objective and decision points.', category: 'OR Technique' },
+    { id: 'imaging_navigation_checks', label: 'What imaging checks matter?', description: 'Localization, hardware position, and final confirmation.', category: 'OR Technique' },
+    { id: 'complications', label: 'What complications should I avoid?', description: 'Neurologic, dural, vascular, infection, and positioning risks.', category: 'Complications' },
+    { id: 'attending_questions', label: 'What will the attending ask?', description: 'Questions to clarify levels, plan, and bailout options.', category: 'Pimp Questions' },
   ],
   hand_procedure: [
-    { id: 'landmarks_exposure', label: 'Landmarks/exposure', description: 'Surface anatomy, incision, and safe dissection.', category: 'OR Prep' },
-    { id: 'structures_at_risk', label: 'Structures at risk', description: 'Nerves, vessels, tendons, pulleys, and soft tissues to protect.', category: 'OR Prep' },
-    { id: 'procedure_endpoint', label: 'Procedure endpoint', description: 'How to confirm release, reduction, repair, or fixation.', category: 'OR Prep' },
-    { id: 'fixation_or_repair', label: 'Fixation/repair decisions', description: 'Implant, suture, or repair choices when applicable.', category: 'OR Prep' },
-    { id: 'postop_plan', label: 'Postop plan', description: 'Splinting, motion, restrictions, and follow-up.', category: 'OR Prep' },
-    { id: 'pitfalls_complications', label: 'Pitfalls/complications', description: 'Common technical errors and complications.', category: 'OR Prep' },
+    { id: 'landmarks_exposure', label: 'What landmarks guide the exposure?', description: 'Surface anatomy, incision, and safe dissection.', category: 'Surgical Approach' },
+    { id: 'structures_at_risk', label: 'What structures are most at risk?', description: 'Nerves, vessels, tendons, pulleys, and soft tissues to protect.', category: 'Anatomy' },
+    { id: 'procedure_endpoint', label: 'How do I confirm the endpoint?', description: 'How to confirm release, reduction, repair, or fixation.', category: 'OR Technique' },
+    { id: 'fixation_or_repair', label: 'What fixation or repair choice matters?', description: 'Implant, suture, or repair choices when applicable.', category: 'Implant Selection' },
+    { id: 'postop_plan', label: 'What postop plan should I know?', description: 'Splinting, motion, restrictions, and follow-up.', category: 'Postoperative Management' },
+    { id: 'pitfalls_complications', label: 'What complications should I avoid?', description: 'Common technical errors and complications.', category: 'Complications' },
   ],
 };
 
@@ -272,7 +272,7 @@ Decide:
 - procedureOrTopic: short topic/procedure.
 - ambiguity: low, moderate, or high.
 - missingContext: details that would materially improve the answer; no PHI.
-- branchOptions: 4-7 selectable learning branches. Prefer mode + procedureCategory templates, but tailor labels to the actual prompt.
+- branchOptions: 4-7 selectable learning branches. Each label must be a realistic resident-style follow-up question, not a generic focus area. Prefer mode + procedureCategory templates, but tailor labels to the actual prompt.
 - answerImmediately: true for low ambiguity and emergency consults; false for moderate/high ambiguity unless urgent safety info should not wait.
 - requiresBranchSelection: true when a full answer would materially change based on fracture pattern, approach, implant, anatomy, study goal, or consult context.
 - reasonForBranching: one sentence explaining why the branch choice matters. Avoid generic wording.
@@ -283,11 +283,11 @@ Broad OR-prep procedure prompts should usually require branch selection. Do not 
 Do not create one-off procedure-specific branch trees. Classify procedureCategory and generate reusable, procedure-relevant branches from the category.
 
 OR Prep category templates:
-- fracture_orif + surgical_steps: General OR flow; fracture pattern/classification; approach/exposure; reduction strategy; implant/fixation options; fluoro/intraop checks; pitfalls/complications; attending questions.
-- arthroplasty: exposure/approach; implant planning; bone preparation; trialing/balancing; complications; postop restrictions; attending questions.
-- arthroscopy: setup/positioning; portal placement; diagnostic sequence; structures to inspect; instrument workflow; complications; attending questions.
-- soft_tissue_release: landmarks; incision/interval; structure at risk; release endpoint; pitfalls; postop considerations.
-- tendon_ligament_repair: exposure/tunnels/anchors; graft/repair choice; fixation construct; tensioning/final checks; rehab restrictions; pitfalls; attending questions.
+- fracture_orif + surgical_steps: How does the case flow start to finish?; How does the fracture pattern change the plan?; What approach and anatomy should I know?; How would you reduce this fracture?; What fixation options should I know?; What fluoro checks matter most?; What complications should I avoid?; What are the attending's favorite questions?
+- arthroplasty: What exposure gets you out of trouble?; How should I think about implants?; What bone cuts or prep matter?; How do you assess balance and stability?; What complications should I anticipate?; What postop restrictions matter?; What will the attending ask?
+- arthroscopy: How should I set up the case?; Where should the portals go?; What is the diagnostic sequence?; What structures are commonly missed?; How should I handle the instruments?; What complications should I avoid?; What will the attending ask?
+- soft_tissue_release: What landmarks should I identify?; Where is the safe interval?; What structure is most at risk?; How do I know the release is complete?; What pitfalls cause failure?; What postop plan matters?
+- tendon_ligament_repair: Where do tunnels or anchors go?; How do I choose graft or repair?; What fixation construct should I know?; How do I tension and check it?; What rehab restrictions matter?; What complications should I avoid?
 - spine_procedure or hand_procedure: use the same broad principles: landmarks/exposure, structures at risk, technical goal, fixation/repair/release decision points, complications, postop plan, attending questions.
 
 Consult categories: infection_consult, postop_complication, arthroplasty_consult, pediatric_fracture, sports_injury. Prioritize urgency, missing data, imaging, red flags, temporizing management, and presentation.
@@ -296,12 +296,18 @@ Clinic categories: prioritize differential, exam, imaging, initial nonoperative 
 Research categories: prioritize evidence hierarchy, study design, practical interpretation, and limitations. Do not fabricate citations.
 
 Mode branch examples:
-- OR Prep: Landmarks, Surgical Steps, Anatomy At Risk, Implants, Complications, Attending Questions.
-- Consult: Presentation Help, Missing Information, Imaging Review, Differential, Operative Indications, Attending Questions.
-- OITE: High Yield Review, Classification, Treatment Algorithm, Test Traps, Quiz Me, Compare Diagnoses.
-- Clinic: Differential, Physical Exam, Imaging, Nonoperative Treatment, Surgical Indications.
-- Research: Study Critique, Statistics, Limitations, Clinical Takeaway, Journal Club.
-- General: Explain, Compare, Quiz, Clinical Application, OR Relevance.
+- OR Prep: What landmarks should I find first?; What are the key operative steps?; What anatomy is most at risk?; What implants should I know?; What complications get tested most?; What will the attending ask?
+- Consult: What information am I missing?; What should I do first?; How should I present this consult?; What imaging or labs matter?; What makes this operative?; What will my senior ask?
+- OITE: What are the board-style pearls?; What classification should I know?; What treatment algorithm gets tested?; What traps show up on OITE?; Can you quiz me on this?
+- Clinic: What diagnoses should I consider?; What exam findings matter most?; What imaging should I order?; What nonoperative options work?; When should I recommend surgery?
+- Research: How strong is this study?; What statistics should I understand?; What are the main limitations?; Does this change practice?; What should I ask in journal club?
+- General: How should I understand this?; What should I compare this with?; Can you quiz me on this?; How does this change management?; Why does this matter in the OR?
+
+Branch quality rules:
+- Keep branch labels under 12 words when possible.
+- Use question marks for question labels.
+- Avoid labels like "Surgical Technique", "Complications", "Rehabilitation", "Anatomy", or "Explore anatomy".
+- Make the next branch feel like the next thing an orthopaedic resident would naturally ask.
 
 Return exactly:
 ${INTENT_EXPANSION_CONTRACT}

@@ -281,7 +281,7 @@ Output rules:
 - priorityPoints: powers the UI section titled "Important Concepts". Return 3-6 ranked concepts. Each item should be concise but clinically useful and should be the highest-yield things to understand for the selected mode and training level.
 - knowledgeGaps: powers the UI section titled "What to Learn Next?". Return 2-4 actionable, specific next learning targets. Identify what the user likely does not know yet without sounding shame-y. Help guide the next study branch.
 - whatMostResidentsMiss: 3-5 concrete misses, pitfalls, traps, or blind spots. This is a signature BroBot section.
-- nextLearningBranches: 4-6 selectable continuation branches. Use branch-shaped labels, not long free-text questions.
+- nextLearningBranches: 4-6 selectable continuation branches. Use realistic resident-style follow-up question labels, not generic focus areas. Keep most labels under 12 words and avoid category-only labels such as "Surgical Technique", "Complications", "Rehabilitation", or "Anatomy".
 - suggestedQuestions: 4-6 unique, specific, clickable follow-up prompts. Keep for backward compatibility, but make them align with nextLearningBranches.
 - tags: meaningful short lowercase tags for future personalization, such as "trauma:tibial plateau", "oite:scfe", "anatomy:axillary nerve", "complication:avn".
 - confidence: number from 0 to 1 reflecting educational confidence and uncertainty.

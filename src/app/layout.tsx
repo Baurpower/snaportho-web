@@ -58,6 +58,7 @@ export const metadata: Metadata = {
 };
 
 const BRANCH_KEY = process.env.NEXT_PUBLIC_BRANCH_KEY ?? "";
+const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
 
 export default function RootLayout({
   children,
@@ -72,6 +73,24 @@ export default function RootLayout({
           src="https://cdn.branch.io/branch-latest.min.js"
           strategy="beforeInteractive"
         />
+
+        {GOOGLE_ADS_ID ? (
+          <>
+            <Script
+              id="google-ads-gtag"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-ads-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', ${JSON.stringify(GOOGLE_ADS_ID)});
+              `}
+            </Script>
+          </>
+        ) : null}
 
         {/* ✅ inline init; avoids referencing process.env inside the string */}
         <Script id="branch-init" strategy="afterInteractive">

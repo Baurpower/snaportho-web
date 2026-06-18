@@ -129,6 +129,7 @@ export const BroBotChatRequestSchema = z.object({
   intentReasonForBranching: z.string().trim().max(300).optional(),
   intentSource: BroBotIntentSourceSchema.optional(),
   answerNow: z.boolean().optional(),
+  stream: z.boolean().optional(),
 });
 
 export type BroBotChatRequest = z.infer<typeof BroBotChatRequestSchema>;
