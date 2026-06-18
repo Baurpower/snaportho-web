@@ -98,6 +98,9 @@ export const BroBotBranchOptionSchema = z.object({
   label: z.string().trim().min(1).max(80),
   description: z.string().trim().max(180).optional(),
   category: z.string().trim().max(80).optional(),
+  topicId: z.string().uuid().optional(),
+  branchQuestionId: z.string().uuid().optional(),
+  rankScore: z.number().optional(),
 });
 
 export type BroBotBranchOption = z.infer<typeof BroBotBranchOptionSchema>;
@@ -121,6 +124,7 @@ export const BroBotChatRequestSchema = z.object({
   sourceMessageId: z.string().uuid().optional(),
   selectedBranchId: z.string().trim().min(1).max(80).optional(),
   selectedBranchLabel: z.string().trim().min(1).max(80).optional(),
+  selectedBranchRankPosition: z.number().int().min(1).max(20).optional(),
   intentMode: BroBotChatModeSchema.exclude(['auto']).optional(),
   intentSubintent: BroBotChatSubintentSchema.optional(),
   intentProcedureOrTopic: z.string().trim().max(160).optional(),

@@ -194,6 +194,12 @@ function normalizeBranchOptions(value: unknown, mode: BroBotChatMode): BroBotBra
         label,
         description: normalizeString(record.description) || undefined,
         category: normalizeString(record.category) || undefined,
+        topicId: normalizeString(record.topicId) || undefined,
+        branchQuestionId: normalizeString(record.branchQuestionId) || undefined,
+        rankScore:
+          typeof record.rankScore === 'number' && Number.isFinite(record.rankScore)
+            ? record.rankScore
+            : undefined,
       };
     })
     .filter((option) => {

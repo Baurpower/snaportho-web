@@ -102,6 +102,9 @@ export type BroBotChatResponse = {
     label: string;
     description?: string;
     category?: string;
+    topicId?: string;
+    branchQuestionId?: string;
+    rankScore?: number;
   }>;
   tags: string[];
   detectedMode: string;
@@ -409,6 +412,7 @@ type RankedBranchOption = BroBotBranchOption & {
   branchQuestionId?: string;
   source?: string;
   rankScore?: number;
+  rankPosition?: number;
 };
 
 type BranchRankingContext = {
@@ -417,6 +421,23 @@ type BranchRankingContext = {
   trainingLevel: BroBotChatRequest['trainingLevel'];
   history: BroBotModelMessage[];
   intent: BroBotChatIntent;
+  fingerprint?: LearningFingerprint | null;
+  outcomePerformanceByBranchId?: Map<string, BranchOutcomePerformance>;
+};
+
+type LearningFingerprint = {
+  favorite_branches?: unknown;
+  frequent_branches?: unknown;
+  weakness_branches?: unknown;
+  preferred_modes?: unknown;
+};
+
+type BranchOutcomePerformance = {
+  branchQuestionId: string;
+  sampleSize: number;
+  avgEducationalSuccess: number;
+  continuationRate: number;
+  abandonmentRate: number;
 };
 
 function slugifyBranchId(value: string): string {
@@ -595,6 +616,61 @@ function noveltyPenalty(branch: RankedBranchOption, context: BranchRankingContex
   return 0;
 }
 
+function normalizeAggregateList(value: unknown): BranchAggregate[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .map((item) => {
+      const record = item && typeof item === 'object' ? (item as Record<string, unknown>) : {};
+      return {
+        id: typeof record.id === 'string' ? record.id : '',
+        label: typeof record.label === 'string' ? record.label : '',
+        count: typeof record.count === 'number' ? record.count : Number(record.count) || 0,
+        lastSelectedAt:
+          typeof record.lastSelectedAt === 'string' ? record.lastSelectedAt : new Date(0).toISOString(),
+      };
+    })
+    .filter((item) => item.id || item.label);
+}
+
+function fingerprintBoost(branch: RankedBranchOption, context: BranchRankingContext): number {
+  const fingerprint = context.fingerprint;
+  if (!fingerprint) return 0;
+
+  const branchKey = normalizeBranchKey(branch.label);
+  const aggregates = [
+    ...normalizeAggregateList(fingerprint.favorite_branches),
+    ...normalizeAggregateList(fingerprint.frequent_branches),
+  ];
+  const strongest = aggregates.reduce((max, item) => {
+    const idMatch = item.id && item.id === branch.id;
+    const labelMatch =
+      item.label && jaccardSimilarity(normalizeBranchKey(item.label), branchKey) >= 0.74;
+    if (!idMatch && !labelMatch) return max;
+    return Math.max(max, Math.min(1, item.count / 6));
+  }, 0);
+
+  return strongest * 5;
+}
+
+function outcomePerformanceAdjustment(
+  branch: RankedBranchOption,
+  context: BranchRankingContext
+): number {
+  const branchQuestionId = branch.branchQuestionId ?? (isUuid(branch.id) ? branch.id : undefined);
+  const performance = branchQuestionId
+    ? context.outcomePerformanceByBranchId?.get(branchQuestionId)
+    : undefined;
+  if (!performance || performance.sampleSize === 0) return 0;
+
+  const confidence = Math.min(1, performance.sampleSize / 12);
+  const educationalLift = ((performance.avgEducationalSuccess - 50) / 50) * 12;
+  const continuationLift = (performance.continuationRate - 0.5) * 8;
+  const abandonmentPenalty = performance.abandonmentRate * 10;
+
+  return (educationalLift + continuationLift - abandonmentPenalty) * confidence;
+}
+
 function scoreBranchOption(
   branch: RankedBranchOption,
   context?: BranchRankingContext
@@ -612,11 +688,21 @@ function scoreBranchOption(
   const levelFit = levelCategoryFit(category, context.trainingLevel) * 14;
   const contextFit = contextRelevanceScore(branch, context) * 22;
   const novelty = 20 - noveltyPenalty(branch, context);
+  const outcomeAdjustment = outcomePerformanceAdjustment(branch, context);
+  const personalization = fingerprintBoost(branch, context);
 
   return {
     ...branch,
     category,
-    rankScore: historicalScore * 0.35 + educationalValue + modeAlignment + levelFit + contextFit + novelty,
+    rankScore:
+      historicalScore * 0.3 +
+      educationalValue +
+      modeAlignment +
+      levelFit +
+      contextFit +
+      novelty +
+      outcomeAdjustment +
+      personalization,
   };
 }
 
@@ -705,6 +791,7 @@ async function getOrCreateBranchTopic(params: {
 async function loadRankedBranchQuestions(params: {
   persistence: BroBotDbClient;
   intent: BroBotChatIntent;
+  context?: BranchRankingContext;
 }): Promise<{ topic: BranchTopicRow | null; branches: RankedBranchOption[] }> {
   const topic = await getOrCreateBranchTopic(params);
   if (!topic) return { topic: null, branches: [] };
@@ -716,14 +803,15 @@ async function loadRankedBranchQuestions(params: {
       .eq('topic_id', topic.topic_id)
       .order('success_score', { ascending: false })
       .order('click_count', { ascending: false })
-      .limit(12);
+      .limit(40);
 
     if (error || !data) return { topic, branches: [] };
 
     const branches = (data as BranchQuestionRow[])
       .map(branchOptionFromQuestion)
+      .map((branch) => scoreBranchOption(branch, params.context))
       .sort((a, b) => (b.rankScore ?? 0) - (a.rankScore ?? 0))
-      .slice(0, 5);
+      .slice(0, 12);
 
     return { topic, branches };
   } catch (error) {
@@ -736,8 +824,8 @@ async function storeGeneratedBranchQuestions(params: {
   persistence: BroBotDbClient;
   topic: BranchTopicRow | null;
   branches: BroBotBranchOption[];
-}) {
-  if (!params.topic || params.branches.length === 0) return;
+}): Promise<RankedBranchOption[]> {
+  if (!params.topic || params.branches.length === 0) return [];
 
   const rows = params.branches
     .map((branch) => ({
@@ -749,62 +837,273 @@ async function storeGeneratedBranchQuestions(params: {
     }))
     .filter((row) => row.question_text);
 
-  if (rows.length === 0) return;
+  if (rows.length === 0) return [];
+
+  const resolved: RankedBranchOption[] = [];
 
   for (const row of rows) {
     try {
       const { data: existing } = await params.persistence
         .from('branch_questions')
-        .select('id')
+        .select('id, topic_id, question_text, category, source, success_score, usage_count, click_count, updated_at')
         .eq('topic_id', row.topic_id)
         .ilike('question_text', row.question_text)
         .maybeSingle();
 
-      if (existing) continue;
+      if (existing) {
+        resolved.push(branchOptionFromQuestion(existing as BranchQuestionRow));
+        continue;
+      }
 
-      await params.persistence.from('branch_questions').insert(row);
+      const { data: inserted, error } = await params.persistence
+        .from('branch_questions')
+        .insert(row)
+        .select('id, topic_id, question_text, category, source, success_score, usage_count, click_count, updated_at')
+        .single();
+
+      if (!error && inserted) {
+        resolved.push(branchOptionFromQuestion(inserted as BranchQuestionRow));
+      }
     } catch (error) {
       console.error('[brobot] storeGeneratedBranchQuestions failed (non-fatal)', error);
     }
   }
+
+  return resolved;
 }
 
-async function recordBranchEvents(params: {
+async function attachPersistedBranchQuestionIds(params: {
+  persistence: BroBotDbClient;
+  topic: BranchTopicRow | null;
+  branches: RankedBranchOption[];
+}): Promise<RankedBranchOption[]> {
+  if (!params.topic || params.branches.length === 0) {
+    return withRankPositions(params.branches);
+  }
+
+  const generated = params.branches.filter((branch) => !isUuid(branch.id));
+  const resolvedGenerated = await storeGeneratedBranchQuestions({
+    persistence: params.persistence,
+    topic: params.topic,
+    branches: generated,
+  });
+  const resolvedByLabel = new Map(
+    resolvedGenerated.map((branch) => [normalizeBranchKey(branch.label), branch])
+  );
+
+  return withRankPositions(
+    params.branches.map((branch) => {
+      const branchQuestionId = branch.branchQuestionId ?? (isUuid(branch.id) ? branch.id : undefined);
+      if (branchQuestionId) {
+        return {
+          ...branch,
+          id: branchQuestionId,
+          branchQuestionId,
+          topicId: branch.topicId ?? params.topic?.topic_id,
+        };
+      }
+
+      const resolved = resolvedByLabel.get(normalizeBranchKey(branch.label));
+      if (!resolved) return branch;
+
+      return {
+        ...branch,
+        id: resolved.id,
+        topicId: resolved.topicId,
+        branchQuestionId: resolved.branchQuestionId,
+        source: resolved.source,
+        rankScore: branch.rankScore ?? resolved.rankScore,
+      };
+    })
+  );
+}
+
+async function recordBranchClickEvent(params: {
   persistence: BroBotDbClient;
   userId: string;
   conversationId: string;
   topicId?: string | null;
-  branches?: RankedBranchOption[];
   selectedBranchId?: string;
-}) {
-  const events = [
-    ...(params.branches ?? []).map((branch) => ({
-      conversation_id: params.conversationId,
-      user_id: params.userId,
-      topic_id: branch.topicId ?? params.topicId ?? null,
-      branch_question_id: branch.branchQuestionId ?? (isUuid(branch.id) ? branch.id : null),
-      clicked: false,
-      generated_followup: false,
-    })),
-    ...(params.selectedBranchId && isUuid(params.selectedBranchId)
-      ? [{
-          conversation_id: params.conversationId,
-          user_id: params.userId,
-          topic_id: params.topicId ?? null,
-          branch_question_id: params.selectedBranchId,
-          clicked: true,
-          generated_followup: true,
-        }]
-      : []),
-  ].filter((event) => event.branch_question_id || event.topic_id);
-
-  if (events.length === 0) return;
+  selectedBranchLabel?: string;
+  selectedBranchRankPosition?: number;
+  sourceMessageId?: string | null;
+  mode: string;
+  trainingLevel: string;
+}): Promise<{ id: string; branchQuestionId: string | null } | null> {
+  if (!params.selectedBranchId || !isUuid(params.selectedBranchId)) return null;
 
   try {
-    await params.persistence.from('branch_events').insert(events);
+    const { data, error } = await params.persistence
+      .from('branch_events')
+      .insert({
+        conversation_id: params.conversationId,
+        user_id: params.userId,
+        topic_id: params.topicId ?? null,
+        branch_question_id: params.selectedBranchId,
+        event_type: 'click',
+        clicked: true,
+        generated_followup: true,
+        rank_position: params.selectedBranchRankPosition ?? null,
+        mode: params.mode,
+        training_level: params.trainingLevel,
+        branch_label: params.selectedBranchLabel ?? null,
+        source_message_id: params.sourceMessageId ?? null,
+        metadata: {
+          source: 'branch_selection',
+          branch_label: params.selectedBranchLabel ?? null,
+          rank_position: params.selectedBranchRankPosition ?? null,
+          mode: params.mode,
+          training_level: params.trainingLevel,
+          source_message_id: params.sourceMessageId ?? null,
+        },
+      })
+      .select('id, branch_question_id')
+      .single();
+
+    if (error || !data) return null;
+
+    return {
+      id: String(data.id),
+      branchQuestionId:
+        typeof data.branch_question_id === 'string' ? data.branch_question_id : null,
+    };
   } catch (error) {
-    console.error('[brobot] recordBranchEvents failed (non-fatal)', error);
+    console.error('[brobot] recordBranchClickEvent failed (non-fatal)', error);
+    return null;
   }
+}
+
+async function recordBranchOutcome(params: {
+  persistence: BroBotDbClient;
+  userId: string;
+  conversationId: string;
+  branchEventId?: string | null;
+  branchQuestionId?: string | null;
+  mode: string;
+  trainingLevel: string;
+  history: BroBotModelMessage[];
+  sourceMessageId?: string | null;
+  latencyMs: number;
+}) {
+  if (!params.branchEventId && !params.branchQuestionId) return;
+
+  const priorDepth = params.history.filter(
+    (message) => message.role === 'user' || message.role === 'assistant'
+  ).length;
+  const conversationDepthDelta = 2;
+  const followupCount = Math.max(
+    0,
+    params.history.filter((message) => message.role === 'user').length - 1
+  );
+  const continuedAfterClick = true;
+  const abandoned = false;
+  const educationalSuccessScore =
+    (continuedAfterClick ? 30 : 0) +
+    Math.min(followupCount, 4) * 10 +
+    Math.min(conversationDepthDelta, 6) * 5 -
+    (abandoned ? 20 : 0);
+
+  try {
+    await params.persistence.from('branch_outcomes').insert({
+      branch_event_id: params.branchEventId ?? null,
+      conversation_id: params.conversationId,
+      user_id: params.userId,
+      branch_question_id: params.branchQuestionId ?? null,
+      mode: params.mode,
+      training_level: params.trainingLevel,
+      continued_after_click: continuedAfterClick,
+      followup_count: followupCount,
+      conversation_depth_delta: conversationDepthDelta,
+      duration_seconds: Math.round(params.latencyMs / 1000),
+      abandoned,
+      educational_success_score: Math.min(100, Math.max(0, educationalSuccessScore)),
+      metadata: {
+        source: 'branch_selection_response',
+        source_message_id: params.sourceMessageId ?? null,
+        prior_depth: priorDepth,
+      },
+    });
+  } catch (error) {
+    console.error('[brobot] recordBranchOutcome failed (non-fatal)', error);
+  }
+}
+
+function withRankPositions(branches: RankedBranchOption[]): RankedBranchOption[] {
+  return branches.map((branch, index) => ({
+    ...branch,
+    rankPosition: index + 1,
+    branchQuestionId: branch.branchQuestionId ?? (isUuid(branch.id) ? branch.id : undefined),
+  }));
+}
+
+async function loadLearningFingerprint(params: {
+  userId: string;
+}): Promise<LearningFingerprint | null> {
+  try {
+    const { data } = await createAdminClient()
+      .from('brobot_learning_fingerprints')
+      .select('favorite_branches, frequent_branches, weakness_branches, preferred_modes')
+      .eq('user_id', params.userId)
+      .maybeSingle();
+
+    return (data as LearningFingerprint | null) ?? null;
+  } catch (error) {
+    console.error('[brobot] loadLearningFingerprint failed (non-fatal)', error);
+    return null;
+  }
+}
+
+async function loadBranchOutcomePerformance(params: {
+  persistence: BroBotDbClient;
+  branchQuestionIds: string[];
+  mode: string;
+  trainingLevel: string;
+}): Promise<Map<string, BranchOutcomePerformance>> {
+  const ids = Array.from(new Set(params.branchQuestionIds.filter(isUuid)));
+  const performance = new Map<string, BranchOutcomePerformance>();
+  if (ids.length === 0) return performance;
+
+  try {
+    const { data, error } = await params.persistence
+      .from('branch_outcomes')
+      .select('branch_question_id, educational_success_score, continued_after_click, abandoned')
+      .in('branch_question_id', ids)
+      .eq('mode', params.mode)
+      .eq('training_level', params.trainingLevel)
+      .limit(500);
+
+    if (error || !data) return performance;
+
+    const aggregate = new Map<
+      string,
+      { count: number; score: number; continued: number; abandoned: number }
+    >();
+
+    for (const row of data as Array<Record<string, unknown>>) {
+      const id = typeof row.branch_question_id === 'string' ? row.branch_question_id : '';
+      if (!id) continue;
+      const current = aggregate.get(id) ?? { count: 0, score: 0, continued: 0, abandoned: 0 };
+      current.count += 1;
+      current.score += Number(row.educational_success_score) || 0;
+      if (row.continued_after_click) current.continued += 1;
+      if (row.abandoned) current.abandoned += 1;
+      aggregate.set(id, current);
+    }
+
+    aggregate.forEach((value, id) => {
+      performance.set(id, {
+        branchQuestionId: id,
+        sampleSize: value.count,
+        avgEducationalSuccess: value.count > 0 ? value.score / value.count : 0,
+        continuationRate: value.count > 0 ? value.continued / value.count : 0,
+        abandonmentRate: value.count > 0 ? value.abandoned / value.count : 0,
+      });
+    });
+  } catch (error) {
+    console.error('[brobot] loadBranchOutcomePerformance failed (non-fatal)', error);
+  }
+
+  return performance;
 }
 
 function isUuid(value: string | undefined): value is string {
@@ -1184,6 +1483,9 @@ export async function POST(request: Request) {
           trainingLevel: body.trainingLevel,
           source: body.source,
           branch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
+          branch_label: body.selectedBranchLabel ?? null,
+          rank_position: body.selectedBranchRankPosition ?? null,
+          source_message_id: body.sourceMessageId ?? null,
           questionLength: body.message.length,
           questionHash: hashForLogging(body.message),
           sourceMessageIdPresent: Boolean(body.sourceMessageId),
@@ -1284,17 +1586,44 @@ export async function POST(request: Request) {
       }
     }
 
+    const fingerprint = await loadLearningFingerprint({ userId });
+    const baseRankingContext: BranchRankingContext = {
+      userMessage: body.message,
+      mode: intent.mode,
+      trainingLevel: body.trainingLevel,
+      history,
+      intent,
+      fingerprint,
+    };
+
     step = 'load_learning_branches';
     const learningBranches = await loadRankedBranchQuestions({
       persistence,
       intent,
+      context: baseRankingContext,
     });
-    const databaseBranchOptions = learningBranches.branches;
+    const outcomePerformanceByBranchId = await loadBranchOutcomePerformance({
+      persistence,
+      branchQuestionIds: learningBranches.branches
+        .map((branch) => branch.branchQuestionId ?? branch.id)
+        .filter(isUuid),
+      mode: intent.mode,
+      trainingLevel: body.trainingLevel,
+    });
+    const rankingContext: BranchRankingContext = {
+      ...baseRankingContext,
+      outcomePerformanceByBranchId,
+    };
+    const databaseBranchOptions = learningBranches.branches
+      .map((branch) => scoreBranchOption(branch, rankingContext))
+      .sort((a, b) => (b.rankScore ?? 0) - (a.rankScore ?? 0))
+      .slice(0, 12);
+    learningBranches.branches = databaseBranchOptions;
 
     if (databaseBranchOptions.length > 0) {
       intent = {
         ...intent,
-        branchOptions: mergeBranchOptions(databaseBranchOptions, intent.branchOptions ?? [], 7),
+        branchOptions: mergeBranchOptions(databaseBranchOptions, intent.branchOptions ?? [], 7, rankingContext),
       };
     }
 
@@ -1371,6 +1700,7 @@ export async function POST(request: Request) {
         modelMessages,
         learningBranches,
         databaseBranchOptions,
+        rankingContext,
         startedAt,
         limit,
         usedBefore,
@@ -1445,9 +1775,16 @@ export async function POST(request: Request) {
       nextLearningBranches: mergeBranchOptions(
         databaseBranchOptions,
         parsedOutput.nextLearningBranches ?? intent.branchOptions ?? [],
-        5
+        5,
+        rankingContext
       ),
     };
+    brobotOutput.nextLearningBranches = await attachPersistedBranchQuestionIds({
+      persistence,
+      topic: learningBranches.topic,
+      branches: brobotOutput.nextLearningBranches,
+    });
+
     const qualityGate = runBroBotQualityGate({
       answer: brobotOutput.answer,
       mode: intent.mode,
@@ -1599,6 +1936,7 @@ async function persistCompletedBroBotOutput(params: {
     topic: BranchTopicRow | null;
     branches: RankedBranchOption[];
   };
+  history: BroBotModelMessage[];
   latencyMs: number;
   limit: number | null;
   usedBefore: number | null;
@@ -1715,21 +2053,30 @@ async function persistCompletedBroBotOutput(params: {
     }
   }
 
-  await storeGeneratedBranchQuestions({
-    persistence: params.persistence,
-    topic: params.learningBranches.topic,
-    branches: (params.brobotOutput.nextLearningBranches ?? []).filter(
-      (branch) => !isUuid(branch.id)
-    ),
-  });
-
-  await recordBranchEvents({
+  const branchClick = await recordBranchClickEvent({
     persistence: params.persistence,
     userId: params.userId,
     conversationId: params.conversationId,
     topicId: params.learningBranches.topic?.topic_id ?? null,
-    branches: params.brobotOutput.nextLearningBranches as RankedBranchOption[],
     selectedBranchId: params.body.selectedBranchId,
+    selectedBranchLabel: params.body.selectedBranchLabel,
+    selectedBranchRankPosition: params.body.selectedBranchRankPosition,
+    sourceMessageId: params.body.sourceMessageId ?? null,
+    mode: params.intent.mode,
+    trainingLevel: params.body.trainingLevel,
+  });
+
+  await recordBranchOutcome({
+    persistence: params.persistence,
+    userId: params.userId,
+    conversationId: params.conversationId,
+    branchEventId: branchClick?.id ?? null,
+    branchQuestionId: branchClick?.branchQuestionId ?? params.body.selectedBranchId ?? null,
+    mode: params.intent.mode,
+    trainingLevel: params.body.trainingLevel,
+    history: params.history,
+    sourceMessageId: params.body.sourceMessageId ?? null,
+    latencyMs: params.latencyMs,
   });
 
   const { error: updateConversationError } = await params.persistence
@@ -1869,6 +2216,7 @@ function createStreamingChatResponse(params: {
     branches: RankedBranchOption[];
   };
   databaseBranchOptions: RankedBranchOption[];
+  rankingContext: BranchRankingContext;
   startedAt: number;
   limit: number | null;
   usedBefore: number | null;
@@ -1950,9 +2298,22 @@ function createStreamingChatResponse(params: {
           nextLearningBranches: mergeBranchOptions(
             params.databaseBranchOptions,
             parsedOutput.nextLearningBranches ?? params.intent.branchOptions ?? [],
-            5
+            5,
+            {
+              ...params.rankingContext,
+              userMessage: params.body.message,
+              mode: params.intent.mode,
+              trainingLevel: params.body.trainingLevel,
+              history: params.modelMessages.filter((message) => message.role !== 'system'),
+              intent: params.intent,
+            }
           ),
         };
+        brobotOutput.nextLearningBranches = await attachPersistedBranchQuestionIds({
+          persistence: params.persistence,
+          topic: params.learningBranches.topic,
+          branches: brobotOutput.nextLearningBranches,
+        });
 
         const responsePayload = await persistCompletedBroBotOutput({
           request: params.request,
@@ -1968,6 +2329,7 @@ function createStreamingChatResponse(params: {
           intentSource: params.intentSource,
           brobotOutput,
           learningBranches: params.learningBranches,
+          history: params.modelMessages.filter((message) => message.role !== 'system'),
           latencyMs,
           limit: params.limit,
           usedBefore: params.usedBefore,
@@ -2028,21 +2390,30 @@ function createStreamingChatResponse(params: {
   });
 }
 
-    await storeGeneratedBranchQuestions({
-      persistence,
-      topic: learningBranches.topic,
-      branches: (brobotOutput.nextLearningBranches ?? []).filter(
-        (branch) => !isUuid(branch.id)
-      ),
-    });
-
-    await recordBranchEvents({
+    const branchClick = await recordBranchClickEvent({
       persistence,
       userId,
       conversationId: persistedConversationId,
       topicId: learningBranches.topic?.topic_id ?? null,
-      branches: brobotOutput.nextLearningBranches as RankedBranchOption[],
       selectedBranchId: body.selectedBranchId,
+      selectedBranchLabel: body.selectedBranchLabel,
+      selectedBranchRankPosition: body.selectedBranchRankPosition,
+      sourceMessageId: body.sourceMessageId ?? null,
+      mode: intent.mode,
+      trainingLevel: body.trainingLevel,
+    });
+
+    await recordBranchOutcome({
+      persistence,
+      userId,
+      conversationId: persistedConversationId,
+      branchEventId: branchClick?.id ?? null,
+      branchQuestionId: branchClick?.branchQuestionId ?? body.selectedBranchId ?? null,
+      mode: intent.mode,
+      trainingLevel: body.trainingLevel,
+      history,
+      sourceMessageId: body.sourceMessageId ?? null,
+      latencyMs,
     });
 
     step = 'update_conversation';

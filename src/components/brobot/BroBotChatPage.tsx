@@ -66,6 +66,10 @@ type BranchOption = {
   label: string;
   description?: string;
   category?: string;
+  topicId?: string;
+  branchQuestionId?: string;
+  rankScore?: number;
+  rankPosition?: number;
 };
 
 type IntentExpansion = {
@@ -343,6 +347,18 @@ function normalizeBranchOptions(value: unknown): BranchOption[] {
         category:
           typeof record.category === 'string' && record.category.trim()
             ? record.category.trim()
+            : undefined,
+        topicId:
+          typeof record.topicId === 'string' && record.topicId.trim()
+            ? record.topicId.trim()
+            : undefined,
+        branchQuestionId:
+          typeof record.branchQuestionId === 'string' && record.branchQuestionId.trim()
+            ? record.branchQuestionId.trim()
+            : undefined,
+        rankScore:
+          typeof record.rankScore === 'number' && Number.isFinite(record.rankScore)
+            ? record.rankScore
             : undefined,
       };
     })
@@ -695,6 +711,7 @@ export default function BroBotChatPage() {
           sourceMessageId,
           selectedBranchId: selectedBranch?.id,
           selectedBranchLabel: selectedBranch?.label,
+          selectedBranchRankPosition: selectedBranch?.rankPosition,
           intentMode: pendingIntent?.intent.mode,
           intentSubintent: pendingIntent?.intent.subintent,
           intentProcedureOrTopic: pendingIntent?.intent.procedureOrTopic || message,
@@ -1108,7 +1125,9 @@ export default function BroBotChatPage() {
                     branches={latestAssistant.response.nextLearningBranches ?? []}
                     fallbackQuestions={latestAssistant.response.suggestedQuestions}
                     mode={latestAssistant.response.detectedMode}
+                    conversationId={latestAssistant.response.conversationId}
                     sourceMessageId={latestAssistant.response.messageId}
+                    trainingLevel={trainingLevel}
                     onPickBranch={(branch, sourceMessageId) =>
                       void sendMessage(
                         branch.label,
@@ -1690,23 +1709,65 @@ function BroBotNextLearningBranches({
   branches,
   fallbackQuestions,
   mode,
+  conversationId,
   sourceMessageId,
+  trainingLevel,
   onPickBranch,
 }: {
   branches: BranchOption[];
   fallbackQuestions: string[];
   mode: string;
+  conversationId: string;
   sourceMessageId: string;
+  trainingLevel: string;
   onPickBranch: (branch: BranchOption, sourceMessageId: string) => void;
 }) {
-  const branchChips =
+  const loggedExposureKeyRef = useRef<string | null>(null);
+  const branchChips: BranchOption[] =
     branches.length > 0
-      ? branches.slice(0, 7)
+      ? branches.slice(0, 7).map((branch, index) => ({
+          ...branch,
+          rankPosition: branch.rankPosition ?? index + 1,
+        }))
       : buildSuggestedChips(fallbackQuestions, mode).map((question) => ({
           id: question.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''),
           label: question,
           category: inferChipCategory(question),
+        })).map((branch, index) => ({
+          ...branch,
+          rankPosition: index + 1,
         }));
+
+  useEffect(() => {
+    if (!conversationId || !sourceMessageId || branchChips.length === 0) return;
+
+    const exposureKey = `${conversationId}:${sourceMessageId}:${branchChips
+      .map((branch) => `${branch.id}:${branch.rankPosition}`)
+      .join('|')}`;
+    if (loggedExposureKeyRef.current === exposureKey) return;
+    loggedExposureKeyRef.current = exposureKey;
+
+    void fetch('/api/brobot/branch-events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        conversationId,
+        sourceMessageId,
+        topicId: branchChips.find((branch) => branch.topicId)?.topicId,
+        branches: branchChips.map((branch) => ({
+          id: branch.branchQuestionId ?? branch.id,
+          label: branch.label,
+          rankPosition: branch.rankPosition ?? 1,
+          mode,
+          trainingLevel,
+        })),
+      }),
+    }).catch(() => {
+      loggedExposureKeyRef.current = null;
+    });
+  }, [branchChips, conversationId, mode, sourceMessageId, trainingLevel]);
+
   if (branchChips.length === 0) return null;
 
   return (
