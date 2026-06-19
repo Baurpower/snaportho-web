@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { safeRedirectPath } from "@/lib/auth/redirects";
 
 export default function UpdatePasswordPage() {
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function UpdatePasswordPage() {
           searchParams.get("next") ?? searchParams.get("redirectTo");
 
         if (nextParam) {
-          setReturnPath(nextParam);
+          setReturnPath(safeRedirectPath(nextParam, "/learn"));
         }
 
         // Preferred SSR / PKCE flow: ?code=...

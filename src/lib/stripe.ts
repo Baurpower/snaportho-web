@@ -132,6 +132,190 @@ type PortalSubscriptionRow = {
   updated_at: string | null;
 };
 
+type TrialEligibilitySubscriptionRow = {
+  provider: string | null;
+  status: string | null;
+  plan_code: string | null;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  stripe_price_id: string | null;
+  current_period_start: string | null;
+  current_period_end: string | null;
+  created_at: string | null;
+};
+
+export type BroBotTrialDecision = {
+  eligible: boolean;
+  reason:
+    | 'eligible'
+    | 'trial_not_configured'
+    | 'prior_subscription_row'
+    | 'prior_stripe_subscription';
+  offerId: string | null;
+  trialEnd: number | null;
+  trialMonths: number | null;
+};
+
+function daysInUtcMonth(year: number, monthIndex: number) {
+  return new Date(Date.UTC(year, monthIndex + 1, 0)).getUTCDate();
+}
+
+export function addCalendarMonthsUtc(date: Date, months: number) {
+  if (!Number.isInteger(months) || months <= 0) {
+    throw new Error('Trial month count must be a positive integer.');
+  }
+
+  const targetMonthZeroBased = date.getUTCMonth() + months;
+  const targetYear = date.getUTCFullYear() + Math.floor(targetMonthZeroBased / 12);
+  const targetMonth = ((targetMonthZeroBased % 12) + 12) % 12;
+  const targetDay = Math.min(date.getUTCDate(), daysInUtcMonth(targetYear, targetMonth));
+
+  return new Date(
+    Date.UTC(
+      targetYear,
+      targetMonth,
+      targetDay,
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds(),
+      date.getUTCMilliseconds()
+    )
+  );
+}
+
+export function getBroBotTrialEndTimestamp(startedAt = new Date()) {
+  const trialMonths = Number.isFinite(BROBOT_CONFIG.TRIAL_MONTHS)
+    ? BROBOT_CONFIG.TRIAL_MONTHS
+    : 0;
+  if (!Number.isInteger(trialMonths) || trialMonths <= 0) return null;
+
+  return Math.floor(addCalendarMonthsUtc(startedAt, trialMonths).getTime() / 1000);
+}
+
+export function buildBroBotCheckoutMetadata(params: {
+  userId: string;
+  trialDecision: BroBotTrialDecision;
+}) {
+  return {
+    user_id: params.userId,
+    product: 'brobot',
+    plan: BROBOT_CONFIG.PAID_PLAN_CODE,
+    plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
+    trial_offer_reference_id: params.trialDecision.offerId ?? '',
+    trial_offer_attached: 'false',
+    trial_implementation: params.trialDecision.eligible ? 'checkout_trial_end' : 'none',
+    trial_duration_unit: params.trialDecision.eligible ? 'calendar_month' : '',
+    trial_duration_count: params.trialDecision.trialMonths?.toString() ?? '',
+    trial_end: params.trialDecision.trialEnd?.toString() ?? '',
+    trial_applied: params.trialDecision.eligible ? 'true' : 'false',
+    trial_eligibility_reason: params.trialDecision.reason,
+  };
+}
+
+function hasPriorBroBotSubscriptionRow(row: TrialEligibilitySubscriptionRow) {
+  if (row.plan_code !== BROBOT_CONFIG.PAID_PLAN_CODE) return false;
+
+  if (row.provider === 'apple') return true;
+  if (row.provider === 'stripe' && row.stripe_subscription_id) return true;
+  if (row.status === 'trialing') return true;
+  if (row.status && ['active', 'past_due', 'canceled', 'unpaid'].includes(row.status)) return true;
+
+  return Boolean(row.current_period_start || row.current_period_end);
+}
+
+function stripeSubscriptionMatchesBroBot(subscription: Stripe.Subscription) {
+  if (subscription.metadata?.plan_code === BROBOT_CONFIG.PAID_PLAN_CODE) return true;
+
+  const priceIds = new Set(
+    [BROBOT_CONFIG.MONTHLY_PRICE_ID, BROBOT_CONFIG.YEARLY_PRICE_ID].filter(Boolean)
+  );
+
+  return subscription.items.data.some((item) => priceIds.has(item.price.id));
+}
+
+export async function determineBroBotTrialDecision(params: {
+  userId: string;
+  stripeCustomerId?: string | null;
+  enableTrial?: boolean;
+  now?: Date;
+}): Promise<BroBotTrialDecision> {
+  const offerId = BROBOT_CONFIG.TRIAL_OFFER_ID || null;
+  const trialMonths = Number.isFinite(BROBOT_CONFIG.TRIAL_MONTHS)
+    ? BROBOT_CONFIG.TRIAL_MONTHS
+    : 0;
+  const trialEnd = getBroBotTrialEndTimestamp(params.now);
+
+  if (!params.enableTrial || !offerId || !trialEnd || trialMonths <= 0) {
+    return {
+      eligible: false,
+      reason: 'trial_not_configured',
+      offerId,
+      trialEnd: null,
+      trialMonths: trialMonths > 0 ? trialMonths : null,
+    };
+  }
+
+  const supabase = createAdminClient();
+  const { data: priorRows, error } = await supabase
+    .from('subscriptions')
+    .select(`
+      provider,
+      status,
+      plan_code,
+      stripe_customer_id,
+      stripe_subscription_id,
+      stripe_price_id,
+      current_period_start,
+      current_period_end,
+      created_at
+    `)
+    .eq('user_id', params.userId)
+    .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+    .order('created_at', { ascending: false })
+    .limit(25);
+
+  if (error) {
+    throw new Error(`Failed to determine trial eligibility: ${error.message}`);
+  }
+
+  if ((priorRows ?? []).some((row) => hasPriorBroBotSubscriptionRow(row as TrialEligibilitySubscriptionRow))) {
+    return {
+      eligible: false,
+      reason: 'prior_subscription_row',
+      offerId,
+      trialEnd: null,
+      trialMonths,
+    };
+  }
+
+  if (params.stripeCustomerId) {
+    const stripe = getStripe();
+    const subscriptions = await stripe.subscriptions.list({
+      customer: params.stripeCustomerId,
+      status: 'all',
+      limit: 100,
+    });
+
+    if (subscriptions.data.some(stripeSubscriptionMatchesBroBot)) {
+      return {
+        eligible: false,
+        reason: 'prior_stripe_subscription',
+        offerId,
+        trialEnd: null,
+        trialMonths,
+      };
+    }
+  }
+
+  return {
+    eligible: true,
+    reason: 'eligible',
+    offerId,
+    trialEnd,
+    trialMonths,
+  };
+}
+
 /**
  * Ensures a Stripe Customer exists for the given user.
  * Creates one if necessary and stores the ID.
@@ -144,6 +328,9 @@ export async function getOrCreateStripeCustomer(userId: string, email?: string):
     .from('subscriptions')
     .select('stripe_customer_id')
     .eq('user_id', userId)
+    .not('stripe_customer_id', 'is', null)
+    .order('updated_at', { ascending: false })
+    .limit(1)
     .maybeSingle();
 
   if (sub?.stripe_customer_id) {
@@ -181,7 +368,10 @@ export async function createBroBotCheckoutSession(
   email?: string,
   /** Optional overrides for mobile flows using custom URL schemes (e.g. snaportho://) */
   customSuccessUrl?: string,
-  customCancelUrl?: string
+  customCancelUrl?: string,
+  options: {
+    enableTrial?: boolean;
+  } = {}
 ): Promise<{ url: string | null }> {
   const stripe = getStripe();
   const priceId =
@@ -193,7 +383,32 @@ export async function createBroBotCheckoutSession(
     throw new Error('Stripe price ID not configured for BroBot');
   }
 
+  const supabase = createAdminClient();
+  const { data: existingCustomerRow } = await supabase
+    .from('subscriptions')
+    .select('stripe_customer_id')
+    .eq('user_id', userId)
+    .not('stripe_customer_id', 'is', null)
+    .order('updated_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const trialDecisionBeforeCustomer = await determineBroBotTrialDecision({
+    userId,
+    stripeCustomerId: existingCustomerRow?.stripe_customer_id ?? null,
+    enableTrial: options.enableTrial,
+  });
+
   const customerId = await getOrCreateStripeCustomer(userId, email);
+  const trialDecision =
+    trialDecisionBeforeCustomer.eligible && !existingCustomerRow?.stripe_customer_id
+      ? await determineBroBotTrialDecision({
+          userId,
+          stripeCustomerId: customerId,
+          enableTrial: options.enableTrial,
+        })
+      : trialDecisionBeforeCustomer;
+  const metadata = buildBroBotCheckoutMetadata({ userId, trialDecision });
 
   // Use custom redirect URLs if provided (mobile), otherwise fall back to centralized web URLs.
   // Always call getAppBaseUrl() for the production safety throw when using web defaults.
@@ -210,8 +425,17 @@ export async function createBroBotCheckoutSession(
       success_url: successUrl,
       cancel_url: cancelUrl,
       isMobileCustom: !!(customSuccessUrl || customCancelUrl),
+      trial_applied: trialDecision.eligible,
+      trial_reason: trialDecision.reason,
     });
   }
+
+  const subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData = {
+    metadata,
+    ...(trialDecision.eligible && trialDecision.trialEnd
+      ? { trial_end: trialDecision.trialEnd }
+      : {}),
+  };
 
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
@@ -220,16 +444,8 @@ export async function createBroBotCheckoutSession(
     success_url: successUrl,
     cancel_url: cancelUrl,
     client_reference_id: userId, // stable identifier for webhook resolution
-    metadata: {
-      user_id: userId,
-      plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
-    },
-    subscription_data: {
-      metadata: {
-        user_id: userId,
-        plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
-      },
-    },
+    metadata,
+    subscription_data: subscriptionData,
   });
 
   return { url: session.url };
@@ -406,7 +622,7 @@ export function mapStripeStatusToInternal(status: Stripe.Subscription.Status): s
     canceled: 'canceled',
     incomplete: 'incomplete',
     incomplete_expired: 'canceled',
-    trialing: 'active', // treat trial as active for entitlement
+    trialing: 'trialing',
     paused: 'past_due',
   };
   return mapping[status] || 'incomplete';

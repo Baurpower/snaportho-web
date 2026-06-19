@@ -13,6 +13,8 @@ declare global {
 }
 
 const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
+const CREATE_ACCOUNT_CONVERSION_SEND_TO =
+  "AW-18233960538/YM_gCOS4ksIcENrQ0PZD";
 
 const CONVERSION_LABELS = {
   signup: process.env.NEXT_PUBLIC_GOOGLE_ADS_SIGNUP_CONVERSION_LABEL ?? "",
@@ -25,9 +27,11 @@ const CONVERSION_LABELS = {
 };
 
 export type GoogleAdsConversionParams = {
+  sendTo?: string;
   conversionLabel?: string;
   value?: number;
   currency?: string;
+  eventName?: string;
   transactionId?: string;
   eventCallback?: () => void;
   eventTimeout?: number;
@@ -42,31 +46,53 @@ function getGtag(): Gtag | null {
 }
 
 export function trackGoogleAdsConversion({
+  sendTo,
   conversionLabel,
   value,
   currency,
+  eventName,
   transactionId,
   eventCallback,
   eventTimeout,
 }: GoogleAdsConversionParams = {}) {
   const gtag = getGtag();
+  const resolvedSendTo =
+    sendTo || (GOOGLE_ADS_ID && conversionLabel ? `${GOOGLE_ADS_ID}/${conversionLabel}` : "");
 
-  if (!gtag || !GOOGLE_ADS_ID || !conversionLabel) {
-    return;
+  if (!gtag || !resolvedSendTo) {
+    return false;
   }
 
   gtag("event", "conversion", {
-    send_to: `${GOOGLE_ADS_ID}/${conversionLabel}`,
+    send_to: resolvedSendTo,
     value,
     currency,
+    event_name: eventName,
     transaction_id: transactionId,
     event_callback: eventCallback,
     event_timeout: eventTimeout,
   });
+
+  return true;
+}
+
+export function trackCreateAccountConversion() {
+  const fired = trackGoogleAdsConversion({
+    sendTo: CREATE_ACCOUNT_CONVERSION_SEND_TO,
+    value: 1,
+    currency: "USD",
+    eventName: "Create Account",
+  });
+
+  if (fired && process.env.NODE_ENV === "development") {
+    console.info("[Google Ads] Create Account conversion fired");
+  }
+
+  return fired;
 }
 
 export function trackSignupConversion() {
-  trackGoogleAdsConversion({
+  return trackGoogleAdsConversion({
     conversionLabel: CONVERSION_LABELS.signup,
   });
 }

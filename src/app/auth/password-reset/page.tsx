@@ -5,6 +5,7 @@ export const dynamic = "force-dynamic";
 import { useMemo, useState } from "react";
 import { createClient } from '@/utils/supabase/client';
 import { buildPasswordResetRedirectUrl } from "@/lib/auth/password-reset";
+import { safeRedirectPath } from "@/lib/auth/redirects";
 
 export default function PasswordResetPage() {
   const supabase = useMemo(() => createClient(), []);
@@ -22,7 +23,7 @@ export default function PasswordResetPage() {
         searchParams.get("next") ?? searchParams.get("redirectTo") ?? "/learn";
 
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: buildPasswordResetRedirectUrl(nextParam),
+        redirectTo: buildPasswordResetRedirectUrl(safeRedirectPath(nextParam, "/learn")),
       });
       console.log("resetPasswordForEmail response:", { data, error });
 

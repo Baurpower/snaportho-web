@@ -12,6 +12,12 @@ import {
   Stethoscope,
   Zap,
 } from "lucide-react";
+import { appendSafeReturnTo } from "@/lib/auth/redirects";
+
+const BROBOT_BILLING_HREF = appendSafeReturnTo(
+  "/account/billing?intent=brobot",
+  "/brobot/chat"
+);
 
 export const metadata: Metadata = {
   title: "BroBot Pricing | SnapOrtho",
@@ -142,7 +148,7 @@ function HeroSection() {
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
-              href="/account/billing"
+              href={BROBOT_BILLING_HREF}
               className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-6 py-3 text-base font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/15"
             >
               Upgrade to Unlimited
@@ -229,7 +235,7 @@ function PricingCards() {
             subtitle="For users who want BroBot available throughout the day."
             features={unlimitedFeatures}
             cta="Upgrade Now"
-            href="/account/billing"
+            href={BROBOT_BILLING_HREF}
             featured
             badge="Best for residents"
           />
@@ -472,7 +478,7 @@ function FinalCta() {
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
           <Link
-            href="/account/billing"
+            href={BROBOT_BILLING_HREF}
             className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/15"
           >
             Upgrade to Unlimited

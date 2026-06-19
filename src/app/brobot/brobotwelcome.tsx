@@ -4,10 +4,19 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { safeRedirectPath } from '@/lib/auth/redirects';
 
 export default function BroBotWelcome() {
   const router = useRouter();
   const { user, loading } = useAuth();
+
+  const getCurrentPath = () =>
+    safeRedirectPath(
+      typeof window !== 'undefined'
+        ? `${window.location.pathname}${window.location.search}`
+        : '/brobot',
+      '/brobot'
+    );
 
   // If already signed in elsewhere in the app, go straight to BroBot
   useEffect(() => {
@@ -17,11 +26,13 @@ export default function BroBotWelcome() {
   }, [loading, user, router]);
 
   const handleLogin = () => {
-    router.push(`/auth/sign-in?redirectTo=/brobot/chat&intent=brobot`);
+    const params = new URLSearchParams({ redirectTo: getCurrentPath(), intent: 'brobot' });
+    router.push(`/auth/sign-in?${params.toString()}`);
   };
 
   const handleSignUp = () => {
-    router.push(`/auth/sign-up?redirectTo=/brobot/chat`);
+    const params = new URLSearchParams({ redirectTo: getCurrentPath(), intent: 'brobot' });
+    router.push(`/auth/sign-up?${params.toString()}`);
   };
 
   const handleGuest = () => {

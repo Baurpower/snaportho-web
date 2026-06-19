@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { BroBotEntitlement } from '@/lib/brobot/entitlements';
+import { safeRedirectPath } from '@/lib/auth/redirects';
 import {
   trackCheckoutStartedConversion,
   trackSubscriptionConversion,
@@ -23,6 +24,7 @@ function BillingContent() {
   // Handle success/cancel feedback from Stripe redirects
   const success = searchParams?.get('success') === 'true';
   const canceled = searchParams?.get('canceled') === 'true';
+  const returnTo = safeRedirectPath(searchParams?.get('returnTo'), '');
 
   useEffect(() => {
     if (authLoading) return;
@@ -127,10 +129,10 @@ function BillingContent() {
       const res = await fetch('/api/billing/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ interval }),
+        body: JSON.stringify({ interval, returnTo: returnTo || undefined }),
       });
-      const { url } = await res.json();
-      if (url) window.location.href = url;
+      const { url, portalUrl } = await res.json();
+      if (url || portalUrl) window.location.href = url || portalUrl;
     } catch {
       alert('Failed to start checkout');
     }
@@ -138,7 +140,11 @@ function BillingContent() {
 
   const handleManageBilling = async () => {
     try {
-      const res = await fetch('/api/billing/portal', { method: 'POST' });
+      const res = await fetch('/api/billing/portal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ returnTo: returnTo || undefined }),
+      });
       const { url } = await res.json();
       if (url) window.location.href = url;
     } catch {

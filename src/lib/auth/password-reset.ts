@@ -1,3 +1,5 @@
+import { safeRedirectPath } from "@/lib/auth/redirects";
+
 function normalizeOrigin(origin: string) {
   try {
     const url = new URL(origin);
@@ -23,7 +25,7 @@ export function buildPasswordResetRedirectUrl(nextPath: string) {
     "http://localhost:3000";
 
   const redirectUrl = new URL("/auth/update-password", baseOrigin);
-  redirectUrl.searchParams.set("next", nextPath);
+  redirectUrl.searchParams.set("next", safeRedirectPath(nextPath, "/learn"));
 
   return redirectUrl.toString();
 }

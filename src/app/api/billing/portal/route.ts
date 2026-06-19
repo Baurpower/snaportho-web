@@ -7,21 +7,43 @@ import {
   SubscriptionNotManageableError,
 } from '@/lib/stripe';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
+import { getAppBaseUrl } from '@/lib/config/app-url';
+import { safeRedirectPath } from '@/lib/auth/redirects';
 
-export async function POST() {
+function buildPortalReturnUrl(returnTo: string) {
+  const url = new URL(returnTo, getAppBaseUrl());
+  url.searchParams.set('portal_return', 'true');
+  return url.toString();
+}
+
+export async function POST(request: Request) {
   if (!BROBOT_CONFIG.PAID_ENABLED) {
-    return NextResponse.json({ error: 'Paid subscriptions are currently disabled' }, { status: 403 });
+    return NextResponse.json(
+      {
+        error: 'Paid subscriptions are currently disabled',
+        reason: 'paid_disabled',
+      },
+      { status: 403 }
+    );
   }
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    return NextResponse.json(
+      { error: 'Authentication required', reason: 'not_authenticated' },
+      { status: 401 }
+    );
   }
 
   try {
-    const { url } = await createBillingPortalSession(user.id);
+    const body = await request.json().catch(() => ({}));
+    const returnTo = safeRedirectPath(body.returnTo, '');
+    const { url } = await createBillingPortalSession(
+      user.id,
+      returnTo ? buildPortalReturnUrl(returnTo) : undefined
+    );
     return NextResponse.json({ url });
   } catch (err) {
     if (err instanceof NoManageableStripeSubscriptionError) {

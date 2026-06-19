@@ -4,7 +4,43 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
-import { trackSignupConversion } from "@/lib/analytics/googleAds";
+import { trackCreateAccountConversion } from "@/lib/analytics/googleAds";
+import { safeRedirectPath } from "@/lib/auth/redirects";
+
+type SignUpResultData = Awaited<
+  ReturnType<ReturnType<typeof createClient>["auth"]["signUp"]>
+>["data"];
+
+function didCreateSupabaseAccount(data: SignUpResultData) {
+  if (!data.user) {
+    return false;
+  }
+
+  if (data.session) {
+    return true;
+  }
+
+  const identities = data.user.identities;
+  return !Array.isArray(identities) || identities.length > 0;
+}
+
+function trackCreateAccountOnce(userId: string) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const storageKey = `google_ads_create_account_conversion:${userId}`;
+
+  if (window.sessionStorage.getItem(storageKey)) {
+    return;
+  }
+
+  const fired = trackCreateAccountConversion();
+
+  if (fired) {
+    window.sessionStorage.setItem(storageKey, "true");
+  }
+}
 
 export default function SignUpClient() {
   const supabase = useMemo(() => createClient(), []);
@@ -13,12 +49,10 @@ export default function SignUpClient() {
   const rawRedirectTo = searchParams?.get("redirectTo");
   const legacyFrom = searchParams?.get("from");
 
-  const redirectTo =
-    rawRedirectTo && rawRedirectTo.startsWith("/")
-      ? rawRedirectTo
-      : legacyFrom === "brobot"
-        ? "/brobot/chat"
-      : "/work";
+  const redirectTo = safeRedirectPath(
+    rawRedirectTo,
+    legacyFrom === "brobot" ? "/brobot/chat" : "/"
+  );
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,7 +90,7 @@ export default function SignUpClient() {
         `${origin}/api/auth/confirm` +
         `?redirectTo=${encodeURIComponent(redirectTo)}`;
 
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: trimmedEmail,
         password,
         options: {
@@ -69,7 +103,9 @@ export default function SignUpClient() {
         return;
       }
 
-      trackSignupConversion();
+      if (didCreateSupabaseAccount(data) && data.user) {
+        trackCreateAccountOnce(data.user.id);
+      }
 
       setMessage(
         "✅ Check your inbox and click the confirmation link to finish creating your account."

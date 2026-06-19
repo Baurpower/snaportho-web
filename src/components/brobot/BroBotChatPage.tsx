@@ -40,6 +40,7 @@ import BroBotMarkdown from './BroBotMarkdown';
 import BroBotProductTabs from './BroBotProductTabs';
 import ReadingRecommendationsPanel from './ReadingRecommendationsPanel';
 import { useChatScrollController } from './useChatScrollController';
+import { safeRedirectPath } from '@/lib/auth/redirects';
 
 type BroBotChatResponse = {
   conversationId: string;
@@ -119,6 +120,7 @@ type MessageStatus = 'pending' | 'streaming' | 'complete' | 'error';
 type ChatError =
   | { type: 'auth' }
   | { type: 'quota'; dailyCap?: number | null }
+  | { type: 'disabled'; message?: string }
   | { type: 'network' }
   | { type: 'validation'; message?: string }
   | { type: 'unexpected'; message?: string };
@@ -530,7 +532,7 @@ export default function BroBotChatPage() {
     let isMounted = true;
 
     async function loadUsage() {
-      if (authStatus !== 'authenticated') {
+      if (authStatus === 'loading') {
         setUsage(null);
         return;
       }
@@ -577,18 +579,22 @@ export default function BroBotChatPage() {
   }, [authStatus]);
 
   function redirectToSignInWithPendingRequest(message: string) {
+    const sourceRoute = safeRedirectPath(
+      typeof window !== 'undefined'
+        ? `${window.location.pathname}${window.location.search}`
+        : '/brobot/chat',
+      '/brobot/chat'
+    );
     savePendingBroBotRequest({
       prompt: message,
       mode,
       responseDepth,
       trainingLevel,
-      sourceRoute:
-        typeof window !== 'undefined'
-          ? `${window.location.pathname}${window.location.search}`
-          : '/brobot/chat',
+      sourceRoute,
     });
     setError({ type: 'auth' });
-    router.push('/auth/sign-in?redirectTo=/brobot/chat&intent=brobot');
+    const params = new URLSearchParams({ redirectTo: sourceRoute, intent: 'brobot' });
+    router.push(`/auth/sign-in?${params.toString()}`);
   }
 
   async function sendMessage(
@@ -660,6 +666,11 @@ export default function BroBotChatPage() {
             return;
           }
 
+          if (intentRes.status === 403) {
+            setError({ type: 'disabled', message: intentBody?.message ?? intentBody?.error });
+            return;
+          }
+
           setError({ type: 'unexpected', message: intentBody?.message ?? intentBody?.error });
           return;
         }
@@ -681,7 +692,8 @@ export default function BroBotChatPage() {
         }
       }
 
-      streamingAssistantId = BROBOT_STREAMING_ENABLED ? crypto.randomUUID() : null;
+      streamingAssistantId =
+        BROBOT_STREAMING_ENABLED && authStatus === 'authenticated' ? crypto.randomUUID() : null;
       if (streamingAssistantId) {
         const assistantId = streamingAssistantId;
         setMessages((current) => [
@@ -890,6 +902,11 @@ export default function BroBotChatPage() {
           return;
         }
 
+        if (res.status === 403) {
+          setError({ type: 'disabled', message: body?.message ?? body?.error });
+          return;
+        }
+
         if (res.status === 400) {
           setError({ type: 'validation', message: body?.message ?? body?.error });
           return;
@@ -1095,7 +1112,11 @@ export default function BroBotChatPage() {
 
                 {showConversationError && error && (
                   <div className="mt-5">
-                    <BroBotChatError error={error} onRetry={() => setError(null)} />
+                    <BroBotChatError
+                      error={error}
+                      isAuthenticated={Boolean(user)}
+                      onRetry={() => setError(null)}
+                    />
                   </div>
                 )}
 
@@ -1130,6 +1151,7 @@ export default function BroBotChatPage() {
                     conversationId={latestAssistant.response.conversationId}
                     sourceMessageId={latestAssistant.response.messageId}
                     trainingLevel={trainingLevel}
+                    canShowReadingPanel={Boolean(user)}
                     onPickBranch={(branch, sourceMessageId) =>
                       void sendMessage(
                         branch.label,
@@ -1283,8 +1305,8 @@ function BroBotEmptyState({
   return (
     <div className="mx-auto max-w-3xl py-4 sm:py-6">
       {showSignInNotice && (
-        <div className="mb-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-          BroBot Chat requires sign-in. You can explore prompts here, then sign in when you are ready to send.
+        <div className="mb-3 rounded-xl border border-teal-200 bg-teal-50 px-3 py-2 text-sm text-teal-900">
+          You can try BroBot Chat as a guest. Sign in to save conversations or unlock more usage.
         </div>
       )}
 
@@ -1714,6 +1736,7 @@ function BroBotNextLearningBranches({
   conversationId,
   sourceMessageId,
   trainingLevel,
+  canShowReadingPanel,
   onPickBranch,
 }: {
   branches: BranchOption[];
@@ -1722,6 +1745,7 @@ function BroBotNextLearningBranches({
   conversationId: string;
   sourceMessageId: string;
   trainingLevel: string;
+  canShowReadingPanel: boolean;
   onPickBranch: (branch: BranchOption, sourceMessageId: string) => void;
 }) {
   const loggedExposureKeyRef = useRef<string | null>(null);
@@ -1792,18 +1816,20 @@ function BroBotNextLearningBranches({
             {branch.label}
           </button>
         ))}
-        <button
-          type="button"
-          onClick={() => setShowReadingPanel((current) => !current)}
-          className="min-h-9 rounded-full border border-sky-200 bg-white px-3 py-2 text-left text-xs font-bold leading-5 text-sky-700 shadow-sm transition hover:bg-sky-50 sm:text-sm"
-        >
-          <span className="mr-1.5 inline-flex align-[-2px] text-sky-500">
-            <BookOpenIcon className="h-4 w-4" />
-          </span>
-          Read Next
-        </button>
+        {canShowReadingPanel && (
+          <button
+            type="button"
+            onClick={() => setShowReadingPanel((current) => !current)}
+            className="min-h-9 rounded-full border border-sky-200 bg-white px-3 py-2 text-left text-xs font-bold leading-5 text-sky-700 shadow-sm transition hover:bg-sky-50 sm:text-sm"
+          >
+            <span className="mr-1.5 inline-flex align-[-2px] text-sky-500">
+              <BookOpenIcon className="h-4 w-4" />
+            </span>
+            Read Next
+          </button>
+        )}
       </div>
-      {showReadingPanel && (
+      {canShowReadingPanel && showReadingPanel && (
         <ReadingRecommendationsPanel
           conversationId={conversationId}
           sourceMessageId={sourceMessageId}
@@ -1996,16 +2022,24 @@ function BroBotUsageBanner({ usage }: { usage: UsageSnapshot | null }) {
   );
 }
 
-function BroBotChatError({ error, onRetry }: { error: ChatError; onRetry: () => void }) {
+function BroBotChatError({
+  error,
+  isAuthenticated,
+  onRetry,
+}: {
+  error: ChatError;
+  isAuthenticated: boolean;
+  onRetry: () => void;
+}) {
   if (error.type === 'auth') {
     return (
       <div className="rounded-2xl border border-amber-200 bg-white p-5 shadow-sm">
         <div className="flex items-start gap-3">
           <ExclamationCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-amber-500" />
           <div>
-            <h2 className="font-bold text-midnight">Sign in to use BroBot Chat</h2>
+            <h2 className="font-bold text-midnight">Sign in to continue BroBot Chat</h2>
             <p className="mt-1 text-sm leading-6 text-slate-600">
-              Chat saves conversation context, so it requires an account. CasePrep guest mode is still available.
+              BroBot could not start a guest chat session. Sign in and your prompt will be restored.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Link
@@ -2015,10 +2049,10 @@ function BroBotChatError({ error, onRetry }: { error: ChatError; onRetry: () => 
                 Sign in
               </Link>
               <Link
-                href="/brobot/basic"
+                href="/brobot/chat"
                 className="rounded-md border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
               >
-                Use guest CasePrep
+                Try again
               </Link>
             </div>
           </div>
@@ -2037,12 +2071,38 @@ function BroBotChatError({ error, onRetry }: { error: ChatError; onRetry: () => 
             <p className="mt-1 text-sm leading-6 text-slate-600">
               You have used your BroBot AI uses for today. This limit is shared across CasePrep and Chat.
             </p>
-            <Link
-              href="/account/billing"
-              className="mt-4 inline-flex rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
-            >
-              Upgrade to Unlimited BroBot
-            </Link>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Link
+                href="/account/billing?returnTo=/brobot/chat&intent=brobot"
+                className="inline-flex rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
+              >
+                Upgrade to Unlimited BroBot
+              </Link>
+              {!isAuthenticated && (
+                <Link
+                  href="/auth/sign-in?redirectTo=/brobot/chat&intent=brobot"
+                  className="inline-flex rounded-md border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Sign in
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error.type === 'disabled') {
+    return (
+      <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="flex items-start gap-3">
+          <ExclamationCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-slate-500" />
+          <div>
+            <h2 className="font-bold text-midnight">BroBot is unavailable</h2>
+            <p className="mt-1 text-sm leading-6 text-slate-600">
+              {error.message || 'BroBot access is currently disabled for this account or temporarily unavailable.'}
+            </p>
           </div>
         </div>
       </div>

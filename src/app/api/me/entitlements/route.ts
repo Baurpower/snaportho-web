@@ -1,18 +1,36 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
+import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
 
-export async function GET() {
+export async function GET(request: Request) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const subject: Subject = user
-    ? { type: 'user', id: user.id }
-    : { type: 'guest', id: 'anonymous' }; // Guests are handled via cookie in the proxy
+  let guestCookieToSet: string | null = null;
+  let subject: Subject;
+
+  if (user) {
+    subject = { type: 'user', id: user.id };
+  } else {
+    let guestSession = getGuestSessionFromRequest(request);
+
+    if (!guestSession) {
+      const createdGuest = createGuestSession();
+      guestSession = createdGuest.session;
+      guestCookieToSet = createdGuest.cookie;
+    }
+
+    subject = { type: 'guest', id: guestSession.guestId };
+  }
 
   try {
     const entitlement = await getRemainingAIUses(subject);
-    return NextResponse.json({ data: entitlement });
+    const response = NextResponse.json({ data: entitlement });
+    if (guestCookieToSet) {
+      response.headers.append('Set-Cookie', guestCookieToSet);
+    }
+    return response;
   } catch (err) {
     console.error('[me/entitlements] error', err);
     return NextResponse.json({ error: 'Failed to load entitlements' }, { status: 500 });

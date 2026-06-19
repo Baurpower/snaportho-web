@@ -10,6 +10,8 @@
  *   BROBOT_FREE_DAILY_CAP=3
  *   CASEPREP_INTERNAL_BASE_URL=https://api.snap-ortho.com   (server-only, preferred)
  *   BROBOT_GUEST_SECRET=super-long-random-string-for-signing-guest-cookies
+ *   STRIPE_BROBOT_TRIAL_OFFER_ID=to_...
+ *   STRIPE_BROBOT_TRIAL_MONTHS=1
  */
 
 import {
@@ -45,6 +47,14 @@ export const BROBOT_CONFIG = {
   /** Stripe Price IDs (set in env + Vercel). Never hardcode elsewhere. */
   MONTHLY_PRICE_ID: process.env.STRIPE_BROBOT_MONTHLY_PRICE_ID || '',
   YEARLY_PRICE_ID: process.env.STRIPE_BROBOT_YEARLY_PRICE_ID || '',
+
+  /**
+   * Official Stripe Trial Offer ID for Dashboard/API traceability.
+   * Stripe Checkout cannot attach Trial Offer objects directly; web Checkout uses
+   * a calendar-month trial_end and records this ID in metadata when the trial applies.
+   */
+  TRIAL_OFFER_ID: process.env.STRIPE_BROBOT_TRIAL_OFFER_ID || 'to_1Tk6xTArNRAa5suA9q50NzAV',
+  TRIAL_MONTHS: parseInt(process.env.STRIPE_BROBOT_TRIAL_MONTHS || '1', 10),
 
   /** Human-readable plan codes used in DB and entitlement logic. */
   PAID_PLAN_CODE: 'unlimited_brobot',

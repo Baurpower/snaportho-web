@@ -1,4 +1,5 @@
 import SignInClient from "./signinclient";
+import { safeRedirectPath } from "@/lib/auth/redirects";
 
 export default async function SignInPage({
   searchParams,
@@ -7,12 +8,10 @@ export default async function SignInPage({
 }) {
   const { redirectTo, from } = await searchParams;
 
-  const dest =
-    redirectTo && redirectTo.startsWith("/")
-      ? redirectTo
-      : from === "brobot"
-        ? "/brobot/chat"
-      : "/work";
+  const dest = safeRedirectPath(
+    redirectTo,
+    from === "brobot" ? "/brobot/chat" : "/"
+  );
 
   return <SignInClient redirectTo={dest} />;
 }

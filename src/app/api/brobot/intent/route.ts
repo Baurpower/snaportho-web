@@ -16,7 +16,8 @@ import {
   preRouteBroBotIntent,
   type BroBotIntentSource,
 } from '@/lib/brobot/chat';
-import { getMobileBroBotEntitlement } from '@/lib/brobot/entitlements';
+import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
+import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
 
@@ -24,8 +25,39 @@ const BROBOT_CHAT_MODEL = process.env.BROBOT_CHAT_MODEL || 'gpt-4o-mini';
 
 let openaiClient: OpenAI | null = null;
 
+function withGuestCookie(response: NextResponse, guestCookieToSet: string | null) {
+  if (guestCookieToSet) response.headers.append('Set-Cookie', guestCookieToSet);
+  return response;
+}
+
+function disabledResponse() {
+  return NextResponse.json(
+    {
+      error: 'disabled',
+      reason: 'disabled',
+      message: 'BroBot access is currently unavailable.',
+    },
+    { status: 403 }
+  );
+}
+
+function limitReachedResponse(dailyCap: number | null) {
+  return NextResponse.json(
+    {
+      error: 'daily_limit_reached',
+      reason: 'daily_limit_reached',
+      message: 'Daily limit reached.',
+      isLimitReached: true,
+      remaining: 0,
+      dailyCap,
+    },
+    { status: 429 }
+  );
+}
+
 type AuthContext = {
   user: { id: string } | null;
+  hasBearerToken: boolean;
 };
 
 function getOpenAI(): OpenAI {
@@ -59,7 +91,7 @@ async function getAuthContext(request: Request): Promise<AuthContext> {
     data: { user },
   } = bearerToken ? await supabase.auth.getUser(bearerToken) : await supabase.auth.getUser();
 
-  return { user: user ? { id: user.id } : null };
+  return { user: user ? { id: user.id } : null, hasBearerToken: Boolean(bearerToken) };
 }
 
 async function recordIntentEvent(params: {
@@ -101,26 +133,36 @@ export async function POST(request: Request) {
 
   const body = parsed.data;
   const auth = await getAuthContext(request);
+  let subject: Subject;
+  let guestCookieToSet: string | null = null;
 
-  if (!auth.user) {
-    return NextResponse.json(
-      { error: 'not_authenticated', message: 'Please sign in to use BroBot chat.' },
-      { status: 401 }
-    );
-  }
-
-  const entitlement = await getMobileBroBotEntitlement(auth.user.id);
-  if (!entitlement.hasBroBotAccess) {
+  if (auth.user) {
+    subject = { type: 'user', id: auth.user.id };
+  } else if (auth.hasBearerToken) {
     return NextResponse.json(
       {
-        error: 'daily_limit_reached',
-        message: 'Daily limit reached.',
-        isLimitReached: true,
-        remaining: 0,
-        dailyCap: entitlement.dailyLimit,
+        error: 'not_authenticated',
+        reason: 'not_authenticated',
+        message: 'Please sign in to use BroBot chat.',
       },
-      { status: 429 }
+      { status: 401 }
     );
+  } else {
+    let guestSession = getGuestSessionFromRequest(request);
+    if (!guestSession) {
+      const createdGuest = createGuestSession();
+      guestSession = createdGuest.session;
+      guestCookieToSet = createdGuest.cookie;
+    }
+    subject = { type: 'guest', id: guestSession.guestId };
+  }
+
+  const entitlement = await getRemainingAIUses(subject);
+  if (entitlement.source === 'disabled') {
+    return withGuestCookie(disabledResponse(), guestCookieToSet);
+  }
+  if (entitlement.isLimitReached) {
+    return withGuestCookie(limitReachedResponse(entitlement.aiAccess.dailyCap), guestCookieToSet);
   }
 
   let intent = fallbackBroBotIntentExpansion(body.message, body.mode);
@@ -159,7 +201,7 @@ export async function POST(request: Request) {
     }
   }
 
-  void recordIntentEvent({
+  if (auth.user) void recordIntentEvent({
     userId: auth.user.id,
     eventType: 'brobot_intent_expanded',
     metadata: {
@@ -177,7 +219,7 @@ export async function POST(request: Request) {
     },
   });
 
-  return NextResponse.json({
+  return withGuestCookie(NextResponse.json({
     mode: intent.mode,
     subintent: intent.subintent,
     procedureCategory: intent.procedureCategory,
@@ -191,5 +233,5 @@ export async function POST(request: Request) {
     answerImmediately: Boolean(intent.answerImmediately),
     requiresBranchSelection: Boolean(intent.requiresBranchSelection),
     reasonForBranching: intent.reasonForBranching ?? '',
-  });
+  }), guestCookieToSet);
 }

@@ -576,7 +576,7 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
 
   let reasonIfBlocked: string | null = null;
   if (ent.source === 'disabled') {
-    reasonIfBlocked = 'feature_disabled';
+    reasonIfBlocked = 'disabled';
   } else if (!hasBroBotAccess && (ent.source === 'free_quota' || ent.source === 'guest_quota')) {
     reasonIfBlocked = 'daily_limit_reached';
   }

@@ -21,11 +21,14 @@ import Nav from '@/components/Nav';
 import AccountDropdown from '@/components/accountdropdown';
 import BroBotProductTabs from '@/components/brobot/BroBotProductTabs';
 import { trackCheckoutStartedConversion } from '@/lib/analytics/googleAds';
+import { appendSafeReturnTo } from '@/lib/auth/redirects';
 
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // Direct browser calls to the external CasePrep API have been eliminated.
 
 const BROBOT_VERSION = 2.0;
+const BROBOT_RETURN_TO = '/brobot';
+const BROBOT_BILLING_HREF = appendSafeReturnTo('/account/billing?intent=brobot', BROBOT_RETURN_TO);
 
 // ── Domain types (unchanged) ──────────────────────────────────────────────────
 
@@ -312,17 +315,17 @@ export default function BroBotMember() {
       const res = await fetch('/api/billing/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ interval: 'month' }),
+        body: JSON.stringify({ interval: 'month', returnTo: BROBOT_RETURN_TO }),
       });
       const body = await res.json();
-      if (body.url) {
-        window.location.href = body.url;
+      if (body.url || body.portalUrl) {
+        window.location.href = body.url || body.portalUrl;
       } else {
         // Fallback: billing page
-        router.push('/account/billing');
+        router.push(BROBOT_BILLING_HREF);
       }
     } catch {
-      router.push('/account/billing');
+      router.push(BROBOT_BILLING_HREF);
     } finally {
       setUpgradeLoading(false);
     }
@@ -447,7 +450,7 @@ export default function BroBotMember() {
                       </span>
                     ) : null}
                     <Link
-                      href="/account/billing"
+                      href={BROBOT_BILLING_HREF}
                       className="text-teal-600 hover:underline font-medium"
                     >
                       {usageMeta.cancelAtPeriodEnd ? 'Manage / Reactivate' : 'Manage Subscription'}
@@ -456,7 +459,7 @@ export default function BroBotMember() {
                 ) : (
                   <>
                     <Link
-                      href="/account/billing"
+                      href={BROBOT_BILLING_HREF}
                       className="text-teal-600 hover:underline font-medium"
                     >
                       Upgrade to Unlimited BroBot

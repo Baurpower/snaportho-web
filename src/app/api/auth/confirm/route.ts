@@ -3,12 +3,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import type { EmailOtpType } from "@supabase/supabase-js";
+import { safeRedirectPath } from "@/lib/auth/redirects";
 
 function getRedirectTarget(url: URL): string {
   return (
     url.searchParams.get("redirect_to") ||
     url.searchParams.get("redirectTo") ||
-    "/work"
+    "/"
   );
 }
 
@@ -32,21 +33,7 @@ function buildAppRedirect(
 }
 
 function buildSafeWebRedirect(redirectTo: string, origin: string): string {
-  if (redirectTo.startsWith("http")) {
-    const parsed = new URL(redirectTo);
-
-    if (parsed.origin !== origin) {
-      return new URL("/work", origin).toString();
-    }
-
-    return parsed.toString();
-  }
-
-  if (!redirectTo.startsWith("/")) {
-    return new URL("/work", origin).toString();
-  }
-
-  return new URL(redirectTo, origin).toString();
+  return new URL(safeRedirectPath(redirectTo, "/"), origin).toString();
 }
 
 export async function GET(request: NextRequest) {
@@ -55,9 +42,10 @@ export async function GET(request: NextRequest) {
   const token_hash = url.searchParams.get("token_hash");
   const type = (url.searchParams.get("type") as EmailOtpType) || "signup";
   const redirectTo = getRedirectTarget(url);
+  const safeWebRedirectTo = safeRedirectPath(redirectTo, "/");
 
   const fallbackRedirect = new URL(
-    `/auth/sign-in?redirectTo=${encodeURIComponent(redirectTo || "/work")}`,
+    `/auth/sign-in?redirectTo=${encodeURIComponent(safeWebRedirectTo)}`,
     url.origin
   );
 

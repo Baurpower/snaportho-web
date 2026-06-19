@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { safeRedirectPath } from "@/lib/auth/redirects";
 
 interface Props {
   redirectTo: string;
@@ -14,7 +15,7 @@ export default function SignInClient({ redirectTo }: Props) {
   const router = useRouter();
   const { user, loading, signIn } = useAuth();
 
-  const safeRedirectTo = redirectTo || "/work";
+  const safeRedirectTo = safeRedirectPath(redirectTo, "/");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

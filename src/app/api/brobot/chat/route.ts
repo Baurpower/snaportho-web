@@ -29,6 +29,7 @@ import {
   getMobileBroBotEntitlement,
   type Subject,
 } from '@/lib/brobot/entitlements';
+import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
@@ -120,6 +121,7 @@ export type BroBotChatResponse = {
 type AuthContext = {
   user: { id: string } | null;
   supabase: Awaited<ReturnType<typeof createServerSupabaseClient>>;
+  hasBearerToken: boolean;
 };
 type BroBotDbClient = AuthContext['supabase'] | ReturnType<typeof createAdminClient>;
 
@@ -245,6 +247,7 @@ function unauthorizedResponse() {
   return NextResponse.json(
     {
       error: 'not_authenticated',
+      reason: 'not_authenticated',
       message: 'Please sign in to use BroBot chat.',
     },
     { status: 401 }
@@ -265,6 +268,7 @@ function limitReachedResponse(dailyCap: number | null) {
   return NextResponse.json(
     {
       error: 'daily_limit_reached',
+      reason: 'daily_limit_reached',
       message: 'Daily limit reached.',
       isLimitReached: true,
       remaining: 0,
@@ -272,6 +276,22 @@ function limitReachedResponse(dailyCap: number | null) {
     },
     { status: 429 }
   );
+}
+
+function disabledResponse(message = 'BroBot access is currently unavailable.') {
+  return NextResponse.json(
+    {
+      error: 'disabled',
+      reason: 'disabled',
+      message,
+    },
+    { status: 403 }
+  );
+}
+
+function withGuestCookie(response: NextResponse, guestCookieToSet: string | null) {
+  if (guestCookieToSet) response.headers.append('Set-Cookie', guestCookieToSet);
+  return response;
 }
 
 function generationFailedResponse() {
@@ -338,10 +358,10 @@ async function getAuthContext(request: Request): Promise<AuthContext> {
       success: false,
       message: error.message,
     });
-    return { user: null, supabase };
+    return { user: null, supabase, hasBearerToken: Boolean(bearerToken) };
   }
 
-  return { user: user ? { id: user.id } : null, supabase };
+  return { user: user ? { id: user.id } : null, supabase, hasBearerToken: Boolean(bearerToken) };
 }
 
 function buildConversationTitle(message: string): string {
@@ -1315,11 +1335,257 @@ async function loadConversationHistory(params: {
     .filter((message) => message.content.trim().length > 0);
 }
 
+async function handleGuestChat(params: {
+  request: Request;
+  requestId: string;
+  startedAt: number;
+  body: BroBotChatRequest;
+  subject: Subject;
+  guestCookieToSet: string | null;
+}): Promise<NextResponse> {
+  const { request, requestId, startedAt, body, subject, guestCookieToSet } = params;
+  const persistence = createAdminClient();
+
+  const entitlement = await getRemainingAIUses(subject);
+  const limit = entitlement.aiAccess.dailyCap;
+  const remainingBefore = entitlement.aiAccess.remainingToday;
+  const usedBefore =
+    limit != null && remainingBefore != null ? Math.max(0, limit - remainingBefore) : null;
+
+  logBroBot('[BROBOT-CHAT-START]', {
+    requestId,
+    userType: subject.type,
+    subjectPrefix: subjectPrefix(subject),
+    mode: body.mode,
+    responseDepth: body.responseDepth,
+    trainingLevel: body.trainingLevel,
+    messageLength: body.message.length,
+    remainingBefore,
+    allowed: !entitlement.isLimitReached,
+    persistence: 'guest_ephemeral',
+  });
+
+  if (entitlement.source === 'disabled') {
+    return withGuestCookie(disabledResponse(), guestCookieToSet);
+  }
+
+  if (entitlement.isLimitReached) {
+    await recordUsageEvent({
+      subject,
+      outcome: 'limit_hit',
+      latencyMs: Date.now() - startedAt,
+    });
+    return withGuestCookie(limitReachedResponse(limit), guestCookieToSet);
+  }
+
+  const openai = getOpenAI();
+  const history: BroBotModelMessage[] = [];
+  const acceptedIntent = buildAcceptedIntent(body);
+  let intent: BroBotChatIntent = acceptedIntent ?? fallbackBroBotIntentExpansion(body.message, body.mode);
+  const intentSource = body.intentSource ?? (acceptedIntent ? 'local' : 'fallback');
+
+  if (!acceptedIntent) {
+    try {
+      const intentCompletion = await openai.chat.completions.create({
+        model: BROBOT_CHAT_MODEL,
+        temperature: 0,
+        response_format: { type: 'json_object' },
+        messages: buildBroBotIntentExpansionMessages({
+          message: body.message,
+          selectedMode: body.mode,
+          responseDepth: body.responseDepth,
+          trainingLevel: body.trainingLevel,
+          history,
+        }),
+      });
+      intent = parseBroBotIntentExpansionResponse(
+        intentCompletion.choices[0]?.message?.content ?? '',
+        { message: body.message, selectedMode: body.mode }
+      );
+    } catch (error) {
+      logChatStepError({
+        requestId,
+        category: 'parse_error',
+        step: 'guest_expand_intent',
+        error,
+      });
+      intent = fallbackBroBotIntentExpansion(body.message, body.mode);
+    }
+  }
+
+  const baseRankingContext: BranchRankingContext = {
+    userMessage: body.message,
+    mode: intent.mode,
+    trainingLevel: body.trainingLevel,
+    history,
+    intent,
+    fingerprint: null,
+  };
+
+  const learningBranches = await loadRankedBranchQuestions({
+    persistence,
+    intent,
+    context: baseRankingContext,
+  });
+  const outcomePerformanceByBranchId = await loadBranchOutcomePerformance({
+    persistence,
+    branchQuestionIds: learningBranches.branches
+      .map((branch) => branch.branchQuestionId ?? branch.id)
+      .filter(isUuid),
+    mode: intent.mode,
+    trainingLevel: body.trainingLevel,
+  });
+  const rankingContext: BranchRankingContext = {
+    ...baseRankingContext,
+    outcomePerformanceByBranchId,
+  };
+  const databaseBranchOptions = learningBranches.branches
+    .map((branch) => scoreBranchOption(branch, rankingContext))
+    .sort((a, b) => (b.rankScore ?? 0) - (a.rankScore ?? 0))
+    .slice(0, 12);
+  learningBranches.branches = databaseBranchOptions;
+
+  if (databaseBranchOptions.length > 0) {
+    intent = {
+      ...intent,
+      branchOptions: mergeBranchOptions(databaseBranchOptions, intent.branchOptions ?? [], 7, rankingContext),
+    };
+  }
+
+  const selectedBranch =
+    body.selectedBranchId || body.selectedBranchLabel
+      ? {
+          id: body.selectedBranchId,
+          label: body.selectedBranchLabel,
+        }
+      : undefined;
+  const answerContext = await buildBroBotAnswerContext({
+    intent,
+    selectedBranch,
+    responseDepth: body.responseDepth,
+    trainingLevel: body.trainingLevel,
+    history,
+  });
+  const modelMessages = buildBroBotChatMessages({
+    message: body.message,
+    messages: history,
+    mode: intent.mode,
+    responseDepth: body.responseDepth,
+    trainingLevel: body.trainingLevel,
+    intent,
+    selectedBranch,
+    answerContext,
+    answerNow: Boolean(body.answerNow),
+  });
+
+  const completion = await openai.chat.completions.create({
+    model: BROBOT_CHAT_MODEL,
+    temperature: 0.2,
+    response_format: { type: 'json_object' },
+    messages: modelMessages,
+  });
+
+  const latencyMs = Date.now() - startedAt;
+  const rawContent = completion.choices[0]?.message?.content ?? '';
+  const parsedOutput = parseBroBotChatResponse(rawContent, {
+    fallbackMode: intent.mode,
+    fallbackAnswer: 'BroBot could not format a structured response. Please try again.',
+  });
+  const classifierNeedsClarification = intent.ambiguity !== 'low';
+  const clarifyingQuestions = mergeQuestions(
+    parsedOutput.clarifyingQuestions?.length
+      ? parsedOutput.clarifyingQuestions
+      : intent.clarifyingQuestions,
+    []
+  ).slice(0, 3);
+  const brobotOutput = {
+    ...parsedOutput,
+    selectedFocus:
+      body.selectedBranchLabel ||
+      body.selectedBranchId ||
+      (body.answerNow ? 'General framework' : undefined),
+    detectedMode: intent.mode,
+    needsClarification:
+      parsedOutput.needsClarification ||
+      classifierNeedsClarification ||
+      clarifyingQuestions.length > 0,
+    clarifyingQuestions,
+    assumedContext: parsedOutput.assumedContext || intent.assumedContext,
+    suggestedQuestions: mergeQuestions(clarifyingQuestions, parsedOutput.suggestedQuestions),
+    nextLearningBranches: withRankPositions(
+      mergeBranchOptions(
+        databaseBranchOptions,
+        parsedOutput.nextLearningBranches ?? intent.branchOptions ?? [],
+        5,
+        rankingContext
+      )
+    ),
+  };
+
+  const qualityGate = runBroBotQualityGate({
+    answer: brobotOutput.answer,
+    mode: intent.mode,
+    responseDepth: body.responseDepth,
+    selectedBranchId: body.selectedBranchId,
+    selectedBranchLabel: body.selectedBranchLabel,
+    subintent: intent.subintent,
+  });
+
+  const ip = getClientIp(request) ?? undefined;
+  const userAgent = request.headers.get('user-agent') ?? undefined;
+  const usedAfter = await recordSuccessfulAIUse(subject, latencyMs, {
+    ipHash: hashForLogging(ip),
+    userAgentHash: hashForLogging(userAgent),
+  });
+  const remainingAfter = limit != null ? Math.max(0, limit - usedAfter) : null;
+
+  logBroBot('[BROBOT-CHAT-GENERATION]', {
+    requestId,
+    provider: 'openai',
+    model: BROBOT_CHAT_MODEL,
+    success: true,
+    detectedMode: brobotOutput.detectedMode,
+    confidence: brobotOutput.confidence,
+    usedBefore,
+    usedAfter,
+    remainingAfter,
+    qualityGateWarnings: qualityGate.warnings,
+    persistence: 'guest_ephemeral',
+    intentSource,
+  });
+
+  return withGuestCookie(
+    NextResponse.json({
+      conversationId: body.conversationId ?? crypto.randomUUID(),
+      messageId: crypto.randomUUID(),
+      goal: brobotOutput.goal,
+      selectedFocus: brobotOutput.selectedFocus,
+      answer: brobotOutput.answer,
+      priorityPoints: brobotOutput.priorityPoints,
+      knowledgeGaps: brobotOutput.knowledgeGaps,
+      whatMostResidentsMiss: brobotOutput.whatMostResidentsMiss,
+      suggestedQuestions: brobotOutput.suggestedQuestions,
+      nextLearningBranches: brobotOutput.nextLearningBranches,
+      tags: brobotOutput.tags,
+      detectedMode: brobotOutput.detectedMode,
+      remainingFreeUses: remainingAfter,
+      confidence: brobotOutput.confidence,
+      needsClarification: brobotOutput.needsClarification,
+      clarifyingQuestions: brobotOutput.clarifyingQuestions,
+      assumedContext: brobotOutput.assumedContext,
+      consultConfidence: brobotOutput.consultConfidence,
+      missingInformation: brobotOutput.missingInformation,
+    } satisfies BroBotChatResponse),
+    guestCookieToSet
+  );
+}
+
 export async function POST(request: Request) {
   const startedAt = Date.now();
   const requestId = crypto.randomUUID();
 
   let subject: Subject | null = null;
+  let guestCookieToSet: string | null = null;
   let userId: string | null = null;
   let conversationId: string | null = null;
   let userMessageId: string | null = null;
@@ -1345,8 +1611,27 @@ export async function POST(request: Request) {
     step = 'auth';
     const auth = await getAuthContext(request);
 
-    if (!auth.user) {
+    if (!auth.user && auth.hasBearerToken) {
       return unauthorizedResponse();
+    }
+
+    if (!auth.user) {
+      let guestSession = getGuestSessionFromRequest(request);
+      if (!guestSession) {
+        const createdGuest = createGuestSession();
+        guestSession = createdGuest.session;
+        guestCookieToSet = createdGuest.cookie;
+      }
+
+      subject = { type: 'guest', id: guestSession.guestId };
+      return await handleGuestChat({
+        request,
+        requestId,
+        startedAt,
+        body,
+        subject,
+        guestCookieToSet,
+      });
     }
 
     userId = auth.user.id;
@@ -1356,6 +1641,9 @@ export async function POST(request: Request) {
     step = 'mobile_entitlement';
     const mobileEntitlement = await getMobileBroBotEntitlement(userId);
     if (!mobileEntitlement.hasBroBotAccess) {
+      if (mobileEntitlement.reasonIfBlocked === 'disabled' || mobileEntitlement.source === 'disabled') {
+        return disabledResponse();
+      }
       return limitReachedResponse(mobileEntitlement.dailyLimit);
     }
 
@@ -2581,6 +2869,6 @@ function createStreamingChatResponse(params: {
       message: error instanceof Error ? error.message : 'Unknown route error',
     });
 
-    return generationFailedResponse();
+    return withGuestCookie(generationFailedResponse(), guestCookieToSet);
   }
 }

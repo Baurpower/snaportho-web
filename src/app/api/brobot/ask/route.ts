@@ -80,12 +80,24 @@ function limitReachedResponse(dailyCap: number | null) {
   return NextResponse.json(
     {
       error: 'daily_limit_reached',
+      reason: 'daily_limit_reached',
       message: 'Daily limit reached.',
       isLimitReached: true,
       remaining: 0,
       dailyCap,
     },
     { status: 429 }
+  );
+}
+
+function disabledResponse() {
+  return NextResponse.json(
+    {
+      error: 'disabled',
+      reason: 'disabled',
+      message: 'BroBot access is currently unavailable.',
+    },
+    { status: 403 }
   );
 }
 
@@ -189,6 +201,9 @@ export async function POST(request: Request) {
       subject = { type: 'user', id: user.id };
 
       if (!mobileEntitlement.hasBroBotAccess) {
+        if (mobileEntitlement.reasonIfBlocked === 'disabled' || mobileEntitlement.source === 'disabled') {
+          return disabledResponse();
+        }
         const response = limitReachedResponse(mobileEntitlement.dailyLimit);
         return response;
       }
@@ -232,6 +247,14 @@ export async function POST(request: Request) {
     });
 
     if (!allowed) {
+      if (entitlement.source === 'disabled') {
+        const response = disabledResponse();
+        if (guestCookieToSet) {
+          response.headers.append('Set-Cookie', guestCookieToSet);
+        }
+        return response;
+      }
+
       await recordUsageEvent({
         subject,
         outcome: 'limit_hit',
