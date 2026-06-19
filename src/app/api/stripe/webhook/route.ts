@@ -5,6 +5,7 @@ import { getStripe } from '@/lib/stripe';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { syncSubscriptionFromStripe } from '@/lib/stripe';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
+import { sendSubscriptionPurchaseConversion } from '@/lib/analytics/googleAdsServer';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
@@ -135,6 +136,13 @@ export async function POST(request: Request) {
           }
 
           await syncSubscriptionFromStripe(sub);
+
+          const conversionResult = await sendSubscriptionPurchaseConversion(sub);
+          console.log('[stripe/webhook] Google Ads subscription conversion result', {
+            eventId: event.id,
+            subscriptionId: sub.id,
+            ...conversionResult,
+          });
 
           if (!userIdFromSession && !sub.metadata?.user_id) {
             console.error('[stripe/webhook] checkout.session.completed but could not resolve user_id', {

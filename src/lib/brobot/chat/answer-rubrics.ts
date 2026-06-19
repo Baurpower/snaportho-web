@@ -98,16 +98,52 @@ const CONSULT_RUBRICS: Record<string, string[]> = {
 };
 
 const OITE_RUBRICS: Record<string, string[]> = {
+  high_yield_review: [
+    'core tested concept',
+    'classic stem clue',
+    'management or diagnosis pivot',
+    'board-style pearl',
+    'common trap',
+  ],
+  board_pearls: [
+    'core tested concept',
+    'classic stem clue',
+    'management or diagnosis pivot',
+    'board-style pearl',
+    'common trap',
+  ],
+  classification: [
+    'classification system',
+    'thresholds or categories',
+    'how category changes treatment',
+    'classic complication or prognosis',
+    'common misclassification trap',
+  ],
+  treatment_algorithm: [
+    'first decision point',
+    'nonoperative vs operative threshold',
+    'sequence of management',
+    'exception or contraindication',
+    'tested complication',
+  ],
   test_traps: [
     'classic traps',
     'differentiators',
     'wrong-answer patterns',
     'memorization anchor',
   ],
+  compare_diagnoses: [
+    'similar diagnoses',
+    'key differentiating clue',
+    'imaging or exam discriminator',
+    'management difference',
+    'wrong-answer trap',
+  ],
   quiz_me: [
     'short questions',
     'answers/explanations',
     'difficulty level',
+    'trap explanation',
   ],
 };
 
@@ -167,6 +203,10 @@ function findRubric(
     if (/immediate|priority|red_flag/.test(key)) return CONSULT_RUBRICS.immediate_priorities;
     if (/trap/.test(key)) return OITE_RUBRICS.test_traps;
     if (/quiz/.test(key)) return OITE_RUBRICS.quiz_me;
+    if (/classification|classify/.test(key)) return OITE_RUBRICS.classification;
+    if (/treatment|algorithm|management/.test(key)) return OITE_RUBRICS.treatment_algorithm;
+    if (/compare|diagnos|similar|differenti/.test(key)) return OITE_RUBRICS.compare_diagnoses;
+    if (/board|pearl|high_yield|yield/.test(key)) return OITE_RUBRICS.high_yield_review;
     if (/history|exam/.test(key)) return CLINIC_RUBRICS.history_exam;
     if (/treatment|algorithm/.test(key)) return CLINIC_RUBRICS.treatment_algorithm;
     if (/critique/.test(key)) return RESEARCH_RUBRICS.study_critique;

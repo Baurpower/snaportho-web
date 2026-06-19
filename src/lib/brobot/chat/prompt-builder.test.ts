@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 
 import { buildBroBotChatMessages, buildBroBotChatSystemPrompt } from './prompt-builder';
+import { buildOiteLearningMetadata } from './oite-context';
+import { buildOrPrepProcedureMetadata } from './or-prep-context';
+import { runBroBotQualityGate } from './quality-gate';
 import {
   buildBroBotIntentClassifierMessages,
   fallbackBroBotIntent,
@@ -18,7 +21,7 @@ const samplePrompts: Array<{ prompt: string; mode: BroBotChatMode; expectedText:
   {
     prompt: 'Give me OITE points for SCFE',
     mode: 'oite',
-    expectedText: 'tested facts',
+    expectedText: 'OITE Learning Engine',
   },
   {
     prompt: 'How do I work up septic arthritis?',
@@ -85,7 +88,11 @@ const orPrepSystemPrompt = buildBroBotChatSystemPrompt({
 assert.match(orPrepSystemPrompt, /complements CasePrep/);
 assert.match(orPrepSystemPrompt, /Important OR Concepts/);
 assert.match(orPrepSystemPrompt, /What to Clarify Before Scrub/);
-assert.match(orPrepSystemPrompt, /positioning, landmarks, incision\/interval/);
+assert.match(orPrepSystemPrompt, /operative objective/);
+assert.match(orPrepSystemPrompt, /Exposure Engine/);
+assert.match(orPrepSystemPrompt, /prioritize exposure over chronology/);
+assert.match(orPrepSystemPrompt, /decision points/);
+assert.match(orPrepSystemPrompt, /Pitfalls\/Bailout/);
 assert.match(orPrepSystemPrompt, /Diagnostic knee arthroscopy/);
 assert.match(orPrepSystemPrompt, /I mean the sequence once inside the knee/);
 assert.match(orPrepSystemPrompt, /suprapatellar pouch/);
@@ -96,6 +103,7 @@ assert.match(orPrepSystemPrompt, /Anatomy familiarity/);
 assert.match(orPrepSystemPrompt, /Do not fabricate exact proprietary implant specifications/);
 assert.match(orPrepSystemPrompt, /mode:or_prep/);
 assert.match(orPrepSystemPrompt, /PGY-1/);
+assert.match(orPrepSystemPrompt, /room flow, landmarks, retractors/);
 
 const quickOrPrepSystemPrompt = buildBroBotChatSystemPrompt({
   mode: 'or_prep',
@@ -106,6 +114,54 @@ const quickOrPrepSystemPrompt = buildBroBotChatSystemPrompt({
 assert.match(quickOrPrepSystemPrompt, /3-4 answer bullets/);
 assert.match(quickOrPrepSystemPrompt, /Avoid implant nuance unless asked/);
 
+const orPrepContextPrompt = buildBroBotChatSystemPrompt({
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy3',
+  intent: {
+    mode: 'or_prep',
+    subintent: 'surgical_steps',
+    procedureCategory: 'fracture_orif',
+    procedureOrTopic: 'tibial plateau ORIF',
+    ambiguity: 'low',
+    assumedContext: '',
+    missingContext: [],
+    clarifyingQuestions: [],
+    branchOptions: [],
+    confidence: 0.9,
+  },
+  answerContext: {
+    mode: 'or_prep',
+    subintent: 'surgical_steps',
+    procedureCategory: 'fracture_orif',
+    procedureOrTopic: 'tibial plateau ORIF',
+    trainingLevel: 'pgy3',
+    responseDepth: 'standard',
+    recentConversationSummary: '',
+    certifiedContext: null,
+    orPrepProcedureMetadata: {
+      family: 'trauma',
+      operationType: 'open',
+      primaryObjective: ['reduction', 'fixation'],
+      exposureComplexity: 'high',
+      likelyLearnerChallenge: [
+        'anatomy',
+        'exposure',
+        'reduction',
+        'implant_strategy',
+        'decision_making',
+        'complication_avoidance',
+      ],
+    },
+    oiteLearningMetadata: null,
+  },
+});
+
+assert.match(orPrepContextPrompt, /Hidden OR Prep procedure metadata/);
+assert.match(orPrepContextPrompt, /family: trauma/);
+assert.match(orPrepContextPrompt, /primaryObjective: reduction, fixation/);
+assert.match(orPrepContextPrompt, /exposureComplexity: high/);
+
 const broadOitePrompt = buildBroBotChatSystemPrompt({
   mode: 'oite',
   responseDepth: 'standard',
@@ -114,6 +170,56 @@ const broadOitePrompt = buildBroBotChatSystemPrompt({
 
 assert.match(broadOitePrompt, /Tell me about SCFE/);
 assert.match(broadOitePrompt, /test traps/);
+assert.match(broadOitePrompt, /chief-resident OITE tutor/);
+assert.match(broadOitePrompt, /Hidden OITE planning/);
+assert.match(broadOitePrompt, /Core tested concept/);
+assert.match(broadOitePrompt, /Stem recognition/);
+assert.match(broadOitePrompt, /Distractors/);
+assert.match(broadOitePrompt, /Management pivot/);
+assert.match(broadOitePrompt, /OITE Learning Engine/);
+assert.match(broadOitePrompt, /tested thresholds/);
+
+const oiteContextPrompt = buildBroBotChatSystemPrompt({
+  mode: 'oite',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy3',
+  intent: {
+    mode: 'oite',
+    subintent: 'treatment_algorithm',
+    procedureCategory: 'pediatric_fracture',
+    procedureOrTopic: 'SCFE OITE',
+    ambiguity: 'low',
+    assumedContext: '',
+    missingContext: [],
+    clarifyingQuestions: [],
+    branchOptions: [],
+    confidence: 0.9,
+  },
+  answerContext: {
+    mode: 'oite',
+    subintent: 'treatment_algorithm',
+    procedureCategory: 'pediatric_fracture',
+    procedureOrTopic: 'SCFE OITE',
+    trainingLevel: 'pgy3',
+    responseDepth: 'standard',
+    recentConversationSummary: '',
+    certifiedContext: null,
+    orPrepProcedureMetadata: null,
+    oiteLearningMetadata: {
+      examContext: 'oite',
+      topicFamily: 'pediatrics',
+      conceptType: ['classification', 'treatment_algorithm'],
+      cognitiveTask: ['recall', 'pattern_recognition', 'management_decision'],
+      learnerRisk: ['misses_thresholds', 'weak_algorithm'],
+      yieldTier: 'classic',
+    },
+  },
+});
+
+assert.match(oiteContextPrompt, /Hidden OITE learning metadata/);
+assert.match(oiteContextPrompt, /topicFamily: pediatrics/);
+assert.match(oiteContextPrompt, /conceptType: classification, treatment_algorithm/);
+assert.match(oiteContextPrompt, /yieldTier: classic/);
 
 const researchPrompt = buildBroBotChatSystemPrompt({
   mode: 'research',
@@ -437,6 +543,109 @@ const vagueOrPrep = parseBroBotChatResponse(
 assert.deepEqual(vagueOrPrep.priorityPoints, [
   'FCR interval: stay radial to FCR and protect radial artery.',
 ]);
+
+const plateauMetadata = buildOrPrepProcedureMetadata({
+  mode: 'or_prep',
+  subintent: 'surgical_steps',
+  procedureCategory: 'fracture_orif',
+  procedureOrTopic: 'tibial plateau ORIF',
+  ambiguity: 'low',
+  assumedContext: '',
+  missingContext: [],
+  clarifyingQuestions: [],
+  confidence: 0.9,
+});
+
+assert.equal(plateauMetadata?.family, 'trauma');
+assert.equal(plateauMetadata?.operationType, 'open');
+assert.deepEqual(plateauMetadata?.primaryObjective, ['reduction', 'fixation']);
+assert.equal(plateauMetadata?.exposureComplexity, 'high');
+assert.ok(plateauMetadata?.likelyLearnerChallenge.includes('decision_making'));
+
+const genericChronologyGate = runBroBotQualityGate({
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  answer: [
+    '- Make an incision.',
+    '- Then dissect down.',
+    '- Next place the implant.',
+    '- Then irrigate.',
+    '- Close the wound.',
+  ].join('\n'),
+});
+
+assert.ok(genericChronologyGate.warnings.includes('or_prep_exposure_terms_missing'));
+assert.ok(genericChronologyGate.warnings.includes('or_prep_named_anatomy_missing'));
+assert.ok(genericChronologyGate.warnings.includes('or_prep_decision_point_missing'));
+assert.ok(genericChronologyGate.warnings.includes('or_prep_pitfall_bailout_missing'));
+assert.ok(genericChronologyGate.warnings.includes('or_prep_learner_level_signal_missing'));
+assert.ok(genericChronologyGate.warnings.includes('or_prep_generic_chronology_dominant'));
+
+const strongOrPrepGate = runBroBotQualityGate({
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  answer: [
+    '- Objective: restore joint line and stable fixation.',
+    '- Exposure: use landmarks to plan the incision and improve visualization with safe retractors.',
+    '- Anatomy at risk: protect the peroneal nerve and anterior tibial vessels during exposure.',
+    '- Key decisions/checks: confirm reduction and implant position on fluoro before final fixation.',
+    '- Pitfalls/Bailout: if visualization is poor, extend exposure safely rather than levering blindly.',
+    '- Attending expectation: ask about approach and backup fixation before scrub.',
+  ].join('\n'),
+});
+
+assert.doesNotMatch(
+  strongOrPrepGate.warnings.join(','),
+  /or_prep_(exposure_terms|named_anatomy|decision_point|pitfall_bailout|learner_level_signal|generic_chronology)/
+);
+
+const scfeOiteMetadata = buildOiteLearningMetadata({
+  mode: 'oite',
+  subintent: 'treatment_algorithm',
+  procedureCategory: 'pediatric_fracture',
+  procedureOrTopic: 'SCFE OITE treatment algorithm',
+  ambiguity: 'low',
+  assumedContext: '',
+  missingContext: [],
+  clarifyingQuestions: [],
+  confidence: 0.9,
+});
+
+assert.equal(scfeOiteMetadata?.examContext, 'oite');
+assert.equal(scfeOiteMetadata?.topicFamily, 'pediatrics');
+assert.ok(scfeOiteMetadata?.conceptType.includes('treatment_algorithm'));
+assert.ok(scfeOiteMetadata?.cognitiveTask.includes('management_decision'));
+assert.ok(scfeOiteMetadata?.learnerRisk.includes('weak_algorithm'));
+assert.equal(scfeOiteMetadata?.yieldTier, 'classic');
+
+const genericOiteGate = runBroBotQualityGate({
+  mode: 'oite',
+  responseDepth: 'standard',
+  answer: '- SCFE is a hip disorder in adolescents.\n- Know the basics and review the topic.',
+});
+
+assert.ok(genericOiteGate.warnings.includes('oite_trap_missing'));
+assert.ok(genericOiteGate.warnings.includes('oite_comparison_missing'));
+assert.ok(genericOiteGate.warnings.includes('oite_algorithm_missing'));
+assert.ok(genericOiteGate.warnings.includes('oite_board_pearl_missing'));
+assert.ok(genericOiteGate.warnings.includes('oite_test_taking_signal_missing'));
+
+const strongOiteGate = runBroBotQualityGate({
+  mode: 'oite',
+  responseDepth: 'standard',
+  answer: [
+    '- Direct answer: the classic OITE stem clue is adolescent hip or knee pain with a slipped capital femoral epiphysis.',
+    '- Core framework: classify stable versus unstable because that treatment threshold changes management.',
+    '- Compare: distinguish SCFE versus Perthes by age, body habitus, and radiograph pattern.',
+    '- Exam pearl: boards test AVN risk and in-situ pinning as the management pivot.',
+    '- Common trap: do not choose forced reduction; eliminate that wrong answer choice.',
+  ].join('\n'),
+});
+
+assert.doesNotMatch(
+  strongOiteGate.warnings.join(','),
+  /oite_(trap|comparison|algorithm|board_pearl|test_taking)/
+);
 
 const cleaned = parseBroBotChatResponse(
   JSON.stringify({

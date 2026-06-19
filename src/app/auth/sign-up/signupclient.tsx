@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { trackSignupConversion } from "@/lib/analytics/googleAds";
 
 export default function SignUpClient() {
   const supabase = useMemo(() => createClient(), []);
@@ -67,6 +68,8 @@ export default function SignUpClient() {
         setMessage(error.message);
         return;
       }
+
+      trackSignupConversion();
 
       setMessage(
         "✅ Check your inbox and click the confirmation link to finish creating your account."

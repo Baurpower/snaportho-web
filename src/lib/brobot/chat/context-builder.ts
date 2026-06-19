@@ -8,6 +8,14 @@ import {
   getCasePrepCertifiedContext,
   type BroBotCertifiedContext,
 } from './caseprep-context';
+import {
+  buildOrPrepProcedureMetadata,
+  type OrPrepProcedureMetadata,
+} from './or-prep-context';
+import {
+  buildOiteLearningMetadata,
+  type OiteLearningMetadata,
+} from './oite-context';
 
 export type BroBotAnswerContext = {
   selectedBranch?: {
@@ -22,6 +30,8 @@ export type BroBotAnswerContext = {
   responseDepth: BroBotResponseDepth;
   recentConversationSummary: string;
   certifiedContext: BroBotCertifiedContext;
+  orPrepProcedureMetadata: OrPrepProcedureMetadata | null;
+  oiteLearningMetadata: OiteLearningMetadata | null;
 };
 
 export async function buildBroBotAnswerContext(input: {
@@ -46,6 +56,8 @@ export async function buildBroBotAnswerContext(input: {
     mode: input.intent.mode,
     selectedBranchLabel: input.selectedBranch?.label,
   });
+  const orPrepProcedureMetadata = buildOrPrepProcedureMetadata(input.intent);
+  const oiteLearningMetadata = buildOiteLearningMetadata(input.intent);
 
   return {
     selectedBranch: input.selectedBranch,
@@ -57,6 +69,8 @@ export async function buildBroBotAnswerContext(input: {
     responseDepth: input.responseDepth,
     recentConversationSummary,
     certifiedContext,
+    orPrepProcedureMetadata,
+    oiteLearningMetadata,
   };
 }
 
@@ -72,6 +86,27 @@ export function formatAnswerContextForPrompt(context?: BroBotAnswerContext): str
         ),
       ].join('\n')
     : 'Certified context: none available for this turn.';
+  const orPrepMetadata = context.orPrepProcedureMetadata
+    ? [
+        'Hidden OR Prep procedure metadata:',
+        `- family: ${context.orPrepProcedureMetadata.family}`,
+        `- operationType: ${context.orPrepProcedureMetadata.operationType}`,
+        `- primaryObjective: ${context.orPrepProcedureMetadata.primaryObjective.join(', ')}`,
+        `- exposureComplexity: ${context.orPrepProcedureMetadata.exposureComplexity}`,
+        `- likelyLearnerChallenge: ${context.orPrepProcedureMetadata.likelyLearnerChallenge.join(', ')}`,
+      ].join('\n')
+    : '';
+  const oiteMetadata = context.oiteLearningMetadata
+    ? [
+        'Hidden OITE learning metadata:',
+        `- examContext: ${context.oiteLearningMetadata.examContext}`,
+        `- topicFamily: ${context.oiteLearningMetadata.topicFamily}`,
+        `- conceptType: ${context.oiteLearningMetadata.conceptType.join(', ')}`,
+        `- cognitiveTask: ${context.oiteLearningMetadata.cognitiveTask.join(', ')}`,
+        `- learnerRisk: ${context.oiteLearningMetadata.learnerRisk.join(', ')}`,
+        `- yieldTier: ${context.oiteLearningMetadata.yieldTier}`,
+      ].join('\n')
+    : '';
 
   return [
     'Answer context:',
@@ -82,6 +117,8 @@ export function formatAnswerContextForPrompt(context?: BroBotAnswerContext): str
     `- procedureOrTopic: ${context.procedureOrTopic}`,
     `- trainingLevel: ${context.trainingLevel}`,
     `- responseDepth: ${context.responseDepth}`,
+    orPrepMetadata,
+    oiteMetadata,
     certified,
-  ].join('\n');
+  ].filter(Boolean).join('\n');
 }

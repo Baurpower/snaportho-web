@@ -17,6 +17,8 @@ const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? "";
 const CONVERSION_LABELS = {
   signup: process.env.NEXT_PUBLIC_GOOGLE_ADS_SIGNUP_CONVERSION_LABEL ?? "",
   subscription: process.env.NEXT_PUBLIC_GOOGLE_ADS_SUBSCRIPTION_CONVERSION_LABEL ?? "",
+  checkoutStarted: process.env.NEXT_PUBLIC_GOOGLE_ADS_CHECKOUT_STARTED_CONVERSION_LABEL ?? "",
+  landingCta: process.env.NEXT_PUBLIC_GOOGLE_ADS_LANDING_CTA_CONVERSION_LABEL ?? "",
   casePrep: process.env.NEXT_PUBLIC_GOOGLE_ADS_CASE_PREP_CONVERSION_LABEL ?? "",
   broBotConversation:
     process.env.NEXT_PUBLIC_GOOGLE_ADS_BROBOT_CONVERSATION_CONVERSION_LABEL ?? "",
@@ -73,6 +75,20 @@ export function trackSubscriptionConversion(params: GoogleAdsConversionParams = 
   trackGoogleAdsConversion({
     ...params,
     conversionLabel: params.conversionLabel || CONVERSION_LABELS.subscription,
+  });
+}
+
+export function trackCheckoutStartedConversion(params: GoogleAdsConversionParams = {}) {
+  trackGoogleAdsConversion({
+    ...params,
+    conversionLabel: params.conversionLabel || CONVERSION_LABELS.checkoutStarted,
+  });
+}
+
+export function trackLandingCtaConversion(params: GoogleAdsConversionParams = {}) {
+  trackGoogleAdsConversion({
+    ...params,
+    conversionLabel: params.conversionLabel || CONVERSION_LABELS.landingCta,
   });
 }
 

@@ -21,6 +21,7 @@ import {
   ExclamationCircleIcon,
   CheckCircleIcon,
   ClipboardDocumentIcon,
+  BookOpenIcon,
 } from '@heroicons/react/24/outline';
 
 import { useAuth } from '@/context/AuthContext';
@@ -37,6 +38,7 @@ import type {
 } from '@/lib/brobot/chat';
 import BroBotMarkdown from './BroBotMarkdown';
 import BroBotProductTabs from './BroBotProductTabs';
+import ReadingRecommendationsPanel from './ReadingRecommendationsPanel';
 import { useChatScrollController } from './useChatScrollController';
 
 type BroBotChatResponse = {
@@ -1723,6 +1725,7 @@ function BroBotNextLearningBranches({
   onPickBranch: (branch: BranchOption, sourceMessageId: string) => void;
 }) {
   const loggedExposureKeyRef = useRef<string | null>(null);
+  const [showReadingPanel, setShowReadingPanel] = useState(false);
   const branchChips: BranchOption[] =
     branches.length > 0
       ? branches.slice(0, 7).map((branch, index) => ({
@@ -1789,7 +1792,26 @@ function BroBotNextLearningBranches({
             {branch.label}
           </button>
         ))}
+        <button
+          type="button"
+          onClick={() => setShowReadingPanel((current) => !current)}
+          className="min-h-9 rounded-full border border-sky-200 bg-white px-3 py-2 text-left text-xs font-bold leading-5 text-sky-700 shadow-sm transition hover:bg-sky-50 sm:text-sm"
+        >
+          <span className="mr-1.5 inline-flex align-[-2px] text-sky-500">
+            <BookOpenIcon className="h-4 w-4" />
+          </span>
+          Read Next
+        </button>
       </div>
+      {showReadingPanel && (
+        <ReadingRecommendationsPanel
+          conversationId={conversationId}
+          sourceMessageId={sourceMessageId}
+          mode={mode}
+          trainingLevel={trainingLevel}
+          onClose={() => setShowReadingPanel(false)}
+        />
+      )}
     </div>
   );
 }

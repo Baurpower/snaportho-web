@@ -134,9 +134,12 @@ export const MODE_BRANCH_LIBRARY: Record<Exclude<BroBotChatMode, 'auto' | 'fract
   ],
   oite: [
     { id: 'high_yield_review', label: 'What are the board-style pearls?', description: 'The fastest board-relevant overview.', category: 'Board Review' },
+    { id: 'concept_prerequisites', label: 'What must I know first?', description: 'Prerequisite concept framework before memorizing details.', category: 'Board Review' },
     { id: 'classification', label: 'What classification should I know?', description: 'Classification systems and thresholds.', category: 'Classification Systems' },
     { id: 'treatment_algorithm', label: 'What treatment algorithm gets tested?', description: 'Testable management sequence.', category: 'Clinical Decision Making' },
+    { id: 'treatment_pivots', label: 'What finding changes treatment?', description: 'Thresholds, classifications, and findings that change the answer.', category: 'Clinical Decision Making' },
     { id: 'test_traps', label: 'What traps show up on OITE?', description: 'Common wrong-answer traps.', category: 'Board Review' },
+    { id: 'distractor_diagnosis', label: 'What diagnosis is the distractor?', description: 'The tempting wrong diagnosis and how to distinguish it.', category: 'Controversies' },
     { id: 'quiz_me', label: 'Can you quiz me on this?', description: 'Turn this into questions.', category: 'Board Review' },
     { id: 'compare_diagnoses', label: 'What diagnoses look similar?', description: 'Differentiate similar diagnoses.', category: 'Controversies' },
   ],
@@ -298,7 +301,7 @@ Research categories: prioritize evidence hierarchy, study design, practical inte
 Mode branch examples:
 - OR Prep: What landmarks should I find first?; What are the key operative steps?; What anatomy is most at risk?; What implants should I know?; What complications get tested most?; What will the attending ask?
 - Consult: What information am I missing?; What should I do first?; How should I present this consult?; What imaging or labs matter?; What makes this operative?; What will my senior ask?
-- OITE: What are the board-style pearls?; What classification should I know?; What treatment algorithm gets tested?; What traps show up on OITE?; Can you quiz me on this?
+- OITE: What are the board-style pearls?; What must I know first?; What classification should I know?; What finding changes treatment?; What traps show up on OITE?; What diagnosis is the distractor?; Can you quiz me on this?
 - Clinic: What diagnoses should I consider?; What exam findings matter most?; What imaging should I order?; What nonoperative options work?; When should I recommend surgery?
 - Research: How strong is this study?; What statistics should I understand?; What are the main limitations?; Does this change practice?; What should I ask in journal club?
 - General: How should I understand this?; What should I compare this with?; Can you quiz me on this?; How does this change management?; Why does this matter in the OR?

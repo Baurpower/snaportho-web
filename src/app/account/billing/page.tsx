@@ -5,6 +5,10 @@ import { useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { BroBotEntitlement } from '@/lib/brobot/entitlements';
+import {
+  trackCheckoutStartedConversion,
+  trackSubscriptionConversion,
+} from '@/lib/analytics/googleAds';
 
 // ─── Main content ─────────────────────────────────────────────────────────────
 
@@ -96,8 +100,30 @@ function BillingContent() {
     };
   }, [authLoading, user, router, searchParams]);
 
+  useEffect(() => {
+    if (!success || entitlement?.source !== 'subscription' || !entitlement.stripeSubscriptionId) {
+      return;
+    }
+
+    const storageKey = `google_ads_subscription_conversion:${entitlement.stripeSubscriptionId}`;
+    if (window.localStorage.getItem(storageKey)) {
+      return;
+    }
+
+    trackSubscriptionConversion({
+      currency: 'USD',
+      transactionId: entitlement.stripeSubscriptionId,
+    });
+    window.localStorage.setItem(storageKey, 'sent');
+  }, [success, entitlement]);
+
   const handleUpgrade = async (interval: 'month' | 'year') => {
     try {
+      trackCheckoutStartedConversion({
+        value: interval === 'year' ? 29.99 : 2.99,
+        currency: 'USD',
+      });
+
       const res = await fetch('/api/billing/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

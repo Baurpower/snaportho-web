@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import TrackedLink from '@/components/analytics/TrackedLink';
 
 const SITE_URL = 'https://snap-ortho.com';
 
@@ -170,12 +171,12 @@ function HeroSection() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
+              <TrackedLink
                 href="/brobot/chat"
                 className="rounded-2xl bg-gold px-6 py-3 text-center text-base font-black text-midnight shadow-[0_22px_50px_rgba(255,210,90,0.24)] transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
               >
                 Try BroBot Free
-              </Link>
+              </TrackedLink>
 
               <a
                 href="#examples"

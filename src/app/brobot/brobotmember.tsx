@@ -20,6 +20,7 @@ import { useAuth } from '@/context/AuthContext';
 import Nav from '@/components/Nav';
 import AccountDropdown from '@/components/accountdropdown';
 import BroBotProductTabs from '@/components/brobot/BroBotProductTabs';
+import { trackCheckoutStartedConversion } from '@/lib/analytics/googleAds';
 
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // Direct browser calls to the external CasePrep API have been eliminated.
@@ -303,6 +304,11 @@ export default function BroBotMember() {
   async function handleUpgrade() {
     setUpgradeLoading(true);
     try {
+      trackCheckoutStartedConversion({
+        value: 2.99,
+        currency: 'USD',
+      });
+
       const res = await fetch('/api/billing/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

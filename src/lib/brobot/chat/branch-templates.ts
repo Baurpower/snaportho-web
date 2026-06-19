@@ -24,9 +24,12 @@ export const MODE_BRANCH_LIBRARY: Record<Exclude<BroBotChatMode, 'auto' | 'fract
   ],
   oite: [
     { id: 'board_pearls', label: 'What are the board-style pearls?', description: 'The fastest board-relevant overview.', category: 'Board Review' },
+    { id: 'concept_prerequisites', label: 'What must I know first?', description: 'Prerequisite concept framework before memorizing details.', category: 'Board Review' },
     { id: 'classification', label: 'What classification should I know?', description: 'Classification systems and thresholds.', category: 'Classification Systems' },
     { id: 'treatment_algorithm', label: 'What treatment algorithm gets tested?', description: 'Testable management sequence.', category: 'Clinical Decision Making' },
+    { id: 'treatment_pivots', label: 'What finding changes treatment?', description: 'Thresholds, classifications, and findings that change the answer.', category: 'Clinical Decision Making' },
     { id: 'test_traps', label: 'What traps show up on OITE?', description: 'Common wrong-answer traps.', category: 'Board Review' },
+    { id: 'distractor_diagnosis', label: 'What diagnosis is the distractor?', description: 'The tempting wrong diagnosis and how to distinguish it.', category: 'Controversies' },
     { id: 'quiz_me', label: 'Can you quiz me on this?', description: 'Turn this into questions.', category: 'Board Review' },
     { id: 'compare_diagnoses', label: 'What diagnoses look similar?', description: 'Differentiate similar diagnoses.', category: 'Controversies' },
   ],
