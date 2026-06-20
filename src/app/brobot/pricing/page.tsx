@@ -151,7 +151,7 @@ function HeroSection() {
               href={BROBOT_BILLING_HREF}
               className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/10 px-6 py-3 text-base font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/15"
             >
-              Upgrade to Unlimited
+              Start Free Trial
             </Link>
           </div>
         </div>
@@ -212,12 +212,27 @@ function PricingCards() {
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto max-w-2xl text-center">
           <h2 id="plans-heading" className="text-3xl font-black tracking-tight sm:text-4xl">
-            Choose your BroBot plan
+            Start Your Free Trial
           </h2>
           <p className="mt-3 text-sm leading-6 text-white/60">
-            Start with daily questions. Upgrade when BroBot becomes a regular part
-            of case prep, studying, and clinical review.
+            Unlimited BroBot access for 1 month. Then choose monthly or yearly billing.
           </p>
+        </div>
+
+        <div className="mx-auto mt-8 max-w-4xl rounded-[1.5rem] border border-teal-300/25 bg-teal-300/10 p-5 shadow-2xl backdrop-blur-xl">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-teal-200">
+                Free 1-Month Trial
+              </p>
+              <p className="mt-1 text-lg font-black text-white">
+                Try BroBot Unlimited with no daily caps.
+              </p>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-white/68">
+              Cancel anytime during the trial. Monthly and yearly billing options start afterward.
+            </p>
+          </div>
         </div>
 
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
@@ -231,10 +246,10 @@ function PricingCards() {
           />
           <PlanCard
             name="BroBot Unlimited"
-            price="Simple monthly access"
-            subtitle="For users who want BroBot available throughout the day."
+            price="Free for 1 month"
+            subtitle="Then continue monthly or yearly when BroBot becomes part of your workflow."
             features={unlimitedFeatures}
-            cta="Upgrade Now"
+            cta="Start Free Trial"
             href={BROBOT_BILLING_HREF}
             featured
             badge="Best for residents"
@@ -466,8 +481,7 @@ function FinalCta() {
           Try BroBot today.
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-white/[0.64]">
-          Start free for quick daily questions, or unlock BroBot for your full
-          orthopaedic workflow.
+          Start free for quick daily questions, or try BroBot Unlimited free for 1 month.
         </p>
         <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
           <Link
@@ -481,7 +495,7 @@ function FinalCta() {
             href={BROBOT_BILLING_HREF}
             className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-3 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-white/15"
           >
-            Upgrade to Unlimited
+            Start Free Trial
           </Link>
         </div>
       </div>

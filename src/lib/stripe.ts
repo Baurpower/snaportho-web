@@ -233,6 +233,10 @@ function stripeSubscriptionMatchesBroBot(subscription: Stripe.Subscription) {
   return subscription.items.data.some((item) => priceIds.has(item.price.id));
 }
 
+function logBroBotCheckoutTrialDebug(label: string, details: Record<string, unknown>) {
+  console.info(`[brobot/stripe-checkout-trial-debug] ${label}`, details);
+}
+
 export async function determineBroBotTrialDecision(params: {
   userId: string;
   stripeCustomerId?: string | null;
@@ -245,7 +249,27 @@ export async function determineBroBotTrialDecision(params: {
     : 0;
   const trialEnd = getBroBotTrialEndTimestamp(params.now);
 
+  logBroBotCheckoutTrialDebug('eligibility_start', {
+    userId: params.userId,
+    stripeCustomerId: params.stripeCustomerId ?? null,
+    enableTrial: Boolean(params.enableTrial),
+    configuredTrialOfferId: offerId,
+    configuredTrialMonths: trialMonths,
+    calculatedTrialEnd: trialEnd,
+    calculatedTrialEndIso: trialEnd ? new Date(trialEnd * 1000).toISOString() : null,
+  });
+
   if (!params.enableTrial || !offerId || !trialEnd || trialMonths <= 0) {
+    logBroBotCheckoutTrialDebug('eligibility_result', {
+      userId: params.userId,
+      stripeCustomerId: params.stripeCustomerId ?? null,
+      enableTrial: Boolean(params.enableTrial),
+      trialEligible: false,
+      trialEligibilityReason: 'trial_not_configured',
+      trialEnd: null,
+      trialApplied: false,
+    });
+
     return {
       eligible: false,
       reason: 'trial_not_configured',
@@ -279,6 +303,28 @@ export async function determineBroBotTrialDecision(params: {
   }
 
   if ((priorRows ?? []).some((row) => hasPriorBroBotSubscriptionRow(row as TrialEligibilitySubscriptionRow))) {
+    logBroBotCheckoutTrialDebug('eligibility_result', {
+      userId: params.userId,
+      stripeCustomerId: params.stripeCustomerId ?? null,
+      enableTrial: Boolean(params.enableTrial),
+      trialEligible: false,
+      trialEligibilityReason: 'prior_subscription_row',
+      trialEnd: null,
+      trialApplied: false,
+      matchingSubscriptionRows: (priorRows ?? []).map((row) => ({
+        provider: row.provider,
+        status: row.status,
+        plan_code: row.plan_code,
+        stripe_customer_id: row.stripe_customer_id,
+        stripe_subscription_id: row.stripe_subscription_id,
+        stripe_price_id: row.stripe_price_id,
+        current_period_start: row.current_period_start,
+        current_period_end: row.current_period_end,
+        created_at: row.created_at,
+        countedAsPriorBroBotSubscription: hasPriorBroBotSubscriptionRow(row as TrialEligibilitySubscriptionRow),
+      })),
+    });
+
     return {
       eligible: false,
       reason: 'prior_subscription_row',
@@ -297,6 +343,25 @@ export async function determineBroBotTrialDecision(params: {
     });
 
     if (subscriptions.data.some(stripeSubscriptionMatchesBroBot)) {
+      logBroBotCheckoutTrialDebug('eligibility_result', {
+        userId: params.userId,
+        stripeCustomerId: params.stripeCustomerId,
+        enableTrial: Boolean(params.enableTrial),
+        trialEligible: false,
+        trialEligibilityReason: 'prior_stripe_subscription',
+        trialEnd: null,
+        trialApplied: false,
+        stripeSubscriptionHistory: subscriptions.data.map((subscription) => ({
+          id: subscription.id,
+          status: subscription.status,
+          metadata: subscription.metadata,
+          priceIds: subscription.items.data.map((item) => item.price.id),
+          trial_start: subscription.trial_start,
+          trial_end: subscription.trial_end,
+          matchedBroBot: stripeSubscriptionMatchesBroBot(subscription),
+        })),
+      });
+
       return {
         eligible: false,
         reason: 'prior_stripe_subscription',
@@ -306,6 +371,17 @@ export async function determineBroBotTrialDecision(params: {
       };
     }
   }
+
+  logBroBotCheckoutTrialDebug('eligibility_result', {
+    userId: params.userId,
+    stripeCustomerId: params.stripeCustomerId ?? null,
+    enableTrial: Boolean(params.enableTrial),
+    trialEligible: true,
+    trialEligibilityReason: 'eligible',
+    trialEnd,
+    trialEndIso: new Date(trialEnd * 1000).toISOString(),
+    trialApplied: true,
+  });
 
   return {
     eligible: true,
@@ -437,6 +513,23 @@ export async function createBroBotCheckoutSession(
       : {}),
   };
 
+  logBroBotCheckoutTrialDebug('checkout_create_params', {
+    userId,
+    stripeCustomerId: customerId,
+    enableTrial: Boolean(options.enableTrial),
+    trialEligible: trialDecision.eligible,
+    trialEligibilityReason: trialDecision.reason,
+    trialEnd: trialDecision.trialEnd,
+    trialEndIso: trialDecision.trialEnd
+      ? new Date(trialDecision.trialEnd * 1000).toISOString()
+      : null,
+    trialApplied: Boolean(trialDecision.eligible && trialDecision.trialEnd),
+    mode: 'subscription',
+    lineItemPriceId: priceId,
+    subscription_data: subscriptionData,
+    metadata,
+  });
+
   const session = await stripe.checkout.sessions.create({
     customer: customerId,
     mode: 'subscription',
@@ -446,6 +539,22 @@ export async function createBroBotCheckoutSession(
     client_reference_id: userId, // stable identifier for webhook resolution
     metadata,
     subscription_data: subscriptionData,
+  });
+
+  logBroBotCheckoutTrialDebug('checkout_create_result', {
+    userId,
+    stripeCustomerId: customerId,
+    enableTrial: Boolean(options.enableTrial),
+    trialEligible: trialDecision.eligible,
+    trialEligibilityReason: trialDecision.reason,
+    trialEnd: trialDecision.trialEnd,
+    trialApplied: Boolean(trialDecision.eligible && trialDecision.trialEnd),
+    subscription_data: subscriptionData,
+    checkoutSessionId: session.id,
+    checkoutSessionUrlPresent: Boolean(session.url),
+    checkoutSessionMode: session.mode,
+    checkoutSessionSubscription: session.subscription,
+    checkoutSessionMetadata: session.metadata,
   });
 
   return { url: session.url };

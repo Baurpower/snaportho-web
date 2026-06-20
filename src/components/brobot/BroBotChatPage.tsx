@@ -2076,7 +2076,7 @@ function BroBotChatError({
                 href="/account/billing?returnTo=/brobot/chat&intent=brobot"
                 className="inline-flex rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
               >
-                Upgrade to Unlimited BroBot
+                Start Free Trial
               </Link>
               {!isAuthenticated && (
                 <Link

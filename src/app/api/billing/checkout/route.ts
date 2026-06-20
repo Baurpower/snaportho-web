@@ -11,6 +11,10 @@ function buildAbsoluteReturnUrl(path: string, flag: 'success' | 'canceled' | 'po
   return url.toString();
 }
 
+function logBroBotCheckoutTrialDebug(label: string, details: Record<string, unknown>) {
+  console.info(`[brobot/stripe-checkout-trial-debug] ${label}`, details);
+}
+
 export async function POST(request: Request) {
   if (!BROBOT_CONFIG.PAID_ENABLED) {
     return NextResponse.json(
@@ -78,6 +82,17 @@ export async function POST(request: Request) {
         (existingActive.status === 'past_due' && existingActive.current_period_end && new Date(existingActive.current_period_end) > new Date()) ||
         existingActive.cancel_at_period_end
       );
+
+    logBroBotCheckoutTrialDebug('web_checkout_route', {
+      userId: user.id,
+      enableTrial: true,
+      interval,
+      returnTo,
+      existingRows,
+      existingActive,
+      hasOngoingAccess: Boolean(hasOngoingAccess),
+      willCreateCheckoutSession: !hasOngoingAccess,
+    });
 
     if (hasOngoingAccess) {
       // User already has (or will have until period end) an active BroBot subscription.

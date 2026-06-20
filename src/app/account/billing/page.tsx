@@ -329,19 +329,65 @@ function BillingContent() {
       {/* PRICING */}
       <div className="max-w-5xl mx-auto px-6 pb-16">
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-semibold tracking-tight">Choose your plan</h2>
-          <p className="mt-2 text-gray-600">Cancel anytime. Instant access.</p>
+          <h2 className="text-4xl font-semibold tracking-tight">
+            {isUnlimited ? 'Your BroBot Unlimited Plan' : 'Start Your Free Trial'}
+          </h2>
+          <p className="mt-2 text-gray-600">
+            {isUnlimited
+              ? 'Manage your current subscription or compare billing options.'
+              : 'Unlimited BroBot access for 1 month. Then choose monthly or yearly billing.'}
+          </p>
         </div>
+
+        {!isUnlimited && (
+          <div className="mx-auto mb-6 max-w-4xl rounded-3xl border border-teal-200 bg-white/80 p-5 shadow-sm">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <div className="text-sm font-semibold tracking-widest text-teal-700">
+                  FREE 1-MONTH TRIAL
+                </div>
+                <p className="mt-1 text-lg font-semibold text-[#1A1C2C]">
+                  Try BroBot Unlimited with no daily caps.
+                </p>
+              </div>
+              <p className="max-w-md text-sm leading-6 text-gray-600">
+                Cancel anytime during the trial. Your paid plan starts only after the trial ends.
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {/* MONTHLY */}
           <div className="rounded-3xl border bg-white p-8 flex flex-col">
             <div>
               <div className="text-sm font-semibold tracking-widest text-gray-500">MONTHLY</div>
-              <div className="mt-3 flex items-baseline">
-                <span className="text-6xl font-semibold tracking-tighter">$2.99</span>
-                <span className="ml-1.5 text-gray-500">/ month</span>
+              <div className="mt-4 text-4xl font-semibold tracking-tight">
+                {isUnlimited ? '$2.99/month' : 'Free for 1 month'}
               </div>
+              <p className="mt-2 text-lg font-medium text-gray-600">
+                {isUnlimited ? 'Monthly billing option' : 'Then $2.99/month'}
+              </p>
+              <ul className="mt-6 space-y-3 text-sm text-gray-600">
+                {(isUnlimited
+                  ? [
+                      'Unlimited BroBot Case Prep',
+                      'Unlimited AI questions',
+                      'No daily caps',
+                      'Manage billing anytime',
+                    ]
+                  : [
+                      'Unlimited BroBot Case Prep',
+                      'Unlimited AI questions',
+                      'No daily caps',
+                      'Cancel anytime during trial',
+                    ]).map((feature) => (
+                  <li key={feature} className="flex gap-3">
+                    <span className="mt-0.5 text-teal-600">✓</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div className="mt-auto pt-8">
@@ -350,9 +396,11 @@ function BillingContent() {
                 disabled={isUnlimited}
                 className="w-full rounded-2xl border border-gray-300 py-3.5 text-base font-semibold hover:bg-gray-50 disabled:opacity-60 transition-all active:scale-[0.985]"
               >
-                {isUnlimited ? 'Current Plan' : 'Upgrade Monthly'}
+                {isUnlimited ? 'Current Plan' : 'Start Free Trial'}
               </button>
-              <p className="text-center text-xs text-gray-400 mt-3">Billed monthly • Cancel anytime</p>
+              <p className="text-center text-xs text-gray-400 mt-3">
+                {isUnlimited ? 'Billed monthly · Cancel anytime' : 'Then billed monthly · Cancel anytime'}
+              </p>
             </div>
           </div>
 
@@ -366,14 +414,36 @@ function BillingContent() {
 
             <div>
               <div className="text-sm font-semibold tracking-widest text-teal-600">YEARLY</div>
-              <div className="mt-3 flex items-baseline">
-                <span className="text-6xl font-semibold tracking-tighter">$29.99</span>
-                <span className="ml-1.5 text-gray-500">/ year</span>
+              <div className="mt-4 text-4xl font-semibold tracking-tight">
+                {isUnlimited ? '$29.99/year' : 'Free for 1 month'}
               </div>
+              <p className="mt-2 text-lg font-medium text-gray-600">
+                {isUnlimited ? 'Annual billing option' : 'Then $29.99/year'}
+              </p>
               <div className="mt-1 text-sm">
                 <span className="line-through text-gray-400">$35.88</span>
-                <span className="ml-2 font-medium text-emerald-600">Save $5.89</span>
+                <span className="ml-2 font-medium text-emerald-600">Save $5.89 vs monthly</span>
               </div>
+              <ul className="mt-6 space-y-3 text-sm text-gray-600">
+                {(isUnlimited
+                  ? [
+                      'Unlimited BroBot access',
+                      'Best long-term value',
+                      'Priority access to new AI tools',
+                      'Manage billing anytime',
+                    ]
+                  : [
+                      'Unlimited BroBot access',
+                      'Best long-term value',
+                      'Priority access to new AI tools',
+                      'Cancel anytime during trial',
+                    ]).map((feature) => (
+                  <li key={feature} className="flex gap-3">
+                    <span className="mt-0.5 text-teal-600">✓</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             <div className="mt-auto pt-8">
@@ -382,9 +452,11 @@ function BillingContent() {
                 disabled={isUnlimited}
                 className="w-full rounded-2xl bg-[#0f766e] hover:bg-[#115e59] py-3.5 text-base font-semibold text-white shadow-sm transition-all active:scale-[0.985] disabled:opacity-70"
               >
-                {isUnlimited ? 'Current Plan' : 'Upgrade Yearly — Save 17%'}
+                {isUnlimited ? 'Current Plan' : 'Start Free Trial — Yearly'}
               </button>
-              <p className="text-center text-xs text-gray-400 mt-3">Billed annually • Best price</p>
+              <p className="text-center text-xs text-gray-400 mt-3">
+                {isUnlimited ? 'Billed annually · Best price' : 'Then billed annually · Best price'}
+              </p>
             </div>
           </div>
         </div>
@@ -396,7 +468,7 @@ function BillingContent() {
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-gray-500">
             <div>Cancel anytime</div>
             <div>Secure Stripe billing</div>
-            <div>Instant activation</div>
+            <div>Instant trial activation</div>
             <div>Private &amp; secure</div>
           </div>
           <div className="mt-4 text-xs text-gray-400">

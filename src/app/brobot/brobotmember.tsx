@@ -462,7 +462,7 @@ export default function BroBotMember() {
                       href={BROBOT_BILLING_HREF}
                       className="text-teal-600 hover:underline font-medium"
                     >
-                      Upgrade to Unlimited BroBot
+                      Start Free Trial
                     </Link>
                   </>
                 )}
@@ -640,14 +640,14 @@ function QuotaHitCard({
           </div>
 
           <p className="text-teal-100 text-sm leading-relaxed mb-4">
-            Prepare for every orthopaedic case, every day — no daily limits, no interruptions.
+            Start with a free 1-month trial, then keep BroBot ready for every orthopaedic case.
           </p>
 
           <ul className="space-y-2">
             {[
               'Unlimited AI-powered case preps',
               'Full anatomy & high-yield question libraries',
-              'Cancel anytime from your account',
+              'Cancel anytime during trial',
             ].map(feature => (
               <li key={feature} className="flex items-center gap-2 text-sm text-teal-100">
                 <CheckCircleIcon className="h-4 w-4 text-teal-300 shrink-0" />
@@ -672,7 +672,7 @@ function QuotaHitCard({
             ) : (
               <>
                 <SparklesIcon className="h-4 w-4" />
-                Upgrade to Unlimited
+                Start Free Trial
               </>
             )}
           </button>
