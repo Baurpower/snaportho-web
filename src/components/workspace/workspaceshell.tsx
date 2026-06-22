@@ -115,7 +115,7 @@ export function WorkspaceShell({
   }, [mobileDrawerOpen]);
 
   return (
-    <div className="w-full bg-slate-950">
+    <div className="w-full bg-slate-950 pt-[52px]">
       <div className="flex min-w-0 w-full md:min-h-[calc(100vh-52px)] md:items-stretch">
         {/* Desktop-only sidebar rail (md+). Hidden on mobile.
             All original desktop collapse/hide/sticky/width/persistence behavior preserved exactly. */}
@@ -201,7 +201,7 @@ export function WorkspaceShell({
                 className={`flex flex-col items-center justify-center flex-1 py-1 transition ${active ? "text-slate-950 font-semibold" : "hover:text-slate-700"}`}
               >
                 <Icon className="h-5 w-5 mb-0.5" />
-                <span className="leading-none">{item.label}</span>
+                <span className="leading-none">{item.mobileLabel ?? item.label}</span>
               </Link>
             );
           })}

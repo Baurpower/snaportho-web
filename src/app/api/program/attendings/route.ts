@@ -95,19 +95,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const permission = canManageProgramAttendings({
-      rosterRole: membership.roster?.role ?? null,
-      membershipRole: membership.role ?? null,
-      isRosterAdmin: membership.roster?.isAdmin ?? false,
-    });
-
-    if (!permission.canManage) {
-      return NextResponse.json(
-        { error: "You do not have permission to manage attendings." },
-        { status: 403 }
-      );
-    }
-
+    // Any active program member may add an attending (needed for preference cards).
+    // canManageProgramAttendings still governs call-schedule editing operations.
     const body = await request.json().catch(() => null);
     const input = normalizeProgramAttendingInput(body);
 

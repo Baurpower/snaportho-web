@@ -68,6 +68,11 @@ export type WorkspacePermissions = {
   canCreateAcademicEvents: boolean;
   canEditAcademicEvents: boolean;
   canDeleteAcademicEvents: boolean;
+  canCreateProgramAttending: boolean;
+  canViewAttendingPreferences: boolean;
+  canCreateAttendingPreferences: boolean;
+  canEditAttendingPreferences: boolean;
+  canManageAttendingPreferenceCards: boolean;
 };
 
 export type WorkspaceAccessResult = {
@@ -173,6 +178,12 @@ export function getWorkspacePermissions(
     canCreateAcademicEvents: canViewWorkspace && isAdmin,
     canEditAcademicEvents: canViewWorkspace && isAdmin,
     canDeleteAcademicEvents: canViewWorkspace && isAdmin,
+    // Attending Preferences — all active program members in v1
+    canCreateProgramAttending: canViewWorkspace,
+    canViewAttendingPreferences: canViewWorkspace,
+    canCreateAttendingPreferences: canViewWorkspace,
+    canEditAttendingPreferences: canViewWorkspace,
+    canManageAttendingPreferenceCards: canViewWorkspace,
   };
 }
 

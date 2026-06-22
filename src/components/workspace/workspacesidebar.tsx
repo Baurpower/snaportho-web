@@ -12,6 +12,7 @@ import {
   PanelLeftOpen,
   PlaneTakeoffIcon,
   GraduationCap,
+  BookOpen,
 } from "lucide-react";
 import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
@@ -20,6 +21,8 @@ export type NavItem = {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   adminLabel?: string;
+  /** Shorter label for use in the mobile bottom tab bar */
+  mobileLabel?: string;
 };
 
 type WorkspaceSidebarProps = {
@@ -41,6 +44,7 @@ export const PRIMARY_NAV: NavItem[] = [
     href: "/work/academic",
     icon: GraduationCap,
   },
+  { label: "Preferences", mobileLabel: "Prefs", href: "/work/preferences", icon: BookOpen },
 ];
 
 export const BOTTOM_NAV: NavItem[] = [
