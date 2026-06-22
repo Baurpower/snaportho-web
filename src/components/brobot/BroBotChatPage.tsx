@@ -468,6 +468,7 @@ export default function BroBotChatPage() {
   const [error, setError] = useState<ChatError | null>(null);
   const [usage, setUsage] = useState<UsageSnapshot | null>(null);
   const [pendingIntent, setPendingIntent] = useState<PendingIntent | null>(null);
+  const [lastFailedPrompt, setLastFailedPrompt] = useState<string | null>(null);
   const [restoredPendingPrompt, setRestoredPendingPrompt] = useState(false);
   const messagesViewportRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -538,7 +539,10 @@ export default function BroBotChatPage() {
       }
 
       try {
-        const res = await fetch('/api/me/entitlements');
+        const res = await fetch('/api/me/entitlements', {
+          cache: 'no-store',
+          credentials: 'include',
+        });
         const body = await res.json();
         const data = body?.data;
 
@@ -604,15 +608,15 @@ export default function BroBotChatPage() {
     selectedBranch?: BranchOption,
     answerNow = false
   ) {
-    const message = (rawMessage ?? input).trim();
-    if (!message || isRequestActive) return;
+    const submittedPrompt = (rawMessage ?? input).trim();
+    if (!submittedPrompt || isRequestActive) return;
 
     const shouldAppendUserMessage = source !== 'branch_selection' && source !== 'answer_now';
     const optimisticUserMessage: ChatMessage | null = shouldAppendUserMessage
       ? {
           id: crypto.randomUUID(),
           role: 'user',
-          content: message,
+          content: submittedPrompt,
         }
       : null;
 
@@ -621,6 +625,7 @@ export default function BroBotChatPage() {
     }
     setRestoredPendingPrompt(false);
     setInput('');
+    setLastFailedPrompt(null);
     setError(null);
     setRequestState(
       source === 'manual' || source === 'example_prompt'
@@ -637,7 +642,8 @@ export default function BroBotChatPage() {
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
           body: JSON.stringify({
-            message,
+            prompt: submittedPrompt,
+            message: submittedPrompt,
             mode,
             responseDepth,
             trainingLevel,
@@ -654,7 +660,8 @@ export default function BroBotChatPage() {
           setRequestState('error');
 
           if (intentRes.status === 401) {
-            redirectToSignInWithPendingRequest(message);
+            setLastFailedPrompt(submittedPrompt);
+            redirectToSignInWithPendingRequest(submittedPrompt);
             return;
           }
 
@@ -662,15 +669,18 @@ export default function BroBotChatPage() {
             setUsage((current) =>
               current ? { ...current, remainingToday: 0 } : current
             );
+            setLastFailedPrompt(submittedPrompt);
             setError({ type: 'quota', dailyCap: intentBody?.dailyCap ?? null });
             return;
           }
 
           if (intentRes.status === 403) {
+            setLastFailedPrompt(submittedPrompt);
             setError({ type: 'disabled', message: intentBody?.message ?? intentBody?.error });
             return;
           }
 
+          setLastFailedPrompt(submittedPrompt);
           setError({ type: 'unexpected', message: intentBody?.message ?? intentBody?.error });
           return;
         }
@@ -682,7 +692,7 @@ export default function BroBotChatPage() {
           intent.branchOptions.length > 0
         ) {
           setPendingIntent({
-            message,
+            message: submittedPrompt,
             userMessageId: optimisticUserMessage?.id ?? crypto.randomUUID(),
             intent,
           });
@@ -711,31 +721,45 @@ export default function BroBotChatPage() {
         setRequestState('awaiting_first_token');
       }
 
+      const chatRequestBody = {
+        conversationId: conversationId ?? undefined,
+        prompt: submittedPrompt,
+        message: submittedPrompt,
+        mode,
+        responseDepth,
+        trainingLevel,
+        source,
+        sourceMessageId,
+        selectedBranchId: selectedBranch?.id,
+        selectedBranchLabel: selectedBranch?.label,
+        selectedBranchRankPosition: selectedBranch?.rankPosition,
+        intentMode: pendingIntent?.intent.mode,
+        intentSubintent: pendingIntent?.intent.subintent,
+        intentProcedureOrTopic: pendingIntent?.intent.procedureOrTopic || submittedPrompt,
+        intentProcedureCategory: pendingIntent?.intent.procedureCategory,
+        intentAmbiguity: pendingIntent?.intent.ambiguity,
+        intentReasonForBranching: pendingIntent?.intent.reasonForBranching,
+        intentSource: pendingIntent?.intent.source,
+        answerNow,
+        stream: Boolean(streamingAssistantId),
+      };
+
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('[BROBOT_CHAT_SUBMIT_BODY]', {
+          keys: Object.keys(chatRequestBody),
+          promptLength: chatRequestBody.prompt?.length,
+          messageLength: chatRequestBody.message?.length,
+          mode: chatRequestBody.mode,
+          depth: chatRequestBody.responseDepth,
+          level: chatRequestBody.trainingLevel,
+        });
+      }
+
       const res = await fetch('/api/brobot/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({
-          conversationId: conversationId ?? undefined,
-          message,
-          mode,
-          responseDepth,
-          trainingLevel,
-          source,
-          sourceMessageId,
-          selectedBranchId: selectedBranch?.id,
-          selectedBranchLabel: selectedBranch?.label,
-          selectedBranchRankPosition: selectedBranch?.rankPosition,
-          intentMode: pendingIntent?.intent.mode,
-          intentSubintent: pendingIntent?.intent.subintent,
-          intentProcedureOrTopic: pendingIntent?.intent.procedureOrTopic || message,
-          intentProcedureCategory: pendingIntent?.intent.procedureCategory,
-          intentAmbiguity: pendingIntent?.intent.ambiguity,
-          intentReasonForBranching: pendingIntent?.intent.reasonForBranching,
-          intentSource: pendingIntent?.intent.source,
-          answerNow,
-          stream: Boolean(streamingAssistantId),
-        }),
+        body: JSON.stringify(chatRequestBody),
       });
 
       if (streamingAssistantId && res.headers.get('content-type')?.includes('text/event-stream')) {
@@ -853,6 +877,7 @@ export default function BroBotChatPage() {
 
             if (streamEvent.event === 'error') {
               setRequestState('error');
+              setLastFailedPrompt(submittedPrompt);
               setMessages((current) =>
                 current.map((chatMessage) =>
                   chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
@@ -890,7 +915,8 @@ export default function BroBotChatPage() {
         setRequestState('error');
 
         if (res.status === 401) {
-          redirectToSignInWithPendingRequest(message);
+          setLastFailedPrompt(submittedPrompt);
+          redirectToSignInWithPendingRequest(submittedPrompt);
           return;
         }
 
@@ -898,20 +924,24 @@ export default function BroBotChatPage() {
           setUsage((current) =>
             current ? { ...current, remainingToday: 0 } : current
           );
+          setLastFailedPrompt(submittedPrompt);
           setError({ type: 'quota', dailyCap: body?.dailyCap ?? null });
           return;
         }
 
         if (res.status === 403) {
+          setLastFailedPrompt(submittedPrompt);
           setError({ type: 'disabled', message: body?.message ?? body?.error });
           return;
         }
 
         if (res.status === 400) {
+          setLastFailedPrompt(submittedPrompt);
           setError({ type: 'validation', message: body?.message ?? body?.error });
           return;
         }
 
+        setLastFailedPrompt(submittedPrompt);
         setError({ type: 'unexpected', message: body?.message ?? body?.error });
         return;
       }
@@ -927,6 +957,7 @@ export default function BroBotChatPage() {
               )
             : current.filter((chatMessage) => chatMessage.id !== streamingAssistantId)
         );
+        setLastFailedPrompt(submittedPrompt);
         setError({ type: 'unexpected', message: 'BroBot returned an unexpected response.' });
         setRequestState('error');
         return;
@@ -988,6 +1019,7 @@ export default function BroBotChatPage() {
               : chatMessage
           )
         );
+        setLastFailedPrompt(submittedPrompt);
       } else {
         setMessages((current) =>
           current.filter((chatMessage) => {
@@ -1002,6 +1034,7 @@ export default function BroBotChatPage() {
             return true;
           })
         );
+        setLastFailedPrompt(submittedPrompt);
         setError({ type: 'network' });
       }
     } finally {
@@ -1041,6 +1074,11 @@ export default function BroBotChatPage() {
 
   function retryAssistantMessage(messageId: string) {
     if (isRequestActive) return;
+
+    if (lastFailedPrompt?.trim()) {
+      void sendMessage(lastFailedPrompt, 'manual');
+      return;
+    }
 
     const assistantIndex = messages.findIndex((message) => message.id === messageId);
     if (assistantIndex < 1) return;
@@ -1115,7 +1153,14 @@ export default function BroBotChatPage() {
                     <BroBotChatError
                       error={error}
                       isAuthenticated={Boolean(user)}
-                      onRetry={() => setError(null)}
+                      onRetry={() => {
+                        if (lastFailedPrompt?.trim()) {
+                          void sendMessage(lastFailedPrompt, 'manual');
+                          return;
+                        }
+
+                        setError(null);
+                      }}
                     />
                   </div>
                 )}

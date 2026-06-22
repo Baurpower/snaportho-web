@@ -5,9 +5,11 @@ import {
   type BroBotChatMode,
   type BroBotModelMessage,
 } from './types';
+import { normalizeResearchSubmode } from '@/lib/brobot/research/types';
 
 const CLASSIFIER_CONTRACT = `{
   "mode": "or_prep" | "oite" | "clinic" | "consult" | "research" | "general",
+  "researchSubmode": "reference_finder" | "manuscript_reviewer" | "literature_review_builder" | "evidence_synthesis" | "journal_scout" | "systematic_review_assistant" | "statistical_reviewer" | "research_planning" | null,
   "subintent": "landmarks" | "surgical_steps" | "diagnostic_sequence" | "implant_options" | "brand_comparison" | "anatomy_at_risk" | "attending_questions" | "treatment_algorithm" | "quiz" | "workup" | "evidence_critique" | "initial_consult" | "presentation_help" | "imaging_review" | "differential" | "treatment_plan" | "operative_indications" | "complication" | "postop_problem" | "fracture" | "infection" | "urgent_red_flags" | "overview" | "other",
   "procedureOrTopic": string,
   "ambiguity": "low" | "moderate" | "high",
@@ -66,6 +68,7 @@ Mode hints:
 - research: paper critique, evidence, study design, methods/results.
 - general: broad education that does not fit above.
 - fracture_call is a legacy alias for consult. Never output fracture_call.
+- researchSubmode: only set when mode is research. Use reference_finder for citation support, manuscript_reviewer for manuscript section review, literature_review_builder for lit review outlines, evidence_synthesis for focused evidence questions, journal_scout for must-read/landmark papers, systematic_review_assistant for systematic review planning, statistical_reviewer for statistics review, and research_planning for study design.
 
 Important examples:
 - "diagnostic shoulder scope" or "diagnostic knee scope" often means OR prep. If scope is unclear, subintent diagnostic_sequence or surgical_steps and ambiguity moderate.
@@ -173,6 +176,10 @@ export function parseBroBotIntentClassifierResponse(
     assumedContext: normalizeString(parsed.assumedContext),
     missingContext: normalizeArray(parsed.missingContext, 5),
     clarifyingQuestions: normalizeArray(parsed.clarifyingQuestions, 3),
+    researchSubmode:
+      normalizeMode(mode, fallbackMode) === 'research'
+        ? normalizeResearchSubmode(parsed.researchSubmode)
+        : undefined,
     confidence: Math.min(1, Math.max(0, Number(parsed.confidence) || 0.5)),
   };
 

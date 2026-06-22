@@ -11,6 +11,7 @@ import {
   formatAnswerContextForPrompt,
   type BroBotAnswerContext,
 } from './context-builder';
+import { formatResearchSubmodeInstructions } from '@/lib/brobot/research';
 
 type PromptBuilderInput = {
   message?: string;
@@ -149,12 +150,7 @@ const modeInstructions: Record<Exclude<BroBotChatMode, 'auto'>, string> = {
     consultModeInstructions,
   ].join('\n'),
   research: [
-    'Research mode priorities:',
-    '- answer: concise interpretation, evidence hierarchy, and limitations',
-    '- Important Concepts: study design, bias, applicability, practical interpretation',
-    '- What to Learn Next: limitations, comparison studies, clinical adoption barriers',
-    '- citations only if retrieval exists; do not fabricate references',
-    '- Ambiguity check: if the user asks about a paper without abstract/methods/results or study design, ask for source details and provide a critique checklist. Do not hallucinate paper-specific conclusions.',
+    formatResearchSubmodeInstructions(),
   ].join('\n'),
   general: [
     'General mode: use the best-fit orthopaedic education response for the user request.',
@@ -237,7 +233,8 @@ export const BROBOT_CHAT_JSON_CONTRACT = `{
   "clarifyingQuestions": string[],
   "assumedContext": string,
   "consultConfidence": "low" | "moderate" | "high" | null,
-  "missingInformation": string[]
+  "missingInformation": string[],
+  "researchSubmode": "reference_finder" | "manuscript_reviewer" | "literature_review_builder" | "evidence_synthesis" | "journal_scout" | "systematic_review_assistant" | "statistical_reviewer" | "research_planning" | null
 }`;
 
 function normalizeModeForPrompt(mode: BroBotChatMode): BroBotChatMode {
@@ -257,6 +254,12 @@ export function buildBroBotChatSystemPrompt(input: {
   answerNow?: boolean;
 }) {
   const effectiveMode = normalizeModeForPrompt(input.intent?.mode ?? input.mode);
+  const modeInstruction =
+    effectiveMode === 'auto'
+      ? ''
+      : effectiveMode === 'research'
+      ? formatResearchSubmodeInstructions(input.intent?.researchSubmode)
+      : modeInstructions[effectiveMode];
   const selectedMode =
     effectiveMode === 'auto'
       ? [
@@ -265,7 +268,7 @@ export function buildBroBotChatSystemPrompt(input: {
           'Legacy fracture_call means consult; output consult.',
           'If multiple modes fit, choose the one that best matches the immediate learner task.',
         ].join('\n')
-      : [`Mode: ${effectiveMode}.`, modeInstructions[effectiveMode]].join('\n');
+      : [`Mode: ${effectiveMode}.`, modeInstruction].join('\n');
   const selectedDepth =
     effectiveMode === 'or_prep'
       ? orPrepDepthInstructions[input.responseDepth]
@@ -297,6 +300,7 @@ export function buildBroBotChatSystemPrompt(input: {
         `- subintent: ${input.intent.subintent}`,
         `- procedureCategory: ${input.intent.procedureCategory}`,
         `- procedureOrTopic: ${input.intent.procedureOrTopic || 'unspecified'}`,
+        `- researchSubmode: ${input.intent.researchSubmode || ''}`,
         `- goal: ${input.intent.goal || ''}`,
         `- ambiguity: ${input.intent.ambiguity}`,
         `- assumedContext: ${input.intent.assumedContext || ''}`,
@@ -367,6 +371,7 @@ Output rules:
 - consultConfidence: for Consult mode only, estimate information completeness as low, moderate, or high; otherwise return null.
 - missingInformation: for Consult mode only, return 3-8 concrete missing clinical data points; otherwise return [].
 - For research requests, include citations only if retrieval/source text was provided in the conversation. Do not fabricate references.
+- For Research mode with a researchSubmode, follow that submode's required output structure inside the answer field while still returning the product JSON contract.
 - Do not repeat the same concept verbatim across answer, priorityPoints, and knowledgeGaps.
 - Do not use generic filler such as "this is high-yield" unless you say why it changes decisions or testing.
 - For OR-prep prompts, prioritize operative objective, exposure, named anatomy at risk, attending questions, complications, decision points, and bailout over broad fracture/procedure encyclopedias.

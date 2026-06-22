@@ -39,7 +39,7 @@ export default function BroBotWelcome() {
     router.push('/brobot/basic');
   };
 
-  if (loading) {
+  if (loading || user) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#fefcf7] to-[#f5f2e8] px-6">
         <div className="rounded-2xl border border-slate-200 bg-white px-6 py-5 text-sm font-medium text-slate-600 shadow-sm">

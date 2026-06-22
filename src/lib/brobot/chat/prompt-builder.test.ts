@@ -55,6 +55,29 @@ for (const sample of samplePrompts) {
   assert.equal(messages.at(-1)?.content, sample.prompt);
 }
 
+const referenceFinderPrompt = buildBroBotChatSystemPrompt({
+  mode: 'research',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy3',
+  intent: {
+    mode: 'research',
+    subintent: 'evidence_critique',
+    procedureCategory: 'general_topic',
+    procedureOrTopic: 'PPI and pseudarthrosis',
+    goal: 'Find a citation for a manuscript claim.',
+    ambiguity: 'low',
+    assumedContext: '',
+    missingContext: [],
+    clarifyingQuestions: [],
+    researchSubmode: 'reference_finder',
+    confidence: 0.9,
+  },
+});
+
+assert.match(referenceFinderPrompt, /Research submode: Reference Finder/);
+assert.match(referenceFinderPrompt, /Hard citation rule/);
+assert.match(referenceFinderPrompt, /Best citation/);
+
 const deepPgy5SystemPrompt = buildBroBotChatSystemPrompt({
   mode: 'consult',
   responseDepth: 'deep',
@@ -665,6 +688,22 @@ const cleaned = parseBroBotChatResponse(
 assert.doesNotMatch(cleaned.answer, /^Here are the key points/i);
 assert.equal(cleaned.priorityPoints.length, 1);
 assert.equal(cleaned.suggestedQuestions.length, 1);
+
+const parsedResearch = parseBroBotChatResponse(
+  JSON.stringify({
+    answer: 'Best citation: no verified citation was retrieved.',
+    priorityPoints: ['Direct claim support matters.'],
+    knowledgeGaps: ['Need a narrower claim.'],
+    suggestedQuestions: ['Find a narrower citation.'],
+    tags: ['research'],
+    detectedMode: 'research',
+    researchSubmode: 'reference_finder',
+    confidence: 0.8,
+  }),
+  { fallbackMode: 'research' }
+);
+
+assert.equal(parsedResearch.researchSubmode, 'reference_finder');
 
 const fallback = parseBroBotChatResponse('plain non-json answer', { fallbackMode: 'general' });
 

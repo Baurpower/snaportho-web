@@ -72,7 +72,10 @@ export default function BroBotBasic() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch('/api/me/entitlements');
+        const res = await fetch('/api/me/entitlements', {
+          cache: 'no-store',
+          credentials: 'include',
+        });
         const body = await res.json();
         if (body.data?.aiAccess) {
           setGuestUsage({

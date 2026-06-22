@@ -6,6 +6,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { BroBotEntitlement } from '@/lib/brobot/entitlements';
 import { safeRedirectPath } from '@/lib/auth/redirects';
+import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 import {
   trackCheckoutStartedConversion,
   trackSubscriptionConversion,
@@ -45,7 +46,10 @@ function BillingContent() {
 
     const fetchEntitlement = async (): Promise<BroBotEntitlement | null> => {
       try {
-        const res = await fetch('/api/me/entitlements');
+        const res = await fetch('/api/me/entitlements', {
+          cache: 'no-store',
+          credentials: 'include',
+        });
         const data = await res.json();
         return data.data || null;
       } catch (e) {
@@ -122,7 +126,10 @@ function BillingContent() {
   const handleUpgrade = async (interval: 'month' | 'year') => {
     try {
       trackCheckoutStartedConversion({
-        value: interval === 'year' ? 29.99 : 2.99,
+        value:
+          interval === 'year'
+            ? BROBOT_PRICING.unlimited.yearlyPrice
+            : BROBOT_PRICING.unlimited.monthlyPrice,
         currency: 'USD',
       });
 
@@ -363,10 +370,12 @@ function BillingContent() {
             <div>
               <div className="text-sm font-semibold tracking-widest text-gray-500">MONTHLY</div>
               <div className="mt-4 text-4xl font-semibold tracking-tight">
-                {isUnlimited ? '$2.99/month' : 'Free for 1 month'}
+                {isUnlimited
+                  ? BROBOT_PRICING.unlimited.monthlyPriceLabel
+                  : BROBOT_PRICING.unlimited.trialLabel}
               </div>
               <p className="mt-2 text-lg font-medium text-gray-600">
-                {isUnlimited ? 'Monthly billing option' : 'Then $2.99/month'}
+                {isUnlimited ? 'Monthly billing option' : BROBOT_PRICING.unlimited.monthlyAfterTrialLabel}
               </p>
               <ul className="mt-6 space-y-3 text-sm text-gray-600">
                 {(isUnlimited
@@ -415,14 +424,18 @@ function BillingContent() {
             <div>
               <div className="text-sm font-semibold tracking-widest text-teal-600">YEARLY</div>
               <div className="mt-4 text-4xl font-semibold tracking-tight">
-                {isUnlimited ? '$29.99/year' : 'Free for 1 month'}
+                {isUnlimited
+                  ? BROBOT_PRICING.unlimited.yearlyPriceLabel
+                  : BROBOT_PRICING.unlimited.trialLabel}
               </div>
               <p className="mt-2 text-lg font-medium text-gray-600">
-                {isUnlimited ? 'Annual billing option' : 'Then $29.99/year'}
+                {isUnlimited ? 'Annual billing option' : BROBOT_PRICING.unlimited.yearlyAfterTrialLabel}
               </p>
               <div className="mt-1 text-sm">
                 <span className="line-through text-gray-400">$35.88</span>
-                <span className="ml-2 font-medium text-emerald-600">Save $5.89 vs monthly</span>
+                <span className="ml-2 font-medium text-emerald-600">
+                  {BROBOT_PRICING.unlimited.yearlySavingsLabel}
+                </span>
               </div>
               <ul className="mt-6 space-y-3 text-sm text-gray-600">
                 {(isUnlimited

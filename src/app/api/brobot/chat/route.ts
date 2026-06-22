@@ -25,6 +25,11 @@ import {
   type BroBotModelMessage,
 } from '@/lib/brobot/chat';
 import {
+  normalizeResearchSubmode,
+  routeResearchSubmode,
+  type ResearchSubmodeRoute,
+} from '@/lib/brobot/research';
+import {
   getRemainingAIUses,
   getMobileBroBotEntitlement,
   type Subject,
@@ -116,6 +121,7 @@ export type BroBotChatResponse = {
   assumedContext?: string;
   consultConfidence?: 'low' | 'moderate' | 'high';
   missingInformation?: string[];
+  researchSubmode?: string;
 };
 
 type AuthContext = {
@@ -130,11 +136,13 @@ type ChatAnalyticsEvent =
   | 'brobot_chat_success'
   | 'brobot_chat_error'
   | 'brobot_chat_suggested_question_click'
+  | 'first_brobot_message'
   | 'brobot_chat_clarification_suggested'
   | 'branch_selected'
   | 'branch_skipped'
   | 'answer_now_clicked'
   | 'clarification_selected'
+  | 'brobot_research_submode_detected'
   | 'quality_gate_failed';
 type ServerErrorCategory =
   | 'database_error'
@@ -241,6 +249,52 @@ function invalidRequestResponse(message = 'Please enter a BroBot question.') {
     },
     { status: 400 }
   );
+}
+
+function logBroBotChat400(params: {
+  reason: string;
+  body: unknown;
+  normalizedPrompt: string;
+  request: Request;
+}) {
+  if (process.env.NODE_ENV === 'production') return;
+
+  const body = params.body && typeof params.body === 'object'
+    ? (params.body as Record<string, unknown>)
+    : {};
+
+  console.warn('[BROBOT_CHAT_400]', {
+    reason: params.reason,
+    receivedKeys: Object.keys(body),
+    promptLength: params.normalizedPrompt.length,
+    mode: typeof body.mode === 'string' ? body.mode : undefined,
+    contentType: params.request.headers.get('content-type'),
+  });
+}
+
+function normalizePromptPayload(raw: unknown) {
+  const record = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
+  const prompt =
+    (typeof record.prompt === 'string' ? record.prompt.trim() : '') ||
+    (typeof record.message === 'string' ? record.message.trim() : '') ||
+    (typeof record.question === 'string' ? record.question.trim() : '');
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[brobot] chat prompt payload', {
+      keys: Object.keys(record),
+      mode: typeof record.mode === 'string' ? record.mode : undefined,
+      promptLength: prompt.length,
+    });
+  }
+
+  return {
+    record,
+    prompt,
+    normalized: {
+      ...record,
+      message: prompt,
+    },
+  };
 }
 
 function unauthorizedResponse() {
@@ -1163,7 +1217,54 @@ function buildAcceptedIntent(body: BroBotChatRequest): BroBotChatIntent | null {
     answerImmediately: Boolean(body.answerNow),
     requiresBranchSelection: Boolean(body.selectedBranchId && !body.answerNow),
     reasonForBranching: body.intentReasonForBranching || '',
+    researchSubmode:
+      body.intentMode === 'research' ? normalizeResearchSubmode(body.researchSubmode) : undefined,
     confidence: body.intentSource === 'local' ? 0.82 : body.intentSource === 'llm' ? 0.75 : 0.55,
+  };
+}
+
+function resolveResearchSubmode(params: {
+  message: string;
+  selectedMode: BroBotChatMode;
+  intent: BroBotChatIntent;
+  requestHint?: unknown;
+}): ResearchSubmodeRoute | null {
+  if (params.intent.mode !== 'research') return null;
+
+  const hintedSubmode = normalizeResearchSubmode(params.requestHint);
+  if (hintedSubmode) {
+    return {
+      submode: hintedSubmode,
+      confidence: 0.7,
+      source: 'deterministic',
+      matchedRule: 'client_hint',
+      signals: ['client hint'],
+    };
+  }
+
+  return routeResearchSubmode({
+    message: params.message,
+    selectedMode: params.selectedMode,
+  });
+}
+
+function researchSubmodeMetadata(route: ResearchSubmodeRoute | null) {
+  if (!route) return {};
+
+  return {
+    research_submode: route.submode,
+    research_submode_source: route.source,
+    research_submode_confidence: route.confidence,
+    research_submode_matched_rule: route.matchedRule ?? null,
+    research_submode_signals: route.signals,
+  };
+}
+
+function researchSubmodeMetadataForIntent(intent: BroBotChatIntent) {
+  if (intent.mode !== 'research' || !intent.researchSubmode) return {};
+
+  return {
+    research_submode: intent.researchSubmode,
   };
 }
 
@@ -1593,9 +1694,25 @@ export async function POST(request: Request) {
 
   try {
     const raw = await request.json().catch(() => null);
-    const parsed = BroBotChatRequestSchema.safeParse(raw);
+    const normalizedPayload = normalizePromptPayload(raw);
+    if (!normalizedPayload.prompt) {
+      logBroBotChat400({
+        reason: 'empty_normalized_prompt',
+        body: raw,
+        normalizedPrompt: normalizedPayload.prompt,
+        request,
+      });
+      return invalidRequestResponse('Please enter a BroBot question.');
+    }
+    const parsed = BroBotChatRequestSchema.safeParse(normalizedPayload.normalized);
 
     if (!parsed.success) {
+      logBroBotChat400({
+        reason: 'schema_validation_failed',
+        body: normalizedPayload.normalized,
+        normalizedPrompt: normalizedPayload.prompt,
+        request,
+      });
       logBroBot('[BROBOT-CHAT-VALIDATION]', {
         requestId,
         success: false,
@@ -1604,7 +1721,7 @@ export async function POST(request: Request) {
           code: issue.code,
         })),
       });
-      return invalidRequestResponse();
+      return invalidRequestResponse('Invalid BroBot request.');
     }
 
     const body = parsed.data;
@@ -1874,6 +1991,33 @@ export async function POST(request: Request) {
       }
     }
 
+    const researchSubmodeRoute = resolveResearchSubmode({
+      message: body.message,
+      selectedMode: body.mode,
+      intent,
+      requestHint: body.researchSubmode,
+    });
+    if (researchSubmodeRoute) {
+      intent = {
+        ...intent,
+        researchSubmode: researchSubmodeRoute.submode,
+      };
+      void recordChatAnalyticsEvent({
+        userId,
+        conversationId: persistedConversationId,
+        messageId: userMessageId,
+        eventType: 'brobot_research_submode_detected',
+        outcome: 'success',
+        latencyMs: Date.now() - startedAt,
+        metadata: {
+          mode: body.mode,
+          intent_mode: intent.mode,
+          intent_subintent: intent.subintent,
+          ...researchSubmodeMetadata(researchSubmodeRoute),
+        },
+      });
+    }
+
     const fingerprint = await loadLearningFingerprint({ userId });
     const baseRankingContext: BranchRankingContext = {
       userMessage: body.message,
@@ -1930,6 +2074,7 @@ export async function POST(request: Request) {
           intent_procedure_category: intent.procedureCategory,
           ambiguity_level: intent.ambiguity,
           answerImmediately: Boolean(intent.answerImmediately),
+          ...researchSubmodeMetadata(researchSubmodeRoute),
         },
       });
     }
@@ -2059,6 +2204,7 @@ export async function POST(request: Request) {
         clarifyingQuestions.length > 0,
       clarifyingQuestions,
       assumedContext: parsedOutput.assumedContext || intent.assumedContext,
+      researchSubmode: intent.mode === 'research' ? intent.researchSubmode : undefined,
       suggestedQuestions: mergeQuestions(clarifyingQuestions, parsedOutput.suggestedQuestions),
       nextLearningBranches: mergeBranchOptions(
         databaseBranchOptions,
@@ -2097,6 +2243,7 @@ export async function POST(request: Request) {
           intent_procedure_category: intent.procedureCategory,
           selectedBranch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
           warnings: qualityGate.warnings,
+          ...researchSubmodeMetadata(researchSubmodeRoute),
         },
       });
     }
@@ -2127,6 +2274,7 @@ export async function POST(request: Request) {
           missingInformationCount: brobotOutput.missingInformation?.length ?? 0,
           consultSubtype: brobotOutput.detectedMode === 'consult' ? intent.subintent : null,
           confidence: brobotOutput.confidence,
+          ...researchSubmodeMetadata(researchSubmodeRoute),
         },
       });
     }
@@ -2170,6 +2318,7 @@ export async function POST(request: Request) {
           trainingLevel: body.trainingLevel,
           model: BROBOT_CHAT_MODEL,
           errorCode: 'assistant_message_persistence_failed',
+          ...researchSubmodeMetadata(researchSubmodeRoute),
         },
       });
       return serverErrorResponse('database_error', 'BroBot could not save this response.');
@@ -2385,6 +2534,7 @@ async function persistCompletedBroBotOutput(params: {
           selectedBranch: params.body.selectedBranchLabel ?? params.body.selectedBranchId ?? null,
           classifierConfidence: params.intent.confidence,
           intentSource: params.intentSource,
+          researchSubmode: params.intent.researchSubmode ?? null,
           qualityGateWarnings: qualityGate.warnings,
         },
         consult: params.brobotOutput.detectedMode === 'consult'
@@ -2445,8 +2595,25 @@ async function persistCompletedBroBotOutput(params: {
       trainingLevel: params.body.trainingLevel,
       model: BROBOT_CHAT_MODEL,
       tokenUsage: params.completionUsage ?? null,
+      ...researchSubmodeMetadataForIntent(params.intent),
     },
   });
+
+  if (usedAfter === 1) {
+    await recordChatAnalyticsEvent({
+      userId: params.userId,
+      conversationId: params.conversationId,
+      messageId: params.assistantMessageId,
+      eventType: 'first_brobot_message',
+      outcome: 'success',
+      latencyMs: params.latencyMs,
+      metadata: {
+        source: 'brobot_chat',
+        mode: params.body.mode,
+        detectedMode: params.brobotOutput.detectedMode,
+      },
+    });
+  }
 
   logBroBot('[BROBOT-CHAT-GENERATION]', {
     requestId: params.requestId,
@@ -2481,6 +2648,7 @@ async function persistCompletedBroBotOutput(params: {
     assumedContext: params.brobotOutput.assumedContext,
     consultConfidence: params.brobotOutput.consultConfidence,
     missingInformation: params.brobotOutput.missingInformation,
+    researchSubmode: params.brobotOutput.researchSubmode,
   };
 
   return responsePayload;
@@ -2582,6 +2750,8 @@ function createStreamingChatResponse(params: {
             clarifyingQuestions.length > 0,
           clarifyingQuestions,
           assumedContext: parsedOutput.assumedContext || params.intent.assumedContext,
+          researchSubmode:
+            params.intent.mode === 'research' ? params.intent.researchSubmode : undefined,
           suggestedQuestions: mergeQuestions(clarifyingQuestions, parsedOutput.suggestedQuestions),
           nextLearningBranches: mergeBranchOptions(
             params.databaseBranchOptions,
@@ -2723,6 +2893,7 @@ function createStreamingChatResponse(params: {
             selectedBranch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
             classifierConfidence: intent.confidence,
             intentSource,
+            researchSubmode: intent.researchSubmode ?? null,
             qualityGateWarnings: qualityGate.warnings,
           },
           consult: brobotOutput.detectedMode === 'consult'
@@ -2799,8 +2970,25 @@ function createStreamingChatResponse(params: {
         trainingLevel: body.trainingLevel,
         model: BROBOT_CHAT_MODEL,
         tokenUsage: completion.usage ?? null,
+        ...researchSubmodeMetadata(researchSubmodeRoute),
       },
     });
+
+    if (usedAfter === 1) {
+      await recordChatAnalyticsEvent({
+        userId,
+        conversationId: persistedConversationId,
+        messageId: assistantMessageId,
+        eventType: 'first_brobot_message',
+        outcome: 'success',
+        latencyMs,
+        metadata: {
+          source: 'brobot_chat',
+          mode: body.mode,
+          detectedMode: brobotOutput.detectedMode,
+        },
+      });
+    }
 
     logBroBot('[BROBOT-CHAT-GENERATION]', {
       requestId,
@@ -2834,6 +3022,7 @@ function createStreamingChatResponse(params: {
       assumedContext: brobotOutput.assumedContext,
       consultConfidence: brobotOutput.consultConfidence,
       missingInformation: brobotOutput.missingInformation,
+      researchSubmode: brobotOutput.researchSubmode,
     };
 
     return NextResponse.json(responsePayload);

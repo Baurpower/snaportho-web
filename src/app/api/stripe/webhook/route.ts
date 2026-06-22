@@ -3,7 +3,11 @@ import Stripe from 'stripe';
 
 import { getStripe } from '@/lib/stripe';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { syncSubscriptionFromStripe } from '@/lib/stripe';
+import {
+  syncPendingSubscriptionFromStripe,
+  syncSubscriptionFromStripe,
+  upsertPendingSubscriptionFromCheckoutSession,
+} from '@/lib/stripe';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { sendSubscriptionPurchaseConversion } from '@/lib/analytics/googleAdsServer';
 
@@ -117,6 +121,30 @@ export async function POST(request: Request) {
             });
           }
 
+          const isPreAuthCheckout =
+            session.metadata?.checkout_mode === 'pre_auth' ||
+            sub.metadata?.checkout_mode === 'pre_auth' ||
+            (!userIdFromSession && !sub.metadata?.user_id);
+
+          if (isPreAuthCheckout && !userIdFromSession && !sub.metadata?.user_id) {
+            const pending = await upsertPendingSubscriptionFromCheckoutSession(session, sub);
+            console.log('[stripe/webhook] Stored pre-auth pending subscription', {
+              sessionId: session.id,
+              subscriptionId: sub.id,
+              pendingSubscriptionId: pending.id,
+            });
+
+            const conversionResult = await sendSubscriptionPurchaseConversion(sub);
+            console.log('[stripe/webhook] Google Ads subscription conversion result', {
+              eventId: event.id,
+              subscriptionId: sub.id,
+              checkoutMode: 'pre_auth',
+              ...conversionResult,
+            });
+
+            break;
+          }
+
           // If we still don't have user_id on the subscription, try to get it from the session and force it
           if (!sub.metadata?.user_id && userIdFromSession) {
             console.log('[stripe/webhook] Injecting user_id into subscription metadata from session', {
@@ -167,7 +195,11 @@ export async function POST(request: Request) {
           metadata: subscription.metadata,
           priceId: subscription.items?.data?.[0]?.price?.id,
         });
-        await syncSubscriptionFromStripe(subscription);
+        if (!subscription.metadata?.user_id && subscription.metadata?.checkout_mode === 'pre_auth') {
+          await syncPendingSubscriptionFromStripe(subscription);
+        } else {
+          await syncSubscriptionFromStripe(subscription);
+        }
         break;
       }
 
@@ -184,7 +216,11 @@ export async function POST(request: Request) {
         const subId = typeof subDetail === 'string' ? subDetail : (subDetail as Stripe.Subscription | undefined)?.id ?? null;
         if (subId) {
           const sub = await stripe.subscriptions.retrieve(subId);
-          await syncSubscriptionFromStripe(sub);
+          if (!sub.metadata?.user_id && sub.metadata?.checkout_mode === 'pre_auth') {
+            await syncPendingSubscriptionFromStripe(sub);
+          } else {
+            await syncSubscriptionFromStripe(sub);
+          }
         }
         break;
       }
@@ -202,7 +238,11 @@ export async function POST(request: Request) {
         const subId = typeof subDetail === 'string' ? subDetail : (subDetail as Stripe.Subscription | undefined)?.id ?? null;
         if (subId) {
           const sub = await stripe.subscriptions.retrieve(subId);
-          await syncSubscriptionFromStripe(sub);
+          if (!sub.metadata?.user_id && sub.metadata?.checkout_mode === 'pre_auth') {
+            await syncPendingSubscriptionFromStripe(sub);
+          } else {
+            await syncSubscriptionFromStripe(sub);
+          }
         }
         break;
       }

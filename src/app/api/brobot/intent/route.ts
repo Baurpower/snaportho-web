@@ -55,6 +55,30 @@ function limitReachedResponse(dailyCap: number | null) {
   );
 }
 
+function normalizePromptPayload(raw: unknown) {
+  const record = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
+  const prompt =
+    (typeof record.prompt === 'string' ? record.prompt.trim() : '') ||
+    (typeof record.message === 'string' ? record.message.trim() : '') ||
+    (typeof record.question === 'string' ? record.question.trim() : '');
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[brobot] intent prompt payload', {
+      keys: Object.keys(record),
+      mode: typeof record.mode === 'string' ? record.mode : undefined,
+      promptLength: prompt.length,
+    });
+  }
+
+  return {
+    prompt,
+    normalized: {
+      ...record,
+      message: prompt,
+    },
+  };
+}
+
 type AuthContext = {
   user: { id: string } | null;
   hasBearerToken: boolean;
@@ -117,12 +141,19 @@ export async function POST(request: Request) {
   const startedAt = Date.now();
   const requestId = crypto.randomUUID();
   const raw = await request.json().catch(() => null);
+  const normalizedPayload = normalizePromptPayload(raw);
+  if (!normalizedPayload.prompt) {
+    return NextResponse.json(
+      { error: 'invalid_request', message: 'Please enter a BroBot question.' },
+      { status: 400 }
+    );
+  }
   const parsed = BroBotChatRequestSchema.pick({
     message: true,
     mode: true,
     responseDepth: true,
     trainingLevel: true,
-  }).safeParse(raw);
+  }).safeParse(normalizedPayload.normalized);
 
   if (!parsed.success) {
     return NextResponse.json(

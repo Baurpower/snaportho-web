@@ -21,6 +21,29 @@ export default function SignInClient({ redirectTo }: Props) {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  async function claimPendingSubscriptionAfterAuth() {
+    try {
+      const response = await fetch("/api/billing/claim-pending-subscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+
+      if (!response.ok) return false;
+
+      const payload = await response.json();
+      const status = payload?.result?.status;
+      return (
+        status === "claimed" ||
+        status === "already_has_subscription" ||
+        status === "already_claimed_by_user"
+      );
+    } catch (error) {
+      console.error("[auth/sign-in] pending subscription claim failed", error);
+      return false;
+    }
+  }
+
   useEffect(() => {
     if (!loading && user) {
       router.replace(safeRedirectTo);
@@ -39,7 +62,12 @@ export default function SignInClient({ redirectTo }: Props) {
     }
 
     router.refresh();
-    router.replace(safeRedirectTo);
+    const claimedSubscription = await claimPendingSubscriptionAfterAuth();
+    router.replace(
+      claimedSubscription && safeRedirectTo === "/"
+        ? "/brobot/chat?subscription=active"
+        : safeRedirectTo
+    );
   }
 
   return (

@@ -2,9 +2,12 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
-import { trackCreateAccountConversion } from "@/lib/analytics/googleAds";
+import {
+  trackAccountCreatedEvent,
+  trackCreateAccountConversion,
+} from "@/lib/analytics/googleAds";
 import { safeRedirectPath } from "@/lib/auth/redirects";
 
 type SignUpResultData = Awaited<
@@ -44,6 +47,7 @@ function trackCreateAccountOnce(userId: string) {
 
 export default function SignUpClient() {
   const supabase = useMemo(() => createClient(), []);
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const rawRedirectTo = searchParams?.get("redirectTo");
@@ -105,6 +109,28 @@ export default function SignUpClient() {
 
       if (didCreateSupabaseAccount(data) && data.user) {
         trackCreateAccountOnce(data.user.id);
+        trackAccountCreatedEvent({
+          source: redirectTo.startsWith("/welcome") ? "brobot_pre_auth_checkout" : "auth_sign_up",
+        });
+      }
+
+      if (data.session && data.user) {
+        const response = await fetch("/api/billing/claim-pending-subscription", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({}),
+        });
+        const payload = await response.json().catch(() => ({}));
+        const status = payload?.result?.status;
+
+        if (
+          status === "claimed" ||
+          status === "already_has_subscription" ||
+          status === "already_claimed_by_user"
+        ) {
+          router.replace("/brobot/chat?subscription=active");
+          return;
+        }
       }
 
       setMessage(

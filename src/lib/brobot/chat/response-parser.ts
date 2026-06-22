@@ -6,6 +6,7 @@ import {
   type BroBotBranchOption,
 } from './types';
 import { getModeBranchOptions } from './intent-expander';
+import { normalizeResearchSubmode } from '@/lib/brobot/research/types';
 
 const MODE_SET = new Set<string>(BROBOT_CHAT_MODES);
 
@@ -389,6 +390,8 @@ export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}
           ? missingInformation
           : knowledgeGaps.slice(0, 8)
         : [],
+    researchSubmode:
+      detectedMode === 'research' ? normalizeResearchSubmode(parsed.researchSubmode) : undefined,
   };
 
   normalized.suggestedQuestions = removeItemsDuplicatedInAnswer(

@@ -27,12 +27,19 @@ export async function GET(request: Request) {
   try {
     const entitlement = await getRemainingAIUses(subject);
     const response = NextResponse.json({ data: entitlement });
+    response.headers.set('Cache-Control', 'no-store, max-age=0');
     if (guestCookieToSet) {
       response.headers.append('Set-Cookie', guestCookieToSet);
     }
     return response;
   } catch (err) {
     console.error('[me/entitlements] error', err);
-    return NextResponse.json({ error: 'Failed to load entitlements' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to load entitlements' },
+      {
+        status: 500,
+        headers: { 'Cache-Control': 'no-store, max-age=0' },
+      }
+    );
   }
 }

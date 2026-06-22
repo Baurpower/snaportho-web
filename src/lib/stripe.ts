@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { getAppBaseUrl } from '@/lib/config/app-url'; // Centralized production-safe URL resolution
+import { getRemainingAIUses } from '@/lib/brobot/entitlements';
 
 let stripeClient: Stripe | null = null;
 
@@ -156,6 +157,33 @@ export type BroBotTrialDecision = {
   trialMonths: number | null;
 };
 
+export type PendingBroBotSubscriptionRow = {
+  id: string;
+  email: string;
+  normalized_email: string;
+  stripe_customer_id: string;
+  stripe_subscription_id: string;
+  stripe_price_id: string | null;
+  checkout_session_id: string;
+  plan_code: string;
+  status: string;
+  current_period_start: string | null;
+  current_period_end: string | null;
+  metadata: Record<string, unknown> | null;
+  claimed_by_user_id: string | null;
+  claimed_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ClaimPendingSubscriptionResult =
+  | { status: 'claimed'; subscriptionId: string; pendingId: string }
+  | { status: 'already_claimed_by_user'; subscriptionId: string; pendingId: string }
+  | { status: 'already_has_subscription' }
+  | { status: 'not_found' }
+  | { status: 'email_mismatch'; pendingEmail: string }
+  | { status: 'not_claimable'; reason: string };
+
 function daysInUtcMonth(year: number, monthIndex: number) {
   return new Date(Date.UTC(year, monthIndex + 1, 0)).getUTCDate();
 }
@@ -235,6 +263,62 @@ function stripeSubscriptionMatchesBroBot(subscription: Stripe.Subscription) {
 
 function logBroBotCheckoutTrialDebug(label: string, details: Record<string, unknown>) {
   console.info(`[brobot/stripe-checkout-trial-debug] ${label}`, details);
+}
+
+function normalizeEmail(email: string | null | undefined) {
+  return (email ?? '').trim().toLowerCase();
+}
+
+function getStripeCustomerId(value: string | { id?: string } | null | undefined) {
+  if (!value) return null;
+  return typeof value === 'string' ? value : value.id ?? null;
+}
+
+function getSubscriptionPeriod(subscription: Stripe.Subscription) {
+  const firstItem = subscription.items.data[0];
+  const periodStart = firstItem?.current_period_start ?? null;
+  const periodEnd = firstItem?.current_period_end ?? null;
+
+  return {
+    periodStartIso: periodStart ? new Date(periodStart * 1000).toISOString() : null,
+    periodEndIso: periodEnd ? new Date(periodEnd * 1000).toISOString() : null,
+  };
+}
+
+function getBroBotPriceId(interval: 'month' | 'year') {
+  return interval === 'year'
+    ? BROBOT_CONFIG.YEARLY_PRICE_ID
+    : BROBOT_CONFIG.MONTHLY_PRICE_ID;
+}
+
+function buildGuestTrialMetadata(params: {
+  trialEnd: number | null;
+  trialMonths: number | null;
+}) {
+  const eligible = Boolean(params.trialEnd && params.trialMonths && params.trialMonths > 0);
+
+  return {
+    trial_offer_reference_id: BROBOT_CONFIG.TRIAL_OFFER_ID || '',
+    trial_offer_attached: 'false',
+    trial_implementation: eligible ? 'checkout_trial_end' : 'none',
+    trial_duration_unit: eligible ? 'calendar_month' : '',
+    trial_duration_count: params.trialMonths?.toString() ?? '',
+    trial_end: params.trialEnd?.toString() ?? '',
+    trial_applied: eligible ? 'true' : 'false',
+    trial_eligibility_reason: eligible ? 'eligible_pre_auth' : 'trial_not_configured',
+  };
+}
+
+function getCheckoutSessionEmail(session: Stripe.Checkout.Session) {
+  return session.customer_details?.email || session.customer_email || null;
+}
+
+function hasClaimableStripeStatus(status: string, periodEndIso: string | null) {
+  if (['active', 'trialing', 'past_due'].includes(status)) return true;
+  if (status === 'canceled' && periodEndIso) {
+    return new Date(periodEndIso).getTime() > Date.now();
+  }
+  return false;
 }
 
 export async function determineBroBotTrialDecision(params: {
@@ -558,6 +642,311 @@ export async function createBroBotCheckoutSession(
   });
 
   return { url: session.url };
+}
+
+export async function createGuestBroBotCheckoutSession(
+  interval: 'month' | 'year',
+  options: {
+    source?: string;
+    campaign?: string | null;
+    utmSource?: string | null;
+    utmMedium?: string | null;
+    utmCampaign?: string | null;
+    utmTerm?: string | null;
+    utmContent?: string | null;
+  } = {}
+): Promise<{ url: string | null }> {
+  const stripe = getStripe();
+  const priceId = getBroBotPriceId(interval);
+
+  if (!priceId) {
+    throw new Error('Stripe price ID not configured for BroBot');
+  }
+
+  getAppBaseUrl();
+
+  const trialMonths = Number.isFinite(BROBOT_CONFIG.TRIAL_MONTHS)
+    ? BROBOT_CONFIG.TRIAL_MONTHS
+    : 0;
+  const trialEnd = getBroBotTrialEndTimestamp();
+  const metadata = {
+    product: 'brobot',
+    plan: BROBOT_CONFIG.PAID_PLAN_CODE,
+    plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
+    source: options.source || 'brobot_public_pricing',
+    checkout_mode: 'pre_auth',
+    interval,
+    campaign: options.campaign || '',
+    utm_source: options.utmSource || '',
+    utm_medium: options.utmMedium || '',
+    utm_campaign: options.utmCampaign || '',
+    utm_term: options.utmTerm || '',
+    utm_content: options.utmContent || '',
+    ...buildGuestTrialMetadata({
+      trialEnd,
+      trialMonths: trialMonths > 0 ? trialMonths : null,
+    }),
+  };
+
+  const subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData = {
+    metadata,
+    ...(trialEnd ? { trial_end: trialEnd } : {}),
+  };
+
+  const sessionParams = {
+    mode: 'subscription',
+    line_items: [{ price: priceId, quantity: 1 }],
+    success_url: `${getAppBaseUrl()}/welcome?checkout_session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${getAppBaseUrl()}/brobot/pricing?canceled=true`,
+    customer_creation: 'always',
+    metadata,
+    subscription_data: subscriptionData,
+  } as Stripe.Checkout.SessionCreateParams;
+
+  const session = await stripe.checkout.sessions.create(sessionParams);
+
+  logBroBotCheckoutTrialDebug('guest_checkout_create_result', {
+    interval,
+    trialEnd,
+    checkoutSessionId: session.id,
+    checkoutSessionUrlPresent: Boolean(session.url),
+    metadata,
+  });
+
+  return { url: session.url };
+}
+
+export async function upsertPendingSubscriptionFromCheckoutSession(
+  session: Stripe.Checkout.Session,
+  stripeSub: Stripe.Subscription
+) {
+  const supabase = createAdminClient();
+  const email = getCheckoutSessionEmail(session);
+  const customerId = getStripeCustomerId(session.customer) || getStripeCustomerId(stripeSub.customer);
+
+  if (!email) {
+    throw new Error(`Cannot create pending subscription without checkout email for session ${session.id}`);
+  }
+
+  if (!customerId) {
+    throw new Error(`Cannot create pending subscription without Stripe customer for session ${session.id}`);
+  }
+
+  const priceId = stripeSub.items.data[0]?.price.id || null;
+  const { periodStartIso, periodEndIso } = getSubscriptionPeriod(stripeSub);
+  const metadata = {
+    checkout_session_metadata: session.metadata ?? {},
+    subscription_metadata: stripeSub.metadata ?? {},
+  };
+
+  const payload = {
+    email,
+    stripe_customer_id: customerId,
+    stripe_subscription_id: stripeSub.id,
+    stripe_price_id: priceId,
+    checkout_session_id: session.id,
+    plan_code: stripeSub.metadata?.plan_code || session.metadata?.plan_code || BROBOT_CONFIG.PAID_PLAN_CODE,
+    status: mapStripeStatusToInternal(stripeSub.status),
+    current_period_start: periodStartIso,
+    current_period_end: periodEndIso,
+    metadata,
+    updated_at: new Date().toISOString(),
+  };
+
+  const { data, error } = await supabase
+    .from('pending_subscriptions')
+    .upsert(payload, { onConflict: 'checkout_session_id' })
+    .select('*')
+    .single<PendingBroBotSubscriptionRow>();
+
+  if (error) {
+    throw new Error(`Failed to upsert pending subscription: ${error.message}`);
+  }
+
+  return data;
+}
+
+export async function syncPendingSubscriptionFromStripe(stripeSub: Stripe.Subscription) {
+  const supabase = createAdminClient();
+  const priceId = stripeSub.items.data[0]?.price.id || null;
+  const { periodStartIso, periodEndIso } = getSubscriptionPeriod(stripeSub);
+
+  const { data: pending, error: pendingError } = await supabase
+    .from('pending_subscriptions')
+    .select('id, claimed_at')
+    .eq('stripe_subscription_id', stripeSub.id)
+    .maybeSingle<{ id: string; claimed_at: string | null }>();
+
+  if (pendingError) {
+    throw new Error(`Failed to load pending subscription: ${pendingError.message}`);
+  }
+
+  if (!pending) {
+    return { synced: false, claimed: false };
+  }
+
+  const { error } = await supabase
+    .from('pending_subscriptions')
+    .update({
+      stripe_price_id: priceId,
+      status: mapStripeStatusToInternal(stripeSub.status),
+      current_period_start: periodStartIso,
+      current_period_end: periodEndIso,
+      metadata: {
+        subscription_metadata: stripeSub.metadata ?? {},
+      },
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', pending.id);
+
+  if (error) {
+    throw new Error(`Failed to sync pending subscription: ${error.message}`);
+  }
+
+  return { synced: true, claimed: Boolean(pending.claimed_at) };
+}
+
+export async function claimPendingBroBotSubscriptionForUser(
+  userId: string,
+  email: string | null | undefined,
+  options: {
+    checkoutSessionId?: string | null;
+  } = {}
+): Promise<ClaimPendingSubscriptionResult> {
+  const normalizedEmail = normalizeEmail(email);
+  if (!normalizedEmail) {
+    return { status: 'not_found' };
+  }
+
+  const entitlement = await getRemainingAIUses({ type: 'user', id: userId });
+  if (entitlement.source === 'subscription') {
+    return { status: 'already_has_subscription' };
+  }
+
+  const supabase = createAdminClient();
+  let pending: PendingBroBotSubscriptionRow | null = null;
+
+  if (options.checkoutSessionId) {
+    const { data, error } = await supabase
+      .from('pending_subscriptions')
+      .select('*')
+      .eq('checkout_session_id', options.checkoutSessionId)
+      .maybeSingle<PendingBroBotSubscriptionRow>();
+
+    if (error) {
+      throw new Error(`Failed to load pending subscription: ${error.message}`);
+    }
+
+    pending = data;
+
+    if (pending && pending.normalized_email !== normalizedEmail) {
+      return { status: 'email_mismatch', pendingEmail: pending.email };
+    }
+  } else {
+    const { data, error } = await supabase
+      .from('pending_subscriptions')
+      .select('*')
+      .eq('normalized_email', normalizedEmail)
+      .is('claimed_at', null)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle<PendingBroBotSubscriptionRow>();
+
+    if (error) {
+      throw new Error(`Failed to load pending subscription: ${error.message}`);
+    }
+
+    pending = data;
+  }
+
+  if (!pending) {
+    return { status: 'not_found' };
+  }
+
+  if (pending.claimed_by_user_id === userId && pending.claimed_at) {
+    return {
+      status: 'already_claimed_by_user',
+      subscriptionId: pending.stripe_subscription_id,
+      pendingId: pending.id,
+    };
+  }
+
+  if (pending.claimed_at) {
+    return { status: 'not_claimable', reason: 'already_claimed' };
+  }
+
+  const stripe = getStripe();
+  const stripeSub = await stripe.subscriptions.retrieve(pending.stripe_subscription_id);
+  const { periodStartIso, periodEndIso } = getSubscriptionPeriod(stripeSub);
+  const internalStatus = mapStripeStatusToInternal(stripeSub.status);
+
+  if (!hasClaimableStripeStatus(internalStatus, periodEndIso)) {
+    await syncPendingSubscriptionFromStripe(stripeSub);
+    return { status: 'not_claimable', reason: `subscription_${internalStatus}` };
+  }
+
+  await stripe.subscriptions.update(stripeSub.id, {
+    metadata: {
+      ...stripeSub.metadata,
+      user_id: userId,
+      plan_code: stripeSub.metadata?.plan_code || pending.plan_code || BROBOT_CONFIG.PAID_PLAN_CODE,
+      checkout_mode: stripeSub.metadata?.checkout_mode || 'pre_auth',
+      claimed_from_pending_subscription_id: pending.id,
+    },
+  });
+
+  const upsertPayload = {
+    user_id: userId,
+    provider: 'stripe',
+    stripe_customer_id: getStripeCustomerId(stripeSub.customer),
+    stripe_subscription_id: stripeSub.id,
+    stripe_price_id: stripeSub.items.data[0]?.price.id || pending.stripe_price_id,
+    plan_code: pending.plan_code || BROBOT_CONFIG.PAID_PLAN_CODE,
+    status: internalStatus,
+    current_period_start: periodStartIso,
+    current_period_end: periodEndIso,
+    cancel_at_period_end: stripeSub.cancel_at_period_end,
+    canceled_at: stripeSub.canceled_at
+      ? new Date(stripeSub.canceled_at * 1000).toISOString()
+      : null,
+    updated_at: new Date().toISOString(),
+  };
+
+  const { error: upsertError } = await supabase
+    .from('subscriptions')
+    .upsert(upsertPayload, { onConflict: 'user_id,provider' });
+
+  if (upsertError) {
+    throw new Error(`Failed to attach subscription: ${upsertError.message}`);
+  }
+
+  const { data: claimedRows, error: claimError } = await supabase
+    .from('pending_subscriptions')
+    .update({
+      claimed_by_user_id: userId,
+      claimed_at: new Date().toISOString(),
+      status: internalStatus,
+      current_period_start: periodStartIso,
+      current_period_end: periodEndIso,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', pending.id)
+    .is('claimed_at', null)
+    .select('id');
+
+  if (claimError) {
+    throw new Error(`Failed to mark pending subscription claimed: ${claimError.message}`);
+  }
+
+  if (!claimedRows?.length) {
+    return { status: 'not_claimable', reason: 'claim_race_lost' };
+  }
+
+  return {
+    status: 'claimed',
+    subscriptionId: stripeSub.id,
+    pendingId: pending.id,
+  };
 }
 
 /**

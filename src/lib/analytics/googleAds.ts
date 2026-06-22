@@ -76,6 +76,20 @@ export function trackGoogleAdsConversion({
   return true;
 }
 
+export function trackGoogleAdsEvent(
+  eventName: string,
+  params: GtagEventParams = {}
+) {
+  const gtag = getGtag();
+
+  if (!gtag) {
+    return false;
+  }
+
+  gtag("event", eventName, params);
+  return true;
+}
+
 export function trackCreateAccountConversion() {
   const fired = trackGoogleAdsConversion({
     sendTo: CREATE_ACCOUNT_CONVERSION_SEND_TO,
@@ -116,6 +130,85 @@ export function trackLandingCtaConversion(params: GoogleAdsConversionParams = {}
     ...params,
     conversionLabel: params.conversionLabel || CONVERSION_LABELS.landingCta,
   });
+}
+
+export function trackBroBotLandingPageView() {
+  return trackGoogleAdsEvent("landing_page_view", {
+    page: "brobot_landing",
+  });
+}
+
+export function trackBroBotPricingPageView() {
+  return trackGoogleAdsEvent("pricing_page_view", {
+    page: "brobot_pricing",
+  });
+}
+
+export function trackTryBroBotFreeClick() {
+  trackGoogleAdsEvent("try_brobot_free_click", {
+    page: "brobot_landing",
+  });
+  trackGoogleAdsEvent("landing_try_free_click", {
+    page: "brobot_landing",
+  });
+
+  return trackLandingCtaConversion({
+    eventName: "try_brobot_free_click",
+  });
+}
+
+export function trackPricingClick() {
+  trackGoogleAdsEvent("pricing_click", {
+    page: "brobot_landing",
+  });
+  trackGoogleAdsEvent("landing_pricing_click", {
+    page: "brobot_landing",
+  });
+
+  return trackLandingCtaConversion({
+    eventName: "pricing_click",
+  });
+}
+
+export function trackLandingStartTrialClick() {
+  trackGoogleAdsEvent("landing_start_trial_click", {
+    page: "brobot_landing",
+  });
+
+  return trackLandingCtaConversion({
+    eventName: "landing_start_trial_click",
+  });
+}
+
+export function trackCheckoutStartEvent(params: GtagEventParams = {}) {
+  trackGoogleAdsEvent("checkout_start", params);
+  trackGoogleAdsEvent("start_checkout", params);
+
+  return trackCheckoutStartedConversion({
+    value: typeof params.value === "number" ? params.value : undefined,
+    currency: typeof params.currency === "string" ? params.currency : undefined,
+    eventName: "checkout_start",
+  });
+}
+
+export function trackSignupStartEvent(params: GtagEventParams = {}) {
+  return trackGoogleAdsEvent("signup_start", params);
+}
+
+export function trackCheckoutCompletedEvent(params: GtagEventParams = {}) {
+  return trackGoogleAdsEvent("checkout_completed", params);
+}
+
+export function trackAccountCreatedEvent(params: GtagEventParams = {}) {
+  return trackGoogleAdsEvent("account_created", params);
+}
+
+export function trackSubscriptionClaimedEvent(params: GtagEventParams = {}) {
+  return trackGoogleAdsEvent("subscription_claimed", params);
+}
+
+export function trackFirstBroBotMessageEvent(params: GtagEventParams = {}) {
+  return trackGoogleAdsEvent("first_brobot_message", params);
 }
 
 export function trackCasePrepConversion() {

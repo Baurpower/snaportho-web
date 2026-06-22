@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import type { EmailOtpType } from "@supabase/supabase-js";
 import { safeRedirectPath } from "@/lib/auth/redirects";
+import { claimPendingBroBotSubscriptionForUser } from "@/lib/stripe";
 
 function getRedirectTarget(url: URL): string {
   return (
@@ -73,6 +74,27 @@ export async function GET(request: NextRequest) {
     access_token: data.session.access_token,
     refresh_token: data.session.refresh_token,
   });
+
+  let claimedSubscription = false;
+  if (data.user?.id) {
+    try {
+      const claimResult = await claimPendingBroBotSubscriptionForUser(
+        data.user.id,
+        data.user.email
+      );
+      claimedSubscription = [
+        "claimed",
+        "already_has_subscription",
+        "already_claimed_by_user",
+      ].includes(claimResult.status);
+    } catch (error) {
+      console.error("[auth/confirm] pending subscription claim failed", error);
+    }
+  }
+
+  if (claimedSubscription && (safeWebRedirectTo === "/" || safeWebRedirectTo.startsWith("/welcome"))) {
+    return NextResponse.redirect(new URL("/brobot/chat?subscription=active", url.origin), 303);
+  }
 
   const finalRedirect = buildSafeWebRedirect(redirectTo, url.origin);
 

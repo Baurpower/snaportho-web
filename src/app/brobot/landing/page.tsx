@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import TrackedLink from '@/components/analytics/TrackedLink';
+import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 
 const SITE_URL = 'https://snap-ortho.com';
 
@@ -142,6 +142,8 @@ export default function BroBotLandingPage() {
       <ConversationSection />
       <TrainingSection />
       <ComparisonSection />
+      <StudyNextSection />
+      <PricingPreviewSection />
       <FinalCtaSection />
     </main>
   );
@@ -150,10 +152,16 @@ export default function BroBotLandingPage() {
 function HeroSection() {
   return (
     <section className="relative isolate overflow-hidden bg-[#090b1a] text-white">
-      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_15%_20%,rgba(20,184,166,0.28),transparent_34%),radial-gradient(circle_at_78%_18%,rgba(255,210,90,0.16),transparent_28%),linear-gradient(135deg,#090b1a_0%,#10142b_48%,#17284a_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-b from-transparent to-[#f6f1e7]" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_15%_20%,rgba(20,184,166,0.28),transparent_34%),radial-gradient(circle_at_78%_18%,rgba(255,210,90,0.16),transparent_28%),linear-gradient(135deg,#090b1a_0%,#10142b_48%,#17284a_100%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-28 bg-gradient-to-b from-transparent to-[#f6f1e7]"
+      />
 
-      <div className="mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
+      <div className="relative z-10 mx-auto max-w-7xl px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid items-center gap-12 lg:grid-cols-[0.96fr_1.04fr]">
           <div className="relative z-10">
             <div className="mb-5 inline-flex rounded-full border border-teal-300/40 bg-teal-300/10 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-teal-200">
@@ -167,24 +175,29 @@ function HeroSection() {
 
             <p className="mt-6 max-w-2xl text-lg leading-8 text-white/76">
               BroBot helps you think through fractures, classifications, approaches,
-              anatomy, implants, complications, rehab, and real clinical decision-making.
+              anatomy, implants, complications, rehab, and what to study next.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <TrackedLink
-                href="/brobot/chat"
+                href="/brobot/pricing"
+                trackingEvent="landing_start_trial_click"
                 className="rounded-2xl bg-gold px-6 py-3 text-center text-base font-black text-midnight shadow-[0_22px_50px_rgba(255,210,90,0.24)] transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
+              >
+                Start Free Trial
+              </TrackedLink>
+
+              <TrackedLink
+                href="/brobot/chat"
+                trackingEvent="try_brobot_free_click"
+                className="rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-center text-base font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/15"
               >
                 Try BroBot Free
               </TrackedLink>
-
-              <a
-                href="#examples"
-                className="rounded-2xl border border-white/20 bg-white/10 px-6 py-3 text-center text-base font-black text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/15"
-              >
-                See Examples
-              </a>
             </div>
+            <p className="mt-3 text-sm font-semibold text-white/58">
+              Start BroBot Unlimited with 1 month free, or use free daily access.
+            </p>
 
             <div className="mt-8 flex flex-wrap gap-2">
               {['Case prep', 'Call', 'Classifications', 'Anatomy', 'OITE'].map((item) => (
@@ -478,6 +491,171 @@ function ComparisonSection() {
   );
 }
 
+function StudyNextSection() {
+  return (
+    <section id="study-next" className="scroll-mt-24 bg-[#090b1a] px-5 py-20 text-white sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.18em] text-teal-200">
+              Guided learning
+            </p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
+              Know What To Study Next
+            </h2>
+            <p className="mt-4 text-xl font-black text-gold">
+              Answers are only the beginning.
+            </p>
+            <p className="mt-5 text-lg leading-8 text-white/70">
+              BroBot helps users identify missing concepts, uncover weak areas,
+              and discover the next topics they should learn. Instead of stopping
+              at an answer, BroBot builds connections between topics and recommends
+              what to review next.
+            </p>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/12 bg-white/[0.08] p-5 shadow-2xl backdrop-blur-xl">
+            <div className="rounded-[1.5rem] border border-white/10 bg-[#11162d] p-5">
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-white/45">
+                Question
+              </p>
+              <div className="mt-3 rounded-2xl bg-teal-500 px-4 py-3 text-sm font-black leading-6 text-white">
+                Tibial Plateau Fractures
+              </div>
+
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-4">
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-teal-200">
+                    BroBot teaches
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm leading-6 text-white/76">
+                    {[
+                      'Schatzker classification',
+                      'Operative indications',
+                      'Soft tissue considerations',
+                    ].map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-300" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="rounded-2xl border border-gold/25 bg-gold/10 p-4">
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-gold">
+                    Then recommends
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm leading-6 text-white/78">
+                    {[
+                      'Knee dislocations',
+                      'Meniscal injury patterns',
+                      'External fixation principles',
+                    ].map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.05] p-4 text-sm leading-6 text-white/65">
+                Useful for OITE preparation, clinical reasoning, and personalized
+                follow-up topics after every question.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PricingPreviewSection() {
+  return (
+    <section id="pricing" className="scroll-mt-24 px-5 py-20 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="max-w-3xl">
+          <p className="text-sm font-black uppercase tracking-[0.18em] text-teal-700">
+            Pricing
+          </p>
+          <h2 className="mt-3 text-4xl font-black tracking-tight text-navy sm:text-5xl">
+            Start Free. Upgrade When You Need More.
+          </h2>
+        </div>
+
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
+          <article className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
+            <h3 className="text-2xl font-black text-navy">
+              {BROBOT_PRICING.free.name} Daily Access
+            </h3>
+            <ul className="mt-5 space-y-3 text-sm leading-6 text-slate-600">
+              <li>Ask BroBot questions daily</li>
+              <li>Explore case prep, OITE, anatomy, and consults</li>
+              <li>Good for trying BroBot</li>
+            </ul>
+            <TrackedLink
+              href="/brobot/chat"
+              trackingEvent="try_brobot_free_click"
+              className="mt-6 inline-flex rounded-2xl border border-slate-200 bg-white px-6 py-3 text-center text-sm font-black text-navy transition hover:-translate-y-0.5 hover:border-teal-300"
+            >
+              Try BroBot Free
+            </TrackedLink>
+          </article>
+
+          <article className="rounded-3xl border border-gold/60 bg-white p-7 shadow-xl ring-4 ring-gold/15">
+            <p className="mb-3 inline-flex rounded-full bg-gold/20 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-navy">
+              {BROBOT_PRICING.unlimited.trialLabel}
+            </p>
+            <h3 className="text-2xl font-black text-navy">
+              {BROBOT_PRICING.unlimited.name}
+            </h3>
+            <ul className="mt-5 space-y-3 text-sm leading-6 text-slate-600">
+              <li>{BROBOT_PRICING.unlimited.trialLabel} trial</li>
+              <li>Unlimited BroBot questions</li>
+              <li>OR prep, OITE, consults, anatomy, classifications</li>
+              <li>Personalized what-to-study-next guidance</li>
+              <li>Cancel anytime</li>
+            </ul>
+            <TrackedLink
+              href="/brobot/pricing"
+              trackingEvent="landing_start_trial_click"
+              className="mt-6 inline-flex rounded-2xl bg-gold px-6 py-3 text-center text-sm font-black text-midnight transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
+            >
+              Start Free Trial
+            </TrackedLink>
+          </article>
+        </div>
+
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <TrackedLink
+            href="/brobot/pricing"
+            trackingEvent="pricing_click"
+            className="rounded-2xl bg-gold px-7 py-3 text-center text-base font-black text-midnight transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
+          >
+            View Full Pricing
+          </TrackedLink>
+          <TrackedLink
+            href="/brobot/chat"
+            trackingEvent="try_brobot_free_click"
+            className="rounded-2xl border border-slate-200 bg-white px-7 py-3 text-center text-base font-black text-navy transition hover:-translate-y-0.5 hover:border-teal-300"
+          >
+            Try BroBot Free
+          </TrackedLink>
+          <a
+            href="#examples"
+            className="rounded-2xl border border-slate-200 bg-white px-7 py-3 text-center text-base font-black text-navy transition hover:-translate-y-0.5 hover:border-teal-300"
+          >
+            See Example Use Cases
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCtaSection() {
   return (
     <section className="px-5 py-20 sm:px-6 lg:px-8">
@@ -500,19 +678,21 @@ function FinalCtaSection() {
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link
-            href="/brobot/chat"
+          <TrackedLink
+            href="/brobot/pricing"
+            trackingEvent="landing_start_trial_click"
             className="rounded-2xl bg-gold px-7 py-3 text-base font-black text-midnight transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
           >
-            Try BroBot Free
-          </Link>
+            Start Free Trial
+          </TrackedLink>
 
-          <Link
-            href="/"
+          <TrackedLink
+            href="/brobot/chat"
+            trackingEvent="try_brobot_free_click"
             className="rounded-2xl border border-white/20 bg-white/10 px-7 py-3 text-base font-black text-white transition hover:-translate-y-0.5 hover:bg-white/15"
           >
-            Back to SnapOrtho
-          </Link>
+            Try BroBot Free
+          </TrackedLink>
         </div>
       </div>
     </section>

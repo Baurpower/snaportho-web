@@ -1,5 +1,12 @@
 import { z } from 'zod';
 
+import { BroBotResearchSubmodeSchema } from '@/lib/brobot/research/types';
+
+const OptionalBroBotResearchSubmodeSchema = z.preprocess(
+  (value) => (value === null ? undefined : value),
+  BroBotResearchSubmodeSchema.optional()
+);
+
 export const BROBOT_CHAT_MODES = [
   'auto',
   'or_prep',
@@ -41,6 +48,7 @@ export type BroBotResponseDepth = z.infer<typeof BroBotResponseDepthSchema>;
 export type BroBotTrainingLevel = z.infer<typeof BroBotTrainingLevelSchema>;
 export type BroBotChatSource = z.infer<typeof BroBotChatSourceSchema>;
 export type BroBotIntentSource = z.infer<typeof BroBotIntentSourceSchema>;
+export type BroBotResearchSubmode = z.infer<typeof BroBotResearchSubmodeSchema>;
 
 export const BroBotChatSubintentSchema = z.enum([
   'landmarks',
@@ -132,6 +140,7 @@ export const BroBotChatRequestSchema = z.object({
   intentAmbiguity: BroBotChatAmbiguitySchema.optional(),
   intentReasonForBranching: z.string().trim().max(300).optional(),
   intentSource: BroBotIntentSourceSchema.optional(),
+  researchSubmode: OptionalBroBotResearchSubmodeSchema,
   answerNow: z.boolean().optional(),
   stream: z.boolean().optional(),
 });
@@ -155,6 +164,7 @@ export const BroBotChatOutputSchema = z.object({
   assumedContext: z.string().optional(),
   consultConfidence: BroBotConsultConfidenceSchema.optional(),
   missingInformation: z.array(z.string()).optional(),
+  researchSubmode: BroBotResearchSubmodeSchema.optional(),
 });
 
 export type BroBotChatOutput = z.infer<typeof BroBotChatOutputSchema>;
@@ -173,6 +183,7 @@ export const BroBotChatIntentSchema = z.object({
   answerImmediately: z.boolean().optional(),
   requiresBranchSelection: z.boolean().optional(),
   reasonForBranching: z.string().optional(),
+  researchSubmode: BroBotResearchSubmodeSchema.optional(),
   confidence: z.number().min(0).max(1),
 });
 

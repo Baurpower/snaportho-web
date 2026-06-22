@@ -8,6 +8,7 @@ import {
   type BroBotModelMessage,
   type BroBotProcedureCategory,
 } from './types';
+import { normalizeResearchSubmode } from '@/lib/brobot/research/types';
 
 type IntentExpansionInput = {
   message: string;
@@ -19,6 +20,7 @@ type IntentExpansionInput = {
 
 const INTENT_EXPANSION_CONTRACT = `{
   "mode": "or_prep" | "oite" | "clinic" | "consult" | "research" | "general",
+  "researchSubmode": "reference_finder" | "manuscript_reviewer" | "literature_review_builder" | "evidence_synthesis" | "journal_scout" | "systematic_review_assistant" | "statistical_reviewer" | "research_planning" | null,
   "subintent": string,
   "goal": string,
   "procedureCategory": "fracture_orif" | "arthroplasty" | "arthroscopy" | "soft_tissue_release" | "tendon_ligament_repair" | "spine_procedure" | "hand_procedure" | "infection_consult" | "postop_complication" | "arthroplasty_consult" | "sports_injury" | "pediatric_fracture" | "general_topic" | "unknown",
@@ -279,6 +281,7 @@ Decide:
 - answerImmediately: true for low ambiguity and emergency consults; false for moderate/high ambiguity unless urgent safety info should not wait.
 - requiresBranchSelection: true when a full answer would materially change based on fracture pattern, approach, implant, anatomy, study goal, or consult context.
 - reasonForBranching: one sentence explaining why the branch choice matters. Avoid generic wording.
+- researchSubmode: only set when mode is research. Use reference_finder for citation support, manuscript_reviewer for manuscript section review, literature_review_builder for lit review outlines, evidence_synthesis for focused evidence questions, journal_scout for must-read/landmark papers, systematic_review_assistant for systematic review planning, statistical_reviewer for statistics review, and research_planning for study design.
 - confidence: 0 to 1.
 
 Emergency consults must answer immediately: compartment syndrome, septic joint, open fracture, cauda equina, neurovascular compromise, pulseless limb, rapidly progressive infection.
@@ -575,6 +578,7 @@ export function parseBroBotIntentExpansionResponse(
       procedureCategory,
       parsed.reasonForBranching
     ),
+    researchSubmode: mode === 'research' ? normalizeResearchSubmode(parsed.researchSubmode) : undefined,
     confidence: Math.min(1, Math.max(0, Number(parsed.confidence) || 0.5)),
   };
 

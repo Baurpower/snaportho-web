@@ -22,6 +22,7 @@ import AccountDropdown from '@/components/accountdropdown';
 import BroBotProductTabs from '@/components/brobot/BroBotProductTabs';
 import { trackCheckoutStartedConversion } from '@/lib/analytics/googleAds';
 import { appendSafeReturnTo } from '@/lib/auth/redirects';
+import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // Direct browser calls to the external CasePrep API have been eliminated.
@@ -143,7 +144,10 @@ export default function BroBotMember() {
     if (!user) return;
     (async () => {
       try {
-        const res = await fetch('/api/me/entitlements');
+        const res = await fetch('/api/me/entitlements', {
+          cache: 'no-store',
+          credentials: 'include',
+        });
         const body = await res.json();
         if (body.data) {
           const d = body.data;
@@ -308,7 +312,7 @@ export default function BroBotMember() {
     setUpgradeLoading(true);
     try {
       trackCheckoutStartedConversion({
-        value: 2.99,
+        value: BROBOT_PRICING.unlimited.monthlyPrice,
         currency: 'USD',
       });
 
