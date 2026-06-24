@@ -15,6 +15,8 @@ import {
   buildBroBotIntentExpansionMessages,
   fallbackBroBotIntentExpansion,
   getBranchOptionsForCategory,
+  hasOrthoEntity,
+  resolveTopicFromHistory,
   parseBroBotIntentExpansionResponse,
   parseBroBotChatResponse,
   runBroBotQualityGate,
@@ -1200,6 +1202,27 @@ function isUuid(value: string | undefined): value is string {
   );
 }
 
+/**
+ * P0-2: keep the intent's topic anchored to the conversation entity. When a
+ * follow-up (most often a clicked learning-branch chip such as "Axillary nerve
+ * risk") does not restate the procedure/body region, the freshly derived
+ * procedureOrTopic degrades to the bare chip label. If the current topic has no
+ * recognizable ortho entity but a recent turn does, re-anchor to that entity so
+ * the answer stays on the original procedure instead of restarting.
+ */
+function anchorIntentTopicToHistory(
+  intent: BroBotChatIntent,
+  message: string,
+  history: BroBotModelMessage[]
+): BroBotChatIntent {
+  if (hasOrthoEntity(intent.procedureOrTopic)) return intent;
+
+  const anchoredTopic = resolveTopicFromHistory({ message, history });
+  if (!anchoredTopic || anchoredTopic === intent.procedureOrTopic) return intent;
+
+  return { ...intent, procedureOrTopic: anchoredTopic };
+}
+
 function buildAcceptedIntent(body: BroBotChatRequest): BroBotChatIntent | null {
   if (
     !body.intentMode ||
@@ -1566,6 +1589,8 @@ async function handleGuestChat(params: {
     };
   }
 
+  intent = anchorIntentTopicToHistory(intent, body.message, history);
+
   const selectedBranch =
     body.selectedBranchId || body.selectedBranchLabel
       ? {
@@ -1643,6 +1668,8 @@ async function handleGuestChat(params: {
     selectedBranchId: body.selectedBranchId,
     selectedBranchLabel: body.selectedBranchLabel,
     subintent: intent.subintent,
+    trainingLevel: body.trainingLevel,
+    procedureOrTopic: intent.procedureOrTopic,
   });
 
   const ip = getClientIp(request) ?? undefined;
@@ -2077,6 +2104,8 @@ export async function POST(request: Request) {
       };
     }
 
+    intent = anchorIntentTopicToHistory(intent, body.message, history);
+
     if (body.source === 'manual' && body.selectedBranchId == null && !body.answerNow) {
       await recordChatAnalyticsEvent({
         userId,
@@ -2244,6 +2273,8 @@ export async function POST(request: Request) {
       selectedBranchId: body.selectedBranchId,
       selectedBranchLabel: body.selectedBranchLabel,
       subintent: intent.subintent,
+      trainingLevel: body.trainingLevel,
+      procedureOrTopic: intent.procedureOrTopic,
     });
 
     if (!qualityGate.passed) {
@@ -2404,6 +2435,8 @@ async function persistCompletedBroBotOutput(params: {
     selectedBranchId: params.body.selectedBranchId,
     selectedBranchLabel: params.body.selectedBranchLabel,
     subintent: params.intent.subintent,
+    trainingLevel: params.body.trainingLevel,
+    procedureOrTopic: params.intent.procedureOrTopic,
   });
 
   if (!qualityGate.passed) {

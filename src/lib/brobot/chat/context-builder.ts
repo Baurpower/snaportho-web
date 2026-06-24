@@ -74,6 +74,11 @@ export async function buildBroBotAnswerContext(input: {
   };
 }
 
+export function formatRecentConversationForPrompt(context?: BroBotAnswerContext): string {
+  if (!context?.recentConversationSummary) return '';
+  return `Recent conversation context (most recent turns; resolve pronouns and follow-up references against this before answering):\n${context.recentConversationSummary}`;
+}
+
 export function formatAnswerContextForPrompt(context?: BroBotAnswerContext): string {
   if (!context) return '';
 

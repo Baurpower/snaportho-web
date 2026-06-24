@@ -4,13 +4,15 @@ import { buildBroBotChatMessages, buildBroBotChatSystemPrompt } from './prompt-b
 import { buildOiteLearningMetadata } from './oite-context';
 import { buildOrPrepProcedureMetadata } from './or-prep-context';
 import { runBroBotQualityGate } from './quality-gate';
+import { buildBroBotAnswerContext } from './context-builder';
+import { buildBroBotIntentExpansionMessages } from './intent-expander';
 import {
   buildBroBotIntentClassifierMessages,
   fallbackBroBotIntent,
   parseBroBotIntentClassifierResponse,
 } from './intent-classifier';
 import { parseBroBotChatResponse } from './response-parser';
-import type { BroBotChatMode } from './types';
+import type { BroBotChatIntent, BroBotChatMode } from './types';
 
 const samplePrompts: Array<{ prompt: string; mode: BroBotChatMode; expectedText: string }> = [
   {
@@ -725,4 +727,205 @@ const jsonFallback = parseBroBotChatResponse('```json\n{\"answer\":\"oops\"', {
 
 assert.match(jsonFallback.answer, /could not be structured cleanly/);
 
-console.log('BroBot chat prompt/parser tests passed');
+// --- P0 conversation memory tests ---
+
+const baseConsultIntent: BroBotChatIntent = {
+  mode: 'consult',
+  subintent: 'fracture',
+  procedureCategory: 'fracture_orif',
+  procedureOrTopic: 'intertrochanteric fracture fixation',
+  ambiguity: 'low',
+  assumedContext: '',
+  missingContext: [],
+  clarifyingQuestions: [],
+  branchOptions: [],
+  confidence: 0.8,
+};
+
+// Case 1 — pronoun resolution: "How do I test for it?" after compartment syndrome.
+const compartmentSyndromeHistoryMessages = buildBroBotIntentExpansionMessages({
+  message: 'How do I test for it?',
+  selectedMode: 'auto',
+  history: [
+    { role: 'user', content: 'Explain compartment syndrome.' },
+    { role: 'assistant', content: 'Compartment syndrome is an emergency...' },
+  ],
+});
+
+assert.match(
+  compartmentSyndromeHistoryMessages[0]?.content ?? '',
+  /Continuity rule: this is a continuing conversation/
+);
+assert.ok(
+  compartmentSyndromeHistoryMessages.some((message) =>
+    message.content.includes('Recent conversation context')
+  ),
+  'expansion messages should include recent conversation context when history is present'
+);
+assert.ok(
+  compartmentSyndromeHistoryMessages.some((message) =>
+    message.content.includes('Explain compartment syndrome.')
+  ),
+  'prior user turn should be present in the expansion prompt'
+);
+
+// Case 2 — fracture-pattern follow-up: no history present should not trigger the continuity block.
+const noHistoryMessages = buildBroBotIntentExpansionMessages({
+  message: 'What if it is reverse obliquity?',
+  selectedMode: 'auto',
+});
+
+assert.doesNotMatch(
+  noHistoryMessages[0]?.content ?? '',
+  /Continuity rule: this is a continuing conversation/
+);
+
+async function runAsyncAnswerContextTests() {
+  // Case 3 — recentConversationSummary should reach the answer-model system prompt.
+  const continuityAnswerContext = await buildBroBotAnswerContext({
+    intent: baseConsultIntent,
+    trainingLevel: 'pgy2',
+    responseDepth: 'standard',
+    history: [
+      { role: 'user', content: 'How do you fix an intertrochanteric fracture?' },
+      { role: 'assistant', content: 'Use a cephalomedullary nail for most patterns...' },
+    ],
+  });
+
+  const continuityAnswerPrompt = buildBroBotChatSystemPrompt({
+    mode: 'consult',
+    responseDepth: 'standard',
+    trainingLevel: 'pgy2',
+    intent: baseConsultIntent,
+    answerContext: continuityAnswerContext,
+  });
+
+  assert.match(continuityAnswerPrompt, /Recent conversation context/);
+  assert.match(continuityAnswerPrompt, /intertrochanteric fracture/);
+  assert.match(
+    continuityAnswerPrompt,
+    /Continue the existing conversation when appropriate\. Resolve pronouns/
+  );
+
+  // Case 4 — new topic override: no prior history means no stale conversation block leaks in.
+  const freshTopicAnswerContext = await buildBroBotAnswerContext({
+    intent: { ...baseConsultIntent, procedureOrTopic: 'scaphoid fractures' },
+    trainingLevel: 'pgy2',
+    responseDepth: 'standard',
+    history: [],
+  });
+
+  const freshTopicPrompt = buildBroBotChatSystemPrompt({
+    mode: 'consult',
+    responseDepth: 'standard',
+    trainingLevel: 'pgy2',
+    intent: { ...baseConsultIntent, procedureOrTopic: 'scaphoid fractures' },
+    answerContext: freshTopicAnswerContext,
+  });
+
+  assert.doesNotMatch(freshTopicPrompt, /Recent conversation context/);
+  assert.match(freshTopicPrompt, /scaphoid fractures/);
+
+  console.log('BroBot chat prompt/parser tests passed');
+}
+
+// --- P1 entity-injection + level + quality-gate tests ---
+
+const approachIntent: BroBotChatIntent = {
+  mode: 'or_prep',
+  subintent: 'surgical_approach',
+  procedureCategory: 'fracture_orif',
+  procedureOrTopic: 'proximal humerus',
+  ambiguity: 'low',
+  assumedContext: '',
+  missingContext: [],
+  clarifyingQuestions: [],
+  branchOptions: [],
+  confidence: 0.85,
+};
+
+const approachPrompt = buildBroBotChatSystemPrompt({
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy3',
+  intent: approachIntent,
+});
+
+// 1. Prompt includes the detected-topic anchor.
+assert.match(approachPrompt, /Detected ortho topic: proximal humerus\./);
+assert.match(approachPrompt, /Stay anchored to this topic/);
+
+// 2. Curated surgical-approach prompt is told to avoid generic answers and anchor to the topic.
+assert.match(approachPrompt, /Do not answer generically\./);
+assert.match(approachPrompt, /Anchor every point to proximal humerus/);
+assert.match(approachPrompt, /say so explicitly rather than giving a generic placeholder/);
+
+// Non-entity topic should not inject an anchor block.
+const noEntityPrompt = buildBroBotChatSystemPrompt({
+  mode: 'general',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy2',
+  intent: { ...approachIntent, mode: 'general', subintent: 'overview', procedureOrTopic: 'tell me something' },
+});
+assert.doesNotMatch(noEntityPrompt, /Detected ortho topic:/);
+
+// 3. entity_not_named fires for a generic proximal humerus approach answer.
+const genericApproachGate = runBroBotQualityGate({
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  subintent: 'surgical_approach',
+  procedureOrTopic: 'proximal humerus',
+  answer:
+    '- The procedure requires careful exposure and soft-tissue handling, with attention to the overall objective and a tidy closure that protects the wound for a good recovery overall.',
+});
+assert.ok(genericApproachGate.warnings.includes('entity_not_named'));
+
+// 4. A strong proximal humerus approach answer passes the entity check.
+const strongApproachGate = runBroBotQualityGate({
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  subintent: 'surgical_approach',
+  procedureOrTopic: 'proximal humerus',
+  answer: [
+    '- Positioning: beach chair; use the deltopectoral interval between deltoid and pectoralis major.',
+    '- Protect the axillary nerve at the inferior border; identify the cephalic vein and greater tuberosity.',
+    '- Internervous plane exposure; extend distally for fixation if needed.',
+  ].join('\n'),
+});
+assert.ok(!strongApproachGate.warnings.includes('entity_not_named'));
+
+// 5. Senior-level answer with no judgment/tradeoff/bailout language warns.
+const seniorNoJudgmentGate = runBroBotQualityGate({
+  mode: 'general',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy5',
+  answer:
+    '- The deltopectoral approach uses the interval between deltoid and pectoralis major; the axillary nerve runs at the inferior border and the greater tuberosity is a key bony surface to recognize.',
+});
+assert.ok(seniorNoJudgmentGate.warnings.includes('level_senior_judgment_missing'));
+
+// 6. Junior-level answer with no orientation/landmark/next-step language warns.
+const juniorNoOrientationGate = runBroBotQualityGate({
+  mode: 'general',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy1',
+  answer:
+    '- The tradeoff between alternatives depends on the controversy and the evidence; a nuanced synthesis weighing bailout options and operative judgment is what ultimately drives the decision here.',
+});
+assert.ok(juniorNoOrientationGate.warnings.includes('level_junior_orientation_missing'));
+
+// Level checks are no-ops when trainingLevel is omitted (backward compatible).
+const noLevelGate = runBroBotQualityGate({
+  mode: 'general',
+  responseDepth: 'standard',
+  answer: 'A short answer with no level signals at all and nothing in particular to note here today.',
+});
+assert.ok(!noLevelGate.warnings.includes('level_senior_judgment_missing'));
+assert.ok(!noLevelGate.warnings.includes('level_junior_orientation_missing'));
+
+console.log('BroBot P1 entity/level/quality-gate tests passed');
+
+runAsyncAnswerContextTests().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

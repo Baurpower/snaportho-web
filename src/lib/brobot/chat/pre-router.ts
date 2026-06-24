@@ -1,4 +1,6 @@
 import { getBranchOptionsForCategory } from './branch-templates';
+import { selectSmartChips } from './chip-registry';
+import { entityToTopic, extractOrthoEntity } from './entity-extractor';
 import type {
   BroBotBranchOption,
   BroBotChatAmbiguity,
@@ -29,6 +31,8 @@ const EMERGENCY_PATTERN =
   /\b(compartment syndrome|septic joint|septic arthritis|open fracture|open tibia|cauda equina|pulseless|neurovascular compromise|necrotizing|dislocation with neurovascular|rapidly progressive infection)\b/i;
 const SPECIFIC_OR_PATTERN =
   /\b(isolated\s+\w+|fcr approach|structures? at risk|anatomy at risk|starting point|start point|identify|identification|where is|where do you find)\b/i;
+export const PATIENT_EXPLANATION_PATTERN =
+  /\b(to|for)\s+(a|an|the|my)\s+patient\b|\bexplain[^.]*\bpatient\b|\bin\s+(plain|lay)\s+(language|terms)\b|\bplain language\b|\blay(?:man'?s)?\s+terms?\b|\bpatient[-\s]friendly\b/i;
 
 function normalizeMode(mode: BroBotChatMode): Exclude<BroBotChatMode, 'auto' | 'fracture_call'> {
   if (mode === 'fracture_call') return 'consult';
@@ -107,11 +111,27 @@ export function inferLocalSubintent(
 ): BroBotChatSubintent {
   const lower = message.toLowerCase();
   if (/\bquiz\b/.test(lower)) return 'quiz';
-  if (/\bclassification|classify\b/.test(lower)) return 'treatment_algorithm';
-  if (/\b(test trap|trap)\b/.test(lower)) return 'quiz';
+  if (/\btraps?\b/.test(lower)) return 'oite_traps';
+  // Patient-facing requests take priority so "explain the approach to a patient"
+  // routes to plain-language structure rather than a surgical-approach skeleton.
+  if (PATIENT_EXPLANATION_PATTERN.test(lower)) return 'patient_explanation';
+  if (/\banatomy|nerve|vessel|risk|structures? at risk\b/.test(lower)) return 'anatomy_at_risk';
+  if (
+    /\bapproach(es)?\b|\bincisions?\b|\bexposure\b|\binternervous\b|\binterval\b|\bplanes?\b|\bportal placement\b/.test(
+      lower
+    )
+  )
+    return 'surgical_approach';
+  if (/\bclassify\b|\bclassification\b|\bgrade\b|\btype (of|is)\b/.test(lower)) return 'classification';
+  if (
+    /\bindications?\b|\bwhen (should|do) (i|you) operate\b|\bcontraindications?\b/.test(lower)
+  )
+    return 'indications';
+  if (/\bcomplications?\b|\bfailure\b|\bwhat goes wrong\b|\bmistakes?\b/.test(lower)) {
+    return 'complication';
+  }
   if (/\bsteps?|walk me through|how do you do|flow|tomorrow|prep\b/.test(lower)) return 'surgical_steps';
   if (/\b(implant|plate|nail|screw|fixation option)\b/.test(lower)) return 'implant_options';
-  if (/\banatomy|nerve|vessel|risk|structures? at risk\b/.test(lower)) return 'anatomy_at_risk';
   if (/\bpresent|presentation\b/.test(lower)) return 'presentation_help';
   if (/\bimage|xray|x-ray|radiograph|ct|mri|fluoro|fluoroscopy\b/.test(lower)) return 'imaging_review';
   if (/\bcritique|rct|paper|study|bias|statistics\b/.test(lower)) return 'evidence_critique';
@@ -220,11 +240,13 @@ export function preRouteBroBotIntent(input: {
     subintent,
     requiresBranchSelection,
   });
+  const procedureOrTopic =
+    entityToTopic(extractOrthoEntity(input.message)) ?? input.message.slice(0, 120);
 
   return {
     mode,
     subintent,
-    procedureOrTopic: input.message.slice(0, 120),
+    procedureOrTopic,
     procedureCategory,
     ambiguity,
     assumedContext: '',
@@ -235,7 +257,12 @@ export function preRouteBroBotIntent(input: {
           ? ['abstract or methods/results', 'study design', 'outcome of interest']
           : [],
     clarifyingQuestions: [],
-    branchOptions: getBranchOptionsForCategory({ mode, procedureCategory }),
+    branchOptions:
+      selectSmartChips({
+        message: input.message,
+        subintent,
+        procedureOrTopic: input.message.slice(0, 120),
+      }) ?? getBranchOptionsForCategory({ mode, procedureCategory }),
     answerImmediately: EMERGENCY_PATTERN.test(input.message) || !requiresBranchSelection,
     requiresBranchSelection,
     reasonForBranching: requiresBranchSelection

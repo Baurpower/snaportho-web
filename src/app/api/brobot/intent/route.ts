@@ -15,6 +15,7 @@ import {
   parseBroBotIntentExpansionResponse,
   preRouteBroBotIntent,
   type BroBotIntentSource,
+  type BroBotModelMessage,
 } from '@/lib/brobot/chat';
 import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
 import {
@@ -123,6 +124,31 @@ async function getAuthContext(request: Request): Promise<AuthContext> {
   return { user: user ? { id: user.id } : null, hasBearerToken: Boolean(bearerToken) };
 }
 
+async function loadIntentConversationHistory(params: {
+  conversationId: string;
+  userId: string;
+}): Promise<BroBotModelMessage[]> {
+  try {
+    const { data, error } = await createAdminClient()
+      .from('brobot_messages')
+      .select('role, content')
+      .eq('conversation_id', params.conversationId)
+      .eq('user_id', params.userId)
+      .order('created_at', { ascending: false })
+      .limit(12);
+
+    if (error || !data) return [];
+
+    return data
+      .slice()
+      .reverse()
+      .filter((message) => message.role === 'user' || message.role === 'assistant') as BroBotModelMessage[];
+  } catch (error) {
+    console.error('[brobot] loadIntentConversationHistory failed (non-fatal)', error);
+    return [];
+  }
+}
+
 async function recordIntentEvent(params: {
   userId: string;
   eventType: string;
@@ -158,6 +184,7 @@ export async function POST(request: Request) {
     mode: true,
     responseDepth: true,
     trainingLevel: true,
+    conversationId: true,
   }).safeParse(normalizedPayload.normalized);
 
   if (!parsed.success) {
@@ -215,6 +242,14 @@ export async function POST(request: Request) {
   intent = localIntent;
   intentSource = localIntent.source;
 
+  const conversationHistory =
+    auth.user && body.conversationId
+      ? await loadIntentConversationHistory({
+          conversationId: body.conversationId,
+          userId: auth.user.id,
+        })
+      : [];
+
   if (localIntent.confidence < 0.55 || localIntent.source === 'fallback') {
     try {
       const completion = await getOpenAI().chat.completions.create({
@@ -226,6 +261,7 @@ export async function POST(request: Request) {
           selectedMode: body.mode,
           responseDepth: body.responseDepth,
           trainingLevel: body.trainingLevel,
+          history: conversationHistory,
         }),
       });
 

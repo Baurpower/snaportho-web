@@ -3,6 +3,8 @@ export * from './response-parser';
 export * from './intent-classifier';
 export * from './intent-expander';
 export * from './pre-router';
+export * from './chip-registry';
+export * from './entity-extractor';
 export { getBranchOptionsForCategory } from './branch-templates';
 export * from './answer-rubrics';
 export * from './context-builder';

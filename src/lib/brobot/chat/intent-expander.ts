@@ -9,6 +9,9 @@ import {
   type BroBotProcedureCategory,
 } from './types';
 import { normalizeResearchSubmode } from '@/lib/brobot/research/types';
+import { selectSmartChips } from './chip-registry';
+import { entityToTopic, extractOrthoEntity } from './entity-extractor';
+import { PATIENT_EXPLANATION_PATTERN } from './pre-router';
 
 type IntentExpansionInput = {
   message: string;
@@ -76,13 +79,18 @@ const BRANCH_REASON_BY_MODE: Record<string, string> = {
 const SUBINTENT_FALLBACKS = new Set<string>([
   'landmarks',
   'surgical_steps',
+  'surgical_approach',
   'diagnostic_sequence',
   'implant_options',
   'brand_comparison',
   'anatomy_at_risk',
   'attending_questions',
   'treatment_algorithm',
+  'classification',
+  'indications',
+  'patient_explanation',
   'quiz',
+  'oite_traps',
   'workup',
   'evidence_critique',
   'initial_consult',
@@ -268,7 +276,13 @@ Do not answer the learner. Determine what they are trying to accomplish and retu
 Selected UI mode: ${selectedMode}
 Response depth: ${input.responseDepth ?? 'standard'}
 Training level: ${input.trainingLevel ?? 'pgy2'}
-
+${
+  recentHistory
+    ? `
+Continuity rule: this is a continuing conversation. If the learner's new message is a follow-up, pronoun ("it", "that", "this", "they"), fragment ("What implant?", "Why?", "What about diabetics?"), or comparison ("compare that to nails"), resolve it against the recent conversation context below before assigning procedureOrTopic, procedureCategory, subintent, and ambiguity. Carry forward the prior topic/procedure unless the new message clearly introduces a different topic, in which case switch fully to the new topic and do not anchor to the old one.
+`
+    : ''
+}
 Decide:
 - mode: best workflow mode.
 - subintent: concise task label.
@@ -406,7 +420,10 @@ function templateBranchOptionsForCategory(
 function normalizeBranchOptions(
   value: unknown,
   mode: BroBotChatMode,
-  procedureCategory: BroBotProcedureCategory
+  procedureCategory: BroBotProcedureCategory,
+  message: string,
+  subintent: BroBotChatSubintent,
+  procedureOrTopic: string
 ): BroBotBranchOption[] {
   const raw = Array.isArray(value) ? value : [];
   const seen = new Set<string>();
@@ -430,9 +447,12 @@ function normalizeBranchOptions(
     })
     .slice(0, 7);
 
-  return normalized.length >= 4
-    ? normalized
-    : templateBranchOptionsForCategory(procedureCategory, mode);
+  if (normalized.length >= 4) return normalized;
+
+  return (
+    selectSmartChips({ message, subintent, procedureOrTopic }) ??
+    templateBranchOptionsForCategory(procedureCategory, mode)
+  );
 }
 
 function requiresBranchSelectionForPrompt(input: {
@@ -462,11 +482,17 @@ function branchOptionsForPrompt(input: {
   mode: BroBotChatMode;
   procedureCategory: BroBotProcedureCategory;
   parsedBranchOptions?: unknown;
+  message: string;
+  subintent: BroBotChatSubintent;
+  procedureOrTopic: string;
 }): BroBotBranchOption[] {
   return normalizeBranchOptions(
     input.parsedBranchOptions,
     input.mode,
-    input.procedureCategory
+    input.procedureCategory,
+    input.message,
+    input.subintent,
+    input.procedureOrTopic
   );
 }
 
@@ -538,10 +564,17 @@ export function parseBroBotIntentExpansionResponse(
   const requiresBranchSelection =
     modelRequiresBranchSelection || heuristicRequiresBranchSelection;
   const ambiguity = requiresBranchSelection ? 'moderate' : normalizeAmbiguity(parsed.ambiguity);
+  const procedureOrTopic =
+    normalizeString(parsed.procedureOrTopic) ||
+    entityToTopic(extractOrthoEntity(fallback.message)) ||
+    fallback.message.slice(0, 120);
   const branchOptions = branchOptionsForPrompt({
     mode,
     procedureCategory,
     parsedBranchOptions: parsed.branchOptions,
+    message: fallback.message,
+    subintent,
+    procedureOrTopic,
   });
   const answerImmediately =
     typeof parsed.answerImmediately === 'boolean'
@@ -563,7 +596,7 @@ export function parseBroBotIntentExpansionResponse(
     mode,
     subintent,
     procedureCategory,
-    procedureOrTopic: normalizeString(parsed.procedureOrTopic) || fallback.message.slice(0, 120),
+    procedureOrTopic,
     goal: normalizeString(parsed.goal) || buildFallbackGoal(fallback.message, mode),
     ambiguity,
     assumedContext: normalizeString(parsed.assumedContext),
@@ -687,12 +720,13 @@ export function fallbackBroBotIntentExpansion(
         /\b(critique this rct|diagnostic .*scope|arthroplasty|orif|painful (?:tka|tha|tsa)|fracture consult|pain workup|scfe)\b/i.test(message)
       ? 'moderate'
       : 'low';
+  const procedureOrTopic = entityToTopic(extractOrthoEntity(message)) ?? message.slice(0, 120);
 
   return {
     mode,
     subintent,
     procedureCategory,
-    procedureOrTopic: message.slice(0, 120),
+    procedureOrTopic,
     goal: buildFallbackGoal(message, mode),
     ambiguity,
     assumedContext: '',
@@ -703,7 +737,13 @@ export function fallbackBroBotIntentExpansion(
           ? ['age', 'mechanism or clinical story', 'exam', 'imaging findings']
           : [],
     clarifyingQuestions: [],
-    branchOptions: branchOptionsForPrompt({ mode, procedureCategory }),
+    branchOptions: branchOptionsForPrompt({
+      mode,
+      procedureCategory,
+      message,
+      subintent,
+      procedureOrTopic,
+    }),
     answerImmediately: shouldAnswerImmediately({
       message,
       ambiguity,
@@ -723,10 +763,22 @@ export function fallbackBroBotIntentExpansion(
 function inferFallbackSubintent(message: string, mode: BroBotChatMode): BroBotChatSubintent {
   const lower = message.toLowerCase();
   if (/\bquiz\b/.test(lower)) return 'quiz';
-  if (/\bclassification|classify\b/.test(lower)) return 'treatment_algorithm';
+  if (/\btraps?\b/.test(lower)) return 'oite_traps';
+  if (PATIENT_EXPLANATION_PATTERN.test(lower)) return 'patient_explanation';
+  if (/\banatomy|nerve|vessel|risk\b/.test(lower)) return 'anatomy_at_risk';
+  if (
+    /\bapproach(es)?\b|\bincisions?\b|\bexposure\b|\binternervous\b|\binterval\b|\bplanes?\b|\bportal placement\b/.test(
+      lower
+    )
+  )
+    return 'surgical_approach';
+  if (/\bclassify\b|\bclassification\b|\bgrade\b|\btype (of|is)\b/.test(lower)) return 'classification';
+  if (
+    /\bindications?\b|\bwhen (should|do) (i|you) operate\b|\bcontraindications?\b/.test(lower)
+  )
+    return 'indications';
   if (/\bsteps?|walk me through|how do you do|flow|tomorrow|prep\b/.test(lower)) return 'surgical_steps';
   if (/\b(implant|plate|nail|screw)\b/.test(lower)) return 'implant_options';
-  if (/\banatomy|nerve|vessel|risk\b/.test(lower)) return 'anatomy_at_risk';
   if (/\bpresent|presentation\b/.test(lower)) return 'presentation_help';
   if (/\bimage|xray|x-ray|radiograph|ct|mri\b/.test(lower)) return 'imaging_review';
   if (/\bcritique|rct|paper|study\b/.test(lower)) return 'evidence_critique';

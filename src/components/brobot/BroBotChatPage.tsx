@@ -513,9 +513,11 @@ export default function BroBotChatPage() {
   const {
     showNewMessagesButton,
     scrollToBottom,
+    resetScrollState,
   } = useChatScrollController({
     viewportRef: messagesViewportRef,
     contentVersion: scrollContentVersion,
+    activeAssistantId: latestAssistant?.role === 'assistant' ? latestAssistant.id : null,
   });
 
   useEffect(() => {
@@ -647,6 +649,7 @@ export default function BroBotChatPage() {
             mode,
             responseDepth,
             trainingLevel,
+            conversationId: conversationId ?? undefined,
           }),
         });
         const intentBody = await intentRes.json().catch(() => null);
@@ -1092,6 +1095,20 @@ export default function BroBotChatPage() {
     void sendMessage(previousUserMessage.content, 'manual');
   }
 
+  function startNewChat() {
+    if (isRequestActive) return;
+
+    setMessages([]);
+    setConversationId(null);
+    setInput('');
+    setError(null);
+    setPendingIntent(null);
+    setLastFailedPrompt(null);
+    setRestoredPendingPrompt(false);
+    setRequestState('idle');
+    resetScrollState();
+  }
+
   return (
     <div className="fixed inset-0 z-10 overflow-hidden bg-[#fefcf7] text-[#1A1C2C]">
       <main className="mx-auto flex h-[100dvh] w-full max-w-[1180px] flex-col box-border px-3 pt-16 sm:px-5 sm:pt-[4.75rem] lg:px-6">
@@ -1110,7 +1127,19 @@ export default function BroBotChatPage() {
               </div>
             </div>
 
-            <BroBotUsageBanner usage={usage} />
+            <div className="flex items-center gap-2 sm:gap-3">
+              {hasConversation && (
+                <button
+                  type="button"
+                  onClick={startNewChat}
+                  disabled={isRequestActive}
+                  className="shrink-0 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  New Chat
+                </button>
+              )}
+              <BroBotUsageBanner usage={usage} />
+            </div>
           </div>
         </header>
 

@@ -62,9 +62,11 @@ function restoreAnchor(viewport: HTMLDivElement, anchor: ScrollAnchor) {
 export function useChatScrollController({
   viewportRef,
   contentVersion,
+  activeAssistantId,
 }: {
   viewportRef: RefObject<HTMLDivElement | null>;
   contentVersion: string;
+  activeAssistantId?: string | null;
 }) {
   const [isNearBottom, setIsNearBottom] = useState(true);
   const [userHasScrolledUp, setUserHasScrolledUp] = useState(false);
@@ -75,6 +77,7 @@ export function useChatScrollController({
   const previousAnchorRef = useRef<ScrollAnchor | null>(null);
   const previousScrollTopRef = useRef(0);
   const hasInitializedRef = useRef(false);
+  const lastAnchoredAssistantIdRef = useRef<string | null>(null);
 
   const updateScrollState = useCallback(() => {
     const viewport = viewportRef.current;
@@ -204,7 +207,30 @@ export function useChatScrollController({
       hasInitializedRef.current = true;
       previousAnchorRef.current = getFirstVisibleAnchor(viewport);
       previousScrollTopRef.current = viewport.scrollTop;
+      lastAnchoredAssistantIdRef.current = activeAssistantId ?? null;
       return;
+    }
+
+    // A new assistant response just started: anchor the viewport to the top of
+    // that message once, then stop pinning to bottom so streamed tokens can grow
+    // the message in place without repeatedly forcing the scroll position.
+    if (activeAssistantId && lastAnchoredAssistantIdRef.current !== activeAssistantId) {
+      lastAnchoredAssistantIdRef.current = activeAssistantId;
+      const element = viewport.querySelector<HTMLElement>(
+        `[data-chat-scroll-id="${CSS.escape(activeAssistantId)}"]`
+      );
+
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        userPinnedRef.current = false;
+        isPinnedToBottomRef.current = false;
+        setIsNearBottom(false);
+        setUserHasScrolledUp(false);
+        setShowNewMessagesButton(false);
+        previousAnchorRef.current = getFirstVisibleAnchor(viewport);
+        previousScrollTopRef.current = viewport.scrollTop;
+        return;
+      }
     }
 
     if (isPinnedToBottomRef.current) {
@@ -224,7 +250,19 @@ export function useChatScrollController({
     if (contentChanged) {
       setShowNewMessagesButton(true);
     }
-  }, [contentVersion, viewportRef]);
+  }, [contentVersion, activeAssistantId, viewportRef]);
+
+  const resetScrollState = useCallback(() => {
+    isPinnedToBottomRef.current = true;
+    userPinnedRef.current = true;
+    lastAnchoredAssistantIdRef.current = null;
+    hasInitializedRef.current = false;
+    previousAnchorRef.current = null;
+    previousScrollTopRef.current = 0;
+    setIsNearBottom(true);
+    setUserHasScrolledUp(false);
+    setShowNewMessagesButton(false);
+  }, []);
 
   return {
     isNearBottom,
@@ -232,5 +270,6 @@ export function useChatScrollController({
     userHasScrolledUp,
     showNewMessagesButton,
     scrollToBottom,
+    resetScrollState,
   };
 }

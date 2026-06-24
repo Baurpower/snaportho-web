@@ -7,8 +7,10 @@ import type {
   BroBotTrainingLevel,
 } from './types';
 import { formatRubricForPrompt, getAnswerRubric } from './answer-rubrics';
+import { entityToTopic, extractOrthoEntity, hasOrthoEntity } from './entity-extractor';
 import {
   formatAnswerContextForPrompt,
+  formatRecentConversationForPrompt,
   type BroBotAnswerContext,
 } from './context-builder';
 import { formatResearchSubmodeInstructions } from '@/lib/brobot/research';
@@ -165,13 +167,20 @@ const depthInstructions: Record<BroBotResponseDepth, string> = {
 };
 
 const levelInstructions: Record<BroBotTrainingLevel, string> = {
-  med_student: 'Learner level: medical student. Define key terms, emphasize anatomy, exam, imaging basics, and safe escalation.',
-  pgy1: 'Learner level: PGY-1. Emphasize initial assessment, consult framing, red flags, and concrete next steps.',
-  pgy2: 'Learner level: PGY-2. Emphasize algorithms, classification, reduction/immobilization choices, and when to call up.',
-  pgy3: 'Learner level: PGY-3. Emphasize operative indications, approach, implants, complications, and decision-making.',
-  pgy4: 'Learner level: PGY-4. Emphasize nuance, alternatives, complication avoidance, and attending-level questions.',
-  pgy5: 'Learner level: PGY-5. Emphasize synthesis, operative judgment, evidence limits, and independent consult/OR planning.',
-  attending: 'Learner level: attending. Be concise and collegial; focus on nuance, evidence limits, and teaching-ready framing.',
+  med_student:
+    'Learner level: medical student. Lead with anatomy orientation and the big picture. Define key terms in simple language, cover basic indications, and name the red flags that must not be missed.',
+  pgy1:
+    'Learner level: PGY-1. Focus on what to actually do in the room or on the consult: step order, landmarks, immediate next steps, and the pitfalls to avoid right away.',
+  pgy2:
+    'Learner level: PGY-2. Focus on decision-making: classification, algorithms, alternatives, common complications, and the questions the attending will ask.',
+  pgy3:
+    'Learner level: PGY-3. Focus on operative decision-making: indications, approach, implant choice, alternatives, complications, and attending-level questions.',
+  pgy4:
+    'Learner level: PGY-4. Focus on nuance and tradeoffs: alternatives, complication avoidance, bailout options, and evidence-sensitive judgment.',
+  pgy5:
+    'Learner level: PGY-5. Focus on independent operative judgment: tradeoffs, bailout options, evidence limits, controversies, and synthesis across the topic.',
+  attending:
+    'Learner level: attending. Be concise and collegial; focus on nuance, tradeoffs, evidence limits, controversies, and teaching-ready framing.',
 };
 
 const orPrepLevelInstructions: Record<BroBotTrainingLevel, string> = {
@@ -253,6 +262,13 @@ export function buildBroBotChatSystemPrompt(input: {
   answerContext?: BroBotAnswerContext;
   answerNow?: boolean;
 }) {
+  const detectedEntityTopic =
+    input.intent && hasOrthoEntity(input.intent.procedureOrTopic)
+      ? entityToTopic(extractOrthoEntity(input.intent.procedureOrTopic))
+      : null;
+  const entityAnchor = detectedEntityTopic
+    ? `Detected ortho topic: ${detectedEntityTopic}.\nStay anchored to this topic. Name the actual structures, approaches, implants, classifications, or decision points for this topic. Do not answer generically.`
+    : '';
   const effectiveMode = normalizeModeForPrompt(input.intent?.mode ?? input.mode);
   const modeInstruction =
     effectiveMode === 'auto'
@@ -293,6 +309,19 @@ export function buildBroBotChatSystemPrompt(input: {
           subintent: input.intent?.subintent,
         });
         const rubricText = formatRubricForPrompt(rubric);
+        const detectedTopic = hasOrthoEntity(input.intent.procedureOrTopic)
+          ? entityToTopic(extractOrthoEntity(input.intent.procedureOrTopic))
+          : null;
+        const topicForGuardrail = detectedTopic ?? 'the specific topic the learner asked about';
+        const curatedSubintents = new Set([
+          'surgical_approach',
+          'classification',
+          'indications',
+          'patient_explanation',
+        ]);
+        const curatedGuardrail = curatedSubintents.has(input.intent?.subintent ?? '')
+          ? `- This question maps to a curated subintent. Follow the rubric above exactly rather than answering from general impression alone. Anchor every point to ${topicForGuardrail} and name the actual structures, approaches, implants, or classifications for it. If you cannot name topic-specific specifics, say so explicitly rather than giving a generic placeholder. Explicitly distinguish "commonly taught" teaching points from "evidence-supported" claims, and do not present an unsupported claim as if it were evidence-backed.`
+          : '';
 
         return [
         'Classifier result for this turn:',
@@ -316,6 +345,7 @@ export function buildBroBotChatSystemPrompt(input: {
         }`,
         `- requiredFocus: ${focusLabel}`,
         rubricText ? `Selected branch rubric:\n${rubricText}` : '',
+        curatedGuardrail,
         `- clarifyingQuestions: ${input.intent.clarifyingQuestions.join(' | ') || ''}`,
         `- classifierConfidence: ${input.intent.confidence}`,
         formatAnswerContextForPrompt(input.answerContext),
@@ -346,6 +376,11 @@ Persona:
 - Be cautious about uncertainty.
 - Do not provide patient-specific medical advice beyond educational framing.
 - Encourage appropriate senior/attending involvement for real clinical decisions.
+- Continue the existing conversation when appropriate. Resolve pronouns ("it", "that", "this", "they"), references ("the fracture", "the approach", "the implant"), and brief follow-up questions ("Why?", "What implant?", "What about diabetics?") using the recent conversation context and prior messages before answering. Do not restart the discussion as if it were a brand-new topic unless the user clearly introduces a new one.
+
+${formatRecentConversationForPrompt(input.answerContext)}
+
+${entityAnchor}
 
 ${selectedMode}
 ${intentInstructions}

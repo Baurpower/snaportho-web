@@ -1,13 +1,70 @@
 import { getAnswerRubric } from './answer-rubrics';
+import { entityToTopic, extractOrthoEntity } from './entity-extractor';
 import type {
   BroBotChatMode,
   BroBotResponseDepth,
+  BroBotTrainingLevel,
 } from './types';
 
 export type BroBotQualityGateResult = {
   passed: boolean;
   warnings: string[];
 };
+
+// High-yield terms an answer about a known entity should name at least one of.
+// Keyed by the canonical topic produced by entityToTopic(). Warning-only.
+const ENTITY_EXPECTED_TERMS: Record<string, string[]> = {
+  'proximal humerus': ['deltopectoral', 'deltoid', 'axillary', 'greater tuberosity', 'cephalic'],
+  'distal radius': ['fcr', 'volar', 'median nerve', 'pronator quadratus', 'watershed'],
+  ankle: ['weber', 'lauge-hansen', 'syndesmosis', 'medial clear space', 'malleol'],
+  'reverse total shoulder arthroplasty': [
+    'glenosphere',
+    'baseplate',
+    'deltoid',
+    'cuff tear arthropathy',
+    'notch',
+  ],
+  'femoral neck': ['garden', 'pauwels', 'avn', 'avascular', 'arthroplasty'],
+  'intertrochanteric femur': [
+    'cephalomedullary',
+    'tip-apex',
+    'lag screw',
+    'reverse obliquity',
+    'cutout',
+  ],
+};
+
+const JUNIOR_LEVELS = new Set<BroBotTrainingLevel>(['med_student', 'pgy1']);
+const SENIOR_LEVELS = new Set<BroBotTrainingLevel>(['pgy4', 'pgy5', 'attending']);
+
+const JUNIOR_SHAPE_TERMS = [
+  'orient',
+  'landmark',
+  'identify',
+  'first',
+  'start',
+  'next',
+  'step',
+  'retractor',
+  'position',
+  'where',
+];
+
+const SENIOR_SHAPE_TERMS = [
+  'judgment',
+  'judgement',
+  'alternative',
+  'bailout',
+  'tradeoff',
+  'trade off',
+  'salvage',
+  'revision',
+  'consider',
+  'depends',
+  'nuance',
+  'controversy',
+  'versus',
+];
 
 function normalize(value: string): string {
   return value
@@ -42,6 +99,8 @@ export function runBroBotQualityGate(input: {
   selectedBranchId?: string;
   selectedBranchLabel?: string;
   subintent?: string;
+  trainingLevel?: BroBotTrainingLevel;
+  procedureOrTopic?: string;
 }): BroBotQualityGateResult {
   const warnings: string[] = [];
   const answer = input.answer.trim();
@@ -160,6 +219,40 @@ export function runBroBotQualityGate(input: {
     ) {
       warnings.push('or_prep_generic_chronology_dominant');
     }
+
+    if (input.subintent === 'surgical_approach') {
+      if (tokenHits(answer, ['incision', 'landmark', 'positioning', 'position']) < 1) {
+        warnings.push('surgical_approach_incision_landmark_missing');
+      }
+
+      if (tokenHits(answer, ['interval', 'internervous', 'plane']) < 1) {
+        warnings.push('surgical_approach_plane_missing');
+      }
+
+      if (
+        tokenHits(answer, [
+          'structures at risk',
+          'nerve',
+          'vessel',
+          'artery',
+          'vein',
+        ]) < 1
+      ) {
+        warnings.push('surgical_approach_structures_at_risk_missing');
+      }
+
+      if (
+        tokenHits(answer, [
+          'extend',
+          'extensile',
+          'extension',
+          'proximal extension',
+          'distal extension',
+        ]) < 1
+      ) {
+        warnings.push('surgical_approach_extension_missing');
+      }
+    }
   }
 
   if (input.mode === 'consult' && tokenHits(answer, ['missing', 'red flag', 'exam', 'imaging', 'urgent', 'present']) < 2) {
@@ -239,6 +332,28 @@ export function runBroBotQualityGate(input: {
     const hits = tokenHits(answer, rubric);
     if (hits < Math.min(3, rubric.length)) {
       warnings.push('branch_rubric_coverage_low');
+    }
+  }
+
+  // Entity specificity: for a recognized high-yield entity, the answer should
+  // name at least one expected topic-specific term. Warning-only.
+  if (input.procedureOrTopic) {
+    const topic = entityToTopic(extractOrthoEntity(input.procedureOrTopic));
+    const expectedTerms = topic ? ENTITY_EXPECTED_TERMS[topic] : undefined;
+    if (expectedTerms && tokenHits(answer, expectedTerms) < 1) {
+      warnings.push('entity_not_named');
+    }
+  }
+
+  // Level-shape: junior answers should sound like orientation/next-steps;
+  // senior answers should include judgment/tradeoff/bailout language. Low
+  // brittleness — only checks for the presence of any one signal.
+  if (input.trainingLevel) {
+    if (JUNIOR_LEVELS.has(input.trainingLevel) && tokenHits(answer, JUNIOR_SHAPE_TERMS) < 1) {
+      warnings.push('level_junior_orientation_missing');
+    }
+    if (SENIOR_LEVELS.has(input.trainingLevel) && tokenHits(answer, SENIOR_SHAPE_TERMS) < 1) {
+      warnings.push('level_senior_judgment_missing');
     }
   }
 
