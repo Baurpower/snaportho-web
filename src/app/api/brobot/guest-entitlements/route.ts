@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 
-import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
+import {
+  createGuestSession,
+  getGuestSessionFromRequest,
+  getGuestIdFromHeader,
+  createGuestSessionFromId,
+} from '@/lib/brobot/guest-session';
 import { getRemainingAIUses, getDailyResetAt } from '@/lib/brobot/entitlements';
 
 /**
@@ -18,9 +23,15 @@ export async function GET(request: Request) {
   let guestCookieToSet: string | null = null;
 
   if (!guestSession) {
-    const createdGuest = createGuestSession();
-    guestSession = createdGuest.session;
-    guestCookieToSet = createdGuest.cookie;
+    const headerGuestId = getGuestIdFromHeader(request);
+    if (headerGuestId) {
+      // iOS header fallback: restore quota state without issuing a new cookie.
+      guestSession = createGuestSessionFromId(headerGuestId);
+    } else {
+      const createdGuest = createGuestSession();
+      guestSession = createdGuest.session;
+      guestCookieToSet = createdGuest.cookie;
+    }
   }
 
   const subject = { type: 'guest' as const, id: guestSession.guestId };
@@ -41,6 +52,7 @@ export async function GET(request: Request) {
     remainingUses,
     resetAt,
     reasonIfBlocked,
+    guestId: guestSession.guestId,
   });
 
   if (guestCookieToSet) {

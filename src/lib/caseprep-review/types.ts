@@ -115,7 +115,36 @@ export type ProcedureDetail = {
   sources: CasePrepSource[];
   validation_warnings: ValidationWarning[];
   review_notes_excerpt: string | null;
+  runtime_enabled: boolean;
 };
+
+// ── Phase 2: section review state ────────────────────────────────────────────
+
+export type SectionReviewStatus = "unreviewed" | "needs_improvement" | "approved";
+
+export type CasePrepSectionReview = {
+  id: string;
+  procedure_slug: string;
+  section_key: string;
+  reviewer_id: string;
+  reviewer_display_name: string | null;
+  status: SectionReviewStatus;
+  comment: string | null;
+  reviewed_at: string;
+  updated_at: string;
+};
+
+export type SectionEditRequest = {
+  items: ClinicalSectionItem[];
+};
+
+export type SectionEditResponse = {
+  section: ClinicalSection;
+  validation_warnings: ValidationWarning[];
+  coverage_score: number;
+};
+
+// ── Reviewer context ──────────────────────────────────────────────────────────
 
 export type CasePrepReviewerContext = {
   userId: string;

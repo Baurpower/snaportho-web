@@ -34,7 +34,12 @@ import {
   getMobileBroBotEntitlement,
   type Subject,
 } from '@/lib/brobot/entitlements';
-import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
+import {
+  createGuestSession,
+  getGuestSessionFromRequest,
+  getGuestIdFromHeader,
+  createGuestSessionFromId,
+} from '@/lib/brobot/guest-session';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
@@ -1004,7 +1009,13 @@ async function recordBranchClickEvent(params: {
   mode: string;
   trainingLevel: string;
 }): Promise<{ id: string; branchQuestionId: string | null } | null> {
-  if (!params.selectedBranchId || !isUuid(params.selectedBranchId)) return null;
+  if (!params.selectedBranchId) return null;
+
+  // UUID IDs map to a known branch_question row; slug IDs (from intent-generated branches)
+  // do not — store them in metadata only and leave branch_question_id as null so the FK
+  // constraint is satisfied. Both are recorded so ranking has full mobile click signal.
+  const isUuidId = isUuid(params.selectedBranchId);
+  const branchQuestionId = isUuidId ? params.selectedBranchId : null;
 
   try {
     const { data, error } = await params.persistence
@@ -1013,7 +1024,7 @@ async function recordBranchClickEvent(params: {
         conversation_id: params.conversationId,
         user_id: params.userId,
         topic_id: params.topicId ?? null,
-        branch_question_id: params.selectedBranchId,
+        branch_question_id: branchQuestionId,
         event_type: 'click',
         clicked: true,
         generated_followup: true,
@@ -1024,6 +1035,8 @@ async function recordBranchClickEvent(params: {
         source_message_id: params.sourceMessageId ?? null,
         metadata: {
           source: 'branch_selection',
+          selected_branch_id: params.selectedBranchId,
+          branch_id_is_uuid: isUuidId,
           branch_label: params.selectedBranchLabel ?? null,
           rank_position: params.selectedBranchRankPosition ?? null,
           mode: params.mode,
@@ -1735,9 +1748,14 @@ export async function POST(request: Request) {
     if (!auth.user) {
       let guestSession = getGuestSessionFromRequest(request);
       if (!guestSession) {
-        const createdGuest = createGuestSession();
-        guestSession = createdGuest.session;
-        guestCookieToSet = createdGuest.cookie;
+        const headerGuestId = getGuestIdFromHeader(request);
+        if (headerGuestId) {
+          guestSession = createGuestSessionFromId(headerGuestId);
+        } else {
+          const createdGuest = createGuestSession();
+          guestSession = createdGuest.session;
+          guestCookieToSet = createdGuest.cookie;
+        }
       }
 
       subject = { type: 'guest', id: guestSession.guestId };

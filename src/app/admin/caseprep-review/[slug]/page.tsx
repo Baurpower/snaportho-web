@@ -7,7 +7,9 @@ import {
   CasePrepRegistryNotFoundError,
   fetchRegistryProcedure,
 } from "@/lib/caseprep-review/client";
+import { fetchSectionReviews } from "@/lib/caseprep-review/reviews";
 import { CasePrepProcedureDetail } from "@/components/caseprep-review/CasePrepProcedureDetail";
+import type { CasePrepSectionReview } from "@/lib/caseprep-review/types";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -19,8 +21,9 @@ type PageProps = {
 export default async function CasePrepProcedurePage({ params }: PageProps) {
   const { slug } = await params;
 
+  let ctx;
   try {
-    await requireCasePrepReviewer();
+    ctx = await requireCasePrepReviewer();
   } catch (err) {
     if (err instanceof CasePrepReviewAuthError) {
       if (err.status === 401) {
@@ -36,10 +39,14 @@ export default async function CasePrepProcedurePage({ params }: PageProps) {
     throw err;
   }
 
-  let procedure;
-  try {
-    procedure = await fetchRegistryProcedure(slug);
-  } catch (err) {
+  // Load procedure and reviews in parallel
+  const [procedureResult, reviewsResult] = await Promise.allSettled([
+    fetchRegistryProcedure(slug),
+    fetchSectionReviews(slug),
+  ]);
+
+  if (procedureResult.status === "rejected") {
+    const err = procedureResult.reason;
     if (err instanceof CasePrepRegistryNotFoundError) {
       notFound();
     }
@@ -59,6 +66,10 @@ export default async function CasePrepProcedurePage({ params }: PageProps) {
     );
   }
 
+  const procedure = procedureResult.value;
+  const initialReviews: CasePrepSectionReview[] =
+    reviewsResult.status === "fulfilled" ? reviewsResult.value : [];
+
   return (
     <>
       <div className="max-w-5xl mx-auto px-4 pt-4">
@@ -69,7 +80,12 @@ export default async function CasePrepProcedurePage({ params }: PageProps) {
           ← All Procedures
         </Link>
       </div>
-      <CasePrepProcedureDetail procedure={procedure} />
+      <CasePrepProcedureDetail
+        procedure={procedure}
+        initialReviews={initialReviews}
+        reviewerRole={ctx.role}
+        reviewerName={ctx.displayName}
+      />
     </>
   );
 }

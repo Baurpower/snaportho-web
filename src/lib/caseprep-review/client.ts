@@ -3,7 +3,12 @@ import {
   getCasePrepInternalApiKey,
   getCasePrepReviewBaseUrl,
 } from "@/lib/config/caseprep-review";
-import type { ProcedureDetail, RegistryIndex } from "./types";
+import type {
+  ClinicalSectionItem,
+  ProcedureDetail,
+  RegistryIndex,
+  SectionEditResponse,
+} from "./types";
 
 export class CasePrepRegistryNotFoundError extends Error {
   slug: string;
@@ -85,4 +90,69 @@ export async function fetchRegistryProcedure(slug: string): Promise<ProcedureDet
     `/caseprep/registry/procedures/${encodedSlug}?include_validation=true`,
     { notFoundSlug: slug }
   );
+}
+
+export async function updateRegistrySection(
+  slug: string,
+  sectionKey: string,
+  items: ClinicalSectionItem[]
+): Promise<SectionEditResponse> {
+  const baseUrl = getCasePrepReviewBaseUrl();
+  const encodedSlug = encodeURIComponent(slug);
+  const encodedKey = encodeURIComponent(sectionKey);
+
+  const response = await fetch(
+    `${baseUrl}/caseprep/registry/procedures/${encodedSlug}/sections/${encodedKey}`,
+    {
+      method: "PATCH",
+      headers: {
+        ...buildHeaders(),
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+      body: JSON.stringify({ items }),
+    }
+  );
+
+  if (response.status === 404) {
+    throw new CasePrepRegistryNotFoundError(slug);
+  }
+  if (!response.ok) {
+    const message = await parseErrorMessage(response);
+    throw new CasePrepRegistryUpstreamError(response.status, message);
+  }
+
+  return (await response.json()) as SectionEditResponse;
+}
+
+export async function certifyRegistryProcedure(
+  slug: string,
+  certifiedBy: string,
+  notes?: string
+): Promise<ProcedureDetail> {
+  const baseUrl = getCasePrepReviewBaseUrl();
+  const encodedSlug = encodeURIComponent(slug);
+
+  const response = await fetch(
+    `${baseUrl}/caseprep/registry/procedures/${encodedSlug}/certify`,
+    {
+      method: "POST",
+      headers: {
+        ...buildHeaders(),
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+      body: JSON.stringify({ certified_by: certifiedBy, notes: notes ?? null }),
+    }
+  );
+
+  if (response.status === 404) {
+    throw new CasePrepRegistryNotFoundError(slug);
+  }
+  if (!response.ok) {
+    const message = await parseErrorMessage(response);
+    throw new CasePrepRegistryUpstreamError(response.status, message);
+  }
+
+  return (await response.json()) as ProcedureDetail;
 }

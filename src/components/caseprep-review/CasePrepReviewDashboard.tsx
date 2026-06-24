@@ -21,7 +21,7 @@ function SummaryCard({ label, value, color }: { label: string; value: number; co
 }
 
 function ProcedureRow({ p }: { p: ProcedureSummary }) {
-  const coveragePct = Math.round((p.coverage_score ?? 0) * 100);
+  const coveragePct = p.coverage_score ?? 0;
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:border-indigo-300 hover:shadow-sm transition-all">
       <div className="flex-1 min-w-0">

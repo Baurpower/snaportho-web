@@ -160,6 +160,37 @@ export function getGuestSessionFromRequest(request: Request): GuestSession | nul
 }
 
 /**
+ * Reads the `X-Guest-ID` header as a fallback guest identity when no valid cookie is present.
+ *
+ * Used by iOS clients to restore guest quota state after the cookie is cleared (app reinstall,
+ * OS purge, etc.). The header value is an opaque `guest_xxx` string previously received from
+ * the server. No signature is required — the ID is looked up directly in the usage table.
+ *
+ * Security: accepting an unsigned ID allows a client to "inherit" any known guest's daily
+ * usage, not grant extra uses. The risk is equivalent to cookie sharing, which is already
+ * possible for authenticated quota. This is acceptable for the free-tier guest use case.
+ */
+export function getGuestIdFromHeader(request: Request): string | null {
+  const raw = request.headers.get('X-Guest-ID') ?? request.headers.get('x-guest-id');
+  if (!raw) return null;
+  // Validate format: must start with "guest_" and contain only safe characters.
+  if (/^guest_[A-Za-z0-9_-]{10,50}$/.test(raw)) return raw;
+  return null;
+}
+
+/**
+ * Creates a lightweight in-memory GuestSession from a bare guest ID (no cookie).
+ * Used when restoring identity via X-Guest-ID header. No Set-Cookie is emitted.
+ */
+export function createGuestSessionFromId(guestId: string): GuestSession {
+  return {
+    guestId,
+    issuedAt: Math.floor(Date.now() / 1000),
+    dayKey: getUtcDayKey(),
+  };
+}
+
+/**
  * Helper to attach a fresh guest cookie to a NextResponse (or any response you control).
  * Usage in a route handler:
  *   const res = NextResponse.json(...);

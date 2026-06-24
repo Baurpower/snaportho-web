@@ -17,7 +17,12 @@ import {
   type BroBotIntentSource,
 } from '@/lib/brobot/chat';
 import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
-import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
+import {
+  createGuestSession,
+  getGuestSessionFromRequest,
+  getGuestIdFromHeader,
+  createGuestSessionFromId,
+} from '@/lib/brobot/guest-session';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
 
@@ -181,9 +186,14 @@ export async function POST(request: Request) {
   } else {
     let guestSession = getGuestSessionFromRequest(request);
     if (!guestSession) {
-      const createdGuest = createGuestSession();
-      guestSession = createdGuest.session;
-      guestCookieToSet = createdGuest.cookie;
+      const headerGuestId = getGuestIdFromHeader(request);
+      if (headerGuestId) {
+        guestSession = createGuestSessionFromId(headerGuestId);
+      } else {
+        const createdGuest = createGuestSession();
+        guestSession = createdGuest.session;
+        guestCookieToSet = createdGuest.cookie;
+      }
     }
     subject = { type: 'guest', id: guestSession.guestId };
   }

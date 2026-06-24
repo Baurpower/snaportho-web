@@ -16,6 +16,15 @@ const SEVERITY_ICON = {
   info: "ℹ️",
 } as const;
 
+// Friendly overrides for specific warning codes shown in the review portal.
+const WARNING_OVERRIDES: Record<string, { message: string; severity: "info" | "warning" | "blocking" }> = {
+  missing_indications_transition: {
+    message:
+      "Indications are now required for future certification. This procedure needs indications added.",
+    severity: "info",
+  },
+};
+
 export function CasePrepWarningPanel({ warnings }: CasePrepWarningPanelProps) {
   if (!warnings || warnings.length === 0) return null;
 
@@ -28,23 +37,28 @@ export function CasePrepWarningPanel({ warnings }: CasePrepWarningPanelProps) {
       <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide">
         Validation Issues ({warnings.length})
       </h3>
-      {sorted.map((w, i) => (
-        <div
-          key={i}
-          className={`border rounded-lg p-4 ${SEVERITY_STYLES[w.severity]}`}
-        >
-          <div className="flex items-start gap-2">
-            <span className="text-base shrink-0">{SEVERITY_ICON[w.severity]}</span>
-            <div className="min-w-0">
-              <p className="font-medium text-sm">{w.message}</p>
-              {w.detail && <p className="mt-1 text-sm opacity-80">{w.detail}</p>}
-              {w.section_key && (
-                <p className="mt-1 text-xs opacity-60">Section: {w.section_key}</p>
-              )}
+      {sorted.map((w, i) => {
+        const override = WARNING_OVERRIDES[w.code];
+        const severity = override?.severity ?? w.severity;
+        const message = override?.message ?? w.message;
+        return (
+          <div
+            key={i}
+            className={`border rounded-lg p-4 ${SEVERITY_STYLES[severity]}`}
+          >
+            <div className="flex items-start gap-2">
+              <span className="text-base shrink-0">{SEVERITY_ICON[severity]}</span>
+              <div className="min-w-0">
+                <p className="font-medium text-sm">{message}</p>
+                {w.detail && !override && <p className="mt-1 text-sm opacity-80">{w.detail}</p>}
+                {w.section_key && !override && (
+                  <p className="mt-1 text-xs opacity-60">Section: {w.section_key}</p>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
