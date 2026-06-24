@@ -47,7 +47,7 @@ interface RemoteConfigResponse {
   };
 }
 
-const DEFAULT_APP_STORE_URL = 'https://apps.apple.com/app/id000000000';
+const DEFAULT_APP_STORE_URL = 'https://apps.apple.com/us/app/snaportho/id6742800145';
 
 /**
  * Parses a dot-separated numeric version string into an array of integer
