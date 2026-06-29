@@ -105,6 +105,14 @@ export default function Nav() {
             BroBot
           </Link>
 
+          <Link
+            href="/student-workspace"
+            className="block hover:text-blue-300 transition py-2 md:py-0"
+            onClick={closeAll}
+          >
+            Student Workspace
+          </Link>
+
           {/* Learn Dropdown */}
           <div className="relative">
             <button

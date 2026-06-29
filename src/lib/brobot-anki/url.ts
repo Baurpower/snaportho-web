@@ -1,6 +1,11 @@
 const INVALID_HOSTS = new Set(["0.0.0.0", "127.0.0.1", "localhost"]);
 
-function normalizeBaseUrl(value: string): string | null {
+function normalizeBaseUrl(
+  value: string,
+  options: {
+    allowLocalhost?: boolean;
+  } = {}
+): string | null {
   const trimmed = value.trim();
   if (!trimmed) {
     return null;
@@ -9,7 +14,7 @@ function normalizeBaseUrl(value: string): string | null {
   try {
     const url = new URL(trimmed);
     const hostName = url.hostname.toLowerCase();
-    if (INVALID_HOSTS.has(hostName)) {
+    if (!options.allowLocalhost && INVALID_HOSTS.has(hostName)) {
       return null;
     }
 
@@ -23,6 +28,14 @@ function normalizeBaseUrl(value: string): string | null {
 }
 
 export function resolveBrowserAccessibleBaseUrl(request: Request): string {
+  const addonBaseUrl = normalizeBaseUrl(
+    request.headers.get("x-snaportho-addon-base-url") ?? "",
+    { allowLocalhost: true }
+  );
+  if (addonBaseUrl) {
+    return addonBaseUrl;
+  }
+
   const envBaseUrl = normalizeBaseUrl(
     process.env.NEXT_PUBLIC_SITE_URL ??
       process.env.APP_URL ??
@@ -49,13 +62,6 @@ export function resolveBrowserAccessibleBaseUrl(request: Request): string {
   const requestBaseUrl = normalizeBaseUrl(request.url);
   if (requestBaseUrl) {
     return requestBaseUrl;
-  }
-
-  const addonBaseUrl = normalizeBaseUrl(
-    request.headers.get("x-snaportho-addon-base-url") ?? ""
-  );
-  if (addonBaseUrl) {
-    return addonBaseUrl;
   }
 
   throw new Error(

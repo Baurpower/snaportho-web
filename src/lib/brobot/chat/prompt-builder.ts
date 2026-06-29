@@ -28,6 +28,48 @@ type PromptBuilderInput = {
   };
   answerContext?: BroBotAnswerContext;
   answerNow?: boolean;
+  includeProductMetadata?: boolean;
+};
+
+type MetadataPromptInput = {
+  message: string;
+  mode: BroBotChatMode;
+  responseDepth: BroBotResponseDepth;
+  trainingLevel: BroBotTrainingLevel;
+  intent: BroBotChatIntent;
+  answerContext?: BroBotAnswerContext;
+  finalAnswer: string;
+  priorityPoints: string[];
+  knowledgeGaps: string[];
+  whatMostResidentsMiss?: string[];
+  selectedBranch?: {
+    id?: string;
+    label?: string;
+  };
+  fallbackBranches?: Array<{
+    id: string;
+    label: string;
+    description?: string;
+    category?: string;
+  }>;
+};
+
+type RevisionPromptInput = {
+  message: string;
+  mode: BroBotChatMode;
+  responseDepth: BroBotResponseDepth;
+  trainingLevel: BroBotTrainingLevel;
+  intent: BroBotChatIntent;
+  answerContext?: BroBotAnswerContext;
+  selectedBranch?: {
+    id?: string;
+    label?: string;
+  };
+  originalResponse: string;
+  priorityPoints: string[];
+  knowledgeGaps: string[];
+  whatMostResidentsMiss?: string[];
+  warnings: string[];
 };
 
 const consultModeInstructions = [
@@ -246,6 +288,56 @@ export const BROBOT_CHAT_JSON_CONTRACT = `{
   "researchSubmode": "reference_finder" | "manuscript_reviewer" | "literature_review_builder" | "evidence_synthesis" | "journal_scout" | "systematic_review_assistant" | "statistical_reviewer" | "research_planning" | null
 }`;
 
+export const BROBOT_METADATA_JSON_CONTRACT = `{
+  "suggestedQuestions": string[],
+  "nextLearningBranches": [{ "id": string, "label": string, "description": string, "category": string }],
+  "tags": string[]
+}`;
+
+const OR_PREP_EXEMPLAR = [
+  'OR Prep exemplar:',
+  'User: "Distal radius ORIF tomorrow. What do I need to know?"',
+  'Excellent answer style:',
+  '- **Objective:** restore length, radial inclination, volar tilt, and articular congruity without losing reduction during plate placement.',
+  '- **Exposure:** standard volar FCR approach; stay radial to FCR, protect the radial artery superficially, then elevate pronator quadratus to expose the watershed line.',
+  '- **Anatomy at risk:** median nerve in the carpal tunnel, palmar cutaneous branch, radial artery, and flexor tendons if the plate sits too distal.',
+  '- **Key decisions/checks:** confirm the fracture pattern, use provisional reduction before plate fixation, and check lateral/tilt views carefully for dorsal screw penetration.',
+  '- **Pitfall/Bailout:** residents often stop once the plate is on; the real failure point is accepting malreduction or long distal screws. If the volar plate is fighting the reduction, re-reduce before locking distally.',
+  '- **Attending relevance:** know why you chose the FCR interval, what the watershed line means, and how you avoid flexor tendon irritation.',
+].join('\n');
+
+const CONSULT_EXEMPLAR = [
+  'Consult exemplar:',
+  'User: "Ankle fracture consult. How should I think about it?"',
+  'Excellent answer style:',
+  '- **Assessment:** decide first whether this is a routine fracture consult or an unstable injury with skin threat, open injury, dislocation, or neurovascular compromise.',
+  '- **Immediate priorities:** document neurovascular exam, open vs closed status, swelling/skin condition, reduction status, and the radiographic pattern.',
+  '- **What changes management:** talar shift, syndesmotic injury, medial clear-space widening, fracture-dislocation, open injury, or inability to maintain reduction.',
+  '- **How I would present it:** age, mechanism, ambulatory status, open/closed, neurovascular exam, reduction/splint status, and the exact imaging findings.',
+  '- **What residents miss:** they often name the fracture but skip urgency, skin risk, or whether the ankle is reduced and stable right now.',
+].join('\n');
+
+const OITE_EXEMPLAR = [
+  'OITE exemplar:',
+  'User: "SCFE OITE points"',
+  'Excellent answer style:',
+  '- **Direct answer:** unstable SCFE has the highest risk of AVN; pinning strategy and urgency questions often pivot on stability rather than just slip angle.',
+  '- **Core framework:** think age/body habitus/endocrine risk, stable vs unstable, then in-situ fixation vs more complex correction questions.',
+  '- **High-yield distinction:** the exam stem often rewards recognizing obligate external rotation and limited internal rotation rather than overfocusing on vague hip pain.',
+  '- **Exam trap:** residents memorize Klein line but miss that the tested management decision usually turns on stability or endocrine atypical features.',
+  '- **Next study move:** compare SCFE with Perthes and septic hip so you can separate age, exam pattern, and imaging clues quickly.',
+].join('\n');
+
+function formatModeExemplars(mode: BroBotChatMode, includeProductMetadata: boolean) {
+  if (includeProductMetadata) return '';
+
+  const normalizedMode = normalizeModeForPrompt(mode);
+  if (normalizedMode === 'or_prep') return OR_PREP_EXEMPLAR;
+  if (normalizedMode === 'consult') return CONSULT_EXEMPLAR;
+  if (normalizedMode === 'oite') return OITE_EXEMPLAR;
+  return '';
+}
+
 function normalizeModeForPrompt(mode: BroBotChatMode): BroBotChatMode {
   return mode === 'fracture_call' ? 'consult' : mode;
 }
@@ -261,7 +353,9 @@ export function buildBroBotChatSystemPrompt(input: {
   };
   answerContext?: BroBotAnswerContext;
   answerNow?: boolean;
+  includeProductMetadata?: boolean;
 }) {
+  const includeProductMetadata = input.includeProductMetadata ?? true;
   const detectedEntityTopic =
     input.intent && hasOrthoEntity(input.intent.procedureOrTopic)
       ? entityToTopic(extractOrthoEntity(input.intent.procedureOrTopic))
@@ -386,6 +480,7 @@ ${selectedMode}
 ${intentInstructions}
 ${selectedDepth}
 ${selectedLevel}
+${formatModeExemplars(effectiveMode, includeProductMetadata)}
 
 Output rules:
 - Return valid JSON only. No prose outside JSON. No markdown code fence.
@@ -399,9 +494,6 @@ Output rules:
 - priorityPoints: powers the UI section titled "Important Concepts". Return 3-6 ranked concepts. Each item should be concise but clinically useful and should be the highest-yield things to understand for the selected mode and training level.
 - knowledgeGaps: powers the UI section titled "What to Learn Next?". Return 2-4 actionable, specific next learning targets. Identify what the user likely does not know yet without sounding shame-y. Help guide the next study branch.
 - whatMostResidentsMiss: 3-5 concrete misses, pitfalls, traps, or blind spots. This is a signature BroBot section.
-- nextLearningBranches: 4-6 selectable continuation branches. Use realistic resident-style follow-up question labels, not generic focus areas. Keep most labels under 12 words and avoid category-only labels such as "Surgical Technique", "Complications", "Rehabilitation", or "Anatomy".
-- suggestedQuestions: 4-6 unique, specific, clickable follow-up prompts. Keep for backward compatibility, but make them align with nextLearningBranches.
-- tags: meaningful short lowercase tags for future personalization, such as "trauma:tibial plateau", "oite:scfe", "anatomy:axillary nerve", "complication:avn".
 - confidence: number from 0 to 1 reflecting educational confidence and uncertainty.
 - consultConfidence: for Consult mode only, estimate information completeness as low, moderate, or high; otherwise return null.
 - missingInformation: for Consult mode only, return 3-8 concrete missing clinical data points; otherwise return [].
@@ -415,6 +507,11 @@ Output rules:
 - For Consult prompts, prioritize assessment, missing information, red flags, imaging, temporizing care, presentation coaching, operative indications, and attending questions.
 - For clinic prompts, prioritize differential, workup, first-line treatment, and surgical indications.
 - For OR-prep diagnostic_sequence, answer the structure-by-structure diagnostic sequence rather than generic setup when the classifier/user indicates "once inside" or intra-articular sequence.
+${includeProductMetadata
+  ? `- nextLearningBranches: 4-6 selectable continuation branches. Use realistic resident-style follow-up question labels, not generic focus areas. Keep most labels under 12 words and avoid category-only labels such as "Surgical Technique", "Complications", "Rehabilitation", or "Anatomy".
+- suggestedQuestions: 4-6 unique, specific, clickable follow-up prompts. Keep for backward compatibility, but make them align with nextLearningBranches.
+- tags: meaningful short lowercase tags for future personalization, such as "trauma:tibial plateau", "oite:scfe", "anatomy:axillary nerve", "complication:avn".`
+  : `- Keep the answer pass focused on teaching quality. Set suggestedQuestions to [], nextLearningBranches to [], and tags to [] in this pass; a cheaper metadata pass may populate them later.`}
 
 Return exactly this JSON shape:
 ${BROBOT_CHAT_JSON_CONTRACT}
@@ -435,16 +532,112 @@ export function buildBroBotChatMessages(input: PromptBuilderInput): BroBotModelM
       content: buildBroBotChatSystemPrompt({
         mode,
         responseDepth,
-      trainingLevel,
-      intent: input.intent,
-      selectedBranch: input.selectedBranch,
-      answerContext: input.answerContext,
-      answerNow: input.answerNow,
-    }),
+        trainingLevel,
+        intent: input.intent,
+        selectedBranch: input.selectedBranch,
+        answerContext: input.answerContext,
+        answerNow: input.answerNow,
+        includeProductMetadata: input.includeProductMetadata,
+      }),
     },
     ...conversation.map((message) => ({
       role: message.role,
       content: message.content,
     })),
+  ];
+}
+
+export function buildBroBotMetadataMessages(input: MetadataPromptInput): BroBotModelMessage[] {
+  return [
+    {
+      role: 'system',
+      content: `
+You are BroBot's metadata composer.
+Your job is to derive product metadata from an already-written orthopaedic answer.
+Do NOT rewrite the answer. Do NOT add medical content not already implied by the answer and intent.
+Return valid JSON only.
+
+Generate:
+- suggestedQuestions: 4-6 specific resident-style follow-up prompts
+- nextLearningBranches: 4-6 branch chips with id, label, description, category
+- tags: 3-8 meaningful lowercase tags for personalization
+
+Quality rules:
+- Stay anchored to the actual topic and mode.
+- Prefer follow-up prompts that deepen the answer rather than repeating it.
+- Keep most branch labels under 12 words.
+- Avoid generic labels like "Complications" or "Anatomy" by themselves.
+- Tags should be compact and useful, such as "procedure:distal_radius_orif", "anatomy:median_nerve", or "concept:operative_indications".
+
+Return exactly this JSON shape:
+${BROBOT_METADATA_JSON_CONTRACT}
+      `.trim(),
+    },
+    {
+      role: 'user',
+      content: [
+        `Mode: ${normalizeModeForPrompt(input.intent.mode)}`,
+        `Response depth: ${input.responseDepth}`,
+        `Training level: ${input.trainingLevel}`,
+        `Procedure/topic: ${input.intent.procedureOrTopic}`,
+        `Subintent: ${input.intent.subintent}`,
+        `Selected branch: ${input.selectedBranch?.label || input.selectedBranch?.id || 'none'}`,
+        formatAnswerContextForPrompt(input.answerContext),
+        `User message: ${input.message}`,
+        `Final answer:\n${input.finalAnswer}`,
+        `Important concepts:\n${input.priorityPoints.map((item) => `- ${item}`).join('\n')}`,
+        `What to learn next:\n${input.knowledgeGaps.map((item) => `- ${item}`).join('\n')}`,
+        `What most residents miss:\n${(input.whatMostResidentsMiss ?? []).map((item) => `- ${item}`).join('\n') || '(none)'}`,
+        `Fallback branches:\n${
+          input.fallbackBranches?.map((branch) => `- ${branch.id}: ${branch.label} (${branch.category ?? 'General'})`).join('\n') || '(none)'
+        }`,
+      ]
+        .filter(Boolean)
+        .join('\n\n'),
+    },
+  ];
+}
+
+export function buildBroBotRevisionMessages(input: RevisionPromptInput): BroBotModelMessage[] {
+  return [
+    {
+      role: 'system',
+      content: `
+You are BroBot's answer reviser.
+You are improving a draft orthopaedic teaching answer after a heuristic quality gate flagged weaknesses.
+Fix the weaknesses without changing the user's intent, learner level, or safety stance.
+Return valid JSON only.
+
+Revision rules:
+- Keep the response concise and high-yield.
+- Improve specificity, anatomy, decision points, clinical reasoning, operative relevance, consult structure, or board framing when requested by the warnings.
+- Do not soften emergency guidance or remove urgent escalation language.
+- Do not add suggestedQuestions, nextLearningBranches, or tags in this pass; set them to [].
+- Preserve only claims you can support from the existing context. Do not invent citations.
+
+Return exactly this JSON shape:
+${BROBOT_CHAT_JSON_CONTRACT}
+      `.trim(),
+    },
+    {
+      role: 'user',
+      content: [
+        `Mode: ${normalizeModeForPrompt(input.intent.mode)}`,
+        `Response depth: ${input.responseDepth}`,
+        `Training level: ${input.trainingLevel}`,
+        `Procedure/topic: ${input.intent.procedureOrTopic}`,
+        `Subintent: ${input.intent.subintent}`,
+        `Selected branch: ${input.selectedBranch?.label || input.selectedBranch?.id || 'none'}`,
+        formatAnswerContextForPrompt(input.answerContext),
+        `User message: ${input.message}`,
+        `Quality gate warnings: ${input.warnings.join(', ')}`,
+        `Current answer:\n${input.originalResponse}`,
+        `Current priorityPoints:\n${input.priorityPoints.map((item) => `- ${item}`).join('\n')}`,
+        `Current knowledgeGaps:\n${input.knowledgeGaps.map((item) => `- ${item}`).join('\n')}`,
+        `Current whatMostResidentsMiss:\n${(input.whatMostResidentsMiss ?? []).map((item) => `- ${item}`).join('\n') || '(none)'}`,
+      ]
+        .filter(Boolean)
+        .join('\n\n'),
+    },
   ];
 }

@@ -777,6 +777,9 @@ function inferFallbackSubintent(message: string, mode: BroBotChatMode): BroBotCh
     /\bindications?\b|\bwhen (should|do) (i|you) operate\b|\bcontraindications?\b/.test(lower)
   )
     return 'indications';
+  if (/\bcomplications?\b|\bfailure\b|\bwhat goes wrong\b|\bmistakes?\b/.test(lower)) {
+    return 'complication';
+  }
   if (/\bsteps?|walk me through|how do you do|flow|tomorrow|prep\b/.test(lower)) return 'surgical_steps';
   if (/\b(implant|plate|nail|screw)\b/.test(lower)) return 'implant_options';
   if (/\bpresent|presentation\b/.test(lower)) return 'presentation_help';

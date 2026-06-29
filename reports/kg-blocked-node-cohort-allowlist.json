@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-06-29T14:12:11.629Z",
+  "model": "gpt-4.1-mini",
+  "llmExecuted": true,
+  "confidenceThreshold": 0.8,
+  "calibratedThresholds": {
+    "exact_specific": 0.6,
+    "alias_or_near": 0.7,
+    "weaker_evidence": 0.8
+  },
+  "cohortSizeRequested": 100,
+  "specialtyFilter": null,
+  "allowedNodeSlugs": [
+    "pediatrics-supracondylar-fracture-pediatric",
+    "trauma-distal-radius-fractures",
+    "foot-ankle-diabetic-foot-ulcers",
+    "knee-sports-patellar-instability",
+    "pathology-conventional-intramedullary-osteosarcoma"
+  ],
+  "entries": [
+    {
+      "nodeId": "76c441fe-6e4a-4884-a300-f39bebe726a6",
+      "slug": "pediatrics-supracondylar-fracture-pediatric",
+      "title": "Supracondylar Fracture - Pediatric",
+      "specialty": "Pediatrics",
+      "proposedEntityLabel": "Supracondylar Fracture - Pediatric",
+      "proposedEntityType": "condition",
+      "llmConfidence": 0.61,
+      "deterministicConfidence": 0.61,
+      "calibratedThreshold": 0.6,
+      "calibratedTier": "exact_specific",
+      "reason": "The node clearly refers to a specific condition subtype (pediatric supracondylar fracture) distinct from other fracture entities. There is no strong existing canonical entity match, and the educational assets support a stable condition candidate."
+    },
+    {
+      "nodeId": "44f9fd97-26c4-4b31-98f6-b72dc19b8277",
+      "slug": "trauma-distal-radius-fractures",
+      "title": "Distal Radius Fractures",
+      "specialty": "Trauma",
+      "proposedEntityLabel": "Distal Radius Fractures",
+      "proposedEntityType": "condition",
+      "llmConfidence": 0.61,
+      "deterministicConfidence": 0.61,
+      "calibratedThreshold": 0.6,
+      "calibratedTier": "exact_specific",
+      "reason": "The node clearly refers to a specific canonical orthopaedic condition distinct from other fracture entities. There is no strong existing canonical entity match, and multiple educational assets support this as a stable condition entity."
+    },
+    {
+      "nodeId": "ee3532be-e198-4426-abd1-81ce1b3a7507",
+      "slug": "foot-ankle-diabetic-foot-ulcers",
+      "title": "Diabetic Foot Ulcers",
+      "specialty": "Foot & Ankle",
+      "proposedEntityLabel": "Diabetic Foot Ulcers",
+      "proposedEntityType": "condition",
+      "llmConfidence": 0.61,
+      "deterministicConfidence": 0.61,
+      "calibratedThreshold": 0.6,
+      "calibratedTier": "exact_specific",
+      "reason": "The node clearly refers to a specific medical condition relevant to the Foot & Ankle specialty. There is no existing canonical entity match, and the candidate is supported by multiple educational assets, indicating a stable and distinct entity."
+    },
+    {
+      "nodeId": "1aa34ba6-f996-4a7b-a396-bd2edd5176e8",
+      "slug": "knee-sports-patellar-instability",
+      "title": "Patellar Instability",
+      "specialty": "Knee & Sports",
+      "proposedEntityLabel": "Patellar Instability",
+      "proposedEntityType": "condition",
+      "llmConfidence": 0.61,
+      "deterministicConfidence": 0.61,
+      "calibratedThreshold": 0.6,
+      "calibratedTier": "exact_specific",
+      "reason": "The node clearly refers to a specific orthopaedic condition related to the knee and sports specialty. There is no strong existing canonical entity match, and the educational assets support it as a distinct condition entity."
+    },
+    {
+      "nodeId": "7825da96-1ea1-46fe-9945-7e090a518163",
+      "slug": "pathology-conventional-intramedullary-osteosarcoma",
+      "title": "Conventional Intramedullary Osteosarcoma",
+      "specialty": "Pathology",
+      "proposedEntityLabel": "Conventional Intramedullary Osteosarcoma",
+      "proposedEntityType": "condition",
+      "llmConfidence": 0.61,
+      "deterministicConfidence": 0.61,
+      "calibratedThreshold": 0.6,
+      "calibratedTier": "exact_specific",
+      "reason": "The node clearly refers to a specific subtype of osteosarcoma, a well-defined pathological condition. There is no existing canonical entity that matches this label, and the educational assets support its stability as a distinct condition entity."
+    }
+  ]
+}

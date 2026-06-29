@@ -14,6 +14,7 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import { SharedPlanWeekButton } from "@/components/shared/planner/PlanWeekButton";
 
 export type PlannerCategory = "or" | "clinic" | "custom";
 
@@ -248,18 +249,7 @@ export function PlanWeekButton({
   onClick: () => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-all ${
-        isOpen
-          ? "bg-slate-950 text-white shadow-sm"
-          : "border border-sky-200 bg-sky-50 text-sky-950 hover:border-sky-300 hover:bg-sky-100"
-      }`}
-    >
-      {isOpen ? <X className="h-4 w-4" /> : <CalendarPlus2 className="h-4 w-4" />}
-      {isOpen ? "Close Planner" : "Plan Week"}
-    </button>
+    <SharedPlanWeekButton isOpen={isOpen} onClick={onClick} />
   );
 }
 

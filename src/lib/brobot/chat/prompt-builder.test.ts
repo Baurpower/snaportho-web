@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 
-import { buildBroBotChatMessages, buildBroBotChatSystemPrompt } from './prompt-builder';
+import {
+  buildBroBotChatMessages,
+  buildBroBotChatSystemPrompt,
+  buildBroBotMetadataMessages,
+  buildBroBotRevisionMessages,
+} from './prompt-builder';
 import { buildOiteLearningMetadata } from './oite-context';
 import { buildOrPrepProcedureMetadata } from './or-prep-context';
 import { runBroBotQualityGate } from './quality-gate';
@@ -118,6 +123,67 @@ assert.match(orPrepSystemPrompt, /Exposure Engine/);
 assert.match(orPrepSystemPrompt, /prioritize exposure over chronology/);
 assert.match(orPrepSystemPrompt, /decision points/);
 assert.match(orPrepSystemPrompt, /Pitfalls\/Bailout/);
+
+const answerOnlyPrompt = buildBroBotChatSystemPrompt({
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy2',
+  includeProductMetadata: false,
+});
+
+assert.match(answerOnlyPrompt, /Set suggestedQuestions to \[\]/);
+assert.match(answerOnlyPrompt, /OR Prep exemplar/);
+
+const metadataMessages = buildBroBotMetadataMessages({
+  message: 'Distal radius ORIF tomorrow',
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy2',
+  intent: {
+    mode: 'or_prep',
+    subintent: 'surgical_steps',
+    procedureCategory: 'fracture_orif',
+    procedureOrTopic: 'distal radius orif',
+    ambiguity: 'moderate',
+    assumedContext: '',
+    missingContext: [],
+    clarifyingQuestions: [],
+    confidence: 0.8,
+  },
+  finalAnswer: '- **Exposure:** volar FCR approach with protection of the radial artery and median nerve.',
+  priorityPoints: ['Stay radial to FCR and protect the radial artery.'],
+  knowledgeGaps: ['Review dorsal screw-penetration checks.'],
+  whatMostResidentsMiss: ['They accept reduction before checking distal screw length.'],
+  fallbackBranches: [{ id: 'approach', label: 'What approach should I know?', category: 'Surgical Approach' }],
+});
+
+assert.match(metadataMessages[0]?.content ?? '', /metadata composer/);
+assert.match(metadataMessages[0]?.content ?? '', /suggestedQuestions/);
+
+const revisionMessages = buildBroBotRevisionMessages({
+  message: 'Ankle fracture consult',
+  mode: 'consult',
+  responseDepth: 'standard',
+  trainingLevel: 'pgy2',
+  intent: {
+    mode: 'consult',
+    subintent: 'fracture',
+    procedureCategory: 'unknown',
+    procedureOrTopic: 'ankle fracture',
+    ambiguity: 'moderate',
+    assumedContext: '',
+    missingContext: ['age', 'mechanism'],
+    clarifyingQuestions: [],
+    confidence: 0.7,
+  },
+  originalResponse: '- Get imaging and present it.',
+  priorityPoints: ['Check neurovascular status.'],
+  knowledgeGaps: ['Know what makes this unstable.'],
+  warnings: ['consult_framework_weak'],
+});
+
+assert.match(revisionMessages[0]?.content ?? '', /answer reviser/);
+assert.match(revisionMessages[0]?.content ?? '', /Do not add suggestedQuestions/);
 assert.match(orPrepSystemPrompt, /Diagnostic knee arthroscopy/);
 assert.match(orPrepSystemPrompt, /I mean the sequence once inside the knee/);
 assert.match(orPrepSystemPrompt, /suprapatellar pouch/);

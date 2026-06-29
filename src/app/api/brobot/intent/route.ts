@@ -5,7 +5,6 @@
  */
 
 import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 import {
@@ -24,12 +23,10 @@ import {
   getGuestIdFromHeader,
   createGuestSessionFromId,
 } from '@/lib/brobot/guest-session';
+import { BROBOT_INTENT_MODEL } from '@/lib/brobot/model-config';
+import { getOpenAI } from '@/lib/brobot/openai-client';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
-
-const BROBOT_CHAT_MODEL = process.env.BROBOT_CHAT_MODEL || 'gpt-4o-mini';
-
-let openaiClient: OpenAI | null = null;
 
 function withGuestCookie(response: NextResponse, guestCookieToSet: string | null) {
   if (guestCookieToSet) response.headers.append('Set-Cookie', guestCookieToSet);
@@ -89,13 +86,6 @@ type AuthContext = {
   user: { id: string } | null;
   hasBearerToken: boolean;
 };
-
-function getOpenAI(): OpenAI {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) throw new Error('OPENAI_API_KEY is not configured');
-  if (!openaiClient) openaiClient = new OpenAI({ apiKey });
-  return openaiClient;
-}
 
 function getBearerToken(request: Request): string | null {
   const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
@@ -253,7 +243,7 @@ export async function POST(request: Request) {
   if (localIntent.confidence < 0.55 || localIntent.source === 'fallback') {
     try {
       const completion = await getOpenAI().chat.completions.create({
-        model: BROBOT_CHAT_MODEL,
+        model: BROBOT_INTENT_MODEL,
         temperature: 0,
         response_format: { type: 'json_object' },
         messages: buildBroBotIntentExpansionMessages({
@@ -290,7 +280,7 @@ export async function POST(request: Request) {
       answerImmediately: Boolean(intent.answerImmediately),
       requiresBranchSelection: Boolean(intent.requiresBranchSelection),
       branchCount: intent.branchOptions?.length ?? 0,
-      model: BROBOT_CHAT_MODEL,
+      model: BROBOT_INTENT_MODEL,
       source: intentSource,
       latencyMs: Date.now() - startedAt,
     },

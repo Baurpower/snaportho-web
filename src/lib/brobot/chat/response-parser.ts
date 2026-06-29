@@ -1,9 +1,11 @@
 import {
   BROBOT_CHAT_MODES,
   BroBotChatOutputSchema,
+  BroBotMetadataOutputSchema,
   type BroBotChatMode,
   type BroBotChatOutput,
   type BroBotBranchOption,
+  type BroBotMetadataOutput,
 } from './types';
 import { getModeBranchOptions } from './intent-expander';
 import { normalizeResearchSubmode } from '@/lib/brobot/research/types';
@@ -402,6 +404,43 @@ export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}
   const validation = BroBotChatOutputSchema.safeParse(normalized);
   if (!validation.success) {
     return fallbackOutput(raw, options);
+  }
+
+  return validation.data;
+}
+
+export function parseBroBotMetadataResponse(input: {
+  raw: unknown;
+  fallbackMode?: BroBotChatMode;
+  fallbackSuggestedQuestions?: string[];
+  fallbackNextLearningBranches?: BroBotBranchOption[];
+  fallbackTags?: string[];
+}): BroBotMetadataOutput {
+  const parsed = parseRaw(input.raw);
+  const fallbackMode = input.fallbackMode ?? 'general';
+  const fallback: BroBotMetadataOutput = {
+    suggestedQuestions: normalizeArray(input.fallbackSuggestedQuestions ?? [], 6),
+    nextLearningBranches:
+      (input.fallbackNextLearningBranches?.length
+        ? input.fallbackNextLearningBranches
+        : getModeBranchOptions(fallbackMode)
+      ).slice(0, 6),
+    tags: normalizeArray(input.fallbackTags ?? [], 8).map((tag) => tag.toLowerCase()),
+  };
+
+  if (!parsed) {
+    return fallback;
+  }
+
+  const normalized: BroBotMetadataOutput = {
+    suggestedQuestions: normalizeArray(parsed.suggestedQuestions, 6),
+    nextLearningBranches: normalizeBranchOptions(parsed.nextLearningBranches, fallbackMode),
+    tags: normalizeArray(parsed.tags, 8).map((tag) => tag.toLowerCase()),
+  };
+
+  const validation = BroBotMetadataOutputSchema.safeParse(normalized);
+  if (!validation.success) {
+    return fallback;
   }
 
   return validation.data;

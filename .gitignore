@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Orthobullets BroBot extension build output + locally-captured real page
+# fixtures (copyrighted Orthobullets content — manual capture only, never
+# committed; see extensions/orthobullets-brobot/README.md)
+/extensions/orthobullets-brobot/dist/
+/extensions/orthobullets-brobot/.test-dist/
+/extensions/orthobullets-brobot/fixtures/ob-review-*.html

@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-06-29T23:29:56.277Z",
+  "selectorSetVersion": "2026-06-29-testview-review-v2",
+  "extractorVersion": "2026-06-29-testview-review-v2",
+  "fixtures": [
+    {
+      "fixture": "ob-review-q3794.html",
+      "extractorVersion": "2026-06-29-testview-review-v2",
+      "fieldsFound": [
+        "questionId"
+      ],
+      "fieldsMissing": [
+        "breadcrumbs",
+        "stem",
+        "answerChoices",
+        "selectedAnswerKey",
+        "correctAnswerKey",
+        "explanationText",
+        "percentDistribution",
+        "linkedConcepts",
+        "images"
+      ],
+      "warnings": [
+        "stem_not_visible",
+        "answer_choices_not_visible",
+        "topic_not_visible",
+        "selected_answer_not_visible",
+        "correct_answer_not_visible",
+        "preferred_response_not_visible",
+        "explanation_not_visible"
+      ],
+      "matchedSelectors": {},
+      "successPercent": 10
+    }
+  ]
+}

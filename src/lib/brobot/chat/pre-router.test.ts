@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 
 import { preRouteBroBotIntent } from './pre-router';
+import { getAnswerRubric } from './answer-rubrics';
 
 const broadPrompts = [
   ['What are the steps for ankle ORIF?', 'fracture_orif', /fluoroscopy|intraoperative checks/i],
@@ -180,5 +181,80 @@ const noEntity = preRouteBroBotIntent({
   selectedMode: 'auto',
 });
 assert.equal(noEntity.procedureOrTopic, 'Tell me something interesting');
+
+// --- Curated rubric resolution (audit F1/F2/F7) ---
+
+function rubricFor(message: string): string[] | null {
+  const intent = preRouteBroBotIntent({ message, selectedMode: 'auto' });
+  return getAnswerRubric({ mode: intent.mode, subintent: intent.subintent });
+}
+
+// "classify ankle fractures" lands in general mode but must still resolve the
+// classification rubric (previously returned null for general mode).
+const classifyIntent = preRouteBroBotIntent({
+  message: 'classify ankle fractures',
+  selectedMode: 'auto',
+});
+assert.equal(classifyIntent.mode, 'general');
+assert.equal(classifyIntent.subintent, 'classification');
+const classifyRubric = rubricFor('classify ankle fractures');
+assert.ok(classifyRubric, 'classification rubric should resolve in general mode');
+assert.ok(classifyRubric?.includes('classification system name'));
+assert.ok(classifyRubric?.includes('imaging clues'));
+
+// "indications for reverse TSA" must resolve the indications rubric.
+const indicationsIntent = preRouteBroBotIntent({
+  message: 'indications for reverse TSA',
+  selectedMode: 'auto',
+});
+assert.equal(indicationsIntent.subintent, 'indications');
+const indicationsRubric = rubricFor('indications for reverse TSA');
+assert.ok(indicationsRubric?.includes('primary indications'));
+assert.ok(indicationsRubric?.includes('contraindications'));
+
+// "explain compartment syndrome to a patient" routes to patient_explanation and
+// still answers immediately (emergency urgency preserved).
+const patientEmergency = preRouteBroBotIntent({
+  message: 'explain compartment syndrome to a patient',
+  selectedMode: 'auto',
+});
+assert.equal(patientEmergency.subintent, 'patient_explanation');
+assert.equal(patientEmergency.answerImmediately, true);
+const patientRubric = rubricFor('explain compartment syndrome to a patient');
+assert.ok(patientRubric?.includes('what it is in plain language'));
+assert.ok(patientRubric?.includes('warning signs'));
+
+// Other patient-facing phrasings route correctly too.
+assert.equal(
+  preRouteBroBotIntent({ message: 'explain to my patient in plain language', selectedMode: 'auto' }).subintent,
+  'patient_explanation'
+);
+assert.equal(
+  preRouteBroBotIntent({ message: 'describe this for a patient', selectedMode: 'auto' }).subintent,
+  'patient_explanation'
+);
+
+// "OITE traps for scaphoid fracture" gets the dedicated OITE trap rubric.
+const oiteTrapsIntent = preRouteBroBotIntent({
+  message: 'give me OITE traps for scaphoid fracture',
+  selectedMode: 'auto',
+});
+assert.equal(oiteTrapsIntent.subintent, 'oite_traps');
+const oiteTrapRubric = rubricFor('give me OITE traps for scaphoid fracture');
+assert.ok(oiteTrapRubric?.includes('why the correct answer is correct'));
+assert.ok(oiteTrapRubric?.includes('memory hook'));
+
+// complication subintent resolves to the complication rubric.
+const complicationIntent = preRouteBroBotIntent({
+  message: 'what are the complications of ankle ORIF',
+  selectedMode: 'auto',
+});
+assert.equal(complicationIntent.subintent, 'complication');
+const complicationRubric = getAnswerRubric({
+  mode: complicationIntent.mode,
+  subintent: complicationIntent.subintent,
+});
+assert.ok(complicationRubric?.includes('most common complications'));
+assert.ok(complicationRubric?.includes('how to prevent it'));
 
 console.log('BroBot pre-router tests passed');

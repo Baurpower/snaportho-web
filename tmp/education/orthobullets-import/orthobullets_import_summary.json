@@ -1,0 +1,384 @@
+{
+  "inputPath": "/Users/alexbaur/Downloads/orthobullets_questions_import.csv",
+  "rowCount": 7557,
+  "uniqueExternalQuestions": 7557,
+  "duplicateQuestions": 0,
+  "malformedRows": 0,
+  "sourceAnomalies": 64,
+  "uniqueRawSpecialties": 24,
+  "normalizedSpecialties": [
+    "anatomy",
+    "basic-science",
+    "foot-ankle",
+    "hand",
+    "knee-sports",
+    "pathology",
+    "pediatrics",
+    "recon",
+    "shoulder-elbow",
+    "spine",
+    "trauma"
+  ],
+  "unresolvedSpecialtyMappings": 51,
+  "uniqueRawTopics": 773,
+  "uniqueNormalizedSpecialtyTopicPairs": 752,
+  "acceptedCurriculumNodes": 752,
+  "newDraftCurriculumNodes": 752,
+  "existingMatchedCurriculumNodes": 0,
+  "topicMappingsRequiringReview": 0,
+  "potentialDuplicates": 8,
+  "autoCreatedTopicConcepts": 0,
+  "conceptMappingTasks": 752,
+  "highFrequencyNeedsConceptMappingTopics": [
+    {
+      "specialty": "Knee & Sports",
+      "topic": "ACL Tear",
+      "count": 115
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Ankle Fractures",
+      "count": 98
+    },
+    {
+      "specialty": "Shoulder & Elbow",
+      "topic": "Rotator Cuff Tears",
+      "count": 82
+    },
+    {
+      "specialty": "Shoulder & Elbow",
+      "topic": "Traumatic Anterior Shoulder Instability (TUBS)",
+      "count": 75
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Acetabular Fractures",
+      "count": 74
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Tibial Plateau Fractures",
+      "count": 68
+    },
+    {
+      "specialty": "Recon",
+      "topic": "Prosthetic Joint Infection",
+      "count": 64
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Femoral Neck Fractures",
+      "count": 64
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Pelvic Ring Fractures",
+      "count": 64
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Tibial Shaft Fractures",
+      "count": 63
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Femoral Shaft Fractures",
+      "count": 60
+    },
+    {
+      "specialty": "Pediatrics",
+      "topic": "Supracondylar Fracture - Pediatric",
+      "count": 58
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Proximal Humerus Fractures",
+      "count": 57
+    },
+    {
+      "specialty": "Spine",
+      "topic": "Cervical Myelopathy",
+      "count": 53
+    },
+    {
+      "specialty": "Foot & Ankle",
+      "topic": "Hallux Valgus",
+      "count": 52
+    }
+  ],
+  "autoAcceptCount": 7493,
+  "manualReviewCount": 64,
+  "autoAcceptPercent": 99.3,
+  "topManualReviewReasons": [],
+  "topSourceAnomalies": [
+    {
+      "reason": "Specialty could not be normalized confidently.",
+      "count": 51
+    },
+    {
+      "reason": "Missing specialty value in source CSV.",
+      "count": 5
+    },
+    {
+      "reason": "Specialty/topic fields appear merged or truncated.",
+      "count": 4
+    },
+    {
+      "reason": "Missing topic value in source CSV.",
+      "count": 4
+    }
+  ],
+  "topHighFrequencyAcceptedTopics": [
+    {
+      "specialty": "Knee & Sports",
+      "topic": "ACL Tear",
+      "count": 115
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Ankle Fractures",
+      "count": 98
+    },
+    {
+      "specialty": "Shoulder & Elbow",
+      "topic": "Rotator Cuff Tears",
+      "count": 82
+    },
+    {
+      "specialty": "Shoulder & Elbow",
+      "topic": "Traumatic Anterior Shoulder Instability (TUBS)",
+      "count": 75
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Acetabular Fractures",
+      "count": 74
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Tibial Plateau Fractures",
+      "count": 68
+    },
+    {
+      "specialty": "Recon",
+      "topic": "Prosthetic Joint Infection",
+      "count": 64
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Femoral Neck Fractures",
+      "count": 64
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Pelvic Ring Fractures",
+      "count": 64
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Tibial Shaft Fractures",
+      "count": 63
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Femoral Shaft Fractures",
+      "count": 60
+    },
+    {
+      "specialty": "Pediatrics",
+      "topic": "Supracondylar Fracture - Pediatric",
+      "count": 58
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Proximal Humerus Fractures",
+      "count": 57
+    },
+    {
+      "specialty": "Spine",
+      "topic": "Cervical Myelopathy",
+      "count": 53
+    },
+    {
+      "specialty": "Foot & Ankle",
+      "topic": "Hallux Valgus",
+      "count": 52
+    },
+    {
+      "specialty": "Foot & Ankle",
+      "topic": "Posterior Tibial Tendon Insufficiency (PTTI)",
+      "count": 50
+    },
+    {
+      "specialty": "Spine",
+      "topic": "Lumbar Disc Herniation",
+      "count": 49
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Evaluation, Resuscitation & DCO",
+      "count": 48
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Calcaneus Fractures",
+      "count": 48
+    },
+    {
+      "specialty": "Basic Science",
+      "topic": "Legal Considerations in Orthopaedic Practice",
+      "count": 48
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Humeral Shaft Fractures",
+      "count": 47
+    },
+    {
+      "specialty": "Shoulder & Elbow",
+      "topic": "Total Shoulder Arthroplasty",
+      "count": 47
+    },
+    {
+      "specialty": "Pathology",
+      "topic": "Metastatic Disease Extremity",
+      "count": 46
+    },
+    {
+      "specialty": "Shoulder & Elbow",
+      "topic": "Reverse Shoulder Arthroplasty",
+      "count": 46
+    },
+    {
+      "specialty": "Basic Science",
+      "topic": "Statistic Definitions",
+      "count": 44
+    },
+    {
+      "specialty": "Recon",
+      "topic": "THA Periprosthetic Fracture",
+      "count": 44
+    },
+    {
+      "specialty": "Foot & Ankle",
+      "topic": "Ankle Sprain",
+      "count": 43
+    },
+    {
+      "specialty": "Pediatrics",
+      "topic": "Osteomyelitis - Pediatric",
+      "count": 43
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Amputations",
+      "count": 42
+    },
+    {
+      "specialty": "Pediatrics",
+      "topic": "Developmental Dysplasia the Hip (DDH)",
+      "count": 42
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Distal Radius Fractures",
+      "count": 41
+    },
+    {
+      "specialty": "Basic Science",
+      "topic": "Osteopenia & Osteoporosis",
+      "count": 41
+    },
+    {
+      "specialty": "Spine",
+      "topic": "Cervical Radiculopathy",
+      "count": 40
+    },
+    {
+      "specialty": "Trauma",
+      "topic": "Intertrochanteric Fractures",
+      "count": 40
+    },
+    {
+      "specialty": "Shoulder & Elbow",
+      "topic": "Distal Biceps Avulsion",
+      "count": 38
+    },
+    {
+      "specialty": "Pediatrics",
+      "topic": "Slipped Capital Femoral Epiphysis (SCFE)",
+      "count": 38
+    },
+    {
+      "specialty": "Recon",
+      "topic": "THA Revision",
+      "count": 37
+    },
+    {
+      "specialty": "Recon",
+      "topic": "TKA Prosthesis Design",
+      "count": 36
+    },
+    {
+      "specialty": "Spine",
+      "topic": "Lumbar Spinal Stenosis",
+      "count": 36
+    },
+    {
+      "specialty": "Shoulder & Elbow",
+      "topic": "Medial Ulnar Collateral Ligament Injury",
+      "count": 36
+    },
+    {
+      "specialty": "Spine",
+      "topic": "Adolescent Idiopathic Scoliosis",
+      "count": 35
+    },
+    {
+      "specialty": "Pediatrics",
+      "topic": "Pediatric Abuse",
+      "count": 35
+    },
+    {
+      "specialty": "Foot & Ankle",
+      "topic": "Diabetic Foot Ulcers",
+      "count": 35
+    },
+    {
+      "specialty": "Foot & Ankle",
+      "topic": "Lisfranc Injury",
+      "count": 34
+    },
+    {
+      "specialty": "Basic Science",
+      "topic": "Material Properties",
+      "count": 34
+    },
+    {
+      "specialty": "Foot & Ankle",
+      "topic": "Hallux Rigidus (MTP joint arthritis)",
+      "count": 34
+    },
+    {
+      "specialty": "Basic Science",
+      "topic": "Orthopaedic Implants",
+      "count": 34
+    },
+    {
+      "specialty": "Basic Science",
+      "topic": "Rheumatoid Arthritis",
+      "count": 34
+    },
+    {
+      "specialty": "Pathology",
+      "topic": "Conventional Intramedullary Osteosarcoma",
+      "count": 32
+    },
+    {
+      "specialty": "Recon",
+      "topic": "Wear & Osteolysis Basic Science",
+      "count": 32
+    }
+  ],
+  "topBlockedTopicExamples": []
+}

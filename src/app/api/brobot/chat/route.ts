@@ -11,6 +11,8 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import {
   BroBotChatRequestSchema,
   buildBroBotChatMessages,
+  buildBroBotMetadataMessages,
+  buildBroBotRevisionMessages,
   buildBroBotAnswerContext,
   buildBroBotIntentExpansionMessages,
   fallbackBroBotIntentExpansion,
@@ -19,12 +21,14 @@ import {
   resolveTopicFromHistory,
   parseBroBotIntentExpansionResponse,
   parseBroBotChatResponse,
+  parseBroBotMetadataResponse,
   runBroBotQualityGate,
   type BroBotChatIntent,
   type BroBotChatMode,
   type BroBotChatRequest,
   type BroBotBranchOption,
   type BroBotModelMessage,
+  type BroBotAnswerContext,
 } from '@/lib/brobot/chat';
 import {
   normalizeResearchSubmode,
@@ -43,10 +47,18 @@ import {
   createGuestSessionFromId,
 } from '@/lib/brobot/guest-session';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
+import { enqueueBroBotEvaluationJob } from '@/lib/brobot/evaluator';
+import {
+  BROBOT_ENABLE_REVISION_PASS,
+  BROBOT_INTENT_MODEL,
+  BROBOT_SEPARATE_METADATA_PASS,
+  getAnswerModelForRoute,
+  getMetadataModel,
+  getRevisionModel,
+} from '@/lib/brobot/model-config';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient as createServerSupabaseClient } from '@/utils/supabase/server';
 
-const BROBOT_CHAT_MODEL = process.env.BROBOT_CHAT_MODEL || 'gpt-4o-mini';
 const BROBOT_STREAMING_ENABLED = process.env.BROBOT_STREAMING_ENABLED === 'true';
 
 let openaiClient: OpenAI | null = null;
@@ -55,49 +67,6 @@ type StreamEventName = 'start' | 'delta' | 'metadata' | 'done' | 'error';
 
 function encodeStreamEvent(event: StreamEventName, data: Record<string, unknown>) {
   return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
-}
-
-function decodeJsonStringEscape(value: string, index: number): { char: string; nextIndex: number } {
-  const escaped = value[index + 1];
-  if (!escaped) return { char: '', nextIndex: index + 1 };
-
-  if (escaped === 'n') return { char: '\n', nextIndex: index + 2 };
-  if (escaped === 'r') return { char: '\r', nextIndex: index + 2 };
-  if (escaped === 't') return { char: '\t', nextIndex: index + 2 };
-  if (escaped === 'b') return { char: '\b', nextIndex: index + 2 };
-  if (escaped === 'f') return { char: '\f', nextIndex: index + 2 };
-  if (escaped === 'u') {
-    const hex = value.slice(index + 2, index + 6);
-    if (/^[0-9a-fA-F]{4}$/.test(hex)) {
-      return { char: String.fromCharCode(parseInt(hex, 16)), nextIndex: index + 6 };
-    }
-  }
-
-  return { char: escaped, nextIndex: index + 2 };
-}
-
-function extractAnswerPrefixFromJson(raw: string) {
-  const keyIndex = raw.search(/"answer"\s*:/);
-  if (keyIndex < 0) return '';
-
-  const valueStart = raw.indexOf('"', raw.indexOf(':', keyIndex) + 1);
-  if (valueStart < 0) return '';
-
-  let answer = '';
-  for (let index = valueStart + 1; index < raw.length;) {
-    const char = raw[index];
-    if (char === '"') break;
-    if (char === '\\') {
-      const decoded = decodeJsonStringEscape(raw, index);
-      answer += decoded.char;
-      index = decoded.nextIndex;
-      continue;
-    }
-    answer += char;
-    index += 1;
-  }
-
-  return answer;
 }
 
 export type BroBotChatResponse = {
@@ -1472,6 +1441,285 @@ async function loadConversationHistory(params: {
     .filter((message) => message.content.trim().length > 0);
 }
 
+const REVISION_BLOCKED_SUBINTENTS = new Set<BroBotChatIntent['subintent']>(['urgent_red_flags']);
+
+type BroBotPipelineResult = {
+  answerContext: BroBotAnswerContext;
+  brobotOutput: ReturnType<typeof parseBroBotChatResponse> & {
+    selectedFocus?: string;
+    detectedMode: BroBotChatMode;
+    nextLearningBranches?: BroBotBranchOption[];
+  };
+  answerModel: string;
+  answerUsage?: unknown;
+  answerRawContent: string;
+  metadataModel?: string | null;
+  metadataUsage?: unknown;
+  qualityGate: ReturnType<typeof runBroBotQualityGate>;
+  qualityGateWarningsBeforeRevision: string[];
+  revisionTriggered: boolean;
+  revisionModel?: string | null;
+  revisionUsage?: unknown;
+  originalAnswerBeforeRevision?: string | null;
+};
+
+function shouldBypassRevisionPass(intent: BroBotChatIntent) {
+  return REVISION_BLOCKED_SUBINTENTS.has(intent.subintent);
+}
+
+async function runJsonCompletion(params: {
+  openai: OpenAI;
+  model: string;
+  messages: BroBotModelMessage[];
+  temperature?: number;
+}) {
+  const completion = await params.openai.chat.completions.create({
+    model: params.model,
+    temperature: params.temperature ?? 0.2,
+    response_format: { type: 'json_object' },
+    messages: params.messages,
+  });
+
+  return {
+    rawContent: completion.choices[0]?.message?.content ?? '',
+    usage: completion.usage ?? null,
+  };
+}
+
+async function generateBroBotPipelineResult(params: {
+  openai: OpenAI;
+  persistence: BroBotDbClient;
+  body: BroBotChatRequest;
+  intent: BroBotChatIntent;
+  answerContext?: BroBotAnswerContext;
+  history: BroBotModelMessage[];
+  learningBranches: {
+    topic: BranchTopicRow | null;
+    branches: RankedBranchOption[];
+  };
+  databaseBranchOptions: RankedBranchOption[];
+  rankingContext: BranchRankingContext;
+}) : Promise<BroBotPipelineResult> {
+  const selectedBranch =
+    params.body.selectedBranchId || params.body.selectedBranchLabel
+      ? {
+          id: params.body.selectedBranchId,
+          label: params.body.selectedBranchLabel,
+        }
+      : undefined;
+  const answerContext =
+    params.answerContext ??
+    (await buildBroBotAnswerContext({
+      intent: params.intent,
+      selectedBranch,
+      responseDepth: params.body.responseDepth,
+      trainingLevel: params.body.trainingLevel,
+      history: params.history,
+    }));
+
+  const answerMessages = buildBroBotChatMessages({
+    message: params.body.message,
+    messages: params.history,
+    mode: params.intent.mode,
+    responseDepth: params.body.responseDepth,
+    trainingLevel: params.body.trainingLevel,
+    intent: params.intent,
+    selectedBranch,
+    answerContext,
+    answerNow: Boolean(params.body.answerNow),
+    includeProductMetadata: !BROBOT_SEPARATE_METADATA_PASS,
+  });
+  const answerModel = getAnswerModelForRoute({
+    mode: params.intent.mode,
+    ambiguity: params.intent.ambiguity,
+    responseDepth: params.body.responseDepth,
+    subintent: params.intent.subintent,
+  });
+  const answerCompletion = await runJsonCompletion({
+    openai: params.openai,
+    model: answerModel,
+    messages: answerMessages,
+  });
+
+  let parsedOutput = parseBroBotChatResponse(answerCompletion.rawContent, {
+    fallbackMode: params.intent.mode,
+    fallbackAnswer: 'BroBot could not format a structured response. Please try again.',
+  });
+  let qualityGate = runBroBotQualityGate({
+    answer: parsedOutput.answer,
+    mode: params.intent.mode,
+    responseDepth: params.body.responseDepth,
+    selectedBranchId: params.body.selectedBranchId,
+    selectedBranchLabel: params.body.selectedBranchLabel,
+    subintent: params.intent.subintent,
+    trainingLevel: params.body.trainingLevel,
+    procedureOrTopic: params.intent.procedureOrTopic,
+  });
+  const qualityGateWarningsBeforeRevision = [...qualityGate.warnings];
+  let revisionTriggered = false;
+  let revisionModel: string | null = null;
+  let revisionUsage: unknown = null;
+  let originalAnswerBeforeRevision: string | null = null;
+
+  if (
+    BROBOT_ENABLE_REVISION_PASS &&
+    qualityGate.warnings.length > 0 &&
+    !shouldBypassRevisionPass(params.intent)
+  ) {
+    originalAnswerBeforeRevision = parsedOutput.answer;
+    revisionModel = getRevisionModel(params.intent.mode);
+    const revisionCompletion = await runJsonCompletion({
+      openai: params.openai,
+      model: revisionModel,
+      messages: buildBroBotRevisionMessages({
+        message: params.body.message,
+        mode: params.intent.mode,
+        responseDepth: params.body.responseDepth,
+        trainingLevel: params.body.trainingLevel,
+        intent: params.intent,
+        answerContext,
+        selectedBranch,
+        originalResponse: parsedOutput.answer,
+        priorityPoints: parsedOutput.priorityPoints,
+        knowledgeGaps: parsedOutput.knowledgeGaps,
+        whatMostResidentsMiss: parsedOutput.whatMostResidentsMiss,
+        warnings: qualityGate.warnings,
+      }),
+    });
+    const revisedOutput = parseBroBotChatResponse(revisionCompletion.rawContent, {
+      fallbackMode: params.intent.mode,
+      fallbackAnswer: parsedOutput.answer,
+    });
+    parsedOutput = {
+      ...revisedOutput,
+      suggestedQuestions: revisedOutput.suggestedQuestions,
+      nextLearningBranches: revisedOutput.nextLearningBranches,
+      tags: revisedOutput.tags,
+    };
+    revisionTriggered = true;
+    revisionUsage = revisionCompletion.usage;
+    qualityGate = runBroBotQualityGate({
+      answer: parsedOutput.answer,
+      mode: params.intent.mode,
+      responseDepth: params.body.responseDepth,
+      selectedBranchId: params.body.selectedBranchId,
+      selectedBranchLabel: params.body.selectedBranchLabel,
+      subintent: params.intent.subintent,
+      trainingLevel: params.body.trainingLevel,
+      procedureOrTopic: params.intent.procedureOrTopic,
+    });
+    logBroBot('[BROBOT-CHAT-REVISION]', {
+      mode: params.intent.mode,
+      subintent: params.intent.subintent,
+      responseDepth: params.body.responseDepth,
+      trainingLevel: params.body.trainingLevel,
+      answerModel,
+      revisionModel,
+      warnings: qualityGateWarningsBeforeRevision,
+      originalAnswer: originalAnswerBeforeRevision,
+      revisedAnswer: parsedOutput.answer,
+    });
+  }
+
+  let metadataOutput = {
+    suggestedQuestions: parsedOutput.suggestedQuestions,
+    nextLearningBranches: parsedOutput.nextLearningBranches ?? [],
+    tags: parsedOutput.tags,
+  };
+  let metadataModel: string | null = null;
+  let metadataUsage: unknown = null;
+
+  if (BROBOT_SEPARATE_METADATA_PASS) {
+    metadataModel = getMetadataModel();
+    const metadataCompletion = await runJsonCompletion({
+      openai: params.openai,
+      model: metadataModel,
+      messages: buildBroBotMetadataMessages({
+        message: params.body.message,
+        mode: params.intent.mode,
+        responseDepth: params.body.responseDepth,
+        trainingLevel: params.body.trainingLevel,
+        intent: params.intent,
+        answerContext,
+        finalAnswer: parsedOutput.answer,
+        priorityPoints: parsedOutput.priorityPoints,
+        knowledgeGaps: parsedOutput.knowledgeGaps,
+        whatMostResidentsMiss: parsedOutput.whatMostResidentsMiss,
+        selectedBranch,
+        fallbackBranches: params.intent.branchOptions ?? params.databaseBranchOptions,
+      }),
+    });
+    metadataOutput = parseBroBotMetadataResponse({
+      raw: metadataCompletion.rawContent,
+      fallbackMode: params.intent.mode,
+      fallbackSuggestedQuestions: parsedOutput.suggestedQuestions,
+      fallbackNextLearningBranches:
+        params.intent.branchOptions ?? params.databaseBranchOptions,
+      fallbackTags: parsedOutput.tags,
+    });
+    metadataUsage = metadataCompletion.usage;
+  }
+
+  const classifierNeedsClarification = params.intent.ambiguity !== 'low';
+  const clarifyingQuestions = mergeQuestions(
+    parsedOutput.clarifyingQuestions?.length
+      ? parsedOutput.clarifyingQuestions
+      : params.intent.clarifyingQuestions,
+    []
+  ).slice(0, 3);
+  const nextLearningBranches = mergeBranchOptions(
+    params.databaseBranchOptions,
+    metadataOutput.nextLearningBranches.length > 0
+      ? metadataOutput.nextLearningBranches
+      : parsedOutput.nextLearningBranches ?? params.intent.branchOptions ?? [],
+    5,
+    params.rankingContext
+  );
+  const brobotOutput = {
+    ...parsedOutput,
+    selectedFocus:
+      params.body.selectedBranchLabel ||
+      params.body.selectedBranchId ||
+      (params.body.answerNow ? 'General framework' : undefined),
+    detectedMode: params.intent.mode,
+    needsClarification:
+      parsedOutput.needsClarification ||
+      classifierNeedsClarification ||
+      clarifyingQuestions.length > 0,
+    clarifyingQuestions,
+    assumedContext: parsedOutput.assumedContext || params.intent.assumedContext,
+    researchSubmode: params.intent.mode === 'research' ? params.intent.researchSubmode : undefined,
+    suggestedQuestions: mergeQuestions(
+      clarifyingQuestions,
+      metadataOutput.suggestedQuestions.length > 0
+        ? metadataOutput.suggestedQuestions
+        : parsedOutput.suggestedQuestions
+    ),
+    nextLearningBranches: await attachPersistedBranchQuestionIds({
+      persistence: params.persistence,
+      topic: params.learningBranches.topic,
+      branches: nextLearningBranches,
+    }),
+    tags: metadataOutput.tags.length > 0 ? metadataOutput.tags : parsedOutput.tags,
+  };
+
+  return {
+    answerContext,
+    brobotOutput,
+    answerModel,
+    answerUsage: answerCompletion.usage,
+    answerRawContent: answerCompletion.rawContent,
+    metadataModel,
+    metadataUsage,
+    qualityGate,
+    qualityGateWarningsBeforeRevision,
+    revisionTriggered,
+    revisionModel,
+    revisionUsage,
+    originalAnswerBeforeRevision,
+  };
+}
+
 async function handleGuestChat(params: {
   request: Request;
   requestId: string;
@@ -1524,7 +1772,7 @@ async function handleGuestChat(params: {
   if (!acceptedIntent) {
     try {
       const intentCompletion = await openai.chat.completions.create({
-        model: BROBOT_CHAT_MODEL,
+        model: BROBOT_INTENT_MODEL,
         temperature: 0,
         response_format: { type: 'json_object' },
         messages: buildBroBotIntentExpansionMessages({
@@ -1591,86 +1839,21 @@ async function handleGuestChat(params: {
 
   intent = anchorIntentTopicToHistory(intent, body.message, history);
 
-  const selectedBranch =
-    body.selectedBranchId || body.selectedBranchLabel
-      ? {
-          id: body.selectedBranchId,
-          label: body.selectedBranchLabel,
-        }
-      : undefined;
-  const answerContext = await buildBroBotAnswerContext({
+  const pipelineResult = await generateBroBotPipelineResult({
+    openai,
+    persistence,
+    body,
     intent,
-    selectedBranch,
-    responseDepth: body.responseDepth,
-    trainingLevel: body.trainingLevel,
     history,
+    learningBranches,
+    databaseBranchOptions,
+    rankingContext,
   });
-  const modelMessages = buildBroBotChatMessages({
-    message: body.message,
-    messages: history,
-    mode: intent.mode,
-    responseDepth: body.responseDepth,
-    trainingLevel: body.trainingLevel,
-    intent,
-    selectedBranch,
-    answerContext,
-    answerNow: Boolean(body.answerNow),
-  });
-
-  const completion = await openai.chat.completions.create({
-    model: BROBOT_CHAT_MODEL,
-    temperature: 0.2,
-    response_format: { type: 'json_object' },
-    messages: modelMessages,
-  });
-
   const latencyMs = Date.now() - startedAt;
-  const rawContent = completion.choices[0]?.message?.content ?? '';
-  const parsedOutput = parseBroBotChatResponse(rawContent, {
-    fallbackMode: intent.mode,
-    fallbackAnswer: 'BroBot could not format a structured response. Please try again.',
-  });
-  const classifierNeedsClarification = intent.ambiguity !== 'low';
-  const clarifyingQuestions = mergeQuestions(
-    parsedOutput.clarifyingQuestions?.length
-      ? parsedOutput.clarifyingQuestions
-      : intent.clarifyingQuestions,
-    []
-  ).slice(0, 3);
   const brobotOutput = {
-    ...parsedOutput,
-    selectedFocus:
-      body.selectedBranchLabel ||
-      body.selectedBranchId ||
-      (body.answerNow ? 'General framework' : undefined),
-    detectedMode: intent.mode,
-    needsClarification:
-      parsedOutput.needsClarification ||
-      classifierNeedsClarification ||
-      clarifyingQuestions.length > 0,
-    clarifyingQuestions,
-    assumedContext: parsedOutput.assumedContext || intent.assumedContext,
-    suggestedQuestions: mergeQuestions(clarifyingQuestions, parsedOutput.suggestedQuestions),
-    nextLearningBranches: withRankPositions(
-      mergeBranchOptions(
-        databaseBranchOptions,
-        parsedOutput.nextLearningBranches ?? intent.branchOptions ?? [],
-        5,
-        rankingContext
-      )
-    ),
+    ...pipelineResult.brobotOutput,
+    nextLearningBranches: withRankPositions(pipelineResult.brobotOutput.nextLearningBranches ?? []),
   };
-
-  const qualityGate = runBroBotQualityGate({
-    answer: brobotOutput.answer,
-    mode: intent.mode,
-    responseDepth: body.responseDepth,
-    selectedBranchId: body.selectedBranchId,
-    selectedBranchLabel: body.selectedBranchLabel,
-    subintent: intent.subintent,
-    trainingLevel: body.trainingLevel,
-    procedureOrTopic: intent.procedureOrTopic,
-  });
 
   const ip = getClientIp(request) ?? undefined;
   const userAgent = request.headers.get('user-agent') ?? undefined;
@@ -1683,14 +1866,18 @@ async function handleGuestChat(params: {
   logBroBot('[BROBOT-CHAT-GENERATION]', {
     requestId,
     provider: 'openai',
-    model: BROBOT_CHAT_MODEL,
+    model: pipelineResult.answerModel,
     success: true,
     detectedMode: brobotOutput.detectedMode,
     confidence: brobotOutput.confidence,
     usedBefore,
     usedAfter,
     remainingAfter,
-    qualityGateWarnings: qualityGate.warnings,
+    qualityGateWarnings: pipelineResult.qualityGate.warnings,
+    qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
+    revisionTriggered: pipelineResult.revisionTriggered,
+    revisionModel: pipelineResult.revisionModel,
+    metadataModel: pipelineResult.metadataModel,
     persistence: 'guest_ephemeral',
     intentSource,
   });
@@ -1716,6 +1903,7 @@ async function handleGuestChat(params: {
       assumedContext: brobotOutput.assumedContext,
       consultConfidence: brobotOutput.consultConfidence,
       missingInformation: brobotOutput.missingInformation,
+      researchSubmode: brobotOutput.researchSubmode,
     } satisfies BroBotChatResponse),
     guestCookieToSet
   );
@@ -1730,6 +1918,7 @@ export async function POST(request: Request) {
   let userId: string | null = null;
   let conversationId: string | null = null;
   let userMessageId: string | null = null;
+  let body: BroBotChatRequest | null = null;
   let step = 'parse_request';
 
   try {
@@ -1764,7 +1953,7 @@ export async function POST(request: Request) {
       return invalidRequestResponse('Invalid BroBot request.');
     }
 
-    const body = parsed.data;
+    body = parsed.data;
     step = 'auth';
     const auth = await getAuthContext(request);
 
@@ -1904,7 +2093,10 @@ export async function POST(request: Request) {
         mode: body.mode,
         responseDepth: body.responseDepth,
         trainingLevel: body.trainingLevel,
-        model: BROBOT_CHAT_MODEL,
+        model: getAnswerModelForRoute({
+          mode: body.mode,
+          responseDepth: body.responseDepth,
+        }),
       },
     });
 
@@ -2007,7 +2199,7 @@ export async function POST(request: Request) {
       try {
         step = 'expand_intent';
         const intentCompletion = await openai.chat.completions.create({
-          model: BROBOT_CHAT_MODEL,
+          model: BROBOT_INTENT_MODEL,
           temperature: 0,
           response_format: { type: 'json_object' },
           messages: buildBroBotIntentExpansionMessages({
@@ -2138,30 +2330,18 @@ export async function POST(request: Request) {
           : undefined,
     });
 
-    const selectedBranch =
-      body.selectedBranchId || body.selectedBranchLabel
-        ? {
-            id: body.selectedBranchId,
-            label: body.selectedBranchLabel,
-          }
-        : undefined;
     const answerContext = await buildBroBotAnswerContext({
       intent,
-      selectedBranch,
+      selectedBranch:
+        body.selectedBranchId || body.selectedBranchLabel
+          ? {
+              id: body.selectedBranchId,
+              label: body.selectedBranchLabel,
+            }
+          : undefined,
       responseDepth: body.responseDepth,
       trainingLevel: body.trainingLevel,
       history,
-    });
-    const modelMessages = buildBroBotChatMessages({
-      message: body.message,
-      messages: history,
-      mode: intent.mode,
-      responseDepth: body.responseDepth,
-      trainingLevel: body.trainingLevel,
-      intent,
-      selectedBranch,
-      answerContext,
-      answerNow: Boolean(body.answerNow),
     });
 
     if (body.stream || BROBOT_STREAMING_ENABLED) {
@@ -2177,7 +2357,8 @@ export async function POST(request: Request) {
         body,
         intent,
         intentSource,
-        modelMessages,
+        answerContext,
+        history,
         learningBranches,
         databaseBranchOptions,
         rankingContext,
@@ -2187,14 +2368,19 @@ export async function POST(request: Request) {
       });
     }
 
-    let completion: Awaited<ReturnType<OpenAI['chat']['completions']['create']>>;
+    let pipelineResult: BroBotPipelineResult;
     try {
       step = 'openai_completion';
-      completion = await openai.chat.completions.create({
-        model: BROBOT_CHAT_MODEL,
-        temperature: 0.2,
-        response_format: { type: 'json_object' },
-        messages: modelMessages,
+      pipelineResult = await generateBroBotPipelineResult({
+        openai,
+        persistence,
+        body,
+        intent,
+        answerContext,
+        history,
+        learningBranches,
+        databaseBranchOptions,
+        rankingContext,
       });
     } catch (error) {
       logChatStepError({
@@ -2217,7 +2403,12 @@ export async function POST(request: Request) {
           mode: body.mode,
           responseDepth: body.responseDepth,
           trainingLevel: body.trainingLevel,
-          model: BROBOT_CHAT_MODEL,
+          model: getAnswerModelForRoute({
+            mode: intent.mode,
+            ambiguity: intent.ambiguity,
+            responseDepth: body.responseDepth,
+            subintent: intent.subintent,
+          }),
           errorCode: 'openai_error',
         },
       });
@@ -2225,57 +2416,8 @@ export async function POST(request: Request) {
     }
 
     const latencyMs = Date.now() - startedAt;
-    const rawContent = completion.choices[0]?.message?.content ?? '';
-    step = 'parse_openai_response';
-    const parsedOutput = parseBroBotChatResponse(rawContent, {
-      fallbackMode: intent.mode,
-      fallbackAnswer: 'BroBot could not format a structured response. Please try again.',
-    });
-    const classifierNeedsClarification = intent.ambiguity !== 'low';
-    const clarifyingQuestions = mergeQuestions(
-      parsedOutput.clarifyingQuestions?.length
-        ? parsedOutput.clarifyingQuestions
-        : intent.clarifyingQuestions,
-      []
-    ).slice(0, 3);
-    const brobotOutput = {
-      ...parsedOutput,
-      selectedFocus:
-        body.selectedBranchLabel ||
-        body.selectedBranchId ||
-        (body.answerNow ? 'General framework' : undefined),
-      detectedMode: intent.mode,
-      needsClarification:
-        parsedOutput.needsClarification ||
-        classifierNeedsClarification ||
-        clarifyingQuestions.length > 0,
-      clarifyingQuestions,
-      assumedContext: parsedOutput.assumedContext || intent.assumedContext,
-      researchSubmode: intent.mode === 'research' ? intent.researchSubmode : undefined,
-      suggestedQuestions: mergeQuestions(clarifyingQuestions, parsedOutput.suggestedQuestions),
-      nextLearningBranches: mergeBranchOptions(
-        databaseBranchOptions,
-        parsedOutput.nextLearningBranches ?? intent.branchOptions ?? [],
-        5,
-        rankingContext
-      ),
-    };
-    brobotOutput.nextLearningBranches = await attachPersistedBranchQuestionIds({
-      persistence,
-      topic: learningBranches.topic,
-      branches: brobotOutput.nextLearningBranches,
-    });
-
-    const qualityGate = runBroBotQualityGate({
-      answer: brobotOutput.answer,
-      mode: intent.mode,
-      responseDepth: body.responseDepth,
-      selectedBranchId: body.selectedBranchId,
-      selectedBranchLabel: body.selectedBranchLabel,
-      subintent: intent.subintent,
-      trainingLevel: body.trainingLevel,
-      procedureOrTopic: intent.procedureOrTopic,
-    });
+    const brobotOutput = pipelineResult.brobotOutput;
+    const qualityGate = pipelineResult.qualityGate;
 
     if (!qualityGate.passed) {
       void recordChatAnalyticsEvent({
@@ -2365,7 +2507,7 @@ export async function POST(request: Request) {
           detectedMode: brobotOutput.detectedMode,
           responseDepth: body.responseDepth,
           trainingLevel: body.trainingLevel,
-          model: BROBOT_CHAT_MODEL,
+          model: pipelineResult.answerModel,
           errorCode: 'assistant_message_persistence_failed',
           ...researchSubmodeMetadata(researchSubmodeRoute),
         },
@@ -2374,6 +2516,28 @@ export async function POST(request: Request) {
     }
 
     const assistantMessageId = assistantMessage.id;
+
+    void enqueueBroBotEvaluationJob({
+      conversationId: persistedConversationId,
+      messageId: assistantMessageId,
+      userId,
+      mode: intent.mode,
+      procedure: intent.procedureOrTopic,
+      model: pipelineResult.answerModel,
+      trainingLevel: body.trainingLevel,
+      responseDepth: body.responseDepth,
+      intentSnapshot: intent,
+      contextSnapshot: {
+        certifiedContext: answerContext.certifiedContext,
+        orPrepProcedureMetadata: answerContext.orPrepProcedureMetadata,
+        oiteLearningMetadata: answerContext.oiteLearningMetadata,
+        qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
+        revisionTriggered: pipelineResult.revisionTriggered,
+        originalAnswerBeforeRevision: pipelineResult.originalAnswerBeforeRevision,
+        finalAnswer: brobotOutput.answer,
+      },
+    });
+
     const tagRows = normalizeTags(
       brobotOutput.tags,
       brobotOutput.detectedMode,
@@ -2397,7 +2561,239 @@ export async function POST(request: Request) {
           userId,
           conversationId: persistedConversationId,
           messageId: assistantMessageId,
+        });
+      }
+    }
+
+    const branchClick = await recordBranchClickEvent({
+      persistence,
+      userId,
+      conversationId: persistedConversationId,
+      topicId: learningBranches.topic?.topic_id ?? null,
+      selectedBranchId: body.selectedBranchId,
+      selectedBranchLabel: body.selectedBranchLabel,
+      selectedBranchRankPosition: body.selectedBranchRankPosition,
+      sourceMessageId: body.sourceMessageId ?? null,
+      mode: intent.mode,
+      trainingLevel: body.trainingLevel,
     });
+
+    await recordBranchOutcome({
+      persistence,
+      userId,
+      conversationId: persistedConversationId,
+      branchEventId: branchClick?.id ?? null,
+      branchQuestionId: branchClick?.branchQuestionId ?? body.selectedBranchId ?? null,
+      mode: intent.mode,
+      trainingLevel: body.trainingLevel,
+      history,
+      sourceMessageId: body.sourceMessageId ?? null,
+      latencyMs,
+    });
+
+    step = 'update_conversation';
+    const { error: updateConversationError } = await persistence
+      .from('brobot_conversations')
+      .update({
+        last_mode: brobotOutput.detectedMode,
+        detected_context: {
+          tags: brobotOutput.tags,
+          confidence: brobotOutput.confidence,
+          intent: {
+            subintent: intent.subintent,
+            procedureCategory: intent.procedureCategory,
+            goal: intent.goal ?? null,
+            procedureOrTopic: intent.procedureOrTopic,
+            ambiguity: intent.ambiguity,
+            missingContext: intent.missingContext,
+            branchOptions: intent.branchOptions ?? [],
+            selectedBranch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
+            classifierConfidence: intent.confidence,
+            intentSource,
+            researchSubmode: intent.researchSubmode ?? null,
+            qualityGateWarnings: qualityGate.warnings,
+            qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
+            revisionTriggered: pipelineResult.revisionTriggered,
+          },
+          consult:
+            brobotOutput.detectedMode === 'consult'
+              ? {
+                  confidence: brobotOutput.consultConfidence ?? null,
+                  missingInformationCount: brobotOutput.missingInformation?.length ?? 0,
+                  subtype: intent.subintent,
+                }
+              : null,
+        },
+      })
+      .eq('id', persistedConversationId)
+      .eq('user_id', userId);
+
+    if (updateConversationError) {
+      logChatStepError({
+        requestId,
+        category: 'database_error',
+        step,
+        error: updateConversationError,
+        userId,
+        conversationId: persistedConversationId,
+        messageId: assistantMessageId,
+      });
+    }
+
+    const ip = getClientIp(request) ?? undefined;
+    const userAgent = request.headers.get('user-agent') ?? undefined;
+
+    let usedAfter: number;
+    try {
+      step = 'record_successful_usage';
+      usedAfter = await recordSuccessfulAIUse(subject, latencyMs, {
+        ipHash: hashForLogging(ip),
+        userAgentHash: hashForLogging(userAgent),
+      });
+    } catch (error) {
+      logChatStepError({
+        requestId,
+        category: 'usage_error',
+        step,
+        error,
+        userId,
+        conversationId: persistedConversationId,
+        messageId: assistantMessageId,
+      });
+      return serverErrorResponse('usage_error', 'BroBot could not record usage.');
+    }
+    const remainingAfter = limit != null ? Math.max(0, limit - usedAfter) : null;
+
+    await recordChatAnalyticsEvent({
+      userId,
+      conversationId: persistedConversationId,
+      messageId: assistantMessageId,
+      eventType: 'brobot_chat_success',
+      outcome: 'success',
+      latencyMs,
+      metadata: {
+        mode: body.mode,
+        detectedMode: brobotOutput.detectedMode,
+        intent_mode: intent.mode,
+        intent_subintent: intent.subintent,
+        intent_procedure_category: intent.procedureCategory,
+        ambiguity_level: intent.ambiguity,
+        intent_goal: intent.goal ?? null,
+        selectedBranch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
+        classifierConfidence: intent.confidence,
+        intentSource,
+        qualityGateWarnings: qualityGate.warnings,
+        qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
+        revisionTriggered: pipelineResult.revisionTriggered,
+        revisionModel: pipelineResult.revisionModel,
+        metadataModel: pipelineResult.metadataModel,
+        consultConfidence: brobotOutput.consultConfidence ?? null,
+        missingInformationCount: brobotOutput.missingInformation?.length ?? 0,
+        consultSubtype: brobotOutput.detectedMode === 'consult' ? intent.subintent : null,
+        responseDepth: body.responseDepth,
+        trainingLevel: body.trainingLevel,
+        model: pipelineResult.answerModel,
+        tokenUsage: pipelineResult.answerUsage ?? null,
+        revisionTokenUsage: pipelineResult.revisionUsage ?? null,
+        metadataTokenUsage: pipelineResult.metadataUsage ?? null,
+        ...researchSubmodeMetadata(researchSubmodeRoute),
+      },
+    });
+
+    if (usedAfter === 1) {
+      await recordChatAnalyticsEvent({
+        userId,
+        conversationId: persistedConversationId,
+        messageId: assistantMessageId,
+        eventType: 'first_brobot_message',
+        outcome: 'success',
+        latencyMs,
+        metadata: {
+          source: 'brobot_chat',
+          mode: body.mode,
+          detectedMode: brobotOutput.detectedMode,
+        },
+      });
+    }
+
+    logBroBot('[BROBOT-CHAT-GENERATION]', {
+      requestId,
+      provider: 'openai',
+      model: pipelineResult.answerModel,
+      revisionModel: pipelineResult.revisionModel,
+      metadataModel: pipelineResult.metadataModel,
+      success: true,
+      detectedMode: brobotOutput.detectedMode,
+      confidence: brobotOutput.confidence,
+      usedBefore,
+      usedAfter,
+      remainingAfter,
+      qualityGateWarnings: qualityGate.warnings,
+      qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
+      revisionTriggered: pipelineResult.revisionTriggered,
+      intentSource,
+    });
+
+    return NextResponse.json({
+      conversationId: persistedConversationId,
+      messageId: assistantMessageId,
+      goal: brobotOutput.goal,
+      selectedFocus: brobotOutput.selectedFocus,
+      answer: brobotOutput.answer,
+      priorityPoints: brobotOutput.priorityPoints,
+      knowledgeGaps: brobotOutput.knowledgeGaps,
+      whatMostResidentsMiss: brobotOutput.whatMostResidentsMiss,
+      suggestedQuestions: brobotOutput.suggestedQuestions,
+      nextLearningBranches: brobotOutput.nextLearningBranches,
+      tags: brobotOutput.tags,
+      detectedMode: brobotOutput.detectedMode,
+      remainingFreeUses: remainingAfter,
+      confidence: brobotOutput.confidence,
+      needsClarification: brobotOutput.needsClarification,
+      clarifyingQuestions: brobotOutput.clarifyingQuestions,
+      assumedContext: brobotOutput.assumedContext,
+      consultConfidence: brobotOutput.consultConfidence,
+      missingInformation: brobotOutput.missingInformation,
+      researchSubmode: brobotOutput.researchSubmode,
+    } satisfies BroBotChatResponse);
+  } catch (error) {
+    if (subject) {
+      await recordUsageEvent({
+        subject,
+        outcome: 'failure',
+        latencyMs: Date.now() - startedAt,
+      });
+    }
+
+    if (userId) {
+      await recordChatAnalyticsEvent({
+        userId,
+        conversationId,
+        messageId: userMessageId,
+        eventType: 'brobot_chat_error',
+        outcome: 'failure',
+        latencyMs: Date.now() - startedAt,
+        metadata: {
+          model: body
+            ? getAnswerModelForRoute({
+                mode: body.mode,
+                responseDepth: body.responseDepth,
+              })
+            : undefined,
+          errorCode: error instanceof Error ? error.name : 'unknown_error',
+        },
+      });
+    }
+
+    logBroBot('[BROBOT-CHAT-UNEXPECTED]', {
+      requestId,
+      step,
+      userType: subject?.type ?? 'unknown',
+      subjectPrefix: subject ? subjectPrefix(subject) : null,
+      message: error instanceof Error ? error.message : 'Unknown route error',
+    });
+
+    return withGuestCookie(generationFailedResponse(), guestCookieToSet);
   }
 }
 
@@ -2413,6 +2809,10 @@ async function persistCompletedBroBotOutput(params: {
   body: BroBotChatRequest;
   intent: BroBotChatIntent;
   intentSource: string;
+  answerContext: BroBotAnswerContext;
+  answerModel: string;
+  revisionModel?: string | null;
+  metadataModel?: string | null;
   brobotOutput: ReturnType<typeof parseBroBotChatResponse> & {
     selectedFocus?: string;
     detectedMode: BroBotChatMode;
@@ -2426,7 +2826,12 @@ async function persistCompletedBroBotOutput(params: {
   latencyMs: number;
   limit: number | null;
   usedBefore: number | null;
-  completionUsage?: unknown;
+  answerUsage?: unknown;
+  revisionUsage?: unknown;
+  metadataUsage?: unknown;
+  qualityGateWarningsBeforeRevision?: string[];
+  revisionTriggered?: boolean;
+  originalAnswerBeforeRevision?: string | null;
 }) {
   const qualityGate = runBroBotQualityGate({
     answer: params.brobotOutput.answer,
@@ -2516,6 +2921,27 @@ async function persistCompletedBroBotOutput(params: {
     throw new Error('BroBot could not save this response.');
   }
 
+  void enqueueBroBotEvaluationJob({
+    conversationId: params.conversationId,
+    messageId: params.assistantMessageId,
+    userId: params.userId,
+    mode: params.intent.mode,
+    procedure: params.intent.procedureOrTopic,
+    model: params.answerModel,
+    trainingLevel: params.body.trainingLevel,
+    responseDepth: params.body.responseDepth,
+    intentSnapshot: params.intent,
+    contextSnapshot: {
+      certifiedContext: params.answerContext.certifiedContext,
+      orPrepProcedureMetadata: params.answerContext.orPrepProcedureMetadata,
+      oiteLearningMetadata: params.answerContext.oiteLearningMetadata,
+      qualityGateWarningsBeforeRevision: params.qualityGateWarningsBeforeRevision ?? [],
+      revisionTriggered: params.revisionTriggered ?? false,
+      originalAnswerBeforeRevision: params.originalAnswerBeforeRevision ?? null,
+      finalAnswer: params.brobotOutput.answer,
+    },
+  });
+
   const tagRows = normalizeTags(
     params.brobotOutput.tags,
     params.brobotOutput.detectedMode,
@@ -2587,6 +3013,8 @@ async function persistCompletedBroBotOutput(params: {
           intentSource: params.intentSource,
           researchSubmode: params.intent.researchSubmode ?? null,
           qualityGateWarnings: qualityGate.warnings,
+          qualityGateWarningsBeforeRevision: params.qualityGateWarningsBeforeRevision ?? [],
+          revisionTriggered: params.revisionTriggered ?? false,
         },
         consult: params.brobotOutput.detectedMode === 'consult'
           ? {
@@ -2639,13 +3067,19 @@ async function persistCompletedBroBotOutput(params: {
       classifierConfidence: params.intent.confidence,
       intentSource: params.intentSource,
       qualityGateWarnings: qualityGate.warnings,
+      qualityGateWarningsBeforeRevision: params.qualityGateWarningsBeforeRevision ?? [],
+      revisionTriggered: params.revisionTriggered ?? false,
+      revisionModel: params.revisionModel ?? null,
+      metadataModel: params.metadataModel ?? null,
       consultConfidence: params.brobotOutput.consultConfidence ?? null,
       missingInformationCount: params.brobotOutput.missingInformation?.length ?? 0,
       consultSubtype: params.brobotOutput.detectedMode === 'consult' ? params.intent.subintent : null,
       responseDepth: params.body.responseDepth,
       trainingLevel: params.body.trainingLevel,
-      model: BROBOT_CHAT_MODEL,
-      tokenUsage: params.completionUsage ?? null,
+      model: params.answerModel,
+      tokenUsage: params.answerUsage ?? null,
+      revisionTokenUsage: params.revisionUsage ?? null,
+      metadataTokenUsage: params.metadataUsage ?? null,
       ...researchSubmodeMetadataForIntent(params.intent),
     },
   });
@@ -2669,13 +3103,17 @@ async function persistCompletedBroBotOutput(params: {
   logBroBot('[BROBOT-CHAT-GENERATION]', {
     requestId: params.requestId,
     provider: 'openai',
-    model: BROBOT_CHAT_MODEL,
+    model: params.answerModel,
+    revisionModel: params.revisionModel ?? null,
+    metadataModel: params.metadataModel ?? null,
     success: true,
     detectedMode: params.brobotOutput.detectedMode,
     confidence: params.brobotOutput.confidence,
     usedBefore: params.usedBefore,
     usedAfter,
     remainingAfter,
+    qualityGateWarningsBeforeRevision: params.qualityGateWarningsBeforeRevision ?? [],
+    revisionTriggered: params.revisionTriggered ?? false,
     streaming: true,
   });
 
@@ -2717,7 +3155,8 @@ function createStreamingChatResponse(params: {
   body: BroBotChatRequest;
   intent: BroBotChatIntent;
   intentSource: string;
-  modelMessages: BroBotModelMessage[];
+  answerContext: BroBotAnswerContext;
+  history: BroBotModelMessage[];
   learningBranches: {
     topic: BranchTopicRow | null;
     branches: RankedBranchOption[];
@@ -2731,6 +3170,21 @@ function createStreamingChatResponse(params: {
   const encoder = new TextEncoder();
   const assistantMessageId = crypto.randomUUID();
 
+  const chunkAnswer = (answer: string) => {
+    if (!answer) return [];
+    const chunks: string[] = [];
+    let current = '';
+    for (const token of answer.split(/(\s+)/)) {
+      current += token;
+      if (current.length >= 120) {
+        chunks.push(current);
+        current = '';
+      }
+    }
+    if (current) chunks.push(current);
+    return chunks;
+  };
+
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const send = (event: StreamEventName, data: Record<string, unknown>) => {
@@ -2742,88 +3196,19 @@ function createStreamingChatResponse(params: {
         conversationId: params.conversationId,
       });
 
-      let rawContent = '';
-      let streamedAnswer = '';
-
       try {
-        const completionStream = await params.openai.chat.completions.create({
-          model: BROBOT_CHAT_MODEL,
-          temperature: 0.2,
-          response_format: { type: 'json_object' },
-          messages: params.modelMessages,
-          stream: true,
-          stream_options: { include_usage: true },
-        });
-
-        let completionUsage: unknown = null;
-
-        for await (const chunk of completionStream) {
-          const piece = chunk.choices[0]?.delta?.content ?? '';
-          if (piece) {
-            rawContent += piece;
-            const answerPrefix = extractAnswerPrefixFromJson(rawContent);
-            if (answerPrefix.length > streamedAnswer.length) {
-              const delta = answerPrefix.slice(streamedAnswer.length);
-              streamedAnswer = answerPrefix;
-              send('delta', { content: delta });
-            }
-          }
-
-          if ('usage' in chunk && chunk.usage) {
-            completionUsage = chunk.usage;
-          }
-        }
-
-        const latencyMs = Date.now() - params.startedAt;
-        const parsedOutput = parseBroBotChatResponse(rawContent, {
-          fallbackMode: params.intent.mode,
-          fallbackAnswer:
-            streamedAnswer || 'BroBot could not format a structured response. Please try again.',
-        });
-        const classifierNeedsClarification = params.intent.ambiguity !== 'low';
-        const clarifyingQuestions = mergeQuestions(
-          parsedOutput.clarifyingQuestions?.length
-            ? parsedOutput.clarifyingQuestions
-            : params.intent.clarifyingQuestions,
-          []
-        ).slice(0, 3);
-        const brobotOutput = {
-          ...parsedOutput,
-          answer: parsedOutput.answer || streamedAnswer,
-          selectedFocus:
-            params.body.selectedBranchLabel ||
-            params.body.selectedBranchId ||
-            (params.body.answerNow ? 'General framework' : undefined),
-          detectedMode: params.intent.mode,
-          needsClarification:
-            parsedOutput.needsClarification ||
-            classifierNeedsClarification ||
-            clarifyingQuestions.length > 0,
-          clarifyingQuestions,
-          assumedContext: parsedOutput.assumedContext || params.intent.assumedContext,
-          researchSubmode:
-            params.intent.mode === 'research' ? params.intent.researchSubmode : undefined,
-          suggestedQuestions: mergeQuestions(clarifyingQuestions, parsedOutput.suggestedQuestions),
-          nextLearningBranches: mergeBranchOptions(
-            params.databaseBranchOptions,
-            parsedOutput.nextLearningBranches ?? params.intent.branchOptions ?? [],
-            5,
-            {
-              ...params.rankingContext,
-              userMessage: params.body.message,
-              mode: params.intent.mode,
-              trainingLevel: params.body.trainingLevel,
-              history: params.modelMessages.filter((message) => message.role !== 'system'),
-              intent: params.intent,
-            }
-          ),
-        };
-        brobotOutput.nextLearningBranches = await attachPersistedBranchQuestionIds({
+        const pipelineResult = await generateBroBotPipelineResult({
+          openai: params.openai,
           persistence: params.persistence,
-          topic: params.learningBranches.topic,
-          branches: brobotOutput.nextLearningBranches,
+          body: params.body,
+          intent: params.intent,
+          answerContext: params.answerContext,
+          history: params.history,
+          learningBranches: params.learningBranches,
+          databaseBranchOptions: params.databaseBranchOptions,
+          rankingContext: params.rankingContext,
         });
-
+        const latencyMs = Date.now() - params.startedAt;
         const responsePayload = await persistCompletedBroBotOutput({
           request: params.request,
           requestId: params.requestId,
@@ -2836,15 +3221,27 @@ function createStreamingChatResponse(params: {
           body: params.body,
           intent: params.intent,
           intentSource: params.intentSource,
-          brobotOutput,
+          answerContext: params.answerContext,
+          answerModel: pipelineResult.answerModel,
+          revisionModel: pipelineResult.revisionModel,
+          metadataModel: pipelineResult.metadataModel,
+          brobotOutput: pipelineResult.brobotOutput,
           learningBranches: params.learningBranches,
-          history: params.modelMessages.filter((message) => message.role !== 'system'),
+          history: params.history,
           latencyMs,
           limit: params.limit,
           usedBefore: params.usedBefore,
-          completionUsage,
+          answerUsage: pipelineResult.answerUsage,
+          revisionUsage: pipelineResult.revisionUsage,
+          metadataUsage: pipelineResult.metadataUsage,
+          qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
+          revisionTriggered: pipelineResult.revisionTriggered,
+          originalAnswerBeforeRevision: pipelineResult.originalAnswerBeforeRevision,
         });
 
+        for (const chunk of chunkAnswer(responsePayload.answer)) {
+          send('delta', { content: chunk });
+        }
         send('metadata', responsePayload);
         send('done', {
           assistantMessageId,
@@ -2872,16 +3269,18 @@ function createStreamingChatResponse(params: {
             mode: params.body.mode,
             responseDepth: params.body.responseDepth,
             trainingLevel: params.body.trainingLevel,
-            model: BROBOT_CHAT_MODEL,
+            model: getAnswerModelForRoute({
+              mode: params.intent.mode,
+              ambiguity: params.intent.ambiguity,
+              responseDepth: params.body.responseDepth,
+              subintent: params.intent.subintent,
+            }),
             errorCode: error instanceof Error ? error.name : 'streaming_error',
           },
         });
 
         send('error', {
-          message:
-            streamedAnswer.length > 0
-              ? 'Response interrupted. Please retry if you need the full answer.'
-              : 'BroBot is having trouble responding. Please try again in a moment.',
+          message: 'BroBot is having trouble responding. Please try again in a moment.',
         });
       } finally {
         controller.close();
@@ -2897,218 +3296,4 @@ function createStreamingChatResponse(params: {
       'X-Accel-Buffering': 'no',
     },
   });
-}
-
-    const branchClick = await recordBranchClickEvent({
-      persistence,
-      userId,
-      conversationId: persistedConversationId,
-      topicId: learningBranches.topic?.topic_id ?? null,
-      selectedBranchId: body.selectedBranchId,
-      selectedBranchLabel: body.selectedBranchLabel,
-      selectedBranchRankPosition: body.selectedBranchRankPosition,
-      sourceMessageId: body.sourceMessageId ?? null,
-      mode: intent.mode,
-      trainingLevel: body.trainingLevel,
-    });
-
-    await recordBranchOutcome({
-      persistence,
-      userId,
-      conversationId: persistedConversationId,
-      branchEventId: branchClick?.id ?? null,
-      branchQuestionId: branchClick?.branchQuestionId ?? body.selectedBranchId ?? null,
-      mode: intent.mode,
-      trainingLevel: body.trainingLevel,
-      history,
-      sourceMessageId: body.sourceMessageId ?? null,
-      latencyMs,
-    });
-
-    step = 'update_conversation';
-    const { error: updateConversationError } = await persistence
-      .from('brobot_conversations')
-      .update({
-        last_mode: brobotOutput.detectedMode,
-        detected_context: {
-          tags: brobotOutput.tags,
-          confidence: brobotOutput.confidence,
-          intent: {
-            subintent: intent.subintent,
-            procedureCategory: intent.procedureCategory,
-            goal: intent.goal ?? null,
-            procedureOrTopic: intent.procedureOrTopic,
-            ambiguity: intent.ambiguity,
-            missingContext: intent.missingContext,
-            branchOptions: intent.branchOptions ?? [],
-            selectedBranch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
-            classifierConfidence: intent.confidence,
-            intentSource,
-            researchSubmode: intent.researchSubmode ?? null,
-            qualityGateWarnings: qualityGate.warnings,
-          },
-          consult: brobotOutput.detectedMode === 'consult'
-            ? {
-                confidence: brobotOutput.consultConfidence ?? null,
-                missingInformationCount: brobotOutput.missingInformation?.length ?? 0,
-                subtype: intent.subintent,
-              }
-            : null,
-        },
-      })
-      .eq('id', persistedConversationId)
-      .eq('user_id', userId);
-
-    if (updateConversationError) {
-      logChatStepError({
-        requestId,
-        category: 'database_error',
-        step,
-        error: updateConversationError,
-        userId,
-        conversationId: persistedConversationId,
-        messageId: assistantMessageId,
-      });
-    }
-
-    const ip = getClientIp(request) ?? undefined;
-    const userAgent = request.headers.get('user-agent') ?? undefined;
-
-    let usedAfter: number;
-    try {
-      step = 'record_successful_usage';
-      usedAfter = await recordSuccessfulAIUse(subject, latencyMs, {
-        ipHash: hashForLogging(ip),
-        userAgentHash: hashForLogging(userAgent),
-      });
-    } catch (error) {
-      logChatStepError({
-        requestId,
-        category: 'usage_error',
-        step,
-        error,
-        userId,
-        conversationId: persistedConversationId,
-        messageId: assistantMessageId,
-      });
-      return serverErrorResponse('usage_error', 'BroBot could not record usage.');
-    }
-    const remainingAfter = limit != null ? Math.max(0, limit - usedAfter) : null;
-
-    await recordChatAnalyticsEvent({
-      userId,
-      conversationId: persistedConversationId,
-      messageId: assistantMessageId,
-      eventType: 'brobot_chat_success',
-      outcome: 'success',
-      latencyMs,
-      metadata: {
-        mode: body.mode,
-        detectedMode: brobotOutput.detectedMode,
-        intent_mode: intent.mode,
-        intent_subintent: intent.subintent,
-        intent_procedure_category: intent.procedureCategory,
-        ambiguity_level: intent.ambiguity,
-        intent_goal: intent.goal ?? null,
-        selectedBranch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
-        classifierConfidence: intent.confidence,
-        intentSource,
-        qualityGateWarnings: qualityGate.warnings,
-        consultConfidence: brobotOutput.consultConfidence ?? null,
-        missingInformationCount: brobotOutput.missingInformation?.length ?? 0,
-        consultSubtype: brobotOutput.detectedMode === 'consult' ? intent.subintent : null,
-        responseDepth: body.responseDepth,
-        trainingLevel: body.trainingLevel,
-        model: BROBOT_CHAT_MODEL,
-        tokenUsage: completion.usage ?? null,
-        ...researchSubmodeMetadata(researchSubmodeRoute),
-      },
-    });
-
-    if (usedAfter === 1) {
-      await recordChatAnalyticsEvent({
-        userId,
-        conversationId: persistedConversationId,
-        messageId: assistantMessageId,
-        eventType: 'first_brobot_message',
-        outcome: 'success',
-        latencyMs,
-        metadata: {
-          source: 'brobot_chat',
-          mode: body.mode,
-          detectedMode: brobotOutput.detectedMode,
-        },
-      });
-    }
-
-    logBroBot('[BROBOT-CHAT-GENERATION]', {
-      requestId,
-      provider: 'openai',
-      model: BROBOT_CHAT_MODEL,
-      success: true,
-      detectedMode: brobotOutput.detectedMode,
-      confidence: brobotOutput.confidence,
-      usedBefore,
-      usedAfter,
-      remainingAfter,
-    });
-
-    const responsePayload: BroBotChatResponse = {
-      conversationId: persistedConversationId,
-      messageId: assistantMessageId,
-      goal: brobotOutput.goal,
-      selectedFocus: brobotOutput.selectedFocus,
-      answer: brobotOutput.answer,
-      priorityPoints: brobotOutput.priorityPoints,
-      knowledgeGaps: brobotOutput.knowledgeGaps,
-      whatMostResidentsMiss: brobotOutput.whatMostResidentsMiss,
-      suggestedQuestions: brobotOutput.suggestedQuestions,
-      nextLearningBranches: brobotOutput.nextLearningBranches,
-      tags: brobotOutput.tags,
-      detectedMode: brobotOutput.detectedMode,
-      remainingFreeUses: remainingAfter,
-      confidence: brobotOutput.confidence,
-      needsClarification: brobotOutput.needsClarification,
-      clarifyingQuestions: brobotOutput.clarifyingQuestions,
-      assumedContext: brobotOutput.assumedContext,
-      consultConfidence: brobotOutput.consultConfidence,
-      missingInformation: brobotOutput.missingInformation,
-      researchSubmode: brobotOutput.researchSubmode,
-    };
-
-    return NextResponse.json(responsePayload);
-  } catch (error) {
-    if (subject) {
-      await recordUsageEvent({
-        subject,
-        outcome: 'failure',
-        latencyMs: Date.now() - startedAt,
-      });
-    }
-
-    if (userId) {
-      await recordChatAnalyticsEvent({
-        userId,
-        conversationId,
-        messageId: userMessageId,
-        eventType: 'brobot_chat_error',
-        outcome: 'failure',
-        latencyMs: Date.now() - startedAt,
-        metadata: {
-          model: BROBOT_CHAT_MODEL,
-          errorCode: error instanceof Error ? error.name : 'unknown_error',
-        },
-      });
-    }
-
-    logBroBot('[BROBOT-CHAT-UNEXPECTED]', {
-      requestId,
-      step,
-      userType: subject?.type ?? 'unknown',
-      subjectPrefix: subject ? subjectPrefix(subject) : null,
-      message: error instanceof Error ? error.message : 'Unknown route error',
-    });
-
-    return withGuestCookie(generationFailedResponse(), guestCookieToSet);
-  }
 }

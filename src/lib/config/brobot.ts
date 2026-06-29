@@ -26,6 +26,9 @@ export const BROBOT_CONFIG = {
   /** Master kill switch. When false, all AI calls are rejected. */
   ENABLED: process.env.BROBOT_ENABLED !== 'false',
 
+  /** Explicit gate for the authenticated Orthobullets browser-extension surface. */
+  ORTHOBULLETS_ENABLED: process.env.BROBOT_ORTHOBULLETS_ENABLED !== 'false',
+
   /** Daily cap for completely unauthenticated guest users (via signed cookie) */
   GUEST_DAILY_CAP: parseInt(process.env.BROBOT_GUEST_DAILY_CAP || '1', 10),
 

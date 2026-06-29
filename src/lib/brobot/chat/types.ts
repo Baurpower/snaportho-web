@@ -174,6 +174,14 @@ export const BroBotChatOutputSchema = z.object({
 
 export type BroBotChatOutput = z.infer<typeof BroBotChatOutputSchema>;
 
+export const BroBotMetadataOutputSchema = z.object({
+  suggestedQuestions: z.array(z.string()),
+  nextLearningBranches: z.array(BroBotBranchOptionSchema),
+  tags: z.array(z.string()),
+});
+
+export type BroBotMetadataOutput = z.infer<typeof BroBotMetadataOutputSchema>;
+
 export const BroBotChatIntentSchema = z.object({
   mode: BroBotChatModeSchema.exclude(['auto']),
   subintent: BroBotChatSubintentSchema,

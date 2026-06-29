@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "SnapOrtho BroBot for Orthobullets",
+  "version": "0.1.0",
+  "description": "Explain Orthobullets review pages with BroBot in a side panel.",
+  "permissions": ["storage", "tabs", "activeTab", "sidePanel"],
+  "host_permissions": [
+    "https://www.orthobullets.com/*",
+    "https://orthobullets.com/*",
+    "__APP_ORIGIN__/*"
+  ],
+  "background": {
+    "service_worker": "__BACKGROUND_SERVICE_WORKER__",
+    "type": "module"
+  },
+  "icons": {
+    "16": "icons/brobot-16.png",
+    "32": "icons/brobot-32.png",
+    "48": "icons/brobot-48.png",
+    "128": "icons/brobot-128.png"
+  },
+  "side_panel": {
+    "default_path": "__SIDEPANEL_HTML__"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.orthobullets.com/*", "https://orthobullets.com/*"],
+      "js": ["__CONTENT_SCRIPT__"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Open BroBot",
+    "default_icon": {
+      "16": "icons/brobot-16.png",
+      "32": "icons/brobot-32.png",
+      "48": "icons/brobot-48.png",
+      "128": "icons/brobot-128.png"
+    }
+  }
+}
