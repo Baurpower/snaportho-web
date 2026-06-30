@@ -1,0 +1,8 @@
+# Local automation, diagnostics, and generated artifacts stay committed when
+# useful, but they are not part of the production deployment bundle.
+.agents/
+.codex/
+docs/
+reports/
+scripts/
+tmp/

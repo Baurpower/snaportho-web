@@ -7,6 +7,10 @@ import {
   CasePrepReviewAuthError,
   requireCasePrepReviewer,
 } from "@/lib/caseprep-review/access-control";
+import {
+  getDisabledAutomationResponse,
+  isKgAutomationEnabled,
+} from "@/lib/config/automation";
 
 function readFilters(searchParams: URLSearchParams): AnkiKgReviewFilters {
   return {
@@ -23,6 +27,17 @@ function readFilters(searchParams: URLSearchParams): AnkiKgReviewFilters {
 }
 
 export async function GET(req: NextRequest) {
+  // This review surface is intentionally present in Git, but stays inert on
+  // production deployments until ENABLE_KG_AUTOMATION=true is set explicitly.
+  if (!isKgAutomationEnabled()) {
+    return NextResponse.json(
+      getDisabledAutomationResponse(
+        "Anki KG automation review is disabled. Set ENABLE_KG_AUTOMATION=true to enable it."
+      ),
+      { status: 503 }
+    );
+  }
+
   try {
     await requireCasePrepReviewer();
   } catch (err) {

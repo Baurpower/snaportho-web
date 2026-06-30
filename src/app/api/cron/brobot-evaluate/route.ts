@@ -4,6 +4,10 @@ import { NextResponse } from 'next/server';
 
 import { createAdminClient } from '@/lib/supabase/admin';
 import {
+  getDisabledAutomationResponse,
+  isCronJobsEnabled,
+} from '@/lib/config/automation';
+import {
   BROBOT_EVAL_MODEL,
   claimPendingEvaluationJobs,
   markJobCompleted,
@@ -20,6 +24,26 @@ export const maxDuration = 60;
 
 const JOBS_PER_RUN = 5;
 const BROBOT_EVAL_ENABLED = process.env.BROBOT_EVAL_ENABLED !== 'false';
+
+function getCronConfigurationError(): string | null {
+  if (!isCronJobsEnabled()) {
+    return 'Cron jobs are disabled. Set ENABLE_CRON_JOBS=true to allow scheduled production runs.';
+  }
+
+  if (!process.env.CRON_SECRET) {
+    return 'Cron jobs are enabled, but CRON_SECRET is missing.';
+  }
+
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return 'Cron jobs are enabled, but Supabase admin environment variables are missing.';
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return 'Cron jobs are enabled, but OPENAI_API_KEY is missing.';
+  }
+
+  return null;
+}
 
 function isAuthorized(request: Request): boolean {
   const secret = process.env.CRON_SECRET;
@@ -182,6 +206,18 @@ async function processJob(job: BroBotEvaluationJobRow): Promise<boolean> {
 }
 
 export async function GET(request: Request) {
+  const configurationError = getCronConfigurationError();
+
+  // Keep the route committed and reachable, but fail closed on Vercel until
+  // production explicitly enables scheduled work.
+  if (configurationError) {
+    const status = isCronJobsEnabled() ? 503 : 200;
+    return NextResponse.json(
+      getDisabledAutomationResponse(configurationError),
+      { status }
+    );
+  }
+
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }

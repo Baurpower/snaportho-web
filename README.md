@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## SnapOrtho Web
 
-## Getting Started
+This repository contains the production SnapOrtho Next.js app plus internal scripts, reports, and review tooling that support backend and content workflows.
 
-First, run the development server:
+## Local Development
+
+Run the app locally with:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment Boundaries
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Vercel production builds should only run intentional app behavior.
+- Local/admin automation code remains committed, but is disabled on production unless the corresponding env flag is explicitly enabled.
+- Vercel Hobby does not support the high-frequency cron schedule that was previously configured here, so scheduled jobs must remain disabled or be moved to a compatible scheduler or plan.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See [docs/vercel-deployment-boundaries.md](/Volumes/PS3000/snaportho_dev/snaportho-web/docs/vercel-deployment-boundaries.md) for the current production rules, env flags, and what is intentionally excluded from Vercel deployments.
 
-## Learn More
+## Useful Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run lint`
+- `npm run build`
+- `npm run kg:auto:loop`
+- `npm run kg:automation:generate`
+- `npm run kg:automation:report`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The `kg:*`, `anki:*`, and other `scripts/*` entry points are intended for trusted local/admin execution, not automatic Vercel production startup.

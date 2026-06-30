@@ -7,6 +7,7 @@ import {
   fetchAnkiKgReviewDashboard,
   type AnkiKgReviewFilters,
 } from "@/lib/education/anki-kg-review";
+import { isKgAutomationEnabled } from "@/lib/config/automation";
 import { AnkiKgReviewDashboard } from "@/components/anki-kg-review/AnkiKgReviewDashboard";
 
 export const dynamic = "force-dynamic";
@@ -35,6 +36,18 @@ export default async function AnkiKgReviewPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  if (!isKgAutomationEnabled()) {
+    return (
+      <div className="mx-auto mt-24 max-w-lg rounded-2xl border border-amber-200 bg-white p-6 shadow-sm">
+        <h1 className="text-xl font-bold text-gray-900">Review Dashboard Disabled</h1>
+        <p className="mt-2 text-sm text-gray-600">
+          This Anki KG review surface is committed for internal workflows, but production keeps it
+          disabled unless <code>ENABLE_KG_AUTOMATION=true</code> is set.
+        </p>
+      </div>
+    );
+  }
+
   let ctx;
   try {
     ctx = await requireCasePrepReviewer();

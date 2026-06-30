@@ -8,6 +8,10 @@ import {
   CasePrepReviewAuthError,
   requireCasePrepReviewer,
 } from "@/lib/caseprep-review/access-control";
+import {
+  getDisabledAutomationResponse,
+  isKgAutomationEnabled,
+} from "@/lib/config/automation";
 
 function isAction(value: string | null | undefined): value is ReviewActionInput["action"] {
   return (
@@ -21,6 +25,17 @@ function isAction(value: string | null | undefined): value is ReviewActionInput[
 }
 
 export async function POST(req: NextRequest) {
+  // Keep these admin actions available in source control without activating
+  // them on Vercel until the production env explicitly opts in.
+  if (!isKgAutomationEnabled()) {
+    return NextResponse.json(
+      getDisabledAutomationResponse(
+        "Anki KG automation review is disabled. Set ENABLE_KG_AUTOMATION=true to enable it."
+      ),
+      { status: 503 }
+    );
+  }
+
   try {
     await requireCasePrepReviewer();
   } catch (err) {
