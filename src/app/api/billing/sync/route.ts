@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
-import { getStripe } from '@/lib/stripe';
-import { syncSubscriptionFromStripe } from '@/lib/stripe';
+import { reconcileStripeSubscriptions } from '@/lib/stripe';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 
 /**
@@ -21,48 +20,31 @@ export async function POST() {
   }
 
   try {
-    const stripe = getStripe();
-    // Look up any existing subscription row for this user + plan to get Stripe IDs
-    const { data: subRow } = await supabase
+    const { data: subRows } = await supabase
       .from('subscriptions')
-      .select('stripe_customer_id, stripe_subscription_id, status')
+      .select('stripe_customer_id, stripe_subscription_id, status, current_period_end, updated_at')
       .eq('user_id', user.id)
+      .eq('provider', 'stripe')
       .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+      .order('current_period_end', { ascending: false, nullsFirst: false })
       .order('updated_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
+      .limit(25);
 
-    let synced = false;
-    let message = 'No Stripe subscription data found yet.';
+    const customerId = subRows?.find((row) => row.stripe_customer_id)?.stripe_customer_id ?? null;
+    const reconciliation = await reconcileStripeSubscriptions({
+      userId: user.id,
+      stripeCustomerId: customerId,
+    });
 
-    if (subRow?.stripe_subscription_id) {
-      // Prefer direct sub ID
-      const sub = await stripe.subscriptions.retrieve(subRow.stripe_subscription_id);
-      await syncSubscriptionFromStripe(sub);
-      synced = true;
-      message = 'Synced subscription by ID.';
-    } else if (subRow?.stripe_customer_id) {
-      // Fallback: list recent subs for the customer
-      const subs = await stripe.subscriptions.list({
-        customer: subRow.stripe_customer_id,
-        limit: 3,
-        status: 'all',
-      });
-
-      // Pick the most relevant (active or latest)
-      const relevant = subs.data.find(s => ['active', 'trialing', 'past_due'].includes(s.status)) || subs.data[0];
-
-      if (relevant) {
-        await syncSubscriptionFromStripe(relevant);
-        synced = true;
-        message = 'Synced latest subscription for customer.';
-      }
-    } else {
-      // Last resort: try to find customer via previous rows or create flow, but for now just report
-      message = 'No customer or subscription ID on file yet. Complete checkout first.';
-    }
-
-    return NextResponse.json({ success: true, synced, message });
+    return NextResponse.json({
+      success: true,
+      synced: reconciliation.syncedCount > 0,
+      message: reconciliation.syncedCount > 0
+        ? `Synced ${reconciliation.syncedCount} Stripe subscription(s) for customer ${reconciliation.customerId}.`
+        : 'No Stripe customer or BroBot subscriptions were found to reconcile.',
+      customerId: reconciliation.customerId,
+      subscriptions: reconciliation.subscriptions,
+    });
   } catch (err) {
     console.error('[billing/sync] error', err);
     return NextResponse.json(

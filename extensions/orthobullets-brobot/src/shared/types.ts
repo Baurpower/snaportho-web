@@ -31,10 +31,15 @@ export type OrthobulletsExtractionFailureCode =
   | 'page_not_readable';
 
 export interface OrthobulletsExtractionDiagnostics {
+  activeTabId: number | null;
   activeTabUrl: string | null;
+  activeTabStatus: string | null;
   contentScriptResponded: boolean;
   readable: boolean;
   failureCode?: OrthobulletsExtractionFailureCode;
+  sendMessageError: string | null;
+  fallbackInjectionAttempted: boolean;
+  injectionError: string | null;
   hasQuestionId: boolean;
   hasStem: boolean;
   answerChoiceCount: number;
@@ -77,7 +82,41 @@ export interface OrthobulletsExplainResponse {
     reason: string;
     isClassicTrap?: boolean;
   }>;
+  boardTrap?: string;
   boardPearl: string;
+  studyNext: string[];
+  warnings: string[];
+  usage?: {
+    remainingToday: number | null;
+    dailyCap: number | null;
+    unlimited: boolean;
+  };
+}
+
+export interface OrthobulletsHintResponse {
+  hintId: string;
+  hintLevel: 1 | 2 | 3;
+  title: string;
+  hint: string;
+  avoidRevealingAnswer: boolean;
+  nextActionLabel?: string;
+  warnings: string[];
+  usage?: {
+    remainingToday: number | null;
+    dailyCap: number | null;
+    unlimited: boolean;
+  };
+}
+
+export interface OrthobulletsChatTurn {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface OrthobulletsChatResponse {
+  responseId: string;
+  answer: string;
+  suggestedPrompts: string[];
   warnings: string[];
   usage?: {
     remainingToday: number | null;

@@ -57,6 +57,15 @@ async function getActiveTabState() {
   };
 }
 
+async function getTabSnapshot(tabId: number) {
+  const tab = await chrome.tabs.get(tabId).catch(() => null);
+  return {
+    tabId: typeof tab?.id === 'number' ? tab.id : null,
+    url: tab?.url ?? null,
+    status: tab?.status ?? null,
+  };
+}
+
 async function fetchJson(pathname: string, init?: RequestInit) {
   let response: Response;
   try {
@@ -82,23 +91,58 @@ function isReadableOrthobulletsQuestionContext(pageContext: OrthobulletsPageCont
   return hasQuestionIdentity && hasStem && hasChoices;
 }
 
-async function getTabUrl(tabId: number) {
-  const tab = await chrome.tabs.get(tabId).catch(() => null);
-  return tab?.url ?? null;
+async function sendExtractionMessage(tabId: number): Promise<{
+  response: { ok?: boolean; pageContext?: OrthobulletsPageContext; error?: string } | null;
+  sendMessageError: string | null;
+}> {
+  return new Promise((resolve) => {
+    chrome.tabs.sendMessage(tabId, { type: 'ob:extract-page-context' }, (response: unknown) => {
+      const sendMessageError = chrome.runtime.lastError?.message ?? null;
+      resolve({
+        response: (response as { ok?: boolean; pageContext?: OrthobulletsPageContext; error?: string } | null) ?? null,
+        sendMessageError,
+      });
+    });
+  });
+}
+
+async function injectContentScript(tabId: number) {
+  try {
+    await chrome.scripting.executeScript({
+      target: { tabId },
+      files: ['content/content-script.js'],
+    });
+    return { ok: true as const, injectionError: null };
+  } catch (error) {
+    return {
+      ok: false as const,
+      injectionError: error instanceof Error ? error.message : 'Failed to inject content script.',
+    };
+  }
 }
 
 function buildExtractionDiagnostics(input: {
+  activeTabId: number | null;
   activeTabUrl: string | null;
+  activeTabStatus: string | null;
   contentScriptResponded: boolean;
   pageContext?: OrthobulletsPageContext | null;
   failureCode?: OrthobulletsExtractionDiagnostics['failureCode'];
+  sendMessageError?: string | null;
+  fallbackInjectionAttempted?: boolean;
+  injectionError?: string | null;
 }): OrthobulletsExtractionDiagnostics {
   const pageContext = input.pageContext ?? null;
   return {
+    activeTabId: input.activeTabId,
     activeTabUrl: input.activeTabUrl,
+    activeTabStatus: input.activeTabStatus,
     contentScriptResponded: input.contentScriptResponded,
     readable: pageContext ? isReadableOrthobulletsQuestionContext(pageContext) : false,
     failureCode: input.failureCode,
+    sendMessageError: input.sendMessageError ?? null,
+    fallbackInjectionAttempted: input.fallbackInjectionAttempted ?? false,
+    injectionError: input.injectionError ?? null,
     hasQuestionId: Boolean(pageContext?.questionId),
     hasStem: Boolean(pageContext?.stem?.trim()),
     answerChoiceCount: pageContext?.answerChoices.length ?? 0,
@@ -180,15 +224,39 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
       }
 
       if (message.type === 'ob:extract-page-context') {
-        const activeTabUrl = await getTabUrl(message.tabId);
-        const response = await chrome.tabs.sendMessage(message.tabId, {
-          type: 'ob:extract-page-context',
-        }).catch(() => null);
+        const tabSnapshot = await getTabSnapshot(message.tabId);
+        const initialAttempt = await sendExtractionMessage(message.tabId);
+        let response = initialAttempt.response;
+        let sendMessageError = initialAttempt.sendMessageError;
+        let fallbackInjectionAttempted = false;
+        let injectionError: string | null = null;
+
+        const shouldAttemptInjection =
+          isLikelyOrthobulletsUrl(tabSnapshot.url) &&
+          (!response || sendMessageError?.toLowerCase().includes('receiving end does not exist'));
+
+        if (shouldAttemptInjection) {
+          fallbackInjectionAttempted = true;
+          const injectionResult = await injectContentScript(message.tabId);
+          injectionError = injectionResult.injectionError;
+
+          if (injectionResult.ok) {
+            const retryAttempt = await sendExtractionMessage(message.tabId);
+            response = retryAttempt.response;
+            sendMessageError = retryAttempt.sendMessageError;
+          }
+        }
+
         if (!response?.ok || !response.pageContext) {
           const diagnostics = buildExtractionDiagnostics({
-            activeTabUrl,
+            activeTabId: tabSnapshot.tabId,
+            activeTabUrl: tabSnapshot.url,
+            activeTabStatus: tabSnapshot.status,
             contentScriptResponded: false,
             failureCode: 'content_script_no_response',
+            sendMessageError,
+            fallbackInjectionAttempted,
+            injectionError,
           });
           throw new CodedError(
             JSON.stringify({
@@ -201,10 +269,15 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
           );
         }
         const diagnostics = buildExtractionDiagnostics({
-          activeTabUrl,
+          activeTabId: tabSnapshot.tabId,
+          activeTabUrl: tabSnapshot.url,
+          activeTabStatus: tabSnapshot.status,
           contentScriptResponded: true,
           pageContext: response.pageContext,
           failureCode: isReadableOrthobulletsQuestionContext(response.pageContext) ? undefined : 'page_not_readable',
+          sendMessageError,
+          fallbackInjectionAttempted,
+          injectionError,
         });
         sendResponse({ ok: true, pageContext: response.pageContext, diagnostics });
         return;
@@ -226,6 +299,53 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
         });
 
         sendResponse({ ok: true, explanation });
+        return;
+      }
+
+      if (message.type === 'ob:hint') {
+        const deviceToken = await getStoredDeviceToken();
+        if (!deviceToken) {
+          throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+        }
+
+        const hint = await fetchJson('/api/brobot/orthobullets/hint', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            [EXTENSION_TOKEN_HEADER]: deviceToken,
+          },
+          body: JSON.stringify({
+            pageContext: message.pageContext,
+            hintLevel: message.hintLevel,
+            selectedAnswerKey: message.selectedAnswerKey,
+          }),
+        });
+
+        sendResponse({ ok: true, hint });
+        return;
+      }
+
+      if (message.type === 'ob:chat') {
+        const deviceToken = await getStoredDeviceToken();
+        if (!deviceToken) {
+          throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+        }
+
+        const chat = await fetchJson('/api/brobot/orthobullets/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            [EXTENSION_TOKEN_HEADER]: deviceToken,
+          },
+          body: JSON.stringify({
+            pageContext: message.pageContext,
+            explanation: message.explanation,
+            history: message.history,
+            userMessage: message.userMessage,
+          }),
+        });
+
+        sendResponse({ ok: true, chat });
         return;
       }
 

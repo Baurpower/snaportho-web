@@ -225,10 +225,12 @@ export async function POST(request: Request) {
         break;
       }
 
+      case 'invoice.paid':
       case 'invoice.payment_succeeded': {
         const invoice = event.data.object as Stripe.Invoice;
-        console.log('[stripe/webhook] invoice.payment_succeeded', {
+        console.log('[stripe/webhook] invoice payment success', {
           eventId: event.id,
+          type: event.type,
           invoiceId: invoice.id,
           customer: invoice.customer,
           subscription: invoice.parent?.subscription_details?.subscription,

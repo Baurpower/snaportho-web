@@ -133,6 +133,28 @@ type PortalSubscriptionRow = {
   updated_at: string | null;
 };
 
+type StripeSubscriptionRow = {
+  user_id: string;
+  provider: string | null;
+  environment: string | null;
+  status: string | null;
+  plan_code: string | null;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean | null;
+  canceled_at: string | null;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  stripe_price_id: string | null;
+  updated_at: string | null;
+};
+
+type ExistingStripeSubscriptionRow = {
+  stripe_subscription_id: string | null;
+  status: string | null;
+  current_period_end: string | null;
+  updated_at: string | null;
+};
+
 type TrialEligibilitySubscriptionRow = {
   provider: string | null;
   status: string | null;
@@ -274,6 +296,49 @@ function getStripeCustomerId(value: string | { id?: string } | null | undefined)
   return typeof value === 'string' ? value : value.id ?? null;
 }
 
+function getStripeEnvironment() {
+  const secretKey = process.env.STRIPE_SECRET_KEY ?? '';
+  if (secretKey.startsWith('sk_live_')) return 'live';
+  if (secretKey.startsWith('sk_test_')) return 'test';
+  return 'unknown';
+}
+
+function getIsoTime(value: string | null | undefined) {
+  if (!value) return null;
+  const time = new Date(value).getTime();
+  return Number.isFinite(time) ? time : null;
+}
+
+export function shouldKeepExistingStripeSubscription(params: {
+  existing: ExistingStripeSubscriptionRow | null;
+  incomingSubscriptionId: string;
+  incomingStatus: string;
+  incomingPeriodEndIso: string | null;
+}) {
+  const { existing, incomingSubscriptionId, incomingStatus, incomingPeriodEndIso } = params;
+  if (!existing?.stripe_subscription_id) return false;
+  if (existing.stripe_subscription_id === incomingSubscriptionId) return false;
+
+  const existingPeriodEnd = getIsoTime(existing.current_period_end);
+  const incomingPeriodEnd = getIsoTime(incomingPeriodEndIso);
+
+  if (existingPeriodEnd != null && incomingPeriodEnd != null && existingPeriodEnd > incomingPeriodEnd) {
+    return true;
+  }
+
+  const existingStatus = existing.status ?? 'incomplete';
+  const existingIsActiveLike = ['active', 'trialing', 'past_due'].includes(existingStatus);
+  const incomingIsActiveLike = ['active', 'trialing', 'past_due'].includes(incomingStatus);
+
+  if (existingIsActiveLike && !incomingIsActiveLike) {
+    if (existingPeriodEnd == null) return true;
+    if (incomingPeriodEnd == null) return true;
+    if (existingPeriodEnd >= incomingPeriodEnd) return true;
+  }
+
+  return false;
+}
+
 function getSubscriptionPeriod(subscription: Stripe.Subscription) {
   const firstItem = subscription.items.data[0];
   const periodStart = firstItem?.current_period_start ?? null;
@@ -319,6 +384,88 @@ function hasClaimableStripeStatus(status: string, periodEndIso: string | null) {
     return new Date(periodEndIso).getTime() > Date.now();
   }
   return false;
+}
+
+function stripeStatusSelectionPriority(status: string | null | undefined) {
+  switch (status) {
+    case 'active':
+      return 5;
+    case 'trialing':
+      return 4;
+    case 'past_due':
+      return 3;
+    case 'canceled':
+      return 2;
+    case 'incomplete':
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+function compareStripeSubscriptionRows(a: StripeSubscriptionRow, b: StripeSubscriptionRow) {
+  const statusDiff = stripeStatusSelectionPriority(b.status) - stripeStatusSelectionPriority(a.status);
+  if (statusDiff !== 0) return statusDiff;
+
+  const periodDiff = (getIsoTime(b.current_period_end) ?? -Infinity) - (getIsoTime(a.current_period_end) ?? -Infinity);
+  if (periodDiff !== 0) return periodDiff;
+
+  return (getIsoTime(b.updated_at) ?? -Infinity) - (getIsoTime(a.updated_at) ?? -Infinity);
+}
+
+function stripeRowGrantsPortalAccess(row: PortalSubscriptionRow, now = Date.now()) {
+  const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
+  const periodEndTs = row.current_period_end ? new Date(row.current_period_end).getTime() : null;
+  const hasFutureAccessWindow = periodEndTs != null && periodEndTs > now;
+  const isStripeBacked = Boolean(row.stripe_customer_id) && row.provider !== 'apple';
+
+  return (
+    isStripeBacked &&
+    (
+      row.status === 'active' ||
+      row.status === 'trialing' ||
+      (row.status === 'past_due' && periodEndTs != null && periodEndTs + graceMs > now) ||
+      (row.cancel_at_period_end === true && hasFutureAccessWindow) ||
+      (row.status === 'canceled' && hasFutureAccessWindow)
+    )
+  );
+}
+
+async function listStripeSubscriptionsForUser(userId: string) {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from('subscriptions')
+    .select(`
+      user_id,
+      provider,
+      environment,
+      status,
+      plan_code,
+      current_period_end,
+      cancel_at_period_end,
+      canceled_at,
+      stripe_customer_id,
+      stripe_subscription_id,
+      stripe_price_id,
+      updated_at
+    `)
+    .eq('user_id', userId)
+    .eq('provider', 'stripe')
+    .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+    .order('current_period_end', { ascending: false, nullsFirst: false })
+    .order('updated_at', { ascending: false })
+    .limit(50);
+
+  if (error) {
+    throw new Error(`Failed to load Stripe subscriptions: ${error.message}`);
+  }
+
+  return (data ?? []) as StripeSubscriptionRow[];
+}
+
+async function getLatestStripeCustomerIdForUser(userId: string) {
+  const rows = await listStripeSubscriptionsForUser(userId);
+  return rows.find((row) => row.stripe_customer_id)?.stripe_customer_id ?? null;
 }
 
 export async function determineBroBotTrialDecision(params: {
@@ -478,43 +625,20 @@ export async function determineBroBotTrialDecision(params: {
 
 /**
  * Ensures a Stripe Customer exists for the given user.
- * Creates one if necessary and stores the ID.
+ * Reuses the most recent saved customer ID when available.
  */
 export async function getOrCreateStripeCustomer(userId: string, email?: string): Promise<string> {
-  const supabase = createAdminClient();
   const stripe = getStripe();
 
-  const { data: sub } = await supabase
-    .from('subscriptions')
-    .select('stripe_customer_id')
-    .eq('user_id', userId)
-    .not('stripe_customer_id', 'is', null)
-    .order('updated_at', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (sub?.stripe_customer_id) {
-    return sub.stripe_customer_id;
+  const existingCustomerId = await getLatestStripeCustomerIdForUser(userId);
+  if (existingCustomerId) {
+    return existingCustomerId;
   }
 
-  // Create new customer in Stripe
   const customer = await stripe.customers.create({
     email,
     metadata: { user_id: userId },
   });
-
-  // Store it immediately (best effort)
-  await supabase
-    .from('subscriptions')
-    .upsert(
-      {
-        user_id: userId,
-        stripe_customer_id: customer.id,
-        plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
-        status: 'incomplete',
-      },
-      { onConflict: 'user_id' }
-    );
 
   return customer.id;
 }
@@ -543,25 +667,17 @@ export async function createBroBotCheckoutSession(
     throw new Error('Stripe price ID not configured for BroBot');
   }
 
-  const supabase = createAdminClient();
-  const { data: existingCustomerRow } = await supabase
-    .from('subscriptions')
-    .select('stripe_customer_id')
-    .eq('user_id', userId)
-    .not('stripe_customer_id', 'is', null)
-    .order('updated_at', { ascending: false })
-    .limit(1)
-    .maybeSingle();
+  const existingCustomerId = await getLatestStripeCustomerIdForUser(userId);
 
   const trialDecisionBeforeCustomer = await determineBroBotTrialDecision({
     userId,
-    stripeCustomerId: existingCustomerRow?.stripe_customer_id ?? null,
+    stripeCustomerId: existingCustomerId,
     enableTrial: options.enableTrial,
   });
 
   const customerId = await getOrCreateStripeCustomer(userId, email);
   const trialDecision =
-    trialDecisionBeforeCustomer.eligible && !existingCustomerRow?.stripe_customer_id
+    trialDecisionBeforeCustomer.eligible && !existingCustomerId
       ? await determineBroBotTrialDecision({
           userId,
           stripeCustomerId: customerId,
@@ -898,6 +1014,7 @@ export async function claimPendingBroBotSubscriptionForUser(
   const upsertPayload = {
     user_id: userId,
     provider: 'stripe',
+    environment: getStripeEnvironment(),
     stripe_customer_id: getStripeCustomerId(stripeSub.customer),
     stripe_subscription_id: stripeSub.id,
     stripe_price_id: stripeSub.items.data[0]?.price.id || pending.stripe_price_id,
@@ -914,7 +1031,7 @@ export async function claimPendingBroBotSubscriptionForUser(
 
   const { error: upsertError } = await supabase
     .from('subscriptions')
-    .upsert(upsertPayload, { onConflict: 'user_id,provider' });
+    .upsert(upsertPayload, { onConflict: 'stripe_subscription_id' });
 
   if (upsertError) {
     throw new Error(`Failed to attach subscription: ${upsertError.message}`);
@@ -957,78 +1074,19 @@ export async function createBillingPortalSession(
   /** Optional custom return URL (e.g. mobile snaportho://subscription/portal-return) */
   customReturnUrl?: string
 ): Promise<{ url: string | null }> {
-  const supabase = createAdminClient();
   const stripe = getStripe();
 
-  const { data: initialSub, error } = await supabase
-    .from('subscriptions')
-    .select(`
-      status,
-      current_period_end,
-      cancel_at_period_end,
-      canceled_at,
-      stripe_customer_id,
-      stripe_subscription_id,
-      provider,
-      plan_code,
-      updated_at
-    `)
-    .eq('user_id', userId)
-    .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
-    .in('status', ['active', 'trialing', 'past_due'])
-    .order('current_period_end', { ascending: false, nullsFirst: false })
-    .limit(1)
-    .maybeSingle<PortalSubscriptionRow>();
-
-  if (error) {
-    throw new Error('Failed to load Stripe subscription for portal access');
-  }
-
-  let sub = initialSub;
-
-  if (!sub) {
-    const { data: fallback, error: fallbackError } = await supabase
-      .from('subscriptions')
-      .select(`
-        status,
-        current_period_end,
-        cancel_at_period_end,
-        canceled_at,
-        stripe_customer_id,
-        stripe_subscription_id,
-        provider,
-        plan_code,
-        updated_at
-      `)
-      .eq('user_id', userId)
-      .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
-      .order('current_period_end', { ascending: false, nullsFirst: false })
-      .limit(1)
-      .maybeSingle<PortalSubscriptionRow>();
-
-    if (fallbackError) {
-      throw new Error('Failed to load Stripe subscription for portal access');
-    }
-    sub = fallback;
-  }
+  const allRows = await listStripeSubscriptionsForUser(userId);
+  const sortedRows = [...allRows].sort(compareStripeSubscriptionRows);
+  const manageableRow = sortedRows.find((row) => stripeRowGrantsPortalAccess(row as PortalSubscriptionRow));
+  const sub = (manageableRow ?? sortedRows[0] ?? null) as PortalSubscriptionRow | null;
 
   const now = Date.now();
-  const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
   const periodEndTs = sub?.current_period_end ? new Date(sub.current_period_end).getTime() : null;
   const hasStripeCustomerId = Boolean(sub?.stripe_customer_id);
   const hasStripeSubscriptionId = Boolean(sub?.stripe_subscription_id);
-  const isStripeBacked = hasStripeCustomerId && sub?.provider !== 'apple';
   const hasFutureAccessWindow = periodEndTs != null && periodEndTs > now;
-  const isManageable =
-    !!sub &&
-    isStripeBacked &&
-    (
-      sub.status === 'active' ||
-      sub.status === 'trialing' ||
-      (sub.status === 'past_due' && periodEndTs != null && periodEndTs + graceMs > now) ||
-      (sub.cancel_at_period_end === true && hasFutureAccessWindow) ||
-      (sub.status === 'canceled' && hasFutureAccessWindow)
-    );
+  const isManageable = !!sub && stripeRowGrantsPortalAccess(sub, now);
 
   logPortalDecision('subscription_selected', {
     userId: userId.slice(0, 8),
@@ -1038,10 +1096,15 @@ export async function createBillingPortalSession(
     hasStripeCustomerId,
     hasStripeSubscriptionId,
     currentPeriodEndInFuture: hasFutureAccessWindow,
-    cancelAtPeriodEnd: sub?.cancel_at_period_end ?? null,
-    environmentMode: process.env.STRIPE_SECRET_KEY?.startsWith('sk_live_')
-      ? 'live'
-      : process.env.STRIPE_SECRET_KEY?.startsWith('sk_test_')
+      cancelAtPeriodEnd: sub?.cancel_at_period_end ?? null,
+      rowsConsidered: sortedRows.map((row) => ({
+        status: row.status,
+        currentPeriodEnd: row.current_period_end,
+        stripeSubscriptionId: summarizeStripeId(row.stripe_subscription_id),
+      })),
+      environmentMode: process.env.STRIPE_SECRET_KEY?.startsWith('sk_live_')
+        ? 'live'
+        : process.env.STRIPE_SECRET_KEY?.startsWith('sk_test_')
       ? 'test'
       : 'unknown',
   });
@@ -1144,6 +1207,19 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
 
   let userId = stripeSub.metadata?.user_id;
 
+  if (!userId) {
+    const { data: existingBySubscription } = await supabase
+      .from('subscriptions')
+      .select('user_id')
+      .eq('stripe_subscription_id', stripeSub.id)
+      .limit(1)
+      .maybeSingle<{ user_id: string }>();
+
+    if (existingBySubscription?.user_id) {
+      userId = existingBySubscription.user_id;
+    }
+  }
+
   // Fallback: look up by customer if metadata is missing (very useful after checkout)
   if (!userId && stripeSub.customer) {
     const customerId = typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer.id;
@@ -1186,6 +1262,7 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
   const upsertPayload = {
     user_id: userId,
     provider: 'stripe',
+    environment: getStripeEnvironment(),
     stripe_customer_id: typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer?.id,
     stripe_subscription_id: stripeSub.id,
     stripe_price_id: priceId,
@@ -1206,7 +1283,7 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
 
   const { error: upsertError } = await supabase.from('subscriptions').upsert(
     upsertPayload,
-    { onConflict: 'user_id,provider' }
+    { onConflict: 'stripe_subscription_id' }
   );
 
   console.log('[stripe] syncSubscriptionFromStripe upsert', {
@@ -1219,4 +1296,45 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
     },
     upsertError: upsertError ? { message: upsertError.message, code: upsertError.code } : null,
   });
+}
+
+export async function reconcileStripeSubscriptions(params: {
+  userId?: string | null;
+  stripeCustomerId?: string | null;
+}) {
+  const stripe = getStripe();
+  const customerId = params.stripeCustomerId
+    ?? (params.userId ? await getLatestStripeCustomerIdForUser(params.userId) : null);
+
+  if (!customerId) {
+    return {
+      customerId: null,
+      syncedCount: 0,
+      matchedCount: 0,
+      subscriptions: [] as Array<{ id: string; status: string; matchedBroBot: boolean }>,
+    };
+  }
+
+  const subscriptions = await stripe.subscriptions.list({
+    customer: customerId,
+    status: 'all',
+    limit: 100,
+  });
+
+  const relevant = subscriptions.data.filter((subscription) => stripeSubscriptionMatchesBroBot(subscription));
+
+  for (const subscription of relevant) {
+    await syncSubscriptionFromStripe(subscription);
+  }
+
+  return {
+    customerId,
+    syncedCount: relevant.length,
+    matchedCount: relevant.length,
+    subscriptions: subscriptions.data.map((subscription) => ({
+      id: subscription.id,
+      status: subscription.status,
+      matchedBroBot: stripeSubscriptionMatchesBroBot(subscription),
+    })),
+  };
 }

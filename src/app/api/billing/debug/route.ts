@@ -28,7 +28,7 @@ export async function GET() {
 
   interface DebugResult {
     user: { id: string; email: string | undefined };
-    supabaseSubscription: Record<string, unknown> | null; // raw row is fine for debug
+    supabaseSubscriptions: Record<string, unknown>[]; // raw rows are fine for debug
     stripeCustomer: { id: string; email?: string; created?: number } | null;
     stripeSubscriptions: Record<string, unknown>[];
     entitlement: Record<string, unknown> | null;
@@ -42,7 +42,7 @@ export async function GET() {
       id: user.id,
       email: user.email,
     },
-    supabaseSubscription: null,
+    supabaseSubscriptions: [],
     stripeCustomer: null,
     stripeSubscriptions: [],
     entitlement: null,
@@ -52,19 +52,19 @@ export async function GET() {
   try {
     const stripe = getStripe();
     // Supabase subscriptions row
-    const { data: subRow } = await supabase
+    const { data: subRows } = await supabase
       .from('subscriptions')
       .select('*')
       .eq('user_id', user.id)
       .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+      .order('current_period_end', { ascending: false, nullsFirst: false })
       .order('updated_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
+      .limit(10);
 
-    result.supabaseSubscription = subRow;
+    result.supabaseSubscriptions = subRows ?? [];
 
     // Try to get Stripe customer from the row or via getOrCreate (read-only here)
-    const customerId = subRow?.stripe_customer_id;
+    const customerId = (subRows ?? []).find((row) => row.stripe_customer_id)?.stripe_customer_id;
 
     if (customerId) {
       try {

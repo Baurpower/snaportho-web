@@ -6,13 +6,22 @@ import type {
   ExtensionMessageResponse,
 } from '../shared/messages.js';
 import type {
+  OrthobulletsChatResponse,
+  OrthobulletsChatTurn,
   OrthobulletsExplainResponse,
   OrthobulletsExtractionDiagnostics,
+  OrthobulletsHintResponse,
   OrthobulletsPageContext,
 } from '../shared/types.js';
-import { isDevelopmentMode } from '../shared/runtime.js';
+import {
+  hasReviewData,
+  isExplainEligible,
+  isHintEligible,
+  isUnansweredQuestion,
+} from '../shared/page-classification.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
+const DEFAULT_FOLLOW_UP_PROMPTS = ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
 
 const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean }> = {
   unsupported_page: { title: 'This page is not supported.', canRetry: false },
@@ -26,6 +35,13 @@ const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean 
   network_failure: { title: 'Could not reach SnapOrtho.', canRetry: true },
   unknown: { title: 'Something went wrong.', canRetry: true },
 };
+
+type OperationState = 'idle' | 'extracting' | 'hinting' | 'explaining' | 'chatting';
+type UsageState =
+  | OrthobulletsExplainResponse['usage']
+  | OrthobulletsChatResponse['usage']
+  | OrthobulletsHintResponse['usage']
+  | null;
 
 async function sendMessage(message: ExtensionMessage): Promise<ExtensionMessageResponse> {
   return chrome.runtime.sendMessage(message);
@@ -46,17 +62,36 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
   return element;
 }
 
-function renderList(items: string[]) {
-  if (!items.length) return '<p style="margin:0;color:#5c6574;">None</p>';
-  return `<ul style="margin:0;padding-left:18px;">${items.map((item) => `<li>${item}</li>`).join('')}</ul>`;
+function escapeHtml(value: string) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }
 
-function canUnlockFullExplanation(pageContext: OrthobulletsPageContext) {
-  return Boolean(pageContext.correctAnswerKey && pageContext.explanationText);
+function renderTextBlock(value: string, emphasis = false) {
+  const paragraphs = value
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+
+  if (!paragraphs.length) return '';
+
+  return paragraphs
+    .map(
+      (paragraph) =>
+        `<p style="margin:0;line-height:1.55;${emphasis ? 'font-weight:600;' : ''}">${escapeHtml(paragraph).replace(/\n/g, '<br />')}</p>`
+    )
+    .join('');
 }
 
-function isCurrentTestAwaitingReview(pageContext: OrthobulletsPageContext) {
-  return pageContext.pageKind === 'current_test' && !canUnlockFullExplanation(pageContext);
+function renderStringList(items: string[]) {
+  if (!items.length) return '';
+  return `<ul style="margin:0;padding-left:18px;display:grid;gap:6px;">${items
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join('')}</ul>`;
 }
 
 function isReadableReviewPage(pageContext: OrthobulletsPageContext) {
@@ -66,6 +101,218 @@ function isReadableReviewPage(pageContext: OrthobulletsPageContext) {
   return hasQuestionIdentity && hasStem && hasChoices;
 }
 
+function isLikelyCurrentTestUrl(url: string | null | undefined) {
+  return Boolean(url && /orthobullets\.com\/currenttest/i.test(url));
+}
+
+function getBoardTrap(explanation: OrthobulletsExplainResponse) {
+  if (explanation.boardTrap) return explanation.boardTrap;
+  const classicTrap = explanation.whyWrong.find((item) => item.isClassicTrap);
+  if (!classicTrap) return null;
+  return `${classicTrap.choiceKey ?? 'Tempting choice'} is the trap because ${classicTrap.reason}`;
+}
+
+function getUsageLabel(usage: UsageState) {
+  if (!usage) return null;
+  if (usage.unlimited) return 'Unlimited';
+  if (usage.remainingToday == null || usage.dailyCap == null) return null;
+  return `${usage.remainingToday}/${usage.dailyCap} left today`;
+}
+
+function renderCard(title: string, contentHtml: string, tone: 'neutral' | 'accent' | 'warning' = 'neutral') {
+  const theme =
+    tone === 'accent'
+      ? 'background:#f0fdfa;border:1px solid #99f6e4;'
+      : tone === 'warning'
+        ? 'background:#fffbeb;border:1px solid #fde68a;'
+        : 'background:white;border:1px solid #ded7c8;';
+  return `<article style="padding:14px;border-radius:16px;${theme}display:grid;gap:8px;">
+    <h3 style="margin:0;font-size:15px;line-height:1.3;">${escapeHtml(title)}</h3>
+    ${contentHtml}
+  </article>`;
+}
+
+function renderExplanation(explanation: OrthobulletsExplainResponse) {
+  const cards: string[] = [];
+  cards.push(renderCard('Bottom Line', renderTextBlock(explanation.bottomLine, true), 'accent'));
+
+  if (explanation.testedConcept) {
+    cards.push(renderCard('Tested Concept', renderTextBlock(explanation.testedConcept)));
+  }
+
+  if (explanation.whyCorrect) {
+    cards.push(renderCard('Why Correct', renderTextBlock(explanation.whyCorrect)));
+  }
+
+  if (explanation.whyWrong.length) {
+    cards.push(
+      renderCard(
+        'Why Wrong',
+        `<ul style="margin:0;padding-left:18px;display:grid;gap:8px;">${explanation.whyWrong
+          .map((item) => {
+            const label = item.choiceKey ? `${escapeHtml(item.choiceKey)}:` : 'Choice:';
+            const trapTag = item.isClassicTrap
+              ? ' <span style="font-size:11px;font-weight:700;color:#9a3412;text-transform:uppercase;letter-spacing:0.06em;">Trap</span>'
+              : '';
+            return `<li><strong>${label}</strong> ${escapeHtml(item.reason)}${trapTag}</li>`;
+          })
+          .join('')}</ul>`
+      )
+    );
+  }
+
+  const boardTrap = getBoardTrap(explanation);
+  if (boardTrap) {
+    cards.push(renderCard('Board Trap', renderTextBlock(boardTrap), 'warning'));
+  }
+
+  if (explanation.boardPearl) {
+    cards.push(renderCard('Pearl / Takeaway', renderTextBlock(explanation.boardPearl, true), 'warning'));
+  }
+
+  if (explanation.studyNext.length) {
+    cards.push(renderCard('Study Next', renderStringList(explanation.studyNext)));
+  }
+
+  return `<section style="display:grid;gap:12px;">${cards.join('')}</section>`;
+}
+
+function renderChatTranscript(history: OrthobulletsChatTurn[], isLoading: boolean) {
+  const items = history
+    .map((turn) => {
+      const bubbleTone =
+        turn.role === 'assistant'
+          ? 'background:#f7f5ef;border:1px solid #ded7c8;color:#18202b;'
+          : 'background:#0f766e;border:1px solid #0f766e;color:white;';
+      const label = turn.role === 'assistant' ? 'BroBot' : 'You';
+      return `<div style="display:grid;gap:6px;justify-items:${turn.role === 'assistant' ? 'start' : 'end'};">
+        <p style="margin:0;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#5c6574;font-weight:700;">${label}</p>
+        <div style="max-width:100%;padding:10px 12px;border-radius:14px;line-height:1.55;${bubbleTone}">${renderTextBlock(turn.content)}</div>
+      </div>`;
+    })
+    .join('');
+
+  const loadingBubble = isLoading
+    ? `<div style="display:grid;gap:6px;">
+        <p style="margin:0;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#5c6574;font-weight:700;">BroBot</p>
+        <div style="max-width:100%;padding:10px 12px;border-radius:14px;background:#f7f5ef;border:1px solid #ded7c8;color:#5c6574;">Thinking through your follow-up...</div>
+      </div>`
+    : '';
+
+  return `<div style="display:grid;gap:12px;max-height:280px;overflow:auto;padding-right:4px;">${items}${loadingBubble}</div>`;
+}
+
+function renderHintCards(hints: OrthobulletsHintResponse[]) {
+  return `<section style="display:grid;gap:12px;">${hints
+    .map((hint) =>
+      renderCard(
+        hint.title,
+        `${renderTextBlock(hint.hint)}${
+          hint.warnings.length
+            ? `<p style="margin:0;font-size:12px;color:#7c2d12;">Notes: ${escapeHtml(hint.warnings.join(' | '))}</p>`
+            : ''
+        }`,
+        hint.hintLevel === 3 ? 'warning' : 'neutral'
+      )
+    )
+    .join('')}</section>`;
+}
+
+function renderDebugSummary(input: {
+  activePage: ActivePageState | null;
+  diagnostics: OrthobulletsExtractionDiagnostics | null;
+  pageContext: OrthobulletsPageContext | null;
+  errorCode: ExtensionErrorCode | null;
+}) {
+  const summary = {
+    activeTabUrl: input.diagnostics?.activeTabUrl ?? input.activePage?.url ?? null,
+    activeTabId: input.diagnostics?.activeTabId ?? input.activePage?.tabId ?? null,
+    activeTabStatus: input.diagnostics?.activeTabStatus ?? null,
+    contentScriptResponded: input.diagnostics?.contentScriptResponded ?? null,
+    readable: input.diagnostics?.readable ?? null,
+    failureCode: input.diagnostics?.failureCode ?? null,
+    sendMessageError: input.diagnostics?.sendMessageError ?? null,
+    fallbackInjectionAttempted: input.diagnostics?.fallbackInjectionAttempted ?? false,
+    injectionError: input.diagnostics?.injectionError ?? null,
+    extractorVersion: input.pageContext?.debug?.extractorVersion ?? null,
+    pageKind: input.pageContext?.pageKind ?? null,
+    questionId: input.pageContext?.questionId ?? null,
+    topicId: input.pageContext?.topicId ?? null,
+    breadcrumbCount: input.diagnostics?.breadcrumbCount ?? input.pageContext?.breadcrumbs.length ?? 0,
+    breadcrumbs: input.pageContext?.breadcrumbs ?? [],
+    hasStem: input.diagnostics?.hasStem ?? Boolean(input.pageContext?.stem),
+    stemPreview: input.pageContext?.stem?.slice(0, 80) ?? null,
+    hasQuestionId: input.diagnostics?.hasQuestionId ?? Boolean(input.pageContext?.questionId),
+    answerChoiceCount: input.diagnostics?.answerChoiceCount ?? input.pageContext?.answerChoices.length ?? 0,
+    selectedAnswerKey: input.pageContext?.selectedAnswerKey ?? null,
+    correctAnswerKey: input.pageContext?.correctAnswerKey ?? null,
+    percentDistributionRows: input.diagnostics?.percentDistributionCount ?? input.pageContext?.percentDistribution.length ?? 0,
+    imageCount: input.diagnostics?.imageCount ?? input.pageContext?.images.length ?? 0,
+    linkedConceptCount: input.diagnostics?.linkedConceptCount ?? input.pageContext?.linkedConcepts.length ?? 0,
+    warnings: input.diagnostics?.warnings ?? input.pageContext?.extractionWarnings ?? [],
+    matchedSelectors: input.pageContext?.debug?.matchedSelectors ?? {},
+    lastErrorCode: input.errorCode,
+  };
+
+  return `<details style="padding:12px;border-radius:14px;background:white;border:1px solid #ded7c8;">
+    <summary style="cursor:pointer;font-weight:700;color:#5c6574;">Developer debug</summary>
+    <p style="margin:10px 0 8px;color:#5c6574;font-size:12px;">Extraction and messaging diagnostics for QA. Hidden by default for normal use.</p>
+    <pre style="white-space:pre-wrap;margin:0;font-size:12px;line-height:1.45;">${escapeHtml(JSON.stringify(summary, null, 2))}</pre>
+  </details>`;
+}
+
+function getStatusCopy(input: {
+  loading: boolean;
+  activePage: ActivePageState | null;
+  auth: AuthState | null;
+  operation: OperationState;
+  pageContext: OrthobulletsPageContext | null;
+  explanation: OrthobulletsExplainResponse | null;
+  hints: OrthobulletsHintResponse[];
+  error: { message: string; code: ExtensionErrorCode } | null;
+}) {
+  if (input.loading) {
+    return { label: 'Loading', detail: 'Checking your extension state and active page.' };
+  }
+  if (!input.activePage?.supported) {
+    return { label: 'Open an Orthobullets page', detail: 'Switch to a supported Orthobullets question tab, then reopen this panel.' };
+  }
+  if (input.auth?.status !== 'linked') {
+    return { label: 'Not linked', detail: 'Link the extension to your SnapOrtho account to use BroBot.' };
+  }
+  if (input.operation === 'extracting') {
+    return { label: 'Extracting', detail: 'Reading the visible question stem, choices, and review context from this page.' };
+  }
+  if (input.operation === 'hinting') {
+    return { label: 'Generating hint', detail: 'BroBot is giving the next reasoning nudge without revealing the answer.' };
+  }
+  if (input.operation === 'explaining') {
+    return { label: 'Generating explanation', detail: 'BroBot is turning this question into a focused teaching answer.' };
+  }
+  if (input.operation === 'chatting') {
+    return { label: 'Follow-up chat loading', detail: 'BroBot is answering your follow-up based on this same question context.' };
+  }
+  if (input.error?.code === 'quota_exceeded') {
+    return { label: 'Quota exceeded', detail: 'Your daily BroBot limit has been reached for now.' };
+  }
+  if (input.error) {
+    return { label: 'Error with retry', detail: input.error.message };
+  }
+  if (input.explanation) {
+    return { label: 'Explanation ready', detail: 'BroBot has a structured teaching answer ready below.' };
+  }
+  if (input.hints.length) {
+    return { label: 'Hint Mode active', detail: 'BroBot is nudging your reasoning step by step without naming the answer choice.' };
+  }
+  if (input.pageContext && isUnansweredQuestion(input.pageContext)) {
+    return { label: 'Hint Mode ready', detail: 'This page looks unanswered, so you can ask for progressive hints before revealing the reasoning.' };
+  }
+  if (input.pageContext && hasReviewData(input.pageContext)) {
+    return { label: 'Review data detected', detail: 'Use Explain with BroBot for full reasoning.' };
+  }
+  return { label: 'Ready to explain', detail: 'Nothing is sent to SnapOrtho until you click a hint or explanation action.' };
+}
+
 export function mountSidePanelApp(root: HTMLElement) {
   const state: {
     activePage: ActivePageState | null;
@@ -73,22 +320,32 @@ export function mountSidePanelApp(root: HTMLElement) {
     loading: boolean;
     linking: boolean;
     linkCode: string | null;
+    operation: OperationState;
     pageContext: OrthobulletsPageContext | null;
     extractionDiagnostics: OrthobulletsExtractionDiagnostics | null;
     explanation: OrthobulletsExplainResponse | null;
+    hints: OrthobulletsHintResponse[];
     error: { message: string; code: ExtensionErrorCode } | null;
-    debugMode: boolean;
+    chatHistory: OrthobulletsChatTurn[];
+    chatDraft: string;
+    chatPrompts: string[];
+    usage: UsageState;
   } = {
     activePage: null,
     auth: null,
     loading: true,
     linking: false,
     linkCode: null,
+    operation: 'idle',
     pageContext: null,
     extractionDiagnostics: null,
     explanation: null,
+    hints: [],
     error: null,
-    debugMode: false,
+    chatHistory: [],
+    chatDraft: '',
+    chatPrompts: [],
+    usage: null,
   };
 
   async function refreshBaseState() {
@@ -141,20 +398,15 @@ export function mountSidePanelApp(root: HTMLElement) {
         state.linkCode = null;
         await refreshBaseState();
         window.clearInterval(interval);
-        return;
       }
     }, 3000);
   }
 
-  async function runExplain() {
-    state.error = null;
-    state.explanation = null;
-    render();
-
+  async function extractPageContext() {
     if (!state.activePage?.tabId) {
       state.error = { message: 'No active Orthobullets tab is available.', code: 'unsupported_page' };
       render();
-      return;
+      return null;
     }
 
     const extractResult = await sendMessage({
@@ -168,33 +420,98 @@ export function mountSidePanelApp(root: HTMLElement) {
         ? { message: 'Failed to extract page context.', code: 'extraction_failure' }
         : { message: extractResult.error, code: extractResult.code ?? 'extraction_failure' };
       render();
-      return;
+      return null;
     }
 
     state.pageContext = extractResult.pageContext;
     state.extractionDiagnostics = extractResult.diagnostics;
+
     if (!isReadableReviewPage(extractResult.pageContext)) {
       state.error = {
         message: 'This page did not expose enough visible question content yet. BroBot needs the stem and at least two answer choices to continue.',
         code: 'extraction_failure',
       };
       render();
-      return;
+      return null;
     }
-    if (isCurrentTestAwaitingReview(extractResult.pageContext)) {
-      state.error = null;
-      state.explanation = null;
+
+    return extractResult.pageContext;
+  }
+
+  async function runHint(hintLevel: 1 | 2 | 3) {
+    state.error = null;
+    state.explanation = null;
+    state.chatHistory = [];
+    state.chatDraft = '';
+    state.chatPrompts = [];
+    state.operation = 'extracting';
+    render();
+
+    const pageContext = await extractPageContext();
+    if (!pageContext) {
+      state.operation = 'idle';
       render();
       return;
     }
+
+    if (!isHintEligible(pageContext)) {
+      state.operation = 'idle';
+      state.error = null;
+      render();
+      return;
+    }
+
+    state.operation = 'hinting';
+    render();
+
+    const hintResult = await sendMessage({
+      type: 'ob:hint',
+      pageContext,
+      hintLevel,
+      selectedAnswerKey: pageContext.selectedAnswerKey,
+    });
+
+    if (!hintResult.ok || !('hint' in hintResult)) {
+      state.operation = 'idle';
+      state.error = hintResult.ok
+        ? { message: 'Failed to generate hint.', code: 'unknown' }
+        : { message: hintResult.error, code: hintResult.code ?? 'unknown' };
+      render();
+      return;
+    }
+
+    state.operation = 'idle';
+    state.hints = [...state.hints.filter((hint) => hint.hintLevel < hintLevel), hintResult.hint];
+    state.usage = hintResult.hint.usage ?? state.usage;
+    render();
+  }
+
+  async function runExplain(options: { revealRequested?: boolean } = {}) {
+    state.error = null;
+    state.explanation = null;
+    state.chatHistory = [];
+    state.chatPrompts = [];
+    state.chatDraft = '';
+    state.operation = 'extracting';
+    render();
+
+    const pageContext = await extractPageContext();
+    if (!pageContext) {
+      state.operation = 'idle';
+      render();
+      return;
+    }
+
+    state.operation = 'explaining';
     render();
 
     const explainResult = await sendMessage({
       type: 'ob:explain',
-      pageContext: extractResult.pageContext,
+      pageContext,
     });
 
     if (!explainResult.ok || !('explanation' in explainResult)) {
+      state.operation = 'idle';
       state.error = explainResult.ok
         ? { message: 'Failed to explain page.', code: 'unknown' }
         : { message: explainResult.error, code: explainResult.code ?? 'unknown' };
@@ -202,59 +519,97 @@ export function mountSidePanelApp(root: HTMLElement) {
       return;
     }
 
+    state.operation = 'idle';
     state.explanation = explainResult.explanation;
+    state.chatPrompts = DEFAULT_FOLLOW_UP_PROMPTS;
+    state.usage = explainResult.explanation.usage ?? null;
+    render();
+  }
+
+  async function submitFollowUp(promptOverride?: string) {
+    if (!state.pageContext || !state.explanation) return;
+
+    const userMessage = (promptOverride ?? state.chatDraft).trim();
+    if (!userMessage) return;
+
+    state.error = null;
+    state.operation = 'chatting';
+    render();
+
+    const priorHistory = [...state.chatHistory];
+    const result = await sendMessage({
+      type: 'ob:chat',
+      pageContext: state.pageContext,
+      explanation: state.explanation,
+      history: priorHistory,
+      userMessage,
+    });
+
+    if (!result.ok || !('chat' in result)) {
+      state.operation = 'idle';
+      state.error = result.ok
+        ? { message: 'Failed to answer follow-up.', code: 'unknown' }
+        : { message: result.error, code: result.code ?? 'unknown' };
+      if (!promptOverride) {
+        state.chatDraft = userMessage;
+      }
+      render();
+      return;
+    }
+
+    state.operation = 'idle';
+    state.chatDraft = '';
+    state.chatHistory = [
+      ...priorHistory,
+      { role: 'user', content: userMessage },
+      { role: 'assistant', content: result.chat.answer },
+    ];
+    state.chatPrompts = result.chat.suggestedPrompts.length ? result.chat.suggestedPrompts : DEFAULT_FOLLOW_UP_PROMPTS;
+    state.usage = result.chat.usage ?? state.usage;
     render();
   }
 
   async function unlink() {
     await sendMessage({ type: 'ob:clear-link' });
     state.explanation = null;
+    state.hints = [];
+    state.chatHistory = [];
+    state.chatDraft = '';
+    state.chatPrompts = [];
+    state.pageContext = null;
+    state.extractionDiagnostics = null;
+    state.usage = null;
     await refreshBaseState();
-  }
-
-  function renderExplanation(explanation: OrthobulletsExplainResponse) {
-    return `
-      <section style="display:grid;gap:12px;">
-        <article style="padding:12px;border-radius:14px;background:#f0fdfa;border:1px solid #99f6e4;">
-          <h3 style="margin:0 0 6px;">Bottom Line</h3>
-          <p style="margin:0;font-weight:600;">${explanation.bottomLine}</p>
-        </article>
-        <article style="padding:12px;border-radius:14px;background:white;border:1px solid #ded7c8;">
-          <h3 style="margin:0 0 6px;">Tested Concept</h3>
-          <p style="margin:0;">${explanation.testedConcept}</p>
-        </article>
-        <article style="padding:12px;border-radius:14px;background:white;border:1px solid #ded7c8;">
-          <h3 style="margin:0 0 6px;">Why This Answer Is Correct</h3>
-          <p style="margin:0;white-space:pre-wrap;">${explanation.whyCorrect}</p>
-        </article>
-        <article style="padding:12px;border-radius:14px;background:white;border:1px solid #ded7c8;">
-          <h3 style="margin:0 0 6px;">Why the Other Choices Are Wrong</h3>
-          ${renderList(
-            explanation.whyWrong.map(
-              (item) =>
-                `${item.choiceKey ?? '?'}: ${item.reason}${item.isClassicTrap ? ' <strong>(classic trap)</strong>' : ''}`
-            )
-          )}
-        </article>
-        <article style="padding:12px;border-radius:14px;background:#fffbeb;border:1px solid #fde68a;">
-          <h3 style="margin:0 0 6px;">Board Pearl</h3>
-          <p style="margin:0;font-weight:600;">${explanation.boardPearl}</p>
-        </article>
-      </section>
-    `;
   }
 
   function render() {
     root.innerHTML = '';
 
+    const status = getStatusCopy({
+      loading: state.loading,
+      activePage: state.activePage,
+      auth: state.auth,
+      operation: state.operation,
+      pageContext: state.pageContext,
+      explanation: state.explanation,
+      hints: state.hints,
+      error: state.error,
+    });
+
+    const pageLooksHintEligible = state.pageContext
+      ? isHintEligible(state.pageContext)
+      : isLikelyCurrentTestUrl(state.activePage?.url);
+    const pageLooksExplainEligible = state.pageContext ? isExplainEligible(state.pageContext) : false;
+    const hintNextLevel = state.hints.length === 0 ? 1 : state.hints.length === 1 ? 2 : 3;
+
     const container = createElement('div', {
       html: `
-        <div style="padding:18px;display:grid;gap:14px;">
+        <div style="padding:18px 18px 8px;display:grid;gap:14px;">
           <div style="display:flex;align-items:center;gap:12px;">
             <img src="${BROBOT_ICON_URL}" alt="BroBot" width="32" height="32" style="display:block;width:32px;height:32px;border-radius:8px;" />
             <div>
-            <p style="margin:0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#0f766e;font-weight:700;">BroBot</p>
-            <h1 style="margin:6px 0 0;font-size:24px;line-height:1.2;">Orthobullets Tutor</h1>
+              <p style="margin:0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#0f766e;font-weight:700;">BroBot</p>
+              <h1 style="margin:6px 0 0;font-size:24px;line-height:1.2;">Orthobullets Tutor</h1>
             </div>
           </div>
         </div>
@@ -266,24 +621,40 @@ export function mountSidePanelApp(root: HTMLElement) {
     content.style.display = 'grid';
     content.style.gap = '14px';
 
+    content.appendChild(
+      createElement('div', {
+        html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+            <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">${escapeHtml(status.label)}</p>
+            ${state.usage ? `<p style="margin:0;font-size:12px;color:#5c6574;">${escapeHtml(getUsageLabel(state.usage) ?? '')}</p>` : ''}
+          </div>
+          <p style="margin:0;color:#384152;line-height:1.5;">${escapeHtml(status.detail)}</p>
+        </div>`,
+      })
+    );
+
     if (state.loading) {
-      content.appendChild(createElement('p', { text: 'Loading extension state...' }));
+      content.appendChild(
+        createElement('div', {
+          html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;color:#5c6574;">Loading extension state...</div>`,
+        })
+      );
     } else if (!state.activePage?.supported) {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;">
-            Open an Orthobullets page, then reopen this side panel.
+            Open an Orthobullets review or current-test question page, then reopen this side panel.
           </div>`,
         })
       );
     } else if (state.auth?.status !== 'linked') {
       const card = createElement('div', {
-        html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;">
-          <p style="margin:0 0 10px;">Link this extension to your SnapOrtho account before requesting explanations.</p>
+        html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
+          <p style="margin:0;line-height:1.5;">Link this extension to your SnapOrtho account before requesting hints, explanations, or follow-up tutoring.</p>
           <button id="start-link" style="border:none;border-radius:999px;background:#0f766e;color:white;padding:10px 14px;font-weight:700;cursor:pointer;">
             ${state.linking ? 'Waiting for approval...' : 'Link to SnapOrtho'}
           </button>
-          ${state.linkCode ? `<p style="margin:10px 0 0;color:#5c6574;">Link code: ${state.linkCode}</p>` : ''}
+          ${state.linkCode ? `<p style="margin:0;color:#5c6574;">Link code: ${escapeHtml(state.linkCode)}</p>` : ''}
         </div>`,
       });
       content.appendChild(card);
@@ -291,17 +662,52 @@ export function mountSidePanelApp(root: HTMLElement) {
         void startLinkFlow();
       });
     } else {
+      const isBusy = state.operation !== 'idle';
       const explainButtonLabel =
-        state.pageContext && isCurrentTestAwaitingReview(state.pageContext)
-          ? 'Waiting for review mode'
-          : 'Explain with BroBot';
+        state.operation === 'extracting'
+          ? 'Extracting...'
+          : state.operation === 'explaining'
+            ? 'Generating...'
+            : 'Explain with BroBot';
+
+      if (pageLooksHintEligible) {
+        const hintButtonLabel =
+          state.operation === 'hinting'
+            ? 'Getting hint...'
+            : hintNextLevel === 1
+              ? 'Get Hint 1'
+              : hintNextLevel === 2
+                ? 'Next Hint'
+                : 'Final Hint';
+
+        const hintCard = createElement('div', {
+          html: `<div style="padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #cbd5e1;display:grid;gap:10px;">
+            <div style="display:grid;gap:6px;">
+              <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">Need a hint?</p>
+              <p style="margin:0;color:#384152;line-height:1.5;">BroBot can nudge your reasoning in three steps without naming the answer choice too early.</p>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button id="hint-next" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(hintButtonLabel)}</button>
+              <button id="reveal-reasoning" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:white;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Reveal Reasoning</button>
+              <button id="unlink" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>
+            </div>
+            <p style="margin:0;font-size:12px;color:#5c6574;">Hints and reveal requests send the current page context only when you click them.</p>
+          </div>`,
+        });
+        content.appendChild(hintCard);
+        hintCard.querySelector('#hint-next')?.addEventListener('click', () => void runHint(hintNextLevel as 1 | 2 | 3));
+        hintCard.querySelector('#reveal-reasoning')?.addEventListener('click', () => void runExplain({ revealRequested: true }));
+        hintCard.querySelector('#unlink')?.addEventListener('click', () => void unlink());
+      }
+
       const controls = createElement('div', {
         html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
-          <p style="margin:0;color:#5c6574;">Active page: ${state.activePage.title ?? state.activePage.url ?? 'Orthobullets'}</p>
+          <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? 'Orthobullets')}</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button id="explain" style="border:none;border-radius:999px;background:#0f766e;color:white;padding:10px 14px;font-weight:700;cursor:pointer;">${explainButtonLabel}</button>
-            <button id="unlink" style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:pointer;">Unlink</button>
+            <button id="explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
+            ${pageLooksHintEligible ? '' : `<button id="unlink" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>`}
           </div>
+          <p style="margin:0;font-size:12px;color:#5c6574;">${pageLooksExplainEligible ? 'Review data detected. Use Explain with BroBot for full reasoning.' : 'Use Explain with BroBot for full review-mode reasoning. Hint Mode stays answer-sparing until you explicitly reveal.'}</p>
         </div>`,
       });
       content.appendChild(controls);
@@ -309,83 +715,61 @@ export function mountSidePanelApp(root: HTMLElement) {
       controls.querySelector('#unlink')?.addEventListener('click', () => void unlink());
     }
 
-    if (state.pageContext && isCurrentTestAwaitingReview(state.pageContext)) {
-      content.appendChild(
-        createElement('div', {
-          html: `<div style="padding:12px;border-radius:14px;background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;display:grid;gap:8px;">
-            <p style="margin:0;font-weight:700;">Current test detected.</p>
-            <p style="margin:0;">Answer or review the question to unlock the complete BroBot explanation.</p>
-          </div>`,
-        })
-      );
-    }
-
     if (state.error) {
       const copy = ERROR_COPY[state.error.code] ?? ERROR_COPY.unknown;
       const errorCard = createElement('div', {
-        html: `<div style="padding:12px;border-radius:14px;background:#fff0ef;border:1px solid #f0c0bc;color:#a02d1f;display:grid;gap:8px;">
-          <p style="margin:0;font-weight:700;">${copy.title}</p>
-          <p style="margin:0;">${state.error.message}</p>
+        html: `<div style="padding:14px;border-radius:16px;background:#fff0ef;border:1px solid #f0c0bc;color:#a02d1f;display:grid;gap:8px;">
+          <p style="margin:0;font-weight:700;">${escapeHtml(copy.title)}</p>
+          <p style="margin:0;line-height:1.5;">${escapeHtml(state.error.message)}</p>
           ${
             state.extractionDiagnostics?.failureCode
-              ? `<p style="margin:0;font-size:12px;color:#7f1d1d;">Failure code: ${state.extractionDiagnostics.failureCode}</p>`
+              ? `<p style="margin:0;font-size:12px;color:#7f1d1d;">Failure code: ${escapeHtml(state.extractionDiagnostics.failureCode)}</p>`
               : ''
           }
           ${copy.canRetry ? `<button id="retry-explain" style="justify-self:start;border:1px solid #a02d1f;border-radius:999px;background:white;color:#a02d1f;padding:6px 12px;font-weight:700;cursor:pointer;">Retry</button>` : ''}
         </div>`,
       });
       content.appendChild(errorCard);
-      errorCard.querySelector('#retry-explain')?.addEventListener('click', () => void runExplain());
-    }
-
-    if (state.activePage?.supported && state.auth?.status === 'linked') {
-      const debugToggle = createElement('div', {
-        html: `<button id="toggle-debug" style="justify-self:start;border:none;background:none;color:#5c6574;font-size:12px;text-decoration:underline;cursor:pointer;padding:0;">
-          ${state.debugMode ? 'Hide debug info' : 'Show debug info'}
-        </button>`,
-      });
-      content.appendChild(debugToggle);
-      debugToggle.querySelector('#toggle-debug')?.addEventListener('click', () => {
-        state.debugMode = !state.debugMode;
-        render();
+      errorCard.querySelector('#retry-explain')?.addEventListener('click', () => {
+        if (pageLooksHintEligible) {
+          void runHint(hintNextLevel as 1 | 2 | 3);
+        } else {
+          void runExplain();
+        }
       });
     }
 
-    if ((state.debugMode || isDevelopmentMode()) && (state.pageContext || state.extractionDiagnostics)) {
+    if (state.hints.length) {
+      content.appendChild(createElement('div', { html: renderHintCards(state.hints) }));
+
+      if (!state.explanation) {
+        content.appendChild(
+          createElement('div', {
+            html: `<div style="padding:12px;border-radius:14px;background:#fffaf0;border:1px solid #f5d7a1;color:#7c2d12;">
+              <p style="margin:0;font-size:12px;line-height:1.5;">Hint Mode is designed to guide your reasoning without naming the answer choice. Use Reveal Reasoning only when you want the full answer path.</p>
+            </div>`,
+          })
+        );
+      }
+    }
+
+    if (state.pageContext && !state.explanation && !state.error && hasReviewData(state.pageContext)) {
       content.appendChild(
         createElement('div', {
-          html: `<div style="padding:12px;border-radius:14px;background:white;border:1px solid #ded7c8;">
-            <h3 style="margin:0 0 6px;">Debug Summary</h3>
-            <pre style="white-space:pre-wrap;margin:0;font-size:12px;">${JSON.stringify(
-              {
-                activeTabUrl: state.extractionDiagnostics?.activeTabUrl ?? state.activePage?.url ?? null,
-                contentScriptResponded: state.extractionDiagnostics?.contentScriptResponded ?? null,
-                readable: state.extractionDiagnostics?.readable ?? null,
-                failureCode: state.extractionDiagnostics?.failureCode ?? null,
-                extractorVersion: state.pageContext?.debug?.extractorVersion ?? null,
-                pageKind: state.pageContext?.pageKind ?? null,
-                questionId: state.pageContext?.questionId ?? null,
-                topicId: state.pageContext?.topicId ?? null,
-                breadcrumbCount: state.extractionDiagnostics?.breadcrumbCount ?? state.pageContext?.breadcrumbs.length ?? 0,
-                breadcrumbs: state.pageContext?.breadcrumbs ?? [],
-                hasStem: state.extractionDiagnostics?.hasStem ?? Boolean(state.pageContext?.stem),
-                stemPreview: state.pageContext?.stem?.slice(0, 80) ?? null,
-                hasQuestionId: state.extractionDiagnostics?.hasQuestionId ?? Boolean(state.pageContext?.questionId),
-                answerChoiceCount: state.extractionDiagnostics?.answerChoiceCount ?? state.pageContext?.answerChoices.length ?? 0,
-                selectedAnswerKey: state.pageContext?.selectedAnswerKey ?? null,
-                correctAnswerKey: state.pageContext?.correctAnswerKey ?? null,
-                percentDistributionRows:
-                  state.extractionDiagnostics?.percentDistributionCount ?? state.pageContext?.percentDistribution.length ?? 0,
-                imageCount: state.extractionDiagnostics?.imageCount ?? state.pageContext?.images.length ?? 0,
-                linkedConceptCount:
-                  state.extractionDiagnostics?.linkedConceptCount ?? state.pageContext?.linkedConcepts.length ?? 0,
-                warnings: state.extractionDiagnostics?.warnings ?? state.pageContext?.extractionWarnings ?? [],
-                matchedSelectors: state.pageContext?.debug?.matchedSelectors ?? {},
-                lastErrorCode: state.error?.code ?? null,
-              },
-              null,
-              2
-            )}</pre>
+          html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
+            <p style="margin:0;font-weight:700;">Review data detected.</p>
+            <p style="margin:0;color:#384152;line-height:1.5;">Use Explain with BroBot for full reasoning. This page already shows ${state.pageContext.correctAnswerKey ? 'a visible correct answer' : 'review-style context'}${state.pageContext.explanationText ? ', explanation text' : ''}${state.pageContext.percentDistribution.length ? `, and ${state.pageContext.percentDistribution.length} distribution rows` : ''}.</p>
+          </div>`,
+        })
+      );
+    }
+
+    if (state.pageContext && !state.explanation && !state.error && !hasReviewData(state.pageContext) && !pageLooksHintEligible) {
+      content.appendChild(
+        createElement('div', {
+          html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
+            <p style="margin:0;font-weight:700;">Partial question data detected.</p>
+            <p style="margin:0;color:#384152;line-height:1.5;">BroBot can still help with hints from the visible stem and choices. Missing fields are treated as warnings, not a hard failure.</p>
           </div>`,
         })
       );
@@ -393,6 +777,75 @@ export function mountSidePanelApp(root: HTMLElement) {
 
     if (state.explanation) {
       content.appendChild(createElement('div', { html: renderExplanation(state.explanation) }));
+
+      if (state.explanation.warnings.length) {
+        content.appendChild(
+          createElement('div', {
+            html: `<div style="padding:12px;border-radius:14px;background:#fffaf0;border:1px solid #f5d7a1;color:#7c2d12;">
+              <p style="margin:0;font-size:12px;line-height:1.5;">BroBot notes: ${escapeHtml(state.explanation.warnings.join(' | '))}</p>
+            </div>`,
+          })
+        );
+      }
+
+      const chatCard = createElement('div', {
+        html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:12px;">
+          <div style="display:grid;gap:6px;">
+            <h3 style="margin:0;font-size:18px;">Follow-up chat</h3>
+            <p style="margin:0;color:#5c6574;line-height:1.5;">Ask BroBot about this exact question without leaving the side panel.</p>
+          </div>
+          ${state.chatHistory.length || state.operation === 'chatting' ? renderChatTranscript(state.chatHistory, state.operation === 'chatting') : '<p style="margin:0;color:#5c6574;">Try: “Why not the trap answer?” or “Give me an Anki-style card.”</p>'}
+          ${
+            state.chatPrompts.length
+              ? `<div style="display:flex;gap:8px;flex-wrap:wrap;">${state.chatPrompts
+                  .map(
+                    (prompt, index) =>
+                      `<button data-prompt-index="${index}" style="border:1px solid #cbd5e1;border-radius:999px;background:#f8fafc;color:#0f172a;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer;">${escapeHtml(prompt)}</button>`
+                  )
+                  .join('')}</div>`
+              : ''
+          }
+          <form id="chat-form" style="display:grid;gap:8px;">
+            <textarea id="chat-input" rows="3" placeholder="Ask a follow-up..." style="width:100%;box-sizing:border-box;border:1px solid #d2cab8;border-radius:14px;padding:12px;font:inherit;resize:vertical;">${escapeHtml(state.chatDraft)}</textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+              <p style="margin:0;font-size:12px;color:#5c6574;">Raw Orthobullets content is only sent when you submit a question.</p>
+              <button type="submit" ${state.operation === 'chatting' ? 'disabled' : ''} style="border:none;border-radius:999px;background:${state.operation === 'chatting' ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${state.operation === 'chatting' ? 'default' : 'pointer'};">${state.operation === 'chatting' ? 'Sending...' : 'Ask BroBot'}</button>
+            </div>
+          </form>
+        </div>`,
+      });
+      content.appendChild(chatCard);
+
+      const chatInput = chatCard.querySelector('#chat-input') as HTMLTextAreaElement | null;
+      chatInput?.addEventListener('input', (event) => {
+        state.chatDraft = (event.currentTarget as HTMLTextAreaElement).value;
+      });
+      chatCard.querySelector('#chat-form')?.addEventListener('submit', (event) => {
+        event.preventDefault();
+        void submitFollowUp();
+      });
+      chatCard.querySelectorAll<HTMLButtonElement>('[data-prompt-index]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const index = Number(button.dataset.promptIndex ?? -1);
+          const prompt = state.chatPrompts[index];
+          if (prompt) {
+            void submitFollowUp(prompt);
+          }
+        });
+      });
+    }
+
+    if (state.pageContext || state.extractionDiagnostics) {
+      content.appendChild(
+        createElement('div', {
+          html: renderDebugSummary({
+            activePage: state.activePage,
+            diagnostics: state.extractionDiagnostics,
+            pageContext: state.pageContext,
+            errorCode: state.error?.code ?? null,
+          }),
+        })
+      );
     }
 
     root.appendChild(container);

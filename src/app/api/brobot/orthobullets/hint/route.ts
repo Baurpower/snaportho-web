@@ -1,0 +1,193 @@
+import { createHash } from 'node:crypto';
+import { NextResponse } from 'next/server';
+
+import { authenticateDeviceLinkedRequest } from '@/lib/brobot/device-link';
+import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
+import { getAnswerModelForRoute } from '@/lib/brobot/model-config';
+import { getOpenAI } from '@/lib/brobot/openai-client';
+import { buildOrthobulletsHintMessages } from '@/lib/brobot/orthobullets/prompt-builder';
+import { lookupOrthobulletsKgContext } from '@/lib/brobot/orthobullets/kg-lookup';
+import { resolveOrthobulletsContext } from '@/lib/brobot/orthobullets/context-resolver';
+import { OrthobulletsHintRequestSchema } from '@/lib/brobot/orthobullets/types';
+import {
+  OrthobulletsParseError,
+  parseOrthobulletsHintResponse,
+} from '@/lib/brobot/orthobullets/response-parser';
+import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
+import { BROBOT_CONFIG } from '@/lib/config/brobot';
+
+const EXTENSION_TOKEN_HEADER = 'x-snaportho-extension-token';
+
+function hashText(value: string | null | undefined): string | null {
+  if (!value) return null;
+  return createHash('sha256').update(value, 'utf8').digest('hex').slice(0, 16);
+}
+
+function disabledResponse() {
+  return NextResponse.json(
+    {
+      error: 'disabled',
+      message: 'BroBot Orthobullets hints are currently unavailable.',
+    },
+    { status: 403 }
+  );
+}
+
+function limitReachedResponse(dailyCap: number | null) {
+  return NextResponse.json(
+    {
+      error: 'quota_exceeded',
+      message: 'Daily BroBot limit reached.',
+      dailyCap,
+    },
+    { status: 429 }
+  );
+}
+
+function requestHasReviewData(input: { correctAnswerKey?: string; explanationText?: string; percentDistribution: unknown[] }) {
+  return Boolean(input.correctAnswerKey) || Boolean(input.explanationText) || input.percentDistribution.length > 0;
+}
+
+export async function POST(request: Request) {
+  if (!BROBOT_CONFIG.ENABLED || !BROBOT_CONFIG.ORTHOBULLETS_ENABLED) {
+    return disabledResponse();
+  }
+
+  const auth = await authenticateDeviceLinkedRequest(request, {
+    deviceTokenHeader: EXTENSION_TOKEN_HEADER,
+    allowBearerToken: false,
+    allowBrowserSession: false,
+  });
+
+  if ('response' in auth) {
+    return auth.response;
+  }
+
+  const parsedBody = await request.json().catch(() => null);
+  const parsed = OrthobulletsHintRequestSchema.safeParse(parsedBody);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: 'invalid_request', message: 'Invalid Orthobullets hint request.' },
+      { status: 400 }
+    );
+  }
+
+  if (requestHasReviewData(parsed.data.pageContext)) {
+    return NextResponse.json(
+      {
+        error: 'invalid_request',
+        message: 'Review data detected. Use Explain with BroBot for full reasoning.',
+      },
+      { status: 400 }
+    );
+  }
+
+  const subject: Subject = { type: 'user', id: auth.userId };
+  const entitlement = await getRemainingAIUses(subject);
+
+  if (entitlement.source === 'disabled') {
+    return disabledResponse();
+  }
+
+  if (entitlement.isLimitReached) {
+    await recordUsageEvent({
+      subject,
+      outcome: 'limit_hit',
+    });
+    return limitReachedResponse(entitlement.aiAccess.dailyCap);
+  }
+
+  const requestId = crypto.randomUUID();
+  const startedAt = Date.now();
+  const kgLookup = await lookupOrthobulletsKgContext({
+    questionId: parsed.data.pageContext.questionId,
+  });
+  const resolvedContext = resolveOrthobulletsContext({
+    pageContext: parsed.data.pageContext,
+    kgLookup,
+  });
+
+  console.log('[brobot-orthobullets] hint_request', {
+    requestId,
+    userIdPrefix: auth.userId.slice(0, 8),
+    questionId: resolvedContext.pageContext.questionId ?? null,
+    hintLevel: parsed.data.hintLevel,
+    stemHash: hashText(resolvedContext.pageContext.stem),
+    explanationHash: hashText(resolvedContext.pageContext.explanationText),
+    selectedAnswerKey: parsed.data.selectedAnswerKey ?? resolvedContext.pageContext.selectedAnswerKey ?? null,
+    answerChoiceCount: resolvedContext.pageContext.answerChoices.length,
+    warningCount: resolvedContext.warnings.length,
+    kgMatched: Boolean(kgLookup?.matchedQuestionId),
+  });
+
+  try {
+    const completion = await getOpenAI().chat.completions.create({
+      model: getAnswerModelForRoute({
+        mode: 'oite',
+        ambiguity: 'low',
+        responseDepth: 'quick',
+        subintent: 'oite_traps',
+      }),
+      temperature: 0.2,
+      response_format: { type: 'json_object' },
+      messages: buildOrthobulletsHintMessages({
+        context: resolvedContext,
+        hintLevel: parsed.data.hintLevel,
+        selectedAnswerKey: parsed.data.selectedAnswerKey,
+      }),
+    });
+
+    const latencyMs = Date.now() - startedAt;
+    const usedAfter = await recordSuccessfulAIUse(subject, latencyMs);
+    const remainingToday =
+      entitlement.aiAccess.dailyCap != null
+        ? Math.max(0, entitlement.aiAccess.dailyCap - usedAfter)
+        : null;
+
+    const response = parseOrthobulletsHintResponse({
+      raw: completion.choices[0]?.message?.content ?? '',
+      hintId: crypto.randomUUID(),
+      hintLevel: parsed.data.hintLevel,
+      remainingToday,
+      dailyCap: entitlement.aiAccess.dailyCap,
+      unlimited: entitlement.aiAccess.unlimited,
+    });
+
+    console.log('[brobot-orthobullets] hint_success', {
+      requestId,
+      userIdPrefix: auth.userId.slice(0, 8),
+      questionId: resolvedContext.pageContext.questionId ?? null,
+      hintLevel: parsed.data.hintLevel,
+      latencyMs,
+      remainingToday,
+    });
+
+    return NextResponse.json(response);
+  } catch (error) {
+    await recordUsageEvent({
+      subject,
+      outcome: 'failure',
+      latencyMs: Date.now() - startedAt,
+    });
+
+    console.error('[brobot-orthobullets] hint_failure', {
+      requestId,
+      userIdPrefix: auth.userId.slice(0, 8),
+      questionId: resolvedContext.pageContext.questionId ?? null,
+      hintLevel: parsed.data.hintLevel,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+
+    if (error instanceof OrthobulletsParseError) {
+      return NextResponse.json(
+        { error: 'parse_failure', message: "BroBot's hint could not be parsed. Please try again." },
+        { status: 502 }
+      );
+    }
+
+    return NextResponse.json(
+      { error: 'api_failure', message: 'BroBot could not generate a hint.' },
+      { status: 500 }
+    );
+  }
+}

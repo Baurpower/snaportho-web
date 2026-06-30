@@ -1,6 +1,9 @@
 import type {
+  OrthobulletsChatResponse,
+  OrthobulletsChatTurn,
   OrthobulletsExplainResponse,
   OrthobulletsExtractionDiagnostics,
+  OrthobulletsHintResponse,
   OrthobulletsPageContext,
 } from './types.js';
 
@@ -29,7 +32,20 @@ export type ExtensionMessage =
   | { type: 'ob:poll-link'; linkCode: string }
   | { type: 'ob:clear-link' }
   | { type: 'ob:extract-page-context'; tabId: number }
-  | { type: 'ob:explain'; pageContext: OrthobulletsPageContext };
+  | {
+      type: 'ob:hint';
+      pageContext: OrthobulletsPageContext;
+      hintLevel: 1 | 2 | 3;
+      selectedAnswerKey?: string;
+    }
+  | { type: 'ob:explain'; pageContext: OrthobulletsPageContext }
+  | {
+      type: 'ob:chat';
+      pageContext: OrthobulletsPageContext;
+      explanation: OrthobulletsExplainResponse;
+      history: OrthobulletsChatTurn[];
+      userMessage: string;
+    };
 
 // Stable error codes surfaced to the side panel so it can render a specific
 // UI state (and, where relevant, a retry path) instead of a raw message.
@@ -51,6 +67,8 @@ export type ExtensionMessageResponse =
   | { ok: true; link: LinkStartResult }
   | { ok: true; deviceToken: string }
   | { ok: true; pageContext: OrthobulletsPageContext; diagnostics: OrthobulletsExtractionDiagnostics }
+  | { ok: true; hint: OrthobulletsHintResponse }
   | { ok: true; explanation: OrthobulletsExplainResponse }
+  | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; cleared: true }
   | { ok: false; error: string; code?: ExtensionErrorCode; diagnostics?: OrthobulletsExtractionDiagnostics };

@@ -22,6 +22,42 @@ const configuredAppOrigin =
   process.env.NEXT_PUBLIC_SITE_URL ||
   'http://localhost:3000';
 
+function buildClassicContentScriptBundle() {
+  const selectorsPath = path.join(distDir, 'content', 'selectors.js');
+  const extractorPath = path.join(distDir, 'content', 'extractor.js');
+  const contentScriptPath = path.join(distDir, 'content', 'content-script.js');
+
+  const selectorsSource = readFileSync(selectorsPath, 'utf8')
+    .replace(/^export const SELECTOR_SET_VERSION =/m, 'const SELECTOR_SET_VERSION =')
+    .replace(/^export const SELECTORS =/m, 'const SELECTORS =');
+
+  const extractorSource = readFileSync(extractorPath, 'utf8')
+    .replace(/^import\s+\{\s*SELECTOR_SET_VERSION,\s*SELECTORS\s*\}\s+from\s+['"]\.\/selectors\.js['"];\r?\n?/m, '')
+    .replace(/^export const EXTRACTOR_VERSION =/m, 'const EXTRACTOR_VERSION =')
+    .replace(/^export \{ SELECTOR_SET_VERSION \};\r?\n?/m, '')
+    .replace(/^export function extractOrthobulletsPageContext\(/m, 'function extractOrthobulletsPageContext(');
+
+  const contentScriptSource = readFileSync(contentScriptPath, 'utf8')
+    .replace(/^import\s+\{\s*extractOrthobulletsPageContext\s*\}\s+from\s+['"]\.\/extractor\.js['"];\r?\n?/m, '');
+
+  const bundledSource = [
+    '(() => {',
+    selectorsSource.trim(),
+    '',
+    extractorSource.trim(),
+    '',
+    contentScriptSource.trim(),
+    '})();',
+    '',
+  ].join('\n');
+
+  if (/^\s*import\s/m.test(bundledSource) || /^\s*export\s/m.test(bundledSource)) {
+    throw new Error('Classic content script bundle still contains ESM syntax.');
+  }
+
+  writeFileSync(contentScriptPath, bundledSource);
+}
+
 rmSync(distDir, { recursive: true, force: true });
 
 const tscResult = spawnSync(
@@ -39,6 +75,7 @@ if (tscResult.status !== 0) {
 
 mkdirSync(distDir, { recursive: true });
 cpSync(iconsSourceDir, path.join(distDir, builtPaths.iconsDir), { recursive: true });
+buildClassicContentScriptBundle();
 
 const manifestTemplate = readFileSync(manifestTemplatePath, 'utf8');
 const manifest = manifestTemplate

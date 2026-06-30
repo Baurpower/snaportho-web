@@ -52,6 +52,77 @@ export interface BroBotEntitlement {
   appleExpiresAt?: string | null;
 }
 
+type SubscriptionEntitlementRow = {
+  user_id: string;
+  status: string;
+  plan_code: string;
+  current_period_end: string | null;
+  cancel_at_period_end: boolean | null;
+  canceled_at: string | null;
+  stripe_customer_id: string | null;
+  stripe_subscription_id: string | null;
+  stripe_price_id: string | null;
+  provider: string | null;
+  provider_subscription_id: string | null;
+  provider_transaction_id: string | null;
+  environment: string | null;
+  updated_at?: string | null;
+};
+
+function getSubscriptionStatusRank(status: string) {
+  switch (status) {
+    case 'active':
+      return 5;
+    case 'trialing':
+      return 4;
+    case 'past_due':
+      return 3;
+    case 'canceled':
+      return 2;
+    default:
+      return 0;
+  }
+}
+
+export function pickBestEntitlingSubscriptionRow(
+  rows: SubscriptionEntitlementRow[],
+  now = new Date(),
+  gracePeriodDays = BROBOT_CONFIG.GRACE_PERIOD_DAYS
+) {
+  const graceMs = gracePeriodDays * 24 * 60 * 60 * 1000;
+  const nowTs = now.getTime();
+
+  const entitlingRows = rows.filter((row) => {
+    const periodEndTs = row.current_period_end ? new Date(row.current_period_end).getTime() : null;
+    const appleActiveIsValid =
+      row.provider !== 'apple' ||
+      (periodEndTs != null && periodEndTs > nowTs);
+
+    return (
+      (row.status === 'active' && appleActiveIsValid) ||
+      row.status === 'trialing' ||
+      (row.status === 'past_due' && periodEndTs != null && periodEndTs + graceMs > nowTs) ||
+      (Boolean(row.cancel_at_period_end) && periodEndTs != null && periodEndTs > nowTs) ||
+      (row.status === 'canceled' && periodEndTs != null && periodEndTs > nowTs)
+    );
+  });
+
+  return entitlingRows.sort((left, right) => {
+    const statusDiff = getSubscriptionStatusRank(right.status) - getSubscriptionStatusRank(left.status);
+    if (statusDiff !== 0) return statusDiff;
+
+    const periodDiff =
+      (right.current_period_end ? new Date(right.current_period_end).getTime() : -Infinity) -
+      (left.current_period_end ? new Date(left.current_period_end).getTime() : -Infinity);
+    if (periodDiff !== 0) return periodDiff;
+
+    return (
+      (right.updated_at ? new Date(right.updated_at).getTime() : -Infinity) -
+      (left.updated_at ? new Date(left.updated_at).getTime() : -Infinity)
+    );
+  })[0] ?? null;
+}
+
 /**
  * Returns the entitlement for a subject (user or guest).
  * This is the SINGLE source of truth for BroBot access decisions.
@@ -132,72 +203,40 @@ async function getActiveOverride(userId: string) {
 /** Checks for an active paid BroBot subscription with proper grace period logic */
 async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEntitlement | null> {
   const supabase = createAdminClient();
-
-  // Prefer active/past_due/trialing/canceling subscriptions over stale 'incomplete' placeholder rows.
-  // Supports both Stripe and Apple (and future providers).
-  // First try to find a "good" status row.
-  let { data: sub } = await supabase
+  const { data: rows } = await supabase
     .from('subscriptions')
     .select(`
       user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at,
       stripe_customer_id, stripe_subscription_id, stripe_price_id,
-      provider, provider_subscription_id, provider_transaction_id, environment
+      provider, provider_subscription_id, provider_transaction_id, environment, updated_at
     `)
     .eq('user_id', userId)
     .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
-    .in('status', ['active', 'trialing', 'past_due'])
     .order('current_period_end', { ascending: false, nullsFirst: false })
-    .limit(1)
-    .maybeSingle();
-
-  if (!sub) {
-    // Fallback to any row (including incomplete or canceled), still prefer latest period end
-    const { data: fallback } = await supabase
-      .from('subscriptions')
-      .select(`
-        user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at,
-        stripe_customer_id, stripe_subscription_id, stripe_price_id,
-        provider, provider_subscription_id, provider_transaction_id, environment
-      `)
-      .eq('user_id', userId)
-      .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
-      .order('current_period_end', { ascending: false, nullsFirst: false })
-      .limit(1)
-      .maybeSingle();
-    sub = fallback;
-  }
+    .order('updated_at', { ascending: false })
+    .limit(50);
 
   // [BROBOT-ENTITLEMENT-SELECT] - detailed row inspection for debugging Apple vs Stripe
   {
-    const { data: allRows } = await supabase
-      .from('subscriptions')
-      .select('provider, plan_code, status, current_period_end, environment, updated_at')
-      .eq('user_id', userId)
-      .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
-      .order('updated_at', { ascending: false });
-
     console.log('[BROBOT-ENTITLEMENT-SELECT]', {
       userId: userId.slice(0, 8),
-      rowsFound: allRows?.length ?? 0,
-      rows: (allRows || []).map(r => ({
+      rowsFound: rows?.length ?? 0,
+      rows: (rows || []).map(r => ({
         provider: r.provider,
         plan_code: r.plan_code,
         status: r.status,
         current_period_end: r.current_period_end,
         environment: r.environment,
       })),
-      selectedRow: sub ? {
-        provider: sub.provider,
-        status: sub.status,
-        current_period_end: sub.current_period_end,
-      } : null,
     });
   }
 
-  if (!sub) return null;
-
+  const candidates = (rows ?? []) as SubscriptionEntitlementRow[];
   const now = new Date();
   const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
+  const sub = pickBestEntitlingSubscriptionRow(candidates, now, BROBOT_CONFIG.GRACE_PERIOD_DAYS);
+
+  if (!sub) return null;
 
   // Apple subscriptions have no server-push notifications — status is only updated
   // when the iOS client calls /sync, which only happens while a transaction is in
@@ -273,10 +312,12 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
 
   // Compute grace separately so mobile (and future) can show "in grace" messaging
   const isInGracePeriod =
-    (sub.status === 'past_due' && sub.current_period_end &&
-      new Date(sub.current_period_end).getTime() + graceMs > now.getTime()) ||
-    (sub.cancel_at_period_end && sub.current_period_end &&
-      new Date(sub.current_period_end).getTime() > now.getTime());
+    Boolean(
+      (sub.status === 'past_due' && sub.current_period_end &&
+        new Date(sub.current_period_end).getTime() + graceMs > now.getTime()) ||
+      (sub.cancel_at_period_end && sub.current_period_end &&
+        new Date(sub.current_period_end).getTime() > now.getTime())
+    );
 
   if (isActive) {
     // Also attach today's usage count for the mobile contract (even for unlimited users)
@@ -288,7 +329,7 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
       planCode: sub.plan_code,
       expiresAt: sub.current_period_end,
       status: sub.status,
-      cancelAtPeriodEnd: sub.cancel_at_period_end,
+      cancelAtPeriodEnd: sub.cancel_at_period_end ?? undefined,
       // New additive fields
       stripeCustomerId: sub.stripe_customer_id ?? null,
       stripeSubscriptionId: sub.stripe_subscription_id ?? null,

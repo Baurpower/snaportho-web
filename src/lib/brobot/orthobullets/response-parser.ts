@@ -1,4 +1,11 @@
-import { OrthobulletsExplainResponseSchema, type OrthobulletsExplainResponse } from './types';
+import {
+  OrthobulletsChatResponseSchema,
+  OrthobulletsExplainResponseSchema,
+  OrthobulletsHintResponseSchema,
+  type OrthobulletsChatResponse,
+  type OrthobulletsExplainResponse,
+  type OrthobulletsHintResponse,
+} from './types';
 
 export class OrthobulletsParseError extends Error {
   constructor(message: string) {
@@ -18,6 +25,19 @@ function extractJsonObject(raw: string): string | null {
   return trimmed.slice(first, last + 1);
 }
 
+function parseJsonObject(raw: string): Record<string, unknown> {
+  const json = extractJsonObject(raw);
+  if (!json) {
+    throw new OrthobulletsParseError('BroBot orthobullets response did not contain JSON.');
+  }
+
+  try {
+    return JSON.parse(json) as Record<string, unknown>;
+  } catch {
+    throw new OrthobulletsParseError('BroBot orthobullets response was not valid JSON.');
+  }
+}
+
 export function parseOrthobulletsExplainResponse(input: {
   raw: string;
   explanationId: string;
@@ -25,17 +45,7 @@ export function parseOrthobulletsExplainResponse(input: {
   dailyCap: number | null;
   unlimited: boolean;
 }): OrthobulletsExplainResponse {
-  const json = extractJsonObject(input.raw);
-  if (!json) {
-    throw new OrthobulletsParseError('BroBot orthobullets response did not contain JSON.');
-  }
-
-  let parsed: Record<string, unknown>;
-  try {
-    parsed = JSON.parse(json) as Record<string, unknown>;
-  } catch {
-    throw new OrthobulletsParseError('BroBot orthobullets response was not valid JSON.');
-  }
+  const parsed = parseJsonObject(input.raw);
 
   try {
     return OrthobulletsExplainResponseSchema.parse({
@@ -49,5 +59,59 @@ export function parseOrthobulletsExplainResponse(input: {
     });
   } catch {
     throw new OrthobulletsParseError('BroBot orthobullets response did not match the expected shape.');
+  }
+}
+
+export function parseOrthobulletsChatResponse(input: {
+  raw: string;
+  responseId: string;
+  remainingToday: number | null;
+  dailyCap: number | null;
+  unlimited: boolean;
+}): OrthobulletsChatResponse {
+  const parsed = parseJsonObject(input.raw);
+
+  try {
+    return OrthobulletsChatResponseSchema.parse({
+      ...parsed,
+      responseId: input.responseId,
+      usage: {
+        remainingToday: input.remainingToday,
+        dailyCap: input.dailyCap,
+        unlimited: input.unlimited,
+      },
+    });
+  } catch {
+    throw new OrthobulletsParseError('BroBot orthobullets chat response did not match the expected shape.');
+  }
+}
+
+export function parseOrthobulletsHintResponse(input: {
+  raw: string;
+  hintId: string;
+  hintLevel: 1 | 2 | 3;
+  remainingToday: number | null;
+  dailyCap: number | null;
+  unlimited: boolean;
+}): OrthobulletsHintResponse {
+  const parsed = parseJsonObject(input.raw);
+  const nextActionLabel =
+    input.hintLevel === 1 ? 'Next Hint' : input.hintLevel === 2 ? 'Final Hint' : 'Reveal Reasoning';
+
+  try {
+    return OrthobulletsHintResponseSchema.parse({
+      ...parsed,
+      hintId: input.hintId,
+      hintLevel: input.hintLevel,
+      avoidRevealingAnswer: true,
+      nextActionLabel,
+      usage: {
+        remainingToday: input.remainingToday,
+        dailyCap: input.dailyCap,
+        unlimited: input.unlimited,
+      },
+    });
+  } catch {
+    throw new OrthobulletsParseError('BroBot orthobullets hint response did not match the expected shape.');
   }
 }

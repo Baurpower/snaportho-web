@@ -56,6 +56,7 @@ export async function POST(request: Request) {
       .from('subscriptions')
       .select('id, status, cancel_at_period_end, current_period_end')
       .eq('user_id', user.id)
+      .eq('provider', 'stripe')
       .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
       .in('status', ['active', 'trialing', 'past_due', 'incomplete'])
       .order('current_period_end', { ascending: false, nullsFirst: false })
