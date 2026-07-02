@@ -11,6 +11,7 @@ import {
   trackCheckoutStartedConversion,
   trackSubscriptionConversion,
 } from '@/lib/analytics/googleAds';
+import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
 
 // ─── Main content ─────────────────────────────────────────────────────────────
 
@@ -133,13 +134,14 @@ function BillingContent() {
         currency: 'USD',
       });
 
-      const res = await fetch('/api/billing/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ interval, returnTo: returnTo || undefined }),
+      const { url, portalUrl } = await createWebsiteBroBotCheckout({
+        interval,
+        isAuthenticated: true,
+        returnTo: returnTo || undefined,
+        checkoutSource: 'account_billing_page',
       });
-      const { url, portalUrl } = await res.json();
-      if (url || portalUrl) window.location.href = url || portalUrl;
+      const redirectUrl = url ?? portalUrl;
+      if (redirectUrl) window.location.href = redirectUrl;
     } catch {
       alert('Failed to start checkout');
     }

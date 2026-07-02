@@ -12,7 +12,9 @@ function buildAbsoluteReturnUrl(path: string, flag: 'success' | 'canceled' | 'po
 }
 
 function logBroBotCheckoutTrialDebug(label: string, details: Record<string, unknown>) {
-  console.info(`[brobot/stripe-checkout-trial-debug] ${label}`, details);
+  if (process.env.NODE_ENV !== 'production' || process.env.BROBOT_CHECKOUT_DEBUG === 'true') {
+    console.info(`[brobot/stripe-checkout-trial-debug] ${label}`, details);
+  }
 }
 
 export async function POST(request: Request) {
@@ -39,6 +41,11 @@ export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
     const interval: 'month' | 'year' = body.interval === 'year' ? 'year' : 'month';
+    const trialRequested = body.trialRequested !== false;
+    const checkoutSource =
+      typeof body.checkoutSource === 'string' && body.checkoutSource.trim().length > 0
+        ? body.checkoutSource.trim()
+        : 'website_authenticated_checkout';
     const returnTo = safeRedirectPath(body.returnTo, '');
     const successUrl = returnTo
       ? buildAbsoluteReturnUrl(returnTo, 'success')
@@ -86,7 +93,8 @@ export async function POST(request: Request) {
 
     logBroBotCheckoutTrialDebug('web_checkout_route', {
       userId: user.id,
-      enableTrial: true,
+      enableTrial: trialRequested,
+      checkoutSource,
       interval,
       returnTo,
       existingRows,
@@ -120,6 +128,8 @@ export async function POST(request: Request) {
         base: getAppBaseUrl(),
         user_id: user.id,
         interval,
+        checkout_source: checkoutSource,
+        trial_requested: trialRequested,
       });
     }
 
@@ -129,7 +139,10 @@ export async function POST(request: Request) {
       user.email ?? undefined,
       returnTo ? successUrl : undefined,
       returnTo ? cancelUrl : undefined,
-      { enableTrial: true }
+      {
+        enableTrial: trialRequested,
+        source: checkoutSource,
+      }
     );
 
     if (!url) {

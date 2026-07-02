@@ -18,6 +18,7 @@ import {
   trackBroBotPricingPageView,
   trackCheckoutStartEvent,
 } from '@/lib/analytics/googleAds';
+import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
 
 const BILLING_RETURN_TO = '/brobot/chat';
 
@@ -66,7 +67,7 @@ const faqs = [
 export default function BroBotPricingClient() {
   const { user, loading: authLoading } = useAuth();
   const [checkoutLoading, setCheckoutLoading] = useState<'month' | 'year' | null>(null);
-  const subscribeCta = user ? 'Subscribe Now' : 'Start Free Trial';
+  const subscribeCta = 'Start Free Trial';
 
   useEffect(() => {
     trackBroBotPricingPageView();
@@ -89,29 +90,15 @@ export default function BroBotPricingClient() {
         interval,
       });
 
-      const checkoutEndpoint = user
-        ? '/api/billing/checkout'
-        : '/api/billing/checkout/guest';
-
-      const res = await fetch(checkoutEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(
-          user
-            ? { interval, returnTo: BILLING_RETURN_TO }
-            : {
-                interval,
-                source: 'brobot_public_pricing',
-              }
-        ),
+      const { url, portalUrl } = await createWebsiteBroBotCheckout({
+        interval,
+        isAuthenticated: Boolean(user),
+        returnTo: user ? BILLING_RETURN_TO : undefined,
+        checkoutSource: 'brobot_pricing_page',
       });
-
-      const { url, portalUrl, error } = await res.json();
-      if (!res.ok && error) {
-        throw new Error(error);
-      }
-      if (url || portalUrl) {
-        window.location.href = url || portalUrl;
+      const redirectUrl = url ?? portalUrl;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
       }
     } catch (error) {
       console.error('[brobot/pricing] checkout failed', error);
@@ -214,7 +201,7 @@ function HeroSection({
             </a>
           </div>
           <p className="mt-3 text-sm font-semibold text-white/[0.58]">
-            Start your first month free. No charge today.
+            Start free trial. No charge today. Then {BROBOT_PRICING.unlimited.monthlyPriceLabel} after trial. Cancel anytime.
           </p>
         </div>
 

@@ -38,7 +38,11 @@
     "kg:ontology:build-llm": "node --experimental-strip-types scripts/build-kg-ontology-with-llm.ts",
     "kg:retarget:generate": "node --experimental-strip-types scripts/generate-legacy-retargeting-proposals.ts",
     "kg:retarget:apply": "node --experimental-strip-types scripts/apply-legacy-retargeting.ts",
-    "kg:retarget:report": "node --experimental-strip-types scripts/report-legacy-retargeting-completion.ts"
+    "kg:retarget:report": "node --experimental-strip-types scripts/report-legacy-retargeting-completion.ts",
+    "subscriptions:backfill:stripe": "node --experimental-strip-types scripts/reconcile-brobot-stripe-subscriptions.ts",
+    "subscriptions:test:selection": "node --experimental-strip-types src/lib/brobot/entitlements-selection.test.ts",
+    "subscriptions:test:sync": "node --experimental-strip-types src/lib/stripe-subscription-sync.test.ts",
+    "subscriptions:test:lifecycle": "node --experimental-strip-types src/lib/brobot/entitlements-lifecycle.test.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

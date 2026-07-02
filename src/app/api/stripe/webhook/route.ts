@@ -10,6 +10,10 @@ import {
 } from '@/lib/stripe';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { sendSubscriptionPurchaseConversion } from '@/lib/analytics/googleAdsServer';
+import {
+  getExistingSubscriptionEvent,
+  upsertSubscriptionEvent,
+} from '@/lib/subscriptions/events';
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
@@ -38,27 +42,21 @@ export async function POST(request: Request) {
     created: event.created,
   });
 
-  const supabase = createAdminClient();
-
-  // Idempotency: skip only if the event was already SUCCESSFULLY processed.
-  // If it exists but processed_at is null (a prior attempt failed), fall through
-  // and retry processing so Stripe retries are not silently dropped.
-  const { data: existing } = await supabase
-    .from('subscription_events')
-    .select('id, processed_at')
-    .eq('stripe_event_id', event.id)
-    .maybeSingle();
+  const existing = await getExistingSubscriptionEvent({
+    provider: 'stripe',
+    providerEventId: event.id,
+  });
 
   if (existing?.processed_at) {
     return NextResponse.json({ received: true, duplicate: true });
   }
 
-  // Insert the raw event for audit (skip if already logged from a previous failed attempt)
   if (!existing) {
-    await supabase.from('subscription_events').insert({
-      stripe_event_id: event.id,
-      event_type: event.type,
-      raw_event: event,
+    await upsertSubscriptionEvent({
+      provider: 'stripe',
+      providerEventId: event.id,
+      eventType: event.type,
+      rawPayload: event as unknown as Record<string, unknown>,
     });
   }
 
@@ -262,11 +260,14 @@ export async function POST(request: Request) {
         break;
     }
 
-    // Mark as processed
-    await supabase
-      .from('subscription_events')
-      .update({ processed_at: new Date().toISOString() })
-      .eq('stripe_event_id', event.id);
+    await upsertSubscriptionEvent({
+      provider: 'stripe',
+      providerEventId: event.id,
+      eventType: event.type,
+      rawPayload: event as unknown as Record<string, unknown>,
+      processedAt: new Date().toISOString(),
+      processingResult: { received: true },
+    });
 
     return NextResponse.json({ received: true });
   } catch (err) {

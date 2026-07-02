@@ -45,9 +45,13 @@ function buildBroBotCheckoutMetadata(params: {
 }) {
   return {
     user_id: params.userId,
+    provider: 'stripe',
+    billing_environment: 'test',
+    checkout_source: 'test_source',
     product: 'brobot',
     plan: 'unlimited_brobot',
     plan_code: 'unlimited_brobot',
+    trial_requested: 'true',
     trial_offer_reference_id: params.trialDecision.offerId ?? '',
     trial_offer_attached: 'false',
     trial_implementation: params.trialDecision.eligible ? 'checkout_trial_end' : 'none',
@@ -93,9 +97,13 @@ assert.deepEqual(
   buildBroBotCheckoutMetadata({ userId: 'user_123', trialDecision: eligibleTrial }),
   {
     user_id: 'user_123',
+    provider: 'stripe',
+    billing_environment: 'test',
+    checkout_source: 'test_source',
     product: 'brobot',
     plan: 'unlimited_brobot',
     plan_code: 'unlimited_brobot',
+    trial_requested: 'true',
     trial_offer_reference_id: 'to_1Tk6xTArNRAa5suA9q50NzAV',
     trial_offer_attached: 'false',
     trial_implementation: 'checkout_trial_end',

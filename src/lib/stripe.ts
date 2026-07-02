@@ -4,6 +4,7 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { getAppBaseUrl } from '@/lib/config/app-url'; // Centralized production-safe URL resolution
 import { getRemainingAIUses } from '@/lib/brobot/entitlements';
+import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
 
 let stripeClient: Stripe | null = null;
 
@@ -245,12 +246,18 @@ export function getBroBotTrialEndTimestamp(startedAt = new Date()) {
 export function buildBroBotCheckoutMetadata(params: {
   userId: string;
   trialDecision: BroBotTrialDecision;
+  source?: string | null;
+  trialRequested?: boolean;
 }) {
   return {
     user_id: params.userId,
+    provider: 'stripe',
+    billing_environment: getStripeEnvironment(),
+    checkout_source: params.source ?? '',
     product: 'brobot',
     plan: BROBOT_CONFIG.PAID_PLAN_CODE,
     plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
+    trial_requested: params.trialRequested === false ? 'false' : 'true',
     trial_offer_reference_id: params.trialDecision.offerId ?? '',
     trial_offer_attached: 'false',
     trial_implementation: params.trialDecision.eligible ? 'checkout_trial_end' : 'none',
@@ -284,7 +291,9 @@ function stripeSubscriptionMatchesBroBot(subscription: Stripe.Subscription) {
 }
 
 function logBroBotCheckoutTrialDebug(label: string, details: Record<string, unknown>) {
-  console.info(`[brobot/stripe-checkout-trial-debug] ${label}`, details);
+  if (process.env.NODE_ENV !== 'production' || process.env.BROBOT_CHECKOUT_DEBUG === 'true') {
+    console.info(`[brobot/stripe-checkout-trial-debug] ${label}`, details);
+  }
 }
 
 function normalizeEmail(email: string | null | undefined) {
@@ -357,10 +366,13 @@ function getBroBotPriceId(interval: 'month' | 'year') {
 }
 
 function buildGuestTrialMetadata(params: {
+  trialRequested?: boolean;
   trialEnd: number | null;
   trialMonths: number | null;
 }) {
-  const eligible = Boolean(params.trialEnd && params.trialMonths && params.trialMonths > 0);
+  const eligible =
+    params.trialRequested !== false &&
+    Boolean(params.trialEnd && params.trialMonths && params.trialMonths > 0);
 
   return {
     trial_offer_reference_id: BROBOT_CONFIG.TRIAL_OFFER_ID || '',
@@ -655,6 +667,7 @@ export async function createBroBotCheckoutSession(
   customCancelUrl?: string,
   options: {
     enableTrial?: boolean;
+    source?: string;
   } = {}
 ): Promise<{ url: string | null }> {
   const stripe = getStripe();
@@ -684,7 +697,12 @@ export async function createBroBotCheckoutSession(
           enableTrial: options.enableTrial,
         })
       : trialDecisionBeforeCustomer;
-  const metadata = buildBroBotCheckoutMetadata({ userId, trialDecision });
+  const metadata = buildBroBotCheckoutMetadata({
+    userId,
+    trialDecision,
+    source: options.source ?? null,
+    trialRequested: options.enableTrial,
+  });
 
   // Use custom redirect URLs if provided (mobile), otherwise fall back to centralized web URLs.
   // Always call getAppBaseUrl() for the production safety throw when using web defaults.
@@ -701,6 +719,7 @@ export async function createBroBotCheckoutSession(
       success_url: successUrl,
       cancel_url: cancelUrl,
       isMobileCustom: !!(customSuccessUrl || customCancelUrl),
+      checkout_source: options.source ?? 'direct',
       trial_applied: trialDecision.eligible,
       trial_reason: trialDecision.reason,
     });
@@ -717,6 +736,7 @@ export async function createBroBotCheckoutSession(
     userId,
     stripeCustomerId: customerId,
     enableTrial: Boolean(options.enableTrial),
+    checkoutSource: options.source ?? 'direct',
     trialEligible: trialDecision.eligible,
     trialEligibilityReason: trialDecision.reason,
     trialEnd: trialDecision.trialEnd,
@@ -745,6 +765,7 @@ export async function createBroBotCheckoutSession(
     userId,
     stripeCustomerId: customerId,
     enableTrial: Boolean(options.enableTrial),
+    checkoutSource: options.source ?? 'direct',
     trialEligible: trialDecision.eligible,
     trialEligibilityReason: trialDecision.reason,
     trialEnd: trialDecision.trialEnd,
@@ -763,6 +784,7 @@ export async function createBroBotCheckoutSession(
 export async function createGuestBroBotCheckoutSession(
   interval: 'month' | 'year',
   options: {
+    enableTrial?: boolean;
     source?: string;
     campaign?: string | null;
     utmSource?: string | null;
@@ -790,6 +812,7 @@ export async function createGuestBroBotCheckoutSession(
     plan: BROBOT_CONFIG.PAID_PLAN_CODE,
     plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
     source: options.source || 'brobot_public_pricing',
+    trial_requested: options.enableTrial === false ? 'false' : 'true',
     checkout_mode: 'pre_auth',
     interval,
     campaign: options.campaign || '',
@@ -799,6 +822,7 @@ export async function createGuestBroBotCheckoutSession(
     utm_term: options.utmTerm || '',
     utm_content: options.utmContent || '',
     ...buildGuestTrialMetadata({
+      trialRequested: options.enableTrial,
       trialEnd,
       trialMonths: trialMonths > 0 ? trialMonths : null,
     }),
@@ -806,7 +830,7 @@ export async function createGuestBroBotCheckoutSession(
 
   const subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData = {
     metadata,
-    ...(trialEnd ? { trial_end: trialEnd } : {}),
+    ...(options.enableTrial !== false && trialEnd ? { trial_end: trialEnd } : {}),
   };
 
   const sessionParams = {
@@ -823,7 +847,10 @@ export async function createGuestBroBotCheckoutSession(
 
   logBroBotCheckoutTrialDebug('guest_checkout_create_result', {
     interval,
+    checkoutSource: options.source || 'brobot_public_pricing',
+    trialRequested: options.enableTrial !== false,
     trialEnd,
+    subscription_data: subscriptionData,
     checkoutSessionId: session.id,
     checkoutSessionUrlPresent: Boolean(session.url),
     metadata,
@@ -1011,31 +1038,54 @@ export async function claimPendingBroBotSubscriptionForUser(
     },
   });
 
-  const upsertPayload = {
+  await upsertCanonicalSubscription({
     user_id: userId,
     provider: 'stripe',
     environment: getStripeEnvironment(),
-    stripe_customer_id: getStripeCustomerId(stripeSub.customer),
-    stripe_subscription_id: stripeSub.id,
-    stripe_price_id: stripeSub.items.data[0]?.price.id || pending.stripe_price_id,
+    provider_customer_id: getStripeCustomerId(stripeSub.customer),
+    provider_subscription_id: stripeSub.id,
+    provider_product_id:
+      typeof stripeSub.items.data[0]?.price.product === 'string'
+        ? stripeSub.items.data[0]?.price.product
+        : stripeSub.items.data[0]?.price.product?.id ?? null,
+    provider_price_id: stripeSub.items.data[0]?.price.id || pending.stripe_price_id,
+    provider_original_transaction_id: null,
+    provider_transaction_id:
+      stripeSub.latest_invoice
+        ? (
+            typeof stripeSub.latest_invoice === 'string'
+              ? stripeSub.latest_invoice
+              : (stripeSub.latest_invoice.id ?? null)
+          )
+        : null,
+    raw_provider_status: stripeSub.status,
+    provider_metadata: {
+      provider: 'stripe',
+      claim_source: 'pending_subscription',
+      metadata: stripeSub.metadata ?? {},
+    },
     plan_code: pending.plan_code || BROBOT_CONFIG.PAID_PLAN_CODE,
-    status: internalStatus,
+    status: internalStatus as
+      | 'active'
+      | 'trialing'
+      | 'past_due'
+      | 'canceled'
+      | 'expired'
+      | 'unpaid'
+      | 'incomplete'
+      | 'grace'
+      | 'billing_retry',
     current_period_start: periodStartIso,
     current_period_end: periodEndIso,
     cancel_at_period_end: stripeSub.cancel_at_period_end,
     canceled_at: stripeSub.canceled_at
       ? new Date(stripeSub.canceled_at * 1000).toISOString()
       : null,
-    updated_at: new Date().toISOString(),
-  };
-
-  const { error: upsertError } = await supabase
-    .from('subscriptions')
-    .upsert(upsertPayload, { onConflict: 'stripe_subscription_id' });
-
-  if (upsertError) {
-    throw new Error(`Failed to attach subscription: ${upsertError.message}`);
-  }
+    last_verified_at: new Date().toISOString(),
+    stripe_customer_id: getStripeCustomerId(stripeSub.customer),
+    stripe_subscription_id: stripeSub.id,
+    stripe_price_id: stripeSub.items.data[0]?.price.id || pending.stripe_price_id,
+  });
 
   const { data: claimedRows, error: claimError } = await supabase
     .from('pending_subscriptions')
@@ -1263,11 +1313,40 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
     user_id: userId,
     provider: 'stripe',
     environment: getStripeEnvironment(),
-    stripe_customer_id: typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer?.id,
-    stripe_subscription_id: stripeSub.id,
-    stripe_price_id: priceId,
+    provider_customer_id: typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer?.id,
+    provider_subscription_id: stripeSub.id,
+    provider_product_id:
+      typeof priceId === 'string' && typeof stripeSub.items.data[0]?.price.product === 'string'
+        ? stripeSub.items.data[0]?.price.product
+        : typeof stripeSub.items.data[0]?.price.product === 'object'
+        ? stripeSub.items.data[0]?.price.product?.id ?? null
+        : null,
+    provider_price_id: priceId,
+    provider_original_transaction_id: null,
+    provider_transaction_id:
+      stripeSub.latest_invoice
+        ? (
+            typeof stripeSub.latest_invoice === 'string'
+              ? stripeSub.latest_invoice
+              : (stripeSub.latest_invoice.id ?? null)
+          )
+        : null,
+    raw_provider_status: stripeSub.status,
+    provider_metadata: {
+      provider: 'stripe',
+      metadata: stripeSub.metadata ?? {},
+    },
     plan_code: planCode,
-    status: internalStatus,
+    status: internalStatus as
+      | 'active'
+      | 'trialing'
+      | 'past_due'
+      | 'canceled'
+      | 'expired'
+      | 'unpaid'
+      | 'incomplete'
+      | 'grace'
+      | 'billing_retry',
     current_period_start: periodStart
       ? new Date(periodStart * 1000).toISOString()
       : null,
@@ -1278,13 +1357,13 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
     canceled_at: stripeSub.canceled_at
       ? new Date(stripeSub.canceled_at * 1000).toISOString()
       : null,
-    updated_at: new Date().toISOString(),
+    last_verified_at: new Date().toISOString(),
+    stripe_customer_id: typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer?.id,
+    stripe_subscription_id: stripeSub.id,
+    stripe_price_id: priceId,
   };
 
-  const { error: upsertError } = await supabase.from('subscriptions').upsert(
-    upsertPayload,
-    { onConflict: 'stripe_subscription_id' }
-  );
+  const upserted = await upsertCanonicalSubscription(upsertPayload);
 
   console.log('[stripe] syncSubscriptionFromStripe upsert', {
     userId,
@@ -1294,7 +1373,7 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
       ...upsertPayload,
       // avoid dumping huge objects
     },
-    upsertError: upsertError ? { message: upsertError.message, code: upsertError.code } : null,
+    upsertApplied: upserted.applied,
   });
 }
 

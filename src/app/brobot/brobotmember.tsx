@@ -23,6 +23,7 @@ import BroBotProductTabs from '@/components/brobot/BroBotProductTabs';
 import { trackCheckoutStartedConversion } from '@/lib/analytics/googleAds';
 import { appendSafeReturnTo } from '@/lib/auth/redirects';
 import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
+import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
 
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // Direct browser calls to the external CasePrep API have been eliminated.
@@ -316,14 +317,15 @@ export default function BroBotMember() {
         currency: 'USD',
       });
 
-      const res = await fetch('/api/billing/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ interval: 'month', returnTo: BROBOT_RETURN_TO }),
+      const body = await createWebsiteBroBotCheckout({
+        interval: 'month',
+        isAuthenticated: true,
+        returnTo: BROBOT_RETURN_TO,
+        checkoutSource: 'brobot_member_upgrade',
       });
-      const body = await res.json();
-      if (body.url || body.portalUrl) {
-        window.location.href = body.url || body.portalUrl;
+      const redirectUrl = body.url ?? body.portalUrl;
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
       } else {
         // Fallback: billing page
         router.push(BROBOT_BILLING_HREF);

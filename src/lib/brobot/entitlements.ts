@@ -75,10 +75,12 @@ function getSubscriptionStatusRank(status: string) {
       return 5;
     case 'trialing':
       return 4;
-    case 'past_due':
+    case 'grace':
       return 3;
-    case 'canceled':
+    case 'billing_retry':
       return 2;
+    case 'past_due':
+      return 1;
     default:
       return 0;
   }
@@ -86,10 +88,8 @@ function getSubscriptionStatusRank(status: string) {
 
 export function pickBestEntitlingSubscriptionRow(
   rows: SubscriptionEntitlementRow[],
-  now = new Date(),
-  gracePeriodDays = BROBOT_CONFIG.GRACE_PERIOD_DAYS
+  now = new Date()
 ) {
-  const graceMs = gracePeriodDays * 24 * 60 * 60 * 1000;
   const nowTs = now.getTime();
 
   const entitlingRows = rows.filter((row) => {
@@ -101,9 +101,7 @@ export function pickBestEntitlingSubscriptionRow(
     return (
       (row.status === 'active' && appleActiveIsValid) ||
       row.status === 'trialing' ||
-      (row.status === 'past_due' && periodEndTs != null && periodEndTs + graceMs > nowTs) ||
-      (Boolean(row.cancel_at_period_end) && periodEndTs != null && periodEndTs > nowTs) ||
-      (row.status === 'canceled' && periodEndTs != null && periodEndTs > nowTs)
+      (row.status === 'grace' && row.provider === 'apple' && periodEndTs != null && periodEndTs > nowTs)
     );
   });
 
@@ -233,8 +231,7 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
 
   const candidates = (rows ?? []) as SubscriptionEntitlementRow[];
   const now = new Date();
-  const graceMs = BROBOT_CONFIG.GRACE_PERIOD_DAYS * 24 * 60 * 60 * 1000;
-  const sub = pickBestEntitlingSubscriptionRow(candidates, now, BROBOT_CONFIG.GRACE_PERIOD_DAYS);
+  const sub = pickBestEntitlingSubscriptionRow(candidates, now);
 
   if (!sub) return null;
 
@@ -254,18 +251,16 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     const isActiveDecision =
       (sub.status === 'active' && appleActiveIsValid) ||
       sub.status === 'trialing' ||
-      (sub.status === 'past_due' && periodEndTs && periodEndTs + graceMs > nowTs) ||
-      (sub.cancel_at_period_end && periodEndTs && periodEndTs > nowTs) ||
-      (sub.status === 'canceled' && periodEndTs && periodEndTs > nowTs);
+      (sub.status === 'grace' && sub.provider === 'apple' && periodEndTs && periodEndTs > nowTs);
 
     let reasonIfInactive = null;
     if (!isActiveDecision) {
       if (sub.provider === 'apple' && sub.status === 'active' && (periodEndTs == null || periodEndTs <= nowTs)) {
         reasonIfInactive = 'apple_active_but_period_ended';
-      } else if (sub.status === 'canceled' && periodEndTs && periodEndTs <= nowTs) {
-        reasonIfInactive = 'canceled_and_period_ended';
+      } else if (sub.status === 'expired' && periodEndTs && periodEndTs <= nowTs) {
+        reasonIfInactive = 'expired_and_period_ended';
       } else if (sub.status === 'canceled') {
-        reasonIfInactive = 'canceled_but_no_remaining_period_logic_matched';
+        reasonIfInactive = 'canceled_not_entitling';
       } else if (!['active','trialing','past_due'].includes(sub.status) && !sub.cancel_at_period_end) {
         reasonIfInactive = `status_${sub.status}_not_in_active_set_and_not_cancel_at_period_end`;
       } else {
@@ -302,20 +297,13 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
   const isActive =
     (sub.status === 'active' && appleActiveIsValid) ||
     sub.status === 'trialing' ||
-    (sub.status === 'past_due' && sub.current_period_end &&
-      new Date(sub.current_period_end).getTime() + graceMs > now.getTime()) ||
-    (sub.cancel_at_period_end && sub.current_period_end &&
-      new Date(sub.current_period_end).getTime() > now.getTime()) ||
-    // Honor remaining paid time even after explicit cancel (common SaaS behavior)
-    (sub.status === 'canceled' && sub.current_period_end &&
+    (sub.status === 'grace' && sub.provider === 'apple' && sub.current_period_end &&
       new Date(sub.current_period_end).getTime() > now.getTime());
 
   // Compute grace separately so mobile (and future) can show "in grace" messaging
   const isInGracePeriod =
     Boolean(
-      (sub.status === 'past_due' && sub.current_period_end &&
-        new Date(sub.current_period_end).getTime() + graceMs > now.getTime()) ||
-      (sub.cancel_at_period_end && sub.current_period_end &&
+      (sub.status === 'grace' && sub.provider === 'apple' && sub.current_period_end &&
         new Date(sub.current_period_end).getTime() > now.getTime())
     );
 

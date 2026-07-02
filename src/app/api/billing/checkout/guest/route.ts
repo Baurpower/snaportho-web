@@ -17,9 +17,17 @@ export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
     const interval: 'month' | 'year' = body.interval === 'year' ? 'year' : 'month';
+    const trialRequested = body.trialRequested !== false;
+    const checkoutSource =
+      typeof body.checkoutSource === 'string' && body.checkoutSource.trim().length > 0
+        ? body.checkoutSource.trim()
+        : typeof body.source === 'string' && body.source.trim().length > 0
+        ? body.source.trim()
+        : 'website_guest_checkout';
 
     const { url } = await createGuestBroBotCheckoutSession(interval, {
-      source: 'brobot_public_pricing',
+      enableTrial: trialRequested,
+      source: checkoutSource,
       campaign: typeof body.campaign === 'string' ? body.campaign : null,
       utmSource: typeof body.utm_source === 'string' ? body.utm_source : null,
       utmMedium: typeof body.utm_medium === 'string' ? body.utm_medium : null,

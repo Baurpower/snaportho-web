@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
-import { reconcileStripeSubscriptions } from '@/lib/stripe';
+import { reconcileStripeSubscriptions } from '@/lib/subscriptions/stripe-reconciliation';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 
 /**
@@ -34,16 +34,32 @@ export async function POST() {
     const reconciliation = await reconcileStripeSubscriptions({
       userId: user.id,
       stripeCustomerId: customerId,
+      dryRun: false,
     });
+    const reconciledSubscriptions = reconciliation.resolvedMappings
+      .filter((row) => row.userId === user.id)
+      .map((row) => ({
+        id: row.subscriptionId,
+        customerId: row.customerId,
+        source: row.source,
+      }));
 
     return NextResponse.json({
       success: true,
-      synced: reconciliation.syncedCount > 0,
-      message: reconciliation.syncedCount > 0
-        ? `Synced ${reconciliation.syncedCount} Stripe subscription(s) for customer ${reconciliation.customerId}.`
+      synced: reconciliation.appliedCount > 0,
+      message: reconciliation.appliedCount > 0
+        ? `Synced ${reconciliation.appliedCount} Stripe subscription(s) for ${customerId ?? 'the mapped customer'}.`
         : 'No Stripe customer or BroBot subscriptions were found to reconcile.',
-      customerId: reconciliation.customerId,
-      subscriptions: reconciliation.subscriptions,
+      customerId,
+      summary: {
+        customersScanned: reconciliation.customersScanned,
+        subscriptionsScanned: reconciliation.subscriptionsScanned,
+        matchedSubscriptions: reconciliation.matchedSubscriptions,
+        wouldUpsertCount: reconciliation.wouldUpsertCount,
+        appliedCount: reconciliation.appliedCount,
+      },
+      subscriptions: reconciledSubscriptions,
+      unmappedSubscriptions: reconciliation.unmappedSubscriptions,
     });
   } catch (err) {
     console.error('[billing/sync] error', err);

@@ -1,9 +1,12 @@
 import {
   AppleVerificationError,
   applyAppleNotificationToSubscription,
-  logAppleSubscriptionEvent,
   verifyAppStoreServerNotification,
 } from '@/lib/apple/app-store-server';
+import {
+  getExistingSubscriptionEvent,
+  upsertSubscriptionEvent,
+} from '@/lib/subscriptions/events';
 
 type AppleNotificationRequestBody = {
   signedPayload?: string;
@@ -11,13 +14,11 @@ type AppleNotificationRequestBody = {
 
 export type AppleNotificationDeps = {
   verify: typeof verifyAppStoreServerNotification;
-  logEvent: typeof logAppleSubscriptionEvent;
   applyNotification: typeof applyAppleNotificationToSubscription;
 };
 
 const defaultDeps: AppleNotificationDeps = {
   verify: verifyAppStoreServerNotification,
-  logEvent: logAppleSubscriptionEvent,
   applyNotification: applyAppleNotificationToSubscription,
 };
 
@@ -54,38 +55,45 @@ export async function handleAppleNotification(
       return { status: 400, body: { error: 'Verified Apple notification missing notificationUUID' } };
     }
 
-    const existing = await deps.logEvent({
-      notificationUuid,
-      notificationType,
-      subtype: verified.notification.subtype ?? null,
-      originalTransactionId:
-        verified.transactionInfo?.originalTransactionId ??
-        verified.renewalInfo?.originalTransactionId ??
-        null,
-      transactionId: verified.transactionInfo?.transactionId ?? null,
-      signedPayload,
-      rawPayload: verified.notification,
-      processedAt: null,
+    const existing = await getExistingSubscriptionEvent({
+      provider: 'apple',
+      providerEventId: notificationUuid,
     });
 
     if (existing?.processed_at) {
       return { status: 200, body: { received: true, duplicate: true } };
     }
 
+    if (!existing) {
+      await upsertSubscriptionEvent({
+        provider: 'apple',
+        providerEventId: notificationUuid,
+        eventType: notificationType,
+        providerSubscriptionId:
+          verified.transactionInfo?.originalTransactionId ??
+          verified.renewalInfo?.originalTransactionId ??
+          null,
+        providerTransactionId: verified.transactionInfo?.transactionId ?? null,
+        rawPayload: verified.notification as Record<string, unknown>,
+      });
+    }
+
     const result = await deps.applyNotification(verified);
 
-    await deps.logEvent({
-      notificationUuid,
-      notificationType,
-      subtype: verified.notification.subtype ?? null,
-      originalTransactionId:
+    await upsertSubscriptionEvent({
+      provider: 'apple',
+      providerEventId: notificationUuid,
+      eventType: notificationType,
+      providerSubscriptionId:
         verified.transactionInfo?.originalTransactionId ??
         verified.renewalInfo?.originalTransactionId ??
         null,
-      transactionId: verified.transactionInfo?.transactionId ?? null,
-      signedPayload,
-      rawPayload: verified.notification,
+      providerTransactionId: verified.transactionInfo?.transactionId ?? null,
+      rawPayload: verified.notification as Record<string, unknown>,
       processedAt: new Date().toISOString(),
+      processingResult: {
+        updated: result.updated,
+      },
     });
 
     return {

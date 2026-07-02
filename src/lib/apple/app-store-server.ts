@@ -4,6 +4,7 @@ import { SignJWT, decodeProtectedHeader, importPKCS8, jwtVerify } from 'jose';
 
 import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
+import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
 
 const APPLE_ROOT_CA_G3_PEM = `-----BEGIN CERTIFICATE-----
 MIICQzCCAcmgAwIBAgIILcX8iNLFS5UwCgYIKoZIzj0EAwMwZzEbMBkGA1UEAwwS
@@ -82,6 +83,19 @@ export type VerifiedAppleTransaction = {
   environment: AppleEnvironment;
 };
 
+export type AppleSubscriptionStatusResponse = {
+  environment: AppleEnvironment;
+  raw: Record<string, unknown>;
+  lastTransactions: Array<{
+    status: number;
+    originalTransactionId: string | null;
+    signedTransactionInfo: string | null;
+    signedRenewalInfo: string | null;
+    transactionInfo: AppleTransactionInfo | null;
+    renewalInfo: AppleRenewalInfo | null;
+  }>;
+};
+
 export class AppleVerificationError extends Error {
   constructor(message: string, options?: { cause?: unknown }) {
     super(message);
@@ -92,7 +106,7 @@ export class AppleVerificationError extends Error {
   }
 }
 
-type AppleSubscriptionStatus = 'active' | 'past_due' | 'canceled';
+type AppleSubscriptionStatus = 'active' | 'grace' | 'billing_retry' | 'canceled' | 'expired';
 
 type AppleSubscriptionState = {
   status: AppleSubscriptionStatus;
@@ -330,6 +344,78 @@ export async function fetchVerifiedAppleTransaction(
   throw lastError ?? new Error('Apple transaction lookup failed');
 }
 
+export async function fetchAppleSubscriptionStatus(
+  originalTransactionId: string,
+  environmentHint?: AppleEnvironment
+): Promise<AppleSubscriptionStatusResponse> {
+  if (!isAppleServerConfigured()) {
+    throw new Error('Apple App Store Server API verification is not configured');
+  }
+
+  const environments: AppleEnvironment[] = environmentHint
+    ? [environmentHint, environmentHint === 'sandbox' ? 'production' : 'sandbox']
+    : ['production', 'sandbox'];
+
+  const token = await createAppleApiToken();
+  let lastError: Error | null = null;
+
+  for (const environment of environments) {
+    const url = `${getAppleApiBaseUrl(environment)}/inApps/v1/subscriptions/${encodeURIComponent(originalTransactionId)}`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: buildAppleApiHeaders(token),
+        cache: 'no-store',
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        lastError = new Error(`Apple subscription lookup failed (${environment} ${response.status}): ${errorText}`);
+        continue;
+      }
+
+      const payload = (await response.json()) as {
+        data?: Array<{
+          lastTransactions?: Array<{
+            status?: number;
+            originalTransactionId?: string;
+            signedTransactionInfo?: string;
+            signedRenewalInfo?: string;
+          }>;
+        }>;
+      };
+
+      const lastTransactions = await Promise.all(
+        (payload.data ?? [])
+          .flatMap((group) => group.lastTransactions ?? [])
+          .map(async (item) => ({
+            status: item.status ?? 0,
+            originalTransactionId: item.originalTransactionId ?? null,
+            signedTransactionInfo: item.signedTransactionInfo ?? null,
+            signedRenewalInfo: item.signedRenewalInfo ?? null,
+            transactionInfo: item.signedTransactionInfo
+              ? await verifyAndDecodeAppleJws<AppleTransactionInfo>(item.signedTransactionInfo)
+              : null,
+            renewalInfo: item.signedRenewalInfo
+              ? await verifyAndDecodeAppleJws<AppleRenewalInfo>(item.signedRenewalInfo)
+              : null,
+          }))
+      );
+
+      return {
+        environment,
+        raw: payload as Record<string, unknown>,
+        lastTransactions,
+      };
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+    }
+  }
+
+  throw lastError ?? new Error('Apple subscription lookup failed');
+}
+
 export function deriveAppleState(params: {
   transactionInfo: AppleTransactionInfo | null;
   renewalInfo?: AppleRenewalInfo | null;
@@ -359,11 +445,15 @@ export function deriveAppleState(params: {
 
   let status: AppleSubscriptionStatus;
   switch (notificationType) {
-    case 'DID_FAIL_TO_RENEW':
     case 'GRACE_PERIOD':
-      status = 'past_due';
+      status = 'grace';
+      break;
+    case 'DID_FAIL_TO_RENEW':
+      status = 'billing_retry';
       break;
     case 'EXPIRED':
+      status = 'expired';
+      break;
     case 'REFUND':
     case 'REVOKE':
       status = 'canceled';
@@ -382,7 +472,7 @@ export function deriveAppleState(params: {
   }
 
   if (notificationType === 'DID_FAIL_TO_RENEW' && subtype === 'GRACE_PERIOD') {
-    status = 'past_due';
+    status = 'grace';
   }
 
   return {
@@ -464,8 +554,21 @@ export async function upsertAppleSubscriptionForUser(params: {
   const upsertPayload = {
     user_id: params.userId,
     provider: 'apple',
+    environment: state.environment,
+    provider_customer_id: null,
     provider_subscription_id: params.transactionInfo.originalTransactionId,
+    provider_product_id: state.productId,
+    provider_price_id: state.productId,
+    provider_original_transaction_id: params.transactionInfo.originalTransactionId,
     provider_transaction_id: params.transactionInfo.transactionId ?? null,
+    raw_provider_status: params.notificationType ?? state.status,
+    provider_metadata: {
+      provider: 'apple',
+      notificationType: params.notificationType ?? null,
+      subtype: params.subtype ?? null,
+      renewalInfo: params.renewalInfo ?? null,
+      transactionInfo: params.transactionInfo,
+    },
     stripe_price_id: state.productId,
     plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
     status: state.status,
@@ -476,20 +579,12 @@ export async function upsertAppleSubscriptionForUser(params: {
     current_period_end: state.currentPeriodEnd,
     cancel_at_period_end: state.cancelAtPeriodEnd,
     canceled_at: state.canceledAt,
-    environment: state.environment,
-    updated_at: new Date().toISOString(),
+    last_verified_at: new Date().toISOString(),
+    stripe_customer_id: null,
+    stripe_subscription_id: null,
   };
 
-  const supabase = createAdminClient();
-  const { data, error } = await supabase
-    .from('subscriptions')
-    .upsert(upsertPayload, { onConflict: 'provider_subscription_id' })
-    .select('id, user_id, provider, status, current_period_end, provider_subscription_id')
-    .maybeSingle();
-
-  if (error) {
-    throw new Error(`Failed to upsert Apple subscription: ${error.message}`);
-  }
+  const { row: data } = await upsertCanonicalSubscription(upsertPayload);
 
   return { row: data, state };
 }
