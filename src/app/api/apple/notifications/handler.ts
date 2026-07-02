@@ -15,11 +15,15 @@ type AppleNotificationRequestBody = {
 export type AppleNotificationDeps = {
   verify: typeof verifyAppStoreServerNotification;
   applyNotification: typeof applyAppleNotificationToSubscription;
+  getExistingEvent: typeof getExistingSubscriptionEvent;
+  upsertEvent: typeof upsertSubscriptionEvent;
 };
 
 const defaultDeps: AppleNotificationDeps = {
   verify: verifyAppStoreServerNotification,
   applyNotification: applyAppleNotificationToSubscription,
+  getExistingEvent: getExistingSubscriptionEvent,
+  upsertEvent: upsertSubscriptionEvent,
 };
 
 function classifyAppleNotificationError(error: unknown) {
@@ -55,7 +59,7 @@ export async function handleAppleNotification(
       return { status: 400, body: { error: 'Verified Apple notification missing notificationUUID' } };
     }
 
-    const existing = await getExistingSubscriptionEvent({
+    const existing = await deps.getExistingEvent({
       provider: 'apple',
       providerEventId: notificationUuid,
     });
@@ -65,7 +69,7 @@ export async function handleAppleNotification(
     }
 
     if (!existing) {
-      await upsertSubscriptionEvent({
+      await deps.upsertEvent({
         provider: 'apple',
         providerEventId: notificationUuid,
         eventType: notificationType,
@@ -80,7 +84,7 @@ export async function handleAppleNotification(
 
     const result = await deps.applyNotification(verified);
 
-    await upsertSubscriptionEvent({
+    await deps.upsertEvent({
       provider: 'apple',
       providerEventId: notificationUuid,
       eventType: notificationType,

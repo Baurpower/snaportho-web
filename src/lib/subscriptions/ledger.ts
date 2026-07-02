@@ -140,13 +140,14 @@ export function doesSubscriptionGrantEntitlement(
 ) {
   const periodEndTs = subscriptionExpirationTs(row.current_period_end);
   const nowTs = now.getTime();
+  const periodEndIsFuture = periodEndTs != null && periodEndTs > nowTs;
 
   if (row.status === 'active' || row.status === 'trialing') {
-    return periodEndTs == null || periodEndTs > nowTs;
+    return periodEndIsFuture;
   }
 
   if (row.status === 'grace' && row.provider === 'apple') {
-    return periodEndTs != null && periodEndTs > nowTs;
+    return periodEndIsFuture;
   }
 
   return false;
@@ -157,6 +158,7 @@ export function pickBestSubscriptionForEntitlement<T extends CanonicalSubscripti
   now = new Date()
 ) {
   return [...rows]
+    .filter((row) => doesSubscriptionGrantEntitlement(row, now))
     .sort((left, right) => {
       const statusDiff = subscriptionStatusRank(right.status) - subscriptionStatusRank(left.status);
       if (statusDiff !== 0) return statusDiff;
@@ -171,5 +173,5 @@ export function pickBestSubscriptionForEntitlement<T extends CanonicalSubscripti
         (subscriptionExpirationTs(left.updated_at ?? null) ?? -Infinity)
       );
     })
-    .find((row) => doesSubscriptionGrantEntitlement(row, now)) ?? null;
+    [0] ?? null;
 }

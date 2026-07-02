@@ -13,6 +13,11 @@
 
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { createAdminClient } from '@/lib/supabase/admin';
+import {
+  doesSubscriptionGrantEntitlement,
+  pickBestSubscriptionForEntitlement,
+  type CanonicalSubscriptionRow,
+} from '@/lib/subscriptions/ledger';
 
 export type Subject =
   | { type: 'user'; id: string }
@@ -69,56 +74,17 @@ type SubscriptionEntitlementRow = {
   updated_at?: string | null;
 };
 
-function getSubscriptionStatusRank(status: string) {
-  switch (status) {
-    case 'active':
-      return 5;
-    case 'trialing':
-      return 4;
-    case 'grace':
-      return 3;
-    case 'billing_retry':
-      return 2;
-    case 'past_due':
-      return 1;
-    default:
-      return 0;
-  }
-}
-
 export function pickBestEntitlingSubscriptionRow(
   rows: SubscriptionEntitlementRow[],
   now = new Date()
 ) {
-  const nowTs = now.getTime();
-
-  const entitlingRows = rows.filter((row) => {
-    const periodEndTs = row.current_period_end ? new Date(row.current_period_end).getTime() : null;
-    const appleActiveIsValid =
-      row.provider !== 'apple' ||
-      (periodEndTs != null && periodEndTs > nowTs);
-
-    return (
-      (row.status === 'active' && appleActiveIsValid) ||
-      row.status === 'trialing' ||
-      (row.status === 'grace' && row.provider === 'apple' && periodEndTs != null && periodEndTs > nowTs)
-    );
-  });
-
-  return entitlingRows.sort((left, right) => {
-    const statusDiff = getSubscriptionStatusRank(right.status) - getSubscriptionStatusRank(left.status);
-    if (statusDiff !== 0) return statusDiff;
-
-    const periodDiff =
-      (right.current_period_end ? new Date(right.current_period_end).getTime() : -Infinity) -
-      (left.current_period_end ? new Date(left.current_period_end).getTime() : -Infinity);
-    if (periodDiff !== 0) return periodDiff;
-
-    return (
-      (right.updated_at ? new Date(right.updated_at).getTime() : -Infinity) -
-      (left.updated_at ? new Date(left.updated_at).getTime() : -Infinity)
-    );
-  })[0] ?? null;
+  return pickBestSubscriptionForEntitlement(
+    rows.map((row) => ({
+      ...row,
+      provider: row.provider ?? 'stripe',
+    })) as CanonicalSubscriptionRow[],
+    now
+  ) as SubscriptionEntitlementRow | null;
 }
 
 /**
@@ -235,29 +201,23 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
 
   if (!sub) return null;
 
-  // Apple subscriptions have no server-push notifications — status is only updated
-  // when the iOS client calls /sync, which only happens while a transaction is in
-  // Transaction.currentEntitlements. Once expired, the transaction leaves StoreKit
-  // and no sync is ever sent, leaving a stale status='active' row in the DB.
-  // Guard: Apple 'active' only grants access if current_period_end is still in the future.
-  const periodEndTs = sub.current_period_end ? new Date(sub.current_period_end).getTime() : null;
-  const nowTs = now.getTime();
-  const appleActiveIsValid =
-    sub.provider !== 'apple' ||
-    (periodEndTs != null && periodEndTs > nowTs);
-
   // === DIAGNOSTIC LOG ===
   {
-    const isActiveDecision =
-      (sub.status === 'active' && appleActiveIsValid) ||
-      sub.status === 'trialing' ||
-      (sub.status === 'grace' && sub.provider === 'apple' && periodEndTs && periodEndTs > nowTs);
+    const isActiveDecision = doesSubscriptionGrantEntitlement(
+      {
+        status: sub.status as CanonicalSubscriptionRow['status'],
+        provider: sub.provider ?? 'stripe',
+        current_period_end: sub.current_period_end,
+      },
+      now
+    );
 
     let reasonIfInactive = null;
     if (!isActiveDecision) {
-      if (sub.provider === 'apple' && sub.status === 'active' && (periodEndTs == null || periodEndTs <= nowTs)) {
-        reasonIfInactive = 'apple_active_but_period_ended';
-      } else if (sub.status === 'expired' && periodEndTs && periodEndTs <= nowTs) {
+      const periodEndTs = sub.current_period_end ? new Date(sub.current_period_end).getTime() : null;
+      if ((sub.status === 'active' || sub.status === 'trialing') && (periodEndTs == null || periodEndTs <= now.getTime())) {
+        reasonIfInactive = 'active_like_but_missing_or_ended_period';
+      } else if (sub.status === 'expired' && periodEndTs && periodEndTs <= now.getTime()) {
         reasonIfInactive = 'expired_and_period_ended';
       } else if (sub.status === 'canceled') {
         reasonIfInactive = 'canceled_not_entitling';
@@ -269,15 +229,14 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     }
 
     console.log('[SUBSCRIPTION-ENTITLEMENT-DEBUG]', {
-      resolvedUserId: userId,
-      subscriptionRowUserId: sub.user_id ?? null,
+      userId: userId.slice(0, 8),
+      subscriptionRowUserId: sub.user_id ? sub.user_id.slice(0, 8) : null,
       status: sub.status,
       provider: sub.provider ?? null,
       plan_code: sub.plan_code,
       current_period_end: sub.current_period_end,
       cancel_at_period_end: sub.cancel_at_period_end,
       canceled_at: sub.canceled_at,
-      appleActiveIsValid: sub.provider === 'apple' ? appleActiveIsValid : undefined,
       isActive: isActiveDecision,
       reasonIfInactive,
     });
@@ -294,11 +253,14 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     }
   }
 
-  const isActive =
-    (sub.status === 'active' && appleActiveIsValid) ||
-    sub.status === 'trialing' ||
-    (sub.status === 'grace' && sub.provider === 'apple' && sub.current_period_end &&
-      new Date(sub.current_period_end).getTime() > now.getTime());
+  const isActive = doesSubscriptionGrantEntitlement(
+    {
+      status: sub.status as CanonicalSubscriptionRow['status'],
+      provider: sub.provider ?? 'stripe',
+      current_period_end: sub.current_period_end,
+    },
+    now
+  );
 
   // Compute grace separately so mobile (and future) can show "in grace" messaging
   const isInGracePeriod =
@@ -417,8 +379,14 @@ export async function getRemainingAIUses(subject: Subject) {
  */
 export interface MobileBroBotEntitlement {
   hasBroBotAccess: boolean;
+  hasUnlimitedBroBot: boolean;
   plan: string; // e.g. 'unlimited_brobot', 'brobot_monthly', etc. Derived from DB plan_code for the subscription. Never null for paid Active cases.
-  source: 'stripe' | 'apple' | 'override' | 'free_quota' | 'disabled'; // 'stripe' or 'apple' for paid BroBot subscriptions
+  planCode: string;
+  source: 'subscriptions' | 'override' | 'free_quota' | 'disabled';
+  entitlementSource: 'subscriptions' | 'override' | 'free_quota' | 'disabled';
+  provider: 'stripe' | 'apple' | null;
+  providerSource: 'stripe' | 'apple' | null;
+  status: string | null;
   stripeCustomerId: string | null;
   stripeSubscriptionId: string | null;
   subscriptionStatus: string | null;
@@ -499,11 +467,12 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
 
   const hasBroBotAccess =
     ent.aiAccess.unlimited || (ent.aiAccess.remainingToday ?? 0) > 0;
+  const hasUnlimitedBroBot = ent.aiAccess.unlimited;
 
-  // Map to mobile contract.
-  // Per requirements: website source "subscription" → mobile source "stripe" (web Stripe subs)
+  // Map to mobile contract. Paid rows report source='subscriptions' plus a
+  // separate provider so Stripe and Apple stay normalized without hiding origin.
   let plan: MobileBroBotEntitlement['plan'] = 'free';
-  let mobileSource: MobileBroBotEntitlement['source'] = 'free_quota';
+  let mobileSource: 'stripe' | 'apple' | 'override' | 'free_quota' | 'disabled' = 'free_quota';
 
   if (ent.source === 'subscription') {
     // Derive plan from the actual subscription data (plan_code stored from Stripe metadata or default).
@@ -612,8 +581,32 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
 
   const payload: MobileBroBotEntitlement = {
     hasBroBotAccess,
+    hasUnlimitedBroBot,
     plan,
-    source: mobileSource,
+    planCode: plan,
+    source:
+      ent.source === 'subscription'
+        ? 'subscriptions'
+        : ent.source === 'override'
+          ? 'override'
+          : ent.source === 'disabled'
+            ? 'disabled'
+            : 'free_quota',
+    entitlementSource:
+      ent.source === 'subscription'
+        ? 'subscriptions'
+        : ent.source === 'override'
+          ? 'override'
+          : ent.source === 'disabled'
+            ? 'disabled'
+            : 'free_quota',
+    provider: ent.source === 'subscription'
+      ? (ent.provider === 'apple' ? 'apple' : 'stripe')
+      : null,
+    providerSource: ent.source === 'subscription'
+      ? (ent.provider === 'apple' ? 'apple' : 'stripe')
+      : null,
+    status: subscriptionStatus,
     stripeCustomerId,
     stripeSubscriptionId,
     subscriptionStatus,

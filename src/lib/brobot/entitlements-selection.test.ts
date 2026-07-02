@@ -42,14 +42,11 @@ function pickBestEntitlingSubscriptionRow(
 
   const entitlingRows = rows.filter((row) => {
     const periodEndTs = row.current_period_end ? new Date(row.current_period_end).getTime() : null;
-    const appleActiveIsValid =
-      row.provider !== 'apple' ||
-      (periodEndTs != null && periodEndTs > nowTs);
+    const periodEndIsFuture = periodEndTs != null && periodEndTs > nowTs;
 
     return (
-      (row.status === 'active' && appleActiveIsValid) ||
-      row.status === 'trialing' ||
-      (row.status === 'grace' && row.provider === 'apple' && periodEndTs != null && periodEndTs > nowTs)
+      ((row.status === 'active' || row.status === 'trialing') && periodEndIsFuture) ||
+      (row.status === 'grace' && row.provider === 'apple' && periodEndIsFuture)
     );
   });
 
@@ -127,6 +124,22 @@ const cancelingButStillEntitled = {
 assert.equal(
   pickBestEntitlingSubscriptionRow([cancelingButStillEntitled], now)?.stripe_subscription_id,
   'sub_canceling'
+);
+
+const activeWithoutPeriodEnd = {
+  ...baseRow,
+  provider: 'stripe',
+  status: 'active',
+  current_period_end: null,
+  cancel_at_period_end: false,
+  canceled_at: null,
+  stripe_subscription_id: 'sub_missing_period',
+  updated_at: '2026-06-30T00:00:00.000Z',
+};
+
+assert.equal(
+  pickBestEntitlingSubscriptionRow([activeWithoutPeriodEnd], now),
+  null
 );
 
 const canceledWithFutureEnd = {
