@@ -4,7 +4,7 @@ import * as path from 'node:path';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { parseHTML } = require('linkedom');
 
-import { extractOrthobulletsPageContext } from './extractor.js';
+import { detectQuestionProvider, extractOrthobulletsPageContext, extractQuestionContext } from './extractor.js';
 
 const FIXTURES_DIR = path.join(process.cwd(), 'extensions/orthobullets-brobot/fixtures');
 
@@ -334,6 +334,7 @@ const syntheticContext = extractOrthobulletsPageContext({
 });
 
 assert.equal(syntheticContext.source, 'orthobullets');
+assert.equal(syntheticContext.provider, 'orthobullets');
 assert.equal(syntheticContext.pageKind, 'review');
 assert.equal(syntheticContext.questionId, 'OBQ24-001');
 assert.equal(syntheticContext.topicId, '1046');
@@ -406,9 +407,175 @@ assert.equal(missingFieldContext.answerChoices.length, 0);
 assert.equal(missingFieldContext.selectedAnswerKey, undefined);
 assert.equal(missingFieldContext.correctAnswerKey, undefined);
 
+const rockUnansweredHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-unanswered-question.html'), 'utf8');
+assert.match(rockUnansweredHtml, /ROCK Synthetic Unanswered Fixture/);
+assert.match(rockUnansweredHtml, /Synthetic ROCK fixture, not a real captured ROCK page/);
+const { document: rockUnansweredDocument } = parseHTML(rockUnansweredHtml);
+const rockUnansweredContext = extractQuestionContext({
+  document: rockUnansweredDocument,
+  pageUrl: 'https://rock.aaos.org/questions/ROCK-SYN-001',
+});
+
+assert.ok(rockUnansweredContext, 'ROCK unanswered fixture should be detected');
+assert.equal(rockUnansweredContext.provider, 'rock');
+assert.equal(rockUnansweredContext.mode, 'question');
+assert.equal(rockUnansweredContext.pageKind, 'question');
+assert.equal(rockUnansweredContext.questionId, 'ROCK-SYN-001');
+assert.equal(rockUnansweredContext.topicId, 'adult-recon');
+assert.equal(rockUnansweredContext.breadcrumbs.length, 2);
+assert.match(rockUnansweredContext.stem ?? '', /jump distance/i);
+assert.equal(rockUnansweredContext.answerChoices.length, 4);
+assert.equal(rockUnansweredContext.selectedAnswerKey, null);
+assert.equal(rockUnansweredContext.correctAnswerKey, null);
+assert.equal(rockUnansweredContext.explanationText, null);
+assert.ok(rockUnansweredContext.extractionWarnings.includes('correct_answer_not_visible'));
+assert.ok(rockUnansweredContext.extractionWarnings.includes('explanation_not_visible'));
+assert.equal(rockUnansweredContext.raw?.providerSpecific?.fixtureSource, 'synthetic_until_real_sanitized_captures_available');
+assert.equal(rockUnansweredContext.raw?.providerSpecific?.stemStrategy, '[data-testid="question-stem"]');
+assert.equal(rockUnansweredContext.raw?.providerSpecific?.choicesStrategy, '[data-testid="answer-choice"]');
+assert.equal(rockUnansweredContext.raw?.providerSpecific?.explanationStrategy, 'not_found');
+
+const rockAnsweredHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-answered-review.html'), 'utf8');
+assert.match(rockAnsweredHtml, /ROCK Synthetic Answered Review Fixture/);
+assert.match(rockAnsweredHtml, /Synthetic ROCK fixture, not a real captured ROCK page/);
+const { document: rockAnsweredDocument } = parseHTML(rockAnsweredHtml);
+const rockAnsweredContext = extractQuestionContext({
+  document: rockAnsweredDocument,
+  pageUrl: 'https://rock.aaos.org/review/questions/ROCK-SYN-002',
+});
+
+assert.ok(rockAnsweredContext, 'ROCK answered fixture should be detected');
+assert.equal(rockAnsweredContext.provider, 'rock');
+assert.equal(rockAnsweredContext.mode, 'question');
+assert.equal(rockAnsweredContext.pageKind, 'review');
+assert.equal(rockAnsweredContext.questionId, 'ROCK-SYN-002');
+assert.equal(rockAnsweredContext.topicId, 'trauma');
+assert.equal(rockAnsweredContext.selectedAnswerKey, 'B');
+assert.equal(rockAnsweredContext.correctAnswerKey, 'C');
+assert.match(rockAnsweredContext.selectedAnswer ?? '', /Functional brace/i);
+assert.match(rockAnsweredContext.correctAnswer ?? '', /Open reduction/i);
+assert.match(rockAnsweredContext.explanationText ?? '', /deltoid incompetence/i);
+assert.equal(rockAnsweredContext.answerChoices.length, 4);
+assert.match(String(rockAnsweredContext.raw?.providerSpecific?.answerStateStrategy), /selected:aria_or_data/);
+assert.match(String(rockAnsweredContext.raw?.providerSpecific?.answerStateStrategy), /correct:data_attr/);
+
+const rockMediaHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-question-with-media.html'), 'utf8');
+assert.match(rockMediaHtml, /ROCK Synthetic Media Fixture/);
+assert.match(rockMediaHtml, /Synthetic ROCK fixture, not a real captured ROCK page/);
+const { document: rockMediaDocument } = parseHTML(rockMediaHtml);
+const rockMediaContext = extractQuestionContext({
+  document: rockMediaDocument,
+  pageUrl: 'https://rock.aaos.org/questions/ROCK-SYN-003',
+});
+
+assert.ok(rockMediaContext, 'ROCK media fixture should be detected');
+assert.equal(rockMediaContext.provider, 'rock');
+assert.equal(rockMediaContext.images.length, 1);
+assert.equal(rockMediaContext.images[0]?.src, 'https://example.test/sanitized-rock-elbow-xray.jpg');
+assert.equal(rockMediaContext.images[0]?.alt, 'Sanitized elbow radiograph');
+assert.equal(rockMediaContext.answerChoices.length, 4);
+
+const rockCurriculumHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-curriculum-long-article.html'), 'utf8');
+assert.match(rockCurriculumHtml, /Synthetic ROCK curriculum fixture/);
+const { document: rockCurriculumDocument } = parseHTML(rockCurriculumHtml);
+const rockCurriculumContext = extractQuestionContext({
+  document: rockCurriculumDocument,
+  pageUrl: 'https://rock.aaos.org/coursecontent.aspx?id=LOCAL-ANESTHESIA',
+});
+
+assert.ok(rockCurriculumContext, 'ROCK curriculum article should be detected');
+assert.equal(rockCurriculumContext.provider, 'rock');
+assert.equal(rockCurriculumContext.mode, 'curriculum_content');
+assert.equal(rockCurriculumContext.pageKind, 'curriculum_content');
+assert.match(rockCurriculumContext.title ?? '', /Local Anesthesia/i);
+assert.ok((rockCurriculumContext.contentText ?? '').length >= 500);
+assert.ok((rockCurriculumContext.contentSections ?? []).length >= 3);
+assert.ok((rockCurriculumContext.sectionHeadings ?? []).includes('Learning Objectives'));
+assert.ok(!rockCurriculumContext.contentText?.includes('Send feedback'));
+assert.equal(rockCurriculumContext.answerChoices.length, 0);
+assert.equal(rockCurriculumContext.raw?.providerSpecific?.hasCurriculumContent, true);
+
+const rockCurriculumMediaHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-curriculum-media-article.html'), 'utf8');
+assert.match(rockCurriculumMediaHtml, /Synthetic ROCK curriculum fixture with media/);
+const { document: rockCurriculumMediaDocument } = parseHTML(rockCurriculumMediaHtml);
+const rockCurriculumMediaContext = extractQuestionContext({
+  document: rockCurriculumMediaDocument,
+  pageUrl: 'https://rock.aaos.org/coursecontent.aspx?id=POSITIONING',
+});
+
+assert.ok(rockCurriculumMediaContext, 'ROCK curriculum media article should be detected');
+assert.equal(rockCurriculumMediaContext.mode, 'curriculum_content');
+assert.equal(rockCurriculumMediaContext.images.length, 1);
+assert.equal(rockCurriculumMediaContext.images[0]?.src, 'https://example.test/sanitized-rock-positioning.jpg');
+assert.match(rockCurriculumMediaContext.contentText ?? '', /pressure points/i);
+
+const rockSparseHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-curriculum-sparse.html'), 'utf8');
+assert.match(rockSparseHtml, /Synthetic sparse ROCK page/);
+const { document: rockSparseDocument } = parseHTML(rockSparseHtml);
+const rockSparseContext = extractQuestionContext({
+  document: rockSparseDocument,
+  pageUrl: 'https://rock.aaos.org/coursecontent.aspx?id=SPARSE',
+});
+
+assert.ok(rockSparseContext, 'Sparse ROCK page should return diagnostics context instead of throwing');
+assert.equal(rockSparseContext.mode, 'curriculum_content');
+assert.ok((rockSparseContext.contentText ?? '').length < 500);
+assert.ok(rockSparseContext.extractionWarnings.includes('curriculum_content_not_visible'));
+
+const unsupportedRockLikeHtml = `
+  <!doctype html>
+  <html>
+    <head><title>ROCK Curriculum Dashboard</title></head>
+    <body>
+      <main>
+        <nav aria-label="breadcrumb"><a>ROCK Curriculum</a><a>Dashboard</a></nav>
+        <article>
+          <p>Welcome to the ROCK curriculum dashboard. Review modules, progress, and announcements here.</p>
+          <p>This is readable page content but it is not a question stem.</p>
+        </article>
+        <button>Continue</button>
+        <button>Open module list</button>
+      </main>
+    </body>
+  </html>
+`;
+const { document: unsupportedRockLikeDocument } = parseHTML(unsupportedRockLikeHtml);
+const unsupportedRockLikeContext = extractQuestionContext({
+  document: unsupportedRockLikeDocument,
+  pageUrl: 'https://rock.aaos.org/dashboard',
+});
+
+assert.ok(unsupportedRockLikeContext, 'ROCK-like dashboard should return diagnostics context instead of throwing');
+assert.equal(unsupportedRockLikeContext.provider, 'rock');
+assert.equal(unsupportedRockLikeContext.stem, undefined);
+assert.equal(unsupportedRockLikeContext.answerChoices.length, 0);
+assert.equal(unsupportedRockLikeContext.raw?.providerSpecific?.stemStrategy, 'not_found');
+assert.equal(unsupportedRockLikeContext.raw?.providerSpecific?.choicesStrategy, 'not_found');
+assert.ok(unsupportedRockLikeContext.extractionWarnings.includes('stem_not_visible'));
+assert.ok(unsupportedRockLikeContext.extractionWarnings.includes('answer_choices_not_visible'));
+
+const unsupportedDocument = {
+  locationHref: 'https://example.test/article',
+  title: 'Generic readable article',
+  textContent: 'This readable page has paragraphs but no recognized question provider.',
+  getAttribute() {
+    return null;
+  },
+  querySelector() {
+    return null;
+  },
+  querySelectorAll() {
+    return [];
+  },
+};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+assert.equal(detectQuestionProvider({ document: unsupportedDocument as any }), null);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+assert.equal(extractQuestionContext({ document: unsupportedDocument as any }), null);
+
 const ranRealFixtures = REAL_FIXTURES.length - skippedRealFixtures;
 console.log(
-  `Orthobullets extractor tests passed (${ranRealFixtures}/${REAL_FIXTURES.length} real fixtures run, ${skippedRealFixtures} skipped (not present locally) + synthetic sanity checks).`
+  `Question extractor tests passed (${ranRealFixtures}/${REAL_FIXTURES.length} real Orthobullets fixtures run, ${skippedRealFixtures} skipped (not present locally) + Orthobullets/ROCK synthetic sanity checks).`
 );
 if (skippedRealFixtures > 0) {
   console.log(

@@ -271,8 +271,20 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ received: true });
   } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : String(err);
     console.error(`[stripe/webhook] error processing ${event.type}`, err);
-    // Do not mark as processed so it can be retried by Stripe
+    await upsertSubscriptionEvent({
+      provider: 'stripe',
+      providerEventId: event.id,
+      eventType: event.type,
+      rawPayload: event as unknown as Record<string, unknown>,
+      processingResult: {
+        received: true,
+        success: false,
+        error: errorMessage,
+      },
+    });
+    // Do not set processedAt so Stripe can retry, but keep the failure reason for inspection.
     return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 });
   }
 }

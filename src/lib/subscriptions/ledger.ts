@@ -1,7 +1,22 @@
 import { createAdminClient } from '@/lib/supabase/admin';
 
+/**
+ * Canonical paid entitlement selection policy.
+ *
+ * 1. Rows must have a future current_period_end; malformed/missing periods do
+ *    not grant paid access.
+ * 2. `active` and `trialing` grant access for all providers until period end.
+ * 3. Apple `grace` grants access until period end.
+ * 4. Apple `billing_retry` grants cached access only while the current paid
+ *    period is still in the future. Stripe `past_due` remains non-entitling
+ *    here; the billing portal may still be available so users can repair it.
+ * 5. Canceled, expired, unpaid, incomplete, duplicate, or older historical rows
+ *    never override a current entitling row.
+ * 6. If multiple rows grant access, choose highest status rank, then newest
+ *    current_period_end, then newest updated_at.
+ */
 export const ENTITLING_STATUSES = ['active', 'trialing'] as const;
-export const CONDITIONALLY_ENTITLING_STATUSES = ['grace'] as const;
+export const CONDITIONALLY_ENTITLING_STATUSES = ['grace', 'billing_retry'] as const;
 
 export type CanonicalSubscriptionStatus =
   | 'active'
@@ -147,6 +162,10 @@ export function doesSubscriptionGrantEntitlement(
   }
 
   if (row.status === 'grace' && row.provider === 'apple') {
+    return periodEndIsFuture;
+  }
+
+  if (row.status === 'billing_retry' && row.provider === 'apple') {
     return periodEndIsFuture;
   }
 

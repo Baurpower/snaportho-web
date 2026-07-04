@@ -1,0 +1,34 @@
+<!doctype html>
+<!--
+  Synthetic ROCK fixture, not a real captured ROCK page.
+  TODO: Replace or supplement with a sanitized real DOM capture once an authenticated user can export one without secrets/PII.
+-->
+<html>
+  <head>
+    <title>ROCK Synthetic Media Fixture</title>
+  </head>
+  <body>
+    <main data-provider="rock" data-rock-question data-question-id="ROCK-SYN-003" data-topic-id="pediatrics">
+      <nav aria-label="breadcrumb">
+        <a href="/rock/curriculum">ROCK Curriculum</a>
+        <a href="/rock/curriculum/pediatrics">Pediatrics</a>
+      </nav>
+      <h1 data-testid="curriculum-title">Pediatric Elbow Trauma</h1>
+      <section aria-label="Question">
+        <div data-testid="question-stem">
+          <p>A child falls on an outstretched hand and has an extension-type supracondylar humerus fracture.</p>
+          <figure>
+            <img src="https://example.test/sanitized-rock-elbow-xray.jpg" alt="Sanitized elbow radiograph" />
+            <figcaption>AP and lateral elbow radiographs.</figcaption>
+          </figure>
+        </div>
+        <fieldset>
+          <label data-testid="answer-choice" data-answer-label="A"><input type="radio" /> Closed reduction and percutaneous pinning</label>
+          <label data-testid="answer-choice" data-answer-label="B"><input type="radio" /> Sling immobilization only</label>
+          <label data-testid="answer-choice" data-answer-label="C"><input type="radio" /> Radial head excision</label>
+          <label data-testid="answer-choice" data-answer-label="D"><input type="radio" /> Total elbow arthroplasty</label>
+        </fieldset>
+      </section>
+    </main>
+  </body>
+</html>

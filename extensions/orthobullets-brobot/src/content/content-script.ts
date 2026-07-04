@@ -1,4 +1,4 @@
-import { extractOrthobulletsPageContext } from './extractor.js';
+import { detectQuestionProvider, extractQuestionContext } from './extractor.js';
 
 declare global {
   interface Window {
@@ -16,10 +16,24 @@ if (!window.__snapOrthoBroBotContentScriptLoaded) {
     }
 
     try {
-      const pageContext = extractOrthobulletsPageContext({
+      const provider = detectQuestionProvider({
         document: document as never,
         pageUrl: window.location.href,
       });
+      const pageContext = extractQuestionContext({
+        document: document as never,
+        pageUrl: window.location.href,
+      });
+
+      if (!pageContext) {
+        sendResponse({
+          ok: false,
+          unsupported: true,
+          provider: provider ?? 'unsupported',
+          error: 'This readable page is not a supported BroBot question page.',
+        });
+        return false;
+      }
 
       sendResponse({
         ok: true,

@@ -4,10 +4,17 @@ import type {
   ExtensionMessageResponse,
 } from './shared/messages.js';
 import type {
+  ExtensionFetchDiagnostics,
   OrthobulletsExtractionDiagnostics,
   OrthobulletsPageContext,
+  ProviderDetectionStatus,
+  QuestionProvider,
 } from './shared/types.js';
-import { getConfiguredAppOrigin, isLikelyOrthobulletsUrl } from './shared/runtime.js';
+import {
+  detectSupportedQuestionProviderFromUrl,
+  getConfiguredAppOrigin,
+  isLikelySupportedQuestionUrl,
+} from './shared/runtime.js';
 
 const STORAGE_KEY = 'snaportho_extension_device_token';
 const EXTENSION_TOKEN_HEADER = 'x-snaportho-extension-token';
@@ -26,9 +33,11 @@ const KNOWN_ERROR_CODES = new Set<ExtensionErrorCode>([
 
 class CodedError extends Error {
   code: ExtensionErrorCode;
-  constructor(message: string, code: ExtensionErrorCode) {
+  fetchDiagnostics?: ExtensionFetchDiagnostics;
+  constructor(message: string, code: ExtensionErrorCode, fetchDiagnostics?: ExtensionFetchDiagnostics) {
     super(message);
     this.code = code;
+    this.fetchDiagnostics = fetchDiagnostics;
   }
 }
 
@@ -49,11 +58,14 @@ async function clearStoredDeviceToken() {
 
 async function getActiveTabState() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const provider: QuestionProvider | null = detectSupportedQuestionProviderFromUrl(tab?.url ?? null);
   return {
     tabId: typeof tab?.id === 'number' ? tab.id : null,
     url: tab?.url ?? null,
     title: tab?.title ?? null,
-    supported: isLikelyOrthobulletsUrl(tab?.url ?? null),
+    supported: isLikelySupportedQuestionUrl(tab?.url ?? null),
+    provider,
+    detectionStatus: (provider ?? 'unsupported') as ProviderDetectionStatus,
   };
 }
 
@@ -66,24 +78,65 @@ async function getTabSnapshot(tabId: number) {
   };
 }
 
+function safeResponseBodyPreview(value: string | null) {
+  if (!value) return null;
+  return value
+    .replace(/snaportho_(?:extension|device)_[A-Za-z0-9_=-]+/g, '[redacted-device-token]')
+    .slice(0, 800);
+}
+
 async function fetchJson(pathname: string, init?: RequestInit) {
+  const baseUrl = getConfiguredAppOrigin();
+  const attemptedLinkUrl = `${baseUrl}${pathname}`;
+  const baseDiagnostics = {
+    attemptedLinkUrl,
+    baseUrl,
+    httpStatus: null,
+    responseBody: null,
+    responseMessage: null,
+    fetchFailedBeforeResponse: false,
+  };
   let response: Response;
   try {
-    response = await fetch(`${getConfiguredAppOrigin()}${pathname}`, init);
-  } catch {
-    throw new CodedError('Could not reach SnapOrtho. Check your connection and try again.', 'network_failure');
+    response = await fetch(attemptedLinkUrl, init);
+  } catch (error) {
+    throw new CodedError(
+      'Could not reach SnapOrtho. Check that the extension is built for the local app URL and that the dev server is running.',
+      'network_failure',
+      {
+        ...baseDiagnostics,
+        responseMessage: error instanceof Error ? error.message : 'Fetch failed before a response was received.',
+        fetchFailedBeforeResponse: true,
+      }
+    );
   }
 
-  const json = await response.json().catch(() => null);
+  const rawBody = await response.text().catch(() => '');
+  const json = rawBody
+    ? await Promise.resolve()
+        .then(() => JSON.parse(rawBody))
+        .catch(() => null)
+    : null;
   if (!response.ok) {
     const code: ExtensionErrorCode = KNOWN_ERROR_CODES.has(json?.error) ? json.error : 'unknown';
-    const message = json?.message ?? json?.error ?? `Request failed (${response.status})`;
-    throw new CodedError(message, code);
+    const message =
+      response.status === 401
+        ? 'Log in to SnapOrtho first, then retry linking the extension.'
+        : json?.message ?? json?.error ?? `Request failed (${response.status})`;
+    throw new CodedError(message, code, {
+      ...baseDiagnostics,
+      httpStatus: response.status,
+      responseBody: safeResponseBodyPreview(rawBody),
+      responseMessage: json?.message ?? json?.error ?? response.statusText,
+    });
   }
   return json;
 }
 
-function isReadableOrthobulletsQuestionContext(pageContext: OrthobulletsPageContext) {
+function isReadableQuestionContext(pageContext: OrthobulletsPageContext) {
+  if (pageContext.mode === 'curriculum_content') {
+    return Boolean(pageContext.contentText && pageContext.contentText.trim().length >= 500);
+  }
   const hasQuestionIdentity = Boolean(pageContext.questionId || pageContext.stem);
   const hasStem = typeof pageContext.stem === 'string' && pageContext.stem.trim().length > 0;
   const hasChoices = pageContext.answerChoices.length >= 2;
@@ -92,14 +145,14 @@ function isReadableOrthobulletsQuestionContext(pageContext: OrthobulletsPageCont
 }
 
 async function sendExtractionMessage(tabId: number): Promise<{
-  response: { ok?: boolean; pageContext?: OrthobulletsPageContext; error?: string } | null;
+  response: { ok?: boolean; pageContext?: OrthobulletsPageContext; error?: string; provider?: ProviderDetectionStatus; unsupported?: boolean } | null;
   sendMessageError: string | null;
 }> {
   return new Promise((resolve) => {
     chrome.tabs.sendMessage(tabId, { type: 'ob:extract-page-context' }, (response: unknown) => {
       const sendMessageError = chrome.runtime.lastError?.message ?? null;
       resolve({
-        response: (response as { ok?: boolean; pageContext?: OrthobulletsPageContext; error?: string } | null) ?? null,
+        response: (response as { ok?: boolean; pageContext?: OrthobulletsPageContext; error?: string; provider?: ProviderDetectionStatus; unsupported?: boolean } | null) ?? null,
         sendMessageError,
       });
     });
@@ -133,12 +186,16 @@ function buildExtractionDiagnostics(input: {
   injectionError?: string | null;
 }): OrthobulletsExtractionDiagnostics {
   const pageContext = input.pageContext ?? null;
+  const urlProvider = detectSupportedQuestionProviderFromUrl(input.activeTabUrl);
+  const provider = pageContext?.provider ?? urlProvider ?? 'unsupported';
+  const providerSpecific = pageContext?.raw?.providerSpecific ?? {};
   return {
     activeTabId: input.activeTabId,
     activeTabUrl: input.activeTabUrl,
     activeTabStatus: input.activeTabStatus,
     contentScriptResponded: input.contentScriptResponded,
-    readable: pageContext ? isReadableOrthobulletsQuestionContext(pageContext) : false,
+    provider,
+    readable: pageContext ? isReadableQuestionContext(pageContext) : false,
     failureCode: input.failureCode,
     sendMessageError: input.sendMessageError ?? null,
     fallbackInjectionAttempted: input.fallbackInjectionAttempted ?? false,
@@ -146,6 +203,13 @@ function buildExtractionDiagnostics(input: {
     hasQuestionId: Boolean(pageContext?.questionId),
     hasStem: Boolean(pageContext?.stem?.trim()),
     answerChoiceCount: pageContext?.answerChoices.length ?? 0,
+    hasSelectedAnswer: Boolean(pageContext?.selectedAnswerKey ?? pageContext?.selectedAnswer),
+    hasCorrectAnswer: Boolean(pageContext?.correctAnswerKey ?? pageContext?.correctAnswer),
+    hasExplanation: Boolean(pageContext?.explanationText ?? pageContext?.explanation),
+    hasCurriculumContent: Boolean(pageContext?.contentText?.trim()),
+    contentCharCount: pageContext?.contentText?.length ?? 0,
+    sectionCount: pageContext?.contentSections?.length ?? Number(providerSpecific.sectionCount ?? 0),
+    headingCount: pageContext?.sectionHeadings?.length ?? Number(providerSpecific.headingCount ?? 0),
     breadcrumbCount: pageContext?.breadcrumbs.length ?? 0,
     percentDistributionCount: pageContext?.percentDistribution.length ?? 0,
     imageCount: pageContext?.images.length ?? 0,
@@ -232,7 +296,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
         let injectionError: string | null = null;
 
         const shouldAttemptInjection =
-          isLikelyOrthobulletsUrl(tabSnapshot.url) &&
+          isLikelySupportedQuestionUrl(tabSnapshot.url) &&
           (!response || sendMessageError?.toLowerCase().includes('receiving end does not exist'));
 
         if (shouldAttemptInjection) {
@@ -262,7 +326,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
             JSON.stringify({
               message:
                 response?.error ??
-                'Could not read this page. Make sure you are on an Orthobullets review page and try again.',
+                'Could not read this page. Make sure you are on a supported Orthobullets or ROCK question page and try again.',
               diagnostics,
             }),
             'extraction_failure'
@@ -274,7 +338,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
           activeTabStatus: tabSnapshot.status,
           contentScriptResponded: true,
           pageContext: response.pageContext,
-          failureCode: isReadableOrthobulletsQuestionContext(response.pageContext) ? undefined : 'page_not_readable',
+          failureCode: isReadableQuestionContext(response.pageContext) ? undefined : 'page_not_readable',
           sendMessageError,
           fallbackInjectionAttempted,
           injectionError,
@@ -352,6 +416,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
       sendResponse({ ok: false, error: 'Unsupported message.', code: 'unknown' });
     } catch (error) {
       const code = error instanceof CodedError ? error.code : 'unknown';
+      const fetchDiagnostics = error instanceof CodedError ? error.fetchDiagnostics : undefined;
       let diagnostics: OrthobulletsExtractionDiagnostics | undefined;
       let message = error instanceof Error ? error.message : 'Unknown extension error.';
       if (code === 'extraction_failure' && typeof message === 'string') {
@@ -368,6 +433,7 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
         error: message,
         code,
         diagnostics,
+        fetchDiagnostics,
       });
     }
   })();

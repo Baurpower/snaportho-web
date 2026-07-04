@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
-import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
+import { getNormalizedBroBotEntitlement, type Subject } from '@/lib/brobot/entitlements';
 import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
 
 export async function GET(request: Request) {
@@ -25,8 +25,13 @@ export async function GET(request: Request) {
   }
 
   try {
-    const entitlement = await getRemainingAIUses(subject);
-    const response = NextResponse.json({ data: entitlement });
+    const url = new URL(request.url);
+    const includeDebug =
+      process.env.NODE_ENV !== 'production' &&
+      subject.type === 'user' &&
+      url.searchParams.get('debug') === '1';
+    const entitlement = await getNormalizedBroBotEntitlement(subject, { includeDebug });
+    const response = NextResponse.json(entitlement);
     response.headers.set('Cache-Control', 'no-store, max-age=0');
     if (guestCookieToSet) {
       response.headers.append('Set-Cookie', guestCookieToSet);

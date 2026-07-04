@@ -26,6 +26,9 @@ export function resolveOrthobulletsContext(input: {
   const pageContext: OrthobulletsPageContext = {
     ...input.pageContext,
     breadcrumbs: dedupe(input.pageContext.breadcrumbs),
+    authors: dedupe(input.pageContext.authors ?? []),
+    sectionHeadings: dedupe(input.pageContext.sectionHeadings ?? []),
+    contentSections: (input.pageContext.contentSections ?? []).slice(0, 20),
     linkedConcepts: input.pageContext.linkedConcepts.slice(0, 10),
     images: input.pageContext.images.slice(0, 8),
     answerChoices: input.pageContext.answerChoices.map((choice, index) => ({
@@ -36,10 +39,14 @@ export function resolveOrthobulletsContext(input: {
 
   const warnings = [...pageContext.extractionWarnings];
 
-  if (!pageContext.stem) warnings.push('stem_not_visible');
-  if (pageContext.answerChoices.length === 0) warnings.push('answer_choices_not_visible');
-  if (!pageContext.explanationText) warnings.push('explanation_not_visible');
-  if (!pageContext.questionId) warnings.push('question_id_not_visible');
+  if (pageContext.mode === 'curriculum_content') {
+    if (!pageContext.contentText) warnings.push('curriculum_content_not_visible');
+  } else {
+    if (!pageContext.stem) warnings.push('stem_not_visible');
+    if (pageContext.answerChoices.length === 0) warnings.push('answer_choices_not_visible');
+    if (!pageContext.explanationText && !pageContext.explanation) warnings.push('explanation_not_visible');
+    if (!pageContext.questionId) warnings.push('question_id_not_visible');
+  }
 
   return {
     pageContext: {

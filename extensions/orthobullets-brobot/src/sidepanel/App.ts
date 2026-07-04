@@ -6,6 +6,7 @@ import type {
   ExtensionMessageResponse,
 } from '../shared/messages.js';
 import type {
+  ExtensionFetchDiagnostics,
   OrthobulletsChatResponse,
   OrthobulletsChatTurn,
   OrthobulletsExplainResponse,
@@ -31,7 +32,7 @@ const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean 
   invalid_request: { title: 'This page context could not be processed.', canRetry: true },
   api_failure: { title: 'BroBot could not generate an explanation.', canRetry: true },
   parse_failure: { title: "BroBot's response could not be parsed.", canRetry: true },
-  extraction_failure: { title: 'Could not read this Orthobullets page.', canRetry: true },
+  extraction_failure: { title: 'Could not read this question page.', canRetry: true },
   network_failure: { title: 'Could not reach SnapOrtho.', canRetry: true },
   unknown: { title: 'Something went wrong.', canRetry: true },
 };
@@ -95,6 +96,9 @@ function renderStringList(items: string[]) {
 }
 
 function isReadableReviewPage(pageContext: OrthobulletsPageContext) {
+  if (pageContext.mode === 'curriculum_content') {
+    return Boolean(pageContext.contentText?.trim() && pageContext.contentText.length >= 500);
+  }
   const hasQuestionIdentity = Boolean(pageContext.questionId || pageContext.stem);
   const hasStem = Boolean(pageContext.stem?.trim());
   const hasChoices = pageContext.answerChoices.length >= 2;
@@ -103,6 +107,12 @@ function isReadableReviewPage(pageContext: OrthobulletsPageContext) {
 
 function isLikelyCurrentTestUrl(url: string | null | undefined) {
   return Boolean(url && /orthobullets\.com\/currenttest/i.test(url));
+}
+
+function providerLabel(provider: string | null | undefined) {
+  if (provider === 'rock') return 'ROCK';
+  if (provider === 'orthobullets') return 'Orthobullets';
+  return 'supported';
 }
 
 function getBoardTrap(explanation: OrthobulletsExplainResponse) {
@@ -221,6 +231,7 @@ function renderHintCards(hints: OrthobulletsHintResponse[]) {
 function renderDebugSummary(input: {
   activePage: ActivePageState | null;
   diagnostics: OrthobulletsExtractionDiagnostics | null;
+  fetchDiagnostics: ExtensionFetchDiagnostics | null;
   pageContext: OrthobulletsPageContext | null;
   errorCode: ExtensionErrorCode | null;
 }) {
@@ -229,18 +240,30 @@ function renderDebugSummary(input: {
     activeTabId: input.diagnostics?.activeTabId ?? input.activePage?.tabId ?? null,
     activeTabStatus: input.diagnostics?.activeTabStatus ?? null,
     contentScriptResponded: input.diagnostics?.contentScriptResponded ?? null,
+    provider: input.pageContext?.provider ?? input.diagnostics?.provider ?? input.activePage?.provider ?? null,
+    detectionStatus: input.activePage?.detectionStatus ?? null,
+    mode: input.pageContext?.mode ?? null,
     readable: input.diagnostics?.readable ?? null,
     failureCode: input.diagnostics?.failureCode ?? null,
     sendMessageError: input.diagnostics?.sendMessageError ?? null,
+    fetchDiagnostics: input.fetchDiagnostics,
     fallbackInjectionAttempted: input.diagnostics?.fallbackInjectionAttempted ?? false,
     injectionError: input.diagnostics?.injectionError ?? null,
     extractorVersion: input.pageContext?.debug?.extractorVersion ?? null,
     pageKind: input.pageContext?.pageKind ?? null,
+    sourceUrl: input.pageContext?.sourceUrl ?? input.pageContext?.pageUrl ?? null,
     questionId: input.pageContext?.questionId ?? null,
     topicId: input.pageContext?.topicId ?? null,
     breadcrumbCount: input.diagnostics?.breadcrumbCount ?? input.pageContext?.breadcrumbs.length ?? 0,
     breadcrumbs: input.pageContext?.breadcrumbs ?? [],
     hasStem: input.diagnostics?.hasStem ?? Boolean(input.pageContext?.stem),
+    hasSelectedAnswer: input.diagnostics?.hasSelectedAnswer ?? Boolean(input.pageContext?.selectedAnswerKey ?? input.pageContext?.selectedAnswer),
+    hasCorrectAnswer: input.diagnostics?.hasCorrectAnswer ?? Boolean(input.pageContext?.correctAnswerKey ?? input.pageContext?.correctAnswer),
+    hasExplanation: input.diagnostics?.hasExplanation ?? Boolean(input.pageContext?.explanationText ?? input.pageContext?.explanation),
+    hasCurriculumContent: input.diagnostics?.hasCurriculumContent ?? Boolean(input.pageContext?.contentText),
+    contentCharCount: input.diagnostics?.contentCharCount ?? input.pageContext?.contentText?.length ?? 0,
+    sectionCount: input.diagnostics?.sectionCount ?? input.pageContext?.contentSections?.length ?? 0,
+    headingCount: input.diagnostics?.headingCount ?? input.pageContext?.sectionHeadings?.length ?? 0,
     stemPreview: input.pageContext?.stem?.slice(0, 80) ?? null,
     hasQuestionId: input.diagnostics?.hasQuestionId ?? Boolean(input.pageContext?.questionId),
     answerChoiceCount: input.diagnostics?.answerChoiceCount ?? input.pageContext?.answerChoices.length ?? 0,
@@ -275,7 +298,7 @@ function getStatusCopy(input: {
     return { label: 'Loading', detail: 'Checking your extension state and active page.' };
   }
   if (!input.activePage?.supported) {
-    return { label: 'Open an Orthobullets page', detail: 'Switch to a supported Orthobullets question tab, then reopen this panel.' };
+    return { label: 'Open a supported question page', detail: 'Switch to an Orthobullets or ROCK question tab, then reopen this panel.' };
   }
   if (input.auth?.status !== 'linked') {
     return { label: 'Not linked', detail: 'Link the extension to your SnapOrtho account to use BroBot.' };
@@ -308,7 +331,10 @@ function getStatusCopy(input: {
     return { label: 'Hint Mode ready', detail: 'This page looks unanswered, so you can ask for progressive hints before revealing the reasoning.' };
   }
   if (input.pageContext && hasReviewData(input.pageContext)) {
-    return { label: 'Review data detected', detail: 'Use Explain with BroBot for full reasoning.' };
+    if (input.pageContext.mode === 'curriculum_content') {
+      return { label: 'ROCK curriculum page detected', detail: 'Use Explain with BroBot for a resident-friendly teaching summary of this page.' };
+    }
+    return { label: `${providerLabel(input.pageContext.provider)} review data detected`, detail: 'Use Explain with BroBot for full reasoning.' };
   }
   return { label: 'Ready to explain', detail: 'Nothing is sent to SnapOrtho until you click a hint or explanation action.' };
 }
@@ -323,6 +349,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     operation: OperationState;
     pageContext: OrthobulletsPageContext | null;
     extractionDiagnostics: OrthobulletsExtractionDiagnostics | null;
+    fetchDiagnostics: ExtensionFetchDiagnostics | null;
     explanation: OrthobulletsExplainResponse | null;
     hints: OrthobulletsHintResponse[];
     error: { message: string; code: ExtensionErrorCode } | null;
@@ -339,6 +366,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     operation: 'idle',
     pageContext: null,
     extractionDiagnostics: null,
+    fetchDiagnostics: null,
     explanation: null,
     hints: [],
     error: null,
@@ -374,11 +402,13 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.error = result.ok
         ? { message: 'Failed to start link flow.', code: 'unknown' }
         : { message: result.error, code: result.code ?? 'unknown' };
+      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? result.fetchDiagnostics ?? null : null;
       state.linking = false;
       render();
       return;
     }
 
+    state.fetchDiagnostics = null;
     state.linkCode = result.link.linkCode;
     render();
 
@@ -394,17 +424,24 @@ export function mountSidePanelApp(root: HTMLElement) {
       });
 
       if (pollResult.ok && 'deviceToken' in pollResult) {
+        state.fetchDiagnostics = null;
         state.linking = false;
         state.linkCode = null;
         await refreshBaseState();
         window.clearInterval(interval);
+      } else if (!pollResult.ok && pollResult.code === 'network_failure') {
+        state.fetchDiagnostics = 'fetchDiagnostics' in pollResult ? pollResult.fetchDiagnostics ?? null : null;
+        state.error = { message: pollResult.error, code: pollResult.code };
+        state.linking = false;
+        window.clearInterval(interval);
+        render();
       }
     }, 3000);
   }
 
   async function extractPageContext() {
     if (!state.activePage?.tabId) {
-      state.error = { message: 'No active Orthobullets tab is available.', code: 'unsupported_page' };
+      state.error = { message: 'No active supported question tab is available.', code: 'unsupported_page' };
       render();
       return null;
     }
@@ -416,6 +453,7 @@ export function mountSidePanelApp(root: HTMLElement) {
 
     if (!extractResult.ok || !('pageContext' in extractResult)) {
       state.extractionDiagnostics = !extractResult.ok && 'diagnostics' in extractResult ? extractResult.diagnostics ?? null : null;
+      state.fetchDiagnostics = !extractResult.ok && 'fetchDiagnostics' in extractResult ? extractResult.fetchDiagnostics ?? null : null;
       state.error = extractResult.ok
         ? { message: 'Failed to extract page context.', code: 'extraction_failure' }
         : { message: extractResult.error, code: extractResult.code ?? 'extraction_failure' };
@@ -425,6 +463,7 @@ export function mountSidePanelApp(root: HTMLElement) {
 
     state.pageContext = extractResult.pageContext;
     state.extractionDiagnostics = extractResult.diagnostics;
+    state.fetchDiagnostics = null;
 
     if (!isReadableReviewPage(extractResult.pageContext)) {
       state.error = {
@@ -476,6 +515,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.error = hintResult.ok
         ? { message: 'Failed to generate hint.', code: 'unknown' }
         : { message: hintResult.error, code: hintResult.code ?? 'unknown' };
+      state.fetchDiagnostics = !hintResult.ok && 'fetchDiagnostics' in hintResult ? hintResult.fetchDiagnostics ?? null : null;
       render();
       return;
     }
@@ -515,6 +555,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.error = explainResult.ok
         ? { message: 'Failed to explain page.', code: 'unknown' }
         : { message: explainResult.error, code: explainResult.code ?? 'unknown' };
+      state.fetchDiagnostics = !explainResult.ok && 'fetchDiagnostics' in explainResult ? explainResult.fetchDiagnostics ?? null : null;
       render();
       return;
     }
@@ -550,6 +591,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       state.error = result.ok
         ? { message: 'Failed to answer follow-up.', code: 'unknown' }
         : { message: result.error, code: result.code ?? 'unknown' };
+      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? result.fetchDiagnostics ?? null : null;
       if (!promptOverride) {
         state.chatDraft = userMessage;
       }
@@ -578,6 +620,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.chatPrompts = [];
     state.pageContext = null;
     state.extractionDiagnostics = null;
+    state.fetchDiagnostics = null;
     state.usage = null;
     await refreshBaseState();
   }
@@ -596,6 +639,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       error: state.error,
     });
 
+    const isCurriculumPage = state.pageContext?.mode === 'curriculum_content';
     const pageLooksHintEligible = state.pageContext
       ? isHintEligible(state.pageContext)
       : isLikelyCurrentTestUrl(state.activePage?.url);
@@ -609,7 +653,7 @@ export function mountSidePanelApp(root: HTMLElement) {
             <img src="${BROBOT_ICON_URL}" alt="BroBot" width="32" height="32" style="display:block;width:32px;height:32px;border-radius:8px;" />
             <div>
               <p style="margin:0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#0f766e;font-weight:700;">BroBot</p>
-              <h1 style="margin:6px 0 0;font-size:24px;line-height:1.2;">Orthobullets Tutor</h1>
+              <h1 style="margin:6px 0 0;font-size:24px;line-height:1.2;">Question Tutor</h1>
             </div>
           </div>
         </div>
@@ -643,7 +687,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;">
-            Open an Orthobullets review or current-test question page, then reopen this side panel.
+            Open an Orthobullets or ROCK question page, then reopen this side panel.
           </div>`,
         })
       );
@@ -698,16 +742,25 @@ export function mountSidePanelApp(root: HTMLElement) {
         hintCard.querySelector('#hint-next')?.addEventListener('click', () => void runHint(hintNextLevel as 1 | 2 | 3));
         hintCard.querySelector('#reveal-reasoning')?.addEventListener('click', () => void runExplain({ revealRequested: true }));
         hintCard.querySelector('#unlink')?.addEventListener('click', () => void unlink());
+      } else if (isCurriculumPage) {
+        content.appendChild(
+          createElement('div', {
+            html: `<div style="padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #cbd5e1;display:grid;gap:8px;">
+              <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">ROCK curriculum page detected</p>
+              <p style="margin:0;color:#384152;line-height:1.5;">BroBot can explain and organize the visible curriculum content. Hints and reveal reasoning are only available on question pages.</p>
+            </div>`,
+          })
+        );
       }
 
       const controls = createElement('div', {
         html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
-          <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? 'Orthobullets')}</p>
+          <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? providerLabel(state.activePage.provider))}</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button id="explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
             ${pageLooksHintEligible ? '' : `<button id="unlink" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>`}
           </div>
-          <p style="margin:0;font-size:12px;color:#5c6574;">${pageLooksExplainEligible ? 'Review data detected. Use Explain with BroBot for full reasoning.' : 'Use Explain with BroBot for full review-mode reasoning. Hint Mode stays answer-sparing until you explicitly reveal.'}</p>
+          <p style="margin:0;font-size:12px;color:#5c6574;">${isCurriculumPage ? 'Curriculum content detected. Use Explain with BroBot for a teaching summary.' : pageLooksExplainEligible ? 'Review data detected. Use Explain with BroBot for full reasoning.' : 'Use Explain with BroBot for full review-mode reasoning. Hint Mode stays answer-sparing until you explicitly reveal.'}</p>
         </div>`,
       });
       content.appendChild(controls);
@@ -753,18 +806,18 @@ export function mountSidePanelApp(root: HTMLElement) {
       }
     }
 
-    if (state.pageContext && !state.explanation && !state.error && hasReviewData(state.pageContext)) {
+    if (state.pageContext && !state.explanation && !state.error && hasReviewData(state.pageContext) && state.pageContext.mode !== 'curriculum_content') {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
             <p style="margin:0;font-weight:700;">Review data detected.</p>
-            <p style="margin:0;color:#384152;line-height:1.5;">Use Explain with BroBot for full reasoning. This page already shows ${state.pageContext.correctAnswerKey ? 'a visible correct answer' : 'review-style context'}${state.pageContext.explanationText ? ', explanation text' : ''}${state.pageContext.percentDistribution.length ? `, and ${state.pageContext.percentDistribution.length} distribution rows` : ''}.</p>
+            <p style="margin:0;color:#384152;line-height:1.5;">Use Explain with BroBot for full reasoning. This page already shows ${state.pageContext.correctAnswerKey || state.pageContext.correctAnswer ? 'a visible correct answer' : 'review-style context'}${state.pageContext.explanationText || state.pageContext.explanation ? ', explanation text' : ''}${state.pageContext.percentDistribution.length ? `, and ${state.pageContext.percentDistribution.length} distribution rows` : ''}.</p>
           </div>`,
         })
       );
     }
 
-    if (state.pageContext && !state.explanation && !state.error && !hasReviewData(state.pageContext) && !pageLooksHintEligible) {
+    if (state.pageContext && !state.explanation && !state.error && !hasReviewData(state.pageContext) && !pageLooksHintEligible && state.pageContext.mode !== 'curriculum_content') {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
@@ -808,7 +861,7 @@ export function mountSidePanelApp(root: HTMLElement) {
           <form id="chat-form" style="display:grid;gap:8px;">
             <textarea id="chat-input" rows="3" placeholder="Ask a follow-up..." style="width:100%;box-sizing:border-box;border:1px solid #d2cab8;border-radius:14px;padding:12px;font:inherit;resize:vertical;">${escapeHtml(state.chatDraft)}</textarea>
             <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-              <p style="margin:0;font-size:12px;color:#5c6574;">Raw Orthobullets content is only sent when you submit a question.</p>
+              <p style="margin:0;font-size:12px;color:#5c6574;">Extracted question context is only sent when you submit a question.</p>
               <button type="submit" ${state.operation === 'chatting' ? 'disabled' : ''} style="border:none;border-radius:999px;background:${state.operation === 'chatting' ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${state.operation === 'chatting' ? 'default' : 'pointer'};">${state.operation === 'chatting' ? 'Sending...' : 'Ask BroBot'}</button>
             </div>
           </form>
@@ -835,12 +888,13 @@ export function mountSidePanelApp(root: HTMLElement) {
       });
     }
 
-    if (state.pageContext || state.extractionDiagnostics) {
+    if (state.pageContext || state.extractionDiagnostics || state.fetchDiagnostics) {
       content.appendChild(
         createElement('div', {
           html: renderDebugSummary({
             activePage: state.activePage,
             diagnostics: state.extractionDiagnostics,
+            fetchDiagnostics: state.fetchDiagnostics,
             pageContext: state.pageContext,
             errorCode: state.error?.code ?? null,
           }),

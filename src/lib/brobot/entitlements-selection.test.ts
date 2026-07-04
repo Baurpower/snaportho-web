@@ -20,14 +20,18 @@ type SubscriptionEntitlementRow = {
 function getSubscriptionStatusRank(status: string) {
   switch (status) {
     case 'active':
-      return 5;
+      return 7;
     case 'trialing':
-      return 4;
+      return 6;
     case 'grace':
-      return 3;
+      return 5;
     case 'billing_retry':
-      return 2;
+      return 4;
     case 'past_due':
+      return 3;
+    case 'canceled':
+      return 2;
+    case 'expired':
       return 1;
     default:
       return 0;
@@ -46,7 +50,8 @@ function pickBestEntitlingSubscriptionRow(
 
     return (
       ((row.status === 'active' || row.status === 'trialing') && periodEndIsFuture) ||
-      (row.status === 'grace' && row.provider === 'apple' && periodEndIsFuture)
+      (row.status === 'grace' && row.provider === 'apple' && periodEndIsFuture) ||
+      (row.status === 'billing_retry' && row.provider === 'apple' && periodEndIsFuture)
     );
   });
 
@@ -190,6 +195,77 @@ const appleGrace = {
 assert.equal(
   pickBestEntitlingSubscriptionRow([appleGrace], now)?.provider_subscription_id,
   'orig_txn_456'
+);
+
+const appleBillingRetry = {
+  ...baseRow,
+  provider: 'apple',
+  status: 'billing_retry',
+  current_period_end: '2026-07-01T00:00:00.000Z',
+  cancel_at_period_end: false,
+  canceled_at: null,
+  stripe_subscription_id: null,
+  provider_subscription_id: 'orig_txn_retry',
+  updated_at: '2026-06-30T06:30:00.000Z',
+};
+
+assert.equal(
+  pickBestEntitlingSubscriptionRow([appleBillingRetry], now)?.provider_subscription_id,
+  'orig_txn_retry'
+);
+
+const stripeBillingRetry = {
+  ...appleBillingRetry,
+  provider: 'stripe',
+  stripe_subscription_id: 'sub_retry',
+  provider_subscription_id: 'sub_retry',
+};
+
+assert.equal(
+  pickBestEntitlingSubscriptionRow([stripeBillingRetry], now),
+  null
+);
+
+const appleSandboxActive = {
+  ...baseRow,
+  provider: 'apple',
+  environment: 'sandbox',
+  status: 'active',
+  current_period_end: '2026-07-03T00:00:00.000Z',
+  cancel_at_period_end: false,
+  canceled_at: null,
+  stripe_subscription_id: null,
+  provider_subscription_id: 'sandbox_orig_txn_123',
+  updated_at: '2026-06-30T06:00:00.000Z',
+};
+
+assert.equal(
+  pickBestEntitlingSubscriptionRow([appleSandboxActive], now)?.provider_subscription_id,
+  'sandbox_orig_txn_123'
+);
+
+const appleExpired = {
+  ...appleSandboxActive,
+  status: 'expired',
+  current_period_end: '2026-06-01T00:00:00.000Z',
+  provider_subscription_id: 'expired_orig_txn_123',
+};
+
+assert.equal(
+  pickBestEntitlingSubscriptionRow([appleExpired], now),
+  null
+);
+
+const newerStripeActive = {
+  ...activeResubscription,
+  current_period_end: '2026-07-10T00:00:00.000Z',
+  stripe_subscription_id: 'sub_newer_than_apple',
+  updated_at: '2026-06-30T08:00:00.000Z',
+};
+
+assert.equal(
+  pickBestEntitlingSubscriptionRow([appleSandboxActive, newerStripeActive], now)?.stripe_subscription_id,
+  'sub_newer_than_apple'
 );
 
 console.log('brobot entitlement selection tests passed');

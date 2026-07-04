@@ -2,9 +2,10 @@ import { z } from 'zod';
 
 const OrthobulletsChoiceSchema = z.object({
   key: z.string().trim().min(1).max(32).optional(),
+  label: z.string().trim().min(1).max(32).nullable().optional(),
   text: z.string().trim().min(1).max(4000),
-  isSelected: z.boolean().optional(),
-  isCorrect: z.boolean().optional(),
+  isSelected: z.boolean().nullable().optional(),
+  isCorrect: z.boolean().nullable().optional(),
 });
 
 const OrthobulletsPercentDistributionSchema = z.object({
@@ -22,6 +23,7 @@ const OrthobulletsLinkedConceptSchema = z.object({
 const OrthobulletsImageMetadataSchema = z.object({
   src: z.string().trim().max(2000).optional(),
   alt: z.string().trim().max(500).optional(),
+  caption: z.string().trim().max(1000).nullable().optional(),
   width: z.number().int().positive().optional(),
   height: z.number().int().positive().optional(),
 });
@@ -32,20 +34,38 @@ const OrthobulletsDebugSchema = z.object({
 });
 
 export const OrthobulletsPageContextSchema = z.object({
-  source: z.literal('orthobullets'),
+  source: z.enum(['orthobullets', 'rock']).default('orthobullets'),
+  provider: z.enum(['orthobullets', 'rock']).default('orthobullets'),
+  mode: z.enum(['question', 'curriculum_content']).default('question'),
   pageUrl: z.string().trim().url(),
-  pageKind: z.enum(['review', 'current_test', 'unknown']).default('unknown'),
-  questionId: z.string().trim().min(1).max(64).optional(),
-  topicId: z.string().trim().min(1).max(64).optional(),
+  sourceUrl: z.string().trim().url().optional(),
+  pageKind: z.string().trim().min(1).max(80).default('unknown'),
+  questionId: z.string().trim().min(1).max(64).nullable().optional(),
+  topicId: z.string().trim().min(1).max(64).nullable().optional(),
+  title: z.string().trim().min(1).max(300).nullable().optional(),
   breadcrumbs: z.array(z.string().trim().min(1).max(200)).max(12).default([]),
+  authors: z.array(z.string().trim().min(1).max(200)).max(12).default([]).optional(),
+  date: z.string().trim().min(1).max(120).nullable().optional(),
+  sectionHeadings: z.array(z.string().trim().min(1).max(240)).max(40).default([]).optional(),
+  contentText: z.string().trim().min(1).max(16000).nullable().optional(),
+  contentSections: z.array(z.object({
+    heading: z.string().trim().min(1).max(240),
+    text: z.string().trim().min(1).max(4000),
+  })).max(24).default([]).optional(),
   stem: z.string().trim().min(1).max(12000).optional(),
   answerChoices: z.array(OrthobulletsChoiceSchema).max(12).default([]),
-  selectedAnswerKey: z.string().trim().min(1).max(32).optional(),
-  correctAnswerKey: z.string().trim().min(1).max(32).optional(),
+  selectedAnswerKey: z.string().trim().min(1).max(32).nullable().optional(),
+  correctAnswerKey: z.string().trim().min(1).max(32).nullable().optional(),
+  selectedAnswer: z.string().trim().min(1).max(4000).nullable().optional(),
+  correctAnswer: z.string().trim().min(1).max(4000).nullable().optional(),
   percentDistribution: z.array(OrthobulletsPercentDistributionSchema).max(12).default([]),
-  explanationText: z.string().trim().min(1).max(16000).optional(),
+  explanationText: z.string().trim().min(1).max(16000).nullable().optional(),
+  explanation: z.string().trim().min(1).max(16000).nullable().optional(),
   linkedConcepts: z.array(OrthobulletsLinkedConceptSchema).max(20).default([]),
   images: z.array(OrthobulletsImageMetadataSchema).max(20).default([]),
+  raw: z.object({
+    providerSpecific: z.record(z.string(), z.unknown()).optional(),
+  }).optional(),
   extractionWarnings: z.array(z.string().trim().min(1).max(300)).max(20).default([]),
   debug: OrthobulletsDebugSchema.optional(),
 });

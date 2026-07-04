@@ -3,8 +3,11 @@ import type {
   OrthobulletsChatTurn,
   OrthobulletsExplainResponse,
   OrthobulletsExtractionDiagnostics,
+  ExtensionFetchDiagnostics,
   OrthobulletsHintResponse,
   OrthobulletsPageContext,
+  ProviderDetectionStatus,
+  QuestionProvider,
 } from './types.js';
 
 export type ActivePageState = {
@@ -12,6 +15,8 @@ export type ActivePageState = {
   url: string | null;
   title: string | null;
   supported: boolean;
+  provider: QuestionProvider | null;
+  detectionStatus: ProviderDetectionStatus;
 };
 
 export type AuthState = {
@@ -36,7 +41,7 @@ export type ExtensionMessage =
       type: 'ob:hint';
       pageContext: OrthobulletsPageContext;
       hintLevel: 1 | 2 | 3;
-      selectedAnswerKey?: string;
+      selectedAnswerKey?: string | null;
     }
   | { type: 'ob:explain'; pageContext: OrthobulletsPageContext }
   | {
@@ -71,4 +76,4 @@ export type ExtensionMessageResponse =
   | { ok: true; explanation: OrthobulletsExplainResponse }
   | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; cleared: true }
-  | { ok: false; error: string; code?: ExtensionErrorCode; diagnostics?: OrthobulletsExtractionDiagnostics };
+  | { ok: false; error: string; code?: ExtensionErrorCode; diagnostics?: OrthobulletsExtractionDiagnostics; fetchDiagnostics?: ExtensionFetchDiagnostics };

@@ -44,8 +44,9 @@ function limitReachedResponse(dailyCap: number | null) {
   );
 }
 
-function requestHasReviewData(input: { correctAnswerKey?: string; explanationText?: string; percentDistribution: unknown[] }) {
-  return Boolean(input.correctAnswerKey) || Boolean(input.explanationText) || input.percentDistribution.length > 0;
+function requestHasReviewData(input: { mode?: string; correctAnswerKey?: string | null; correctAnswer?: string | null; explanationText?: string | null; explanation?: string | null; percentDistribution: unknown[] }) {
+  if (input.mode === 'curriculum_content') return true;
+  return Boolean(input.correctAnswerKey ?? input.correctAnswer) || Boolean(input.explanationText ?? input.explanation) || input.percentDistribution.length > 0;
 }
 
 export async function POST(request: Request) {
@@ -99,9 +100,11 @@ export async function POST(request: Request) {
 
   const requestId = crypto.randomUUID();
   const startedAt = Date.now();
-  const kgLookup = await lookupOrthobulletsKgContext({
-    questionId: parsed.data.pageContext.questionId,
-  });
+  const kgLookup = parsed.data.pageContext.provider === 'orthobullets'
+    ? await lookupOrthobulletsKgContext({
+        questionId: parsed.data.pageContext.questionId,
+      })
+    : null;
   const resolvedContext = resolveOrthobulletsContext({
     pageContext: parsed.data.pageContext,
     kgLookup,
@@ -110,11 +113,12 @@ export async function POST(request: Request) {
   console.log('[brobot-orthobullets] hint_request', {
     requestId,
     userIdPrefix: auth.userId.slice(0, 8),
+    provider: resolvedContext.pageContext.provider,
     questionId: resolvedContext.pageContext.questionId ?? null,
     hintLevel: parsed.data.hintLevel,
     stemHash: hashText(resolvedContext.pageContext.stem),
-    explanationHash: hashText(resolvedContext.pageContext.explanationText),
-    selectedAnswerKey: parsed.data.selectedAnswerKey ?? resolvedContext.pageContext.selectedAnswerKey ?? null,
+    explanationHash: hashText(resolvedContext.pageContext.explanationText ?? resolvedContext.pageContext.explanation),
+    selectedAnswerKey: parsed.data.selectedAnswerKey ?? resolvedContext.pageContext.selectedAnswerKey ?? resolvedContext.pageContext.selectedAnswer ?? null,
     answerChoiceCount: resolvedContext.pageContext.answerChoices.length,
     warningCount: resolvedContext.warnings.length,
     kgMatched: Boolean(kgLookup?.matchedQuestionId),

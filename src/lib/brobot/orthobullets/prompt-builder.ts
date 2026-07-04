@@ -32,7 +32,7 @@ function renderDistribution(context: ResolvedOrthobulletsContext) {
     .join('\n');
 }
 
-const SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending reviewing a single Orthobullets question with a resident, right after they answered it.
+const SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending reviewing a single orthopaedic question-bank question with a resident, right after they answered it.
 
 Return valid JSON only, matching exactly this shape:
 {
@@ -47,18 +47,18 @@ Return valid JSON only, matching exactly this shape:
 }
 
 SCOPE
-- Use only the provided stem, choices, percent data, explanation text, and KG metadata. Never claim to have seen images, hidden content, or other Orthobullets pages.
+- Use only the provided provider/source, stem, choices, percent data, explanation text, and KG metadata. Never claim to have seen images, hidden content, or other pages from the source.
 - If the provided explanation is missing or thin, reason from orthopaedic first principles and clinical knowledge instead of inventing facts; add a note to "warnings" if you had to do this.
 
 YOUR JOB IS TO TEACH THE CONCEPT, NOT SUMMARIZE THE PAGE
-- The resident has already read the Orthobullets explanation. Repeating its claims in different words has zero value, even if you reword every sentence — a paraphrase is still a summary.
+- The resident has already read the visible source explanation when one is provided. Repeating its claims in different words has zero value, even if you reword every sentence — a paraphrase is still a summary.
 - "whyCorrect" must lead with ONE of these four angles — vary your phrasing naturally, but the substance must be one of these, not a restatement of what's already given:
   (1) Mechanism: the anatomic/biomechanical/pathophysiologic reason the correct choice works, one level deeper than what the explanation said.
   (2) Distinguishing feature: the specific finding/fact that separates this diagnosis from the next-most-likely mimic, especially if the explanation didn't frame it as a comparison.
   (3) Classic reference: the relevant named study, eponym, or classification system the explanation didn't cite.
   (4) Transferable pattern: the general rule for this question archetype that applies beyond this one instance, not just this question.
   Pick whichever genuinely fits; do not force one that adds nothing real, and do not announce which one you picked — just teach it. Do not literally write "the distinguishing feature is," "mechanistically," "classically," or "the pattern here is" as a stock opener — express it in plain language specific to this question instead of a template phrase.
-- Never quote the Orthobullets explanation verbatim, and never just reorder the same 1-2 facts the explanation already gave as your entire answer.
+- Never quote the source explanation verbatim, and never just reorder the same 1-2 facts the explanation already gave as your entire answer.
 
 CONTENT REQUIREMENTS (map directly to the JSON fields)
 - testedConcept: name the ONE concept being tested, concretely (e.g. "reverse obliquity intertrochanteric fracture fixation," not "hip fractures"). One short phrase, not a sentence.
@@ -77,7 +77,7 @@ STYLE CONSTRAINTS
 - Whole response should read in well under 500 words unless the question genuinely has unusual complexity (e.g. many distractors or multi-step reasoning) — most should be much shorter than that ceiling.
 - No markdown formatting inside string values (no asterisks, headers, or bullets within a field) — the client renders structure from the JSON fields themselves.`;
 
-const CHAT_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending answering a resident's follow-up question about ONE Orthobullets question they just reviewed.
+const CHAT_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending answering a resident's follow-up question about ONE orthopaedic question-bank question they just reviewed.
 
 Return valid JSON only, matching exactly this shape:
 {
@@ -92,15 +92,15 @@ GOAL
 - Most answers should be 2-6 sentences. Go shorter when the question is simple.
 
 RULES
-- Use only the provided page context, prior explanation, and follow-up chat history. Do not claim you saw anything else on Orthobullets.
-- Do not quote or paraphrase the Orthobullets explanation at length. Build on it.
+- Use only the provided page context, prior explanation, and follow-up chat history. Do not claim you saw anything else on the source site.
+- Do not quote or paraphrase the source explanation at length. Build on it.
 - Resolve short follow-ups like "why not bone scan?" or "make this simpler" against the prior explanation and chat history.
 - If the user asks for simplification, keep the same medical accuracy but use plainer language.
 - If the user asks for an Anki card, return the answer as a compact Q/A style card inside the answer string.
 - No markdown bullets or headers inside "answer".
 - "suggestedPrompts" should contain 0-3 short, useful next follow-ups only when there is an obvious next step.`;
 
-const HINT_SYSTEM_PROMPT = `You are BroBot, a senior orthopaedic resident coaching an intern through an unanswered Orthobullets-style question.
+const HINT_SYSTEM_PROMPT = `You are BroBot, a senior orthopaedic resident coaching an intern through an unanswered orthopaedic question-bank question.
 
 Return valid JSON only, matching exactly this shape:
 {
@@ -117,7 +117,7 @@ GOAL
 NON-NEGOTIABLE SAFETY RULES
 - Do NOT reveal the correct answer choice, answer number, or answer text.
 - Do NOT say "the correct answer is", "choose", "pick", "the answer is", or any equivalent.
-- Do NOT quote the Orthobullets explanation.
+- Do NOT quote the source explanation.
 - Do NOT give away the final management/test/diagnosis in Hint 1 or Hint 2.
 
 HINT LADDER
@@ -131,9 +131,73 @@ STYLE
 - Use only the provided stem, choices, visible explanation state, and KG metadata. Never imply you saw hidden content.
 - If key review-only fields are missing, that is expected; use the visible clue pattern and add a warning only if the missing information materially limits the hint.`;
 
+const CURRICULUM_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending explaining a ROCK curriculum page to a resident.
+
+Return valid JSON only, matching exactly this shape:
+{
+  "bottomLine": string,
+  "testedConcept": string,
+  "whyCorrect": string,
+  "whyWrong": [],
+  "boardTrap"?: string,
+  "boardPearl": string,
+  "studyNext": string[],
+  "warnings": string[]
+}
+
+GOAL
+- Explain and organize the visible curriculum page content in a resident-friendly way.
+- Focus on what matters for cases, OITE/boards, and clinical use.
+- Convert long sections into high-yield teaching points rather than repeating the page.
+
+FIELD MEANING
+- bottomLine: 2-3 sentence summary of what this page is teaching and why it matters.
+- testedConcept: the page topic as one concise phrase.
+- whyCorrect: organized teaching explanation of the page content. Use short paragraphs separated by semicolons if needed, but no markdown bullets.
+- whyWrong: always return an empty array for curriculum pages.
+- boardTrap: optional high-yield pitfall or misconception from the topic.
+- boardPearl: one memorable clinical/OITE takeaway.
+- studyNext: 2-5 adjacent topics to review next.
+- warnings: include a brief warning if the extracted content was sparse or lacked key sections.
+
+RULES
+- Use only the provided normalized visible content. Do not claim you saw hidden content, full HTML, or unprovided images.
+- Do not quote long passages. Teach from the extracted content.
+- Write for orthopaedic residents using precise clinical language.`;
+
 export function buildOrthobulletsExplainMessages(
   context: ResolvedOrthobulletsContext
 ): ChatCompletionMessage[] {
+  if (context.pageContext.mode === 'curriculum_content') {
+    const sections = (context.pageContext.contentSections ?? [])
+      .map((section) => `${section.heading}\n${section.text}`)
+      .join('\n\n');
+
+    return [
+      {
+        role: 'system',
+        content: CURRICULUM_SYSTEM_PROMPT,
+      },
+      {
+        role: 'user',
+        content: [
+          `Provider/source: ${context.pageContext.provider ?? context.pageContext.source}`,
+          `Mode: ${context.pageContext.mode}`,
+          `Page URL: ${context.pageContext.sourceUrl ?? context.pageContext.pageUrl}`,
+          `Title: ${context.pageContext.title ?? '(missing)'}`,
+          `Breadcrumbs: ${context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
+          `Authors: ${(context.pageContext.authors ?? []).join(', ') || '(missing)'}`,
+          `Date: ${context.pageContext.date ?? '(missing)'}`,
+          `Section headings: ${(context.pageContext.sectionHeadings ?? []).join(' | ') || '(missing)'}`,
+          `Extracted sections:\n${sections || '(none)'}`,
+          `Extracted content:\n${context.pageContext.contentText ?? '(missing)'}`,
+          `Image count: ${context.pageContext.images.length}`,
+          `Extraction warnings: ${context.warnings.join(' | ') || '(none)'}`,
+        ].join('\n\n'),
+      },
+    ];
+  }
+
   const kgNotes = context.kgLookup
     ? [
         `KG specialty: ${context.kgLookup.sourceSpecialty ?? '(unknown)'}`,
@@ -150,16 +214,17 @@ export function buildOrthobulletsExplainMessages(
     {
       role: 'user',
       content: [
-        `Page URL: ${context.pageContext.pageUrl}`,
+        `Provider/source: ${context.pageContext.provider ?? context.pageContext.source}`,
+        `Page URL: ${context.pageContext.sourceUrl ?? context.pageContext.pageUrl}`,
         `Question ID: ${context.pageContext.questionId ?? '(missing)'}`,
         `Topic ID: ${context.pageContext.topicId ?? '(missing)'}`,
         `Breadcrumbs: ${context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
         `Stem:\n${context.pageContext.stem ?? '(missing)'}`,
         `Answer choices:\n${renderChoices(context)}`,
-        `Selected answer: ${context.pageContext.selectedAnswerKey ?? '(unknown)'}`,
-        `Correct answer: ${context.pageContext.correctAnswerKey ?? '(unknown)'}`,
+        `Selected answer: ${context.pageContext.selectedAnswerKey ?? context.pageContext.selectedAnswer ?? '(unknown)'}`,
+        `Correct answer: ${context.pageContext.correctAnswerKey ?? context.pageContext.correctAnswer ?? '(unknown)'}`,
         `Percent distribution:\n${renderDistribution(context)}`,
-        `Explanation (background only — do not summarize or quote this; reason independently):\n${context.pageContext.explanationText ?? '(missing)'}`,
+        `Explanation (background only — do not summarize or quote this; reason independently):\n${context.pageContext.explanationText ?? context.pageContext.explanation ?? '(missing)'}`,
         `Linked concepts: ${
           context.pageContext.linkedConcepts.map((item) => item.label).join(', ') || '(none)'
         }`,
@@ -219,13 +284,14 @@ export function buildOrthobulletsChatMessages(input: {
     {
       role: 'user',
       content: [
-        `Page URL: ${input.context.pageContext.pageUrl}`,
+        `Provider/source: ${input.context.pageContext.provider ?? input.context.pageContext.source}`,
+        `Page URL: ${input.context.pageContext.sourceUrl ?? input.context.pageContext.pageUrl}`,
         `Question ID: ${input.context.pageContext.questionId ?? '(missing)'}`,
         `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
         `Stem:\n${input.context.pageContext.stem ?? '(missing)'}`,
         `Answer choices:\n${renderChoices(input.context)}`,
-        `Selected answer: ${input.context.pageContext.selectedAnswerKey ?? '(unknown)'}`,
-        `Correct answer: ${input.context.pageContext.correctAnswerKey ?? '(unknown)'}`,
+        `Selected answer: ${input.context.pageContext.selectedAnswerKey ?? input.context.pageContext.selectedAnswer ?? '(unknown)'}`,
+        `Correct answer: ${input.context.pageContext.correctAnswerKey ?? input.context.pageContext.correctAnswer ?? '(unknown)'}`,
         `Prior BroBot explanation:\n${renderPriorExplanation(input.explanation)}`,
         `Recent follow-up chat:\n${renderChatHistory(input.history)}`,
         `Resident follow-up: ${input.userMessage}`,
@@ -256,16 +322,17 @@ export function buildOrthobulletsHintMessages(input: {
       role: 'user',
       content: [
         `Hint level requested: ${ladderLabel}`,
-        `Page URL: ${input.context.pageContext.pageUrl}`,
+        `Provider/source: ${input.context.pageContext.provider ?? input.context.pageContext.source}`,
+        `Page URL: ${input.context.pageContext.sourceUrl ?? input.context.pageContext.pageUrl}`,
         `Question ID: ${input.context.pageContext.questionId ?? '(missing)'}`,
         `Topic ID: ${input.context.pageContext.topicId ?? '(missing)'}`,
         `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
         `Stem:\n${input.context.pageContext.stem ?? '(missing)'}`,
         `Answer choices (visible to learner; do not reveal any choice in the hint):\n${renderChoices(input.context)}`,
-        `User selected answer so far: ${input.selectedAnswerKey ?? input.context.pageContext.selectedAnswerKey ?? '(none visible)'}`,
-        `Correct answer visibility on page: ${input.context.pageContext.correctAnswerKey ? 'visible' : 'not visible'}`,
+        `User selected answer so far: ${input.selectedAnswerKey ?? input.context.pageContext.selectedAnswerKey ?? input.context.pageContext.selectedAnswer ?? '(none visible)'}`,
+        `Correct answer visibility on page: ${input.context.pageContext.correctAnswerKey || input.context.pageContext.correctAnswer ? 'visible' : 'not visible'}`,
         `Percent distribution:\n${renderDistribution(input.context)}`,
-        `Visible explanation text (may be missing; do not quote it):\n${input.context.pageContext.explanationText ?? '(missing)'}`,
+        `Visible explanation text (may be missing; do not quote it):\n${input.context.pageContext.explanationText ?? input.context.pageContext.explanation ?? '(missing)'}`,
         `Linked concepts: ${input.context.pageContext.linkedConcepts.map((item) => item.label).join(', ') || '(none)'}`,
         `Image count: ${input.context.pageContext.images.length}`,
         renderKgNotes(input.context),

@@ -58,9 +58,11 @@ export interface BroBotEntitlement {
 }
 
 type SubscriptionEntitlementRow = {
+  id?: string;
   user_id: string;
   status: string;
   plan_code: string;
+  current_period_start?: string | null;
   current_period_end: string | null;
   cancel_at_period_end: boolean | null;
   canceled_at: string | null;
@@ -71,8 +73,57 @@ type SubscriptionEntitlementRow = {
   provider_subscription_id: string | null;
   provider_transaction_id: string | null;
   environment: string | null;
+  last_verified_at?: string | null;
   updated_at?: string | null;
+  created_at?: string | null;
 };
+
+export type EntitlementProvider = 'apple' | 'stripe' | 'none';
+
+export type EntitlementCandidateDiagnostic = {
+  id: string | null;
+  provider: string | null;
+  providerSubscriptionId: string | null;
+  providerTransactionId: string | null;
+  appleOriginalTransactionId: string | null;
+  stripeSubscriptionId: string | null;
+  status: string;
+  planCode: string;
+  currentPeriodEnd: string | null;
+  cancelAtPeriodEnd: boolean;
+  environment: string | null;
+  grantsAccess: boolean;
+  selected: boolean;
+  reason: string;
+};
+
+export interface NormalizedBroBotEntitlement {
+  access: 'free' | 'unlimited';
+  planCode: 'free' | 'unlimited_brobot';
+  provider: EntitlementProvider;
+  status: string | null;
+  currentPeriodEnd: string | null;
+  cancelAtPeriodEnd: boolean;
+  isVerified: boolean;
+  verificationWarning: string | null;
+  freeQuotaUsed: number;
+  freeQuotaLimit: number;
+  freeQuotaRemaining: number;
+  freeQuotaResetAt: string;
+  resolutionSource: string;
+  resolutionReason: string;
+  selectedSubscriptionId: string | null;
+  selectedProvider: EntitlementProvider;
+  selectedStatus: string | null;
+  selectedCurrentPeriodEnd: string | null;
+  debug?: {
+    userId?: string;
+    selectedSubscriptionRowId: string | null;
+    selectionReason: string;
+    candidates: EntitlementCandidateDiagnostic[];
+    policy: string;
+  };
+}
 
 export function pickBestEntitlingSubscriptionRow(
   rows: SubscriptionEntitlementRow[],
@@ -85,6 +136,175 @@ export function pickBestEntitlingSubscriptionRow(
     })) as CanonicalSubscriptionRow[],
     now
   ) as SubscriptionEntitlementRow | null;
+}
+
+function normalizeEntitlementProvider(provider: string | null | undefined): EntitlementProvider {
+  if (provider === 'apple') return 'apple';
+  if (provider === 'stripe' || provider == null) return 'stripe';
+  return 'none';
+}
+
+function getSubscriptionCandidateReason(
+  row: SubscriptionEntitlementRow,
+  now: Date,
+  grantsAccess: boolean,
+  selected: boolean
+) {
+  if (selected) {
+    return `selected_${row.status}_with_latest_valid_current_period_end`;
+  }
+
+  if (grantsAccess) {
+    return 'valid_but_lower_priority_than_selected_subscription';
+  }
+
+  const periodEndTs = row.current_period_end ? new Date(row.current_period_end).getTime() : null;
+  const periodEndIsFuture = periodEndTs != null && Number.isFinite(periodEndTs) && periodEndTs > now.getTime();
+
+  if ((row.status === 'active' || row.status === 'trialing') && !periodEndIsFuture) {
+    return 'active_like_status_missing_or_past_current_period_end';
+  }
+
+  if (row.status === 'grace' && row.provider !== 'apple') {
+    return 'grace_period_only_entitles_apple_subscriptions';
+  }
+
+  if (row.status === 'grace' && !periodEndIsFuture) {
+    return 'apple_grace_period_missing_or_past_current_period_end';
+  }
+
+  if (row.status === 'billing_retry' && row.provider !== 'apple') {
+    return 'billing_retry_only_entitles_apple_cached_subscriptions';
+  }
+
+  if (row.status === 'billing_retry' && !periodEndIsFuture) {
+    return 'apple_billing_retry_missing_or_past_current_period_end';
+  }
+
+  if (row.status === 'canceled' || row.status === 'expired') {
+    return periodEndIsFuture
+      ? `${row.status}_status_does_not_grant_access_even_with_future_period_end`
+      : `${row.status}_and_period_ended`;
+  }
+
+  return `status_${row.status || 'unknown'}_does_not_grant_access`;
+}
+
+export function evaluateSubscriptionCandidates(
+  rows: SubscriptionEntitlementRow[],
+  now = new Date()
+) {
+  const selected = pickBestEntitlingSubscriptionRow(rows, now);
+  const selectedRowId = selected?.id ?? null;
+  const selectedIdentity =
+    selectedRowId ??
+    selected?.provider_subscription_id ??
+    selected?.stripe_subscription_id ??
+    selected?.provider_transaction_id ??
+    null;
+
+  const candidates = rows.map((row) => {
+    const grantsAccess = doesSubscriptionGrantEntitlement(
+      {
+        status: row.status as CanonicalSubscriptionRow['status'],
+        provider: row.provider ?? 'stripe',
+        current_period_end: row.current_period_end,
+      },
+      now
+    );
+    const rowIdentity =
+      row.id ??
+      row.provider_subscription_id ??
+      row.stripe_subscription_id ??
+      row.provider_transaction_id ??
+      null;
+    const isSelected = Boolean(selectedIdentity && rowIdentity === selectedIdentity);
+
+    return {
+      id: row.id ?? null,
+      provider: row.provider ?? 'stripe',
+      providerSubscriptionId: row.provider_subscription_id ?? row.stripe_subscription_id ?? null,
+      providerTransactionId: row.provider_transaction_id ?? null,
+      appleOriginalTransactionId: row.provider === 'apple' ? row.provider_subscription_id : null,
+      stripeSubscriptionId: row.stripe_subscription_id ?? null,
+      status: row.status,
+      planCode: row.plan_code,
+      currentPeriodEnd: row.current_period_end,
+      cancelAtPeriodEnd: row.cancel_at_period_end ?? false,
+      environment: row.environment ?? null,
+      grantsAccess,
+      selected: isSelected,
+      reason: getSubscriptionCandidateReason(row, now, grantsAccess, isSelected),
+    } satisfies EntitlementCandidateDiagnostic;
+  });
+
+  return {
+    selected,
+    selectedRowId,
+    candidates,
+    selectionReason: selected
+      ? 'active_or_trialing_or_apple_grace_subscription_with_best_status_and_latest_current_period_end'
+      : 'no_current_subscription_row_grants_unlimited_access',
+  };
+}
+
+function getResolutionSource(params: {
+  entitlement: BroBotEntitlement & { isLimitReached?: boolean };
+  selected: SubscriptionEntitlementRow | null;
+}) {
+  if (params.entitlement.source === 'override') return 'legacy';
+  if (params.entitlement.source === 'disabled') return 'disabled';
+  if (params.entitlement.source !== 'subscription') return 'free_quota';
+
+  const provider = params.entitlement.provider ?? params.selected?.provider ?? 'stripe';
+  const environment = params.entitlement.environment ?? params.selected?.environment ?? null;
+  if (provider === 'apple') {
+    if (params.selected?.status === 'grace' || params.selected?.status === 'billing_retry') {
+      return 'apple_cached';
+    }
+    return environment === 'sandbox' ? 'apple_sandbox' : 'apple_live';
+  }
+  if (provider === 'stripe') {
+    return environment === 'test' ? 'stripe_test' : 'stripe_live';
+  }
+  return 'legacy';
+}
+
+function getResolutionReason(params: {
+  entitlement: BroBotEntitlement & { isLimitReached?: boolean };
+  selected: SubscriptionEntitlementRow | null;
+  quotaRemaining: number;
+}) {
+  if (params.entitlement.source === 'override') {
+    return 'Selected non-provider entitlement override';
+  }
+  if (params.entitlement.source === 'disabled') {
+    return 'BroBot access is disabled by configuration or override';
+  }
+  if (params.entitlement.source !== 'subscription') {
+    return params.quotaRemaining > 0
+      ? 'No active paid subscription found; free quota available'
+      : 'No active paid subscription found; free quota exhausted';
+  }
+
+  if (params.selected?.provider === 'apple') {
+    if (params.selected.status === 'grace') {
+      return 'Selected Apple subscription currently in grace period';
+    }
+    if (params.selected.status === 'billing_retry') {
+      return 'Provider verification unavailable or billing retry active; cached Apple entitlement used until current period end';
+    }
+    return 'Selected newest active Apple subscription';
+  }
+
+  if (params.selected?.provider === 'stripe' || !params.selected?.provider) {
+    if (params.selected?.status === 'trialing') {
+      return 'Selected newest trialing Stripe subscription';
+    }
+    return 'Selected newest active Stripe subscription';
+  }
+
+  return 'Selected newest valid paid subscription';
 }
 
 /**
@@ -170,9 +390,9 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
   const { data: rows } = await supabase
     .from('subscriptions')
     .select(`
-      user_id, status, plan_code, current_period_end, cancel_at_period_end, canceled_at,
+      id, user_id, status, plan_code, current_period_start, current_period_end, cancel_at_period_end, canceled_at,
       stripe_customer_id, stripe_subscription_id, stripe_price_id,
-      provider, provider_subscription_id, provider_transaction_id, environment, updated_at
+      provider, provider_subscription_id, provider_transaction_id, environment, last_verified_at, updated_at, created_at
     `)
     .eq('user_id', userId)
     .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
@@ -197,7 +417,30 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
 
   const candidates = (rows ?? []) as SubscriptionEntitlementRow[];
   const now = new Date();
-  const sub = pickBestEntitlingSubscriptionRow(candidates, now);
+  const evaluation = evaluateSubscriptionCandidates(candidates, now);
+  const sub = evaluation.selected;
+
+  console.log('[BROBOT-ENTITLEMENT-RESOLUTION]', {
+    user_id: userId,
+    selected_subscription_row_id: evaluation.selectedRowId,
+    provider: sub?.provider ?? null,
+    provider_subscription_id: sub?.provider_subscription_id ?? sub?.stripe_subscription_id ?? null,
+    original_transaction_id: sub?.provider === 'apple' ? sub.provider_subscription_id : null,
+    status: sub?.status ?? null,
+    current_period_end: sub?.current_period_end ?? null,
+    reason_selected: evaluation.selectionReason,
+    candidates: evaluation.candidates.map((candidate) => ({
+      id: candidate.id,
+      provider: candidate.provider,
+      provider_subscription_id: candidate.providerSubscriptionId,
+      original_transaction_id: candidate.appleOriginalTransactionId,
+      status: candidate.status,
+      current_period_end: candidate.currentPeriodEnd,
+      grants_access: candidate.grantsAccess,
+      selected: candidate.selected,
+      reason: candidate.reason,
+    })),
+  });
 
   if (!sub) return null;
 
@@ -359,6 +602,123 @@ export async function getRemainingAIUses(subject: Subject) {
   };
 }
 
+async function getSubscriptionDiagnosticsForUser(userId: string, now: Date) {
+  const supabase = createAdminClient();
+  const { data: rows, error } = await supabase
+    .from('subscriptions')
+    .select(`
+      id, user_id, status, plan_code, current_period_start, current_period_end, cancel_at_period_end, canceled_at,
+      stripe_customer_id, stripe_subscription_id, stripe_price_id,
+      provider, provider_subscription_id, provider_transaction_id, environment, last_verified_at, updated_at, created_at
+    `)
+    .eq('user_id', userId)
+    .eq('plan_code', BROBOT_CONFIG.PAID_PLAN_CODE)
+    .order('current_period_end', { ascending: false, nullsFirst: false })
+    .order('updated_at', { ascending: false })
+    .limit(50);
+
+  if (error) {
+    throw new Error(`Failed to load subscription entitlement candidates: ${error.message}`);
+  }
+
+  return evaluateSubscriptionCandidates((rows ?? []) as SubscriptionEntitlementRow[], now);
+}
+
+/**
+ * Canonical API contract for web and mobile entitlement reads.
+ *
+ * Provider verification policy:
+ * - Entitlement reads trust the local canonical subscription ledger until
+ *   current_period_end. Stripe webhooks, Apple server notifications, and Apple
+ *   restore/sync are responsible for provider verification and ledger writes.
+ * - A temporary remote provider outage during restore/sync must not turn a
+ *   current verified local row into "free"; it should surface on that write
+ *   route while this resolver continues to use the cached row through period end.
+ */
+export async function getNormalizedBroBotEntitlement(
+  subject: Subject,
+  options: { includeDebug?: boolean } = {}
+): Promise<NormalizedBroBotEntitlement & { data: Awaited<ReturnType<typeof getRemainingAIUses>> }> {
+  const now = new Date();
+  const legacy = await getRemainingAIUses(subject);
+  const used = legacy.usedToday ?? (await getUsedCountToday(subject));
+  const quotaLimit =
+    subject.type === 'guest'
+      ? BROBOT_CONFIG.GUEST_DAILY_CAP
+      : BROBOT_CONFIG.FREE_DAILY_CAP;
+  const quotaRemaining = Math.max(0, quotaLimit - used);
+
+  const subscriptionEvaluation =
+    subject.type === 'user' && BROBOT_CONFIG.PAID_ENABLED
+      ? await getSubscriptionDiagnosticsForUser(subject.id, now)
+      : null;
+  const selected = subscriptionEvaluation?.selected ?? null;
+  const provider =
+    legacy.source === 'subscription'
+      ? normalizeEntitlementProvider(legacy.provider ?? selected?.provider ?? 'stripe')
+      : 'none';
+  const isUnlimited = legacy.aiAccess.unlimited;
+  const selectedSubscriptionId =
+    selected?.provider_subscription_id ??
+    selected?.stripe_subscription_id ??
+    selected?.provider_transaction_id ??
+    selected?.id ??
+    null;
+  const resolutionSource = getResolutionSource({ entitlement: legacy, selected });
+  const resolutionReason = getResolutionReason({
+    entitlement: legacy,
+    selected,
+    quotaRemaining,
+  });
+
+  const normalized: NormalizedBroBotEntitlement & { data: Awaited<ReturnType<typeof getRemainingAIUses>> } = {
+    access: isUnlimited ? 'unlimited' : 'free',
+    planCode: isUnlimited ? 'unlimited_brobot' : 'free',
+    provider,
+    status: legacy.status ?? null,
+    currentPeriodEnd: legacy.expiresAt ?? null,
+    cancelAtPeriodEnd: legacy.cancelAtPeriodEnd ?? false,
+    isVerified: true,
+    verificationWarning: null,
+    freeQuotaUsed: used,
+    freeQuotaLimit: quotaLimit,
+    freeQuotaRemaining: quotaRemaining,
+    freeQuotaResetAt: getDailyResetAt(),
+    resolutionSource,
+    resolutionReason,
+    selectedSubscriptionId,
+    selectedProvider: provider,
+    selectedStatus: legacy.status ?? null,
+    selectedCurrentPeriodEnd: legacy.expiresAt ?? null,
+    data: legacy,
+  };
+
+  if (options.includeDebug && subscriptionEvaluation) {
+    normalized.debug = {
+      userId: subject.type === 'user' ? subject.id : undefined,
+      selectedSubscriptionRowId: subscriptionEvaluation.selectedRowId,
+      selectionReason: subscriptionEvaluation.selectionReason,
+      candidates: subscriptionEvaluation.candidates,
+      policy: 'trust_local_verified_subscription_rows_until_current_period_end; provider write paths perform remote verification',
+    };
+  }
+
+  console.log('[BROBOT-ENTITLEMENT-NORMALIZED]', {
+    user_id: subject.type === 'user' ? subject.id : null,
+    access: normalized.access,
+    planCode: normalized.planCode,
+    provider: normalized.provider,
+    status: normalized.status,
+    currentPeriodEnd: normalized.currentPeriodEnd,
+    resolutionSource: normalized.resolutionSource,
+    resolutionReason: normalized.resolutionReason,
+    selected_subscription_row_id: subscriptionEvaluation?.selectedRowId ?? null,
+    reason_selected: subscriptionEvaluation?.selectionReason ?? 'non_user_or_paid_disabled',
+  });
+
+  return normalized;
+}
+
 // ============================================================================
 // Mobile Entitlement Contract (additive, for iOS / future clients)
 // ============================================================================
@@ -378,13 +738,28 @@ export async function getRemainingAIUses(subject: Subject) {
  *   - expired/free       → show free quota state, subscribe CTA
  */
 export interface MobileBroBotEntitlement {
+  access: 'free' | 'unlimited';
+  planCode: string;
+  provider: 'stripe' | 'apple' | 'none';
+  isVerified: boolean;
+  verificationWarning: string | null;
+  freeQuotaUsed: number;
+  freeQuotaLimit: number;
+  freeQuotaRemaining: number;
+  freeQuotaResetAt: string;
+  resolutionSource: string;
+  resolutionReason: string;
+  selectedSubscriptionId: string | null;
+  selectedProvider: 'stripe' | 'apple' | 'none';
+  selectedStatus: string | null;
+  selectedCurrentPeriodEnd: string | null;
+  data?: Awaited<ReturnType<typeof getRemainingAIUses>>;
+
   hasBroBotAccess: boolean;
   hasUnlimitedBroBot: boolean;
   plan: string; // e.g. 'unlimited_brobot', 'brobot_monthly', etc. Derived from DB plan_code for the subscription. Never null for paid Active cases.
-  planCode: string;
-  source: 'subscriptions' | 'override' | 'free_quota' | 'disabled';
+  source: 'stripe' | 'apple' | 'promo' | 'free_quota' | 'disabled';
   entitlementSource: 'subscriptions' | 'override' | 'free_quota' | 'disabled';
-  provider: 'stripe' | 'apple' | null;
   providerSource: 'stripe' | 'apple' | null;
   status: string | null;
   stripeCustomerId: string | null;
@@ -451,8 +826,8 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
   // We deliberately call the EXACT same internal path the website trusts:
   //   /api/me/entitlements  →  getRemainingAIUses({ type: "user", id })
   // This guarantees identical paid subscription decisions (getPaidSubscriptionEntitlement + overrides + grace).
-  const websiteResult = await getRemainingAIUses({ type: 'user', id: userId });
-  const ent = websiteResult; // BroBotEntitlement shape + isLimitReached
+  const normalized = await getNormalizedBroBotEntitlement({ type: 'user', id: userId });
+  const ent = normalized.data; // BroBotEntitlement shape + isLimitReached
 
   // Safe debug logs (userId prefix only, no secrets)
   if (process.env.NODE_ENV !== 'production') {
@@ -461,7 +836,7 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
       websiteSource: ent.source,
       websiteUnlimited: ent.aiAccess.unlimited,
       websiteRemaining: ent.aiAccess.remainingToday,
-      isLimitReached: websiteResult.isLimitReached,
+      isLimitReached: ent.isLimitReached,
     });
   }
 
@@ -580,15 +955,31 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
   }
 
   const payload: MobileBroBotEntitlement = {
+    access: normalized.access,
+    planCode: normalized.planCode,
+    provider: normalized.provider,
+    isVerified: normalized.isVerified,
+    verificationWarning: normalized.verificationWarning,
+    freeQuotaUsed: normalized.freeQuotaUsed,
+    freeQuotaLimit: normalized.freeQuotaLimit,
+    freeQuotaRemaining: normalized.freeQuotaRemaining,
+    freeQuotaResetAt: normalized.freeQuotaResetAt,
+    resolutionSource: normalized.resolutionSource,
+    resolutionReason: normalized.resolutionReason,
+    selectedSubscriptionId: normalized.selectedSubscriptionId,
+    selectedProvider: normalized.selectedProvider,
+    selectedStatus: normalized.selectedStatus,
+    selectedCurrentPeriodEnd: normalized.selectedCurrentPeriodEnd,
+    data: normalized.data,
+
     hasBroBotAccess,
     hasUnlimitedBroBot,
     plan,
-    planCode: plan,
     source:
       ent.source === 'subscription'
-        ? 'subscriptions'
+        ? (ent.provider === 'apple' ? 'apple' : 'stripe')
         : ent.source === 'override'
-          ? 'override'
+          ? 'promo'
           : ent.source === 'disabled'
             ? 'disabled'
             : 'free_quota',
@@ -600,9 +991,6 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
           : ent.source === 'disabled'
             ? 'disabled'
             : 'free_quota',
-    provider: ent.source === 'subscription'
-      ? (ent.provider === 'apple' ? 'apple' : 'stripe')
-      : null,
     providerSource: ent.source === 'subscription'
       ? (ent.provider === 'apple' ? 'apple' : 'stripe')
       : null,

@@ -1,0 +1,35 @@
+<!doctype html>
+<!--
+  Synthetic ROCK fixture, not a real captured ROCK page.
+  TODO: Replace or supplement with a sanitized real DOM capture once an authenticated user can export one without secrets/PII.
+-->
+<html>
+  <head>
+    <title>ROCK Synthetic Answered Review Fixture</title>
+  </head>
+  <body>
+    <main data-provider="rock" data-rock-question data-question-id="ROCK-SYN-002" data-module-id="trauma">
+      <nav aria-label="breadcrumb">
+        <a href="/rock/curriculum">ROCK Curriculum</a>
+        <a href="/rock/curriculum/trauma">Trauma</a>
+        <a href="/rock/curriculum/trauma/ankle">Ankle Fractures</a>
+      </nav>
+      <h1>Rotational Ankle Fractures</h1>
+      <article>
+        <p data-testid="question-stem">
+          A patient has a supination-external rotation ankle fracture with medial clear space widening after stress imaging.
+          What is the most appropriate treatment?
+        </p>
+        <ol aria-label="Answer choices">
+          <li data-testid="answer-choice" data-answer-label="A">Short leg cast</li>
+          <li data-testid="answer-choice" data-answer-label="B" data-selected="true" data-result="incorrect">Functional brace</li>
+          <li data-testid="answer-choice" data-answer-label="C" data-correct="true">Open reduction and internal fixation</li>
+          <li data-testid="answer-choice" data-answer-label="D">Immediate arthrodesis</li>
+        </ol>
+      </article>
+      <section data-testid="rationale">
+        Medial clear space widening indicates deltoid incompetence and an unstable ankle fracture pattern. Operative fixation restores fibular length and mortise stability.
+      </section>
+    </main>
+  </body>
+</html>

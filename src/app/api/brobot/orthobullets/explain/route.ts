@@ -82,9 +82,11 @@ export async function POST(request: Request) {
 
   const requestId = crypto.randomUUID();
   const startedAt = Date.now();
-  const kgLookup = await lookupOrthobulletsKgContext({
-    questionId: parsed.data.pageContext.questionId,
-  });
+  const kgLookup = parsed.data.pageContext.provider === 'orthobullets'
+    ? await lookupOrthobulletsKgContext({
+        questionId: parsed.data.pageContext.questionId,
+      })
+    : null;
   const resolvedContext = resolveOrthobulletsContext({
     pageContext: parsed.data.pageContext,
     kgLookup,
@@ -93,9 +95,10 @@ export async function POST(request: Request) {
   console.log('[brobot-orthobullets] explain_request', {
     requestId,
     userIdPrefix: auth.userId.slice(0, 8),
+    provider: resolvedContext.pageContext.provider,
     questionId: resolvedContext.pageContext.questionId ?? null,
     stemHash: hashText(resolvedContext.pageContext.stem),
-    explanationHash: hashText(resolvedContext.pageContext.explanationText),
+    explanationHash: hashText(resolvedContext.pageContext.explanationText ?? resolvedContext.pageContext.explanation),
     answerChoiceCount: resolvedContext.pageContext.answerChoices.length,
     warningCount: resolvedContext.warnings.length,
     kgMatched: Boolean(kgLookup?.matchedQuestionId),

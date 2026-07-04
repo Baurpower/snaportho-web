@@ -6,7 +6,10 @@ import type { OrthobulletsPageContext } from './types.js';
 function createContext(overrides: Partial<OrthobulletsPageContext>): OrthobulletsPageContext {
   return {
     source: 'orthobullets',
+    provider: 'orthobullets',
+    mode: 'question',
     pageUrl: 'https://www.orthobullets.com/currenttest?questionId=210999',
+    sourceUrl: 'https://www.orthobullets.com/currenttest?questionId=210999',
     pageKind: 'current_test',
     breadcrumbs: ['Trauma'],
     answerChoices: [
@@ -56,5 +59,50 @@ assert.equal(hasReviewData(reviewPage), true);
 assert.equal(isUnansweredQuestion(reviewPage), false);
 assert.equal(isHintEligible(reviewPage), false);
 assert.equal(isExplainEligible(reviewPage), true);
+
+const rockUnanswered = createContext({
+  source: 'rock',
+  provider: 'rock',
+  mode: 'question',
+  pageUrl: 'https://rock.aaos.org/questions/ROCK-SYN-001',
+  sourceUrl: 'https://rock.aaos.org/questions/ROCK-SYN-001',
+  pageKind: 'question',
+  stem: 'A ROCK curriculum question stem.',
+});
+
+assert.equal(hasReviewData(rockUnanswered), false);
+assert.equal(isUnansweredQuestion(rockUnanswered), true);
+assert.equal(isHintEligible(rockUnanswered), true);
+
+const rockReview = createContext({
+  source: 'rock',
+  provider: 'rock',
+  mode: 'question',
+  pageUrl: 'https://rock.aaos.org/review/questions/ROCK-SYN-002',
+  sourceUrl: 'https://rock.aaos.org/review/questions/ROCK-SYN-002',
+  pageKind: 'review',
+  correctAnswer: 'Open reduction and internal fixation',
+  explanation: 'Rationale is visible.',
+});
+
+assert.equal(hasReviewData(rockReview), true);
+assert.equal(isUnansweredQuestion(rockReview), false);
+assert.equal(isExplainEligible(rockReview), true);
+
+const rockCurriculum = createContext({
+  source: 'rock',
+  provider: 'rock',
+  mode: 'curriculum_content',
+  pageUrl: 'https://rock.aaos.org/coursecontent.aspx?id=LOCAL-ANESTHESIA',
+  sourceUrl: 'https://rock.aaos.org/coursecontent.aspx?id=LOCAL-ANESTHESIA',
+  pageKind: 'curriculum_content',
+  answerChoices: [],
+  contentText: 'A substantial ROCK curriculum page about local anesthesia.',
+});
+
+assert.equal(hasReviewData(rockCurriculum), true);
+assert.equal(isUnansweredQuestion(rockCurriculum), false);
+assert.equal(isHintEligible(rockCurriculum), false);
+assert.equal(isExplainEligible(rockCurriculum), true);
 
 console.log('Orthobullets page classification tests passed.');

@@ -35,10 +35,13 @@ function buildClassicContentScriptBundle() {
     .replace(/^import\s+\{\s*SELECTOR_SET_VERSION,\s*SELECTORS\s*\}\s+from\s+['"]\.\/selectors\.js['"];\r?\n?/m, '')
     .replace(/^export const EXTRACTOR_VERSION =/m, 'const EXTRACTOR_VERSION =')
     .replace(/^export \{ SELECTOR_SET_VERSION \};\r?\n?/m, '')
-    .replace(/^export function extractOrthobulletsPageContext\(/m, 'function extractOrthobulletsPageContext(');
+    .replace(/^export function detectQuestionProvider\(/m, 'function detectQuestionProvider(')
+    .replace(/^export function extractOrthobulletsPageContext\(/m, 'function extractOrthobulletsPageContext(')
+    .replace(/^export function extractRockPageContext\(/m, 'function extractRockPageContext(')
+    .replace(/^export function extractQuestionContext\(/m, 'function extractQuestionContext(');
 
   const contentScriptSource = readFileSync(contentScriptPath, 'utf8')
-    .replace(/^import\s+\{\s*extractOrthobulletsPageContext\s*\}\s+from\s+['"]\.\/extractor\.js['"];\r?\n?/m, '');
+    .replace(/^import\s+\{\s*detectQuestionProvider,\s*extractQuestionContext\s*\}\s+from\s+['"]\.\/extractor\.js['"];\r?\n?/m, '');
 
   const bundledSource = [
     '(() => {',

@@ -1,8 +1,9 @@
 export interface OrthobulletsChoice {
   key?: string;
+  label?: string | null;
   text: string;
-  isSelected?: boolean;
-  isCorrect?: boolean;
+  isSelected?: boolean | null;
+  isCorrect?: boolean | null;
 }
 
 export interface OrthobulletsPercentDistribution {
@@ -20,11 +21,15 @@ export interface OrthobulletsLinkedConcept {
 export interface OrthobulletsImageMetadata {
   src?: string;
   alt?: string;
+  caption?: string | null;
   width?: number;
   height?: number;
 }
 
 export type OrthobulletsPageKind = 'review' | 'current_test' | 'unknown';
+export type QuestionProvider = 'orthobullets' | 'rock';
+export type ExtractedPageMode = 'question' | 'curriculum_content';
+export type ProviderDetectionStatus = QuestionProvider | 'unsupported' | 'readable_unrecognized';
 
 export type OrthobulletsExtractionFailureCode =
   | 'content_script_no_response'
@@ -35,6 +40,7 @@ export interface OrthobulletsExtractionDiagnostics {
   activeTabUrl: string | null;
   activeTabStatus: string | null;
   contentScriptResponded: boolean;
+  provider: ProviderDetectionStatus;
   readable: boolean;
   failureCode?: OrthobulletsExtractionFailureCode;
   sendMessageError: string | null;
@@ -43,6 +49,13 @@ export interface OrthobulletsExtractionDiagnostics {
   hasQuestionId: boolean;
   hasStem: boolean;
   answerChoiceCount: number;
+  hasSelectedAnswer: boolean;
+  hasCorrectAnswer: boolean;
+  hasExplanation: boolean;
+  hasCurriculumContent: boolean;
+  contentCharCount: number;
+  sectionCount: number;
+  headingCount: number;
   breadcrumbCount: number;
   percentDistributionCount: number;
   imageCount: number;
@@ -50,21 +63,48 @@ export interface OrthobulletsExtractionDiagnostics {
   warnings: string[];
 }
 
+export interface ExtensionFetchDiagnostics {
+  attemptedLinkUrl: string;
+  baseUrl: string;
+  httpStatus: number | null;
+  responseBody: string | null;
+  responseMessage: string | null;
+  fetchFailedBeforeResponse: boolean;
+}
+
 export interface OrthobulletsPageContext {
-  source: 'orthobullets';
+  source: QuestionProvider;
+  provider: QuestionProvider;
+  mode: ExtractedPageMode;
   pageUrl: string;
-  pageKind: OrthobulletsPageKind;
-  questionId?: string;
-  topicId?: string;
+  sourceUrl: string;
+  pageKind: OrthobulletsPageKind | string;
+  questionId?: string | null;
+  topicId?: string | null;
+  title?: string | null;
   breadcrumbs: string[];
+  authors?: string[];
+  date?: string | null;
+  sectionHeadings?: string[];
+  contentText?: string | null;
+  contentSections?: Array<{
+    heading: string;
+    text: string;
+  }>;
   stem?: string;
   answerChoices: OrthobulletsChoice[];
-  selectedAnswerKey?: string;
-  correctAnswerKey?: string;
+  selectedAnswerKey?: string | null;
+  correctAnswerKey?: string | null;
+  selectedAnswer?: string | null;
+  correctAnswer?: string | null;
   percentDistribution: OrthobulletsPercentDistribution[];
-  explanationText?: string;
+  explanationText?: string | null;
+  explanation?: string | null;
   linkedConcepts: OrthobulletsLinkedConcept[];
   images: OrthobulletsImageMetadata[];
+  raw?: {
+    providerSpecific?: Record<string, unknown>;
+  };
   extractionWarnings: string[];
   debug?: {
     matchedSelectors: Record<string, string[]>;

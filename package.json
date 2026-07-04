@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit",
     "extension:orthobullets:build": "node scripts/build-orthobullets-extension.mjs",
     "extension:orthobullets:watch": "./node_modules/.bin/tsc -p extensions/orthobullets-brobot/tsconfig.json --watch",
-    "extension:orthobullets:test": "./node_modules/.bin/tsc -p extensions/orthobullets-brobot/tsconfig.test.json && node extensions/orthobullets-brobot/.test-dist/content/extractor.test.js && node extensions/orthobullets-brobot/.test-dist/shared/page-classification.test.js && node --experimental-strip-types src/lib/brobot-anki/url.test.mjs",
+    "extension:orthobullets:test": "./node_modules/.bin/tsc -p extensions/orthobullets-brobot/tsconfig.test.json && node extensions/orthobullets-brobot/.test-dist/content/extractor.test.js && node extensions/orthobullets-brobot/.test-dist/shared/page-classification.test.js && node extensions/orthobullets-brobot/.test-dist/shared/runtime.test.js && node --experimental-strip-types src/lib/brobot-anki/url.test.mjs",
     "extension:orthobullets:health-report": "node scripts/report-orthobullets-extraction-health.mjs",
     "anki:audit": "node --experimental-strip-types scripts/import-anki.ts --dry-run",
     "anki:import": "node --experimental-strip-types scripts/import-anki.ts --apply",
@@ -40,6 +40,8 @@
     "kg:retarget:apply": "node --experimental-strip-types scripts/apply-legacy-retargeting.ts",
     "kg:retarget:report": "node --experimental-strip-types scripts/report-legacy-retargeting-completion.ts",
     "subscriptions:backfill:stripe": "node --experimental-strip-types scripts/reconcile-brobot-stripe-subscriptions.ts",
+    "subscriptions:audit": "node --experimental-strip-types scripts/audit-brobot-entitlement.ts",
+    "subscriptions:health": "node --experimental-strip-types scripts/subscriptions-health.ts",
     "subscriptions:test:selection": "node --experimental-strip-types src/lib/brobot/entitlements-selection.test.ts",
     "subscriptions:test:sync": "node --experimental-strip-types src/lib/stripe-subscription-sync.test.ts",
     "subscriptions:test:lifecycle": "node --experimental-strip-types src/lib/brobot/entitlements-lifecycle.test.ts"
