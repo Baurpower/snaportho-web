@@ -1,4 +1,8 @@
 import { NextResponse } from 'next/server';
+import {
+  getMobileSubscriptionDisplayConfig,
+  type MobileSubscriptionDisplayConfig,
+} from '@/lib/config/mobile-subscription';
 
 /**
  * Mobile Remote Config / Version Gate Endpoint
@@ -45,6 +49,8 @@ interface RemoteConfigResponse {
     brobotFollowUpChips: boolean;
     brobotReadingRecs: boolean;
   };
+
+  brobotSubscription: MobileSubscriptionDisplayConfig;
 }
 
 const DEFAULT_APP_STORE_URL = 'https://apps.apple.com/us/app/snaportho/id6742800145';
@@ -153,6 +159,8 @@ export async function GET(request: Request) {
       brobotFollowUpChips: readBool(process.env.BROBOT_FEATURE_FOLLOWUP_CHIPS, true),
       brobotReadingRecs: readBool(process.env.BROBOT_FEATURE_READING_RECS, false),
     },
+
+    brobotSubscription: getMobileSubscriptionDisplayConfig(),
   };
 
   const response = NextResponse.json(payload);
