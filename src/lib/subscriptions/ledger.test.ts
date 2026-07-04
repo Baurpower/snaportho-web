@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 
 import {
   doesSubscriptionGrantEntitlement,
+  getCanonicalSubscriptionConflictTarget,
   pickBestSubscriptionForEntitlement,
   type CanonicalSubscriptionRow,
 } from './ledger';
@@ -55,6 +56,39 @@ const appleActiveOlder = row({
   stripe_subscription_id: null,
   current_period_end: future,
 });
+
+assert.equal(
+  getCanonicalSubscriptionConflictTarget(appleActiveOlder),
+  'provider,provider_subscription_id,environment'
+);
+
+const appleRenewal = row({
+  provider: 'apple',
+  environment: 'sandbox',
+  provider_subscription_id: 'orig_stable_1',
+  provider_original_transaction_id: 'orig_stable_1',
+  provider_transaction_id: 'txn_renewal_2',
+  stripe_subscription_id: null,
+});
+
+assert.equal(appleRenewal.provider_subscription_id, 'orig_stable_1');
+assert.equal(appleRenewal.provider_transaction_id, 'txn_renewal_2');
+assert.equal(
+  getCanonicalSubscriptionConflictTarget(appleRenewal),
+  'provider,provider_subscription_id,environment'
+);
+
+const stripeSubscription = row({
+  provider: 'stripe',
+  environment: 'production',
+  provider_subscription_id: 'sub_stripe_1',
+  stripe_subscription_id: 'sub_stripe_1',
+});
+
+assert.equal(
+  getCanonicalSubscriptionConflictTarget(stripeSubscription),
+  'provider,provider_subscription_id,environment'
+);
 const stripeActiveNewer = row({
   id: 'stripe_active_newer',
   provider: 'stripe',

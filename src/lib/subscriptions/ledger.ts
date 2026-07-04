@@ -61,7 +61,7 @@ export type CanonicalSubscriptionRow = CanonicalSubscriptionEntry & {
 
 export function getCanonicalSubscriptionConflictTarget(entry: CanonicalSubscriptionEntry) {
   if (entry.provider && entry.environment && entry.provider_subscription_id) {
-    return 'provider,environment,provider_subscription_id';
+    return 'provider,provider_subscription_id,environment';
   }
 
   if (entry.provider === 'stripe' && entry.stripe_subscription_id) {
