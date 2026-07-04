@@ -46,8 +46,10 @@ function buildBroBotCheckoutMetadata(params: {
   return {
     user_id: params.userId,
     provider: 'stripe',
+    purchase_source: 'stripe',
     billing_environment: 'test',
     checkout_source: 'test_source',
+    entry_point: 'test_source',
     product: 'brobot',
     plan: 'unlimited_brobot',
     plan_code: 'unlimited_brobot',
@@ -98,8 +100,10 @@ assert.deepEqual(
   {
     user_id: 'user_123',
     provider: 'stripe',
+    purchase_source: 'stripe',
     billing_environment: 'test',
     checkout_source: 'test_source',
+    entry_point: 'test_source',
     product: 'brobot',
     plan: 'unlimited_brobot',
     plan_code: 'unlimited_brobot',

@@ -252,8 +252,10 @@ export function buildBroBotCheckoutMetadata(params: {
   return {
     user_id: params.userId,
     provider: 'stripe',
+    purchase_source: 'stripe',
     billing_environment: getStripeEnvironment(),
     checkout_source: params.source ?? '',
+    entry_point: params.source ?? '',
     product: 'brobot',
     plan: BROBOT_CONFIG.PAID_PLAN_CODE,
     plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
@@ -756,6 +758,7 @@ export async function createBroBotCheckoutSession(
     line_items: [{ price: priceId, quantity: 1 }],
     success_url: successUrl,
     cancel_url: cancelUrl,
+    allow_promotion_codes: true,
     client_reference_id: userId, // stable identifier for webhook resolution
     metadata,
     subscription_data: subscriptionData,

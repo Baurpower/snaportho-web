@@ -5,6 +5,10 @@ import { SignJWT, decodeProtectedHeader, importPKCS8, jwtVerify } from 'jose';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
+import {
+  appleStateFromExistingRow,
+  shouldSkipAppleCanonicalUpdate,
+} from '@/lib/subscriptions/apple-ordering';
 
 const APPLE_ROOT_CA_G3_PEM = `-----BEGIN CERTIFICATE-----
 MIICQzCCAcmgAwIBAgIILcX8iNLFS5UwCgYIKoZIzj0EAwMwZzEbMBkGA1UEAwwS
@@ -516,13 +520,25 @@ async function resolveAppleUserId(params: {
   return null;
 }
 
-async function getAppleSubscriptionRow(originalTransactionId: string) {
+async function getAppleSubscriptionRow(originalTransactionId: string, environment?: AppleEnvironment) {
   const supabase = createAdminClient();
-  const { data, error } = await supabase
+  let query = supabase
     .from('subscriptions')
-    .select('user_id, provider_transaction_id, stripe_price_id, current_period_start, current_period_end, environment')
+    .select(`
+      id, user_id, status, cancel_at_period_end, canceled_at,
+      provider_transaction_id, provider_product_id, stripe_price_id,
+      current_period_start, current_period_end, environment
+    `)
     .eq('provider', 'apple')
-    .eq('provider_subscription_id', originalTransactionId)
+    .eq('provider_subscription_id', originalTransactionId);
+
+  if (environment) {
+    query = query.eq('environment', environment);
+  }
+
+  const { data, error } = await query
+    .order('current_period_end', { ascending: false, nullsFirst: false })
+    .order('updated_at', { ascending: false })
     .limit(1)
     .maybeSingle();
 
@@ -550,6 +566,33 @@ export async function upsertAppleSubscriptionForUser(params: {
     notificationType: params.notificationType,
     subtype: params.subtype ?? null,
   });
+
+  const existingRow = await getAppleSubscriptionRow(
+    params.transactionInfo.originalTransactionId,
+    state.environment
+  );
+
+  if (
+    existingRow &&
+    shouldSkipAppleCanonicalUpdate({
+      existing: existingRow,
+      incomingCurrentPeriodEnd: state.currentPeriodEnd,
+    })
+  ) {
+    const existingState = appleStateFromExistingRow(existingRow);
+    console.log('[apple/subscription] skipped_stale_transaction_update', {
+      userId: params.userId.slice(0, 8),
+      originalTransactionId: params.transactionInfo.originalTransactionId,
+      incomingTransactionId: params.transactionInfo.transactionId ?? null,
+      incomingStatus: state.status,
+      incomingCurrentPeriodEnd: state.currentPeriodEnd,
+      existingStatus: existingRow.status,
+      existingCurrentPeriodEnd: existingRow.current_period_end,
+      environment: state.environment,
+    });
+
+    return { row: existingRow, state: existingState, skippedStaleUpdate: true };
+  }
 
   const upsertPayload = {
     user_id: params.userId,
@@ -586,7 +629,7 @@ export async function upsertAppleSubscriptionForUser(params: {
 
   const { row: data } = await upsertCanonicalSubscription(upsertPayload);
 
-  return { row: data, state };
+  return { row: data, state, skippedStaleUpdate: false };
 }
 
 export async function applyAppleNotificationToSubscription(params: VerifiedAppleNotification) {
