@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
+import { getMobileBearerUser } from '@/app/api/mobile/_utils/auth';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { createBroBotCheckoutSession } from '@/lib/stripe';
 import { BROBOT_CONFIG as BroBotConfig } from '@/lib/config/brobot';
 
@@ -8,7 +9,7 @@ import { BROBOT_CONFIG as BroBotConfig } from '@/lib/config/brobot';
  *
  * POST /api/mobile/stripe/create-checkout-session
  *
- * - Requires authenticated Supabase user (supports Bearer token from iOS + cookie fallback).
+ * - Requires authenticated Supabase user via Bearer token from iOS.
  * - Reuses the existing BroBot subscription creation + metadata logic.
  * - Uses mobile custom URL scheme redirects (snaportho://) so the app can handle success/cancel.
  * - The app must call GET /api/mobile/entitlements after return to determine actual access.
@@ -24,29 +25,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Paid subscriptions are currently disabled' }, { status: 403 });
   }
 
-  const supabase = await createClient();
-
-  // Support both cookie-based (web testing) and Bearer token (native iOS) — same pattern as /api/mobile/entitlements
-  const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
-  const isBearer = authHeader?.toLowerCase().startsWith('bearer ');
-  let bearerToken: string | null = null;
-  if (isBearer) {
-    bearerToken = authHeader!.replace(/^Bearer\s+/i, '').trim();
-  }
-
-  const {
-    data: { user },
-    error: authError,
-  } = bearerToken
-    ? await supabase.auth.getUser(bearerToken)
-    : await supabase.auth.getUser();
-
-  if (authError || !user) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('[mobile/stripe/checkout] auth failed', authError?.message);
-    }
-    return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
-  }
+  const { user, response } = await getMobileBearerUser(request);
+  if (response) return response;
+  const supabase = createAdminClient();
 
   try {
     const body = await request.json().catch(() => ({}));

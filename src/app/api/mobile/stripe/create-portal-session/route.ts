@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
+import { getMobileBearerUser } from '@/app/api/mobile/_utils/auth';
 import {
   BillingPortalSessionFailedError,
   createBillingPortalSession,
@@ -13,7 +13,7 @@ import { BROBOT_CONFIG as BroBotConfig } from '@/lib/config/brobot';
  *
  * POST /api/mobile/stripe/create-portal-session
  *
- * - Requires authenticated Supabase user (Bearer from iOS + cookie fallback).
+ * - Requires authenticated Supabase user via Bearer token from iOS.
  * - Returns a portal URL the app can open in SFSafariViewController / browser.
  * - Uses a mobile-friendly return URL so the user comes back to the app.
  */
@@ -43,24 +43,8 @@ export async function POST(request: Request) {
     });
   }
 
-  const supabase = await createClient();
-
-  // Same auth pattern as other mobile endpoints (Bearer token support for iOS)
-  const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
-  const isBearer = authHeader?.toLowerCase().startsWith('bearer ');
-  let bearerToken: string | null = null;
-  if (isBearer) {
-    bearerToken = authHeader!.replace(/^Bearer\s+/i, '').trim();
-  }
-
-  const {
-    data: { user },
-    error: authError,
-  } = bearerToken
-    ? await supabase.auth.getUser(bearerToken)
-    : await supabase.auth.getUser();
-
-  if (authError || !user) {
+  const { user, response } = await getMobileBearerUser(request);
+  if (response) {
     return portalErrorResponse({
       error: 'Authentication required',
       code: 'UNAUTHORIZED',

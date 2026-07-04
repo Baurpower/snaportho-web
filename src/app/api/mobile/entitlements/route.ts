@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
+import { getMobileBearerUser } from '@/app/api/mobile/_utils/auth';
 import {
   getMobileBroBotEntitlement,
   type MobileBroBotEntitlement,
@@ -22,64 +22,8 @@ import {
  */
 
 export async function GET(request: Request) {
-  const supabase = await createClient();
-
-  // TEMP DEBUG (safe): Check for native iOS Bearer token vs cookie auth
-  const authHeader = request.headers.get('authorization') || request.headers.get('Authorization');
-  const hasAuthorizationHeader = !!authHeader;
-  const isBearer = authHeader?.toLowerCase().startsWith('bearer ');
-  const authMode = isBearer ? 'bearer' : (hasAuthorizationHeader ? 'other' : 'cookie');
-
-  let bearerToken: string | null = null;
-  if (isBearer) {
-    bearerToken = authHeader!.replace(/^Bearer\s+/i, '').trim();
-  }
-
-  // TEMP DEBUG (safe): Log only non-sensitive info
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[mobile/entitlements] AUTH_DEBUG', {
-      hasAuthorizationHeader,
-      authMode,
-      tokenPrefix: bearerToken ? bearerToken.slice(0, 8) : null,
-    });
-  }
-
-  // Support both cookie-based (web) and Bearer token (native iOS)
-  const {
-    data: { user },
-    error: authError,
-  } = bearerToken
-    ? await supabase.auth.getUser(bearerToken)
-    : await supabase.auth.getUser();
-
-  if (authError) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('[mobile/entitlements] auth error', authError.message);
-    }
-    return NextResponse.json(
-      { error: 'Authentication required' },
-      { status: 401 }
-    );
-  }
-
-  if (!user) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('[mobile/entitlements] no user found', { authMode });
-    }
-    return NextResponse.json(
-      { error: 'Authentication required' },
-      { status: 401 }
-    );
-  }
-
-  // TEMP DEBUG (safe)
-  if (process.env.NODE_ENV !== 'production') {
-    console.log('[mobile/entitlements] AUTH_DEBUG', {
-      authMode,
-      userFound: true,
-      userId: user.id.slice(0, 8),
-    });
-  }
+  const { user, response } = await getMobileBearerUser(request);
+  if (response) return response;
 
   try {
     const payload: MobileBroBotEntitlement = await getMobileBroBotEntitlement(user.id);
@@ -88,7 +32,6 @@ export async function GET(request: Request) {
     if (process.env.NODE_ENV !== 'production') {
       console.log('[mobile/entitlements] website-aligned-decision', {
         userId: user.id.slice(0, 8),
-        authMode,
         websiteSourceFromMapper: payload.source, // reflects the getRemainingAIUses decision
         hasBroBotAccess: payload.hasBroBotAccess,
         plan: payload.plan,

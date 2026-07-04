@@ -757,6 +757,7 @@ export interface MobileBroBotEntitlement {
 
   hasBroBotAccess: boolean;
   hasUnlimitedBroBot: boolean;
+  unlimitedAccess: boolean;
   plan: string; // e.g. 'unlimited_brobot', 'brobot_monthly', etc. Derived from DB plan_code for the subscription. Never null for paid Active cases.
   source: 'stripe' | 'apple' | 'promo' | 'free_quota' | 'disabled';
   entitlementSource: 'subscriptions' | 'override' | 'free_quota' | 'disabled';
@@ -769,8 +770,10 @@ export interface MobileBroBotEntitlement {
   cancelAtPeriodEnd: boolean;
   isInGracePeriod: boolean;
   remainingFreeUses: number | null;
+  remainingFreePreps: number | null;
   dailyLimit: number | null;
   usedToday: number | null;
+  resetTime: string | null;
   lastSyncedAt: string;
   serverTime: string;
 
@@ -974,6 +977,7 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
 
     hasBroBotAccess,
     hasUnlimitedBroBot,
+    unlimitedAccess: hasUnlimitedBroBot,
     plan,
     source:
       ent.source === 'subscription'
@@ -1002,8 +1006,10 @@ export async function getMobileBroBotEntitlement(userId: string): Promise<Mobile
     cancelAtPeriodEnd,
     isInGracePeriod,
     remainingFreeUses: isUnlimited ? null : (ent.aiAccess.remainingToday ?? null),
+    remainingFreePreps: isUnlimited ? null : (ent.aiAccess.remainingToday ?? null),
     dailyLimit: ent.aiAccess.dailyCap,
     usedToday,
+    resetTime: resetAt,
     lastSyncedAt: now,
     serverTime: now,
 

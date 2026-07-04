@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin';
+import { createAdminClient } from '../supabase/admin';
 
 /**
  * Canonical paid entitlement selection policy.

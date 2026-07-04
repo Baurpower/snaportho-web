@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin';
+import { createAdminClient } from '../supabase/admin';
 
 export type SubscriptionEventRecord = {
   provider: string;
@@ -12,6 +12,23 @@ export type SubscriptionEventRecord = {
   processedAt?: string | null;
   receivedAt?: string | null;
 };
+
+export function buildSubscriptionEventPayload(record: SubscriptionEventRecord) {
+  return {
+    provider: record.provider,
+    provider_event_id: record.providerEventId,
+    stripe_event_id: record.provider === 'stripe' ? record.providerEventId : null,
+    event_type: record.eventType,
+    user_id: record.userId ?? null,
+    provider_subscription_id: record.providerSubscriptionId ?? null,
+    provider_transaction_id: record.providerTransactionId ?? null,
+    raw_payload: record.rawPayload,
+    raw_event: record.rawPayload,
+    processing_result: record.processingResult ?? null,
+    processed_at: record.processedAt ?? null,
+    received_at: record.receivedAt ?? new Date().toISOString(),
+  };
+}
 
 export async function getExistingSubscriptionEvent(params: {
   provider: string;
@@ -34,20 +51,7 @@ export async function getExistingSubscriptionEvent(params: {
 
 export async function upsertSubscriptionEvent(record: SubscriptionEventRecord) {
   const supabase = createAdminClient();
-  const payload = {
-    provider: record.provider,
-    provider_event_id: record.providerEventId,
-    stripe_event_id: record.provider === 'stripe' ? record.providerEventId : null,
-    event_type: record.eventType,
-    user_id: record.userId ?? null,
-    provider_subscription_id: record.providerSubscriptionId ?? null,
-    provider_transaction_id: record.providerTransactionId ?? null,
-    raw_payload: record.rawPayload,
-    raw_event: record.provider === 'stripe' ? record.rawPayload : null,
-    processing_result: record.processingResult ?? null,
-    processed_at: record.processedAt ?? null,
-    received_at: record.receivedAt ?? new Date().toISOString(),
-  };
+  const payload = buildSubscriptionEventPayload(record);
 
   const { data, error } = await supabase
     .from('subscription_events')
