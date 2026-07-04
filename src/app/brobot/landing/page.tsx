@@ -184,7 +184,7 @@ function HeroSection() {
                 trackingEvent="landing_start_trial_click"
                 className="rounded-2xl bg-gold px-6 py-3 text-center text-base font-black text-midnight shadow-[0_22px_50px_rgba(255,210,90,0.24)] transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
               >
-                Start Free Trial
+                Start 1-month free trial
               </TrackedLink>
 
               <TrackedLink
@@ -624,7 +624,7 @@ function PricingPreviewSection() {
               trackingEvent="landing_start_trial_click"
               className="mt-6 inline-flex rounded-2xl bg-gold px-6 py-3 text-center text-sm font-black text-midnight transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
             >
-              Start Free Trial
+              Start 1-month free trial
             </TrackedLink>
           </article>
         </div>
@@ -683,7 +683,7 @@ function FinalCtaSection() {
             trackingEvent="landing_start_trial_click"
             className="rounded-2xl bg-gold px-7 py-3 text-base font-black text-midnight transition hover:-translate-y-0.5 hover:bg-[#ffe08a]"
           >
-            Start Free Trial
+            Start 1-month free trial
           </TrackedLink>
 
           <TrackedLink

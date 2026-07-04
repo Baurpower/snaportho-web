@@ -2150,7 +2150,7 @@ function BroBotChatError({
                 href="/account/billing?returnTo=/brobot/chat&intent=brobot"
                 className="inline-flex rounded-md bg-teal-600 px-4 py-2 text-sm font-semibold text-white hover:bg-teal-700"
               >
-                Start Free Trial
+                Start 1-month free trial
               </Link>
               {!isAuthenticated && (
                 <Link

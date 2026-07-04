@@ -339,7 +339,7 @@ function BillingContent() {
       <div className="max-w-5xl mx-auto px-6 pb-16">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-semibold tracking-tight">
-            {isUnlimited ? 'Your BroBot Unlimited Plan' : 'Start Your Free Trial'}
+            {isUnlimited ? 'Your BroBot Unlimited Plan' : 'Start Your 1-month Free Trial'}
           </h2>
           <p className="mt-2 text-gray-600">
             {isUnlimited
@@ -407,7 +407,7 @@ function BillingContent() {
                 disabled={isUnlimited}
                 className="w-full rounded-2xl border border-gray-300 py-3.5 text-base font-semibold hover:bg-gray-50 disabled:opacity-60 transition-all active:scale-[0.985]"
               >
-                {isUnlimited ? 'Current Plan' : 'Start Free Trial'}
+                {isUnlimited ? 'Current Plan' : 'Start 1-month free trial'}
               </button>
               <p className="text-center text-xs text-gray-400 mt-3">
                 {isUnlimited ? 'Billed monthly · Cancel anytime' : 'Then billed monthly · Cancel anytime'}
@@ -467,7 +467,7 @@ function BillingContent() {
                 disabled={isUnlimited}
                 className="w-full rounded-2xl bg-[#0f766e] hover:bg-[#115e59] py-3.5 text-base font-semibold text-white shadow-sm transition-all active:scale-[0.985] disabled:opacity-70"
               >
-                {isUnlimited ? 'Current Plan' : 'Start Free Trial — Yearly'}
+                {isUnlimited ? 'Current Plan' : 'Start 1-month free trial — Yearly'}
               </button>
               <p className="text-center text-xs text-gray-400 mt-3">
                 {isUnlimited ? 'Billed annually · Best price' : 'Then billed annually · Best price'}

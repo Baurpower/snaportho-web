@@ -249,13 +249,15 @@ export function buildBroBotCheckoutMetadata(params: {
   source?: string | null;
   trialRequested?: boolean;
 }) {
+  const source = params.source ?? '';
   return {
     user_id: params.userId,
+    source,
     provider: 'stripe',
     purchase_source: 'stripe',
     billing_environment: getStripeEnvironment(),
-    checkout_source: params.source ?? '',
-    entry_point: params.source ?? '',
+    checkout_source: source,
+    entry_point: source,
     product: 'brobot',
     plan: BROBOT_CONFIG.PAID_PLAN_CODE,
     plan_code: BROBOT_CONFIG.PAID_PLAN_CODE,
@@ -268,6 +270,32 @@ export function buildBroBotCheckoutMetadata(params: {
     trial_end: params.trialDecision.trialEnd?.toString() ?? '',
     trial_applied: params.trialDecision.eligible ? 'true' : 'false',
     trial_eligibility_reason: params.trialDecision.reason,
+  };
+}
+
+function buildRequestedBroBotTrialDecision(enableTrial?: boolean): BroBotTrialDecision {
+  const offerId = BROBOT_CONFIG.TRIAL_OFFER_ID || null;
+  const trialMonths = Number.isFinite(BROBOT_CONFIG.TRIAL_MONTHS)
+    ? BROBOT_CONFIG.TRIAL_MONTHS
+    : 0;
+  const trialEnd = getBroBotTrialEndTimestamp();
+
+  if (enableTrial === false || !trialEnd || trialMonths <= 0) {
+    return {
+      eligible: false,
+      reason: 'trial_not_configured',
+      offerId,
+      trialEnd: null,
+      trialMonths: trialMonths > 0 ? trialMonths : null,
+    };
+  }
+
+  return {
+    eligible: true,
+    reason: 'eligible',
+    offerId,
+    trialEnd,
+    trialMonths,
   };
 }
 
@@ -682,23 +710,8 @@ export async function createBroBotCheckoutSession(
     throw new Error('Stripe price ID not configured for BroBot');
   }
 
-  const existingCustomerId = await getLatestStripeCustomerIdForUser(userId);
-
-  const trialDecisionBeforeCustomer = await determineBroBotTrialDecision({
-    userId,
-    stripeCustomerId: existingCustomerId,
-    enableTrial: options.enableTrial,
-  });
-
   const customerId = await getOrCreateStripeCustomer(userId, email);
-  const trialDecision =
-    trialDecisionBeforeCustomer.eligible && !existingCustomerId
-      ? await determineBroBotTrialDecision({
-          userId,
-          stripeCustomerId: customerId,
-          enableTrial: options.enableTrial,
-        })
-      : trialDecisionBeforeCustomer;
+  const trialDecision = buildRequestedBroBotTrialDecision(options.enableTrial);
   const metadata = buildBroBotCheckoutMetadata({
     userId,
     trialDecision,
@@ -730,9 +743,26 @@ export async function createBroBotCheckoutSession(
   const subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData = {
     metadata,
     ...(trialDecision.eligible && trialDecision.trialEnd
-      ? { trial_end: trialDecision.trialEnd }
+      ? {
+          trial_end: trialDecision.trialEnd,
+          trial_settings: {
+            end_behavior: {
+              missing_payment_method: 'cancel',
+            },
+          },
+        }
       : {}),
   };
+
+  console.info('[STRIPE_CHECKOUT]', {
+    source: options.source ?? 'direct',
+    userId: userId.slice(0, 8),
+    priceId: summarizeStripeId(priceId),
+    trial: Boolean(trialDecision.eligible && trialDecision.trialEnd),
+    trialEnd: trialDecision.trialEnd,
+    trialPeriodDays: null,
+    planCode: BROBOT_CONFIG.PAID_PLAN_CODE,
+  });
 
   logBroBotCheckoutTrialDebug('checkout_create_params', {
     userId,
@@ -833,7 +863,16 @@ export async function createGuestBroBotCheckoutSession(
 
   const subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData = {
     metadata,
-    ...(options.enableTrial !== false && trialEnd ? { trial_end: trialEnd } : {}),
+    ...(options.enableTrial !== false && trialEnd
+      ? {
+          trial_end: trialEnd,
+          trial_settings: {
+            end_behavior: {
+              missing_payment_method: 'cancel',
+            },
+          },
+        }
+      : {}),
   };
 
   const sessionParams = {
@@ -845,6 +884,16 @@ export async function createGuestBroBotCheckoutSession(
     metadata,
     subscription_data: subscriptionData,
   } as Stripe.Checkout.SessionCreateParams;
+
+  console.info('[STRIPE_CHECKOUT]', {
+    source: options.source || 'brobot_public_pricing',
+    userId: 'guest',
+    priceId: summarizeStripeId(priceId),
+    trial: Boolean(options.enableTrial !== false && trialEnd),
+    trialEnd,
+    trialPeriodDays: null,
+    planCode: BROBOT_CONFIG.PAID_PLAN_CODE,
+  });
 
   const session = await stripe.checkout.sessions.create(sessionParams);
 
@@ -1305,6 +1354,14 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
   const priceId = stripeSub.items.data[0]?.price.id || null;
 
   const internalStatus = mapStripeStatusToInternal(stripeSub.status);
+
+  console.log('[STRIPE_WEBHOOK]', {
+    event: 'syncSubscriptionFromStripe',
+    subscriptionStatus: stripeSub.status,
+    plan: planCode,
+    userId: userId.slice(0, 8),
+    subscriptionId: summarizeStripeId(stripeSub.id),
+  });
 
   // In Stripe SDK v18 (API 2025-03-31+), current_period_start/end moved from
   // Subscription to SubscriptionItem. Use the first item as source of truth.

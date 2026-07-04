@@ -67,7 +67,7 @@ const faqs = [
 export default function BroBotPricingClient() {
   const { user, loading: authLoading } = useAuth();
   const [checkoutLoading, setCheckoutLoading] = useState<'month' | 'year' | null>(null);
-  const subscribeCta = 'Start Free Trial';
+  const subscribeCta = 'Start 1-month free trial';
 
   useEffect(() => {
     trackBroBotPricingPageView();
@@ -201,7 +201,7 @@ function HeroSection({
             </a>
           </div>
           <p className="mt-3 text-sm font-semibold text-white/[0.58]">
-            Start free trial. No charge today. Then {BROBOT_PRICING.unlimited.monthlyPriceLabel} after trial. Cancel anytime.
+            Start 1-month free trial. No charge today. Then {BROBOT_PRICING.unlimited.monthlyPriceLabel} after trial. Cancel anytime.
           </p>
         </div>
 
@@ -519,7 +519,7 @@ function TrustSection() {
             </div>
             <div className="grid gap-3 text-sm font-semibold text-white/[0.76] sm:grid-cols-2 md:min-w-[460px]">
               {[
-                'Start free trial',
+                'Start 1-month free trial',
                 'Ask your first question immediately',
                 'Cancel anytime',
                 'No commitment',

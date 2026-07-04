@@ -516,6 +516,14 @@ async function getPaidSubscriptionEntitlement(userId: string): Promise<BroBotEnt
     // Also attach today's usage count for the mobile contract (even for unlimited users)
     const usedToday = await getUsedCountToday({ type: 'user', id: userId });
 
+    console.log('[ENTITLEMENTS]', {
+      source: sub.provider ?? 'stripe',
+      status: sub.status,
+      plan: sub.plan_code,
+      userId: userId.slice(0, 8),
+      unlimitedAccess: true,
+    });
+
     return {
       aiAccess: { unlimited: true, dailyCap: null, remainingToday: null },
       source: 'subscription',

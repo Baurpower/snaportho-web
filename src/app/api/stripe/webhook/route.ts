@@ -119,6 +119,13 @@ export async function POST(request: Request) {
             });
           }
 
+          console.log('[STRIPE_WEBHOOK]', {
+            event: event.type,
+            subscriptionStatus: sub.status,
+            plan: sub.metadata?.plan_code || session.metadata?.plan_code || BROBOT_CONFIG.PAID_PLAN_CODE,
+            userId: (userIdFromSession || sub.metadata?.user_id || '').slice(0, 8) || null,
+          });
+
           const isPreAuthCheckout =
             session.metadata?.checkout_mode === 'pre_auth' ||
             sub.metadata?.checkout_mode === 'pre_auth' ||
@@ -192,6 +199,12 @@ export async function POST(request: Request) {
           status: subscription.status,
           metadata: subscription.metadata,
           priceId: subscription.items?.data?.[0]?.price?.id,
+        });
+        console.log('[STRIPE_WEBHOOK]', {
+          event: event.type,
+          subscriptionStatus: subscription.status,
+          plan: subscription.metadata?.plan_code || BROBOT_CONFIG.PAID_PLAN_CODE,
+          userId: subscription.metadata?.user_id?.slice(0, 8) ?? null,
         });
         if (!subscription.metadata?.user_id && subscription.metadata?.checkout_mode === 'pre_auth') {
           await syncPendingSubscriptionFromStripe(subscription);

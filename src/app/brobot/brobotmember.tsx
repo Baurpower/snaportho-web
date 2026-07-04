@@ -468,7 +468,7 @@ export default function BroBotMember() {
                       href={BROBOT_BILLING_HREF}
                       className="text-teal-600 hover:underline font-medium"
                     >
-                      Start Free Trial
+                      Start 1-month free trial
                     </Link>
                   </>
                 )}
@@ -678,7 +678,7 @@ function QuotaHitCard({
             ) : (
               <>
                 <SparklesIcon className="h-4 w-4" />
-                Start Free Trial
+                Start 1-month free trial
               </>
             )}
           </button>
