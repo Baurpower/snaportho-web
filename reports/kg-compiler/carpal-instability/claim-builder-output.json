@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-05T23:31:01.517Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-103b6ffe",
+  "gapsAddressed": 1,
+  "gapsScheduled": 2,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-carpal-instability-cognitive-trap",
+      "draftId": "claim-carpal-instability-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-7be7c2bb",
+        "ev-quality-signal-688806dd",
+        "ev-quality-signal-7cf2b804"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-carpal-instability-imaging",
+      "draftId": "claim-carpal-instability-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-7be7c2bb",
+        "ev-quality-signal-688806dd",
+        "ev-quality-signal-7cf2b804"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-carpal-instability-mechanism",
+      "draftId": "claim-carpal-instability-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-7be7c2bb",
+        "ev-quality-signal-688806dd",
+        "ev-quality-signal-7cf2b804"
+      ],
+      "verified": false
+    }
+  ]
+}

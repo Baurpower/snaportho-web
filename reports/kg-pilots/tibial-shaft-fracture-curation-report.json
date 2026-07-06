@@ -1,0 +1,830 @@
+{
+  "generatedAt": "2026-07-05T21:21:50.717Z",
+  "pilotKey": "tibial-shaft-fracture-neighborhood",
+  "summary": {
+    "AUTO_APPROVED_LOW_RISK": 32,
+    "AUTO_REVISED": 1,
+    "HUMAN_REVIEW": 5,
+    "ATTENDING_REVIEW": 5,
+    "REJECTED": 0
+  },
+  "decisions": [
+    {
+      "proposal_fingerprint": "create|condition|tibial-shaft-fracture",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|tibia-leg-anatomy-hub",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|tibial-shaft",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|fibula",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|biomechanics_concept|tibial-blood-supply",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|leg-compartment-complex",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|anterior-compartment",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|procedure|tibial-im-nail",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|fixation_method|im-nail-fixation",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|complication|tibial-malunion",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|complication|tibial-nonunion",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|complication|tibial-infection",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "create|imaging_finding|segmental-tibial-fracture",
+      "proposal_type": "create_canonical_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: spec_backed_entity_create"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft|part_of|tibia-leg-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|fibula|part_of|tibia-leg-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|anterior-compartment|part_of|leg-compartment-complex",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|leg-compartment-complex|part_of|tibia-leg-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibia-leg-anatomy-hub|prerequisite_for|tibial-shaft-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|injured_in|tibial-shaft",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|involves_anatomy|fibula",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|involves_anatomy|tibia-leg-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|involves_anatomy|leg-compartment-complex",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|involves_anatomy|anterior-compartment",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|involves_anatomy|tibial-blood-supply",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|has_imaging_finding|segmental-tibial-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|segmental-tibial-fracture|indicates_treatment|tibial-im-nail",
+      "proposal_type": "add_canonical_relationship",
+      "route": "ATTENDING_REVIEW",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "recommendation": "Attending review required",
+      "rationale": [
+        "Rule: high_risk_predicate"
+      ],
+      "reviewerDecisionRequired": "Confirm management implication: segmental-tibial-fracture -[indicates_treatment]-> tibial-im-nail",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+      "proposal_type": "add_canonical_relationship",
+      "route": "ATTENDING_REVIEW",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "recommendation": "Attending review required",
+      "rationale": [
+        "Rule: high_risk_predicate"
+      ],
+      "reviewerDecisionRequired": "Review add_canonical_relationship for rel|tibial-shaft-fracture|uses_fixation|im-nail-fixation",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|treated_by|tibial-im-nail",
+      "proposal_type": "add_canonical_relationship",
+      "route": "ATTENDING_REVIEW",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "recommendation": "Attending review required",
+      "rationale": [
+        "Rule: high_risk_predicate"
+      ],
+      "reviewerDecisionRequired": "Review add_canonical_relationship for rel|tibial-shaft-fracture|treated_by|tibial-im-nail",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-im-nail|involves_anatomy|tibial-shaft",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|has_complication|tibial-malunion",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|has_complication|tibial-nonunion",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|tibial-shaft-fracture|has_complication|tibial-infection",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "rel|fibula|articulates_with|tibial-shaft",
+      "proposal_type": "add_canonical_relationship",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tsf-soft-tissue-first",
+      "proposal_type": "propose_educational_claim",
+      "route": "HUMAN_REVIEW",
+      "scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "recommendation": "Curator review required",
+      "rationale": [
+        "Rule: l1_management_fact"
+      ],
+      "reviewerDecisionRequired": "Confirm clinical accuracy and atomicity of claim: claim-tsf-soft-tissue-first",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tsf-compartment-serial-exams",
+      "proposal_type": "propose_educational_claim",
+      "route": "HUMAN_REVIEW",
+      "scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "recommendation": "Curator review required",
+      "rationale": [
+        "Rule: educational_judgment_claim"
+      ],
+      "reviewerDecisionRequired": "Confirm clinical accuracy and atomicity of claim: claim-tsf-compartment-serial-exams",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tsf-open-urgency",
+      "proposal_type": "propose_educational_claim",
+      "route": "HUMAN_REVIEW",
+      "scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "recommendation": "Curator review required",
+      "rationale": [
+        "Rule: educational_judgment_claim"
+      ],
+      "reviewerDecisionRequired": "Confirm clinical accuracy and atomicity of claim: claim-tsf-open-urgency",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tsf-im-entry-anatomy",
+      "proposal_type": "propose_educational_claim",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.88,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.15,
+        "completeness": 0.8
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tsf-fibula-alignment",
+      "proposal_type": "propose_educational_claim",
+      "route": "AUTO_REVISED",
+      "scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "recommendation": "Auto-revise then queue for light human confirmation",
+      "rationale": [
+        "Rule: l2_fact_light_review"
+      ],
+      "reviewerDecisionRequired": "Confirm clinical accuracy and atomicity of claim: claim-tsf-fibula-alignment",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tsf-segmental-instability",
+      "proposal_type": "propose_educational_claim",
+      "route": "HUMAN_REVIEW",
+      "scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "recommendation": "Curator review required",
+      "rationale": [
+        "Rule: educational_judgment_claim"
+      ],
+      "reviewerDecisionRequired": "Confirm clinical accuracy and atomicity of claim: claim-tsf-segmental-instability",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "claim|claim-tsf-case-script",
+      "proposal_type": "propose_educational_claim",
+      "route": "HUMAN_REVIEW",
+      "scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "recommendation": "Curator review required",
+      "rationale": [
+        "Rule: educational_judgment_claim"
+      ],
+      "reviewerDecisionRequired": "Confirm clinical accuracy and atomicity of claim: claim-tsf-case-script",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "dp|dp-tsf-operative-nailing",
+      "proposal_type": "propose_decision_point",
+      "route": "ATTENDING_REVIEW",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "recommendation": "Attending review required",
+      "rationale": [
+        "Rule: decision_point_requires_attending"
+      ],
+      "reviewerDecisionRequired": "Approve operative/management pathway: dp-tsf-operative-nailing",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "dp|dp-tsf-nonoperative-cast",
+      "proposal_type": "propose_decision_point",
+      "route": "ATTENDING_REVIEW",
+      "scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "recommendation": "Attending review required",
+      "rationale": [
+        "Rule: decision_point_requires_attending"
+      ],
+      "reviewerDecisionRequired": "Approve operative/management pathway: dp-tsf-nonoperative-cast",
+      "revised": true,
+      "final_review_status": "needs_review"
+    },
+    {
+      "proposal_fingerprint": "bridge|trauma-tibial-shaft-fractures|tibial-shaft-fracture",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "route": "AUTO_APPROVED_LOW_RISK",
+      "scores": {
+        "confidence": 0.95,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "recommendation": "Auto-approve — low-risk deterministic curation",
+      "rationale": [
+        "Rule: deterministic_bridge"
+      ],
+      "reviewerDecisionRequired": null,
+      "revised": true,
+      "final_review_status": "approved"
+    }
+  ]
+}

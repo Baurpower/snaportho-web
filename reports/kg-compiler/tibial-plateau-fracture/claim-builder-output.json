@@ -1,0 +1,822 @@
+{
+  "generatedAt": "2026-07-05T22:41:47.917Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-7c14f9ff",
+  "gapsAddressed": 3,
+  "gapsScheduled": 3,
+  "claimsGenerated": 8,
+  "claimsRejected": 5,
+  "redirectedToDecisionPoint": 3,
+  "candidates": [
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-lateral-and-medial-plate",
+      "claimText": "Lateral and medial plateau.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-acl-pcl-relationship",
+      "claimText": "ACL/PCL relationship.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-posterolateral-corner-pr",
+      "claimText": "Posterolateral corner proximity.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-schatzker-i-vi-patterns",
+      "claimText": "Schatzker I–VI patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-imaging_point-ap-lateral-knee",
+      "claimText": "AP/lateral knee.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-imaging_point-ct-for-depression-and-sp",
+      "claimText": "CT for depression and split detail.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-board_trap-high-energy-medial-plate",
+      "claimText": "High-energy medial plateau fractures can threaten the popliteal artery.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-knee-stiffness",
+      "claimText": "Knee stiffness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-post-traumatic-arthritis",
+      "claimText": "Post-traumatic arthritis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-red_flag-compartment-syndrome",
+      "claimText": "Compartment syndrome.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-condylar-involvement",
+      "claimText": "Condylar involvement.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-depression",
+      "claimText": "depression.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-knee-stability",
+      "claimText": "knee stability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-nv-exam",
+      "claimText": "NV exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-tibial-plateau",
+      "claimText": "Tibial plateau.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-lateral-condyle",
+      "claimText": "Lateral condyle.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-medial-condyle",
+      "claimText": "Medial condyle.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-popliteal-artery",
+      "claimText": "Popliteal artery.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-common-peroneal-nerve",
+      "claimText": "Common peroneal nerve.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-tibial-plateau-fractures",
+      "claimText": "Tibial plateau fractures are knee injuries where articular depression and ligament status drive operative planning.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.oneLiner",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-cognitive_trap-document-knee-stability-",
+      "claimText": "Document knee stability and NV exam.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-cognitive_trap-use-plateau-depression-l",
+      "claimText": "Use plateau depression language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-clinical_script-describe-condylar-split-",
+      "claimText": "Describe condylar split/depression.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-clinical_script-check-nv-status",
+      "claimText": "Check NV status.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-clinical_script-state-splint-versus-orif",
+      "claimText": "State splint versus ORIF.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-clinical_script-plan-protected-weight-be",
+      "claimText": "Plan protected weight bearing.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-classify-tibial-plateau-",
+      "claimText": "Classify tibial plateau fractures by condylar involvement and depression.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b7b872ac"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-anatomy_pearl-screen-for-ligament-and-",
+      "claimText": "Screen for ligament and neurovascular injury around the knee.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "patient_safety",
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b7b872ac"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-plateau-fracture-fact-compare-nonoperative-tre",
+      "claimText": "Compare nonoperative treatment with plateau ORIF indications.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b7b872ac"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-4",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Displacement, instability, associated ligament injury, soft tissues",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ]
+    },
+    {
+      "text": "Nonoperative in stable patterns",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ]
+    },
+    {
+      "text": "Tibial plateau ORIF",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ]
+    },
+    {
+      "text": "What Schatzker pattern is this?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ]
+    },
+    {
+      "text": "When is dual-buttress fixation needed?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-tibial-plateau-fracture-fact-schatzker-i-vi-patterns",
+      "draftId": "claim-tibial-plateau-fracture-fact-schatzker-i-vi-patterns",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-plateau-fracture-imaging_point-ap-lateral-knee",
+      "draftId": "claim-tibial-plateau-fracture-imaging_point-ap-lateral-knee",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-plateau-fracture-cognitive_trap-document-knee-stability-",
+      "draftId": "claim-tibial-plateau-fracture-cognitive_trap-document-knee-stability-",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "ATTENDING_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-plateau-fracture-imaging_point-ct-for-depression-and-sp",
+      "draftId": "claim-tibial-plateau-fracture-imaging_point-ct-for-depression-and-sp",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-plateau-fracture-board_trap-high-energy-medial-plate",
+      "draftId": "claim-tibial-plateau-fracture-board_trap-high-energy-medial-plate",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-plateau-fracture-fact-knee-stiffness",
+      "draftId": "claim-tibial-plateau-fracture-fact-knee-stiffness",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-plateau-fracture-fact-post-traumatic-arthritis",
+      "draftId": "claim-tibial-plateau-fracture-fact-post-traumatic-arthritis",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2794e70f"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-plateau-fracture-fact-condylar-involvement",
+      "draftId": "claim-tibial-plateau-fracture-fact-condylar-involvement",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-2795fd9b"
+      ],
+      "verified": false
+    }
+  ]
+}

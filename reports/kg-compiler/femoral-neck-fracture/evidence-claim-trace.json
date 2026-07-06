@@ -1,0 +1,136 @@
+{
+  "generatedAt": "2026-07-05T21:36:15.789Z",
+  "evidencePacketId": "ev-packet-7ca86001",
+  "traces": [
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-differentiate-fixation-v",
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-fact-differentiate-fixation-v",
+      "evidenceItemIds": [
+        "ev-static-prepare-33dad5d2"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-communicate-avn-and-nonu",
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-fact-communicate-avn-and-nonu",
+      "evidenceItemIds": [
+        "ev-static-prepare-33dad5d2"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-board_trap-displaced-femoral-neck-f",
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-board_trap-displaced-femoral-neck-f",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-imaging_point-pelvis-and-hip-radiograp",
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-imaging_point-pelvis-and-hip-radiograp",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-cognitive_trap-use-intracapsular-langua",
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-cognitive_trap-use-intracapsular-langua",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-garden-displacement-conc",
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-fact-garden-displacement-conc",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-imaging_point-mri-for-occult-fracture",
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-imaging_point-mri-for-occult-fracture",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-avascular-necrosis",
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-fact-avascular-necrosis",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Age, baseline function, displacement, head viability, medical risk"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Cannulated screws"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Femoral neck ORIF"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Hemiarthroplasty"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Total hip arthroplasty"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why are displaced femoral neck fractures different?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What changes management in younger patients?"
+    }
+  ]
+}

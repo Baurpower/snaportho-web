@@ -1,0 +1,4490 @@
+{
+  "generatedAt": "2026-07-05T23:24:00.908Z",
+  "cluster": "sports-medicine",
+  "topics": {
+    "acl-tear": {
+      "displayName": "ACL Tear",
+      "pilotKey": "acl-tear-neighborhood",
+      "region": "knee",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:40:02.191Z",
+        "pilotKey": "acl-tear-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 105,
+          "approvedProposalCount": 86,
+          "entityProposalCount": 46,
+          "relationshipProposalCount": 47,
+          "claimProposalCount": 8,
+          "dpProposalCount": 3,
+          "autoApprovedCount": 86,
+          "humanReviewCount": 18,
+          "canonicalEntityCount": 35,
+          "canonicalRelationshipCount": 270,
+          "educationalClaimCount": 21,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.819047619047619,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:40:02.412Z",
+        "pilotKey": "acl-tear-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "Validation failures must be resolved",
+          "19 proposals still awaiting human review",
+          "6 items require attending review"
+        ],
+        "recommendedActions": [
+          "Run validation engine and fix errors",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 105,
+          "approvedProposals": 86,
+          "pendingReview": 19,
+          "claimDrafts": 8,
+          "decisionPointDrafts": 3,
+          "autoApproved": 86,
+          "humanReviewQueue": 18,
+          "validationErrors": 2
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "acl-tear",
+        "pilotKey": "acl-tear-neighborhood",
+        "generatedAt": "2026-07-05T22:39:31.339Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "19 proposals still awaiting human review",
+          "11 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "6 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] ACL Tear Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] ACL Tear Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] ACL Tear Reconstruction missing outbound at_risk_structure (0/1).",
+          "[high] ACL Tear Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] ACL Tear Classification missing inbound has_classification (0/1).",
+          "[high] Sports Medicine Anatomy Hub missing outbound part_of (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 9,
+          "humanReviewItems": 19,
+          "attendingReviewItems": 11,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 35,
+          "relationships": 25,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 95,
+          "approvedProposals": 76
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T22:39:31.339Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "acl-tear",
+        "pilotKey": "acl-tear-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 26,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 5,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 95,
+            "executionTimeMs": 4,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 126,
+        "uniqueProposals": 95,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-e915b0bd"
+    },
+    "pcl-injury": {
+      "displayName": "PCL Injury",
+      "pilotKey": "pcl-injury-neighborhood",
+      "region": "knee",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:42:26.872Z",
+        "pilotKey": "pcl-injury-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 98,
+          "approvedProposalCount": 83,
+          "entityProposalCount": 45,
+          "relationshipProposalCount": 43,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 83,
+          "humanReviewCount": 14,
+          "canonicalEntityCount": 7,
+          "canonicalRelationshipCount": 286,
+          "educationalClaimCount": 26,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8469387755102041,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:42:27.085Z",
+        "pilotKey": "pcl-injury-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 98,
+          "approvedProposals": 83,
+          "pendingReview": 15,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 83,
+          "humanReviewQueue": 14,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "pcl-injury",
+        "pilotKey": "pcl-injury-neighborhood",
+        "generatedAt": "2026-07-05T22:41:56.095Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "15 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] PCL Injury neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] PCL Injury missing outbound injured_in (0/1).",
+          "[high] PCL Injury missing outbound involves_anatomy (0/1).",
+          "[high] PCL Injury missing outbound at_risk_structure (0/1).",
+          "[high] PCL Injury missing outbound has_grade (0/1).",
+          "[high] PCL Injury missing outbound treated_by (0/1).",
+          "[high] PCL Injury missing inbound prerequisite_for (0/1).",
+          "[high] PCL Injury has 0/3 L1 claims.",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 9,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 7,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 98,
+          "approvedProposals": 83
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T22:41:56.095Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "pcl-injury",
+        "pilotKey": "pcl-injury-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-claim-builder",
+          "work-decision-point-builder",
+          "work-metadata-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-claim-builder",
+            "work-decision-point-builder",
+            "work-metadata-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 35,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 7,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-claim-builder",
+            "agentId": "claim-builder",
+            "status": "completed",
+            "proposalCount": 4,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-decision-point-builder",
+            "agentId": "decision-point-builder",
+            "status": "completed",
+            "proposalCount": 2,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-metadata-builder",
+            "agentId": "metadata-builder",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 98,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 146,
+        "uniqueProposals": 98,
+        "completedAgents": 11,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-c4cd5fdd"
+    },
+    "meniscus-tear": {
+      "displayName": "Meniscus Tear",
+      "pilotKey": "meniscus-tear-neighborhood",
+      "region": "knee",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:44:48.470Z",
+        "pilotKey": "meniscus-tear-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 101,
+          "approvedProposalCount": 85,
+          "entityProposalCount": 45,
+          "relationshipProposalCount": 45,
+          "claimProposalCount": 7,
+          "dpProposalCount": 3,
+          "autoApprovedCount": 85,
+          "humanReviewCount": 15,
+          "canonicalEntityCount": 7,
+          "canonicalRelationshipCount": 316,
+          "educationalClaimCount": 33,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8415841584158416,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:44:48.688Z",
+        "pilotKey": "meniscus-tear-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "Validation failures must be resolved",
+          "16 proposals still awaiting human review",
+          "6 items require attending review"
+        ],
+        "recommendedActions": [
+          "Run validation engine and fix errors",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 101,
+          "approvedProposals": 85,
+          "pendingReview": 16,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 3,
+          "autoApproved": 85,
+          "humanReviewQueue": 15,
+          "validationErrors": 4
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "meniscus-tear",
+        "pilotKey": "meniscus-tear-neighborhood",
+        "generatedAt": "2026-07-05T22:44:17.814Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "10 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Meniscus Tear Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Meniscus Tear Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Meniscus Tear Reconstruction missing outbound at_risk_structure (0/1).",
+          "[high] Meniscus Tear Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Meniscus Tear Classification missing inbound has_classification (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 16,
+          "attendingReviewItems": 10,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 7,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 91,
+          "approvedProposals": 75
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T22:44:17.814Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "meniscus-tear",
+        "pilotKey": "meniscus-tear-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 28,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 92,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 121,
+        "uniqueProposals": 92,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-fd0f062a"
+    },
+    "patellar-instability": {
+      "displayName": "Patellar Instability",
+      "pilotKey": "patellar-instability-neighborhood",
+      "region": "knee",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:47:08.614Z",
+        "pilotKey": "patellar-instability-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 98,
+          "approvedProposalCount": 83,
+          "entityProposalCount": 45,
+          "relationshipProposalCount": 43,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 83,
+          "humanReviewCount": 14,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 431,
+          "educationalClaimCount": 41,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8469387755102041,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:47:08.837Z",
+        "pilotKey": "patellar-instability-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 98,
+          "approvedProposals": 83,
+          "pendingReview": 15,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 83,
+          "humanReviewQueue": 14,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "patellar-instability",
+        "pilotKey": "patellar-instability-neighborhood",
+        "generatedAt": "2026-07-05T22:46:37.927Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Patellar Instability Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Patellar Instability Classification missing inbound has_classification (0/1).",
+          "[critical] Patellar Instability Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Patellar Instability Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Patellar Instability Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 9,
+          "effortBand": "medium"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 90,
+          "approvedProposals": 75
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T22:46:37.927Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "patellar-instability",
+        "pilotKey": "patellar-instability-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 28,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 91,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 120,
+        "uniqueProposals": 91,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-eb411440"
+    },
+    "multiligament-knee-injury": {
+      "displayName": "Multiligament Knee Injury",
+      "pilotKey": "multiligament-knee-injury-neighborhood",
+      "region": "knee",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:49:34.298Z",
+        "pilotKey": "multiligament-knee-injury-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 107,
+          "approvedProposalCount": 88,
+          "entityProposalCount": 46,
+          "relationshipProposalCount": 50,
+          "claimProposalCount": 7,
+          "dpProposalCount": 3,
+          "autoApprovedCount": 88,
+          "humanReviewCount": 18,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 467,
+          "educationalClaimCount": 48,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.822429906542056,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:49:34.517Z",
+        "pilotKey": "multiligament-knee-injury-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "19 proposals still awaiting human review",
+          "8 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 107,
+          "approvedProposals": 88,
+          "pendingReview": 19,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 3,
+          "autoApproved": 88,
+          "humanReviewQueue": 18,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "multiligament-knee-injury",
+        "pilotKey": "multiligament-knee-injury-neighborhood",
+        "generatedAt": "2026-07-05T22:49:03.429Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "19 proposals still awaiting human review",
+          "12 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Multiligament Knee Injury Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Multiligament Knee Injury Classification missing inbound has_classification (0/1).",
+          "[critical] Multiligament Knee Injury Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Multiligament Knee Injury Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Multiligament Knee Injury Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 19,
+          "attendingReviewItems": 12,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 95,
+          "approvedProposals": 76
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T22:49:03.429Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "multiligament-knee-injury",
+        "pilotKey": "multiligament-knee-injury-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 24,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 95,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 120,
+        "uniqueProposals": 95,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-548e1252"
+    },
+    "osteochondral-defect-knee": {
+      "displayName": "Osteochondral Defect of the Knee",
+      "pilotKey": "osteochondral-defect-knee-neighborhood",
+      "region": "knee",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:51:53.760Z",
+        "pilotKey": "osteochondral-defect-knee-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 98,
+          "approvedProposalCount": 83,
+          "entityProposalCount": 45,
+          "relationshipProposalCount": 43,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 83,
+          "humanReviewCount": 14,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 489,
+          "educationalClaimCount": 55,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8469387755102041,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:51:53.975Z",
+        "pilotKey": "osteochondral-defect-knee-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 98,
+          "approvedProposals": 83,
+          "pendingReview": 15,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 83,
+          "humanReviewQueue": 14,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "osteochondral-defect-knee",
+        "pilotKey": "osteochondral-defect-knee-neighborhood",
+        "generatedAt": "2026-07-05T22:51:23.020Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Osteochondral Defect of the Knee Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Osteochondral Defect of the Knee Classification missing inbound has_classification (0/1).",
+          "[critical] Osteochondral Defect of the Knee Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Osteochondral Defect of the Knee Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Osteochondral Defect of the Knee Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 9,
+          "effortBand": "medium"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 91,
+          "approvedProposals": 76
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T22:51:23.020Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "osteochondral-defect-knee",
+        "pilotKey": "osteochondral-defect-knee-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 29,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 91,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 121,
+        "uniqueProposals": 91,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-e00aef3f"
+    },
+    "anterior-shoulder-instability": {
+      "displayName": "Anterior Shoulder Instability",
+      "pilotKey": "anterior-shoulder-instability-neighborhood",
+      "region": "shoulder",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:54:40.003Z",
+        "pilotKey": "anterior-shoulder-instability-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 99,
+          "approvedProposalCount": 83,
+          "entityProposalCount": 45,
+          "relationshipProposalCount": 44,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 83,
+          "humanReviewCount": 15,
+          "canonicalEntityCount": 9,
+          "canonicalRelationshipCount": 517,
+          "educationalClaimCount": 61,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8383838383838383,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:54:40.210Z",
+        "pilotKey": "anterior-shoulder-instability-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "6 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 99,
+          "approvedProposals": 83,
+          "pendingReview": 16,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 83,
+          "humanReviewQueue": 15,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "anterior-shoulder-instability",
+        "pilotKey": "anterior-shoulder-instability-neighborhood",
+        "generatedAt": "2026-07-05T22:54:09.257Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "10 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "15 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Anterior Shoulder Instability neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] Anterior Shoulder Instability missing outbound injured_in (0/1).",
+          "[high] Anterior Shoulder Instability missing outbound involves_anatomy (0/1).",
+          "[high] Anterior Shoulder Instability missing outbound at_risk_structure (0/1).",
+          "[high] Anterior Shoulder Instability missing outbound has_grade (0/1).",
+          "[high] Anterior Shoulder Instability missing outbound treated_by (0/1).",
+          "[high] Anterior Shoulder Instability missing inbound prerequisite_for (0/1).",
+          "[high] Anterior Shoulder Instability has 0/3 L1 claims.",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 16,
+          "attendingReviewItems": 10,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 9,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 99,
+          "approvedProposals": 83
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T22:54:09.257Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "anterior-shoulder-instability",
+        "pilotKey": "anterior-shoulder-instability-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-claim-builder",
+          "work-decision-point-builder",
+          "work-metadata-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-claim-builder",
+            "work-decision-point-builder",
+            "work-metadata-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 35,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 9,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-claim-builder",
+            "agentId": "claim-builder",
+            "status": "completed",
+            "proposalCount": 4,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-decision-point-builder",
+            "agentId": "decision-point-builder",
+            "status": "completed",
+            "proposalCount": 2,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-metadata-builder",
+            "agentId": "metadata-builder",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 99,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 149,
+        "uniqueProposals": 99,
+        "completedAgents": 11,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-745b5d58"
+    },
+    "rotator-cuff-tear": {
+      "displayName": "Rotator Cuff Tear",
+      "pilotKey": "rotator-cuff-tear-neighborhood",
+      "region": "shoulder",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:57:03.568Z",
+        "pilotKey": "rotator-cuff-tear-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 99,
+          "approvedProposalCount": 84,
+          "entityProposalCount": 45,
+          "relationshipProposalCount": 44,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 84,
+          "humanReviewCount": 14,
+          "canonicalEntityCount": 7,
+          "canonicalRelationshipCount": 536,
+          "educationalClaimCount": 65,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8484848484848485,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:57:03.767Z",
+        "pilotKey": "rotator-cuff-tear-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 99,
+          "approvedProposals": 84,
+          "pendingReview": 15,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 84,
+          "humanReviewQueue": 14,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "rotator-cuff-tear",
+        "pilotKey": "rotator-cuff-tear-neighborhood",
+        "generatedAt": "2026-07-05T22:56:31.267Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Rotator Cuff Tear Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Rotator Cuff Tear Classification missing inbound has_classification (0/1).",
+          "[critical] Rotator Cuff Tear Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Rotator Cuff Tear Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Rotator Cuff Tear Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 9,
+          "effortBand": "medium"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 7,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 96,
+          "approvedProposals": 81
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T22:56:31.267Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "rotator-cuff-tear",
+        "pilotKey": "rotator-cuff-tear-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 32,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 96,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 129,
+        "uniqueProposals": 96,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-8a6ee229"
+    },
+    "ac-joint-separation": {
+      "displayName": "AC Joint Separation",
+      "pilotKey": "ac-joint-separation-neighborhood",
+      "region": "shoulder",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:00:32.892Z",
+        "pilotKey": "ac-joint-separation-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 99,
+          "approvedProposalCount": 83,
+          "entityProposalCount": 47,
+          "relationshipProposalCount": 42,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 83,
+          "humanReviewCount": 15,
+          "canonicalEntityCount": 7,
+          "canonicalRelationshipCount": 563,
+          "educationalClaimCount": 71,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8383838383838383,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:00:33.107Z",
+        "pilotKey": "ac-joint-separation-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 99,
+          "approvedProposals": 83,
+          "pendingReview": 16,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 83,
+          "humanReviewQueue": 15,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "ac-joint-separation",
+        "pilotKey": "ac-joint-separation-neighborhood",
+        "generatedAt": "2026-07-05T23:00:02.213Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "15 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] AC Joint Separation neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] AC Joint Separation missing outbound injured_in (0/1).",
+          "[high] AC Joint Separation missing outbound involves_anatomy (0/1).",
+          "[high] AC Joint Separation missing outbound at_risk_structure (0/1).",
+          "[high] AC Joint Separation missing outbound has_grade (0/1).",
+          "[high] AC Joint Separation missing outbound treated_by (0/1).",
+          "[high] AC Joint Separation missing inbound prerequisite_for (0/1).",
+          "[high] AC Joint Separation has 0/3 L1 claims.",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 16,
+          "attendingReviewItems": 9,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 7,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 97,
+          "approvedProposals": 81
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:00:02.213Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "ac-joint-separation",
+        "pilotKey": "ac-joint-separation-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-claim-builder",
+          "work-decision-point-builder",
+          "work-metadata-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-claim-builder",
+            "work-decision-point-builder",
+            "work-metadata-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 34,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 6,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-claim-builder",
+            "agentId": "claim-builder",
+            "status": "completed",
+            "proposalCount": 4,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-decision-point-builder",
+            "agentId": "decision-point-builder",
+            "status": "completed",
+            "proposalCount": 2,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-metadata-builder",
+            "agentId": "metadata-builder",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 97,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 143,
+        "uniqueProposals": 97,
+        "completedAgents": 11,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-b6542f80"
+    },
+    "slap-tear": {
+      "displayName": "SLAP Tear",
+      "pilotKey": "slap-tear-neighborhood",
+      "region": "shoulder",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:02:56.010Z",
+        "pilotKey": "slap-tear-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 100,
+          "approvedProposalCount": 84,
+          "entityProposalCount": 47,
+          "relationshipProposalCount": 43,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 84,
+          "humanReviewCount": 15,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 588,
+          "educationalClaimCount": 77,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.84,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:02:56.229Z",
+        "pilotKey": "slap-tear-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 100,
+          "approvedProposals": 84,
+          "pendingReview": 16,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 84,
+          "humanReviewQueue": 15,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "slap-tear",
+        "pilotKey": "slap-tear-neighborhood",
+        "generatedAt": "2026-07-05T23:02:25.242Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] SLAP Tear Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] SLAP Tear Classification missing inbound has_classification (0/1).",
+          "[critical] SLAP Tear Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] SLAP Tear Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] SLAP Tear Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 16,
+          "attendingReviewItems": 9,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 95,
+          "approvedProposals": 79
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:02:25.242Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "slap-tear",
+        "pilotKey": "slap-tear-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 31,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 95,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 127,
+        "uniqueProposals": 95,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-03069c1d"
+    },
+    "proximal-biceps-tendon-pathology": {
+      "displayName": "Proximal Biceps Tendon Pathology",
+      "pilotKey": "proximal-biceps-tendon-pathology-neighborhood",
+      "region": "shoulder",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:05:38.370Z",
+        "pilotKey": "proximal-biceps-tendon-pathology-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 98,
+          "approvedProposalCount": 83,
+          "entityProposalCount": 46,
+          "relationshipProposalCount": 42,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 83,
+          "humanReviewCount": 14,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 613,
+          "educationalClaimCount": 82,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8469387755102041,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:05:38.592Z",
+        "pilotKey": "proximal-biceps-tendon-pathology-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 98,
+          "approvedProposals": 83,
+          "pendingReview": 15,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 83,
+          "humanReviewQueue": 14,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "proximal-biceps-tendon-pathology",
+        "pilotKey": "proximal-biceps-tendon-pathology-neighborhood",
+        "generatedAt": "2026-07-05T23:05:07.652Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Proximal Biceps Tendon Pathology Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Proximal Biceps Tendon Pathology Classification missing inbound has_classification (0/1).",
+          "[critical] Proximal Biceps Tendon Pathology Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Proximal Biceps Tendon Pathology Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Proximal Biceps Tendon Pathology Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 9,
+          "effortBand": "medium"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 98,
+          "approvedProposals": 83
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:05:07.652Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "proximal-biceps-tendon-pathology",
+        "pilotKey": "proximal-biceps-tendon-pathology-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 36,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 98,
+            "executionTimeMs": 4,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 135,
+        "uniqueProposals": 98,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-b41901e6"
+    },
+    "ucl-injury": {
+      "displayName": "UCL Injury",
+      "pilotKey": "ucl-injury-neighborhood",
+      "region": "elbow",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:07:56.209Z",
+        "pilotKey": "ucl-injury-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 95,
+          "approvedProposalCount": 80,
+          "entityProposalCount": 45,
+          "relationshipProposalCount": 39,
+          "claimProposalCount": 7,
+          "dpProposalCount": 3,
+          "autoApprovedCount": 80,
+          "humanReviewCount": 14,
+          "canonicalEntityCount": 8,
+          "canonicalRelationshipCount": 627,
+          "educationalClaimCount": 87,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8421052631578947,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:07:56.403Z",
+        "pilotKey": "ucl-injury-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "6 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 95,
+          "approvedProposals": 80,
+          "pendingReview": 15,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 3,
+          "autoApproved": 80,
+          "humanReviewQueue": 14,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "ucl-injury",
+        "pilotKey": "ucl-injury-neighborhood",
+        "generatedAt": "2026-07-05T23:07:25.518Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "10 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "15 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] UCL Injury neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] UCL Injury missing outbound injured_in (0/1).",
+          "[high] UCL Injury missing outbound involves_anatomy (0/1).",
+          "[high] UCL Injury missing outbound at_risk_structure (0/1).",
+          "[high] UCL Injury missing outbound has_grade (0/1).",
+          "[high] UCL Injury missing outbound treated_by (0/1).",
+          "[high] UCL Injury missing inbound prerequisite_for (0/1).",
+          "[high] UCL Injury has 0/3 L1 claims.",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 10,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 8,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 95,
+          "approvedProposals": 80
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:07:25.518Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "ucl-injury",
+        "pilotKey": "ucl-injury-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-claim-builder",
+          "work-decision-point-builder",
+          "work-metadata-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-claim-builder",
+            "work-decision-point-builder",
+            "work-metadata-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 36,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 7,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-claim-builder",
+            "agentId": "claim-builder",
+            "status": "completed",
+            "proposalCount": 4,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-decision-point-builder",
+            "agentId": "decision-point-builder",
+            "status": "completed",
+            "proposalCount": 3,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-metadata-builder",
+            "agentId": "metadata-builder",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 95,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 145,
+        "uniqueProposals": 95,
+        "completedAgents": 11,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-31c43cd8"
+    },
+    "distal-biceps-tendon-rupture": {
+      "displayName": "Distal Biceps Tendon Rupture",
+      "pilotKey": "distal-biceps-tendon-rupture-neighborhood",
+      "region": "elbow",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:10:52.235Z",
+        "pilotKey": "distal-biceps-tendon-rupture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 95,
+          "approvedProposalCount": 80,
+          "entityProposalCount": 45,
+          "relationshipProposalCount": 40,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 80,
+          "humanReviewCount": 14,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 651,
+          "educationalClaimCount": 93,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8421052631578947,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:10:52.443Z",
+        "pilotKey": "distal-biceps-tendon-rupture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "6 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 95,
+          "approvedProposals": 80,
+          "pendingReview": 15,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 80,
+          "humanReviewQueue": 14,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "distal-biceps-tendon-rupture",
+        "pilotKey": "distal-biceps-tendon-rupture-neighborhood",
+        "generatedAt": "2026-07-05T23:10:21.498Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "10 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Distal Biceps Tendon Rupture Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Distal Biceps Tendon Rupture Classification missing inbound has_classification (0/1).",
+          "[critical] Distal Biceps Tendon Rupture Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Distal Biceps Tendon Rupture Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Distal Biceps Tendon Rupture Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 10,
+          "effortBand": "medium"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 94,
+          "approvedProposals": 79
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:10:21.498Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "distal-biceps-tendon-rupture",
+        "pilotKey": "distal-biceps-tendon-rupture-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 35,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 94,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 130,
+        "uniqueProposals": 94,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-d459c3c3"
+    },
+    "achilles-tendon-rupture": {
+      "displayName": "Achilles Tendon Rupture",
+      "pilotKey": "achilles-tendon-rupture-neighborhood",
+      "region": "foot_ankle",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:13:56.531Z",
+        "pilotKey": "achilles-tendon-rupture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 99,
+          "approvedProposalCount": 82,
+          "entityProposalCount": 44,
+          "relationshipProposalCount": 45,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 82,
+          "humanReviewCount": 16,
+          "canonicalEntityCount": 9,
+          "canonicalRelationshipCount": 667,
+          "educationalClaimCount": 96,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8282828282828283,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:13:56.737Z",
+        "pilotKey": "achilles-tendon-rupture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "Validation failures must be resolved",
+          "17 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Run validation engine and fix errors",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 99,
+          "approvedProposals": 82,
+          "pendingReview": 17,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 82,
+          "humanReviewQueue": 16,
+          "validationErrors": 2
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "achilles-tendon-rupture",
+        "pilotKey": "achilles-tendon-rupture-neighborhood",
+        "generatedAt": "2026-07-05T23:13:25.098Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "25 proposals still awaiting human review",
+          "11 items require attending review",
+          "Insufficient relationship metadata on essential edges",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "15 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Achilles Tendon Rupture Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Achilles Tendon Rupture Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Achilles Tendon Rupture Reconstruction missing outbound at_risk_structure (0/1).",
+          "[critical] Achilles Tendon Rupture neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] Achilles Tendon Rupture missing outbound injured_in (0/1).",
+          "[high] Achilles Tendon Rupture missing outbound involves_anatomy (0/1).",
+          "[high] Achilles Tendon Rupture missing outbound at_risk_structure (0/1).",
+          "[high] Achilles Tendon Rupture missing outbound has_grade (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer",
+          "Run curate step to normalize metadata"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 25,
+          "attendingReviewItems": 11,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 9,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 96,
+          "approvedProposals": 79
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:13:25.098Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "achilles-tendon-rupture",
+        "pilotKey": "achilles-tendon-rupture-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-claim-builder",
+          "work-decision-point-builder",
+          "work-metadata-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-claim-builder",
+            "work-decision-point-builder",
+            "work-metadata-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 30,
+            "executionTimeMs": 4,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 6,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-claim-builder",
+            "agentId": "claim-builder",
+            "status": "completed",
+            "proposalCount": 8,
+            "executionTimeMs": 8,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-decision-point-builder",
+            "agentId": "decision-point-builder",
+            "status": "completed",
+            "proposalCount": 2,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-metadata-builder",
+            "agentId": "metadata-builder",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 104,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 150,
+        "uniqueProposals": 104,
+        "completedAgents": 11,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-34afd352"
+    },
+    "chronic-lateral-ankle-instability": {
+      "displayName": "Chronic Lateral Ankle Instability",
+      "pilotKey": "chronic-lateral-ankle-instability-neighborhood",
+      "region": "foot_ankle",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:17:11.256Z",
+        "pilotKey": "chronic-lateral-ankle-instability-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 96,
+          "approvedProposalCount": 81,
+          "entityProposalCount": 42,
+          "relationshipProposalCount": 44,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 81,
+          "humanReviewCount": 14,
+          "canonicalEntityCount": 7,
+          "canonicalRelationshipCount": 690,
+          "educationalClaimCount": 101,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.84375,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:17:11.464Z",
+        "pilotKey": "chronic-lateral-ankle-instability-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "Validation failures must be resolved",
+          "15 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Run validation engine and fix errors",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 96,
+          "approvedProposals": 81,
+          "pendingReview": 15,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 81,
+          "humanReviewQueue": 14,
+          "validationErrors": 2
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "chronic-lateral-ankle-instability",
+        "pilotKey": "chronic-lateral-ankle-instability-neighborhood",
+        "generatedAt": "2026-07-05T23:16:20.305Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Chronic Lateral Ankle Instability Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Chronic Lateral Ankle Instability Classification missing inbound has_classification (0/1).",
+          "[critical] Chronic Lateral Ankle Instability Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Chronic Lateral Ankle Instability Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Chronic Lateral Ankle Instability Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 9,
+          "effortBand": "medium"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 7,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 95,
+          "approvedProposals": 80
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:16:20.305Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "chronic-lateral-ankle-instability",
+        "pilotKey": "chronic-lateral-ankle-instability-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 32,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 95,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 128,
+        "uniqueProposals": 95,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-43eb572f"
+    },
+    "syndesmotic-sprain": {
+      "displayName": "Syndesmotic Sprain",
+      "pilotKey": "syndesmotic-sprain-neighborhood",
+      "region": "foot_ankle",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:20:27.233Z",
+        "pilotKey": "syndesmotic-sprain-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 98,
+          "approvedProposalCount": 82,
+          "entityProposalCount": 42,
+          "relationshipProposalCount": 46,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 82,
+          "humanReviewCount": 15,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 718,
+          "educationalClaimCount": 107,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8367346938775511,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:20:27.441Z",
+        "pilotKey": "syndesmotic-sprain-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "Validation failures must be resolved",
+          "16 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Run validation engine and fix errors",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 98,
+          "approvedProposals": 82,
+          "pendingReview": 16,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 82,
+          "humanReviewQueue": 15,
+          "validationErrors": 6
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "syndesmotic-sprain",
+        "pilotKey": "syndesmotic-sprain-neighborhood",
+        "generatedAt": "2026-07-05T23:19:56.516Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "15 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Syndesmotic Sprain Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Syndesmotic Sprain Classification missing inbound has_classification (0/1).",
+          "[critical] Syndesmotic Sprain Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Syndesmotic Sprain Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Syndesmotic Sprain Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 15,
+          "attendingReviewItems": 9,
+          "effortBand": "medium"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 94,
+          "approvedProposals": 79
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:19:56.517Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "syndesmotic-sprain",
+        "pilotKey": "syndesmotic-sprain-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 31,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 94,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 126,
+        "uniqueProposals": 94,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-1d72000c"
+    },
+    "osteochondral-lesion-talus": {
+      "displayName": "Osteochondral Lesion of the Talus",
+      "pilotKey": "osteochondral-lesion-talus-neighborhood",
+      "region": "foot_ankle",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T23:23:31.400Z",
+        "pilotKey": "osteochondral-lesion-talus-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 97,
+          "approvedProposalCount": 81,
+          "entityProposalCount": 43,
+          "relationshipProposalCount": 44,
+          "claimProposalCount": 7,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 81,
+          "humanReviewCount": 15,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 732,
+          "educationalClaimCount": 112,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8350515463917526,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T23:23:31.615Z",
+        "pilotKey": "osteochondral-lesion-talus-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "Validation failures must be resolved",
+          "16 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Run validation engine and fix errors",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 97,
+          "approvedProposals": 81,
+          "pendingReview": 16,
+          "claimDrafts": 7,
+          "decisionPointDrafts": 2,
+          "autoApproved": 81,
+          "humanReviewQueue": 15,
+          "validationErrors": 2
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "osteochondral-lesion-talus",
+        "pilotKey": "osteochondral-lesion-talus-neighborhood",
+        "generatedAt": "2026-07-05T23:23:00.716Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Osteochondral Lesion of the Talus Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Osteochondral Lesion of the Talus Classification missing inbound has_classification (0/1).",
+          "[critical] Osteochondral Lesion of the Talus Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Osteochondral Lesion of the Talus Reconstruction missing outbound involves_anatomy (0/1).",
+          "[high] Osteochondral Lesion of the Talus Reconstruction missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 16,
+          "attendingReviewItems": 9,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 96,
+          "approvedProposals": 80
+        },
+        "dbLoaded": true
+      },
+      "agentExecution": {
+        "generatedAt": "2026-07-05T23:23:00.716Z",
+        "frameworkVersion": "1.0.0",
+        "topicKey": "osteochondral-lesion-talus",
+        "pilotKey": "osteochondral-lesion-talus-neighborhood",
+        "executionOrder": [
+          "work-clinical-entity-builder",
+          "work-asset-linker",
+          "work-relationship-builder",
+          "work-duplicate-detector",
+          "work-quality-scorer",
+          "work-conflict-resolver",
+          "work-review-assistant",
+          "work-publication-validator"
+        ],
+        "parallelLayers": [
+          [
+            "work-clinical-entity-builder"
+          ],
+          [
+            "work-asset-linker",
+            "work-relationship-builder"
+          ],
+          [
+            "work-duplicate-detector"
+          ],
+          [
+            "work-quality-scorer"
+          ],
+          [
+            "work-conflict-resolver"
+          ],
+          [
+            "work-review-assistant"
+          ],
+          [
+            "work-publication-validator"
+          ]
+        ],
+        "entries": [
+          {
+            "assignmentId": "work-clinical-entity-builder",
+            "agentId": "clinical-entity-builder",
+            "status": "completed",
+            "proposalCount": 32,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-asset-linker",
+            "agentId": "asset-linker",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-relationship-builder",
+            "agentId": "relationship-builder",
+            "status": "completed",
+            "proposalCount": 1,
+            "executionTimeMs": 1,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-duplicate-detector",
+            "agentId": "duplicate-detector",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-quality-scorer",
+            "agentId": "quality-scorer",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-conflict-resolver",
+            "agentId": "conflict-resolver",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 0,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-review-assistant",
+            "agentId": "review-assistant",
+            "status": "completed",
+            "proposalCount": 96,
+            "executionTimeMs": 3,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          },
+          {
+            "assignmentId": "work-publication-validator",
+            "agentId": "publication-validator",
+            "status": "completed",
+            "proposalCount": 0,
+            "executionTimeMs": 2,
+            "errors": [],
+            "warnings": [],
+            "skipped": false,
+            "timedOut": false
+          }
+        ],
+        "totalProposalsEmitted": 129,
+        "uniqueProposals": 96,
+        "completedAgents": 8,
+        "failedAgents": 0,
+        "partialAgents": 0,
+        "skippedAgents": 0,
+        "databaseModified": false
+      },
+      "evidencePacketId": "ev-packet-e4da0a62"
+    }
+  },
+  "sharedAnatomySlugs": [
+    "sports-medicine-anatomy-hub",
+    "sports-knee-anatomy-hub",
+    "sports-shoulder-anatomy-hub",
+    "sports-elbow-anatomy-hub",
+    "sports-foot-ankle-anatomy-hub",
+    "mcl",
+    "lcl",
+    "posterolateral-corner",
+    "medial-meniscus",
+    "lateral-meniscus",
+    "articular-cartilage",
+    "femoral-condyles",
+    "glenoid",
+    "labrum",
+    "rotator-cuff",
+    "supraspinatus",
+    "infraspinatus",
+    "subscapularis",
+    "teres-minor",
+    "biceps-anchor",
+    "ucl",
+    "radial-collateral-ligament",
+    "distal-biceps-tendon",
+    "atfl",
+    "cfl",
+    "achilles-tendon"
+  ],
+  "traumaCrossLinks": [
+    "tibial-plateau-fracture",
+    "proximal-humerus-fracture",
+    "clavicle-fracture",
+    "ankle-fracture",
+    "calcaneus-fracture",
+    "talus-fracture",
+    "patella-fracture",
+    "distal-femur-fracture",
+    "pilon-fracture"
+  ],
+  "publicationBlocked": true,
+  "clinicalVerification": false,
+  "stagingOnly": true,
+  "aggregate": {
+    "topicCount": 17,
+    "factoryMaturityLevels": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "allDbBackedCompileOk": true,
+    "allCompilerAgentsOk": true,
+    "allPublicationBlocked": true
+  }
+}

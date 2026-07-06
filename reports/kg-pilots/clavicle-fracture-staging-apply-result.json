@@ -1,0 +1,175 @@
+{
+  "topicKey": "clavicle-fracture",
+  "pilotKey": "clavicle-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 40,
+  "applied": {
+    "entities": 0,
+    "relationships": 6,
+    "bridges": 0,
+    "claims_draft": 0,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 40
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|treatment_principle|clavicle-sling-immobilization",
+      "reason": "entity exists: clavicle-sling-immobilization"
+    },
+    {
+      "fingerprint": "create|condition|clavicle-fracture",
+      "reason": "entity exists: clavicle-fracture"
+    },
+    {
+      "fingerprint": "create|procedure|clavicle-orif",
+      "reason": "entity exists: clavicle-orif"
+    },
+    {
+      "fingerprint": "create|complication|clavicle-nonunion",
+      "reason": "entity exists: clavicle-nonunion"
+    },
+    {
+      "fingerprint": "create|imaging_finding|midshaft-clavicle-fracture-pattern",
+      "reason": "entity exists: midshaft-clavicle-fracture-pattern"
+    },
+    {
+      "fingerprint": "create|complication|clavicle-malunion",
+      "reason": "entity exists: clavicle-malunion"
+    },
+    {
+      "fingerprint": "rel|clavicle-fracture|has_complication|clavicle-nonunion",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|clavicle|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sternoclavicular-joint|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|axillary-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|humeral-head|part_of|proximal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|capitellum|articulates_with|elbow-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|radial-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|medial-column|part_of|distal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|brachial-artery|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-humerus|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lateral-column|part_of|distal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|clavicle-fracture|has_complication|clavicle-malunion",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|proximal-humerus|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ac-joint|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|humeral-shaft|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ulnar-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|trochlea|articulates_with|elbow-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|clavicle|articulates_with|sternoclavicular-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|capitellum|part_of|lateral-column",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|elbow-joint|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|clavicle|articulates_with|ac-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|anterior-interosseous-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|surgical-neck|part_of|proximal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|median-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|olecranon-fossa|part_of|distal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|trochlea|part_of|medial-column",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|clavicle-fracture|has_imaging_finding|midshaft-clavicle-fracture-pattern",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|trauma-clavicle-fractures-midshaft|clavicle-fracture",
+      "reason": "bridge exists"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 0,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  },
+  "cumulativeApply": {
+    "entities": 6,
+    "relationships": 9,
+    "bridges": 1,
+    "claims_draft": 0,
+    "applyPasses": 2,
+    "note": "Pass 1 created entities/shared anatomy; pass 2 resolved cross-slug relationships"
+  }
+}

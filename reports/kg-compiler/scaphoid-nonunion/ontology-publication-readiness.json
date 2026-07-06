@@ -1,0 +1,42 @@
+{
+  "topicKey": "scaphoid-nonunion",
+  "pilotKey": "scaphoid-nonunion-neighborhood",
+  "generatedAt": "2026-07-05T23:16:30.508Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "13 proposals still awaiting human review",
+    "7 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "3 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Scaphoid Nonunion Operative Treatment neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Scaphoid Nonunion Operative Treatment missing outbound involves_anatomy (0/1).",
+    "[high] Scaphoid Nonunion Operative Treatment missing outbound at_risk_structure (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 6,
+    "humanReviewItems": 13,
+    "attendingReviewItems": 7,
+    "effortBand": "medium"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

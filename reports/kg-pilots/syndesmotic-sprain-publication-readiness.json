@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-05T23:20:27.441Z",
+  "pilotKey": "syndesmotic-sprain-neighborhood",
+  "ready": false,
+  "estimatedMaturityLevel": 5,
+  "blockers": [
+    "Validation failures must be resolved",
+    "16 proposals still awaiting human review",
+    "5 items require attending review"
+  ],
+  "recommendedActions": [
+    "Run validation engine and fix errors",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "metrics": {
+    "totalProposals": 98,
+    "approvedProposals": 82,
+    "pendingReview": 16,
+    "claimDrafts": 7,
+    "decisionPointDrafts": 2,
+    "autoApproved": 82,
+    "humanReviewQueue": 15,
+    "validationErrors": 6
+  }
+}

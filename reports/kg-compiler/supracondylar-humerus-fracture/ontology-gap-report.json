@@ -1,0 +1,243 @@
+{
+  "generatedAt": "2026-07-05T21:58:33.991Z",
+  "gaps": [
+    {
+      "id": "gap-entity-neighbor-1",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "Gartland Classification neighborhood has 0/2 classification_grade entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.grades",
+      "anchorEntitySlug": "gartland-classification",
+      "entityType": "classification_grade"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Upper Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "upper-extremity-trauma-anatomy-hub",
+      "subjectSlug": "upper-extremity-trauma-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Supracondylar Humerus Fracture missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.at_risk_structure",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "subjectSlug": "supracondylar-humerus-fracture",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-rel-4",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Supracondylar Humerus Fracture missing outbound has_grade (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.has_grade",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "subjectSlug": "supracondylar-humerus-fracture",
+      "predicate": "has_grade"
+    },
+    {
+      "id": "gap-rel-5",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Supracondylar Humerus Fracture missing outbound treated_by (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.treated_by",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "subjectSlug": "supracondylar-humerus-fracture",
+      "predicate": "treated_by"
+    },
+    {
+      "id": "gap-claim-6",
+      "kind": "missing_claim",
+      "priority": "high",
+      "confidence": 0.88,
+      "reason": "Supracondylar Humerus Fracture has 0/3 L1 claims.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.claims.l1",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "claimType": "fact|board_trap|imaging_point|cognitive_trap"
+    },
+    {
+      "id": "gap-claim-type-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Supracondylar Humerus Fracture missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.fact",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-8",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Supracondylar Humerus Fracture missing claim type: board_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.board_trap",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "claimType": "board_trap"
+    },
+    {
+      "id": "gap-claim-type-9",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Supracondylar Humerus Fracture missing claim type: imaging_point.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.imaging_point",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "claimType": "imaging_point"
+    },
+    {
+      "id": "gap-claim-type-10",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Supracondylar Humerus Fracture missing claim type: cognitive_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.cognitive_trap",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "claimType": "cognitive_trap"
+    },
+    {
+      "id": "gap-dp-11",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.9,
+      "reason": "Supracondylar Humerus Fracture has 0/1 decision points.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management",
+      "anchorEntitySlug": "supracondylar-humerus-fracture"
+    },
+    {
+      "id": "gap-dp-pattern-12",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.85,
+      "reason": "Supracondylar Humerus Fracture missing decision point pattern: operative_indication.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management.operative_indication",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "decisionPointPattern": "operative_indication"
+    },
+    {
+      "id": "gap-dp-pattern-13",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.85,
+      "reason": "Supracondylar Humerus Fracture missing decision point pattern: nonoperative_eligible.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management.nonoperative_eligible",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "decisionPointPattern": "nonoperative_eligible"
+    },
+    {
+      "id": "gap-meta-rel-14",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "3 clinical_importance gaps on Supracondylar Humerus Fracture injured_in/has_imaging_finding/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.meta.clinical_importance",
+      "anchorEntitySlug": "supracondylar-humerus-fracture",
+      "metadataField": "clinical_importance",
+      "predicate": "injured_in|has_imaging_finding|at_risk_structure"
+    },
+    {
+      "id": "gap-rel-15",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Supracondylar Percutaneous Pinning missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "supracondylar-percutaneous-pinning",
+      "subjectSlug": "supracondylar-percutaneous-pinning",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-meta-rel-16",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "1 context_relevance gaps on Supracondylar Percutaneous Pinning involves_anatomy/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.meta.context",
+      "anchorEntitySlug": "supracondylar-percutaneous-pinning",
+      "metadataField": "context_relevance",
+      "predicate": "involves_anatomy|at_risk_structure"
+    },
+    {
+      "id": "gap-asset-question-17",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "58 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "supracondylar-humerus-fracture"
+    },
+    {
+      "id": "gap-proc-approach-18",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Supracondylar Percutaneous Pinning missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "supracondylar-percutaneous-pinning",
+      "subjectSlug": "supracondylar-percutaneous-pinning",
+      "predicate": "uses_approach"
+    }
+  ],
+  "summary": {
+    "total": 18,
+    "byKind": {
+      "missing_entity": 1,
+      "missing_relationship": 6,
+      "missing_claim": 5,
+      "missing_decision_point": 3,
+      "missing_metadata": 2,
+      "missing_asset_link": 1
+    },
+    "byPriority": {
+      "high": 7,
+      "medium": 8,
+      "critical": 3
+    }
+  }
+}

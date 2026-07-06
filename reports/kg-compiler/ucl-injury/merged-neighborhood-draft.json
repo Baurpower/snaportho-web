@@ -1,0 +1,2567 @@
+{
+  "topicKey": "ucl-injury",
+  "pilotKey": "ucl-injury-neighborhood",
+  "generatedAt": "2026-07-05T23:07:25.518Z",
+  "entities": [
+    {
+      "slug": "ucl-injury",
+      "entityType": "condition",
+      "preferredLabel": "UCL Injury",
+      "metadata": {
+        "slug": "ucl-injury",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Ulnar collateral ligament injury.",
+        "clinical_kind": "sports_soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|ucl-injury",
+        "canonical_entity_id": "d5d05dfd-b5e7-40d9-8f3a-094a0d729d2d",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|ucl-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl-injury-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "UCL Injury Classification",
+      "metadata": {
+        "slug": "ucl-injury-classification",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Educational classification framework for ucl injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|ucl-injury-classification",
+        "canonical_entity_id": "38ca297c-9c96-4bb4-a34d-62f09fb5f585",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|ucl-injury-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl-injury-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "UCL Injury MRI Pattern",
+      "metadata": {
+        "slug": "ucl-injury-mri-finding",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Characteristic MRI findings in ucl injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|ucl-injury-mri-finding",
+        "canonical_entity_id": "cc27d953-6061-4fac-b72c-c786849ca087",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|ucl-injury-mri-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl-injury-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "UCL Injury Reconstruction",
+      "metadata": {
+        "slug": "ucl-injury-reconstruction",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Operative reconstruction concept for ucl injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|ucl-injury-reconstruction",
+        "canonical_entity_id": "2f187727-7799-4155-8ef6-561fe8472879",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|ucl-injury-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl-injury-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "UCL Injury Rehabilitation",
+      "metadata": {
+        "slug": "ucl-injury-rehab-protocol",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Return-to-play rehabilitation milestones for ucl injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|treatment_principle|ucl-injury-rehab-protocol",
+        "canonical_entity_id": "6fa08a89-da46-42ce-96ae-38abf5a762de",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|treatment_principle|ucl-injury-rehab-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl-injury-complication",
+      "entityType": "complication",
+      "preferredLabel": "UCL Injury Complication",
+      "metadata": {
+        "slug": "ucl-injury-complication",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Common post-injury complication in ucl injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|ucl-injury-complication",
+        "canonical_entity_id": "ecc92e5b-3cba-4007-81d7-d1b527f0d433",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|ucl-injury-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl-injury-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "UCL Injury Physical Exam",
+      "metadata": {
+        "slug": "ucl-injury-exam-maneuver",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Key physical examination maneuver for ucl injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|exam_maneuver|ucl-injury-exam-maneuver",
+        "canonical_entity_id": "45b560af-f6b6-499e-a2a0-be31738b8189",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|exam_maneuver|ucl-injury-exam-maneuver"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-biceps-tendon-rupture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Biceps Tendon Rupture",
+      "metadata": {
+        "slug": "distal-biceps-tendon-rupture",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-neighborhood reference to canonical condition distal-biceps-tendon-rupture.",
+        "owner_pilot": "distal-biceps-tendon-rupture-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|distal-biceps-tendon-rupture",
+        "canonical_entity_id": "0cb4c6dd-9e8a-473b-9437-c69c8cd50309",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|distal-biceps-tendon-rupture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ac Joint",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (ac-joint).",
+      "metadata": {
+        "slug": "ac-joint",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (ac-joint).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Achilles Tendon",
+      "description": "Conjoined gastrocnemius-soleus tendon inserting on the calcaneus.",
+      "metadata": {
+        "slug": "achilles-tendon",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Conjoined gastrocnemius-soleus tendon inserting on the calcaneus.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|achilles-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "articular-cartilage",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Articular Cartilage",
+      "description": "Hyaline cartilage covering femoral condyles and tibial plateau.",
+      "metadata": {
+        "slug": "articular-cartilage",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Hyaline cartilage covering femoral condyles and tibial plateau.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "cartilage",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|articular-cartilage"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "atfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Talofibular Ligament",
+      "description": "Primary lateral ankle stabilizer injured in inversion sprains.",
+      "metadata": {
+        "slug": "atfl",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Primary lateral ankle stabilizer injured in inversion sprains.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|atfl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "axillary-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Axillary Nerve",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (axillary-nerve).",
+      "metadata": {
+        "slug": "axillary-nerve",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (axillary-nerve).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|axillary-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "biceps-anchor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Biceps Anchor",
+      "description": "Superior labrum and biceps anchor complex at the glenoid origin.",
+      "metadata": {
+        "slug": "biceps-anchor",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Superior labrum and biceps anchor complex at the glenoid origin.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|biceps-anchor"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "cfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneofibular Ligament",
+      "description": "Lateral ankle ligament stabilizing subtalar motion after inversion injury.",
+      "metadata": {
+        "slug": "cfl",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Lateral ankle ligament stabilizing subtalar motion after inversion injury.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|cfl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "clavicle",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Clavicle",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (clavicle).",
+      "metadata": {
+        "slug": "clavicle",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (clavicle).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|clavicle"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-biceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Biceps Tendon",
+      "description": "Distal biceps insertion on the radial tuberosity enabling elbow flexion and supination.",
+      "metadata": {
+        "slug": "distal-biceps-tendon",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Distal biceps insertion on the radial tuberosity enabling elbow flexion and supination.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-biceps-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "elbow-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Elbow Joint",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (elbow-joint).",
+      "metadata": {
+        "slug": "elbow-joint",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (elbow-joint).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|elbow-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-condyles",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Condyles",
+      "description": "Medial and lateral femoral condyles forming the proximal tibiofemoral articulation.",
+      "metadata": {
+        "slug": "femoral-condyles",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Medial and lateral femoral condyles forming the proximal tibiofemoral articulation.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-condyles"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "glenoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid",
+      "description": "Scapular articular surface forming the socket of the glenohumeral joint.",
+      "metadata": {
+        "slug": "glenoid",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Scapular articular surface forming the socket of the glenohumeral joint.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|glenoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "humeral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Humeral Head",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (humeral-head).",
+      "metadata": {
+        "slug": "humeral-head",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (humeral-head).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|humeral-head"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "infraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Infraspinatus",
+      "description": "Posterior cuff tendon providing external rotation strength.",
+      "metadata": {
+        "slug": "infraspinatus",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Posterior cuff tendon providing external rotation strength.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|infraspinatus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "labrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid Labrum",
+      "description": "Fibrocartilaginous rim deepening the glenoid and anchoring capsulolabral structures.",
+      "metadata": {
+        "slug": "labrum",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Fibrocartilaginous rim deepening the glenoid and anchoring capsulolabral structures.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "labrum",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|labrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lateral-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Meniscus",
+      "description": "More mobile lateral meniscus with popliteus hiatus; commonly torn with ACL injuries.",
+      "metadata": {
+        "slug": "lateral-meniscus",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "More mobile lateral meniscus with popliteus hiatus; commonly torn with ACL injuries.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "meniscus",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lateral-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Collateral Ligament",
+      "description": "Primary lateral knee stabilizer resisting varus stress.",
+      "metadata": {
+        "slug": "lcl",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Primary lateral knee stabilizer resisting varus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "mcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Collateral Ligament",
+      "description": "Primary medial knee stabilizer resisting valgus stress.",
+      "metadata": {
+        "slug": "mcl",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Primary medial knee stabilizer resisting valgus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|mcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "medial-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Meniscus",
+      "description": "C-shaped medial meniscus distributing load and resisting shear at the medial compartment.",
+      "metadata": {
+        "slug": "medial-meniscus",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "C-shaped medial meniscus distributing load and resisting shear at the medial compartment.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "meniscus",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|medial-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Median Nerve",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (median-nerve).",
+      "metadata": {
+        "slug": "median-nerve",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (median-nerve).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|median-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "posterolateral-corner",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterolateral Corner",
+      "description": "Posterolateral knee stabilizing complex including LCL, popliteus, and arcuate ligaments.",
+      "metadata": {
+        "slug": "posterolateral-corner",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Posterolateral knee stabilizing complex including LCL, popliteus, and arcuate ligaments.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|posterolateral-corner"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "proximal-humerus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Humerus",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (proximal-humerus).",
+      "metadata": {
+        "slug": "proximal-humerus",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (proximal-humerus).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|proximal-humerus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "radial-collateral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Collateral Ligament",
+      "description": "Lateral elbow stabilizer resisting varus stress.",
+      "metadata": {
+        "slug": "radial-collateral-ligament",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Lateral elbow stabilizer resisting varus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radial-collateral-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "radial-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Nerve",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (radial-nerve).",
+      "metadata": {
+        "slug": "radial-nerve",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (radial-nerve).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radial-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "rotator-cuff",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Rotator Cuff",
+      "description": "Supraspinatus, infraspinatus, subscapularis, and teres minor force-couple complex.",
+      "metadata": {
+        "slug": "rotator-cuff",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Supraspinatus, infraspinatus, subscapularis, and teres minor force-couple complex.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-elbow-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Elbow Anatomy Hub",
+      "description": "Elbow ligament and tendon structures relevant to throwing and flexion injuries.",
+      "metadata": {
+        "slug": "sports-elbow-anatomy-hub",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Elbow ligament and tendon structures relevant to throwing and flexion injuries.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-foot-ankle-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Foot & Ankle Anatomy Hub",
+      "description": "Lateral ankle ligaments, syndesmosis, Achilles, and hindfoot structures for sports foot-ankle conditions.",
+      "metadata": {
+        "slug": "sports-foot-ankle-anatomy-hub",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "foot_ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Lateral ankle ligaments, syndesmosis, Achilles, and hindfoot structures for sports foot-ankle conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-knee-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Knee Anatomy Hub",
+      "description": "Knee ligament, meniscus, extensor, and articular structures for sports knee conditions.",
+      "metadata": {
+        "slug": "sports-knee-anatomy-hub",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Knee ligament, meniscus, extensor, and articular structures for sports knee conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-medicine-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Medicine Anatomy Hub",
+      "description": "Composite sports medicine model linking knee, shoulder, elbow, and foot-ankle regional hubs.",
+      "metadata": {
+        "slug": "sports-medicine-anatomy-hub",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "sports_medicine",
+        "cluster": "sports-medicine",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Composite sports medicine model linking knee, shoulder, elbow, and foot-ankle regional hubs.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-shoulder-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Shoulder Anatomy Hub",
+      "description": "Glenohumeral stabilizers, rotator cuff, and biceps anchor for shoulder sports conditions.",
+      "metadata": {
+        "slug": "sports-shoulder-anatomy-hub",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Glenohumeral stabilizers, rotator cuff, and biceps anchor for shoulder sports conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subscapularis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subscapularis",
+      "description": "Anterior cuff tendon providing internal rotation and anterior stability.",
+      "metadata": {
+        "slug": "subscapularis",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Anterior cuff tendon providing internal rotation and anterior stability.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subscapularis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "supraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Supraspinatus",
+      "description": "Superior rotator cuff tendon initiating abduction and commonly torn in cuff pathology.",
+      "metadata": {
+        "slug": "supraspinatus",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Superior rotator cuff tendon initiating abduction and commonly torn in cuff pathology.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|supraspinatus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "teres-minor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Teres Minor",
+      "description": "Inferior posterior cuff muscle contributing to external rotation.",
+      "metadata": {
+        "slug": "teres-minor",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Inferior posterior cuff muscle contributing to external rotation.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "muscle",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|teres-minor"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Collateral Ligament",
+      "description": "Medial elbow stabilizer critical in throwing athletes.",
+      "metadata": {
+        "slug": "ucl",
+        "pilot": "ucl-injury-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Medial elbow stabilizer critical in throwing athletes.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ucl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ulnar-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Nerve",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (ulnar-nerve).",
+      "metadata": {
+        "slug": "ulnar-nerve",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (ulnar-nerve).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ulnar-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "upper-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Upper Extremity Trauma Anatomy Hub",
+      "description": "Cross-cluster UE trauma anatomy reference for sports medicine (upper-extremity-trauma-anatomy-hub).",
+      "metadata": {
+        "slug": "upper-extremity-trauma-anatomy-hub",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-cluster UE trauma anatomy reference for sports medicine (upper-extremity-trauma-anatomy-hub).",
+        "owner_pilot": "upper-extremity-trauma-cluster-shared",
+        "cross_cluster": "upper-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|upper-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-humerus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Humerus Fracture",
+      "description": "Cross-neighborhood reference to canonical condition distal-humerus-fracture.",
+      "metadata": {
+        "slug": "distal-humerus-fracture",
+        "pilot": "ucl-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "description": "Cross-neighborhood reference to canonical condition distal-humerus-fracture.",
+        "owner_pilot": "distal-humerus-fracture-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|distal-humerus-fracture"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "has_classification",
+      "objectSlug": "ucl-injury-classification",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic",
+            "oite"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|ucl-injury|has_classification|ucl-injury-classification",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|has_classification|ucl-injury-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "has_complication",
+      "objectSlug": "ucl-injury-complication",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|ucl-injury|has_complication|ucl-injury-complication",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|ucl-injury|has_complication|ucl-injury-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "ucl-injury-mri-finding",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "workup",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|ucl-injury|has_imaging_finding|ucl-injury-mri-finding",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "workup",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|has_imaging_finding|ucl-injury-mri-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "plantarflexion",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|achilles-tendon|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "articular-cartilage",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cartilage",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|articular-cartilage|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "atfl",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_ankle",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|atfl|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "biceps-anchor",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "biceps_labrum",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|biceps-anchor|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "cfl",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_ankle",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|cfl|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-biceps-tendon",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexion_supination",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|distal-biceps-tendon|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-condyles",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|femoral-condyles|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "glenoid",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "socket",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|glenoid|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "infraspinatus",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "external_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|infraspinatus|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "labrum",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|labrum|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lateral-meniscus",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "meniscus",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|lateral-meniscus|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|lcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "mcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|mcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "medial-meniscus",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "meniscus",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|medial-meniscus|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "posterolateral-corner",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "rotational_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|posterolateral-corner|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-collateral-ligament",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|radial-collateral-ligament|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "rotator-cuff",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "dynamic_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|rotator-cuff|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-elbow-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-elbow-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-elbow-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "ucl-injury",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|sports-elbow-anatomy-hub|prerequisite_for|ucl-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-foot-ankle-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot_ankle",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-foot-ankle-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-knee-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-knee-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-shoulder-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "shoulder",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-shoulder-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subscapularis",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "internal_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|subscapularis|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "supraspinatus",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "abduction",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|supraspinatus|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "teres-minor",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "external_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|teres-minor|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury-mri-finding",
+      "predicate": "indicates_treatment",
+      "objectSlug": "ucl-injury-reconstruction",
+      "metadata": {
+        "note": "operative indication attending-dependent",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury-mri-finding|indicates_treatment|ucl-injury-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "differential_for",
+      "objectSlug": "distal-biceps-tendon-rupture",
+      "metadata": {
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_injury",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|differential_for|distal-biceps-tendon-rupture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "differential_for",
+      "objectSlug": "distal-humerus-fracture",
+      "metadata": {
+        "cross_cluster": true,
+        "review_status": "unreviewed",
+        "relevance_reason": "trauma_overlap",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|differential_for|distal-humerus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "elbow-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|involves_anatomy|elbow-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "radial-collateral-ligament",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|involves_anatomy|radial-collateral-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|ucl-injury|involves_anatomy|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "ucl",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|involves_anatomy|ucl"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "tested_by",
+      "objectSlug": "ucl-injury-exam-maneuver",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|tested_by|ucl-injury-exam-maneuver"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "treated_by",
+      "objectSlug": "ucl-injury-reconstruction",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|treated_by|ucl-injury-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl-injury",
+      "predicate": "treated_by",
+      "objectSlug": "ucl-injury-rehab-protocol",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|ucl-injury|treated_by|ucl-injury-rehab-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|ucl|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-uclinjury-anatomy-pearl",
+      "claimType": "anatomy_pearl",
+      "claimText": "UCL Injury pathoanatomy centers on ucl, elbow-joint, radial-collateral-ligament and related stabilizers.",
+      "primaryEntitySlug": "ucl",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "ucl-injury-neighborhood",
+        "draft_id": "claim-uclinjury-anatomy-pearl",
+        "verified": false,
+        "claim_text": "UCL Injury pathoanatomy centers on ucl, elbow-joint, radial-collateral-ligament and related stabilizers.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "primary_entity_slug": "ucl",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-uclinjury-anatomy-pearl"
+      }
+    },
+    {
+      "draftId": "claim-uclinjury-board-trap",
+      "claimType": "board_trap",
+      "claimText": "Students often underweight exam findings and over-rely on imaging when evaluating ucl injury.",
+      "primaryEntitySlug": "ucl-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "ucl-injury-neighborhood",
+        "draft_id": "claim-uclinjury-board-trap",
+        "verified": false,
+        "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating ucl injury.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite"
+        ],
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "primary_entity_slug": "ucl-injury",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "generated_by": "claim-builder-fallback",
+        "evidence_item_ids": [
+          "ev-proposal-history-39702dfd",
+          "ev-quality-signal-606cd7fb"
+        ],
+        "publication_eligible": false,
+        "_provenance_fingerprint": "claim|claim-uclinjury-board-trap"
+      }
+    },
+    {
+      "draftId": "claim-uclinjury-clinical-script",
+      "claimType": "clinical_script",
+      "claimText": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for ucl injury.",
+      "primaryEntitySlug": "ucl-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "ucl-injury-neighborhood",
+        "draft_id": "claim-uclinjury-clinical-script",
+        "verified": false,
+        "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for ucl injury.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "primary_entity_slug": "ucl-injury",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-uclinjury-clinical-script"
+      }
+    },
+    {
+      "draftId": "claim-uclinjury-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Do not anchor on a single exam maneuver for ucl injury — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primaryEntitySlug": "ucl-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "ucl-injury-neighborhood",
+        "draft_id": "claim-uclinjury-cognitive-trap",
+        "verified": false,
+        "claim_text": "Do not anchor on a single exam maneuver for ucl injury — integrate mechanism, instability symptoms, and imaging pattern.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "primary_entity_slug": "ucl-injury",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "generated_by": "claim-builder-fallback",
+        "evidence_item_ids": [
+          "ev-proposal-history-39702dfd",
+          "ev-quality-signal-606cd7fb"
+        ],
+        "publication_eligible": false,
+        "_provenance_fingerprint": "claim|claim-uclinjury-cognitive-trap"
+      }
+    },
+    {
+      "draftId": "claim-uclinjury-oneliner",
+      "claimType": "fact",
+      "claimText": "UCL injuries in throwers present with medial elbow pain and valgus instability requiring graded return-to-throw planning.",
+      "primaryEntitySlug": "ucl-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "ucl-injury-neighborhood",
+        "draft_id": "claim-uclinjury-oneliner",
+        "verified": false,
+        "claim_text": "UCL injuries in throwers present with medial elbow pain and valgus instability requiring graded return-to-throw planning.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "primary_entity_slug": "ucl-injury",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "generated_by": "claim-builder-fallback",
+        "evidence_item_ids": [
+          "ev-proposal-history-39702dfd",
+          "ev-quality-signal-606cd7fb"
+        ],
+        "publication_eligible": false,
+        "_provenance_fingerprint": "claim|claim-uclinjury-oneliner"
+      }
+    },
+    {
+      "draftId": "claim-uclinjury-rehab-milestone",
+      "claimType": "fact",
+      "claimText": "Rehabilitation milestones and return-to-play criteria for ucl injury require attending-defined progression gates.",
+      "primaryEntitySlug": "ucl-injury-rehab-protocol",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "ucl-injury-neighborhood",
+        "draft_id": "claim-uclinjury-rehab-milestone",
+        "verified": false,
+        "claim_text": "Rehabilitation milestones and return-to-play criteria for ucl injury require attending-defined progression gates.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "primary_entity_slug": "ucl-injury-rehab-protocol",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-uclinjury-rehab-milestone"
+      }
+    },
+    {
+      "draftId": "claim-uclinjury-valgus",
+      "claimType": "fact",
+      "claimText": "Valgus stress testing and throwing history are central to UCL injury evaluation.",
+      "primaryEntitySlug": "ucl-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "ucl-injury-neighborhood",
+        "draft_id": "claim-uclinjury-valgus",
+        "verified": false,
+        "claim_text": "Valgus stress testing and throwing history are central to UCL injury evaluation.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T23:07:25.516Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [],
+        "review_packet_key": "pilot:ucl-injury-neighborhood",
+        "primary_entity_slug": "ucl-injury",
+        "review_packet_label": "UCL Injury Neighborhood",
+        "generated_by": "claim-builder-fallback",
+        "evidence_item_ids": [
+          "ev-proposal-history-39702dfd",
+          "ev-quality-signal-606cd7fb"
+        ],
+        "publication_eligible": false,
+        "_provenance_fingerprint": "claim|claim-uclinjury-valgus"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-uclinjury-operative-indication",
+      "subjectEntitySlug": "ucl-injury",
+      "patternType": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from ucl injury despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-uclinjury-return-to-play",
+      "subjectEntitySlug": "ucl-injury",
+      "patternType": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after ucl injury treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-uclinjury-tommy-john",
+      "subjectEntitySlug": "ucl-injury",
+      "patternType": "operative_indication",
+      "trigger": "Throwing athlete with confirmed UCL tear and inability to return to sport after rehab",
+      "action": "Discuss UCL reconstruction (Tommy John) with graft selection and return-to-throw timeline",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern ucl-injury|operative_indication: dp-uclinjury-operative-indication vs dp-uclinjury-tommy-john"
+    }
+  ],
+  "stats": {
+    "entityCount": 45,
+    "relationshipCount": 39,
+    "claimCount": 7,
+    "decisionPointCount": 3,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 8,
+    "conflictingRelationships": 0,
+    "metadataMerged": 11,
+    "provenanceAttached": 95
+  }
+}

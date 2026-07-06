@@ -1,0 +1,852 @@
+[
+  {
+    "proposal_fingerprint": "rel|distal-radius-fracture|at_risk_structure|median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "distal-radius-fracture -[at_risk_structure]-> median-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-fracture|at_risk_structure|median-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "median-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "neurovascular_risk",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "call"
+        ],
+        "clinical_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:41:15.976Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-radius-fracture|differential_for|druj-instability",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "distal-radius-fracture -[differential_for]-> druj-instability",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-fracture|differential_for|druj-instability",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "druj-instability",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-radius-fracture|differential_for|galeazzi-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "distal-radius-fracture -[differential_for]-> galeazzi-fracture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-fracture|differential_for|galeazzi-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "galeazzi-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-radius-fracture|differential_for|essex-lopresti-injury",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "distal-radius-fracture -[differential_for]-> essex-lopresti-injury",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-fracture|differential_for|essex-lopresti-injury",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "essex-lopresti-injury",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-radius-fracture|differential_for|carpal-instability",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "distal-radius-fracture -[differential_for]-> carpal-instability",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-fracture|differential_for|carpal-instability",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "carpal-instability",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|dorsal-comminution|indicates_treatment|distal-radius-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "dorsal-comminution -[indicates_treatment]-> distal-radius-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: dorsal-comminution -[indicates_treatment]-> distal-radius-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "dorsal-comminution",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "distal-radius-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.82,
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|radial-height-loss|indicates_treatment|distal-radius-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "radial-height-loss -[indicates_treatment]-> distal-radius-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: radial-height-loss -[indicates_treatment]-> distal-radius-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "radial-height-loss",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "distal-radius-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.8,
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-radius-fracture|uses_fixation|distal-radius-orif-fixation",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "distal-radius-fracture -[uses_fixation]-> distal-radius-orif-fixation",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-fracture|uses_fixation|distal-radius-orif-fixation",
+    "alternatives": [],
+    "evidence_summary": "Relationship uses_fixation",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "distal-radius-orif-fixation",
+      "object_entity_type": "fixation_method",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or",
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-radius-fracture|treated_by|distal-radius-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "distal-radius-fracture -[treated_by]-> distal-radius-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-fracture|treated_by|distal-radius-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "distal-radius-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-radius-orif|uses_approach|volar-approach",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "distal-radius-orif -[uses_approach]-> volar-approach",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-orif|uses_approach|volar-approach",
+    "alternatives": [],
+    "evidence_summary": "Relationship uses_approach",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-orif",
+      "subject_entity_type": "procedure",
+      "object_slug": "volar-approach",
+      "object_entity_type": "surgical_approach",
+      "relationship_metadata": {
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-radius-orif|at_risk_structure|median-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "distal-radius-orif -[at_risk_structure]-> median-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-radius-orif|at_risk_structure|median-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-radius-orif",
+      "subject_entity_type": "procedure",
+      "object_slug": "median-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "neurovascular_risk",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|druj|explains_instability|distal-radius-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "druj -[explains_instability]-> distal-radius-fracture",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|druj|explains_instability|distal-radius-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "druj",
+      "subject_entity_type": "anatomy_structure",
+      "object_slug": "distal-radius-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dr-mechanism-nv",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dr-mechanism-nv",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.mustKnow",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dr-mechanism-nv",
+      "claim_type": "fact",
+      "claim_text": "Distal radius fracture management hinges on mechanism, alignment, median nerve exam, and appropriate immobilization choice.",
+      "primary_entity_slug": "distal-radius-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dr-druj-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dr-druj-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.anatomy + boardPearls synthesis",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dr-druj-trap",
+      "claim_type": "board_trap",
+      "claim_text": "DRUJ instability after distal radius fixation can be missed if ulnar-sided wrist exam is skipped.",
+      "primary_entity_slug": "druj",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dr-dorsal-comminution",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dr-dorsal-comminution",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.pimpQuestions",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dr-dorsal-comminution",
+      "claim_type": "imaging_point",
+      "claim_text": "Dorsal comminution often signals instability and higher fixation likelihood after reduction.",
+      "primary_entity_slug": "dorsal-comminution",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dr-malalignment-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dr-malalignment-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.boardPearls",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dr-malalignment-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Accepting malalignment in young or high-demand patients without reassessing instability criteria.",
+      "primary_entity_slug": "distal-radius-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dr-splint-plan",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dr-splint-plan",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.caseSteps",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dr-splint-plan",
+      "claim_type": "clinical_script",
+      "claim_text": "After reduction, document median nerve status, finger ROM, splint plan, and timing of post-reduction films.",
+      "primary_entity_slug": "distal-radius-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-dr-operative-fixation",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-dr-operative-fixation",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.decisionMaking + treatmentOptions",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-dr-operative-fixation",
+      "subject_entity_slug": "distal-radius-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Unstable pattern with significant displacement, dorsal comminution, articular step-off, or failed closed reduction",
+      "action": "Proceed with operative fixation pathway (volar ORIF when indicated) with documented median nerve exam",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-dr-nonoperative-cast",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-dr-nonoperative-cast",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.treatmentOptions",
+    "metadata": {
+      "pilot": "distal-radius-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+      "review_packet_label": "Distal Radius Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-dr-nonoperative-cast",
+      "subject_entity_slug": "distal-radius-fracture",
+      "pattern_type": "nonoperative_eligible",
+      "trigger": "Acceptable alignment after closed reduction in patient suitable for casting",
+      "action": "Splint/cast with protected motion plan, repeat radiographs, and median nerve surveillance",
+      "urgency": "routine",
+      "safety_criticality": "none",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:41:15.977Z"
+    }
+  }
+]

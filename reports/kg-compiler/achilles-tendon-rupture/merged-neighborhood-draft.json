@@ -1,0 +1,2862 @@
+{
+  "topicKey": "achilles-tendon-rupture",
+  "pilotKey": "achilles-tendon-rupture-neighborhood",
+  "generatedAt": "2026-07-05T23:13:25.100Z",
+  "entities": [
+    {
+      "slug": "achilles-tendon-rupture-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Achilles Tendon Rupture MRI Pattern",
+      "metadata": {
+        "slug": "achilles-tendon-rupture-mri-finding",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Characteristic MRI findings in achilles tendon rupture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|achilles-tendon-rupture-mri-finding",
+        "canonical_entity_id": "3d77a667-83e3-4e8b-abbb-b33c8133c6e9",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|achilles-tendon-rupture-mri-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "chronic-lateral-ankle-instability",
+      "entityType": "condition",
+      "preferredLabel": "Chronic Lateral Ankle Instability",
+      "metadata": {
+        "slug": "chronic-lateral-ankle-instability",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-neighborhood reference to canonical condition chronic-lateral-ankle-instability.",
+        "owner_pilot": "chronic-lateral-ankle-instability-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|chronic-lateral-ankle-instability",
+        "canonical_entity_id": "b68aa905-c795-47d9-97e8-642f9b54d50a",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|chronic-lateral-ankle-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon-rupture-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Achilles Tendon Rupture Reconstruction",
+      "metadata": {
+        "slug": "achilles-tendon-rupture-reconstruction",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Operative reconstruction concept for achilles tendon rupture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|achilles-tendon-rupture-reconstruction",
+        "canonical_entity_id": "91dea21e-935b-4788-81f0-88d05d6fca11",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|achilles-tendon-rupture-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon-rupture",
+      "entityType": "condition",
+      "preferredLabel": "Achilles Tendon Rupture",
+      "metadata": {
+        "slug": "achilles-tendon-rupture",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Achilles tendon rupture.",
+        "clinical_kind": "sports_soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|achilles-tendon-rupture",
+        "canonical_entity_id": "d8d2bcc0-c83e-453c-92e2-4776aee44ae8",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|achilles-tendon-rupture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "osteochondral-lesion-talus",
+      "entityType": "condition",
+      "preferredLabel": "Osteochondral Lesion Talus",
+      "metadata": {
+        "slug": "osteochondral-lesion-talus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-neighborhood reference to canonical condition osteochondral-lesion-talus.",
+        "owner_pilot": "osteochondral-lesion-talus-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|osteochondral-lesion-talus",
+        "canonical_entity_id": "bb6177a1-3dfe-49d0-844a-206712c44adf",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|osteochondral-lesion-talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon-rupture-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Achilles Tendon Rupture Rehabilitation",
+      "metadata": {
+        "slug": "achilles-tendon-rupture-rehab-protocol",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Return-to-play rehabilitation milestones for achilles tendon rupture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|treatment_principle|achilles-tendon-rupture-rehab-protocol",
+        "canonical_entity_id": "7ef94717-1119-411b-ae7e-432c54129b22",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|treatment_principle|achilles-tendon-rupture-rehab-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon-rupture-complication",
+      "entityType": "complication",
+      "preferredLabel": "Achilles Tendon Rupture Complication",
+      "metadata": {
+        "slug": "achilles-tendon-rupture-complication",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Common post-injury complication in achilles tendon rupture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|achilles-tendon-rupture-complication",
+        "canonical_entity_id": "a4538040-211c-4eab-b899-75995ddfda57",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|achilles-tendon-rupture-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon-rupture-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Achilles Tendon Rupture Classification",
+      "metadata": {
+        "slug": "achilles-tendon-rupture-classification",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Educational classification framework for achilles tendon rupture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|achilles-tendon-rupture-classification",
+        "canonical_entity_id": "fd894c5a-f465-42ef-b005-4e7aa404d8bc",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|achilles-tendon-rupture-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon-rupture-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Achilles Tendon Rupture Physical Exam",
+      "metadata": {
+        "slug": "achilles-tendon-rupture-exam-maneuver",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Key physical examination maneuver for achilles tendon rupture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|exam_maneuver|achilles-tendon-rupture-exam-maneuver",
+        "canonical_entity_id": "faac7a42-335b-4ca6-a3b6-472bff94809b",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|exam_maneuver|achilles-tendon-rupture-exam-maneuver"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Achilles Tendon",
+      "description": "Conjoined gastrocnemius-soleus tendon inserting on the calcaneus.",
+      "metadata": {
+        "slug": "achilles-tendon",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Conjoined gastrocnemius-soleus tendon inserting on the calcaneus.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|achilles-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "articular-cartilage",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Articular Cartilage",
+      "description": "Hyaline cartilage covering femoral condyles and tibial plateau.",
+      "metadata": {
+        "slug": "articular-cartilage",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Hyaline cartilage covering femoral condyles and tibial plateau.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "cartilage",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|articular-cartilage"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "atfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Talofibular Ligament",
+      "description": "Primary lateral ankle stabilizer injured in inversion sprains.",
+      "metadata": {
+        "slug": "atfl",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Primary lateral ankle stabilizer injured in inversion sprains.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|atfl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "biceps-anchor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Biceps Anchor",
+      "description": "Superior labrum and biceps anchor complex at the glenoid origin.",
+      "metadata": {
+        "slug": "biceps-anchor",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Superior labrum and biceps anchor complex at the glenoid origin.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|biceps-anchor"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (calcaneus).",
+      "metadata": {
+        "slug": "calcaneus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (calcaneus).",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "cross_cluster": "lower-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "cfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneofibular Ligament",
+      "description": "Lateral ankle ligament stabilizing subtalar motion after inversion injury.",
+      "metadata": {
+        "slug": "cfl",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Lateral ankle ligament stabilizing subtalar motion after inversion injury.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|cfl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "deltoid-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deltoid Ligament",
+      "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (deltoid-ligament).",
+      "metadata": {
+        "slug": "deltoid-ligament",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (deltoid-ligament).",
+        "owner_pilot": "ankle-fracture-neighborhood",
+        "cross_cluster": "ankle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|deltoid-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-biceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Biceps Tendon",
+      "description": "Distal biceps insertion on the radial tuberosity enabling elbow flexion and supination.",
+      "metadata": {
+        "slug": "distal-biceps-tendon",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Distal biceps insertion on the radial tuberosity enabling elbow flexion and supination.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-biceps-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "glenoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid",
+      "description": "Scapular articular surface forming the socket of the glenohumeral joint.",
+      "metadata": {
+        "slug": "glenoid",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Scapular articular surface forming the socket of the glenohumeral joint.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|glenoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "infraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Infraspinatus",
+      "description": "Posterior cuff tendon providing external rotation strength.",
+      "metadata": {
+        "slug": "infraspinatus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Posterior cuff tendon providing external rotation strength.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|infraspinatus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lateral-malleolus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Malleolus",
+      "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (lateral-malleolus).",
+      "metadata": {
+        "slug": "lateral-malleolus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (lateral-malleolus).",
+        "owner_pilot": "ankle-fracture-neighborhood",
+        "cross_cluster": "ankle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lateral-malleolus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lateral-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Meniscus",
+      "description": "More mobile lateral meniscus with popliteus hiatus; commonly torn with ACL injuries.",
+      "metadata": {
+        "slug": "lateral-meniscus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "More mobile lateral meniscus with popliteus hiatus; commonly torn with ACL injuries.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "meniscus",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lateral-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Collateral Ligament",
+      "description": "Primary lateral knee stabilizer resisting varus stress.",
+      "metadata": {
+        "slug": "lcl",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Primary lateral knee stabilizer resisting varus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "mcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Collateral Ligament",
+      "description": "Primary medial knee stabilizer resisting valgus stress.",
+      "metadata": {
+        "slug": "mcl",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Primary medial knee stabilizer resisting valgus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|mcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "medial-malleolus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Malleolus",
+      "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (medial-malleolus).",
+      "metadata": {
+        "slug": "medial-malleolus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (medial-malleolus).",
+        "owner_pilot": "ankle-fracture-neighborhood",
+        "cross_cluster": "ankle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|medial-malleolus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "medial-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Meniscus",
+      "description": "C-shaped medial meniscus distributing load and resisting shear at the medial compartment.",
+      "metadata": {
+        "slug": "medial-meniscus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "C-shaped medial meniscus distributing load and resisting shear at the medial compartment.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "meniscus",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|medial-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "posterolateral-corner",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterolateral Corner",
+      "description": "Posterolateral knee stabilizing complex including LCL, popliteus, and arcuate ligaments.",
+      "metadata": {
+        "slug": "posterolateral-corner",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Posterolateral knee stabilizing complex including LCL, popliteus, and arcuate ligaments.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|posterolateral-corner"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "radial-collateral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Collateral Ligament",
+      "description": "Lateral elbow stabilizer resisting varus stress.",
+      "metadata": {
+        "slug": "radial-collateral-ligament",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Lateral elbow stabilizer resisting varus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radial-collateral-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "rotator-cuff",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Rotator Cuff",
+      "description": "Supraspinatus, infraspinatus, subscapularis, and teres minor force-couple complex.",
+      "metadata": {
+        "slug": "rotator-cuff",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Supraspinatus, infraspinatus, subscapularis, and teres minor force-couple complex.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-elbow-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Elbow Anatomy Hub",
+      "description": "Elbow ligament and tendon structures relevant to throwing and flexion injuries.",
+      "metadata": {
+        "slug": "sports-elbow-anatomy-hub",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Elbow ligament and tendon structures relevant to throwing and flexion injuries.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-foot-ankle-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Foot & Ankle Anatomy Hub",
+      "description": "Lateral ankle ligaments, syndesmosis, Achilles, and hindfoot structures for sports foot-ankle conditions.",
+      "metadata": {
+        "slug": "sports-foot-ankle-anatomy-hub",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "foot_ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Lateral ankle ligaments, syndesmosis, Achilles, and hindfoot structures for sports foot-ankle conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-knee-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Knee Anatomy Hub",
+      "description": "Knee ligament, meniscus, extensor, and articular structures for sports knee conditions.",
+      "metadata": {
+        "slug": "sports-knee-anatomy-hub",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Knee ligament, meniscus, extensor, and articular structures for sports knee conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-medicine-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Medicine Anatomy Hub",
+      "description": "Composite sports medicine model linking knee, shoulder, elbow, and foot-ankle regional hubs.",
+      "metadata": {
+        "slug": "sports-medicine-anatomy-hub",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "sports_medicine",
+        "cluster": "sports-medicine",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Composite sports medicine model linking knee, shoulder, elbow, and foot-ankle regional hubs.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-shoulder-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Shoulder Anatomy Hub",
+      "description": "Glenohumeral stabilizers, rotator cuff, and biceps anchor for shoulder sports conditions.",
+      "metadata": {
+        "slug": "sports-shoulder-anatomy-hub",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Glenohumeral stabilizers, rotator cuff, and biceps anchor for shoulder sports conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subscapularis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subscapularis",
+      "description": "Anterior cuff tendon providing internal rotation and anterior stability.",
+      "metadata": {
+        "slug": "subscapularis",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Anterior cuff tendon providing internal rotation and anterior stability.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subscapularis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "supraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Supraspinatus",
+      "description": "Superior rotator cuff tendon initiating abduction and commonly torn in cuff pathology.",
+      "metadata": {
+        "slug": "supraspinatus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Superior rotator cuff tendon initiating abduction and commonly torn in cuff pathology.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|supraspinatus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "syndesmosis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Syndesmosis",
+      "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (syndesmosis).",
+      "metadata": {
+        "slug": "syndesmosis",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (syndesmosis).",
+        "owner_pilot": "ankle-fracture-neighborhood",
+        "cross_cluster": "ankle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|syndesmosis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (talus).",
+      "metadata": {
+        "slug": "talus",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-cluster foot-ankle anatomy reference for sports medicine (talus).",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "cross_cluster": "lower-extremity-trauma",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "teres-minor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Teres Minor",
+      "description": "Inferior posterior cuff muscle contributing to external rotation.",
+      "metadata": {
+        "slug": "teres-minor",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Inferior posterior cuff muscle contributing to external rotation.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "muscle",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|teres-minor"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Collateral Ligament",
+      "description": "Medial elbow stabilizer critical in throwing athletes.",
+      "metadata": {
+        "slug": "ucl",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Medial elbow stabilizer critical in throwing athletes.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ucl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ankle-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Ankle Fracture",
+      "description": "Cross-neighborhood reference to canonical condition ankle-fracture.",
+      "metadata": {
+        "slug": "ankle-fracture",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-neighborhood reference to canonical condition ankle-fracture.",
+        "owner_pilot": "ankle-fracture-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|ankle-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Calcaneus Fracture",
+      "description": "Cross-neighborhood reference to canonical condition calcaneus-fracture.",
+      "metadata": {
+        "slug": "calcaneus-fracture",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-neighborhood reference to canonical condition calcaneus-fracture.",
+        "owner_pilot": "calcaneus-fracture-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|calcaneus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Talus Fracture",
+      "description": "Cross-neighborhood reference to canonical condition talus-fracture.",
+      "metadata": {
+        "slug": "talus-fracture",
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "description": "Cross-neighborhood reference to canonical condition talus-fracture.",
+        "owner_pilot": "talus-fracture-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|talus-fracture"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "has_classification",
+      "objectSlug": "achilles-tendon-rupture-classification",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic",
+            "oite"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|achilles-tendon-rupture|has_classification|achilles-tendon-rupture-classification",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|has_classification|achilles-tendon-rupture-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "has_complication",
+      "objectSlug": "achilles-tendon-rupture-complication",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|achilles-tendon-rupture|has_complication|achilles-tendon-rupture-complication",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|has_complication|achilles-tendon-rupture-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "achilles-tendon-rupture-mri-finding",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "workup",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|achilles-tendon-rupture|has_imaging_finding|achilles-tendon-rupture-mri-finding",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "workup",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|has_imaging_finding|achilles-tendon-rupture-mri-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture-mri-finding",
+      "predicate": "indicates_treatment",
+      "objectSlug": "achilles-tendon-rupture-reconstruction",
+      "metadata": {
+        "note": "operative indication attending-dependent",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture-mri-finding|indicates_treatment|achilles-tendon-rupture-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "differential_for",
+      "objectSlug": "ankle-fracture",
+      "metadata": {
+        "cross_cluster": true,
+        "review_status": "unreviewed",
+        "relevance_reason": "trauma_overlap",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|differential_for|ankle-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "differential_for",
+      "objectSlug": "calcaneus-fracture",
+      "metadata": {
+        "cross_cluster": true,
+        "review_status": "unreviewed",
+        "relevance_reason": "trauma_overlap",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|differential_for|calcaneus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "differential_for",
+      "objectSlug": "chronic-lateral-ankle-instability",
+      "metadata": {
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_injury",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|differential_for|chronic-lateral-ankle-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "differential_for",
+      "objectSlug": "osteochondral-lesion-talus",
+      "metadata": {
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_injury",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|differential_for|osteochondral-lesion-talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "differential_for",
+      "objectSlug": "talus-fracture",
+      "metadata": {
+        "cross_cluster": true,
+        "review_status": "unreviewed",
+        "relevance_reason": "trauma_overlap",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|differential_for|talus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "achilles-tendon",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|involves_anatomy|achilles-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|involves_anatomy|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|involves_anatomy|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "tested_by",
+      "objectSlug": "achilles-tendon-rupture-exam-maneuver",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|tested_by|achilles-tendon-rupture-exam-maneuver"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "treated_by",
+      "objectSlug": "achilles-tendon-rupture-reconstruction",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|treated_by|achilles-tendon-rupture-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon-rupture",
+      "predicate": "treated_by",
+      "objectSlug": "achilles-tendon-rupture-rehab-protocol",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|achilles-tendon-rupture|treated_by|achilles-tendon-rupture-rehab-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "plantarflexion",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|achilles-tendon|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "articular-cartilage",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cartilage",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|articular-cartilage|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "atfl",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_ankle",
+        "_provenance_fingerprint": "rel|atfl|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "biceps-anchor",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "biceps_labrum",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|biceps-anchor|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|calcaneus|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "cfl",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_ankle",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|cfl|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-biceps-tendon",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexion_supination",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|distal-biceps-tendon|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-condyles",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|femoral-condyles|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "glenoid",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "socket",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|glenoid|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "infraspinatus",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "external_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|infraspinatus|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "labrum",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|labrum|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lateral-meniscus",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "meniscus",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|lateral-meniscus|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|lcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "mcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|mcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "medial-meniscus",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "meniscus",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|medial-meniscus|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "posterolateral-corner",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "rotational_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|posterolateral-corner|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-collateral-ligament",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|radial-collateral-ligament|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "rotator-cuff",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "dynamic_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|rotator-cuff|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-elbow-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-elbow-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-foot-ankle-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot_ankle",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-foot-ankle-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-foot-ankle-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "achilles-tendon-rupture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|sports-foot-ankle-anatomy-hub|prerequisite_for|achilles-tendon-rupture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-knee-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-knee-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-shoulder-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "shoulder",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-shoulder-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subscapularis",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "internal_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|subscapularis|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "supraspinatus",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "abduction",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|supraspinatus|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "syndesmosis",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|syndesmosis|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|talus|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "teres-minor",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "external_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|teres-minor|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|ucl|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-achilles-tendon-rupture-board_trap-a-positive-thompson-test",
+      "claimType": "board_trap",
+      "claimText": "A positive Thompson test in the right story is often enough to act.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achilles-tendon-rupture-board_trap-a-positive-thompson-test",
+        "claim_type": "board_trap",
+        "claim_text": "A positive Thompson test in the right story is often enough to act.",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-cd080f22"
+        ],
+        "evidence_packet_id": "ev-packet-34afd352",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "_provenance_fingerprint": "claim|claim-achilles-tendon-rupture-board_trap-a-positive-thompson-test"
+      }
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-cognitive_trap-do-not-forget-comparison",
+      "claimType": "cognitive_trap",
+      "claimText": "Do not forget comparison to the opposite side.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achilles-tendon-rupture-cognitive_trap-do-not-forget-comparison",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Do not forget comparison to the opposite side.",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-cd0904b6"
+        ],
+        "evidence_packet_id": "ev-packet-34afd352",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "_provenance_fingerprint": "claim|claim-achilles-tendon-rupture-cognitive_trap-do-not-forget-comparison"
+      }
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-acute-versus-chronic-rup",
+      "claimType": "fact",
+      "claimText": "Acute versus chronic rupture.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achilles-tendon-rupture-fact-acute-versus-chronic-rup",
+        "claim_type": "fact",
+        "claim_text": "Acute versus chronic rupture.",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-cd080f22"
+        ],
+        "evidence_packet_id": "ev-packet-34afd352",
+        "uncertainty_note": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_REVISED",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "_provenance_fingerprint": "claim|claim-achilles-tendon-rupture-fact-acute-versus-chronic-rup"
+      }
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-compare-operative-and-no",
+      "claimType": "fact",
+      "claimText": "Compare operative and nonoperative treatment at a high level.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achilles-tendon-rupture-fact-compare-operative-and-no",
+        "claim_type": "fact",
+        "claim_text": "Compare operative and nonoperative treatment at a high level.",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-55dbaea1"
+        ],
+        "evidence_packet_id": "ev-packet-34afd352",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "_provenance_fingerprint": "claim|claim-achilles-tendon-rupture-fact-compare-operative-and-no"
+      }
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-explain-the-thompson-tes",
+      "claimType": "fact",
+      "claimText": "Explain the Thompson test and resting tension findings.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achilles-tendon-rupture-fact-explain-the-thompson-tes",
+        "claim_type": "fact",
+        "claim_text": "Explain the Thompson test and resting tension findings.",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-55dbaea1"
+        ],
+        "evidence_packet_id": "ev-packet-34afd352",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "_provenance_fingerprint": "claim|claim-achilles-tendon-rupture-fact-explain-the-thompson-tes"
+      }
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-identify-classic-achille",
+      "claimType": "fact",
+      "claimText": "Identify classic Achilles rupture history and exam.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achilles-tendon-rupture-fact-identify-classic-achille",
+        "claim_type": "fact",
+        "claim_text": "Identify classic Achilles rupture history and exam.",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-55dbaea1"
+        ],
+        "evidence_packet_id": "ev-packet-34afd352",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "_provenance_fingerprint": "claim|claim-achilles-tendon-rupture-fact-identify-classic-achille"
+      }
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-insertional-versus-midsu",
+      "claimType": "fact",
+      "claimText": "Insertional versus midsubstance.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achilles-tendon-rupture-fact-insertional-versus-midsu",
+        "claim_type": "fact",
+        "claim_text": "Insertional versus midsubstance.",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-cd080f22"
+        ],
+        "evidence_packet_id": "ev-packet-34afd352",
+        "uncertainty_note": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_REVISED",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "_provenance_fingerprint": "claim|claim-achilles-tendon-rupture-fact-insertional-versus-midsu"
+      }
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-imaging_point-ultrasound-or-mri-only-w",
+      "claimType": "imaging_point",
+      "claimText": "Ultrasound or MRI only when exam is equivocal.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achilles-tendon-rupture-imaging_point-ultrasound-or-mri-only-w",
+        "claim_type": "imaging_point",
+        "claim_text": "Ultrasound or MRI only when exam is equivocal.",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-cd080f22"
+        ],
+        "evidence_packet_id": "ev-packet-34afd352",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "_provenance_fingerprint": "claim|claim-achilles-tendon-rupture-imaging_point-ultrasound-or-mri-only-w"
+      }
+    },
+    {
+      "draftId": "claim-achillestendonrupture-anatomy-pearl",
+      "claimType": "anatomy_pearl",
+      "claimText": "Achilles Tendon Rupture pathoanatomy centers on achilles-tendon, calcaneus and related stabilizers.",
+      "primaryEntitySlug": "achilles-tendon",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achillestendonrupture-anatomy-pearl",
+        "verified": false,
+        "claim_text": "Achilles Tendon Rupture pathoanatomy centers on achilles-tendon, calcaneus and related stabilizers.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "primary_entity_slug": "achilles-tendon",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-achillestendonrupture-anatomy-pearl"
+      }
+    },
+    {
+      "draftId": "claim-achillestendonrupture-board-trap",
+      "claimType": "board_trap",
+      "claimText": "Students often underweight exam findings and over-rely on imaging when evaluating achilles tendon rupture.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achillestendonrupture-board-trap",
+        "verified": false,
+        "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating achilles tendon rupture.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite"
+        ],
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-achillestendonrupture-board-trap"
+      }
+    },
+    {
+      "draftId": "claim-achillestendonrupture-clinical-script",
+      "claimType": "clinical_script",
+      "claimText": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for achilles tendon rupture.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achillestendonrupture-clinical-script",
+        "verified": false,
+        "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for achilles tendon rupture.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-achillestendonrupture-clinical-script"
+      }
+    },
+    {
+      "draftId": "claim-achillestendonrupture-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Do not anchor on a single exam maneuver for achilles tendon rupture — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achillestendonrupture-cognitive-trap",
+        "verified": false,
+        "claim_text": "Do not anchor on a single exam maneuver for achilles tendon rupture — integrate mechanism, instability symptoms, and imaging pattern.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-achillestendonrupture-cognitive-trap"
+      }
+    },
+    {
+      "draftId": "claim-achillestendonrupture-oneliner",
+      "claimType": "fact",
+      "claimText": "Achilles rupture is usually a clinical diagnosis where early recognition preserves treatment options.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achillestendonrupture-oneliner",
+        "verified": false,
+        "claim_text": "Achilles rupture is usually a clinical diagnosis where early recognition preserves treatment options.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-achillestendonrupture-oneliner"
+      }
+    },
+    {
+      "draftId": "claim-achillestendonrupture-rehab-milestone",
+      "claimType": "fact",
+      "claimText": "Rehabilitation milestones and return-to-play criteria for achilles tendon rupture require attending-defined progression gates.",
+      "primaryEntitySlug": "achilles-tendon-rupture-rehab-protocol",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achillestendonrupture-rehab-milestone",
+        "verified": false,
+        "claim_text": "Rehabilitation milestones and return-to-play criteria for achilles tendon rupture require attending-defined progression gates.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "primary_entity_slug": "achilles-tendon-rupture-rehab-protocol",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-achillestendonrupture-rehab-milestone"
+      }
+    },
+    {
+      "draftId": "claim-achillestendonrupture-thompson",
+      "claimType": "fact",
+      "claimText": "Positive Thompson test with sudden pop history is often sufficient to diagnose Achilles rupture.",
+      "primaryEntitySlug": "achilles-tendon-rupture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "achilles-tendon-rupture-neighborhood",
+        "draft_id": "claim-achillestendonrupture-thompson",
+        "verified": false,
+        "claim_text": "Positive Thompson test with sudden pop history is often sufficient to diagnose Achilles rupture.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T23:13:25.095Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [],
+        "review_packet_key": "pilot:achilles-tendon-rupture-neighborhood",
+        "primary_entity_slug": "achilles-tendon-rupture",
+        "review_packet_label": "Achilles Tendon Rupture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-achillestendonrupture-thompson"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-achillestendonrupture-operative-indication",
+      "subjectEntitySlug": "achilles-tendon-rupture",
+      "patternType": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from achilles tendon rupture despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-achillestendonrupture-return-to-play",
+      "subjectEntitySlug": "achilles-tendon-rupture",
+      "patternType": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after achilles tendon rupture treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [],
+  "stats": {
+    "entityCount": 42,
+    "relationshipCount": 44,
+    "claimCount": 15,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 9,
+    "conflictingRelationships": 0,
+    "metadataMerged": 12,
+    "provenanceAttached": 104
+  }
+}

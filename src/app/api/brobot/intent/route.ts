@@ -16,7 +16,8 @@ import {
   type BroBotIntentSource,
   type BroBotModelMessage,
 } from '@/lib/brobot/chat';
-import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
+import { getBroBotAccessGate } from '@/lib/brobot/brobot-entitlement-access';
+import { type Subject } from '@/lib/brobot/entitlements';
 import {
   createGuestSession,
   getGuestSessionFromRequest,
@@ -215,12 +216,12 @@ export async function POST(request: Request) {
     subject = { type: 'guest', id: guestSession.guestId };
   }
 
-  const entitlement = await getRemainingAIUses(subject);
-  if (entitlement.source === 'disabled') {
+  const gate = await getBroBotAccessGate(subject);
+  if (gate.source === 'disabled') {
     return withGuestCookie(disabledResponse(), guestCookieToSet);
   }
-  if (entitlement.isLimitReached) {
-    return withGuestCookie(limitReachedResponse(entitlement.aiAccess.dailyCap), guestCookieToSet);
+  if (gate.isLimitReached) {
+    return withGuestCookie(limitReachedResponse(gate.dailyCap), guestCookieToSet);
   }
 
   let intent = fallbackBroBotIntentExpansion(body.message, body.mode);

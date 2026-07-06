@@ -1,0 +1,813 @@
+{
+  "topicKey": "proximal-humerus-fracture",
+  "pilotKey": "proximal-humerus-fracture-neighborhood",
+  "generatedAt": "2026-07-05T21:56:51.261Z",
+  "summary": {
+    "AUTO_APPROVE": 19,
+    "SAFE_REVIEW": 6,
+    "EXPERT_REVIEW": 13,
+    "REJECT": 0
+  },
+  "humanReviewPercent": 50,
+  "autoApprovedPercent": 50,
+  "decisions": [
+    {
+      "proposal_fingerprint": "bridge|trauma-proximal-humerus-fractures|proximal-humerus-fracture",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8725,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.8075,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_bridge",
+        "Composite confidence 0.873 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_bridge"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ph-axillary-exam",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8225000000000001,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.823 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ph-case-script",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8225000000000001,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.5625,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.823 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ph-elderly-arthroplasty-trap",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8225000000000001,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.823 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ph-nonoperative-majority",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8225000000000001,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.823 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ph-stiffness",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.8225000000000001,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.5625,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.823 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ph-tuberosity-trap",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8225000000000001,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.823 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-proximal-humerus-fracture-board_trap-axillary-nerve-exam-shou",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7828750000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.39575,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.783 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-proximal-humerus-fracture-cognitive_trap-mention-tuberosity-displ",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7828750000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.39575,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.783 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-proximal-humerus-fracture-fact-describe-complications-a",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "default_human_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-proximal-humerus-fracture-fact-many-nonoperative",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-proximal-humerus-fracture-fact-often-low-energy-elderly",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-proximal-humerus-fracture-fact-recognize-common-proxima",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "default_human_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-proximal-humerus-fracture-fact-understand-why-many-are-",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "default_human_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-proximal-humerus-fracture-imaging_point-ap-scapular-y-axillary-v",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|classification_system|neer-classification",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8935,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.893 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|complication|humeral-head-avn",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8935,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.893 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|complication|proximal-humerus-stiffness",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8935,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.893 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|proximal-humerus-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8935,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.893 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|imaging_finding|displaced-proximal-humerus-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8935,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.893 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|proximal-humerus-hemiarthroplasty",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8935,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.893 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|proximal-humerus-orif",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8935,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.893 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "dp|dp-ph-hemiarthroplasty",
+      "proposal_type": "propose_decision_point",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.81,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.85,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: decision_point_requires_attending",
+        "Composite confidence 0.810 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "decision_point_requires_attending"
+      ]
+    },
+    {
+      "proposal_fingerprint": "dp|dp-ph-operative-orif",
+      "proposal_type": "propose_decision_point",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.81,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.85,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: decision_point_requires_attending",
+        "Composite confidence 0.810 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "decision_point_requires_attending"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|displaced-proximal-humerus-fracture|indicates_treatment|proximal-humerus-orif",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|at_risk_structure|axillary-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|has_classification|neer-classification",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|has_complication|humeral-head-avn",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|has_complication|proximal-humerus-stiffness",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|has_imaging_finding|displaced-proximal-humerus-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|injured_in|proximal-humerus",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|injured_in|surgical-neck",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|involves_anatomy|humeral-head",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|treated_by|proximal-humerus-hemiarthroplasty",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-fracture|treated_by|proximal-humerus-orif",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|proximal-humerus-orif|involves_anatomy|proximal-humerus",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|proximal-humerus-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.87,
+      "evidenceQuality": 0.75,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.870 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    }
+  ]
+}

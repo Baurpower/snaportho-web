@@ -1,0 +1,1138 @@
+{
+  "topicKey": "proximal-humerus-fracture",
+  "pilotKey": "proximal-humerus-fracture-neighborhood",
+  "generatedAt": "2026-07-05T21:56:51.262Z",
+  "entities": [
+    {
+      "slug": "proximal-humerus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Proximal Humerus Fracture",
+      "metadata": {
+        "slug": "proximal-humerus-fracture",
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "description": "Fracture involving the proximal humeral head, neck, or tuberosities.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|proximal-humerus-fracture",
+        "canonical_entity_id": "d627334c-5d00-427a-a0d1-8470b34d4407",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|proximal-humerus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "neer-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Neer Classification",
+      "metadata": {
+        "slug": "neer-classification",
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "description": "Part-based proximal humerus fracture classification framework.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|neer-classification",
+        "canonical_entity_id": "05e9f5ca-5d33-4845-ac31-56bdaf02eea9",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|neer-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "humeral-head-avn",
+      "entityType": "complication",
+      "preferredLabel": "Humeral Head AVN",
+      "metadata": {
+        "slug": "humeral-head-avn",
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "description": "Avascular necrosis of the humeral head after proximal humerus fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|humeral-head-avn",
+        "canonical_entity_id": "d95e7379-cdaf-4482-997e-53ad06bcc355",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|humeral-head-avn"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "proximal-humerus-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Proximal Humerus ORIF",
+      "metadata": {
+        "slug": "proximal-humerus-orif",
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "description": "Open reduction internal fixation of displaced proximal humerus fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|proximal-humerus-orif",
+        "canonical_entity_id": "88743898-8317-402a-a784-d3f838e3ce9f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|proximal-humerus-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "displaced-proximal-humerus-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Displaced Proximal Humerus Fracture",
+      "metadata": {
+        "slug": "displaced-proximal-humerus-fracture",
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "description": "Multi-part or displaced proximal humerus pattern altering fixation versus arthroplasty calculus.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|displaced-proximal-humerus-fracture",
+        "canonical_entity_id": "ce705cfe-6a84-48c4-ae35-9b28f75aa461",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|displaced-proximal-humerus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "proximal-humerus-stiffness",
+      "entityType": "complication",
+      "preferredLabel": "Proximal Humerus Stiffness",
+      "metadata": {
+        "slug": "proximal-humerus-stiffness",
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "description": "Post-fracture shoulder stiffness from immobilization or malunion.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|proximal-humerus-stiffness",
+        "canonical_entity_id": "b6f0dc36-3588-465d-8e9b-0a389f56bd5a",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|proximal-humerus-stiffness"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "proximal-humerus-hemiarthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Proximal Humerus Hemiarthroplasty",
+      "metadata": {
+        "slug": "proximal-humerus-hemiarthroplasty",
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "description": "Hemiarthroplasty for select complex or unreconstructable proximal humerus fractures.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|proximal-humerus-hemiarthroplasty",
+        "canonical_entity_id": "b83896d5-7595-445d-8399-3e1384c549c5",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|proximal-humerus-hemiarthroplasty"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "has_classification",
+      "objectSlug": "neer-classification",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic",
+            "oite"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|proximal-humerus-fracture|has_classification|neer-classification",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|has_classification|neer-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "proximal-humerus-stiffness",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|proximal-humerus-fracture|has_complication|proximal-humerus-stiffness",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|has_complication|proximal-humerus-stiffness"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "humeral-head-avn",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|proximal-humerus-fracture|has_complication|humeral-head-avn",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|has_complication|humeral-head-avn"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "displaced-proximal-humerus-fracture",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "displacement",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|proximal-humerus-fracture|has_imaging_finding|displaced-proximal-humerus-fracture",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "displacement",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|has_imaging_finding|displaced-proximal-humerus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "displaced-proximal-humerus-fracture",
+      "predicate": "indicates_treatment",
+      "objectSlug": "proximal-humerus-orif",
+      "metadata": {
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|displaced-proximal-humerus-fracture|indicates_treatment|proximal-humerus-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "at_risk_structure",
+      "objectSlug": "axillary-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular_exam",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|at_risk_structure|axillary-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "proximal-humerus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|injured_in|proximal-humerus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "surgical-neck",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "fracture_zone",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|injured_in|surgical-neck"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "humeral-head",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "viability",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|involves_anatomy|humeral-head"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "upper-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "proximal-humerus-hemiarthroplasty",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|treated_by|proximal-humerus-hemiarthroplasty"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "proximal-humerus-orif",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|proximal-humerus-fracture|treated_by|proximal-humerus-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-humerus-orif",
+      "predicate": "involves_anatomy",
+      "objectSlug": "proximal-humerus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "approach",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|proximal-humerus-orif|involves_anatomy|proximal-humerus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "upper-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "proximal-humerus-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|proximal-humerus-fracture"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-ph-axillary-exam",
+      "claimType": "anatomy_pearl",
+      "claimText": "Axillary nerve exam should be part of every proximal humerus fracture presentation.",
+      "primaryEntitySlug": "axillary-nerve",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-ph-axillary-exam",
+        "verified": false,
+        "claim_text": "Axillary nerve exam should be part of every proximal humerus fracture presentation.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "call",
+          "oite"
+        ],
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "axillary-nerve",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-ph-axillary-exam"
+      }
+    },
+    {
+      "draftId": "claim-ph-case-script",
+      "claimType": "clinical_script",
+      "claimText": "State fracture parts, axillary nerve function, sling plan, and early pendulum motion when safe.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-ph-case-script",
+        "verified": false,
+        "claim_text": "State fracture parts, axillary nerve function, sling plan, and early pendulum motion when safe.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-ph-case-script"
+      }
+    },
+    {
+      "draftId": "claim-ph-elderly-arthroplasty-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Pushing ORIF in poor bone quality complex fractures without discussing hemiarthroplasty alternatives.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-ph-elderly-arthroplasty-trap",
+        "verified": false,
+        "claim_text": "Pushing ORIF in poor bone quality complex fractures without discussing hemiarthroplasty alternatives.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-ph-elderly-arthroplasty-trap"
+      }
+    },
+    {
+      "draftId": "claim-ph-nonoperative-majority",
+      "claimType": "fact",
+      "claimText": "Many proximal humerus fractures in elderly patients are treated nonoperatively when alignment is acceptable.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-ph-nonoperative-majority",
+        "verified": false,
+        "claim_text": "Many proximal humerus fractures in elderly patients are treated nonoperatively when alignment is acceptable.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-ph-nonoperative-majority"
+      }
+    },
+    {
+      "draftId": "claim-ph-stiffness",
+      "claimType": "fact",
+      "claimText": "Stiffness is a major functional complication after proximal humerus fracture and immobilization.",
+      "primaryEntitySlug": "proximal-humerus-stiffness",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-ph-stiffness",
+        "verified": false,
+        "claim_text": "Stiffness is a major functional complication after proximal humerus fracture and immobilization.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "proximal-humerus-stiffness",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-ph-stiffness"
+      }
+    },
+    {
+      "draftId": "claim-ph-tuberosity-trap",
+      "claimType": "board_trap",
+      "claimText": "Tuberosity displacement and head-split patterns change operative thinking more than nondisplaced neck lines alone.",
+      "primaryEntitySlug": "displaced-proximal-humerus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-ph-tuberosity-trap",
+        "verified": false,
+        "claim_text": "Tuberosity displacement and head-split patterns change operative thinking more than nondisplaced neck lines alone.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "or"
+        ],
+        "review_packet_key": "pilot:proximal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "displaced-proximal-humerus-fracture",
+        "review_packet_label": "Proximal Humerus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-ph-tuberosity-trap"
+      }
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-board_trap-axillary-nerve-exam-shou",
+      "claimType": "board_trap",
+      "claimText": "Axillary nerve exam should be part of every shoulder trauma presentation.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-proximal-humerus-fracture-board_trap-axillary-nerve-exam-shou",
+        "claim_type": "board_trap",
+        "claim_text": "Axillary nerve exam should be part of every shoulder trauma presentation.",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ad3ac3d1"
+        ],
+        "evidence_packet_id": "ev-packet-22f83ba1",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "_provenance_fingerprint": "claim|claim-proximal-humerus-fracture-board_trap-axillary-nerve-exam-shou"
+      }
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-cognitive_trap-mention-tuberosity-displ",
+      "claimType": "cognitive_trap",
+      "claimText": "Mention tuberosity displacement and head split if present.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-proximal-humerus-fracture-cognitive_trap-mention-tuberosity-displ",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Mention tuberosity displacement and head split if present.",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ad39ad45"
+        ],
+        "evidence_packet_id": "ev-packet-22f83ba1",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "_provenance_fingerprint": "claim|claim-proximal-humerus-fracture-cognitive_trap-mention-tuberosity-displ"
+      }
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-describe-complications-a",
+      "claimType": "fact",
+      "claimText": "Describe complications and rehab priorities.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-proximal-humerus-fracture-fact-describe-complications-a",
+        "claim_type": "fact",
+        "claim_text": "Describe complications and rehab priorities.",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-09757232"
+        ],
+        "evidence_packet_id": "ev-packet-22f83ba1",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "_provenance_fingerprint": "claim|claim-proximal-humerus-fracture-fact-describe-complications-a"
+      }
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-many-nonoperative",
+      "claimType": "fact",
+      "claimText": "many nonoperative.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-proximal-humerus-fracture-fact-many-nonoperative",
+        "claim_type": "fact",
+        "claim_text": "many nonoperative.",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ad39ad45"
+        ],
+        "evidence_packet_id": "ev-packet-22f83ba1",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "_provenance_fingerprint": "claim|claim-proximal-humerus-fracture-fact-many-nonoperative"
+      }
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-often-low-energy-elderly",
+      "claimType": "fact",
+      "claimText": "Often low-energy elderly injury.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-proximal-humerus-fracture-fact-often-low-energy-elderly",
+        "claim_type": "fact",
+        "claim_text": "Often low-energy elderly injury.",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ad39ad45"
+        ],
+        "evidence_packet_id": "ev-packet-22f83ba1",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "_provenance_fingerprint": "claim|claim-proximal-humerus-fracture-fact-often-low-energy-elderly"
+      }
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-recognize-common-proxima",
+      "claimType": "fact",
+      "claimText": "Recognize common proximal humerus fracture patterns and demographic.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-proximal-humerus-fracture-fact-recognize-common-proxima",
+        "claim_type": "fact",
+        "claim_text": "Recognize common proximal humerus fracture patterns and demographic.",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-09757232"
+        ],
+        "evidence_packet_id": "ev-packet-22f83ba1",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "_provenance_fingerprint": "claim|claim-proximal-humerus-fracture-fact-recognize-common-proxima"
+      }
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-understand-why-many-are-",
+      "claimType": "fact",
+      "claimText": "Understand why many are treated nonoperatively.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-proximal-humerus-fracture-fact-understand-why-many-are-",
+        "claim_type": "fact",
+        "claim_text": "Understand why many are treated nonoperatively.",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-09757232"
+        ],
+        "evidence_packet_id": "ev-packet-22f83ba1",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "_provenance_fingerprint": "claim|claim-proximal-humerus-fracture-fact-understand-why-many-are-"
+      }
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-imaging_point-ap-scapular-y-axillary-v",
+      "claimType": "imaging_point",
+      "claimText": "AP, scapular Y, axillary views if tolerated.",
+      "primaryEntitySlug": "proximal-humerus-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "proximal-humerus-fracture-neighborhood",
+        "draft_id": "claim-proximal-humerus-fracture-imaging_point-ap-scapular-y-axillary-v",
+        "claim_type": "imaging_point",
+        "claim_text": "AP, scapular Y, axillary views if tolerated.",
+        "primary_entity_slug": "proximal-humerus-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ad3ac3d1"
+        ],
+        "evidence_packet_id": "ev-packet-22f83ba1",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T21:56:51.260Z",
+        "_provenance_fingerprint": "claim|claim-proximal-humerus-fracture-imaging_point-ap-scapular-y-axillary-v"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-ph-hemiarthroplasty",
+      "subjectEntitySlug": "proximal-humerus-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Unreconstructable head-split or severe comminution in elderly low-demand patient",
+      "action": "Discuss hemiarthroplasty with attending and tuberosity healing expectations",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-ph-operative-orif",
+      "subjectEntitySlug": "proximal-humerus-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Displaced two-, three-, or four-part pattern with reconstructable tuberosities in suitable patient",
+      "action": "Discuss ORIF with attending; document tuberosity reduction goals and rehab plan",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern proximal-humerus-fracture|operative_indication: dp-ph-hemiarthroplasty vs dp-ph-operative-orif"
+    }
+  ],
+  "stats": {
+    "entityCount": 7,
+    "relationshipCount": 14,
+    "claimCount": 14,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 7,
+    "conflictingRelationships": 0,
+    "metadataMerged": 11,
+    "provenanceAttached": 38
+  }
+}

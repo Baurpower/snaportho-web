@@ -1,0 +1,58 @@
+{
+  "topicKey": "lunate-dislocation",
+  "pilotKey": "lunate-dislocation-neighborhood",
+  "primaryEntitySlug": "lunate-dislocation",
+  "displayName": "Lunate Dislocation",
+  "generatedAt": "2026-07-05T23:30:30.181Z",
+  "nodes": [
+    {
+      "slug": "lunate-dislocation-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Lunate Dislocation Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lunate-dislocation-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "Lunate Dislocation Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "carpal-tunnel-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Carpal Tunnel Syndrome",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "lunate-dislocation-operative-treatment"
+    ],
+    "classification": [
+      "lunate-dislocation-classification"
+    ],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "carpal-tunnel-syndrome"
+    ]
+  }
+}

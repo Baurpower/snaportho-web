@@ -5,7 +5,12 @@ import {
   resolveCaseReadinessMinutes,
   type StudyMode,
 } from "@/lib/student-curriculum";
+import {
+  getStudentWorkspacePrepareProgressSnapshot,
+  getTopicCurriculumProgress,
+} from "@/lib/student-workspace/curriculum-progress";
 import { getStudentWorkspaceDashboardState } from "@/lib/student-workspace/page-state";
+import { getStudentCasePrepContext } from "@/lib/student-curriculum/student-caseprep-context";
 
 function resolveStudyMode(mode: string | undefined): StudyMode {
   return mode === "deep" ? "deep" : "fast";
@@ -33,14 +38,26 @@ export default async function StudentWorkspaceCaseReadinessRoute({
     mode,
     resolveRequestedMinutes(resolvedSearchParams?.time)
   );
+
+  const [progressSnapshot, topicProgress, casePrepContext] = await Promise.all([
+    getStudentWorkspacePrepareProgressSnapshot(state.userId),
+    getTopicCurriculumProgress(state.userId, resolvedParams.topicId),
+    getStudentCasePrepContext(resolvedParams.topicId),
+  ]);
+
   const session = buildCaseReadinessSession(resolvedParams.topicId, mode, {
     selectedMinutes,
+    completedTopicIds: progressSnapshot.completedTopicIds,
+    casePrepContext,
   });
 
   return (
     <>
       <StudentWorkspaceTimezoneSync profileTimeZone={state.profile.timezone} />
-      <CaseReadinessPage session={session} />
+      <CaseReadinessPage
+        session={session}
+        initialCompletedObjectiveIds={topicProgress?.completed_objective_ids ?? []}
+      />
     </>
   );
 }

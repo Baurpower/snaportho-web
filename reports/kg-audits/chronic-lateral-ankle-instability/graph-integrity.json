@@ -1,0 +1,48 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 84,
+  "deductions": [
+    {
+      "finding": "3 orphan entities with no relationships",
+      "evidence": "Slugs: deltoid-ligament, lateral-malleolus, medial-malleolus",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "deltoid-ligament",
+        "lateral-malleolus",
+        "medial-malleolus"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 8
+    },
+    {
+      "finding": "3 disconnected anatomy structures",
+      "evidence": "Disconnected: deltoid-ligament, lateral-malleolus, medial-malleolus",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "deltoid-ligament",
+        "lateral-malleolus",
+        "medial-malleolus"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 42,
+    "relationshipCount": 43,
+    "orphanCount": 3,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors."
+  ]
+}

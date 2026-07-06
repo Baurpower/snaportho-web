@@ -1,0 +1,759 @@
+{
+  "generatedAt": "2026-07-05T22:54:40.624Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-8a6ee229",
+  "gapsAddressed": 1,
+  "gapsScheduled": 1,
+  "claimsGenerated": 2,
+  "claimsRejected": 7,
+  "redirectedToDecisionPoint": 5,
+  "candidates": [
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-recognize-common-cuff-te",
+      "claimText": "Recognize common cuff tear presentations and key exam findings.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-5514053a"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-explain-the-role-of-x-ra",
+      "claimText": "Explain the role of x-rays and MRI in workup.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-5514053a"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-clinical_script-outline-initial-conserva",
+      "claimText": "Outline initial conservative care and when surgery becomes more urgent.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-5514053a"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-night-pain",
+      "claimText": "Night pain.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.mustKnow",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-weakness",
+      "claimText": "weakness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.mustKnow",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-active-versus-passive-ro",
+      "claimText": "active versus passive ROM.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.mustKnow",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-traumatic-acute-tears",
+      "claimText": "traumatic acute tears.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.mustKnow",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-anatomy_pearl-supraspinatus",
+      "claimText": "Supraspinatus.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-anatomy_pearl-infraspinatus",
+      "claimText": "Infraspinatus.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-anatomy_pearl-subscapularis",
+      "claimText": "Subscapularis.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-anatomy_pearl-biceps",
+      "claimText": "Biceps.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-rotator-cuff-tears-are-s",
+      "claimText": "Rotator cuff tears are shoulder dysfunction problems where age, acuity, and functional loss shape urgency.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.oneLiner",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-cognitive_trap-mention-pseudoparalysis-",
+      "claimText": "Mention pseudoparalysis when severe.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-cognitive_trap-know-cuff-muscle-actions",
+      "claimText": "Know cuff muscle actions.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-clinical_script-describe-active-rom",
+      "claimText": "Describe active ROM.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-clinical_script-localize-weakness",
+      "claimText": "Localize weakness.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-clinical_script-mention-x-rays-before-mr",
+      "claimText": "Mention x-rays before MRI.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-clinical_script-state-pt-versus-surgery-",
+      "claimText": "State PT versus surgery framework.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-anatomy_pearl-force-couples-of-the-sho",
+      "claimText": "Force couples of the shoulder.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-anatomy_pearl-cuff-insertion-footprint",
+      "claimText": "Cuff insertion footprints.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-partial-versus-full-thic",
+      "claimText": "Partial versus full-thickness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.classification",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-acute-versus-chronic",
+      "claimText": "Acute versus chronic.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.classification",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-massive-tears",
+      "claimText": "Massive tears.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.classification",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-imaging_point-x-ray-findings",
+      "claimText": "X-ray findings.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-type-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-imaging_point-mri-for-tendon-quality-r",
+      "claimText": "MRI for tendon quality, retraction, and atrophy.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-type-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-board_trap-passive-rom-preserved-wi",
+      "claimText": "Passive ROM preserved with weak active elevation suggests cuff pathology rather than adhesive capsulitis.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.boardPearls",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-stiffness",
+      "claimText": "Stiffness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-re-tear",
+      "claimText": "Re-tear.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-fact-persistent-weakness",
+      "claimText": "Persistent weakness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "rotator-cuff-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Why are acute traumatic tears different?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ]
+    },
+    {
+      "text": "What x-ray findings suggest chronic cuff disease?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ]
+    },
+    {
+      "text": "Symptoms, function, tear size, chronicity, patient goals",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ]
+    },
+    {
+      "text": "PT",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ]
+    },
+    {
+      "text": "Injections in selected settings",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ]
+    },
+    {
+      "text": "Arthroscopic repair",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ]
+    },
+    {
+      "text": "Reverse arthroplasty for irreparable patterns",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-rotator-cuff-tear-imaging_point-x-ray-findings",
+      "draftId": "claim-rotator-cuff-tear-imaging_point-x-ray-findings",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-rotator-cuff-tear-imaging_point-mri-for-tendon-quality-r",
+      "draftId": "claim-rotator-cuff-tear-imaging_point-mri-for-tendon-quality-r",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "verified": false
+    }
+  ]
+}

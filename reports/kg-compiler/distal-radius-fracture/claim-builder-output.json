@@ -1,0 +1,840 @@
+{
+  "generatedAt": "2026-07-05T22:43:07.734Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-1605edc3",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 7,
+  "redirectedToDecisionPoint": 5,
+  "candidates": [
+    {
+      "draftId": "claim-distal-radius-fracture-fact-mechanism",
+      "claimText": "Mechanism.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-alignment",
+      "claimText": "alignment.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-median-nerve-exam",
+      "claimText": "median nerve exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-immobilization-choice",
+      "claimText": "immobilization choice.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-anatomy_pearl-distal-radius-articular-",
+      "claimText": "Distal radius articular surface.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-anatomy_pearl-druj-relationship",
+      "claimText": "DRUJ relationship.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-anatomy_pearl-median-nerve-in-carpal-t",
+      "claimText": "Median nerve in carpal tunnel.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-a-distal-radius-fracture",
+      "claimText": "A distal radius fracture is a high-frequency trauma problem where alignment and median nerve status drive urgency.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-cognitive_trap-know-acceptable-radial-h",
+      "claimText": "Know acceptable radial height/inclination language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-cognitive_trap-mention-finger-rom-after",
+      "claimText": "Mention finger ROM after splinting.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-clinical_script-describe-mechanism",
+      "claimText": "Describe mechanism.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-clinical_script-check-nv-exam",
+      "claimText": "Check NV exam.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-clinical_script-review-ap-lateral-films",
+      "claimText": "Review AP/lateral films.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-clinical_script-state-splint-and-follow-",
+      "claimText": "State splint and follow-up plan.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-anatomy_pearl-distal-radius-columns",
+      "claimText": "Distal radius columns.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-anatomy_pearl-volar-cortex-as-reductio",
+      "claimText": "Volar cortex as reduction reference.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-anatomy_pearl-druj-stabilizers",
+      "claimText": "DRUJ stabilizers.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-extra-articular-vs-intra",
+      "claimText": "Extra-articular vs intra-articular.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-dorsally-displaced-vs-vo",
+      "claimText": "Dorsally displaced vs volarly displaced.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-imaging_point-standard-wrist-radiograp",
+      "claimText": "Standard wrist radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-imaging_point-ct-for-complex-articular",
+      "claimText": "CT for complex articular injury.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-board_trap-malalignment-tolerance-i",
+      "claimText": "Malalignment tolerance is lower in active patients and articular injuries.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-loss-of-reduction",
+      "claimText": "Loss of reduction.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-median-neuropathy",
+      "claimText": "Median neuropathy.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-crps",
+      "claimText": "CRPS.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-tendon-irritation",
+      "claimText": "Tendon irritation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-recognize-common-distal-",
+      "claimText": "Recognize common distal radius fracture patterns and mechanism.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-fe1262d0"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-describe-initial-reducti",
+      "claimText": "Describe initial reduction, splinting, and neurovascular checks.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-fe1262d0"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-identify-red-flags-that-",
+      "claimText": "Identify red flags that push management toward fixation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-fe1262d0"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "What radiographic parameters matter?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ]
+    },
+    {
+      "text": "When is dorsal comminution important?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ]
+    },
+    {
+      "text": "Assess displacement, instability, articular step-off, patient demand",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ]
+    },
+    {
+      "text": "Splint/cast",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ]
+    },
+    {
+      "text": "Closed reduction",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ]
+    },
+    {
+      "text": "Percutaneous fixation",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ]
+    },
+    {
+      "text": "Volar plating",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-mechanism",
+      "draftId": "claim-distal-radius-fracture-fact-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-alignment",
+      "draftId": "claim-distal-radius-fracture-fact-alignment",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-board_trap-malalignment-tolerance-i",
+      "draftId": "claim-distal-radius-fracture-board_trap-malalignment-tolerance-i",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-imaging_point-standard-wrist-radiograp",
+      "draftId": "claim-distal-radius-fracture-imaging_point-standard-wrist-radiograp",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-cognitive_trap-know-acceptable-radial-h",
+      "draftId": "claim-distal-radius-fracture-cognitive_trap-know-acceptable-radial-h",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-median-nerve-exam",
+      "draftId": "claim-distal-radius-fracture-fact-median-nerve-exam",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-immobilization-choice",
+      "draftId": "claim-distal-radius-fracture-fact-immobilization-choice",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-a-distal-radius-fracture",
+      "draftId": "claim-distal-radius-fracture-fact-a-distal-radius-fracture",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "verified": false
+    }
+  ]
+}

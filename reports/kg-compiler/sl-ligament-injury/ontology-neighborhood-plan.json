@@ -1,0 +1,47 @@
+{
+  "topicKey": "sl-ligament-injury",
+  "pilotKey": "sl-ligament-injury-neighborhood",
+  "primaryEntitySlug": "sl-ligament-injury",
+  "displayName": "SL Ligament Injury",
+  "generatedAt": "2026-07-05T23:39:10.135Z",
+  "nodes": [
+    {
+      "slug": "sl-ligament-injury-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "SL Ligament Injury Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "sl-ligament-injury-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "SL Ligament Injury Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "sl-ligament-injury-operative-treatment"
+    ],
+    "classification": [],
+    "imaging": [
+      "sl-ligament-injury-key-imaging-finding"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

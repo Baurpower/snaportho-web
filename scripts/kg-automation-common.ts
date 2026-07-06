@@ -9,6 +9,8 @@ export type ProposalType =
   | "add_entity_alias"
   | "add_canonical_relationship"
   | "add_provenance_record"
+  | "propose_educational_claim"
+  | "propose_decision_point"
   | "flag_duplicate_entity"
   | "flag_ambiguous_mapping"
   | "flag_possible_split"

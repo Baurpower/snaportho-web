@@ -1,0 +1,1422 @@
+{
+  "topicKey": "ankle-fracture",
+  "pilotKey": "ankle-fracture-neighborhood",
+  "generatedAt": "2026-07-05T21:09:23.369Z",
+  "summary": {
+    "AUTO_APPROVE": 45,
+    "SAFE_REVIEW": 6,
+    "EXPERT_REVIEW": 16,
+    "REJECT": 0
+  },
+  "humanReviewPercent": 32.8,
+  "autoApprovedPercent": 67.2,
+  "decisions": [
+    {
+      "proposal_fingerprint": "bridge|trauma-ankle-fractures|ankle-fracture",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9025000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.8075,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_bridge",
+        "Composite confidence 0.903 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_bridge"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-deltoid-unstable-fibula",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-fracture-board_trap-a-deltoid-injury-can-mak",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7828750000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.39575,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.783 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-fracture-cognitive_trap-mention-posterior-malleo",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7828750000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.39575,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.783 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-fracture-fact-supination-external-rota",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-fracture-fact-weber",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-fracture-imaging_point-ap-lateral-mortise-views",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-fracture-imaging_point-stress-views",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-isolated-fibula-trap",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-medial-clear-space",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-mortise-congruity",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-ring-concept",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-stress-views",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "AUTO_REVISED",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.5625,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: l2_fact_light_review",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l2_fact_light_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-ankle-syndesmosis-language",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.5625,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-mortise-stability-anatomy_pearl-ankle-ring-concept",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-mortise-stability-anatomy_pearl-posterior-malleolus-role",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-mortise-stability-anatomy_pearl-syndesmotic-stabilizers",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|ankle-ring",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|deltoid-ligament",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|lateral-malleolus",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|medial-malleolus",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|superficial-peroneal-nerve",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|syndesmosis",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|talus",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|biomechanics_concept|mortise-stability",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|classification_grade|weber-a",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|classification_grade|weber-b",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|classification_grade|weber-c",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|classification_system|weber-classification",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|complication|ankle-malunion",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|complication|post-traumatic-ankle-arthritis",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|complication|syndesmotic-malreduction",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|ankle-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|fixation_method|ankle-orif-fixation",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|imaging_finding|medial-clear-space-widening",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|ankle-orif",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "dp|dp-ankle-stable-nonoperative",
+      "proposal_type": "propose_decision_point",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8400000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.85,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: decision_point_requires_attending",
+        "Composite confidence 0.840 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "decision_point_requires_attending"
+      ]
+    },
+    {
+      "proposal_fingerprint": "dp|dp-ankle-unstable-mortise-orif",
+      "proposal_type": "propose_decision_point",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8400000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.85,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: decision_point_requires_attending",
+        "Composite confidence 0.840 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "decision_point_requires_attending"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|at_risk_structure|superficial-peroneal-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|has_classification|weber-classification",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|has_complication|ankle-malunion",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|has_complication|post-traumatic-ankle-arthritis",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|has_complication|syndesmotic-malreduction",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|has_grade|weber-b",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|has_imaging_finding|medial-clear-space-widening",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|injured_in|lateral-malleolus",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|injured_in|medial-malleolus",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|involves_anatomy|ankle-ring",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|involves_anatomy|deltoid-ligament",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|involves_anatomy|mortise-stability",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|involves_anatomy|syndesmosis",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|treated_by|ankle-orif",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-fracture|uses_fixation|ankle-orif-fixation",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-orif|at_risk_structure|superficial-peroneal-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-orif|involves_anatomy|lateral-malleolus",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|ankle-ring|prerequisite_for|ankle-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|deltoid-ligament|explains_instability|ankle-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|deltoid-ligament|inserts_on|medial-malleolus",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|deltoid-ligament|part_of|ankle-ring",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|lateral-malleolus|part_of|ankle-ring",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|medial-clear-space-widening|explains_instability|ankle-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|medial-clear-space-widening|indicates_treatment|ankle-orif",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|medial-malleolus|part_of|ankle-ring",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|syndesmosis|explains_instability|ankle-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|syndesmosis|part_of|ankle-ring",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|talus|articulates_with|lateral-malleolus",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|weber-b|injured_in|lateral-malleolus",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    }
+  ]
+}

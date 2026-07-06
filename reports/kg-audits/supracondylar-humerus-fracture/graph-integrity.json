@@ -1,0 +1,28 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 92,
+  "deductions": [
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern supracondylar-humerus-fracture|operative_indication: dp-sc-pulseless-vascular vs dp-sc-urgent-pinning",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 28,
+    "relationshipCount": 41,
+    "orphanCount": 0,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

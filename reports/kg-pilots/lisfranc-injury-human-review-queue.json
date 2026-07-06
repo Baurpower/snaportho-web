@@ -1,0 +1,400 @@
+[
+  {
+    "proposal_fingerprint": "rel|lisfranc-displacement|indicates_treatment|lisfranc-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "lisfranc-displacement -[indicates_treatment]-> lisfranc-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: lisfranc-displacement -[indicates_treatment]-> lisfranc-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lisfranc-displacement",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "lisfranc-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.85,
+        "review_status": "needs_review",
+        "note": "weight-bearing films and clinical exam confirm instability"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:50:38.078Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|lisfranc-injury|treated_by|lisfranc-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "lisfranc-injury -[treated_by]-> lisfranc-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lisfranc-injury|treated_by|lisfranc-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lisfranc-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "lisfranc-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:50:38.078Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|lisfranc-injury|treated_by|lisfranc-nonoperative-immobilization",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "lisfranc-injury -[treated_by]-> lisfranc-nonoperative-immobilization",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lisfranc-injury|treated_by|lisfranc-nonoperative-immobilization",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lisfranc-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "lisfranc-nonoperative-immobilization",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:50:38.078Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lisfranc-midfoot-stability",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lisfranc-midfoot-stability",
+    "alternatives": [],
+    "evidence_summary": "orthobullets foot-ankle-lisfranc-injury curriculum node",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lisfranc-midfoot-stability",
+      "claim_type": "fact",
+      "claim_text": "Lisfranc injury threatens tarsometatarsal stability and midfoot arch integrity — missed diagnosis leads to chronic collapse.",
+      "primary_entity_slug": "lisfranc-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:50:38.079Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lisfranc-missed-sprain-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lisfranc-missed-sprain-trap",
+    "alternatives": [],
+    "evidence_summary": "orthobullets foot-ankle-lisfranc-injury board pearls",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lisfranc-missed-sprain-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Labeling midfoot pain after athletic or low-energy injury as a simple sprain without checking Lisfranc alignment.",
+      "primary_entity_slug": "lisfranc-displacement",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:50:38.079Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lisfranc-stable-nonop-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lisfranc-stable-nonop-trap",
+    "alternatives": [],
+    "evidence_summary": "orthobullets foot-ankle-lisfranc-injury decision making",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lisfranc-stable-nonop-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Operating on every Lisfranc injury without distinguishing stable nondisplaced patterns suitable for immobilization.",
+      "primary_entity_slug": "lisfranc-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:50:38.079Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lisfranc-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lisfranc-case-script",
+    "alternatives": [],
+    "evidence_summary": "orthobullets foot-ankle-lisfranc-injury case presentation",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lisfranc-case-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Document mechanism, plantar ecchymosis, weight-bearing alignment, stability exam, and operative versus immobilization plan.",
+      "primary_entity_slug": "lisfranc-injury",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:50:38.079Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-lisfranc-unstable-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-lisfranc-unstable-orif",
+    "alternatives": [],
+    "evidence_summary": "orthobullets foot-ankle-lisfranc-injury treatment pathways",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-lisfranc-unstable-orif",
+      "subject_entity_slug": "lisfranc-injury",
+      "pattern_type": "operative_indication",
+      "trigger": "Unstable Lisfranc injury with tarsometatarsal diastasis or clinical instability on exam",
+      "action": "Proceed with Lisfranc ORIF to restore midfoot column alignment; document postoperative protected weight-bearing",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:50:38.079Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-lisfranc-stable-immobilization",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-lisfranc-stable-immobilization",
+    "alternatives": [],
+    "evidence_summary": "orthobullets foot-ankle-lisfranc-injury nonoperative management",
+    "metadata": {
+      "pilot": "lisfranc-injury-neighborhood",
+      "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+      "review_packet_label": "Lisfranc Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-lisfranc-stable-immobilization",
+      "subject_entity_slug": "lisfranc-injury",
+      "pattern_type": "operative_indication",
+      "trigger": "Nondisplaced stable Lisfranc injury without diastasis on weight-bearing views",
+      "action": "Apply Lisfranc nonoperative immobilization with protected weight-bearing and close follow-up for secondary displacement",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:50:38.079Z"
+    }
+  }
+]

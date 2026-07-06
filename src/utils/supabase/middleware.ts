@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { isPublicProviderWebhookPath } from '@/lib/auth/public-provider-webhook-path'
+
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request,
@@ -56,7 +58,19 @@ export async function updateSession(request: NextRequest) {
 
   const isPublicMyCasesLandingPath = pathname === '/mycases/landing'
 
-  if (!user && !isAuthPage && !isPublicBroBotPath && !isPublicMyCasesPlaybookPath && !isPublicMyCasesLandingPath) {
+  const isPublicCheckoutSuccessPath = pathname === '/checkout/success'
+
+  const isProviderWebhook = isPublicProviderWebhookPath(pathname, request.method)
+
+  if (
+    !user &&
+    !isAuthPage &&
+    !isPublicBroBotPath &&
+    !isPublicMyCasesPlaybookPath &&
+    !isPublicMyCasesLandingPath &&
+    !isPublicCheckoutSuccessPath &&
+    !isProviderWebhook
+  ) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/sign-in'
 

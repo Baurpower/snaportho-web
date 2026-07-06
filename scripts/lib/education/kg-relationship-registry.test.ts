@@ -56,6 +56,41 @@ const validTriples = [
     objectEndpointType: "canonical_entity",
     objectEntityType: "classification_system",
   },
+  {
+    subjectEndpointType: "canonical_entity",
+    subjectEntityType: "condition",
+    predicate: "injured_in",
+    objectEndpointType: "canonical_entity",
+    objectEntityType: "anatomy_structure",
+  },
+  {
+    subjectEndpointType: "canonical_entity",
+    subjectEntityType: "condition",
+    predicate: "at_risk_structure",
+    objectEndpointType: "canonical_entity",
+    objectEntityType: "anatomy_structure",
+  },
+  {
+    subjectEndpointType: "canonical_entity",
+    subjectEntityType: "condition",
+    predicate: "has_imaging_finding",
+    objectEndpointType: "canonical_entity",
+    objectEntityType: "imaging_finding",
+  },
+  {
+    subjectEndpointType: "canonical_entity",
+    subjectEntityType: "imaging_finding",
+    predicate: "indicates_treatment",
+    objectEndpointType: "canonical_entity",
+    objectEntityType: "procedure",
+  },
+  {
+    subjectEndpointType: "canonical_entity",
+    subjectEntityType: "anatomy_structure",
+    predicate: "part_of",
+    objectEndpointType: "canonical_entity",
+    objectEntityType: "anatomy_structure",
+  },
   // Educational edge to a non-entity endpoint.
   {
     subjectEndpointType: "canonical_entity",

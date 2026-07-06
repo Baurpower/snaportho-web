@@ -1,0 +1,129 @@
+{
+  "generatedAt": "2026-07-05T22:39:31.341Z",
+  "gaps": [
+    {
+      "id": "gap-entity-neighbor-1",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "ACL Tear Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "acl-tear-reconstruction",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "ACL Tear Reconstruction missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "acl-tear-reconstruction",
+      "subjectSlug": "acl-tear-reconstruction",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "ACL Tear Reconstruction missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "acl-tear-reconstruction",
+      "subjectSlug": "acl-tear-reconstruction",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-entity-neighbor-4",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "ACL Tear Classification neighborhood has 0/2 classification_grade entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.grades",
+      "anchorEntitySlug": "acl-tear-classification",
+      "entityType": "classification_grade"
+    },
+    {
+      "id": "gap-rel-5",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "ACL Tear Classification missing inbound has_classification (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.pred.has_classification_inbound",
+      "anchorEntitySlug": "acl-tear-classification",
+      "predicate": "has_classification",
+      "objectSlug": "acl-tear-classification"
+    },
+    {
+      "id": "gap-rel-6",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Sports Medicine Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "sports-medicine-anatomy-hub",
+      "subjectSlug": "sports-medicine-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-asset-card-7",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "18 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "acl-tear"
+    },
+    {
+      "id": "gap-asset-question-8",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "21 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "acl-tear"
+    },
+    {
+      "id": "gap-proc-approach-9",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure ACL Tear Reconstruction missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "acl-tear-reconstruction",
+      "subjectSlug": "acl-tear-reconstruction",
+      "predicate": "uses_approach"
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "byKind": {
+      "missing_entity": 2,
+      "missing_relationship": 5,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "critical": 2,
+      "high": 4,
+      "medium": 3
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "topicKey": "subtrochanteric-fracture",
+  "pilotKey": "subtrochanteric-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 38,
+  "applied": {
+    "entities": 17,
+    "relationships": 19,
+    "bridges": 1,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 38
+  },
+  "skipped": [],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

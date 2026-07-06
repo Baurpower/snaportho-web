@@ -1,24 +1,97 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { buildCaseReadinessHref } from "@/components/student-workspace/prepare/prepare-routes";
+import { CasePrepStatusBanner } from "@/components/student-workspace/case-readiness/CasePrepStatusBanner";
 import { CaseReadinessHeader } from "@/components/student-workspace/case-readiness/CaseReadinessHeader";
 import { CaseReadinessProgress } from "@/components/student-workspace/case-readiness/CaseReadinessProgress";
+import { ProcedurePrepModulesPanel } from "@/components/student-workspace/case-readiness/ProcedurePrepModulesPanel";
 import { ReadinessObjectiveCard } from "@/components/student-workspace/case-readiness/ReadinessObjectiveCard";
+import { TopicBrobotActionsPanel } from "@/components/student-workspace/case-readiness/TopicBrobotActionsPanel";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
 import type { CaseReadinessSession } from "@/lib/student-curriculum";
 
+async function persistProgress(payload: {
+  topicId: string;
+  trackId: string;
+  studyMode: "fast" | "deep";
+  selectedMinutes: number;
+  completedObjectiveIds: string[];
+  totalObjectives: number;
+  incrementBrobotSessions?: boolean;
+}) {
+  const response = await fetch("/api/student-workspace/curriculum-progress", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      topicId: payload.topicId,
+      trackId: payload.trackId,
+      studyMode: payload.studyMode,
+      selectedMinutes: payload.selectedMinutes,
+      completedObjectiveIds: payload.completedObjectiveIds,
+      totalObjectives: payload.totalObjectives,
+      incrementBrobotSessions: payload.incrementBrobotSessions,
+    }),
+  });
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}));
+    throw new Error(body.error ?? "Failed to save progress");
+  }
+}
+
 export function CaseReadinessPage({
   session,
+  initialCompletedObjectiveIds = [],
 }: {
   session: CaseReadinessSession | null;
+  initialCompletedObjectiveIds?: string[];
 }) {
-  const [completedIds, setCompletedIds] = useState<string[]>([]);
+  const [completedIds, setCompletedIds] = useState<string[]>(
+    initialCompletedObjectiveIds
+  );
   const [expandedIds, setExpandedIds] = useState<string[]>(
     session?.objectives[0] ? [session.objectives[0].id] : []
   );
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
   const completedSet = new Set(completedIds);
   const expandedSet = new Set(expandedIds);
+
+  const syncProgress = useCallback(
+    async (
+      nextCompletedIds: string[],
+      options?: { incrementBrobotSessions?: boolean }
+    ) => {
+      if (!session) return;
+      setIsSaving(true);
+      setSaveError(null);
+      try {
+        await persistProgress({
+          topicId: session.topic.id,
+          trackId: session.track.id,
+          studyMode: session.mode,
+          selectedMinutes: session.selectedMinutes,
+          completedObjectiveIds: nextCompletedIds,
+          totalObjectives: session.objectives.length,
+          incrementBrobotSessions: options?.incrementBrobotSessions,
+        });
+      } catch (error) {
+        setSaveError(
+          error instanceof Error ? error.message : "Failed to save progress"
+        );
+      } finally {
+        setIsSaving(false);
+      }
+    },
+    [session]
+  );
+
+  useEffect(() => {
+    if (!session) return;
+    void syncProgress(initialCompletedObjectiveIds);
+  }, [session, initialCompletedObjectiveIds, syncProgress]);
 
   if (!session) {
     return (
@@ -58,9 +131,12 @@ export function CaseReadinessPage({
     >
       <div className="grid gap-5">
         <CaseReadinessHeader session={session} />
+        <CasePrepStatusBanner context={session.casePrepContext} />
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="grid gap-4">
+            <ProcedurePrepModulesPanel modules={session.prepModules} />
+
             {session.objectives.map((objective) => (
               <ReadinessObjectiveCard
                 key={objective.id}
@@ -74,12 +150,15 @@ export function CaseReadinessPage({
                       : [...current, objective.id]
                   )
                 }
-                onToggleCompleted={() =>
-                  setCompletedIds((current) =>
-                    current.includes(objective.id)
-                      ? current.filter((id) => id !== objective.id)
-                      : [...current, objective.id]
-                  )
+                onToggleCompleted={() => {
+                  const nextCompletedIds = completedSet.has(objective.id)
+                    ? completedIds.filter((id) => id !== objective.id)
+                    : [...completedIds, objective.id];
+                  setCompletedIds(nextCompletedIds);
+                  void syncProgress(nextCompletedIds);
+                }}
+                onBrobotLaunch={() =>
+                  void syncProgress(completedIds, { incrementBrobotSessions: true })
                 }
               />
             ))}
@@ -89,6 +168,18 @@ export function CaseReadinessPage({
             <CaseReadinessProgress
               completedCount={completedIds.length}
               totalCount={session.objectives.length}
+              persisted
+              isSaving={isSaving}
+            />
+            {saveError ? (
+              <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+                {saveError}
+              </p>
+            ) : null}
+
+            <TopicBrobotActionsPanel
+              actions={session.topicBrobotActions}
+              onActionLaunch={() => void syncProgress(completedIds, { incrementBrobotSessions: true })}
             />
 
             <section className="rounded-[1.5rem] border border-slate-200 bg-white p-4 shadow-sm">
@@ -128,7 +219,11 @@ export function CaseReadinessPage({
                   {session.relatedTopics.map((topic) => (
                     <Link
                       key={topic.id}
-                      href={`/student-workspace/case-readiness/${topic.id}?mode=${session.mode}&time=${session.selectedMinutes}`}
+                      href={buildCaseReadinessHref({
+                        topicId: topic.id,
+                        mode: session.mode,
+                        time: session.selectedMinutes,
+                      })}
                       className="block rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-900 transition hover:border-sky-300 hover:bg-sky-50"
                     >
                       {topic.title}
@@ -154,7 +249,11 @@ export function CaseReadinessPage({
                       </p>
                     ) : null}
                     <Link
-                      href={`/student-workspace/case-readiness/${nextTopic.id}?mode=${session.mode}&time=${session.selectedMinutes}`}
+                      href={buildCaseReadinessHref({
+                        topicId: nextTopic.id,
+                        mode: session.mode,
+                        time: session.selectedMinutes,
+                      })}
                       className="mt-3 inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
                     >
                       Continue with {nextTopic.title}

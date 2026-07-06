@@ -35,11 +35,8 @@ import {
   routeResearchSubmode,
   type ResearchSubmodeRoute,
 } from '@/lib/brobot/research';
-import {
-  getRemainingAIUses,
-  getMobileBroBotEntitlement,
-  type Subject,
-} from '@/lib/brobot/entitlements';
+import { getBroBotAccessGate } from '@/lib/brobot/brobot-entitlement-access';
+import { type Subject } from '@/lib/brobot/entitlements';
 import {
   createGuestSession,
   getGuestSessionFromRequest,
@@ -1731,9 +1728,10 @@ async function handleGuestChat(params: {
   const { request, requestId, startedAt, body, subject, guestCookieToSet } = params;
   const persistence = createAdminClient();
 
-  const entitlement = await getRemainingAIUses(subject);
-  const limit = entitlement.aiAccess.dailyCap;
-  const remainingBefore = entitlement.aiAccess.remainingToday;
+  const gate = await getBroBotAccessGate(subject);
+  const entitlement = gate.normalized.data;
+  const limit = gate.dailyCap;
+  const remainingBefore = gate.remainingToday;
   const usedBefore =
     limit != null && remainingBefore != null ? Math.max(0, limit - remainingBefore) : null;
 
@@ -1746,15 +1744,15 @@ async function handleGuestChat(params: {
     trainingLevel: body.trainingLevel,
     messageLength: body.message.length,
     remainingBefore,
-    allowed: !entitlement.isLimitReached,
+    allowed: !gate.isLimitReached,
     persistence: 'guest_ephemeral',
   });
 
-  if (entitlement.source === 'disabled') {
+  if (gate.source === 'disabled') {
     return withGuestCookie(disabledResponse(), guestCookieToSet);
   }
 
-  if (entitlement.isLimitReached) {
+  if (gate.isLimitReached) {
     await recordUsageEvent({
       subject,
       outcome: 'limit_hit',
@@ -1989,19 +1987,11 @@ export async function POST(request: Request) {
     subject = { type: 'user', id: userId };
     const persistence = createAdminClient();
 
-    step = 'mobile_entitlement';
-    const mobileEntitlement = await getMobileBroBotEntitlement(userId);
-    if (!mobileEntitlement.hasBroBotAccess) {
-      if (mobileEntitlement.reasonIfBlocked === 'disabled' || mobileEntitlement.source === 'disabled') {
-        return disabledResponse();
-      }
-      return limitReachedResponse(mobileEntitlement.dailyLimit);
-    }
-
     step = 'quota_check';
-    const entitlement = await getRemainingAIUses(subject);
-    const limit = entitlement.aiAccess.dailyCap;
-    const remainingBefore = entitlement.aiAccess.remainingToday;
+    const gate = await getBroBotAccessGate(subject);
+    const entitlement = gate.normalized.data;
+    const limit = gate.dailyCap;
+    const remainingBefore = gate.remainingToday;
     const usedBefore =
       limit != null && remainingBefore != null ? Math.max(0, limit - remainingBefore) : null;
 
@@ -2014,10 +2004,14 @@ export async function POST(request: Request) {
       trainingLevel: body.trainingLevel,
       messageLength: body.message.length,
       remainingBefore,
-      allowed: !entitlement.isLimitReached,
+      allowed: !gate.isLimitReached,
     });
 
-    if (entitlement.isLimitReached) {
+    if (gate.source === 'disabled') {
+      return disabledResponse();
+    }
+
+    if (gate.isLimitReached) {
       await recordUsageEvent({
         subject,
         outcome: 'limit_hit',

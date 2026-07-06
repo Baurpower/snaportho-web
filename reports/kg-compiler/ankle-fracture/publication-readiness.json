@@ -1,0 +1,47 @@
+{
+  "topicKey": "ankle-fracture",
+  "pilotKey": "ankle-fracture-neighborhood",
+  "generatedAt": "2026-07-05T21:09:23.370Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "22 proposals still awaiting human review",
+    "16 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "10 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+    "[high] Ankle Fracture missing outbound at_risk_structure (0/1).",
+    "[high] Ankle Fracture missing outbound treated_by (0/1).",
+    "[high] Ankle Fracture has 0/3 L1 claims.",
+    "[critical] Ankle Fracture has 0/1 decision points.",
+    "[critical] Ankle Fracture missing decision point pattern: operative_indication.",
+    "[critical] Ankle Fracture missing decision point pattern: nonoperative_eligible.",
+    "[high] Ankle Ring missing outbound part_of (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 25,
+    "humanReviewItems": 22,
+    "attendingReviewItems": 16,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

@@ -1273,8 +1273,9 @@ export function validateRotationConflictRule(input: CallValidationInput) {
  * Validates conditional slot definitions where requiredWhenVisible === true.
  *
  * For each date in touchedDates, finds the Primary resident's PGY year, evaluates
- * which conditional slot definitions are visible (and required), then flags any
- * that are missing. Slots with requiredWhenVisible === false are never flagged.
+ * which conditional slot definitions are visible and explicitly required, then flags
+ * any that are missing. Visibility alone does not imply required — Backup defaults
+ * to optional unless slotRequiredWhenVisible is explicitly enabled.
  *
  * This supplements validateRequiredSlotRule which only handles always-required slots
  * from the required_daily_call_slots rule.

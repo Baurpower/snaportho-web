@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-07-05T22:23:10.246Z",
+  "auditorVersion": "1.0.0",
+  "batchKey": "hip-fracture",
+  "displayName": "Hip Fracture Cluster",
+  "neighborhoods": [
+    {
+      "topicKey": "femoral-neck-fracture",
+      "displayName": "Femoral Neck Fracture",
+      "overallScore": 84,
+      "publicationStatus": "NOT_READY",
+      "reviewBurden": 50,
+      "blockers": [
+        "21 proposals still awaiting human review",
+        "12 items require attending review",
+        "Insufficient relationship metadata on essential edges",
+        "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "18 critical/high ontology gaps remain unresolved"
+      ]
+    },
+    {
+      "topicKey": "intertrochanteric-fracture",
+      "displayName": "Intertrochanteric Fracture",
+      "overallScore": 84,
+      "publicationStatus": "NOT_READY",
+      "reviewBurden": 33.9,
+      "blockers": [
+        "20 proposals still awaiting human review",
+        "16 items require attending review",
+        "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "13 critical/high ontology gaps remain unresolved"
+      ]
+    },
+    {
+      "topicKey": "subtrochanteric-fracture",
+      "displayName": "Subtrochanteric Fracture",
+      "overallScore": 85,
+      "publicationStatus": "NOT_READY",
+      "reviewBurden": 54.3,
+      "blockers": [
+        "19 proposals still awaiting human review",
+        "11 items require attending review",
+        "Insufficient relationship metadata on essential edges",
+        "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "13 critical/high ontology gaps remain unresolved"
+      ]
+    }
+  ],
+  "aggregate": {
+    "averageOverallScore": 84,
+    "factoryMaturity": 5,
+    "publicationReadyCount": 0,
+    "publicationBlockedCount": 3,
+    "totalReviewBurden": 138.2,
+    "outstandingBlockers": [
+      "21 proposals still awaiting human review",
+      "12 items require attending review",
+      "Insufficient relationship metadata on essential edges",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "18 critical/high ontology gaps remain unresolved",
+      "20 proposals still awaiting human review",
+      "16 items require attending review",
+      "13 critical/high ontology gaps remain unresolved",
+      "19 proposals still awaiting human review",
+      "11 items require attending review"
+    ],
+    "weakestCategory": "publication_readiness",
+    "strongestCategory": "shared_knowledge_reuse"
+  },
+  "rankings": {
+    "byQuality": [
+      "subtrochanteric-fracture",
+      "femoral-neck-fracture",
+      "intertrochanteric-fracture"
+    ],
+    "byPublicationReadiness": [
+      "subtrochanteric-fracture",
+      "femoral-neck-fracture",
+      "intertrochanteric-fracture"
+    ]
+  },
+  "databaseModified": false
+}

@@ -1,0 +1,80 @@
+{
+  "topicKey": "lisfranc-injury",
+  "pilotKey": "lisfranc-injury-neighborhood",
+  "primaryEntitySlug": "lisfranc-injury",
+  "displayName": "Lisfranc Injury",
+  "generatedAt": "2026-07-05T22:51:32.817Z",
+  "nodes": [
+    {
+      "slug": "lisfranc-chronic-instability",
+      "entityType": "complication",
+      "preferredLabel": "Lisfranc Chronic Instability",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lisfranc-displacement",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Lisfranc Displacement",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lisfranc-injury",
+      "entityType": "condition",
+      "preferredLabel": "Lisfranc Injury",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "lisfranc-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Lisfranc ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lisfranc-nonoperative-immobilization",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Lisfranc Nonoperative Immobilization",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 2,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "lisfranc-injury"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "lisfranc-orif"
+    ],
+    "classification": [],
+    "imaging": [
+      "lisfranc-displacement"
+    ],
+    "complication": [
+      "lisfranc-chronic-instability"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "lisfranc-nonoperative-immobilization"
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "topicKey": "scaphoid-nonunion",
+  "pilotKey": "scaphoid-nonunion-neighborhood",
+  "primaryEntitySlug": "scaphoid-nonunion",
+  "displayName": "Scaphoid Nonunion",
+  "generatedAt": "2026-07-05T23:16:30.491Z",
+  "nodes": [
+    {
+      "slug": "scaphoid-nonunion-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "Scaphoid Nonunion Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "scaphoid-nonunion-key-complication",
+      "entityType": "complication",
+      "preferredLabel": "Scaphoid Nonunion Key Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "scaphoid-nonunion-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Scaphoid Nonunion Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "scaphoid-nonunion-operative-treatment"
+    ],
+    "classification": [],
+    "imaging": [
+      "scaphoid-nonunion-key-imaging-finding"
+    ],
+    "complication": [
+      "scaphoid-nonunion-key-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

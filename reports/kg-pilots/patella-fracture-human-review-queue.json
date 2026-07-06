@@ -1,0 +1,355 @@
+[
+  {
+    "proposal_fingerprint": "rel|patella-fracture|uses_fixation|tension-band-fixation",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "patella-fracture -[uses_fixation]-> tension-band-fixation",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|patella-fracture|uses_fixation|tension-band-fixation",
+    "alternatives": [],
+    "evidence_summary": "Relationship uses_fixation",
+    "metadata": {
+      "pilot": "patella-fracture-neighborhood",
+      "review_packet_key": "pilot:patella-fracture-neighborhood",
+      "review_packet_label": "Patella Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "patella-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "tension-band-fixation",
+      "object_entity_type": "fixation_method",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:40:11.140Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|patella-fracture|treated_by|patella-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "patella-fracture -[treated_by]-> patella-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|patella-fracture|treated_by|patella-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "patella-fracture-neighborhood",
+      "review_packet_key": "pilot:patella-fracture-neighborhood",
+      "review_packet_label": "Patella Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "patella-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "patella-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:40:11.140Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pat-extensor-continuity",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pat-extensor-continuity",
+    "alternatives": [],
+    "evidence_summary": "trauma-patella-fracture curriculum",
+    "metadata": {
+      "pilot": "patella-fracture-neighborhood",
+      "review_packet_key": "pilot:patella-fracture-neighborhood",
+      "review_packet_label": "Patella Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pat-extensor-continuity",
+      "claim_type": "fact",
+      "claim_text": "Patella fracture management centers on extensor mechanism continuity and restoration of active knee extension.",
+      "primary_entity_slug": "patella-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:40:11.140Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pat-extensor-lag-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pat-extensor-lag-trap",
+    "alternatives": [],
+    "evidence_summary": "patella board pearls",
+    "metadata": {
+      "pilot": "patella-fracture-neighborhood",
+      "review_packet_key": "pilot:patella-fracture-neighborhood",
+      "review_packet_label": "Patella Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pat-extensor-lag-trap",
+      "claim_type": "board_trap",
+      "claim_text": "A patient unable to perform straight-leg raise after patella fracture has extensor mechanism disruption until proven otherwise.",
+      "primary_entity_slug": "extensor-mechanism-disruption",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:40:11.140Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pat-nonoperative-displaced",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pat-nonoperative-displaced",
+    "alternatives": [],
+    "evidence_summary": "patella treatment pitfalls",
+    "metadata": {
+      "pilot": "patella-fracture-neighborhood",
+      "review_packet_key": "pilot:patella-fracture-neighborhood",
+      "review_packet_label": "Patella Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pat-nonoperative-displaced",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Treating a displaced patella fracture with extensor lag nonoperatively without operative discussion.",
+      "primary_entity_slug": "patella-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:40:11.140Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pat-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pat-case-script",
+    "alternatives": [],
+    "evidence_summary": "patella case presentation pattern",
+    "metadata": {
+      "pilot": "patella-fracture-neighborhood",
+      "review_packet_key": "pilot:patella-fracture-neighborhood",
+      "review_packet_label": "Patella Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pat-case-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Describe fracture pattern, extensor exam including straight-leg raise, fixation method, and patella alta-baja awareness.",
+      "primary_entity_slug": "patella-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:40:11.140Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-pat-extensor-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-pat-extensor-orif",
+    "alternatives": [],
+    "evidence_summary": "patella operative indications",
+    "metadata": {
+      "pilot": "patella-fracture-neighborhood",
+      "review_packet_key": "pilot:patella-fracture-neighborhood",
+      "review_packet_label": "Patella Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-pat-extensor-orif",
+      "subject_entity_slug": "patella-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Displaced patella fracture with extensor mechanism disruption or inability to extend the knee",
+      "action": "Discuss patella ORIF with tension band fixation per attending; document extensor exam",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:40:11.140Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-pat-nonoperative-stable",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-pat-nonoperative-stable",
+    "alternatives": [],
+    "evidence_summary": "patella nonoperative pathway",
+    "metadata": {
+      "pilot": "patella-fracture-neighborhood",
+      "review_packet_key": "pilot:patella-fracture-neighborhood",
+      "review_packet_label": "Patella Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-pat-nonoperative-stable",
+      "subject_entity_slug": "patella-fracture",
+      "pattern_type": "nonoperative_eligible",
+      "trigger": "Nondisplaced patella fracture with intact extensor mechanism and acceptable alignment",
+      "action": "Immobilize in extension with progressive range-of-motion protocol when healing permits",
+      "urgency": "routine",
+      "safety_criticality": "none",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:40:11.140Z"
+    }
+  }
+]

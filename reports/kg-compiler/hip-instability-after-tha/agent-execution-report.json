@@ -1,0 +1,178 @@
+{
+  "generatedAt": "2026-07-05T22:55:55.497Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "hip-instability-after-tha",
+  "pilotKey": "hip-instability-after-tha-neighborhood",
+  "executionOrder": [
+    "work-clinical-entity-builder",
+    "work-asset-linker",
+    "work-relationship-builder",
+    "work-claim-builder",
+    "work-decision-point-builder",
+    "work-metadata-builder",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "parallelLayers": [
+    [
+      "work-clinical-entity-builder"
+    ],
+    [
+      "work-asset-linker",
+      "work-relationship-builder"
+    ],
+    [
+      "work-claim-builder",
+      "work-decision-point-builder",
+      "work-metadata-builder"
+    ],
+    [
+      "work-duplicate-detector"
+    ],
+    [
+      "work-quality-scorer"
+    ],
+    [
+      "work-conflict-resolver"
+    ],
+    [
+      "work-review-assistant"
+    ],
+    [
+      "work-publication-validator"
+    ]
+  ],
+  "entries": [
+    {
+      "assignmentId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "status": "completed",
+      "proposalCount": 32,
+      "executionTimeMs": 3,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-asset-linker",
+      "agentId": "asset-linker",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "status": "completed",
+      "proposalCount": 6,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-claim-builder",
+      "agentId": "claim-builder",
+      "status": "completed",
+      "proposalCount": 9,
+      "executionTimeMs": 4,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-decision-point-builder",
+      "agentId": "decision-point-builder",
+      "status": "completed",
+      "proposalCount": 1,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-metadata-builder",
+      "agentId": "metadata-builder",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-duplicate-detector",
+      "agentId": "duplicate-detector",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-quality-scorer",
+      "agentId": "quality-scorer",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-conflict-resolver",
+      "agentId": "conflict-resolver",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-review-assistant",
+      "agentId": "review-assistant",
+      "status": "completed",
+      "proposalCount": 86,
+      "executionTimeMs": 3,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-publication-validator",
+      "agentId": "publication-validator",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    }
+  ],
+  "totalProposalsEmitted": 134,
+  "uniqueProposals": 86,
+  "completedAgents": 11,
+  "failedAgents": 0,
+  "partialAgents": 0,
+  "skippedAgents": 0,
+  "databaseModified": false
+}

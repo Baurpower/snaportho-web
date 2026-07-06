@@ -1,0 +1,57 @@
+{
+  "category": "ontology_completeness",
+  "label": "Ontology Completeness",
+  "score": 80,
+  "deductions": [
+    {
+      "finding": "2 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 4,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "Missing relationship requirements (4)",
+      "evidence": "4 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 4,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "Missing claim requirements (4)",
+      "evidence": "4 gaps of kind missing_claim",
+      "reason": "Ontology contract requires complete claim coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 4,
+      "suggestedFix": "Run the matching builder agent for missing_claim."
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "totalGaps": 11,
+    "criticalGaps": 0,
+    "highGaps": 2,
+    "anatomyStructures": 5,
+    "classificationEntities": 0,
+    "completenessRatio": 0.6333333333333333
+  },
+  "recommendations": [
+    "Schedule gap-resolution work items from ontology-work-plan.json.",
+    "Run the matching builder agent for missing_relationship.",
+    "Run the matching builder agent for missing_claim.",
+    "Link has_classification and has_grade edges to a classification system."
+  ]
+}

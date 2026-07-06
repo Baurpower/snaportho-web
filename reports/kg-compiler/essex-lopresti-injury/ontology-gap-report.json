@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-05T23:02:56.729Z",
+  "gaps": [
+    {
+      "id": "gap-asset-question-1",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "10 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "essex-lopresti-injury"
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "byKind": {
+      "missing_asset_link": 1
+    },
+    "byPriority": {
+      "medium": 1
+    }
+  }
+}

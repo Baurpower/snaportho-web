@@ -1,0 +1,822 @@
+{
+  "generatedAt": "2026-07-05T22:39:09.422Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-bf6b1472",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 5,
+  "redirectedToDecisionPoint": 3,
+  "candidates": [
+    {
+      "draftId": "claim-distal-femur-fracture-fact-articular-involvement",
+      "claimText": "Articular involvement.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-comminution",
+      "claimText": "comminution.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-alignment",
+      "claimText": "alignment.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-implant-category",
+      "claimText": "implant category.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-anatomy_pearl-distal-femur",
+      "claimText": "Distal femur.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-anatomy_pearl-lateral-condyle",
+      "claimText": "Lateral condyle.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-anatomy_pearl-medial-condyle",
+      "claimText": "Medial condyle.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-anatomy_pearl-patellofemoral-groove",
+      "claimText": "Patellofemoral groove.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-distal-femur-fractures-c",
+      "claimText": "Distal femur fractures combine metaphyseal comminution with articular restoration demands.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-clinical_script-comment-on-articular-ste",
+      "claimText": "Comment on articular step-off.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-cognitive_trap-mention-lateral-plating-",
+      "claimText": "Mention lateral plating language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-clinical_script-describe-condylar-involv",
+      "claimText": "Describe condylar involvement.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-clinical_script-assess-alignment",
+      "claimText": "Assess alignment.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-clinical_script-state-orif-plan",
+      "claimText": "State ORIF plan.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-clinical_script-outline-rehab-restrictio",
+      "claimText": "Outline rehab restrictions.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-anatomy_pearl-distal-femoral-metaphysi",
+      "claimText": "Distal femoral metaphysis.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-anatomy_pearl-condylar-columns",
+      "claimText": "Condylar columns.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-anatomy_pearl-patellar-articulation",
+      "claimText": "Patellar articulation.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-extra-articular-versus-i",
+      "claimText": "Extra-articular versus intra-articular.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-ao-distal-femur-patterns",
+      "claimText": "AO distal femur patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-imaging_point-ap-lateral-knee-radiogra",
+      "claimText": "AP/lateral knee radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-imaging_point-ct-for-articular-plannin",
+      "claimText": "CT for articular planning.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-board_trap-articular-step-off-in-di",
+      "claimText": "Articular step-off in distal femur fractures often needs operative reduction.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-malunion",
+      "claimText": "Malunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-knee-stiffness",
+      "claimText": "Knee stiffness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-hardware-irritation",
+      "claimText": "Hardware irritation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-differentiate-extra-arti",
+      "claimText": "Differentiate extra-articular from intra-articular distal femur patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-fcdda181"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-explain-fixation-options",
+      "claimText": "Explain fixation options for comminuted metaphyseal fractures.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-fcdda181"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-identify-malunion-and-st",
+      "claimText": "Identify malunion and stiffness risks after fixation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-fcdda181"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "When is a locking plate preferred?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ]
+    },
+    {
+      "text": "What makes the fracture intra-articular?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ]
+    },
+    {
+      "text": "Articular displacement, bone quality, patient demand",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ]
+    },
+    {
+      "text": "Locked plating",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ]
+    },
+    {
+      "text": "Retrograde nail in selected patterns",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-articular-involvement",
+      "draftId": "claim-distal-femur-fracture-fact-articular-involvement",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-comminution",
+      "draftId": "claim-distal-femur-fracture-fact-comminution",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-board_trap-articular-step-off-in-di",
+      "draftId": "claim-distal-femur-fracture-board_trap-articular-step-off-in-di",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-imaging_point-ap-lateral-knee-radiogra",
+      "draftId": "claim-distal-femur-fracture-imaging_point-ap-lateral-knee-radiogra",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-cognitive_trap-mention-lateral-plating-",
+      "draftId": "claim-distal-femur-fracture-cognitive_trap-mention-lateral-plating-",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-alignment",
+      "draftId": "claim-distal-femur-fracture-fact-alignment",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-implant-category",
+      "draftId": "claim-distal-femur-fracture-fact-implant-category",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-distal-femur-fractures-c",
+      "draftId": "claim-distal-femur-fracture-fact-distal-femur-fractures-c",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "verified": false
+    }
+  ]
+}

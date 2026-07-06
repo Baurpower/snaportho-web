@@ -1,0 +1,47 @@
+{
+  "topicKey": "knee-osteoarthritis",
+  "pilotKey": "knee-osteoarthritis-neighborhood",
+  "primaryEntitySlug": "knee-osteoarthritis",
+  "displayName": "Knee Osteoarthritis",
+  "generatedAt": "2026-07-05T23:02:35.957Z",
+  "nodes": [
+    {
+      "slug": "medial-compartment-narrowing",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Medial Compartment Narrowing",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "mechanical-axis-knee",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Knee Mechanical Axis",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "medial-compartment-narrowing"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "mechanical-axis-knee"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

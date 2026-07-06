@@ -1,0 +1,57 @@
+{
+  "topicKey": "bone-loss-revision-arthroplasty",
+  "pilotKey": "bone-loss-revision-arthroplasty-neighborhood",
+  "primaryEntitySlug": "bone-loss-revision-arthroplasty",
+  "displayName": "Bone Loss in Revision Arthroplasty",
+  "generatedAt": "2026-07-05T23:26:40.619Z",
+  "nodes": [
+    {
+      "slug": "paprosky-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Paprosky Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "bone-loss-revision-arthroplasty",
+      "entityType": "condition",
+      "preferredLabel": "Bone Loss in Revision Arthroplasty",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "aori-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "AORI Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 2,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "bone-loss-revision-arthroplasty"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [
+      "paprosky-classification",
+      "aori-classification"
+    ],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

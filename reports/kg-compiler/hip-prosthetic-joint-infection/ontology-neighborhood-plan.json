@@ -1,0 +1,47 @@
+{
+  "topicKey": "hip-prosthetic-joint-infection",
+  "pilotKey": "hip-prosthetic-joint-infection-neighborhood",
+  "primaryEntitySlug": "hip-prosthetic-joint-infection",
+  "displayName": "Hip Prosthetic Joint Infection",
+  "generatedAt": "2026-07-05T22:51:16.347Z",
+  "nodes": [
+    {
+      "slug": "biofilm-concept",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Biofilm Concept",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-irrigation-debridement",
+      "entityType": "procedure",
+      "preferredLabel": "Hip Irrigation and Debridement",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "hip-irrigation-debridement"
+    ],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "biofilm-concept"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

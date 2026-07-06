@@ -1,0 +1,176 @@
+[
+  {
+    "proposal_fingerprint": "claim|claim-knee-instability-after-tka-core",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-knee-instability-after-tka-core",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+    "metadata": {
+      "pilot": "knee-instability-after-tka-neighborhood",
+      "review_packet_key": "pilot:knee-instability-after-tka-neighborhood",
+      "review_packet_label": "Knee Instability After TKA Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-knee-instability-after-tka-core",
+      "claim_type": "fact",
+      "claim_text": "TKA instability requires gap balance and component position review before revision.",
+      "primary_entity_slug": "knee-instability-after-tka",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.72,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:10:50.417Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-knee-instability-after-tka-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-knee-instability-after-tka-board-trap",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "knee-instability-after-tka-neighborhood",
+      "review_packet_key": "pilot:knee-instability-after-tka-neighborhood",
+      "review_packet_label": "Knee Instability After TKA Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-knee-instability-after-tka-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Board trap: oversimplifying knee instability after tka without attending-level implant, fixation, or infection context.",
+      "primary_entity_slug": "knee-instability-after-tka",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.72,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:10:50.417Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-knee-instability-after-tka-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-knee-instability-after-tka-script",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "knee-instability-after-tka-neighborhood",
+      "review_packet_key": "pilot:knee-instability-after-tka-neighborhood",
+      "review_packet_label": "Knee Instability After TKA Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-knee-instability-after-tka-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for knee instability after tka.",
+      "primary_entity_slug": "knee-instability-after-tka",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.72,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:10:50.417Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-knee-instability-after-tka-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-knee-instability-after-tka-operative",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "knee-instability-after-tka-neighborhood",
+      "review_packet_key": "pilot:knee-instability-after-tka-neighborhood",
+      "review_packet_label": "Knee Instability After TKA Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-knee-instability-after-tka-operative",
+      "subject_entity_slug": "knee-instability-after-tka",
+      "pattern_type": "operative_indication",
+      "trigger": "Persistent TKA instability despite appropriate rehab",
+      "action": "Review balancing and discuss constrained implant or revision with attending",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.72,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:10:50.417Z"
+    }
+  }
+]

@@ -1,0 +1,476 @@
+{
+  "topicKey": "femoral-neck-fracture-adult-recon",
+  "pilotKey": "femoral-neck-fracture-adult-recon-neighborhood",
+  "displayName": "Femoral Neck Fracture (Adult Recon Perspective)",
+  "generatedAt": "2026-07-05T22:46:59.363Z",
+  "stages": [
+    {
+      "stage": 1,
+      "name": "Neighborhood Resolution",
+      "status": "completed",
+      "summary": "Resolved 24 entities from canonical DB for Femoral Neck Fracture (Adult Recon Perspective).",
+      "outputs": [
+        "neighborhood_plan"
+      ]
+    },
+    {
+      "stage": 2,
+      "name": "Ontology Requirement Expansion",
+      "status": "completed",
+      "summary": "Derived requirements from CKO spec §8–§9 and anatomy ontology plan.",
+      "outputs": [
+        "ontology_rules_applied"
+      ]
+    },
+    {
+      "stage": 3,
+      "name": "Gap Analysis",
+      "status": "completed",
+      "summary": "Identified 38 gaps across 5 kinds.",
+      "outputs": [
+        "ontology-gap-report.json"
+      ]
+    },
+    {
+      "stage": 4,
+      "name": "Work Planning",
+      "status": "completed",
+      "summary": "Scheduled 10 work items for 10 registered agents.",
+      "outputs": [
+        "ontology-work-plan.json",
+        "agent-assignment-plan.json",
+        "unmet-agent-capabilities.json",
+        "reviewer-burden-estimate.md",
+        "agent-contract-summary.md"
+      ]
+    },
+    {
+      "stage": 5,
+      "name": "Agent Orchestration",
+      "status": "completed",
+      "summary": "Executed 10/10 agents; 78 unique proposals; 0 failed.",
+      "outputs": [
+        "agent-execution-report.json",
+        "agent-output-summary.md",
+        "work-clinical-entity-builder",
+        "work-anatomy-builder",
+        "work-relationship-builder",
+        "work-decision-point-builder",
+        "work-claim-builder",
+        "work-asset-linker",
+        "work-duplicate-detector",
+        "work-quality-scorer",
+        "work-conflict-resolver",
+        "work-review-assistant",
+        "work-publication-validator"
+      ]
+    },
+    {
+      "stage": 6,
+      "name": "Merge",
+      "status": "completed",
+      "summary": "Merged draft: 55 entities, 8 relationships; 0 conflicts.",
+      "outputs": [
+        "merged-neighborhood-draft.json",
+        "conflict-report.json"
+      ]
+    },
+    {
+      "stage": 7,
+      "name": "Intelligent Auto Review",
+      "status": "completed",
+      "summary": "80.8% auto-approved; 19.2% escalated.",
+      "outputs": [
+        "ontology-auto-review.json"
+      ]
+    },
+    {
+      "stage": 8,
+      "name": "Human Review Packet",
+      "status": "completed",
+      "summary": "15 items in human queue.",
+      "outputs": [
+        "human_review_packet"
+      ]
+    },
+    {
+      "stage": 9,
+      "name": "Publication Readiness",
+      "status": "completed",
+      "summary": "Maturity 5/7; ready=false.",
+      "outputs": [
+        "publication-readiness.json"
+      ]
+    }
+  ],
+  "neighborhood": {
+    "entityCount": 24,
+    "relationshipCount": 3,
+    "claimCount": 2,
+    "decisionPointCount": 0
+  },
+  "gaps": {
+    "total": 38,
+    "byKind": {
+      "missing_relationship": 20,
+      "missing_claim": 9,
+      "missing_entity": 4,
+      "missing_decision_point": 3,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "high": 18,
+      "medium": 13,
+      "critical": 7
+    }
+  },
+  "workPlan": {
+    "workItemCount": 10,
+    "agentsRequired": [
+      "Relationship Builder",
+      "Claim Builder",
+      "Clinical Entity Builder",
+      "Decision Point Builder",
+      "Asset Linker",
+      "Conflict Resolver",
+      "Quality Scorer",
+      "Review Assistant",
+      "Publication Validator"
+    ],
+    "agentIds": [
+      "relationship-builder",
+      "claim-builder",
+      "clinical-entity-builder",
+      "decision-point-builder",
+      "asset-linker",
+      "duplicate-detector",
+      "quality-scorer",
+      "conflict-resolver",
+      "review-assistant",
+      "publication-validator"
+    ],
+    "registryDiscovery": [
+      {
+        "id": "anatomy-builder",
+        "name": "Anatomy Builder",
+        "version": "1.1.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "entities"
+        ],
+        "consumes": [
+          "neighborhood_snapshot",
+          "ontology_requirements",
+          "work_assignment"
+        ],
+        "requires": [],
+        "handlesGapKinds": [
+          "missing_entity"
+        ],
+        "handlesEntityTypes": [
+          "anatomy_structure"
+        ],
+        "handlesOntologyRulePrefixes": [
+          "anatomy."
+        ],
+        "proposalTypes": [
+          "create_canonical_entity"
+        ]
+      },
+      {
+        "id": "clinical-entity-builder",
+        "name": "Clinical Entity Builder",
+        "version": "1.1.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "entities"
+        ],
+        "consumes": [
+          "neighborhood_snapshot",
+          "ontology_requirements",
+          "work_assignment"
+        ],
+        "requires": [],
+        "handlesGapKinds": [
+          "missing_entity"
+        ],
+        "proposalTypes": [
+          "create_canonical_entity"
+        ],
+        "isGenericFallback": true
+      },
+      {
+        "id": "relationship-builder",
+        "name": "Relationship Builder",
+        "version": "1.1.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "relationships"
+        ],
+        "consumes": [
+          "neighborhood_snapshot",
+          "work_assignment",
+          "proposal_packets",
+          "canonical_objects"
+        ],
+        "requires": [
+          "clinical-entity-builder",
+          "anatomy-builder"
+        ],
+        "handlesGapKinds": [
+          "missing_relationship"
+        ],
+        "proposalTypes": [
+          "add_canonical_relationship"
+        ],
+        "autoApprovalPatterns": [
+          "part_of",
+          "contains",
+          "articulates_with",
+          "inserts_on",
+          "prerequisite_for",
+          "has_classification",
+          "has_grade",
+          "injured_in",
+          "involves_anatomy"
+        ],
+        "escalationPatterns": [
+          "at_risk_structure",
+          "indicates_treatment",
+          "must_protect_during",
+          "treated_by",
+          "uses_fixation",
+          "explains_instability"
+        ]
+      },
+      {
+        "id": "claim-builder",
+        "name": "Claim Builder",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "claims"
+        ],
+        "consumes": [
+          "neighborhood_snapshot",
+          "canonical_objects",
+          "work_assignment",
+          "proposal_packets",
+          "evidence_packets"
+        ],
+        "requires": [
+          "relationship-builder"
+        ],
+        "handlesGapKinds": [
+          "missing_claim"
+        ],
+        "proposalTypes": [
+          "propose_educational_claim"
+        ]
+      },
+      {
+        "id": "decision-point-builder",
+        "name": "Decision Point Builder",
+        "version": "1.1.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "decision_points"
+        ],
+        "consumes": [
+          "neighborhood_snapshot",
+          "canonical_objects",
+          "work_assignment"
+        ],
+        "requires": [
+          "relationship-builder"
+        ],
+        "handlesGapKinds": [
+          "missing_decision_point"
+        ],
+        "proposalTypes": [
+          "propose_decision_point"
+        ]
+      },
+      {
+        "id": "metadata-builder",
+        "name": "Metadata Builder",
+        "version": "1.1.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "metadata"
+        ],
+        "consumes": [
+          "neighborhood_snapshot",
+          "canonical_objects",
+          "work_assignment",
+          "proposal_packets"
+        ],
+        "requires": [
+          "relationship-builder"
+        ],
+        "handlesGapKinds": [
+          "missing_metadata"
+        ],
+        "proposalTypes": [
+          "add_canonical_relationship"
+        ]
+      },
+      {
+        "id": "asset-linker",
+        "name": "Asset Linker",
+        "version": "1.1.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "asset_links"
+        ],
+        "consumes": [
+          "neighborhood_snapshot",
+          "canonical_objects",
+          "evidence_packets",
+          "work_assignment"
+        ],
+        "requires": [
+          "clinical-entity-builder"
+        ],
+        "handlesGapKinds": [
+          "missing_asset_link"
+        ],
+        "proposalTypes": [
+          "retarget_card_to_entity",
+          "retarget_question_to_entity"
+        ]
+      },
+      {
+        "id": "provenance-builder",
+        "name": "Provenance Builder",
+        "version": "1.1.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "provenance"
+        ],
+        "consumes": [
+          "proposal_packets",
+          "work_assignment"
+        ],
+        "requires": [],
+        "handlesGapKinds": [
+          "missing_provenance"
+        ],
+        "proposalTypes": [
+          "add_provenance_record"
+        ]
+      },
+      {
+        "id": "duplicate-detector",
+        "name": "Duplicate Detector",
+        "version": "1.0.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "quality_metrics"
+        ],
+        "consumes": [
+          "proposal_packets",
+          "neighborhood_snapshot",
+          "work_assignment"
+        ],
+        "requires": [],
+        "handlesGapKinds": [],
+        "proposalTypes": [
+          "flag_duplicate_entity",
+          "flag_ambiguous_mapping"
+        ]
+      },
+      {
+        "id": "quality-scorer",
+        "name": "Quality Scorer",
+        "version": "1.0.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "quality_metrics"
+        ],
+        "consumes": [
+          "neighborhood_snapshot",
+          "gap_report",
+          "proposal_packets",
+          "work_assignment"
+        ],
+        "requires": [
+          "duplicate-detector"
+        ],
+        "handlesGapKinds": [],
+        "proposalTypes": []
+      },
+      {
+        "id": "conflict-resolver",
+        "name": "Conflict Resolver",
+        "version": "1.0.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "quality_metrics"
+        ],
+        "consumes": [
+          "proposal_packets",
+          "merged_neighborhood_draft",
+          "work_assignment"
+        ],
+        "requires": [
+          "duplicate-detector"
+        ],
+        "handlesGapKinds": [],
+        "proposalTypes": []
+      },
+      {
+        "id": "review-assistant",
+        "name": "Review Assistant",
+        "version": "1.0.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "review_report"
+        ],
+        "consumes": [
+          "proposal_packets",
+          "work_assignment"
+        ],
+        "requires": [],
+        "handlesGapKinds": [],
+        "proposalTypes": []
+      },
+      {
+        "id": "publication-validator",
+        "name": "Publication Validator",
+        "version": "1.0.0",
+        "supportedOntologyVersion": "2026-07-05",
+        "produces": [
+          "publication_report"
+        ],
+        "consumes": [
+          "auto_review_report",
+          "gap_report",
+          "proposal_packets",
+          "work_assignment"
+        ],
+        "requires": [
+          "review-assistant"
+        ],
+        "handlesGapKinds": [],
+        "proposalTypes": []
+      }
+    ]
+  },
+  "review": {
+    "totalProposals": 78,
+    "autoApproved": 63,
+    "humanReview": 15,
+    "humanReviewPercent": 19.2
+  },
+  "publication": {
+    "currentMaturityLevel": 5,
+    "requiredMaturityLevel": 7,
+    "ready": false,
+    "blockerCount": 6
+  },
+  "constraints": {
+    "databaseModified": false,
+    "autoPublished": false
+  },
+  "evidencePacketId": "ev-packet-1102b5fc"
+}

@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-07-05T23:23:21.331Z",
+  "gaps": [
+    {
+      "id": "gap-entity-neighbor-1",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "PJI Timeline Classification neighborhood has 0/2 classification_grade entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.grades",
+      "anchorEntitySlug": "pji-timeline-classification",
+      "entityType": "classification_grade"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "PJI Timeline Classification missing inbound has_classification (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.pred.has_classification_inbound",
+      "anchorEntitySlug": "pji-timeline-classification",
+      "predicate": "has_classification",
+      "objectSlug": "pji-timeline-classification"
+    },
+    {
+      "id": "gap-entity-neighbor-3",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Two-Stage Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "two-stage-revision-arthroplasty",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-4",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Two-Stage Revision Arthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "two-stage-revision-arthroplasty",
+      "subjectSlug": "two-stage-revision-arthroplasty",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-5",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Two-Stage Revision Arthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "two-stage-revision-arthroplasty",
+      "subjectSlug": "two-stage-revision-arthroplasty",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-asset-card-6",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "12 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "periprosthetic-joint-infection"
+    },
+    {
+      "id": "gap-asset-question-7",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "56 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "periprosthetic-joint-infection"
+    },
+    {
+      "id": "gap-proc-approach-8",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Two-Stage Revision Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "two-stage-revision-arthroplasty",
+      "subjectSlug": "two-stage-revision-arthroplasty",
+      "predicate": "uses_approach"
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "byKind": {
+      "missing_entity": 2,
+      "missing_relationship": 4,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "high": 3,
+      "critical": 2,
+      "medium": 3
+    }
+  }
+}

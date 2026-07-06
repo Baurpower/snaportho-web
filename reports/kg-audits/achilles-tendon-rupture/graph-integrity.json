@@ -1,0 +1,58 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 69,
+  "deductions": [
+    {
+      "finding": "3 orphan entities with no relationships",
+      "evidence": "Slugs: deltoid-ligament, lateral-malleolus, medial-malleolus",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "deltoid-ligament",
+        "lateral-malleolus",
+        "medial-malleolus"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 8
+    },
+    {
+      "finding": "2 dangling edges reference missing entities",
+      "evidence": "femoral-condyles -[part_of]-> sports-knee-anatomy-hub; labrum -[part_of]-> sports-shoulder-anatomy-hub",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "3 disconnected anatomy structures",
+      "evidence": "Disconnected: deltoid-ligament, lateral-malleolus, medial-malleolus",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "deltoid-ligament",
+        "lateral-malleolus",
+        "medial-malleolus"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 42,
+    "relationshipCount": 44,
+    "orphanCount": 3,
+    "danglingEdgeCount": 2,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+    "Create missing entities or remove invalid relationship proposals.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors."
+  ]
+}

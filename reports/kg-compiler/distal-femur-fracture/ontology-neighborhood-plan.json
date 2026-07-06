@@ -1,0 +1,69 @@
+{
+  "topicKey": "distal-femur-fracture",
+  "pilotKey": "distal-femur-fracture-neighborhood",
+  "primaryEntitySlug": "distal-femur-fracture",
+  "displayName": "Distal Femur Fracture",
+  "generatedAt": "2026-07-05T22:39:09.407Z",
+  "nodes": [
+    {
+      "slug": "distal-femur-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Femur Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "distal-femur-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Distal Femur ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "intra-articular-distal-femur-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Intra-Articular Distal Femur Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-femur-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Distal Femur Malunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 2,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "distal-femur-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "distal-femur-orif"
+    ],
+    "classification": [],
+    "imaging": [
+      "intra-articular-distal-femur-fracture"
+    ],
+    "complication": [
+      "distal-femur-malunion"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

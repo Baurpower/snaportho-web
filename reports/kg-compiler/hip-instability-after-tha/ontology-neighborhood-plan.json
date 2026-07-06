@@ -1,0 +1,58 @@
+{
+  "topicKey": "hip-instability-after-tha",
+  "pilotKey": "hip-instability-after-tha-neighborhood",
+  "primaryEntitySlug": "hip-instability-after-tha",
+  "displayName": "Hip Instability After THA",
+  "generatedAt": "2026-07-05T22:55:55.468Z",
+  "nodes": [
+    {
+      "slug": "hip-center-of-rotation",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Hip Center of Rotation",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-instability-after-tha",
+      "entityType": "condition",
+      "preferredLabel": "Hip Instability After THA",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "malpositioned-acetabular-component",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Malpositioned Acetabular Component",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "hip-instability-after-tha"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "malpositioned-acetabular-component"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "hip-center-of-rotation"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

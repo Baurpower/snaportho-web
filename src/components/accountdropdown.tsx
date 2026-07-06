@@ -5,11 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
-
-type EntitlementStatus = {
-  unlimited: boolean;
-  source: string;
-};
+import { useBroBotEntitlement } from '@/hooks/useBroBotEntitlement';
 
 export default function AccountDropdown() {
   const router = useRouter();
@@ -18,7 +14,7 @@ export default function AccountDropdown() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [fullName, setFullName] = useState<string | null>(null);
-  const [entitlementStatus, setEntitlementStatus] = useState<EntitlementStatus | null>(null);
+  const { menuStatus, loading: entitlementLoading } = useBroBotEntitlement('account_dropdown');
   const menuRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = async () => {
@@ -57,42 +53,6 @@ export default function AccountDropdown() {
       isMounted = false;
     };
   }, [user, supabase]);
-
-  // Fetch minimal BroBot entitlement status for menu (one small call per session)
-  useEffect(() => {
-    let isMounted = true;
-
-    const fetchEntitlement = async () => {
-      if (!user?.id) {
-        if (isMounted) setEntitlementStatus(null);
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/me/entitlements', {
-          cache: 'no-store',
-          credentials: 'include',
-        });
-        const body = await res.json();
-        if (body.data?.aiAccess) {
-          if (isMounted) {
-            setEntitlementStatus({
-              unlimited: body.data.aiAccess.unlimited,
-              source: body.data.source,
-            });
-          }
-        }
-      } catch {
-        if (isMounted) setEntitlementStatus(null);
-      }
-    };
-
-    fetchEntitlement();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [user]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -133,9 +93,9 @@ export default function AccountDropdown() {
             Billing &amp; Subscription
           </Link>
 
-          {entitlementStatus && (
+          {!entitlementLoading && menuStatus && (
             <div className="px-4 py-1 text-xs text-midnight/60">
-              {entitlementStatus.unlimited ? (
+              {menuStatus.unlimited ? (
                 <span className="inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-emerald-700 text-[10px] font-medium">Unlimited BroBot</span>
               ) : (
                 <span className="text-amber-600">Free BroBot</span>

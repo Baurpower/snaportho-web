@@ -1,0 +1,725 @@
+{
+  "generatedAt": "2026-07-05T21:57:25.244Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-a6c65ede",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 7,
+  "redirectedToDecisionPoint": 5,
+  "candidates": [
+    {
+      "draftId": "claim-humeral-shaft-fracture-anatomy_pearl-radial-nerve-in-spiral-g",
+      "claimText": "Radial nerve in spiral groove.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-anatomy_pearl-brachial-artery-course",
+      "claimText": "Brachial artery course.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-open-versus-closed",
+      "claimText": "Open versus closed.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-spiral-distal-third-patt",
+      "claimText": "Spiral distal-third patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-imaging_point-ap-and-lateral-humerus-r",
+      "claimText": "AP and lateral humerus radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-board_trap-holstein-lewis-fractures",
+      "claimText": "Holstein-Lewis fractures are classic radial nerve board associations.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-radial-nerve-palsy",
+      "claimText": "Radial nerve palsy.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-nonunion",
+      "claimText": "Nonunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-malunion",
+      "claimText": "Malunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-alignment",
+      "claimText": "Alignment.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-radial-nerve-exam",
+      "claimText": "radial nerve exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-brachial-pulse",
+      "claimText": "brachial pulse.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-splint-plan",
+      "claimText": "splint plan.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-anatomy_pearl-spiral-groove-radial-ner",
+      "claimText": "Spiral groove radial nerve.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-anatomy_pearl-humeral-diaphysis",
+      "claimText": "Humeral diaphysis.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-anatomy_pearl-brachial-artery",
+      "claimText": "Brachial artery.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-humeral-shaft-fractures-",
+      "claimText": "Humeral shaft fractures require serial radial nerve exams and clear alignment goals.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-cognitive_trap-repeat-wrist-extension-a",
+      "claimText": "Repeat wrist extension after reduction.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-cognitive_trap-know-holstein-lewis-asso",
+      "claimText": "Know Holstein-Lewis association.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-clinical_script-describe-deformity",
+      "claimText": "Describe deformity.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-clinical_script-document-radial-nerve-ba",
+      "claimText": "Document radial nerve baseline.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-clinical_script-state-splint-and-operati",
+      "claimText": "State splint and operative plan.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-document-radial-nerve-fu",
+      "claimText": "Document radial nerve function before and after reduction.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ef74c42d"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-recognize-holstein-lewis",
+      "claimText": "Recognize Holstein-Lewis fracture association.",
+      "claimType": "fact",
+      "primaryEntitySlug": "humeral-shaft-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ef74c42d"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Alignment, nerve status, open injury, patient factors",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ]
+    },
+    {
+      "text": "Functional bracing",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ]
+    },
+    {
+      "text": "IM nail",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ]
+    },
+    {
+      "text": "Plate osteosynthesis",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ]
+    },
+    {
+      "text": "What fracture pattern risks radial nerve injury?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ]
+    },
+    {
+      "text": "When is IM nailing preferred?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ]
+    },
+    {
+      "text": "Compare nonoperative versus operative stabilization pathways.",
+      "reason": "MANAGEMENT_LOGIC: if/then or treatment pathway — route to Decision Point Builder",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ef74c42d"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-open-versus-closed",
+      "draftId": "claim-humeral-shaft-fracture-fact-open-versus-closed",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-spiral-distal-third-patt",
+      "draftId": "claim-humeral-shaft-fracture-fact-spiral-distal-third-patt",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-board_trap-holstein-lewis-fractures",
+      "draftId": "claim-humeral-shaft-fracture-board_trap-holstein-lewis-fractures",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-imaging_point-ap-and-lateral-humerus-r",
+      "draftId": "claim-humeral-shaft-fracture-imaging_point-ap-and-lateral-humerus-r",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-cognitive_trap-repeat-wrist-extension-a",
+      "draftId": "claim-humeral-shaft-fracture-cognitive_trap-repeat-wrist-extension-a",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-radial-nerve-palsy",
+      "draftId": "claim-humeral-shaft-fracture-fact-radial-nerve-palsy",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-nonunion",
+      "draftId": "claim-humeral-shaft-fracture-fact-nonunion",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-malunion",
+      "draftId": "claim-humeral-shaft-fracture-fact-malunion",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "verified": false
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-07-05T22:35:43.996Z",
+  "evidencePacketId": "ev-packet-f6f79f8a",
+  "traces": [
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-stabilize-femoral-shaft-",
+      "proposalFingerprint": "claim|claim-femoral-shaft-fracture-fact-stabilize-femoral-shaft-",
+      "evidenceItemIds": [
+        "ev-static-prepare-3eee31f9"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-compare-im-nailing-with-",
+      "proposalFingerprint": "claim|claim-femoral-shaft-fracture-fact-compare-im-nailing-with-",
+      "evidenceItemIds": [
+        "ev-static-prepare-3eee31f9"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-board_trap-early-femoral-stabilizat",
+      "proposalFingerprint": "claim|claim-femoral-shaft-fracture-board_trap-early-femoral-stabilizat",
+      "evidenceItemIds": [
+        "ev-static-prepare-eef77ffa"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-imaging_point-ap-lateral-femur",
+      "proposalFingerprint": "claim|claim-femoral-shaft-fracture-imaging_point-ap-lateral-femur",
+      "evidenceItemIds": [
+        "ev-static-prepare-eef77ffa"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-cognitive_trap-mention-antegrade-nail-l",
+      "proposalFingerprint": "claim|claim-femoral-shaft-fracture-cognitive_trap-mention-antegrade-nail-l",
+      "evidenceItemIds": [
+        "ev-static-prepare-eef4386e"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-alignment",
+      "proposalFingerprint": "claim|claim-femoral-shaft-fracture-fact-alignment",
+      "evidenceItemIds": [
+        "ev-static-prepare-eef4386e"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-soft-tissues",
+      "proposalFingerprint": "claim|claim-femoral-shaft-fracture-fact-soft-tissues",
+      "evidenceItemIds": [
+        "ev-static-prepare-eef4386e"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-polytrauma-context",
+      "proposalFingerprint": "claim|claim-femoral-shaft-fracture-fact-polytrauma-context",
+      "evidenceItemIds": [
+        "ev-static-prepare-eef4386e"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-eef4386e"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is early IM nailing preferred?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-eef4386e"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What are bridge fixation indications?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-eef77ffa"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Polytrauma status, open injury, alignment, patient physiology"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-eef77ffa"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Skeletal traction"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-eef77ffa"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "External fixation bridge"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-eef77ffa"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Antegrade/retrograde IM nail"
+    }
+  ]
+}

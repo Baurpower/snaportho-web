@@ -1,0 +1,78 @@
+{
+  "topicKey": "proximal-phalanx-fracture",
+  "pilotKey": "proximal-phalanx-fracture-neighborhood",
+  "primaryEntitySlug": "proximal-phalanx-fracture",
+  "displayName": "Proximal Phalanx Fracture",
+  "generatedAt": "2026-07-06T00:10:41.556Z",
+  "nodes": [
+    {
+      "slug": "proximal-phalanx-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Proximal Phalanx Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "proximal-phalanx-fracture-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Proximal Phalanx Fracture Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-phalanx-fracture-nonoperative-principle",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Proximal Phalanx Fracture Nonoperative Principle",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "volar-plate-injury",
+      "entityType": "condition",
+      "preferredLabel": "Volar Plate Injury",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "central-slip-injury",
+      "entityType": "condition",
+      "preferredLabel": "Central Slip Injury",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "proximal-phalanx-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "proximal-phalanx-fracture-key-imaging-finding"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "proximal-phalanx-fracture-nonoperative-principle",
+      "volar-plate-injury",
+      "central-slip-injury"
+    ]
+  }
+}

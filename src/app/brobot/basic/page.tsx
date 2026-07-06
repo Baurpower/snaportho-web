@@ -8,6 +8,8 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
+import { fetchMeEntitlementsView, toWebUsageSnapshot } from '@/lib/brobot/billing-entitlement-state';
+
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // The old direct getBroBotResponse (which called the public CasePrep API from the browser)
 // has been removed for security and usage tracking.
@@ -72,15 +74,12 @@ export default function BroBotBasic() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch('/api/me/entitlements', {
-          cache: 'no-store',
-          credentials: 'include',
-        });
-        const body = await res.json();
-        if (body.data?.aiAccess) {
+        const view = await fetchMeEntitlementsView({ source: 'brobot_basic' });
+        if (view && !view.isUnlimited) {
+          const usage = toWebUsageSnapshot(view);
           setGuestUsage({
-            remainingToday: body.data.aiAccess.remainingToday,
-            dailyCap: body.data.aiAccess.dailyCap,
+            remainingToday: usage.remainingToday,
+            dailyCap: usage.dailyCap,
           });
         }
       } catch {
@@ -151,7 +150,7 @@ export default function BroBotBasic() {
 
       // TODO (Phase 2): Move feedback to our own backend (/api/brobot/feedback or similar)
       // This direct external call bypasses our infrastructure and should be consolidated.
-      await fetch('https://api.snap-ortho.com/case-prep-log', {
+      await fetch('/api/case-prep-log', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

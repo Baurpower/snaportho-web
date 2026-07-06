@@ -1,0 +1,752 @@
+{
+  "generatedAt": "2026-07-05T21:58:33.981Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-2a9385d8",
+  "gapsAddressed": 4,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 5,
+  "redirectedToDecisionPoint": 3,
+  "candidates": [
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-anatomy_pearl-distal-humerus-anatomy-i",
+      "claimText": "Distal humerus anatomy in children.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-anatomy_pearl-cubital-fossa-neurovascu",
+      "claimText": "Cubital fossa neurovascular structures.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-displacement-based-supra",
+      "claimText": "Displacement-based supracondylar pattern framework.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-imaging_point-anterior-humeral-line",
+      "claimText": "Anterior humeral line.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-imaging_point-baumann-angle-at-a-conce",
+      "claimText": "Baumann angle at a concept level.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-red_flag-a-pulseless-poorly-perfu",
+      "claimText": "A pulseless, poorly perfused hand after this injury is an emergency.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.boardPearls",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-nerve-palsy",
+      "claimText": "Nerve palsy.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-vascular-compromise",
+      "claimText": "Vascular compromise.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-cubitus-varus",
+      "claimText": "Cubitus varus.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-red_flag-compartment-syndrome",
+      "claimText": "Compartment syndrome.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-child-elbow-injury",
+      "claimText": "Child elbow injury.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-posterior-fat-pad-anteri",
+      "claimText": "posterior fat pad/anterior humeral line.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-vascular-exam",
+      "claimText": "vascular exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-anatomy_pearl-brachial-artery",
+      "claimText": "Brachial artery.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-anatomy_pearl-median-ain-and-radial-ne",
+      "claimText": "Median/AIN and radial nerve.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-anatomy_pearl-distal-humerus-alignment",
+      "claimText": "Distal humerus alignment.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-supracondylar-humerus-fr",
+      "claimText": "Supracondylar humerus fractures are pediatric elbow injuries where alignment and neurovascular status determine urgency.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-cognitive_trap-always-mention-ain-exam",
+      "claimText": "Always mention AIN exam.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-cognitive_trap-do-not-forget-compartmen",
+      "claimText": "Do not forget compartment syndrome risk after reduction.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-clinical_script-describe-swelling",
+      "claimText": "Describe swelling.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-clinical_script-document-pulse-and-nerve",
+      "claimText": "Document pulse and nerve exam.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-clinical_script-interpret-lateral-x-ray-",
+      "claimText": "Interpret lateral x-ray alignment.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-clinical_script-state-immobilization-or-",
+      "claimText": "State immobilization/OR urgency.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-recognize-the-classic-pe",
+      "claimText": "Recognize the classic pediatric elbow injury pattern and its urgency.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-e1cc5a6b"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-perform-and-present-a-fo",
+      "claimText": "Perform and present a focused neurovascular exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-e1cc5a6b"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-6",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-red_flag-explain-why-many-displac",
+      "claimText": "Explain why many displaced fractures need urgent pinning.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "supracondylar-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-e1cc5a6b"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Nondisplaced casting versus urgent pinning for displaced injuries",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ]
+    },
+    {
+      "text": "Long-arm cast",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ]
+    },
+    {
+      "text": "Closed reduction and percutaneous pinning",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ]
+    },
+    {
+      "text": "What nerve is most commonly injured?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ]
+    },
+    {
+      "text": "Why is the vascular exam so important?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-displacement-based-supra",
+      "draftId": "claim-supracondylar-humerus-fracture-fact-displacement-based-supra",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-nerve-palsy",
+      "draftId": "claim-supracondylar-humerus-fracture-fact-nerve-palsy",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-imaging_point-anterior-humeral-line",
+      "draftId": "claim-supracondylar-humerus-fracture-imaging_point-anterior-humeral-line",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-cognitive_trap-always-mention-ain-exam",
+      "draftId": "claim-supracondylar-humerus-fracture-cognitive_trap-always-mention-ain-exam",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-imaging_point-baumann-angle-at-a-conce",
+      "draftId": "claim-supracondylar-humerus-fracture-imaging_point-baumann-angle-at-a-conce",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-vascular-compromise",
+      "draftId": "claim-supracondylar-humerus-fracture-fact-vascular-compromise",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-cubitus-varus",
+      "draftId": "claim-supracondylar-humerus-fracture-fact-cubitus-varus",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-child-elbow-injury",
+      "draftId": "claim-supracondylar-humerus-fracture-fact-child-elbow-injury",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "verified": false
+    }
+  ]
+}

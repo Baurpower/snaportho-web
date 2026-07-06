@@ -1,0 +1,359 @@
+{
+  "topicKey": "pcl-injury",
+  "pilotKey": "pcl-injury-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 83,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 83
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|anatomy_structure|mcl",
+      "reason": "entity exists: mcl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|common-peroneal-nerve",
+      "reason": "entity exists: common-peroneal-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|subscapularis",
+      "reason": "entity exists: subscapularis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-biceps-tendon",
+      "reason": "entity exists: distal-biceps-tendon"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|atfl",
+      "reason": "entity exists: atfl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|cfl",
+      "reason": "entity exists: cfl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-shoulder-anatomy-hub",
+      "reason": "entity exists: sports-shoulder-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|imaging_finding|pcl-injury-mri-finding",
+      "reason": "entity exists: pcl-injury-mri-finding"
+    },
+    {
+      "fingerprint": "create|procedure|pcl-injury-reconstruction",
+      "reason": "entity exists: pcl-injury-reconstruction"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|pcl-injury-exam-maneuver",
+      "reason": "entity exists: pcl-injury-exam-maneuver"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|patella",
+      "reason": "entity exists: patella"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|rotator-cuff",
+      "reason": "entity exists: rotator-cuff"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibial-plateau",
+      "reason": "entity exists: tibial-plateau"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|acl",
+      "reason": "entity exists: acl"
+    },
+    {
+      "fingerprint": "create|complication|pcl-injury-complication",
+      "reason": "entity exists: pcl-injury-complication"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|glenoid",
+      "reason": "entity exists: glenoid"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "reason": "entity exists: extensor-mechanism"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|labrum",
+      "reason": "entity exists: labrum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|infraspinatus",
+      "reason": "entity exists: infraspinatus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pcl",
+      "reason": "entity exists: pcl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|popliteal-artery",
+      "reason": "entity exists: popliteal-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ucl",
+      "reason": "entity exists: ucl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-collateral-ligament",
+      "reason": "entity exists: radial-collateral-ligament"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-knee-anatomy-hub",
+      "reason": "entity exists: sports-knee-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-femur",
+      "reason": "entity exists: distal-femur"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|achilles-tendon",
+      "reason": "entity exists: achilles-tendon"
+    },
+    {
+      "fingerprint": "create|condition|acl-tear",
+      "reason": "entity exists: acl-tear"
+    },
+    {
+      "fingerprint": "create|condition|tibial-plateau-fracture",
+      "reason": "entity exists: tibial-plateau-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|teres-minor",
+      "reason": "entity exists: teres-minor"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|posterolateral-corner",
+      "reason": "entity exists: posterolateral-corner"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-condyles",
+      "reason": "entity exists: femoral-condyles"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|biceps-anchor",
+      "reason": "entity exists: biceps-anchor"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-elbow-anatomy-hub",
+      "reason": "entity exists: sports-elbow-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lcl",
+      "reason": "entity exists: lcl"
+    },
+    {
+      "fingerprint": "create|condition|pcl-injury",
+      "reason": "entity exists: pcl-injury"
+    },
+    {
+      "fingerprint": "create|classification_system|pcl-injury-classification",
+      "reason": "entity exists: pcl-injury-classification"
+    },
+    {
+      "fingerprint": "create|condition|multiligament-knee-injury",
+      "reason": "entity exists: multiligament-knee-injury"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-foot-ankle-anatomy-hub",
+      "reason": "entity exists: sports-foot-ankle-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|supraspinatus",
+      "reason": "entity exists: supraspinatus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-medicine-anatomy-hub",
+      "reason": "entity exists: sports-medicine-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|articular-cartilage",
+      "reason": "entity exists: articular-cartilage"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lateral-meniscus",
+      "reason": "entity exists: lateral-meniscus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|medial-meniscus",
+      "reason": "entity exists: medial-meniscus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub",
+      "reason": "entity exists: lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|treatment_principle|pcl-injury-rehab-protocol",
+      "reason": "entity exists: pcl-injury-rehab-protocol"
+    },
+    {
+      "fingerprint": "rel|sports-knee-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lateral-meniscus|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|mcl|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|biceps-anchor|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supraspinatus|part_of|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-biceps-tendon|part_of|sports-elbow-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|infraspinatus|part_of|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-elbow-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl-injury|involves_anatomy|popliteal-artery",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|acl|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-shoulder-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-foot-ankle-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lcl|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|radial-collateral-ligament|part_of|sports-elbow-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl-injury|involves_anatomy|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl-injury|has_imaging_finding|pcl-injury-mri-finding",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|glenoid|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|atfl|part_of|sports-foot-ankle-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl-injury|has_classification|pcl-injury-classification",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|teres-minor|part_of|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|posterolateral-corner|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|medial-meniscus|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|labrum|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-condyles|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|articular-cartilage|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|cfl|part_of|sports-foot-ankle-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ucl|part_of|sports-elbow-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-knee-anatomy-hub|prerequisite_for|pcl-injury",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|subscapularis|part_of|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|achilles-tendon|part_of|sports-foot-ankle-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl-injury|has_complication|pcl-injury-complication",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl-injury|involves_anatomy|tibial-plateau",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella|part_of|extensor-mechanism",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl-injury|involves_anatomy|pcl",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|knee-sports-pcl-injury|pcl-injury",
+      "reason": "bridge exists"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

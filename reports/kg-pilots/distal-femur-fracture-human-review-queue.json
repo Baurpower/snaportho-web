@@ -1,0 +1,403 @@
+[
+  {
+    "proposal_fingerprint": "rel|distal-femur-fracture|at_risk_structure|popliteal-artery",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "distal-femur-fracture -[at_risk_structure]-> popliteal-artery",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-femur-fracture|at_risk_structure|popliteal-artery",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-femur-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "popliteal-artery",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "vascular_injury",
+        "clinical_importance": "high",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:38:12.482Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|intra-articular-distal-femur-fracture|indicates_treatment|distal-femur-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "intra-articular-distal-femur-fracture -[indicates_treatment]-> distal-femur-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: intra-articular-distal-femur-fracture -[indicates_treatment]-> distal-femur-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "intra-articular-distal-femur-fracture",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "distal-femur-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "note": "patient factors and soft-tissue status dependent"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:38:12.482Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|distal-femur-fracture|treated_by|distal-femur-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "distal-femur-fracture -[treated_by]-> distal-femur-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|distal-femur-fracture|treated_by|distal-femur-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "distal-femur-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "distal-femur-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:38:12.482Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dff-articular-reduction",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dff-articular-reduction",
+    "alternatives": [],
+    "evidence_summary": "trauma-distal-femur-fractures curriculum",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dff-articular-reduction",
+      "claim_type": "fact",
+      "claim_text": "Distal femur fractures require assessment of articular involvement, coronal sagittal alignment, and popliteal artery proximity.",
+      "primary_entity_slug": "distal-femur-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:38:12.483Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dff-popliteal-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dff-popliteal-trap",
+    "alternatives": [],
+    "evidence_summary": "distal femur vascular board pearls",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dff-popliteal-trap",
+      "claim_type": "board_trap",
+      "claim_text": "High-energy distal femur fractures can injure the popliteal artery despite a warm foot and palpable dorsalis pedis pulse.",
+      "primary_entity_slug": "popliteal-artery",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.78,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:38:12.483Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dff-nonoperative-displaced",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dff-nonoperative-displaced",
+    "alternatives": [],
+    "evidence_summary": "distal femur treatment pitfalls",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dff-nonoperative-displaced",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Managing displaced intra-articular distal femur fractures nonoperatively without articular reduction discussion.",
+      "primary_entity_slug": "intra-articular-distal-femur-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.78,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:38:12.483Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-dff-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-dff-case-script",
+    "alternatives": [],
+    "evidence_summary": "distal femur case presentation pattern",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-dff-case-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Describe condylar involvement, vascular exam, soft-tissue condition, fixation construct plan, and malunion prevention goals.",
+      "primary_entity_slug": "distal-femur-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:38:12.483Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-dff-intra-articular-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-dff-intra-articular-orif",
+    "alternatives": [],
+    "evidence_summary": "distal femur operative indications",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-dff-intra-articular-orif",
+      "subject_entity_slug": "distal-femur-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Intra-articular distal femur fracture with articular step-off or instability",
+      "action": "Discuss distal femur ORIF with attending; document vascular exam and articular reduction goals",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:38:12.483Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-dff-vascular-workup",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-dff-vascular-workup",
+    "alternatives": [],
+    "evidence_summary": "popliteal artery injury pathway",
+    "metadata": {
+      "pilot": "distal-femur-fracture-neighborhood",
+      "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+      "review_packet_label": "Distal Femur Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-dff-vascular-workup",
+      "subject_entity_slug": "distal-femur-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Distal femur fracture with abnormal ankle-brachial index, expanding hematoma, or ischemic signs",
+      "action": "Activate vascular surgery consultation and expedite imaging before definitive fixation per attending",
+      "urgency": "emergent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:38:12.483Z"
+    }
+  }
+]

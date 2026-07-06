@@ -1,0 +1,90 @@
+{
+  "topicKey": "osteochondral-defect-knee",
+  "pilotKey": "osteochondral-defect-knee-neighborhood",
+  "primaryEntitySlug": "osteochondral-defect-knee",
+  "displayName": "Osteochondral Defect of the Knee",
+  "generatedAt": "2026-07-05T22:51:22.988Z",
+  "nodes": [
+    {
+      "slug": "osteochondral-defect-knee-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Osteochondral Defect of the Knee MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-defect-knee-complication",
+      "entityType": "complication",
+      "preferredLabel": "Osteochondral Defect of the Knee Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-defect-knee-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Osteochondral Defect of the Knee Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-defect-knee-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Osteochondral Defect of the Knee Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-defect-knee-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Osteochondral Defect of the Knee Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-defect-knee-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Osteochondral Defect of the Knee Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "osteochondral-defect-knee-reconstruction"
+    ],
+    "classification": [
+      "osteochondral-defect-knee-classification"
+    ],
+    "imaging": [
+      "osteochondral-defect-knee-mri-finding"
+    ],
+    "complication": [
+      "osteochondral-defect-knee-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "osteochondral-defect-knee-rehab-protocol",
+      "osteochondral-defect-knee-exam-maneuver"
+    ]
+  }
+}

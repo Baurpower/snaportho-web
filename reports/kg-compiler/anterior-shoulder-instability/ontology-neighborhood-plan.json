@@ -1,0 +1,121 @@
+{
+  "topicKey": "anterior-shoulder-instability",
+  "pilotKey": "anterior-shoulder-instability-neighborhood",
+  "primaryEntitySlug": "anterior-shoulder-instability",
+  "displayName": "Anterior Shoulder Instability",
+  "generatedAt": "2026-07-05T22:54:09.239Z",
+  "nodes": [
+    {
+      "slug": "anterior-shoulder-instability",
+      "entityType": "condition",
+      "preferredLabel": "Anterior Shoulder Instability",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "anterior-shoulder-instability-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Anterior Shoulder Instability Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "anterior-shoulder-instability-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Anterior Shoulder Instability MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "anterior-shoulder-instability-complication",
+      "entityType": "complication",
+      "preferredLabel": "Anterior Shoulder Instability Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "slap-tear",
+      "entityType": "condition",
+      "preferredLabel": "Slap Tear",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "anterior-shoulder-instability-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Anterior Shoulder Instability Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "anterior-shoulder-instability-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Anterior Shoulder Instability Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rotator-cuff-tear",
+      "entityType": "condition",
+      "preferredLabel": "Rotator Cuff Tear",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "anterior-shoulder-instability-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Anterior Shoulder Instability Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "anterior-shoulder-instability"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "anterior-shoulder-instability-reconstruction"
+    ],
+    "classification": [
+      "anterior-shoulder-instability-classification"
+    ],
+    "imaging": [
+      "anterior-shoulder-instability-mri-finding"
+    ],
+    "complication": [
+      "anterior-shoulder-instability-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "slap-tear",
+      "anterior-shoulder-instability-rehab-protocol",
+      "rotator-cuff-tear",
+      "anterior-shoulder-instability-exam-maneuver"
+    ]
+  }
+}

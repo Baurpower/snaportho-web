@@ -1,0 +1,443 @@
+[
+  {
+    "proposal_fingerprint": "rel|compartment-syndrome|tested_by|pain-with-passive-stretch",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "compartment-syndrome -[tested_by]-> pain-with-passive-stretch",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|compartment-syndrome|tested_by|pain-with-passive-stretch",
+    "alternatives": [],
+    "evidence_summary": "Relationship tested_by",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "compartment-syndrome",
+      "subject_entity_type": "condition",
+      "object_slug": "pain-with-passive-stretch",
+      "object_entity_type": "exam_maneuver",
+      "relationship_metadata": {
+        "relevance_reason": "exam",
+        "management_importance": "high",
+        "clinical_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|compartment-syndrome|treated_by|leg-fasciotomy",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "compartment-syndrome -[treated_by]-> leg-fasciotomy",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|compartment-syndrome|treated_by|leg-fasciotomy",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "compartment-syndrome",
+      "subject_entity_type": "condition",
+      "object_slug": "leg-fasciotomy",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or",
+          "call"
+        ],
+        "clinical_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-cs-clinical-diagnosis",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-cs-clinical-diagnosis",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.mustKnow + oneLiner",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-cs-clinical-diagnosis",
+      "claim_type": "fact",
+      "claim_text": "Compartment syndrome is a clinical diagnosis where escalating pain, tense compartments, and pain with passive stretch outweigh waiting for confirmatory imaging.",
+      "primary_entity_slug": "compartment-syndrome",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-cs-pulses-unreliable",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-cs-pulses-unreliable",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.boardPearls",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-cs-pulses-unreliable",
+      "claim_type": "board_trap",
+      "claim_text": "Pulselessness is a late finding — do not exclude compartment syndrome when distal pulses are still present.",
+      "primary_entity_slug": "compartment-syndrome",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-cs-passive-stretch",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-cs-passive-stretch",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.boardPearls",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-cs-passive-stretch",
+      "claim_type": "fact",
+      "claim_text": "Pain with passive stretch of involved musculature is an earlier and more useful sign than absent pulses.",
+      "primary_entity_slug": "pain-with-passive-stretch",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-cs-imaging-delay-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-cs-imaging-delay-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.imaging + fast.orSurvivalTips",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-cs-imaging-delay-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Delaying fasciotomy to obtain imaging or pressure measurements when the clinical picture is evolving.",
+      "primary_entity_slug": "compartment-syndrome",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-cs-pressure-adjunct",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-cs-pressure-adjunct",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.pimpQuestions + deep.imaging",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-cs-pressure-adjunct",
+      "claim_type": "imaging_point",
+      "claim_text": "Compartment pressure measurements are adjuncts only — they should not delay treatment when clinical suspicion is high.",
+      "primary_entity_slug": "perfusion-pressure-concept",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-cs-escalation-language",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-cs-escalation-language",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.caseSteps",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-cs-escalation-language",
+      "claim_type": "clinical_script",
+      "claim_text": "On consult, state time-sensitive limb emergency, repeat compartment exam, loosen dressings, and escalate for emergent fasciotomy.",
+      "primary_entity_slug": "compartment-syndrome",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-cs-emergent-fasciotomy",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-cs-emergent-fasciotomy",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.decisionMaking + treatmentOptions",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-cs-emergent-fasciotomy",
+      "subject_entity_slug": "compartment-syndrome",
+      "pattern_type": "emergent_intervention",
+      "trigger": "Escalating pain out of proportion, tense compartments, pain with passive stretch, or evolving neurovascular deficit",
+      "action": "Proceed with emergent leg fasciotomy — do not delay for imaging when clinical suspicion is high",
+      "urgency": "emergent",
+      "safety_criticality": "emergency",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-cs-pressure-measurement-adjunct",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-cs-pressure-measurement-adjunct",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.pimpQuestions + deep.decisionMaking",
+    "metadata": {
+      "pilot": "compartment-syndrome-neighborhood",
+      "review_packet_key": "pilot:compartment-syndrome-neighborhood",
+      "review_packet_label": "Compartment Syndrome Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-cs-pressure-measurement-adjunct",
+      "subject_entity_slug": "compartment-syndrome",
+      "pattern_type": "diagnostic_adjunct",
+      "trigger": "Equivocal exam in obtunded patient or unreliable exam conditions",
+      "action": "Measure compartment pressures as adjunct; maintain low threshold for fasciotomy if trending abnormal",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T20:59:27.505Z"
+    }
+  }
+]

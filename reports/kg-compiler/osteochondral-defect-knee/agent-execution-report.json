@@ -1,0 +1,137 @@
+{
+  "generatedAt": "2026-07-05T22:51:23.020Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "osteochondral-defect-knee",
+  "pilotKey": "osteochondral-defect-knee-neighborhood",
+  "executionOrder": [
+    "work-clinical-entity-builder",
+    "work-asset-linker",
+    "work-relationship-builder",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "parallelLayers": [
+    [
+      "work-clinical-entity-builder"
+    ],
+    [
+      "work-asset-linker",
+      "work-relationship-builder"
+    ],
+    [
+      "work-duplicate-detector"
+    ],
+    [
+      "work-quality-scorer"
+    ],
+    [
+      "work-conflict-resolver"
+    ],
+    [
+      "work-review-assistant"
+    ],
+    [
+      "work-publication-validator"
+    ]
+  ],
+  "entries": [
+    {
+      "assignmentId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "status": "completed",
+      "proposalCount": 29,
+      "executionTimeMs": 2,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-asset-linker",
+      "agentId": "asset-linker",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "status": "completed",
+      "proposalCount": 1,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-duplicate-detector",
+      "agentId": "duplicate-detector",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-quality-scorer",
+      "agentId": "quality-scorer",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-conflict-resolver",
+      "agentId": "conflict-resolver",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-review-assistant",
+      "agentId": "review-assistant",
+      "status": "completed",
+      "proposalCount": 91,
+      "executionTimeMs": 3,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-publication-validator",
+      "agentId": "publication-validator",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 2,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    }
+  ],
+  "totalProposalsEmitted": 121,
+  "uniqueProposals": 91,
+  "completedAgents": 8,
+  "failedAgents": 0,
+  "partialAgents": 0,
+  "skippedAgents": 0,
+  "databaseModified": false
+}

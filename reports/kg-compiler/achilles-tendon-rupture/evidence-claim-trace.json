@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-07-05T23:13:25.091Z",
+  "evidencePacketId": "ev-packet-34afd352",
+  "traces": [
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-identify-classic-achille",
+      "proposalFingerprint": "claim|claim-achilles-tendon-rupture-fact-identify-classic-achille",
+      "evidenceItemIds": [
+        "ev-static-prepare-55dbaea1"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-explain-the-thompson-tes",
+      "proposalFingerprint": "claim|claim-achilles-tendon-rupture-fact-explain-the-thompson-tes",
+      "evidenceItemIds": [
+        "ev-static-prepare-55dbaea1"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-board_trap-a-positive-thompson-test",
+      "proposalFingerprint": "claim|claim-achilles-tendon-rupture-board_trap-a-positive-thompson-test",
+      "evidenceItemIds": [
+        "ev-static-prepare-cd080f22"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-imaging_point-ultrasound-or-mri-only-w",
+      "proposalFingerprint": "claim|claim-achilles-tendon-rupture-imaging_point-ultrasound-or-mri-only-w",
+      "evidenceItemIds": [
+        "ev-static-prepare-cd080f22"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-cognitive_trap-do-not-forget-comparison",
+      "proposalFingerprint": "claim|claim-achilles-tendon-rupture-cognitive_trap-do-not-forget-comparison",
+      "evidenceItemIds": [
+        "ev-static-prepare-cd0904b6"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-compare-operative-and-no",
+      "proposalFingerprint": "claim|claim-achilles-tendon-rupture-fact-compare-operative-and-no",
+      "evidenceItemIds": [
+        "ev-static-prepare-55dbaea1"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-acute-versus-chronic-rup",
+      "proposalFingerprint": "claim|claim-achilles-tendon-rupture-fact-acute-versus-chronic-rup",
+      "evidenceItemIds": [
+        "ev-static-prepare-cd080f22"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-achilles-tendon-rupture-fact-insertional-versus-midsu",
+      "proposalFingerprint": "claim|claim-achilles-tendon-rupture-fact-insertional-versus-midsu",
+      "evidenceItemIds": [
+        "ev-static-prepare-cd080f22"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-cd080f22"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Gap, patient activity level, treatment compliance, chronicity"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-cd080f22"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Functional nonoperative rehab"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-cd080f22"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Open or percutaneous repair"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-cd0904b6"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Who can be treated nonoperatively?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-cd0904b6"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why does delay matter?"
+    }
+  ]
+}

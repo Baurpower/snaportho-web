@@ -1,0 +1,624 @@
+[
+  {
+    "proposal_fingerprint": "rel|pcl-injury|tested_by|pcl-injury-exam-maneuver",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "pcl-injury -[tested_by]-> pcl-injury-exam-maneuver",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pcl-injury|tested_by|pcl-injury-exam-maneuver",
+    "alternatives": [],
+    "evidence_summary": "Relationship tested_by",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pcl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "pcl-injury-exam-maneuver",
+      "object_entity_type": "exam_maneuver",
+      "relationship_metadata": {
+        "educational_importance": "high",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pcl-injury-mri-finding|indicates_treatment|pcl-injury-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "pcl-injury-mri-finding -[indicates_treatment]-> pcl-injury-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: pcl-injury-mri-finding -[indicates_treatment]-> pcl-injury-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pcl-injury-mri-finding",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "pcl-injury-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "note": "operative indication attending-dependent"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pcl-injury|treated_by|pcl-injury-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "pcl-injury -[treated_by]-> pcl-injury-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pcl-injury|treated_by|pcl-injury-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pcl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "pcl-injury-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pcl-injury|treated_by|pcl-injury-rehab-protocol",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "pcl-injury -[treated_by]-> pcl-injury-rehab-protocol",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pcl-injury|treated_by|pcl-injury-rehab-protocol",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pcl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "pcl-injury-rehab-protocol",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pcl-injury|differential_for|acl-tear",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "pcl-injury -[differential_for]-> acl-tear",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pcl-injury|differential_for|acl-tear",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pcl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "acl-tear",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pcl-injury|differential_for|multiligament-knee-injury",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "pcl-injury -[differential_for]-> multiligament-knee-injury",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pcl-injury|differential_for|multiligament-knee-injury",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pcl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "multiligament-knee-injury",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pcl-injury|differential_for|tibial-plateau-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "pcl-injury -[differential_for]-> tibial-plateau-fracture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pcl-injury|differential_for|tibial-plateau-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pcl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "tibial-plateau-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_cluster": true,
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "trauma_overlap",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pclinjury-oneliner",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pclinjury-oneliner",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts pcl-injury",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pclinjury-oneliner",
+      "claim_type": "fact",
+      "claim_text": "PCL injuries range from posterior sag management to operative reconstruction in high-demand or multiligament settings.",
+      "primary_entity_slug": "pcl-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pclinjury-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pclinjury-board-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts pcl-injury boardPearls",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pclinjury-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating pcl injury.",
+      "primary_entity_slug": "pcl-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.76,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pclinjury-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pclinjury-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts pcl-injury pimpQuestions",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pclinjury-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Do not anchor on a single exam maneuver for pcl injury — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primary_entity_slug": "pcl-injury",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.76,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pclinjury-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pclinjury-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts pcl-injury caseSteps",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pclinjury-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for pcl injury.",
+      "primary_entity_slug": "pcl-injury",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pclinjury-sag-sign",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pclinjury-sag-sign",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts pcl-injury",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pclinjury-sag-sign",
+      "claim_type": "fact",
+      "claim_text": "Posterior sag and posterior drawer are key exam clues for PCL insufficiency.",
+      "primary_entity_slug": "pcl-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.76,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-pclinjury-operative-indication",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-pclinjury-operative-indication",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts pcl-injury decisionMaking",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-pclinjury-operative-indication",
+      "subject_entity_slug": "pcl-injury",
+      "pattern_type": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from pcl injury despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-pclinjury-return-to-play",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-pclinjury-return-to-play",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts pcl-injury treatmentOptions",
+    "metadata": {
+      "pilot": "pcl-injury-neighborhood",
+      "review_packet_key": "pilot:pcl-injury-neighborhood",
+      "review_packet_label": "PCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-pclinjury-return-to-play",
+      "subject_entity_slug": "pcl-injury",
+      "pattern_type": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after pcl injury treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.76,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:40:33.340Z"
+    }
+  }
+]

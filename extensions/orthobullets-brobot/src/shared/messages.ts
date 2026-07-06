@@ -1,4 +1,7 @@
 import type {
+  BrobotExplainResult,
+  CurriculumExplainEmphasis,
+  CurriculumStudyResponse,
   OrthobulletsChatResponse,
   OrthobulletsChatTurn,
   OrthobulletsExplainResponse,
@@ -43,11 +46,13 @@ export type ExtensionMessage =
       hintLevel: 1 | 2 | 3;
       selectedAnswerKey?: string | null;
     }
-  | { type: 'ob:explain'; pageContext: OrthobulletsPageContext }
+  | { type: 'ob:explain'; pageContext: OrthobulletsPageContext; emphasis?: CurriculumExplainEmphasis }
   | {
       type: 'ob:chat';
       pageContext: OrthobulletsPageContext;
-      explanation: OrthobulletsExplainResponse;
+      explanation?: OrthobulletsExplainResponse;
+      curriculumStudy?: CurriculumStudyResponse;
+      emphasis?: CurriculumExplainEmphasis;
       history: OrthobulletsChatTurn[];
       userMessage: string;
     };
@@ -73,7 +78,7 @@ export type ExtensionMessageResponse =
   | { ok: true; deviceToken: string }
   | { ok: true; pageContext: OrthobulletsPageContext; diagnostics: OrthobulletsExtractionDiagnostics }
   | { ok: true; hint: OrthobulletsHintResponse }
-  | { ok: true; explanation: OrthobulletsExplainResponse }
+  | { ok: true; explanation: BrobotExplainResult }
   | { ok: true; chat: OrthobulletsChatResponse }
   | { ok: true; cleared: true }
   | { ok: false; error: string; code?: ExtensionErrorCode; diagnostics?: OrthobulletsExtractionDiagnostics; fetchDiagnostics?: ExtensionFetchDiagnostics };

@@ -1,0 +1,2160 @@
+{
+  "topicKey": "pilon-fracture",
+  "pilotKey": "pilon-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:45:34.424Z",
+  "entities": [
+    {
+      "slug": "soft-tissue-compromise-pilon",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Soft Tissue Compromise in Pilon Fracture",
+      "metadata": {
+        "slug": "soft-tissue-compromise-pilon",
+        "pilot": "pilon-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Severe swelling, fracture blisters, or skin compromise delaying definitive fixation.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|soft-tissue-compromise-pilon",
+        "canonical_entity_id": "62c9f1ca-a239-47a1-837e-85da0fb8ed2a",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|soft-tissue-compromise-pilon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pilon-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Pilon ORIF",
+      "metadata": {
+        "slug": "pilon-orif",
+        "pilot": "pilon-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Definitive open reduction internal fixation of tibial plafond articular injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|pilon-orif",
+        "canonical_entity_id": "d87b7c22-5593-4d8c-b54e-7f4f849c0f46",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|pilon-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "staged-pilon-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Staged Pilon Protocol",
+      "metadata": {
+        "slug": "staged-pilon-protocol",
+        "pilot": "pilon-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Spanning external fixation and soft-tissue recovery before definitive plafond reconstruction.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|treatment_principle|staged-pilon-protocol",
+        "canonical_entity_id": "c1523463-044a-4791-8f65-1773bc927377",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|treatment_principle|staged-pilon-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pilon-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Pilon Fracture",
+      "metadata": {
+        "slug": "pilon-fracture",
+        "pilot": "pilon-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "High-energy intra-articular distal tibial plafond fracture with soft-tissue compromise risk.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|pilon-fracture",
+        "canonical_entity_id": "929989f1-d949-4a61-a20f-eead6cb88fb8",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|pilon-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pilon-wound-complication",
+      "entityType": "complication",
+      "preferredLabel": "Pilon Wound Complication",
+      "metadata": {
+        "slug": "pilon-wound-complication",
+        "pilot": "pilon-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Wound breakdown or infection after pilon fracture operative management.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|pilon-wound-complication",
+        "canonical_entity_id": "78b114bd-ae79-4300-80c8-87b4d93c2b42",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|pilon-wound-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+      "metadata": {
+        "slug": "acetabulum",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "anterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Compartment",
+      "description": "Anterior leg compartment at risk after tibial and pilon injuries.",
+      "metadata": {
+        "slug": "anterior-compartment",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "leg",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Anterior leg compartment at risk after tibial and pilon injuries.",
+        "owner_pilot": "tibial-shaft-fracture-neighborhood",
+        "anatomy_kind": "compartment",
+        "cross_cluster": "tibial-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|anterior-compartment"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+      "metadata": {
+        "slug": "calcaneus",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "common-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Peroneal Nerve",
+      "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+      "metadata": {
+        "slug": "common-peroneal-nerve",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|common-peroneal-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Femur",
+      "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+      "metadata": {
+        "slug": "distal-femur",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+      "metadata": {
+        "slug": "extensor-mechanism",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+      "metadata": {
+        "slug": "femoral-diaphysis",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "thigh",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-diaphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fibula",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fibula",
+      "description": "Lateral leg bone influencing alignment and length in leg injuries.",
+      "metadata": {
+        "slug": "fibula",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "leg",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Lateral leg bone influencing alignment and length in leg injuries.",
+        "owner_pilot": "tibial-shaft-fracture-neighborhood",
+        "anatomy_kind": "bone",
+        "cross_cluster": "tibial-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fibula"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+      "metadata": {
+        "slug": "iliac-wing",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "leg-compartment-complex",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Leg Compartment Complex",
+      "description": "Four-compartment osteofascial model shared with compartment syndrome neighborhood.",
+      "metadata": {
+        "slug": "leg-compartment-complex",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "leg",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Four-compartment osteofascial model shared with compartment syndrome neighborhood.",
+        "owner_pilot": "tibial-shaft-fracture-neighborhood",
+        "anatomy_kind": "composite",
+        "cross_cluster": "tibial-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|leg-compartment-complex"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+      "metadata": {
+        "slug": "lisfranc-joint",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lower-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Trauma Anatomy Hub",
+      "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+      "metadata": {
+        "slug": "lower-extremity-trauma-anatomy-hub",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "lower_extremity",
+        "cluster": "lower-extremity-trauma",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+      "metadata": {
+        "slug": "midfoot",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterior Cruciate Ligament",
+      "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+      "metadata": {
+        "slug": "pcl",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+      "metadata": {
+        "slug": "pelvis",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+      "metadata": {
+        "slug": "plantar-soft-tissues",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|plantar-soft-tissues"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+      "metadata": {
+        "slug": "pubic-symphysis",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pubic-symphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+      "metadata": {
+        "slug": "sacroiliac-joint",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacroiliac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+      "metadata": {
+        "slug": "sacrum",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+      "metadata": {
+        "slug": "subtalar-joint",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+      "metadata": {
+        "slug": "talus",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-shaft",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Shaft",
+      "description": "Subcutaneous tibial diaphysis with limited soft-tissue envelope.",
+      "metadata": {
+        "slug": "tibial-shaft",
+        "pilot": "pilon-fracture-neighborhood",
+        "region": "leg",
+        "verified": false,
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "description": "Subcutaneous tibial diaphysis with limited soft-tissue envelope.",
+        "owner_pilot": "tibial-shaft-fracture-neighborhood",
+        "anatomy_kind": "bone",
+        "cross_cluster": "tibial-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|tibial-shaft"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "pilon-wound-complication",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|pilon-fracture|has_complication|pilon-wound-complication",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|pilon-fracture|has_complication|pilon-wound-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "soft-tissue-compromise-pilon",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "staging",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|pilon-fracture|has_imaging_finding|soft-tissue-compromise-pilon",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "staging",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|pilon-fracture|has_imaging_finding|soft-tissue-compromise-pilon"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabulum",
+      "predicate": "part_of",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_socket",
+        "_provenance_fingerprint": "rel|acetabulum|part_of|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "anterior-compartment",
+      "predicate": "part_of",
+      "objectSlug": "leg-compartment-complex",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "compartment",
+        "_provenance_fingerprint": "rel|anterior-compartment|part_of|leg-compartment-complex"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "articulates_with",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "common-peroneal-nerve",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "articulates_with",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral",
+        "_provenance_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-mechanism",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-diaphysis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "femoral_shaft",
+        "_provenance_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fibula",
+      "predicate": "part_of",
+      "objectSlug": "leg-compartment-complex",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_malleolus",
+        "_provenance_fingerprint": "rel|fibula|part_of|leg-compartment-complex"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "iliac-wing",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_pelvis",
+        "_provenance_fingerprint": "rel|iliac-wing|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-joint",
+      "predicate": "part_of",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "midfoot_stability",
+        "_provenance_fingerprint": "rel|lisfranc-joint|part_of|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lower-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "pilon-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|pilon-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "midfoot",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot",
+        "_provenance_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "articulates_with",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "patellofemoral",
+        "_provenance_fingerprint": "rel|patella|articulates_with|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pelvic_ring",
+        "_provenance_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "tibial-shaft",
+      "metadata": {
+        "note": "distal tibial plafond localized via tibial-shaft shared slug",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "distal_plafond",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|pilon-fracture|injured_in|tibial-shaft"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "anterior-compartment",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "compartment_risk",
+        "_provenance_fingerprint": "rel|pilon-fracture|involves_anatomy|anterior-compartment"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "fibula",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_column_length",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|pilon-fracture|involves_anatomy|fibula"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|pilon-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "talus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle_mortise",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|pilon-fracture|involves_anatomy|talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "pilon-orif",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|pilon-fracture|treated_by|pilon-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "staged-pilon-protocol",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|pilon-fracture|treated_by|staged-pilon-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pilon-orif",
+      "predicate": "involves_anatomy",
+      "objectSlug": "tibial-shaft",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "plafond_reduction",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|pilon-orif|involves_anatomy|tibial-shaft"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "plantar-soft-tissues",
+      "predicate": "part_of",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "_provenance_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "popliteal-artery",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pubic-symphysis",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "_provenance_fingerprint": "rel|pubic-symphysis|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacroiliac-joint",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "_provenance_fingerprint": "rel|sacroiliac-joint|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacrum",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "_provenance_fingerprint": "rel|sacrum|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "soft-tissue-compromise-pilon",
+      "predicate": "indicates_treatment",
+      "objectSlug": "staged-pilon-protocol",
+      "metadata": {
+        "note": "do not rush definitive fixation through compromised skin",
+        "confidence": 0.85,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|soft-tissue-compromise-pilon|indicates_treatment|staged-pilon-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subtalar-joint",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "articulates_with",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "subtalar",
+        "_provenance_fingerprint": "rel|talus|articulates_with|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle",
+        "_provenance_fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-shaft",
+      "predicate": "part_of",
+      "objectSlug": "leg-compartment-complex",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diaphysis",
+        "_provenance_fingerprint": "rel|tibial-shaft|part_of|leg-compartment-complex"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-pilon-case-script",
+      "claimType": "clinical_script",
+      "claimText": "Document soft-tissue status, articular injury pattern, fibula role, staging plan, and definitive fixation timing.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-case-script",
+        "verified": false,
+        "claim_text": "Document soft-tissue status, articular injury pattern, fibula role, staging plan, and definitive fixation timing.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "primary_entity_slug": "pilon-fracture",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-pilon-case-script"
+      }
+    },
+    {
+      "draftId": "claim-pilon-ct-articular-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Planning pilon ORIF from radiographs alone without CT articular mapping of comminution and step-off.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-ct-articular-trap",
+        "verified": false,
+        "claim_text": "Planning pilon ORIF from radiographs alone without CT articular mapping of comminution and step-off.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call"
+        ],
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "primary_entity_slug": "pilon-fracture",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-pilon-ct-articular-trap"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fibula-length",
+      "claimType": "anatomy_pearl",
+      "claimText": "Fibular length and lateral column restoration support ankle alignment during pilon reconstruction.",
+      "primaryEntitySlug": "fibula",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fibula-length",
+        "verified": false,
+        "claim_text": "Fibular length and lateral column restoration support ankle alignment during pilon reconstruction.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or",
+          "oite"
+        ],
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "primary_entity_slug": "fibula",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-pilon-fibula-length"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fracture-board_trap-definitive-fixation-thro",
+      "claimType": "board_trap",
+      "claimText": "Definitive fixation through compromised soft tissues increases wound failure risk.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fracture-board_trap-definitive-fixation-thro",
+        "claim_type": "board_trap",
+        "claim_text": "Definitive fixation through compromised soft tissues increases wound failure risk.",
+        "primary_entity_slug": "pilon-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-7fc49835"
+        ],
+        "evidence_packet_id": "ev-packet-07c359c5",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "_provenance_fingerprint": "claim|claim-pilon-fracture-board_trap-definitive-fixation-thro"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fracture-cognitive_trap-lead-with-soft-tissue-en",
+      "claimType": "cognitive_trap",
+      "claimText": "Lead with soft-tissue envelope language.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fracture-cognitive_trap-lead-with-soft-tissue-en",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Lead with soft-tissue envelope language.",
+        "primary_entity_slug": "pilon-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-7fc3a2a1"
+        ],
+        "evidence_packet_id": "ev-packet-07c359c5",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "_provenance_fingerprint": "claim|claim-pilon-fracture-cognitive_trap-lead-with-soft-tissue-en"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-articular-comminution",
+      "claimType": "fact",
+      "claimText": "articular comminution.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fracture-fact-articular-comminution",
+        "claim_type": "fact",
+        "claim_text": "articular comminution.",
+        "primary_entity_slug": "pilon-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-7fc3a2a1"
+        ],
+        "evidence_packet_id": "ev-packet-07c359c5",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "_provenance_fingerprint": "claim|claim-pilon-fracture-fact-articular-comminution"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-explain-staged-managemen",
+      "claimType": "fact",
+      "claimText": "Explain staged management with external fixation bridging.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fracture-fact-explain-staged-managemen",
+        "claim_type": "fact",
+        "claim_text": "Explain staged management with external fixation bridging.",
+        "primary_entity_slug": "pilon-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-30004216"
+        ],
+        "evidence_packet_id": "ev-packet-07c359c5",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "_provenance_fingerprint": "claim|claim-pilon-fracture-fact-explain-staged-managemen"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-identify-wound-complicat",
+      "claimType": "fact",
+      "claimText": "Identify wound complications and articular restoration priorities.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fracture-fact-identify-wound-complicat",
+        "claim_type": "fact",
+        "claim_text": "Identify wound complications and articular restoration priorities.",
+        "primary_entity_slug": "pilon-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-30004216"
+        ],
+        "evidence_packet_id": "ev-packet-07c359c5",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "_provenance_fingerprint": "claim|claim-pilon-fracture-fact-identify-wound-complicat"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-recognize-high-energy-ti",
+      "claimType": "fact",
+      "claimText": "Recognize high-energy tibial plafond fractures with soft-tissue risk.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fracture-fact-recognize-high-energy-ti",
+        "claim_type": "fact",
+        "claim_text": "Recognize high-energy tibial plafond fractures with soft-tissue risk.",
+        "primary_entity_slug": "pilon-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-30004216"
+        ],
+        "evidence_packet_id": "ev-packet-07c359c5",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "_provenance_fingerprint": "claim|claim-pilon-fracture-fact-recognize-high-energy-ti"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-soft-tissue-status",
+      "claimType": "fact",
+      "claimText": "Soft tissue status.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fracture-fact-soft-tissue-status",
+        "claim_type": "fact",
+        "claim_text": "Soft tissue status.",
+        "primary_entity_slug": "pilon-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-7fc3a2a1"
+        ],
+        "evidence_packet_id": "ev-packet-07c359c5",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "_provenance_fingerprint": "claim|claim-pilon-fracture-fact-soft-tissue-status"
+      }
+    },
+    {
+      "draftId": "claim-pilon-fracture-imaging_point-ap-lateral-ankle",
+      "claimType": "imaging_point",
+      "claimText": "AP/lateral ankle.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-fracture-imaging_point-ap-lateral-ankle",
+        "claim_type": "imaging_point",
+        "claim_text": "AP/lateral ankle.",
+        "primary_entity_slug": "pilon-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-7fc49835"
+        ],
+        "evidence_packet_id": "ev-packet-07c359c5",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "_provenance_fingerprint": "claim|claim-pilon-fracture-imaging_point-ap-lateral-ankle"
+      }
+    },
+    {
+      "draftId": "claim-pilon-rush-fixation-trap",
+      "claimType": "board_trap",
+      "claimText": "Do not rush definitive pilon fixation through compromised skin — staging protects against wound catastrophe.",
+      "primaryEntitySlug": "soft-tissue-compromise-pilon",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-rush-fixation-trap",
+        "verified": false,
+        "claim_text": "Do not rush definitive pilon fixation through compromised skin — staging protects against wound catastrophe.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "or"
+        ],
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "primary_entity_slug": "soft-tissue-compromise-pilon",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-pilon-rush-fixation-trap"
+      }
+    },
+    {
+      "draftId": "claim-pilon-staged-soft-tissue",
+      "claimType": "fact",
+      "claimText": "Pilon fractures are intra-articular distal tibial injuries where soft tissues often dictate staged reconstruction.",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pilon-fracture-neighborhood",
+        "draft_id": "claim-pilon-staged-soft-tissue",
+        "verified": false,
+        "claim_text": "Pilon fractures are intra-articular distal tibial injuries where soft tissues often dictate staged reconstruction.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:45:34.420Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_packet_key": "pilot:pilon-fracture-neighborhood",
+        "primary_entity_slug": "pilon-fracture",
+        "review_packet_label": "Pilon Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-pilon-staged-soft-tissue"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-pilon-definitive-orif",
+      "subjectEntitySlug": "pilon-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Soft tissues recovered with unacceptable articular step-off or instability on CT",
+      "action": "Proceed with definitive pilon ORIF including fibular length restoration and articular reduction",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-pilon-staged-spanning",
+      "subjectEntitySlug": "pilon-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Pilon fracture with severe swelling, fracture blisters, or soft-tissue compromise",
+      "action": "Apply staged pilon protocol with spanning external fixation and delayed definitive ORIF when skin allows",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern pilon-fracture|operative_indication: dp-pilon-definitive-orif vs dp-pilon-staged-spanning"
+    }
+  ],
+  "stats": {
+    "entityCount": 27,
+    "relationshipCount": 40,
+    "claimCount": 13,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 5,
+    "conflictingRelationships": 0,
+    "metadataMerged": 7,
+    "provenanceAttached": 83
+  }
+}

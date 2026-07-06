@@ -1,0 +1,824 @@
+{
+  "generatedAt": "2026-07-05T22:37:34.771Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-e915b0bd",
+  "gapsAddressed": 2,
+  "gapsScheduled": 2,
+  "claimsGenerated": 8,
+  "claimsRejected": 5,
+  "redirectedToDecisionPoint": 3,
+  "candidates": [
+    {
+      "draftId": "claim-acl-tear-fact-recognize-the-classic-hi",
+      "claimText": "Recognize the classic history and exam findings of ACL injury.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3c7710ae"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-describe-associated-inju",
+      "claimText": "Describe associated injuries and the role of MRI.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3c7710ae"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-clinical_script-outline-nonoperative-ver",
+      "claimText": "Outline nonoperative versus reconstruction pathways at a student level.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3c7710ae"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-pop",
+      "claimText": "Pop.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-effusion",
+      "claimText": "effusion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-lachman",
+      "claimText": "Lachman.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-pivoting-instability",
+      "claimText": "pivoting instability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-rehab-importance",
+      "claimText": "rehab importance.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-anatomy_pearl-acl-bundles",
+      "claimText": "ACL bundles.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-anatomy_pearl-secondary-stabilizers",
+      "claimText": "Secondary stabilizers.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-anatomy_pearl-meniscus-relationship",
+      "claimText": "Meniscus relationship.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-acl-tears-are-instabilit",
+      "claimText": "ACL tears are instability injuries diagnosed by history and exam, with reconstruction decisions shaped by goals and associated pathology.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-cognitive_trap-mention-bone-bruise-patt",
+      "claimText": "Mention bone bruise pattern on MRI.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-cognitive_trap-do-not-ignore-meniscus-i",
+      "claimText": "Do not ignore meniscus injury.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-clinical_script-summarize-mechanism",
+      "claimText": "Summarize mechanism.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-clinical_script-state-key-exam-tests",
+      "claimText": "State key exam tests.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-clinical_script-mention-mri-and-prehab",
+      "claimText": "Mention MRI and prehab.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-anatomy_pearl-acl-footprint",
+      "claimText": "ACL footprint.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-anatomy_pearl-rotational-stabilizers",
+      "claimText": "Rotational stabilizers.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-anatomy_pearl-anterolateral-structures",
+      "claimText": "Anterolateral structures.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-complete-versus-partial-",
+      "claimText": "Complete versus partial tear.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-acute-versus-chronic-ins",
+      "claimText": "Acute versus chronic instability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-imaging_point-mri-patterns",
+      "claimText": "MRI patterns.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-imaging_point-associated-bone-bruise-a",
+      "claimText": "Associated bone bruise and meniscus findings.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-board_trap-a-good-lachman-with-hema",
+      "claimText": "A good Lachman with hemarthrosis after a pivot injury is highly suggestive.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-stiffness",
+      "claimText": "Stiffness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-graft-failure",
+      "claimText": "Graft failure.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-cyclops-lesion",
+      "claimText": "Cyclops lesion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-persistent-instability",
+      "claimText": "Persistent instability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Why is Lachman better than anterior drawer?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ]
+    },
+    {
+      "text": "What associated injuries matter?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ]
+    },
+    {
+      "text": "Instability symptoms, sport demands, age, concomitant injuries",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ]
+    },
+    {
+      "text": "Rehab-only pathway",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ]
+    },
+    {
+      "text": "ACL reconstruction with graft selection concepts",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-acl-tear-fact-recognize-the-classic-hi",
+      "draftId": "claim-acl-tear-fact-recognize-the-classic-hi",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3c7710ae"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acl-tear-imaging_point-mri-patterns",
+      "draftId": "claim-acl-tear-imaging_point-mri-patterns",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acl-tear-fact-describe-associated-inju",
+      "draftId": "claim-acl-tear-fact-describe-associated-inju",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3c7710ae"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acl-tear-fact-pop",
+      "draftId": "claim-acl-tear-fact-pop",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acl-tear-fact-effusion",
+      "draftId": "claim-acl-tear-fact-effusion",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acl-tear-fact-lachman",
+      "draftId": "claim-acl-tear-fact-lachman",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acl-tear-fact-pivoting-instability",
+      "draftId": "claim-acl-tear-fact-pivoting-instability",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acl-tear-fact-rehab-importance",
+      "draftId": "claim-acl-tear-fact-rehab-importance",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "verified": false
+    }
+  ]
+}

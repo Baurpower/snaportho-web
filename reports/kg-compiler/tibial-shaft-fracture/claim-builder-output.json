@@ -1,0 +1,836 @@
+{
+  "generatedAt": "2026-07-05T21:24:25.507Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-49d3928f",
+  "gapsAddressed": 4,
+  "gapsScheduled": 4,
+  "claimsGenerated": 8,
+  "claimsRejected": 7,
+  "redirectedToDecisionPoint": 5,
+  "candidates": [
+    {
+      "draftId": "claim-tibial-blood-supply-anatomy_pearl-subcutaneous-tibial-cres",
+      "claimText": "Subcutaneous tibial crest.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-red_flag-compartment-layout",
+      "claimText": "Compartment layout.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.7315,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-anatomy_pearl-proximal-distal-metaphys",
+      "claimText": "Proximal/distal metaphyseal challenges.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-open-versus-closed",
+      "claimText": "Open versus closed.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-simple-versus-segmental-",
+      "claimText": "Simple versus segmental/comminuted.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-imaging_point-full-length-tibia-fibula",
+      "claimText": "Full-length tibia/fibula radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.imaging",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-imaging_point-adjacent-joint-views",
+      "claimText": "Adjacent joint views.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.imaging",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-red_flag-serial-exams-matter-beca",
+      "claimText": "Serial exams matter because compartment syndrome is a clinical diagnosis.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.boardPearls",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7315,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-red_flag-compartment-syndrome",
+      "claimText": "Compartment syndrome.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.7315,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-malunion",
+      "claimText": "Malunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-infection",
+      "claimText": "Infection.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-nonunion",
+      "claimText": "Nonunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-soft-tissue-exam",
+      "claimText": "Soft tissue exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-compartments",
+      "claimText": "compartments.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-alignment",
+      "claimText": "alignment.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-weight-bearing-plan",
+      "claimText": "weight-bearing plan.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-anatomy_pearl-tibial-shaft-blood-suppl",
+      "claimText": "Tibial shaft blood supply.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-red_flag-anterior-compartment",
+      "claimText": "Anterior compartment.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.7315,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-anatomy_pearl-proximal-entry-point-lan",
+      "claimText": "Proximal entry point landmarks.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-tibial-shaft-fractures-a",
+      "claimText": "Tibial shaft fractures are soft-tissue injuries first and bony injuries second.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-red_flag-always-mention-soft-tiss",
+      "claimText": "Always mention soft tissues and compartment checks.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7315,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-cognitive_trap-know-common-im-nail-star",
+      "claimText": "Know common IM nail starting point language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7414999999999999,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-clinical_script-describe-wound-status",
+      "claimText": "Describe wound status.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-clinical_script-check-compartments",
+      "claimText": "Check compartments.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-clinical_script-review-alignment",
+      "claimText": "Review alignment.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-clinical_script-state-immobilization-and",
+      "claimText": "State immobilization and operative plan.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-describe-initial-stabili",
+      "claimText": "Describe initial stabilization and soft-tissue priorities in tibial shaft fractures.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-d1fad99c"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-shaft-fracture-red_flag-recognize-the-associatio",
+      "claimText": "Recognize the association with compartment syndrome.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "tibial-shaft-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-d1fad99c"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7315,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-tibial-blood-supply-fact-compare-nonoperative-tre",
+      "claimText": "Compare nonoperative treatment with IM nailing indications.",
+      "claimType": "fact",
+      "primaryEntitySlug": "tibial-blood-supply",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-d1fad99c"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Closed stable injuries versus deformity/open/high-energy patterns",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ]
+    },
+    {
+      "text": "Cast or brace in select cases",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ]
+    },
+    {
+      "text": "External fixation bridge",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ]
+    },
+    {
+      "text": "IM nail",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ]
+    },
+    {
+      "text": "Plate fixation in selected patterns",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ]
+    },
+    {
+      "text": "What are compartment syndrome warning signs?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ]
+    },
+    {
+      "text": "Why do open tibias need urgency?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-tibial-blood-supply-anatomy_pearl-subcutaneous-tibial-cres",
+      "draftId": "claim-tibial-blood-supply-anatomy_pearl-subcutaneous-tibial-cres",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-blood-supply-fact-open-versus-closed",
+      "draftId": "claim-tibial-blood-supply-fact-open-versus-closed",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-blood-supply-anatomy_pearl-proximal-distal-metaphys",
+      "draftId": "claim-tibial-blood-supply-anatomy_pearl-proximal-distal-metaphys",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-blood-supply-fact-simple-versus-segmental-",
+      "draftId": "claim-tibial-blood-supply-fact-simple-versus-segmental-",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-blood-supply-fact-malunion",
+      "draftId": "claim-tibial-blood-supply-fact-malunion",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-blood-supply-fact-infection",
+      "draftId": "claim-tibial-blood-supply-fact-infection",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-blood-supply-fact-nonunion",
+      "draftId": "claim-tibial-blood-supply-fact-nonunion",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6cb3ff"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-tibial-blood-supply-fact-soft-tissue-exam",
+      "draftId": "claim-tibial-blood-supply-fact-soft-tissue-exam",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9e6dce6b"
+      ],
+      "verified": false
+    }
+  ]
+}

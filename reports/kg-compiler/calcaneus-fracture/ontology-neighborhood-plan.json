@@ -1,0 +1,80 @@
+{
+  "topicKey": "calcaneus-fracture",
+  "pilotKey": "calcaneus-fracture-neighborhood",
+  "primaryEntitySlug": "calcaneus-fracture",
+  "displayName": "Calcaneus Fracture",
+  "generatedAt": "2026-07-05T22:47:36.583Z",
+  "nodes": [
+    {
+      "slug": "calcaneus-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Calcaneus ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "subtalar-arthritis",
+      "entityType": "complication",
+      "preferredLabel": "Subtalar Arthritis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "calcaneus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Calcaneus Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "sanders-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Sanders Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "intra-articular-calcaneus-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Intra-Articular Calcaneus Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "calcaneus-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "calcaneus-orif"
+    ],
+    "classification": [
+      "sanders-classification"
+    ],
+    "imaging": [
+      "intra-articular-calcaneus-fracture"
+    ],
+    "complication": [
+      "subtalar-arthritis"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

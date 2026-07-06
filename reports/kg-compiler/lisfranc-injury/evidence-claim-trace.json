@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-07-05T22:51:32.846Z",
+  "evidencePacketId": "ev-packet-4738c88c",
+  "traces": [
+    {
+      "draftId": "claim-lisfranc-injury-fact-interpret-weight-bearing",
+      "proposalFingerprint": "claim|claim-lisfranc-injury-fact-interpret-weight-bearing",
+      "evidenceItemIds": [
+        "ev-static-prepare-868324bf"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-midfoot-pain",
+      "proposalFingerprint": "claim|claim-lisfranc-injury-fact-midfoot-pain",
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1d06e8"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-lisfranc-injury-board_trap-missed-lisfranc-instabil",
+      "proposalFingerprint": "claim|claim-lisfranc-injury-board_trap-missed-lisfranc-instabil",
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1dfc7c"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-lisfranc-injury-imaging_point-ap-oblique-weight-bearin",
+      "proposalFingerprint": "claim|claim-lisfranc-injury-imaging_point-ap-oblique-weight-bearin",
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1dfc7c"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-lisfranc-injury-cognitive_trap-ask-for-weight-bearing-v",
+      "proposalFingerprint": "claim|claim-lisfranc-injury-cognitive_trap-ask-for-weight-bearing-v",
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1d06e8"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-instability",
+      "proposalFingerprint": "claim|claim-lisfranc-injury-fact-instability",
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1d06e8"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-diastasis-language",
+      "proposalFingerprint": "claim|claim-lisfranc-injury-fact-diastasis-language",
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1d06e8"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-weight-bearing-films",
+      "proposalFingerprint": "claim|claim-lisfranc-injury-fact-weight-bearing-films",
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1d06e8"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-868324bf"
+      ],
+      "reason": "MANAGEMENT_LOGIC: if/then or treatment pathway — route to Decision Point Builder",
+      "suggestDecisionPoint": true,
+      "textPreview": "Differentiate nonoperative immobilization from operative stabilization."
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1d06e8"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What radiographic finding suggests instability?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1d06e8"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is ORIF indicated?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1dfc7c"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Displacement, instability, athletic demand, timing of diagnosis"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1dfc7c"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Nonoperative immobilization"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-bf1dfc7c"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Lisfranc ORIF"
+    }
+  ]
+}

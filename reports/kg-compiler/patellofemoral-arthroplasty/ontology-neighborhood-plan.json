@@ -1,0 +1,47 @@
+{
+  "topicKey": "patellofemoral-arthroplasty",
+  "pilotKey": "patellofemoral-arthroplasty-neighborhood",
+  "primaryEntitySlug": "patellofemoral-arthroplasty",
+  "displayName": "Patellofemoral Arthroplasty",
+  "generatedAt": "2026-07-05T23:18:36.878Z",
+  "nodes": [
+    {
+      "slug": "patellofemoral-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Patellofemoral Arthroplasty",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellofemoral-tracking",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Patellofemoral Tracking",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "patellofemoral-arthroplasty"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "patellofemoral-tracking"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

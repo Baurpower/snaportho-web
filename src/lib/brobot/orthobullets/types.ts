@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+import {
+  CurriculumExplainEmphasisSchema,
+  CurriculumStudyResponseSchema,
+} from './curriculum-types';
+
 const OrthobulletsChoiceSchema = z.object({
   key: z.string().trim().min(1).max(32).optional(),
   label: z.string().trim().min(1).max(32).nullable().optional(),
@@ -48,10 +53,16 @@ export const OrthobulletsPageContextSchema = z.object({
   date: z.string().trim().min(1).max(120).nullable().optional(),
   sectionHeadings: z.array(z.string().trim().min(1).max(240)).max(40).default([]).optional(),
   contentText: z.string().trim().min(1).max(16000).nullable().optional(),
+  contentMarkdown: z.string().trim().min(1).max(16000).nullable().optional(),
+  references: z.array(z.string().trim().min(1).max(1200)).max(40).default([]).optional(),
+  referencesCount: z.number().int().min(0).max(100).optional(),
+  tablesCount: z.number().int().min(0).max(50).optional(),
   contentSections: z.array(z.object({
     heading: z.string().trim().min(1).max(240),
     text: z.string().trim().min(1).max(4000),
   })).max(24).default([]).optional(),
+  learningObjectives: z.array(z.string().trim().min(1).max(400)).max(20).default([]).optional(),
+  tablesMarkdown: z.array(z.string().trim().min(1).max(2000)).max(8).default([]).optional(),
   stem: z.string().trim().min(1).max(12000).optional(),
   answerChoices: z.array(OrthobulletsChoiceSchema).max(12).default([]),
   selectedAnswerKey: z.string().trim().min(1).max(32).nullable().optional(),
@@ -72,6 +83,7 @@ export const OrthobulletsPageContextSchema = z.object({
 
 export const OrthobulletsExplainRequestSchema = z.object({
   pageContext: OrthobulletsPageContextSchema,
+  emphasis: CurriculumExplainEmphasisSchema.optional(),
 });
 
 export const OrthobulletsHintRequestSchema = z.object({
@@ -113,14 +125,33 @@ export const OrthobulletsChatTurnSchema = z.object({
   content: z.string().trim().min(1).max(4000),
 });
 
+const OrthobulletsChatExplanationSchema = OrthobulletsExplainResponseSchema.omit({
+  explanationId: true,
+  usage: true,
+});
+
+const CurriculumChatStudySchema = CurriculumStudyResponseSchema.omit({
+  explanationId: true,
+  usage: true,
+});
+
 export const OrthobulletsChatRequestSchema = z.object({
   pageContext: OrthobulletsPageContextSchema,
-  explanation: OrthobulletsExplainResponseSchema.omit({
-    explanationId: true,
-    usage: true,
-  }),
+  explanation: OrthobulletsChatExplanationSchema.optional(),
+  curriculumStudy: CurriculumChatStudySchema.optional(),
+  emphasis: CurriculumExplainEmphasisSchema.optional(),
   history: z.array(OrthobulletsChatTurnSchema).max(12).default([]),
   userMessage: z.string().trim().min(1).max(1000),
+}).superRefine((value, ctx) => {
+  const hasQuestion = Boolean(value.explanation);
+  const hasCurriculum = Boolean(value.curriculumStudy);
+  if (hasQuestion === hasCurriculum) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Provide exactly one of explanation or curriculumStudy.',
+      path: ['explanation'],
+    });
+  }
 });
 
 export const OrthobulletsChatResponseSchema = z.object({

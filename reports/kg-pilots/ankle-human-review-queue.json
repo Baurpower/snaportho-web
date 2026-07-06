@@ -1,0 +1,674 @@
+[
+  {
+    "proposal_fingerprint": "rel|ankle-fracture|at_risk_structure|superficial-peroneal-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "ankle-fracture -[at_risk_structure]-> superficial-peroneal-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ankle-fracture|at_risk_structure|superficial-peroneal-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ankle-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "superficial-peroneal-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "neurovascular_risk",
+        "context_relevance": [
+          "or",
+          "call"
+        ],
+        "clinical_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|deltoid-ligament|explains_instability|ankle-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "deltoid-ligament -[explains_instability]-> ankle-fracture",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|deltoid-ligament|explains_instability|ankle-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "deltoid-ligament",
+      "subject_entity_type": "anatomy_structure",
+      "object_slug": "ankle-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|syndesmosis|explains_instability|ankle-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "syndesmosis -[explains_instability]-> ankle-fracture",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|syndesmosis|explains_instability|ankle-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "syndesmosis",
+      "subject_entity_type": "anatomy_structure",
+      "object_slug": "ankle-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "instability",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|medial-clear-space-widening|explains_instability|ankle-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "medial-clear-space-widening -[explains_instability]-> ankle-fracture",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|medial-clear-space-widening|explains_instability|ankle-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "medial-clear-space-widening",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "ankle-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "relevance_reason": "imaging",
+        "management_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ankle-fracture|uses_fixation|ankle-orif-fixation",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "ankle-fracture -[uses_fixation]-> ankle-orif-fixation",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ankle-fracture|uses_fixation|ankle-orif-fixation",
+    "alternatives": [],
+    "evidence_summary": "Relationship uses_fixation",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ankle-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "ankle-orif-fixation",
+      "object_entity_type": "fixation_method",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or",
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ankle-fracture|treated_by|ankle-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "ankle-fracture -[treated_by]-> ankle-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ankle-fracture|treated_by|ankle-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ankle-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "ankle-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|medial-clear-space-widening|indicates_treatment|ankle-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "medial-clear-space-widening -[indicates_treatment]-> ankle-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: medial-clear-space-widening -[indicates_treatment]-> ankle-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "medial-clear-space-widening",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "ankle-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.85,
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ankle-orif|at_risk_structure|superficial-peroneal-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "ankle-orif -[at_risk_structure]-> superficial-peroneal-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ankle-orif|at_risk_structure|superficial-peroneal-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ankle-orif",
+      "subject_entity_type": "procedure",
+      "object_slug": "superficial-peroneal-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "neurovascular_risk",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ankle-mortise-congruity",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ankle-mortise-congruity",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.mustKnow",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ankle-mortise-congruity",
+      "claim_type": "fact",
+      "claim_text": "Ankle fracture management hinges on mortise congruity, skin status, neurovascular exam, and syndesmotic integrity.",
+      "primary_entity_slug": "ankle-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ankle-deltoid-unstable-fibula",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ankle-deltoid-unstable-fibula",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.boardPearls",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ankle-deltoid-unstable-fibula",
+      "claim_type": "board_trap",
+      "claim_text": "A deltoid ligament injury can make an isolated fibular fracture functionally unstable (bimalleolar equivalent).",
+      "primary_entity_slug": "ankle-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.84,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ankle-medial-clear-space",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ankle-medial-clear-space",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts + orthobullets fixture pattern (metadata only)",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ankle-medial-clear-space",
+      "claim_type": "imaging_point",
+      "claim_text": "Medial clear space widening suggests deltoid incompetence and an unstable ankle fracture pattern.",
+      "primary_entity_slug": "medial-clear-space-widening",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ankle-isolated-fibula-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ankle-isolated-fibula-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.orSurvivalTips + boardPearls synthesis",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ankle-isolated-fibula-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Assuming an isolated lateral malleolus fracture is always stable without assessing medial structures.",
+      "primary_entity_slug": "ankle-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.84,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ankle-syndesmosis-language",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ankle-syndesmosis-language",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts fast.caseSteps",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ankle-syndesmosis-language",
+      "claim_type": "clinical_script",
+      "claim_text": "On rounds, state whether the mortise is stable, comment on syndesmotic injury, and outline splint and weight-bearing plan.",
+      "primary_entity_slug": "ankle-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-ankle-unstable-mortise-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-ankle-unstable-mortise-orif",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.decisionMaking + treatmentOptions",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-ankle-unstable-mortise-orif",
+      "subject_entity_slug": "ankle-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Unstable mortise pattern (e.g., medial clear space widening, bimalleolar injury, failed closed reduction)",
+      "action": "Proceed with operative fixation pathway (ORIF) including syndesmotic assessment/fixation when indicated",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-ankle-stable-nonoperative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-ankle-stable-nonoperative",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts deep.treatmentOptions",
+    "metadata": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-ankle-stable-nonoperative",
+      "subject_entity_slug": "ankle-fracture",
+      "pattern_type": "nonoperative_eligible",
+      "trigger": "Stable mortise with acceptable alignment after reduction",
+      "action": "Nonoperative immobilization with protected weight-bearing plan and repeat radiographs",
+      "urgency": "routine",
+      "safety_criticality": "none",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.84,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T20:02:35.242Z"
+    }
+  }
+]

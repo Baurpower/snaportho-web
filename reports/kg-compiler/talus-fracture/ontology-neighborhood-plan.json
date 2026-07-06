@@ -1,0 +1,80 @@
+{
+  "topicKey": "talus-fracture",
+  "pilotKey": "talus-fracture-neighborhood",
+  "primaryEntitySlug": "talus-fracture",
+  "displayName": "Talus Fracture",
+  "generatedAt": "2026-07-05T22:49:36.321Z",
+  "nodes": [
+    {
+      "slug": "talar-avn",
+      "entityType": "complication",
+      "preferredLabel": "Talar Avascular Necrosis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "talus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Talus Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "hawkins-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Hawkins Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "talar-neck-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Talar Neck Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "talus-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Talus ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "talus-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "talus-orif"
+    ],
+    "classification": [
+      "hawkins-classification"
+    ],
+    "imaging": [
+      "talar-neck-fracture"
+    ],
+    "complication": [
+      "talar-avn"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

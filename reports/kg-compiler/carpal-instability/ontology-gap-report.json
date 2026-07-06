@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-07-05T23:34:38.858Z",
+  "gaps": [
+    {
+      "id": "gap-entity-neighbor-1",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "Carpal Instability Classification neighborhood has 0/2 classification_grade entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.grades",
+      "anchorEntitySlug": "carpal-instability-classification",
+      "entityType": "classification_grade"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Carpal Instability Classification missing inbound has_classification (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.pred.has_classification_inbound",
+      "anchorEntitySlug": "carpal-instability-classification",
+      "predicate": "has_classification",
+      "objectSlug": "carpal-instability-classification"
+    },
+    {
+      "id": "gap-asset-card-3",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "3 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "carpal-instability"
+    },
+    {
+      "id": "gap-asset-question-4",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "24 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "carpal-instability"
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "byKind": {
+      "missing_entity": 1,
+      "missing_relationship": 1,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "high": 2,
+      "medium": 2
+    }
+  }
+}

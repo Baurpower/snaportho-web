@@ -1,0 +1,47 @@
+{
+  "topicKey": "hip-osteoarthritis",
+  "pilotKey": "hip-osteoarthritis-neighborhood",
+  "generatedAt": "2026-07-05T22:44:52.317Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "12 proposals still awaiting human review",
+    "11 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "33 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Revision Arthroplasty missing outbound involves_anatomy (0/1).",
+    "[high] Revision Arthroplasty missing outbound at_risk_structure (0/1).",
+    "[critical] Adverse Local Tissue Reaction neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Adverse Local Tissue Reaction missing outbound involves_anatomy (0/1).",
+    "[high] Adverse Local Tissue Reaction missing outbound at_risk_structure (0/1).",
+    "[critical] Unicompartmental Knee Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Unicompartmental Knee Arthroplasty missing outbound involves_anatomy (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 58,
+    "humanReviewItems": 12,
+    "attendingReviewItems": 11,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

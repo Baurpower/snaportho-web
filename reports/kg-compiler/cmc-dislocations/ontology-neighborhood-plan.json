@@ -1,0 +1,36 @@
+{
+  "topicKey": "cmc-dislocations",
+  "pilotKey": "cmc-dislocations-neighborhood",
+  "primaryEntitySlug": "cmc-dislocations",
+  "displayName": "CMC Dislocations",
+  "generatedAt": "2026-07-06T00:05:43.331Z",
+  "nodes": [
+    {
+      "slug": "cmc-dislocations-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "CMC Dislocations Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "cmc-dislocations-operative-treatment"
+    ],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

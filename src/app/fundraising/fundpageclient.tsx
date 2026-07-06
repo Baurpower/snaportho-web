@@ -101,8 +101,7 @@ function donationTimeMs(input: unknown): number {
 }
 
 function getDonationsUrl(limit: number) {
-  const base = 'https://api.snap-ortho.com'; // <-- your Vapor domain
-  return `${base}/donations?limit=${limit}`;
+  return `/api/donations?limit=${limit}`;
 }
 
 function anySignal(signals: AbortSignal[]) {

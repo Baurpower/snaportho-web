@@ -254,13 +254,17 @@ export async function getSwapRequestsForProgram(
 
 export async function getIncomingSwapRequestsForUser(
   supabase: SupabaseClient,
-  recipientRosterId: string,
+  params: {
+    programId: string;
+    recipientRosterId: string;
+  },
   filters?: SwapRequestQueryFilters | null
 ) {
   let query = supabase
     .from("shift_swap_requests")
     .select(SWAP_REQUEST_DETAIL_SELECT)
-    .eq("recipient_roster_id", recipientRosterId)
+    .eq("program_id", params.programId)
+    .eq("recipient_roster_id", params.recipientRosterId)
     .order("created_at", { ascending: false });
 
   if (filters?.requestType) {
@@ -280,13 +284,17 @@ export async function getIncomingSwapRequestsForUser(
 
 export async function getOutgoingSwapRequestsForUser(
   supabase: SupabaseClient,
-  requesterRosterId: string,
+  params: {
+    programId: string;
+    requesterRosterId: string;
+  },
   filters?: SwapRequestQueryFilters | null
 ) {
   let query = supabase
     .from("shift_swap_requests")
     .select(SWAP_REQUEST_DETAIL_SELECT)
-    .eq("requester_roster_id", requesterRosterId)
+    .eq("program_id", params.programId)
+    .eq("requester_roster_id", params.requesterRosterId)
     .order("created_at", { ascending: false });
 
   if (filters?.requestType) {

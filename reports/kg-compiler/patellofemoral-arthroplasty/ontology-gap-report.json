@@ -1,0 +1,153 @@
+{
+  "generatedAt": "2026-07-05T23:18:36.891Z",
+  "gaps": [
+    {
+      "id": "gap-entity-neighbor-1",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Patellofemoral Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "patellofemoral-arthroplasty",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Patellofemoral Arthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "patellofemoral-arthroplasty",
+      "subjectSlug": "patellofemoral-arthroplasty",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Patellofemoral Arthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "patellofemoral-arthroplasty",
+      "subjectSlug": "patellofemoral-arthroplasty",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-rel-4",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Patellofemoral Tracking missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "patellofemoral-tracking",
+      "predicate": "involves_anatomy",
+      "objectSlug": "patellofemoral-tracking"
+    },
+    {
+      "id": "gap-claim-5",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Patellofemoral Tracking has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "patellofemoral-tracking",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-6",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Patellofemoral Tracking missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "patellofemoral-tracking",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Patellofemoral Tracking missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "patellofemoral-tracking",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-asset-card-8",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "3 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "patellofemoral-arthroplasty"
+    },
+    {
+      "id": "gap-asset-question-9",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "12 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "patellofemoral-arthroplasty"
+    },
+    {
+      "id": "gap-biomech-claim-10",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.82,
+      "reason": "Biomechanics concept Patellofemoral Tracking has no teaching claim (e.g., mortise instability).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "patellofemoral-tracking",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-proc-approach-11",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Patellofemoral Arthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "patellofemoral-arthroplasty",
+      "subjectSlug": "patellofemoral-arthroplasty",
+      "predicate": "uses_approach"
+    }
+  ],
+  "summary": {
+    "total": 11,
+    "byKind": {
+      "missing_entity": 1,
+      "missing_relationship": 4,
+      "missing_claim": 4,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "critical": 2,
+      "high": 1,
+      "medium": 8
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 77,
+  "deductions": [
+    {
+      "finding": "12 dangling edges reference missing entities",
+      "evidence": "acl -[part_of]-> sports-knee-anatomy-hub; femoral-condyles -[part_of]-> sports-knee-anatomy-hub; labrum -[part_of]-> sports-shoulder-anatomy-hub",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern multiligament-knee-injury|operative_indication: dp-multiligamentkneeinjury-operative-indication vs dp-multiligamentkneeinjury-vascular-emergency",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 34,
+    "relationshipCount": 50,
+    "orphanCount": 0,
+    "danglingEdgeCount": 12,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals.",
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

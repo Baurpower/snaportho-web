@@ -1,0 +1,58 @@
+{
+  "topicKey": "aseptic-loosening-tha",
+  "pilotKey": "aseptic-loosening-tha-neighborhood",
+  "primaryEntitySlug": "aseptic-loosening-tha",
+  "displayName": "Aseptic Loosening of THA",
+  "generatedAt": "2026-07-05T22:53:45.311Z",
+  "nodes": [
+    {
+      "slug": "periprosthetic-radiolucency",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Periprosthetic Radiolucency",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteolysis",
+      "entityType": "complication",
+      "preferredLabel": "Periprosthetic Osteolysis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "aseptic-loosening-tha",
+      "entityType": "condition",
+      "preferredLabel": "Aseptic Loosening of THA",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    }
+  ],
+  "edgeCount": 2,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "aseptic-loosening-tha"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "periprosthetic-radiolucency"
+    ],
+    "complication": [
+      "osteolysis"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

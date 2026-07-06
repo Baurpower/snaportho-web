@@ -1,0 +1,38 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 77,
+  "deductions": [
+    {
+      "finding": "7 dangling edges reference missing entities",
+      "evidence": "proximal-humerus-fracture -[at_risk_structure]-> axillary-nerve; proximal-humerus-fracture -[injured_in]-> proximal-humerus; proximal-humerus-fracture -[injured_in]-> surgical-neck",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern proximal-humerus-fracture|operative_indication: dp-ph-hemiarthroplasty vs dp-ph-operative-orif",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 7,
+    "relationshipCount": 14,
+    "orphanCount": 0,
+    "danglingEdgeCount": 7,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals.",
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

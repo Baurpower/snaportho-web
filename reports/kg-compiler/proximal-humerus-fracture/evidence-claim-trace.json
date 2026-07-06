@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-07-05T21:56:51.258Z",
+  "evidencePacketId": "ev-packet-22f83ba1",
+  "traces": [
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-recognize-common-proxima",
+      "proposalFingerprint": "claim|claim-proximal-humerus-fracture-fact-recognize-common-proxima",
+      "evidenceItemIds": [
+        "ev-static-prepare-09757232"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-understand-why-many-are-",
+      "proposalFingerprint": "claim|claim-proximal-humerus-fracture-fact-understand-why-many-are-",
+      "evidenceItemIds": [
+        "ev-static-prepare-09757232"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-board_trap-axillary-nerve-exam-shou",
+      "proposalFingerprint": "claim|claim-proximal-humerus-fracture-board_trap-axillary-nerve-exam-shou",
+      "evidenceItemIds": [
+        "ev-static-prepare-ad3ac3d1"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-imaging_point-ap-scapular-y-axillary-v",
+      "proposalFingerprint": "claim|claim-proximal-humerus-fracture-imaging_point-ap-scapular-y-axillary-v",
+      "evidenceItemIds": [
+        "ev-static-prepare-ad3ac3d1"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-cognitive_trap-mention-tuberosity-displ",
+      "proposalFingerprint": "claim|claim-proximal-humerus-fracture-cognitive_trap-mention-tuberosity-displ",
+      "evidenceItemIds": [
+        "ev-static-prepare-ad39ad45"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-describe-complications-a",
+      "proposalFingerprint": "claim|claim-proximal-humerus-fracture-fact-describe-complications-a",
+      "evidenceItemIds": [
+        "ev-static-prepare-09757232"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-often-low-energy-elderly",
+      "proposalFingerprint": "claim|claim-proximal-humerus-fracture-fact-often-low-energy-elderly",
+      "evidenceItemIds": [
+        "ev-static-prepare-ad39ad45"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-proximal-humerus-fracture-fact-many-nonoperative",
+      "proposalFingerprint": "claim|claim-proximal-humerus-fracture-fact-many-nonoperative",
+      "evidenceItemIds": [
+        "ev-static-prepare-ad39ad45"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ad39ad45"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why are many treated without surgery?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ad39ad45"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What nerve do you check?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ad3ac3d1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Displacement, tuberosity involvement, age, bone quality, function"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ad3ac3d1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Sling and early rehab"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ad3ac3d1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "ORIF"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ad3ac3d1"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Arthroplasty in select complex patterns"
+    }
+  ]
+}

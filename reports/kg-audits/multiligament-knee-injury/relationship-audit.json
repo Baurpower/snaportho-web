@@ -1,0 +1,39 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 77,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from multiligament-knee-injury",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "multiligament-knee-injury"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "5 high-risk relationships lack approved review status",
+      "evidence": "Predicates: indicates_treatment, at_risk_structure, treated_by",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 50,
+    "relationshipDensity": 1.4705882352941178,
+    "missingClinicalEdgeCount": 1,
+    "highRiskUnreviewedCount": 5,
+    "predicateCorrectness": 0.76
+  },
+  "recommendations": [
+    "Add injured_in relationship via relationship-builder agent.",
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

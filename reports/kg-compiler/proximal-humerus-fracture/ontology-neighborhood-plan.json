@@ -1,0 +1,100 @@
+{
+  "topicKey": "proximal-humerus-fracture",
+  "pilotKey": "proximal-humerus-fracture-neighborhood",
+  "primaryEntitySlug": "proximal-humerus-fracture",
+  "displayName": "Proximal Humerus Fracture",
+  "generatedAt": "2026-07-05T21:56:51.231Z",
+  "nodes": [
+    {
+      "slug": "proximal-humerus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Proximal Humerus Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "neer-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Neer Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "humeral-head-avn",
+      "entityType": "complication",
+      "preferredLabel": "Humeral Head AVN",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-humerus-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Proximal Humerus ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "displaced-proximal-humerus-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Displaced Proximal Humerus Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-humerus-stiffness",
+      "entityType": "complication",
+      "preferredLabel": "Proximal Humerus Stiffness",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-humerus-hemiarthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Proximal Humerus Hemiarthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 4,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "proximal-humerus-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "proximal-humerus-orif",
+      "proximal-humerus-hemiarthroplasty"
+    ],
+    "classification": [
+      "neer-classification"
+    ],
+    "imaging": [
+      "displaced-proximal-humerus-fracture"
+    ],
+    "complication": [
+      "humeral-head-avn",
+      "proximal-humerus-stiffness"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

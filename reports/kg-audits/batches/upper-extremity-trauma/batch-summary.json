@@ -1,0 +1,121 @@
+{
+  "generatedAt": "2026-07-05T22:23:10.246Z",
+  "auditorVersion": "1.0.0",
+  "batchKey": "upper-extremity-trauma",
+  "displayName": "Upper Extremity Trauma Cluster",
+  "neighborhoods": [
+    {
+      "topicKey": "clavicle-fracture",
+      "displayName": "Clavicle Fracture",
+      "overallScore": 82,
+      "publicationStatus": "NOT_READY",
+      "reviewBurden": 52.9,
+      "blockers": [
+        "18 proposals still awaiting human review",
+        "10 items require attending review",
+        "Insufficient relationship metadata on essential edges",
+        "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "16 critical/high ontology gaps remain unresolved"
+      ]
+    },
+    {
+      "topicKey": "proximal-humerus-fracture",
+      "displayName": "Proximal Humerus Fracture",
+      "overallScore": 83,
+      "publicationStatus": "NOT_READY",
+      "reviewBurden": 50,
+      "blockers": [
+        "19 proposals still awaiting human review",
+        "13 items require attending review",
+        "Insufficient relationship metadata on essential edges",
+        "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "18 critical/high ontology gaps remain unresolved"
+      ]
+    },
+    {
+      "topicKey": "humeral-shaft-fracture",
+      "displayName": "Humeral Shaft Fracture",
+      "overallScore": 81,
+      "publicationStatus": "NOT_READY",
+      "reviewBurden": 61.1,
+      "blockers": [
+        "22 proposals still awaiting human review",
+        "14 items require attending review",
+        "Insufficient relationship metadata on essential edges",
+        "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "19 critical/high ontology gaps remain unresolved"
+      ]
+    },
+    {
+      "topicKey": "distal-humerus-fracture",
+      "displayName": "Distal Humerus Fracture",
+      "overallScore": 81,
+      "publicationStatus": "NOT_READY",
+      "reviewBurden": 51.3,
+      "blockers": [
+        "20 proposals still awaiting human review",
+        "12 items require attending review",
+        "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "19 critical/high ontology gaps remain unresolved"
+      ]
+    },
+    {
+      "topicKey": "supracondylar-humerus-fracture",
+      "displayName": "Supracondylar Humerus Fracture",
+      "overallScore": 87,
+      "publicationStatus": "NOT_READY",
+      "reviewBurden": 25.6,
+      "blockers": [
+        "22 proposals still awaiting human review",
+        "14 items require attending review",
+        "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "10 critical/high ontology gaps remain unresolved"
+      ]
+    }
+  ],
+  "aggregate": {
+    "averageOverallScore": 83,
+    "factoryMaturity": 5,
+    "publicationReadyCount": 0,
+    "publicationBlockedCount": 5,
+    "totalReviewBurden": 240.9,
+    "outstandingBlockers": [
+      "18 proposals still awaiting human review",
+      "10 items require attending review",
+      "Insufficient relationship metadata on essential edges",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "16 critical/high ontology gaps remain unresolved",
+      "19 proposals still awaiting human review",
+      "13 items require attending review",
+      "18 critical/high ontology gaps remain unresolved",
+      "22 proposals still awaiting human review",
+      "14 items require attending review",
+      "19 critical/high ontology gaps remain unresolved"
+    ],
+    "weakestCategory": "publication_readiness",
+    "strongestCategory": "provenance_quality"
+  },
+  "rankings": {
+    "byQuality": [
+      "supracondylar-humerus-fracture",
+      "proximal-humerus-fracture",
+      "clavicle-fracture",
+      "humeral-shaft-fracture",
+      "distal-humerus-fracture"
+    ],
+    "byPublicationReadiness": [
+      "supracondylar-humerus-fracture",
+      "proximal-humerus-fracture",
+      "clavicle-fracture",
+      "humeral-shaft-fracture",
+      "distal-humerus-fracture"
+    ]
+  },
+  "databaseModified": false
+}

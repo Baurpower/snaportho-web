@@ -1,0 +1,22 @@
+# Database Quality — Carpal Instability
+
+Source: **database**
+Maturity: **Level 6**
+
+## Metrics
+- proposalCount: 177
+- approvedProposalCount: 166
+- entityProposalCount: 74
+- relationshipProposalCount: 94
+- claimProposalCount: 7
+- dpProposalCount: 1
+- autoApprovedCount: 166
+- humanReviewCount: 11
+- canonicalEntityCount: 3
+- canonicalRelationshipCount: 782
+- educationalClaimCount: 123
+- decisionPointCount: 0
+- provenanceCompleteness: 1
+- reviewCompleteness: 0.9378531073446328
+- publicationReadiness: false
+

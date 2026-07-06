@@ -1,0 +1,71 @@
+{
+  "status": "NOT_READY",
+  "ready": false,
+  "blockers": [
+    "22 proposals still awaiting human review",
+    "14 items require attending review",
+    "Insufficient relationship metadata on essential edges",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "19 critical/high ontology gaps remain unresolved"
+  ],
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "score": 2,
+  "deductions": [
+    {
+      "finding": "22 proposals still awaiting human review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Humeral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "14 items require attending review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Humeral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient relationship metadata on essential edges",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Humeral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Humeral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Humeral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "19 critical/high ontology gaps remain unresolved",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Humeral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 15
+    }
+  ]
+}

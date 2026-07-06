@@ -1,0 +1,1653 @@
+{
+  "topicKey": "femoral-neck-fracture-adult-recon",
+  "pilotKey": "femoral-neck-fracture-adult-recon-neighborhood",
+  "generatedAt": "2026-07-05T22:46:59.359Z",
+  "summary": {
+    "AUTO_APPROVE": 63,
+    "SAFE_REVIEW": 2,
+    "EXPERT_REVIEW": 13,
+    "REJECT": 0
+  },
+  "humanReviewPercent": 19.2,
+  "autoApprovedPercent": 80.8,
+  "decisions": [
+    {
+      "proposal_fingerprint": "bridge|adult-recon-femoral-neck-fracture|femoral-neck-fracture-adult-recon",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9025000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.8075,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_bridge",
+        "Composite confidence 0.903 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_bridge"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-board_trap-from-an-adult-reconstruc",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7828750000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.39575,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.783 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-board-trap",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-cognitive_trap-mention-infection-workup",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7828750000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.39575,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.783 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-cognitive_trap-use-implant-component-vo",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7828750000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.55,
+      "publicationReadiness": 0.39575,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.783 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-core",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-imaging_point-review-imaging",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-pearl",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-script",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.8525000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.5625,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: educational_judgment_claim",
+        "Composite confidence 0.853 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "educational_judgment_claim"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-anatomy_pearl-connect-femoral-neck-fra",
+      "proposal_type": "propose_educational_claim",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.7040000000000001,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: anatomy_pearl_on_hub",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "anatomy_pearl_on_hub"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-cross-neighborhood-traum",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-femoral-neck-fracture-ad",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-implant-and-fixation-voc",
+      "proposal_type": "propose_educational_claim",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.41825,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: l1_management_fact",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "l1_management_fact"
+      ]
+    },
+    {
+      "proposal_fingerprint": "claim|claim-implant-concepts-hub-fact-recognize-core-concepts-",
+      "proposal_type": "propose_educational_claim",
+      "category": "SAFE_REVIEW",
+      "curationRoute": "HUMAN_REVIEW",
+      "confidence": 0.7941250000000001,
+      "evidenceQuality": 0.5,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.627375,
+      "humanReviewerType": "curator",
+      "rationale": [
+        "Rule: default_human_review",
+        "Composite confidence 0.794 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "default_human_review"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|calcar",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|cruciate-ligaments",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|femoral-condyles",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|femoral-head",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|femoral-neck",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|femoral-nerve",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|femur",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|gluteus-medius",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|gluteus-minimus",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|greater-trochanter",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|hip-capsule",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|hip-joint",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|intertrochanteric-region",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|lesser-trochanter",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|patellar-tendon",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|proximal-femur",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|proximal-femur-anatomy-hub",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|quadriceps-tendon",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|sciatic-nerve",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|short-external-rotators",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|anatomy_structure|tibia",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|biomechanics_concept|bearing-surface-selection",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|biomechanics_concept|implant-concepts-hub",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|compartment-syndrome",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|distal-femur-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|femoral-neck-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|femoral-neck-fracture-adult-recon",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|femoral-shaft-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|hip-prosthetic-joint-infection",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|intertrochanteric-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|knee-osteoarthritis",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|knee-prosthetic-joint-infection",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|periprosthetic-joint-infection",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|subtrochanteric-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|condition|tibial-shaft-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|fixation_method|cement-mantle",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|fixation_method|cemented-fixation",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|fixation_method|press-fit-fixation",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|imaging_finding|displaced-femoral-neck-fracture",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|implant|acetabular-component",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_fallback",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_fallback"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|implant|femoral-component",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_fallback",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_fallback"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|implant|femoral-stem",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_fallback",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_fallback"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|implant|patellar-component",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_fallback",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_fallback"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|implant|polyethylene-liner",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_fallback",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_fallback"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|implant|tibial-baseplate",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_fallback",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_fallback"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|implant|tibial-insert",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_fallback",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_fallback"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|adverse-local-tissue-reaction",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|hip-hemiarthroplasty",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|polyethylene-wear-osteolysis",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|revision-arthroplasty",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|total-hip-arthroplasty",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|total-knee-arthroplasty",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "create|procedure|unicompartmental-knee-arthroplasty",
+      "proposal_type": "create_canonical_entity",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.9235,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.98,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: spec_backed_entity_create",
+        "Composite confidence 0.923 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "spec_backed_entity_create"
+      ]
+    },
+    {
+      "proposal_fingerprint": "dp|dp-femoral-neck-fracture-adult-recon-operative",
+      "proposal_type": "propose_decision_point",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8400000000000001,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.85,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: decision_point_requires_attending",
+        "Composite confidence 0.840 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "decision_point_requires_attending"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|femoral-neck-fracture-adult-recon",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|displaced-femoral-neck-fracture|indicates_treatment|hip-hemiarthroplasty",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|femoral-neck-fracture-adult-recon|indicates_treatment|hip-hemiarthroplasty",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|femoral-neck-fracture-adult-recon|indicates_treatment|total-hip-arthroplasty",
+      "proposal_type": "add_canonical_relationship",
+      "category": "EXPERT_REVIEW",
+      "curationRoute": "ATTENDING_REVIEW",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.75,
+      "publicationReadiness": 0.45,
+      "humanReviewerType": "attending",
+      "rationale": [
+        "Rule: high_risk_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "high_risk_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|femoral-neck-fracture-adult-recon|involves_anatomy|adult-reconstruction-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|femoral-neck-fracture-adult-recon|involves_anatomy|femoral-neck",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|femoral-neck-fracture|prerequisite_for|femoral-neck-fracture-adult-recon",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    },
+    {
+      "proposal_fingerprint": "rel|implant-concepts-hub|prerequisite_for|femoral-neck-fracture-adult-recon",
+      "proposal_type": "add_canonical_relationship",
+      "category": "AUTO_APPROVE",
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "confidence": 0.8999999999999999,
+      "evidenceQuality": 0.9,
+      "ontologyConsistency": 0.9,
+      "relationshipValidity": 1,
+      "duplicateProbability": 0,
+      "safetyCriticality": 0.1,
+      "publicationReadiness": 0.782,
+      "humanReviewerType": "none",
+      "rationale": [
+        "Rule: deterministic_clinical_or_anatomy_predicate",
+        "Composite confidence 0.900 from explainable dimensions"
+      ],
+      "rulesTriggered": [
+        "deterministic_clinical_or_anatomy_predicate"
+      ]
+    }
+  ]
+}

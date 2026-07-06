@@ -1,0 +1,28 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 85,
+  "deductions": [
+    {
+      "finding": "6 dangling edges reference missing entities",
+      "evidence": "clavicle-fracture -[injured_in]-> clavicle; clavicle-fracture -[involves_anatomy]-> ac-joint; clavicle-fracture -[involves_anatomy]-> sternoclavicular-joint",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    }
+  ],
+  "metrics": {
+    "entityCount": 6,
+    "relationshipCount": 12,
+    "orphanCount": 0,
+    "danglingEdgeCount": 6,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals."
+  ]
+}

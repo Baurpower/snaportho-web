@@ -1,6 +1,15 @@
 import * as assert from 'node:assert/strict';
 
-import { hasReviewData, isExplainEligible, isHintEligible, isUnansweredQuestion } from './page-classification.js';
+import { resolveCurriculumChatChips } from './curriculum-chips.js';
+import {
+  classifyPage,
+  hasReviewData,
+  isExplainEligible,
+  isHintEligible,
+  isPageUsable,
+  isUnansweredQuestion,
+  preferredBrobotMode,
+} from './page-classification.js';
 import type { OrthobulletsPageContext } from './types.js';
 
 function createContext(overrides: Partial<OrthobulletsPageContext>): OrthobulletsPageContext {
@@ -104,5 +113,70 @@ assert.equal(hasReviewData(rockCurriculum), true);
 assert.equal(isUnansweredQuestion(rockCurriculum), false);
 assert.equal(isHintEligible(rockCurriculum), false);
 assert.equal(isExplainEligible(rockCurriculum), true);
+
+const classifiedQuestion = classifyPage(unansweredCurrentTest);
+assert.equal(classifiedQuestion.pageKind, 'question');
+assert.equal(isPageUsable(unansweredCurrentTest), true);
+assert.equal(preferredBrobotMode(unansweredCurrentTest), 'question_tutor');
+
+const classifiedCurriculum = classifyPage(rockCurriculum);
+assert.equal(classifiedCurriculum.pageKind, 'educational_content');
+assert.equal(isPageUsable(rockCurriculum), true);
+assert.equal(preferredBrobotMode(rockCurriculum), 'explain_page');
+
+const referencesHeavy = createContext({
+  source: 'rock',
+  provider: 'rock',
+  mode: 'curriculum_content',
+  pageUrl: 'https://rock.aaos.org/coursecontent.aspx?id=READING',
+  sourceUrl: 'https://rock.aaos.org/coursecontent.aspx?id=READING',
+  pageKind: 'curriculum_content',
+  answerChoices: [],
+  contentText:
+    'Recommended reading summary for proximal humerus fractures. These citations cover classification, vascular risk, operative indications, and rehabilitation milestones that commonly appear on OITE-style trauma questions.',
+  contentMarkdown:
+    '# Recommended Reading\n\nThese citations cover classification, vascular risk, operative indications, and rehabilitation milestones.\n\n1. Neer CS. Displaced proximal humeral fractures.\n2. Hertel R, et al. Predictors of humeral head ischemia.\n3. Robinson CM, et al. ORIF versus nonoperative treatment.',
+  references: [
+    'Neer CS. Displaced proximal humeral fractures.',
+    'Hertel R, et al. Predictors of humeral head ischemia.',
+    'Robinson CM, et al. ORIF versus nonoperative treatment.',
+  ],
+  referencesCount: 3,
+});
+
+const classifiedReferences = classifyPage(referencesHeavy);
+assert.equal(classifiedReferences.pageKind, 'educational_content');
+assert.match(classifiedReferences.reason, /references/i);
+
+const unreadable = createContext({
+  stem: 'A visible stem without choices',
+  answerChoices: [{ key: 'A', text: 'Only one choice' }],
+});
+assert.equal(classifyPage(unreadable).pageKind, 'unreadable');
+assert.equal(isPageUsable(unreadable), false);
+
+const curriculumChips = resolveCurriculumChatChips(
+  createContext({
+    source: 'rock',
+    provider: 'rock',
+    mode: 'curriculum_content',
+    pageUrl: 'https://rock.aaos.org/coursecontent.aspx?id=LOCAL-ANESTHESIA',
+    title: 'Local Anesthesia',
+    contentText: 'Lidocaine, bupivacaine, and LAST management.',
+    tablesCount: 1,
+    answerChoices: [],
+  }),
+  {
+    suggestedFollowUps: [
+      'Why do esters and amides have different allergy risks?',
+      'What should I know about LAST before injecting local?',
+    ],
+  }
+);
+assert.equal(curriculumChips.includes('Teach me like an MS3'), false);
+assert.equal(curriculumChips.includes('Quiz me'), false);
+assert.ok(curriculumChips.includes('Compare the drugs'));
+assert.ok(curriculumChips.length <= 8);
+assert.equal(preferredBrobotMode(unansweredCurrentTest), 'question_tutor');
 
 console.log('Orthobullets page classification tests passed.');

@@ -1,0 +1,82 @@
+{
+  "generatedAt": "2026-07-05T22:54:40.624Z",
+  "evidencePacketId": "ev-packet-8a6ee229",
+  "traces": [
+    {
+      "draftId": "claim-rotator-cuff-tear-imaging_point-x-ray-findings",
+      "proposalFingerprint": "claim|claim-rotator-cuff-tear-imaging_point-x-ray-findings",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-rotator-cuff-tear-imaging_point-mri-for-tendon-quality-r",
+      "proposalFingerprint": "claim|claim-rotator-cuff-tear-imaging_point-mri-for-tendon-quality-r",
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why are acute traumatic tears different?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-b10f654d"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What x-ray findings suggest chronic cuff disease?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Symptoms, function, tear size, chronicity, patient goals"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "PT"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Injections in selected settings"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Arthroscopic repair"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-b1107bd9"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Reverse arthroplasty for irreparable patterns"
+    }
+  ]
+}

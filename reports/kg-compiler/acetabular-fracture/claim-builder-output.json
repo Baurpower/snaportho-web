@@ -1,0 +1,801 @@
+{
+  "generatedAt": "2026-07-05T22:33:19.270Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-05a7be6b",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 5,
+  "redirectedToDecisionPoint": 3,
+  "candidates": [
+    {
+      "draftId": "claim-acetabular-fracture-anatomy_pearl-anterior-and-posterior-c",
+      "claimText": "Anterior and posterior columns.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-anatomy_pearl-acetabular-walls",
+      "claimText": "Acetabular walls.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-anatomy_pearl-quadrilateral-plate",
+      "claimText": "Quadrilateral plate.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-judet-letournel-column-w",
+      "claimText": "Judet-Letournel column/wall patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-imaging_point-judet-views",
+      "claimText": "Judet views.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+      "claimText": "CT with articular mapping.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+      "claimText": "Articular incongruity predicts post-traumatic arthritis.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-post-traumatic-arthritis",
+      "claimText": "Post-traumatic arthritis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-sciatic-nerve-injury",
+      "claimText": "Sciatic nerve injury.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-heterotopic-ossification",
+      "claimText": "Heterotopic ossification.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-column-involvement",
+      "claimText": "Column involvement.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-hip-stability",
+      "claimText": "hip stability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-articular-step-off",
+      "claimText": "articular step-off.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-operative-candidacy",
+      "claimText": "operative candidacy.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-anatomy_pearl-acetabulum",
+      "claimText": "Acetabulum.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-anatomy_pearl-anterior-column",
+      "claimText": "Anterior column.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-anatomy_pearl-posterior-column",
+      "claimText": "Posterior column.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-anatomy_pearl-femoral-head",
+      "claimText": "Femoral head.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-acetabular-fractures-are",
+      "claimText": "Acetabular fractures are articular hip injuries where column pattern and congruity determine operative planning.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+      "claimText": "Use column and wall language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-imaging_point-mention-ct-for-articular",
+      "claimText": "Mention CT for articular planning.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-clinical_script-describe-fracture-patter",
+      "claimText": "Describe fracture pattern.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-clinical_script-assess-hip-stability",
+      "claimText": "Assess hip stability.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-imaging_point-review-ct-articular-deta",
+      "claimText": "Review CT articular detail.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.caseSteps",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-clinical_script-state-orif-pathway",
+      "claimText": "State ORIF pathway.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-localize-acetabular-frac",
+      "claimText": "Localize acetabular fracture columns and articular involvement.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-970b55b8"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-explain-hip-stability-an",
+      "claimText": "Explain hip stability and congruity goals after injury.",
+      "claimType": "fact",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-970b55b8"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-clinical_script-outline-operative-indica",
+      "claimText": "Outline operative indications and post-traumatic arthritis risk.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-970b55b8"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Displacement, instability, articular involvement, patient factors",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ]
+    },
+    {
+      "text": "Nonoperative in select patterns",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ]
+    },
+    {
+      "text": "Acetabular ORIF",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ]
+    },
+    {
+      "text": "What columns are involved?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ]
+    },
+    {
+      "text": "When is operative fixation indicated?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-acetabular-fracture-fact-judet-letournel-column-w",
+      "draftId": "claim-acetabular-fracture-fact-judet-letournel-column-w",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acetabular-fracture-fact-post-traumatic-arthritis",
+      "draftId": "claim-acetabular-fracture-fact-post-traumatic-arthritis",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+      "draftId": "claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acetabular-fracture-imaging_point-judet-views",
+      "draftId": "claim-acetabular-fracture-imaging_point-judet-views",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+      "draftId": "claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+      "draftId": "claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acetabular-fracture-fact-sciatic-nerve-injury",
+      "draftId": "claim-acetabular-fracture-fact-sciatic-nerve-injury",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-acetabular-fracture-fact-heterotopic-ossification",
+      "draftId": "claim-acetabular-fracture-fact-heterotopic-ossification",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "verified": false
+    }
+  ]
+}

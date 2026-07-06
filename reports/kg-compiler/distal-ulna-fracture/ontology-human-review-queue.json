@@ -1,0 +1,622 @@
+[
+  {
+    "proposal_fingerprint": "claim|claim-distal-ulna-fracture-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8225000000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.823 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "draft_id": "claim-distal-ulna-fracture-board-trap",
+      "verified": false,
+      "claim_text": "Missing distal-ulna assessment in distal ulna fracture is a common board and OITE trap.",
+      "claim_type": "board_trap",
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L1",
+      "context_relevance": [
+        "oite",
+        "clinic"
+      ],
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "primary_entity_slug": "distal-ulna",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-distal-ulna-fracture-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.8225000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.823 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rotation script",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "draft_id": "claim-distal-ulna-fracture-clinical-script",
+      "verified": false,
+      "claim_text": "Document neurovascular status, key anatomic structures (distal-ulna, druj, tfcc), stability assessment, and escalation plan for distal ulna fracture.",
+      "claim_type": "clinical_script",
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L2",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "primary_entity_slug": "distal-ulna-fracture",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood"
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-distal-ulna-fracture-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8225000000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.823 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "cross-neighborhood connectivity requirement",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "draft_id": "claim-distal-ulna-fracture-cognitive-trap",
+      "verified": false,
+      "claim_text": "Treating distal ulna fracture in isolation without checking related wrist, tendon, or nerve neighborhoods in the cluster.",
+      "claim_type": "cognitive_trap",
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L1",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "primary_entity_slug": "distal-ulna-fracture",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "generated_by": "claim-builder-fallback",
+      "evidence_item_ids": [
+        "ev-proposal-history-05c45d68",
+        "ev-quality-signal-aabe1d8e"
+      ],
+      "publication_eligible": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-distal-ulna-fracture-imaging",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.8225000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.823 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "draft_id": "claim-distal-ulna-fracture-imaging",
+      "verified": false,
+      "claim_text": "Obtain appropriate hand/wrist imaging for distal ulna fracture and explicitly comment on articular alignment and adjacent joint stability.",
+      "claim_type": "imaging_point",
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L2",
+      "context_relevance": [
+        "clinic"
+      ],
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "primary_entity_slug": "distal-ulna-fracture",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "generated_by": "claim-builder-fallback",
+      "evidence_item_ids": [
+        "ev-proposal-history-05c45d68",
+        "ev-quality-signal-aabe1d8e"
+      ],
+      "publication_eligible": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-distal-ulna-fracture-mechanism",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8225000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.823 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist-cluster-definitions.ts / distal-radius-wrist-trauma",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "draft_id": "claim-distal-ulna-fracture-mechanism",
+      "verified": false,
+      "claim_text": "Distal Ulna Fracture evaluation should anchor on mechanism, focused exam, and the anatomic structures most at risk (distal-ulna, druj, tfcc).",
+      "claim_type": "fact",
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L1",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "primary_entity_slug": "distal-ulna-fracture",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "generated_by": "claim-builder-fallback",
+      "evidence_item_ids": [
+        "ev-proposal-history-05c45d68",
+        "ev-quality-signal-aabe1d8e"
+      ],
+      "publication_eligible": false
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-distal-ulna-fracture-rehab",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.8225000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.823 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rehabilitation concept",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "draft_id": "claim-distal-ulna-fracture-rehab",
+      "verified": false,
+      "claim_text": "Early protected motion and therapy goals for distal ulna fracture should align with tendon, ligament, and joint stability constraints.",
+      "claim_type": "rehab_pearl",
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L2",
+      "context_relevance": [
+        "clinic"
+      ],
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "primary_entity_slug": "distal-ulna-fracture",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood"
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-distal-ulna-fracture-nonoperative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.81,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.810 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand nonoperative pathway",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "action": "Splint/immobilize with therapy plan, repeat exam and imaging, and clear return precautions",
+      "trigger": "Stable pattern with acceptable alignment and intact neurovascular exam for distal ulna fracture",
+      "urgency": "routine",
+      "draft_id": "dp-distal-ulna-fracture-nonoperative",
+      "verified": false,
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "pattern_type": "nonoperative_eligible",
+      "content_source": "generated_draft",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "safety_criticality": "none",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "subject_entity_slug": "distal-ulna-fracture",
+      "requires_attending_review": true
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-distal-ulna-fracture-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.81,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.810 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "operative routing → ATTENDING_REVIEW",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "action": "Proceed with operative pathway when indicated; document fixation strategy, tendon/nerve protection, and postoperative plan",
+      "trigger": "Unstable pattern, displacement, failed closed treatment, or functional deficit in distal ulna fracture",
+      "urgency": "urgent",
+      "draft_id": "dp-distal-ulna-fracture-operative",
+      "verified": false,
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "pattern_type": "operative_indication",
+      "content_source": "generated_draft",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "safety_criticality": "moderate",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "subject_entity_slug": "distal-ulna-fracture",
+      "requires_attending_review": true
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|distal-ulna-fracture-key-imaging-finding|indicates_treatment|distal-ulna-fracture-operative-treatment",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "distal-ulna-fracture-key-imaging-finding -[indicates_treatment]-> distal-ulna-fracture-operative-treatment",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.87,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.870 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "verified": false,
+      "high_risk": true,
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "object_slug": "distal-ulna-fracture-operative-treatment",
+      "subject_slug": "distal-ulna-fracture-key-imaging-finding",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "object_entity_type": "procedure",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "subject_entity_type": "imaging_finding",
+      "relationship_metadata": {
+        "confidence": 0.78,
+        "review_status": "needs_review",
+        "management_importance": "high"
+      }
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|distal-ulna-fracture|differential_for|distal-radius-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "distal-ulna-fracture -[differential_for]-> distal-radius-fracture",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.87,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.870 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "verified": false,
+      "high_risk": false,
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "object_slug": "distal-radius-fracture",
+      "subject_slug": "distal-ulna-fracture",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "object_entity_type": "condition",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "subject_entity_type": "condition",
+      "relationship_metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "relevance_reason": "clinical_association",
+        "cross_neighborhood": true,
+        "educational_importance": "high"
+      }
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|distal-ulna-fracture|differential_for|druj-instability",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "distal-ulna-fracture -[differential_for]-> druj-instability",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.87,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.870 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "verified": false,
+      "high_risk": false,
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "object_slug": "druj-instability",
+      "subject_slug": "distal-ulna-fracture",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "object_entity_type": "condition",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "subject_entity_type": "condition",
+      "relationship_metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "relevance_reason": "clinical_association",
+        "cross_neighborhood": true,
+        "educational_importance": "high"
+      }
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|distal-ulna-fracture|differential_for|ulnar-styloid-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "distal-ulna-fracture -[differential_for]-> ulnar-styloid-fracture",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.87,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.870 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "verified": false,
+      "high_risk": false,
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "object_slug": "ulnar-styloid-fracture",
+      "subject_slug": "distal-ulna-fracture",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "object_entity_type": "condition",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "subject_entity_type": "condition",
+      "relationship_metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "relevance_reason": "clinical_association",
+        "cross_neighborhood": true,
+        "educational_importance": "high"
+      }
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|distal-ulna-fracture|treated_by|distal-ulna-fracture-operative-treatment",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "distal-ulna-fracture -[treated_by]-> distal-ulna-fracture-operative-treatment",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.87,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.870 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "distal-ulna-fracture-neighborhood",
+      "verified": false,
+      "high_risk": true,
+      "curated_at": "2026-07-05T22:47:37.092Z",
+      "object_slug": "distal-ulna-fracture-operative-treatment",
+      "subject_slug": "distal-ulna-fracture",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:distal-ulna-fracture-neighborhood",
+      "object_entity_type": "procedure",
+      "review_packet_label": "Distal Ulna Fracture Neighborhood",
+      "subject_entity_type": "condition",
+      "relationship_metadata": {
+        "review_status": "needs_review",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high"
+      }
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  }
+]

@@ -2,7 +2,11 @@
 import Stripe from 'stripe';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
-import { getAppBaseUrl } from '@/lib/config/app-url'; // Centralized production-safe URL resolution
+import {
+  getAppBaseUrl,
+  getBillingPortalReturnUrl,
+  getCheckoutSuccessUrl,
+} from '@/lib/config/app-url'; // Centralized production-safe URL resolution
 import { getRemainingAIUses } from '@/lib/brobot/entitlements';
 import { upsertCanonicalSubscription } from '@/lib/subscriptions/ledger';
 
@@ -878,7 +882,7 @@ export async function createGuestBroBotCheckoutSession(
   const sessionParams = {
     mode: 'subscription',
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${getAppBaseUrl()}/welcome?checkout_session_id={CHECKOUT_SESSION_ID}`,
+    success_url: getCheckoutSuccessUrl(),
     cancel_url: `${getAppBaseUrl()}/brobot/pricing?canceled=true`,
     customer_creation: 'always',
     metadata,
@@ -1230,7 +1234,7 @@ export async function createBillingPortalSession(
     returnUrl = customReturnUrl;
   } else {
     getAppBaseUrl(); // force throw in production
-    returnUrl = BROBOT_CONFIG.BILLING_SUCCESS_URL.replace('success=true', 'portal_return=true');
+    returnUrl = getBillingPortalReturnUrl();
   }
 
   try {
@@ -1295,7 +1299,96 @@ export function mapStripeStatusToInternal(status: Stripe.Subscription.Status): s
  * Syncs a Stripe Subscription object into our database.
  * Called from webhooks and defensively from other places.
  */
-export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription) {
+export type SyncSubscriptionFromStripeResult =
+  | { synced: true; userId: string; subscriptionId: string; rowId: string | null }
+  | { synced: false; reason: 'missing_user_id' | 'upsert_failed'; subscriptionId: string };
+
+/** Legacy production index removed by 20260630_180000_stripe_resubscribe_history.sql */
+export function isLegacyStripeUserProviderConstraintError(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error);
+  return message.includes('subscriptions_user_provider_idx');
+}
+
+/**
+ * Stripe-only write path.
+ *
+ * Primary path: upsert by stripe_subscription_id (supports multiple historical rows).
+ * Legacy fallback: if the old (user_id, provider) unique index is still present on a
+ * stale database, update the existing Stripe row in place instead of failing checkout.
+ * Never touches provider=apple.
+ */
+async function upsertStripeBrobotSubscription(
+  upsertPayload: Parameters<typeof upsertCanonicalSubscription>[0],
+  userId: string
+) {
+  if (upsertPayload.provider !== 'stripe') {
+    return upsertCanonicalSubscription(upsertPayload);
+  }
+
+  try {
+    return await upsertCanonicalSubscription(upsertPayload);
+  } catch (error) {
+    if (!isLegacyStripeUserProviderConstraintError(error)) {
+      throw error;
+    }
+
+    console.warn('[stripe] legacy_resubscribe_fallback_triggered', {
+      provider: 'stripe',
+      stripe_subscription_id: upsertPayload.stripe_subscription_id,
+      user_id: userId.slice(0, 8),
+      hint: 'Apply migration 20260630_180000_stripe_resubscribe_history.sql to drop subscriptions_user_provider_idx',
+    });
+
+    const supabase = createAdminClient();
+    const { data, error: updateError } = await supabase
+      .from('subscriptions')
+      .update({
+        status: upsertPayload.status,
+        current_period_start: upsertPayload.current_period_start,
+        current_period_end: upsertPayload.current_period_end,
+        cancel_at_period_end: upsertPayload.cancel_at_period_end,
+        canceled_at: upsertPayload.canceled_at,
+        provider_customer_id: upsertPayload.provider_customer_id,
+        provider_subscription_id: upsertPayload.provider_subscription_id,
+        provider_product_id: upsertPayload.provider_product_id,
+        provider_price_id: upsertPayload.provider_price_id,
+        provider_transaction_id: upsertPayload.provider_transaction_id,
+        raw_provider_status: upsertPayload.raw_provider_status,
+        provider_metadata: upsertPayload.provider_metadata,
+        last_verified_at: upsertPayload.last_verified_at,
+        stripe_customer_id: upsertPayload.stripe_customer_id,
+        stripe_subscription_id: upsertPayload.stripe_subscription_id,
+        stripe_price_id: upsertPayload.stripe_price_id,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('user_id', userId)
+      .eq('provider', 'stripe')
+      .eq('plan_code', upsertPayload.plan_code)
+      .select('*')
+      .maybeSingle();
+
+    if (updateError) {
+      throw new Error(`Failed to update existing Stripe subscription row: ${updateError.message}`);
+    }
+
+    if (!data) {
+      throw error;
+    }
+
+    console.log('[stripe] legacy_resubscribe_fallback_applied', {
+      provider: 'stripe',
+      stripe_subscription_id: upsertPayload.stripe_subscription_id,
+      user_id: userId.slice(0, 8),
+      db_row_id: data.id ?? null,
+    });
+
+    return { applied: true, payload: upsertPayload, row: data };
+  }
+}
+
+export async function syncSubscriptionFromStripe(
+  stripeSub: Stripe.Subscription
+): Promise<SyncSubscriptionFromStripeResult> {
   const supabase = createAdminClient();
 
   if (process.env.NODE_ENV !== 'production') {
@@ -1343,11 +1436,18 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
   }
 
   if (!userId) {
-    console.warn('[stripe] syncSubscriptionFromStripe: missing user_id in metadata and no customer mapping found', {
-      subscriptionId: stripeSub.id,
-      customer: stripeSub.customer,
+    console.error('[stripe] syncSubscriptionFromStripe: missing user_id in metadata and no customer mapping found', {
+      provider: 'stripe',
+      stripe_subscription_id: stripeSub.id,
+      stripe_customer_id:
+        typeof stripeSub.customer === 'string' ? stripeSub.customer : stripeSub.customer?.id ?? null,
+      action: 'skipped',
     });
-    return;
+    return {
+      synced: false,
+      reason: 'missing_user_id',
+      subscriptionId: stripeSub.id,
+    };
   }
 
   const planCode = stripeSub.metadata?.plan_code || BROBOT_CONFIG.PAID_PLAN_CODE;
@@ -1423,18 +1523,41 @@ export async function syncSubscriptionFromStripe(stripeSub: Stripe.Subscription)
     stripe_price_id: priceId,
   };
 
-  const upserted = await upsertCanonicalSubscription(upsertPayload);
+  let upserted;
+  try {
+    upserted = await upsertStripeBrobotSubscription(upsertPayload, userId);
+  } catch (error) {
+    console.error('[stripe] syncSubscriptionFromStripe upsert failed', {
+      provider: 'stripe',
+      stripe_subscription_id: stripeSub.id,
+      user_id: userId.slice(0, 8),
+      action: 'upsert_failed',
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return {
+      synced: false,
+      reason: 'upsert_failed',
+      subscriptionId: stripeSub.id,
+    };
+  }
 
   console.log('[stripe] syncSubscriptionFromStripe upsert', {
-    userId,
-    subscriptionId: stripeSub.id,
+    provider: 'stripe',
+    stripe_subscription_id: stripeSub.id,
+    stripe_customer_id: upsertPayload.stripe_customer_id,
+    user_id: userId.slice(0, 8),
+    action: 'upserted',
+    db_row_id: upserted.row?.id ?? null,
     resolvedStatus: internalStatus,
-    upsertPayload: {
-      ...upsertPayload,
-      // avoid dumping huge objects
-    },
     upsertApplied: upserted.applied,
   });
+
+  return {
+    synced: true,
+    userId,
+    subscriptionId: stripeSub.id,
+    rowId: upserted.row?.id ?? null,
+  };
 }
 
 export async function reconcileStripeSubscriptions(params: {

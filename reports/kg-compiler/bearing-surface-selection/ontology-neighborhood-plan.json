@@ -1,0 +1,46 @@
+{
+  "topicKey": "bearing-surface-selection",
+  "pilotKey": "bearing-surface-selection-neighborhood",
+  "primaryEntitySlug": "bearing-surface-selection",
+  "displayName": "Bearing Surface Selection",
+  "generatedAt": "2026-07-05T23:31:26.990Z",
+  "nodes": [
+    {
+      "slug": "cross-linked-polyethylene",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Cross-Linked Polyethylene",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ceramic-on-ceramic-bearing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Ceramic-on-Ceramic Bearing",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "cross-linked-polyethylene",
+      "ceramic-on-ceramic-bearing"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

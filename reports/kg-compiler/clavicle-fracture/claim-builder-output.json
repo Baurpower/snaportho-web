@@ -1,0 +1,761 @@
+{
+  "generatedAt": "2026-07-05T21:56:16.888Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-e491f52a",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 6,
+  "redirectedToDecisionPoint": 4,
+  "candidates": [
+    {
+      "draftId": "claim-clavicle-fracture-fact-recognize-common-midshaf",
+      "claimText": "Recognize common midshaft clavicle fracture patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-455e7259"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-identify-medial-clavicle",
+      "claimText": "Identify medial clavicle and sternoclavicular red flags.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-455e7259"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-anatomy_pearl-clavicular-blood-supply",
+      "claimText": "Clavicular blood supply.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-anatomy_pearl-sc-joint-stability",
+      "claimText": "SC joint stability.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-anatomy_pearl-ac-joint-relationship",
+      "claimText": "AC joint relationship.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-midshaft-versus-lateral-",
+      "claimText": "Midshaft versus lateral versus medial patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-imaging_point-ap-clavicle-radiographs",
+      "claimText": "AP clavicle radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-imaging_point-serendipity-view-for-med",
+      "claimText": "Serendipity view for medial injuries when needed.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-board_trap-posterior-sternoclavicul",
+      "claimText": "Posterior sternoclavicular displacement is not a benign clavicle injury.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-malunion",
+      "claimText": "Malunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-nonunion",
+      "claimText": "Nonunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-neurovascular-compromise",
+      "claimText": "Neurovascular compromise with medial injuries.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-fracture-location",
+      "claimText": "Fracture location.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-shortening",
+      "claimText": "shortening.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-skin-tenting",
+      "claimText": "skin tenting.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-neurovascular-exam",
+      "claimText": "neurovascular exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-anatomy_pearl-clavicle",
+      "claimText": "Clavicle.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-anatomy_pearl-ac-joint",
+      "claimText": "AC joint.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-anatomy_pearl-sternoclavicular-joint",
+      "claimText": "Sternoclavicular joint.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-midshaft-clavicle-fractu",
+      "claimText": "Midshaft clavicle fractures are common shoulder girdle injuries where displacement and patient goals drive operative versus sling treatment.",
+      "claimType": "fact",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-clinical_script-comment-on-shortening-an",
+      "claimText": "Comment on shortening and comminution.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-cognitive_trap-screen-for-sc-joint-post",
+      "claimText": "Screen for SC joint posterior displacement language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-10",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-clinical_script-describe-fracture-site",
+      "claimText": "Describe fracture site.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-clinical_script-check-skin-and-nv-exam",
+      "claimText": "Check skin and NV exam.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-clinical_script-state-sling-versus-orif-",
+      "claimText": "State sling versus ORIF plan.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-clinical_script-set-follow-up-expectatio",
+      "claimText": "Set follow-up expectations.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "clavicle-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Compare nonoperative sling versus operative fixation indications.",
+      "reason": "MANAGEMENT_LOGIC: if/then or treatment pathway — route to Decision Point Builder",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-455e7259"
+      ]
+    },
+    {
+      "text": "Displacement, shortening, comminution, activity demands",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ]
+    },
+    {
+      "text": "Sling immobilization",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ]
+    },
+    {
+      "text": "Open reduction internal fixation",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ]
+    },
+    {
+      "text": "When is operative fixation considered?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ]
+    },
+    {
+      "text": "What makes medial clavicle injuries dangerous?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-clavicle-fracture-fact-recognize-common-midshaf",
+      "draftId": "claim-clavicle-fracture-fact-recognize-common-midshaf",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-455e7259"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clavicle-fracture-fact-identify-medial-clavicle",
+      "draftId": "claim-clavicle-fracture-fact-identify-medial-clavicle",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-455e7259"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clavicle-fracture-board_trap-posterior-sternoclavicul",
+      "draftId": "claim-clavicle-fracture-board_trap-posterior-sternoclavicul",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clavicle-fracture-imaging_point-ap-clavicle-radiographs",
+      "draftId": "claim-clavicle-fracture-imaging_point-ap-clavicle-radiographs",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clavicle-fracture-cognitive_trap-screen-for-sc-joint-post",
+      "draftId": "claim-clavicle-fracture-cognitive_trap-screen-for-sc-joint-post",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clavicle-fracture-fact-midshaft-versus-lateral-",
+      "draftId": "claim-clavicle-fracture-fact-midshaft-versus-lateral-",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clavicle-fracture-imaging_point-serendipity-view-for-med",
+      "draftId": "claim-clavicle-fracture-imaging_point-serendipity-view-for-med",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clavicle-fracture-fact-malunion",
+      "draftId": "claim-clavicle-fracture-fact-malunion",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "verified": false
+    }
+  ]
+}

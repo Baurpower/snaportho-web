@@ -1,0 +1,58 @@
+{
+  "topicKey": "carpal-instability",
+  "pilotKey": "carpal-instability-neighborhood",
+  "primaryEntitySlug": "carpal-instability",
+  "displayName": "Carpal Instability",
+  "generatedAt": "2026-07-05T23:34:38.836Z",
+  "nodes": [
+    {
+      "slug": "carpal-instability-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Carpal Instability Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "carpal-instability-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Carpal Instability Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lt-ligament-injury",
+      "entityType": "condition",
+      "preferredLabel": "Lt Ligament Injury",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [
+      "carpal-instability-classification"
+    ],
+    "imaging": [
+      "carpal-instability-key-imaging-finding"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "lt-ligament-injury"
+    ]
+  }
+}

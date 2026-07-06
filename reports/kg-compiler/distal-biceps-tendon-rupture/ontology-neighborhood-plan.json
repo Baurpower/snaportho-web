@@ -1,0 +1,90 @@
+{
+  "topicKey": "distal-biceps-tendon-rupture",
+  "pilotKey": "distal-biceps-tendon-rupture-neighborhood",
+  "primaryEntitySlug": "distal-biceps-tendon-rupture",
+  "displayName": "Distal Biceps Tendon Rupture",
+  "generatedAt": "2026-07-05T23:10:21.479Z",
+  "nodes": [
+    {
+      "slug": "distal-biceps-tendon-rupture-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Distal Biceps Tendon Rupture Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-biceps-tendon-rupture-complication",
+      "entityType": "complication",
+      "preferredLabel": "Distal Biceps Tendon Rupture Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-biceps-tendon-rupture-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Distal Biceps Tendon Rupture Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-biceps-tendon-rupture-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Distal Biceps Tendon Rupture Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-biceps-tendon-rupture-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Distal Biceps Tendon Rupture MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-biceps-tendon-rupture-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Distal Biceps Tendon Rupture Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "distal-biceps-tendon-rupture-reconstruction"
+    ],
+    "classification": [
+      "distal-biceps-tendon-rupture-classification"
+    ],
+    "imaging": [
+      "distal-biceps-tendon-rupture-mri-finding"
+    ],
+    "complication": [
+      "distal-biceps-tendon-rupture-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "distal-biceps-tendon-rupture-exam-maneuver",
+      "distal-biceps-tendon-rupture-rehab-protocol"
+    ]
+  }
+}

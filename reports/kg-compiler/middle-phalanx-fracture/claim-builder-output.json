@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-06T00:12:16.640Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-307f9053",
+  "gapsAddressed": 1,
+  "gapsScheduled": 2,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-middle-phalanx-fracture-cognitive-trap",
+      "draftId": "claim-middle-phalanx-fracture-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-bf7812f6",
+        "ev-quality-signal-1d55c6e9",
+        "ev-quality-signal-f2ed7250"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-middle-phalanx-fracture-imaging",
+      "draftId": "claim-middle-phalanx-fracture-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-bf7812f6",
+        "ev-quality-signal-1d55c6e9",
+        "ev-quality-signal-f2ed7250"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-middle-phalanx-fracture-mechanism",
+      "draftId": "claim-middle-phalanx-fracture-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-bf7812f6",
+        "ev-quality-signal-1d55c6e9",
+        "ev-quality-signal-f2ed7250"
+      ],
+      "verified": false
+    }
+  ]
+}

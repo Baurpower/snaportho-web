@@ -1,0 +1,171 @@
+{
+  "topicKey": "compartment-syndrome",
+  "pilotKey": "compartment-syndrome-neighborhood",
+  "primaryEntitySlug": "compartment-syndrome",
+  "displayName": "Compartment Syndrome",
+  "generatedAt": "2026-07-05T21:07:49.531Z",
+  "nodes": [
+    {
+      "slug": "deep-posterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deep Posterior Compartment",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "leg-fasciotomy",
+      "entityType": "procedure",
+      "preferredLabel": "Leg Fasciotomy",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "perfusion-pressure-concept",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Perfusion Pressure Concept",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibial-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Tibial Shaft Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "rhabdomyolysis",
+      "entityType": "complication",
+      "preferredLabel": "Rhabdomyolysis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "compartment-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Compartment Syndrome",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 10
+    },
+    {
+      "slug": "limb-amputation",
+      "entityType": "complication",
+      "preferredLabel": "Limb Amputation",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lateral-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Compartment",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pain-with-passive-stretch",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Pain with Passive Stretch",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "muscle-necrosis",
+      "entityType": "complication",
+      "preferredLabel": "Muscle Necrosis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "volkmann-contracture",
+      "entityType": "complication",
+      "preferredLabel": "Volkmann Contracture",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "anterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Compartment",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "leg-compartment-complex",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Leg Compartment Complex",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "superficial-posterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Superficial Posterior Compartment",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    }
+  ],
+  "edgeCount": 20,
+  "claimCount": 1,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "compartment-syndrome"
+    ],
+    "neighboring_anatomy": [
+      "deep-posterior-compartment",
+      "lateral-compartment",
+      "anterior-compartment",
+      "leg-compartment-complex",
+      "superficial-posterior-compartment"
+    ],
+    "procedure": [
+      "leg-fasciotomy"
+    ],
+    "classification": [],
+    "imaging": [],
+    "complication": [
+      "rhabdomyolysis",
+      "limb-amputation",
+      "muscle-necrosis",
+      "volkmann-contracture"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "perfusion-pressure-concept"
+    ],
+    "fixation": [],
+    "supporting": [
+      "tibial-shaft-fracture",
+      "pain-with-passive-stretch"
+    ]
+  }
+}

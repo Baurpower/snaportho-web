@@ -1,0 +1,333 @@
+{
+  "generatedAt": "2026-07-05T23:23:33.765Z",
+  "auditorVersion": "1.0.0",
+  "topicKey": "ucl-injury",
+  "pilotKey": "ucl-injury-neighborhood",
+  "displayName": "UCL Injury",
+  "dataSource": {
+    "neighborhood": "merged_draft",
+    "reportsLoaded": [
+      "ontology-compiler-plan.json",
+      "ontology-gap-report.json",
+      "ontology-work-plan.json",
+      "agent-execution-report.json",
+      "merged-neighborhood-draft.json",
+      "publication-readiness.json",
+      "ontology-auto-review.json",
+      "ontology-human-review-queue.json",
+      "conflict-report.json",
+      "agent-assignment-plan.json",
+      "ontology-neighborhood-plan.json",
+      "evidence-packet.json",
+      "database-proposals"
+    ],
+    "reportsMissing": []
+  },
+  "overallScore": 83,
+  "categories": {
+    "ontology_completeness": 54,
+    "evidence_quality": 85,
+    "graph_integrity": 76,
+    "shared_knowledge_reuse": 98,
+    "relationship_quality": 65,
+    "claim_quality": 84,
+    "decision_point_quality": 69,
+    "metadata_quality": 92,
+    "provenance_quality": 100,
+    "review_calibration": 100,
+    "agent_performance": 92,
+    "compiler_quality": 83,
+    "educational_quality": 94,
+    "cross_neighborhood_consistency": 96,
+    "publication_readiness": 25
+  },
+  "publication": {
+    "status": "NOT_READY",
+    "ready": false,
+    "blockers": [
+      "15 proposals still awaiting human review",
+      "10 items require attending review",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "15 critical/high ontology gaps remain unresolved"
+    ],
+    "currentLevel": 5,
+    "requiredLevel": 7,
+    "score": 25,
+    "deductions": [
+      {
+        "finding": "15 proposals still awaiting human review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] UCL Injury neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "10 items require attending review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] UCL Injury neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] UCL Injury neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] UCL Injury neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "15 critical/high ontology gaps remain unresolved",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "critical",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] UCL Injury neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 15
+      }
+    ]
+  },
+  "topFindings": [
+    {
+      "finding": "7 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-2, gap-dp-13",
+      "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "suggestedFix": "Resolve critical gaps via assigned factory agents before publication review.",
+      "impact": 15
+    },
+    {
+      "finding": "Low evidence coverage (0% of proposals cite evidence)",
+      "evidence": "0/31 proposals have evidence_refs",
+      "reason": "Every proposal should cite supporting evidence per factory contract.",
+      "severity": "critical",
+      "category": "evidence_quality",
+      "suggestedFix": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from ucl-injury",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "ucl-injury"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing decision point pattern: emergency_escalation",
+      "evidence": "0 decision points with pattern emergency_escalation",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "critical",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "impact": 15
+    },
+    {
+      "finding": "15 critical/high ontology gaps remain unresolved",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] UCL Injury neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 15
+    },
+    {
+      "finding": "8 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship, missing_claim, missing_entity",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 12,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "Missing relationship requirements (9)",
+      "evidence": "9 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "9 orphan entities with no relationships",
+      "evidence": "Slugs: ac-joint, axillary-nerve, clavicle, humeral-head, median-nerve, proximal-humerus, radial-nerve, ulnar-nerve, upper-extremity-trauma-anatomy-hub",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "ac-joint",
+        "axillary-nerve",
+        "clavicle",
+        "humeral-head",
+        "median-nerve",
+        "proximal-humerus",
+        "radial-nerve",
+        "ulnar-nerve",
+        "upper-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 8
+    },
+    {
+      "finding": "9 disconnected anatomy structures",
+      "evidence": "Disconnected: ac-joint, axillary-nerve, clavicle, humeral-head, median-nerve, proximal-humerus, radial-nerve, ulnar-nerve, upper-extremity-trauma-anatomy-hub",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "ac-joint",
+        "axillary-nerve",
+        "clavicle",
+        "humeral-head",
+        "median-nerve",
+        "proximal-humerus",
+        "radial-nerve",
+        "ulnar-nerve",
+        "upper-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern ucl-injury|operative_indication: dp-uclinjury-operative-indication vs dp-uclinjury-tommy-john",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from ucl-injury",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "ucl-injury"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "3 high-risk relationships lack approved review status",
+      "evidence": "Predicates: indicates_treatment, treated_by",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    },
+    {
+      "finding": "All claims remain generated_draft",
+      "evidence": "7/7 claims are unreviewed drafts",
+      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Route claims through human review queue before publication.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient evidence support on claim proposals",
+      "evidence": "0% of claim proposals cite evidence",
+      "reason": "Every claim should cite supporting evidence.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing decision point pattern: nonoperative_eligible",
+      "evidence": "UCL Injury missing decision point pattern: nonoperative_eligible.",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "high",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add nonoperative_eligible decision point with attending-gated review.",
+      "impact": 8
+    }
+  ],
+  "prioritizedRecommendations": [
+    {
+      "priority": 1,
+      "action": "Resolve critical gaps via assigned factory agents before publication review.",
+      "category": "ontology_completeness",
+      "impact": "7 critical ontology gaps remain"
+    },
+    {
+      "priority": 2,
+      "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "category": "evidence_quality",
+      "impact": "Low evidence coverage (0% of proposals cite evidence)"
+    },
+    {
+      "priority": 3,
+      "action": "Add injured_in relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: injured_in"
+    },
+    {
+      "priority": 4,
+      "action": "Add emergency_escalation decision point with attending-gated review.",
+      "category": "decision_point_quality",
+      "impact": "Missing decision point pattern: emergency_escalation"
+    },
+    {
+      "priority": 5,
+      "action": "[critical] UCL Injury neighborhood has 0/3 anatomy_structure entities.",
+      "category": "publication_readiness",
+      "impact": "15 critical/high ontology gaps remain unresolved"
+    },
+    {
+      "priority": 6,
+      "action": "Schedule gap-resolution work items from ontology-work-plan.json.",
+      "category": "ontology_completeness",
+      "impact": "8 high-priority ontology gaps"
+    },
+    {
+      "priority": 7,
+      "action": "Run the matching builder agent for missing_relationship.",
+      "category": "ontology_completeness",
+      "impact": "Missing relationship requirements (9)"
+    },
+    {
+      "priority": 8,
+      "action": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "category": "graph_integrity",
+      "impact": "9 orphan entities with no relationships"
+    },
+    {
+      "priority": 9,
+      "action": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "category": "graph_integrity",
+      "impact": "9 disconnected anatomy structures"
+    },
+    {
+      "priority": 10,
+      "action": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "category": "graph_integrity",
+      "impact": "1 merge conflicts detected"
+    }
+  ],
+  "databaseModified": false
+}

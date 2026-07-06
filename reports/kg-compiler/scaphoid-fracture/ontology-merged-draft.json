@@ -1,0 +1,4235 @@
+{
+  "topicKey": "scaphoid-fracture",
+  "pilotKey": "scaphoid-fracture-neighborhood",
+  "generatedAt": "2026-07-05T23:11:03.587Z",
+  "entities": [
+    {
+      "slug": "sl-ligament-injury",
+      "entityType": "condition",
+      "preferredLabel": "Sl Ligament Injury",
+      "metadata": {
+        "slug": "sl-ligament-injury",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.584Z",
+        "description": "Cross-neighborhood reference stub for sl-ligament-injury (owner: sl-ligament-injury-neighborhood).",
+        "owner_pilot": "sl-ligament-injury-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|sl-ligament-injury",
+        "canonical_entity_id": "83ca1fbf-0ee9-4dd8-85b2-b57697a813c3",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|sl-ligament-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "scaphoid-fracture-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Scaphoid Fracture Classification",
+      "metadata": {
+        "slug": "scaphoid-fracture-classification",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Classification framework for scaphoid fracture pattern recognition and management planning.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|scaphoid-fracture-classification",
+        "canonical_entity_id": "24eed3da-d156-49f0-8322-080640329658",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|scaphoid-fracture-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "scaphoid-nonunion",
+      "entityType": "condition",
+      "preferredLabel": "Scaphoid Nonunion",
+      "metadata": {
+        "slug": "scaphoid-nonunion",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.584Z",
+        "description": "Cross-neighborhood reference stub for scaphoid-nonunion (owner: scaphoid-nonunion-neighborhood).",
+        "owner_pilot": "scaphoid-nonunion-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|scaphoid-nonunion",
+        "canonical_entity_id": "c9450e89-64f6-4b55-8e6e-7fc401591135",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|scaphoid-nonunion"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "scaphoid-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Scaphoid Fracture",
+      "metadata": {
+        "slug": "scaphoid-fracture",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "cluster": "hand-wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.584Z",
+        "description": "Prepare Hand rotation neighborhood for Scaphoid Fracture — Carpal Trauma.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|scaphoid-fracture",
+        "canonical_entity_id": "6a59a18e-4fc7-4f79-9a17-11110529e5dd",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|scaphoid-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "scaphoid-fracture-key-complication",
+      "entityType": "complication",
+      "preferredLabel": "Scaphoid Fracture Key Complication",
+      "metadata": {
+        "slug": "scaphoid-fracture-key-complication",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.584Z",
+        "description": "Important complication to recognize after scaphoid fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|scaphoid-fracture-key-complication",
+        "canonical_entity_id": "0bf6fa5c-ad85-44c5-89e2-95eda9f264fd",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|scaphoid-fracture-key-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "scaphoid-fracture-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Scaphoid Fracture Key Imaging Finding",
+      "metadata": {
+        "slug": "scaphoid-fracture-key-imaging-finding",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.584Z",
+        "description": "Characteristic imaging finding for scaphoid fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|scaphoid-fracture-key-imaging-finding",
+        "canonical_entity_id": "e946cf4b-92f4-4b29-ad71-338ad7028208",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|scaphoid-fracture-key-imaging-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "scaphoid-fracture-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "Scaphoid Fracture Operative Treatment",
+      "metadata": {
+        "slug": "scaphoid-fracture-operative-treatment",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.584Z",
+        "description": "Operative management pathway for scaphoid fracture when nonoperative care is insufficient.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|scaphoid-fracture-operative-treatment",
+        "canonical_entity_id": "3452acdc-a055-4121-9662-369e5faa7633",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|scaphoid-fracture-operative-treatment"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "a1-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A1 Pulley",
+      "description": "Flexor tendon pulley A1 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "slug": "a1-pulley",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor tendon pulley A1 Pulley restraining flexor tendons against the phalanges.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "pulley",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a1-pulley"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "a2-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A2 Pulley",
+      "description": "Flexor tendon pulley A2 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "slug": "a2-pulley",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor tendon pulley A2 Pulley restraining flexor tendons against the phalanges.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "pulley",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a2-pulley"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "a3-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A3 Pulley",
+      "description": "Flexor tendon pulley A3 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "slug": "a3-pulley",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor tendon pulley A3 Pulley restraining flexor tendons against the phalanges.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "pulley",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a3-pulley"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "a4-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A4 Pulley",
+      "description": "Flexor tendon pulley A4 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "slug": "a4-pulley",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor tendon pulley A4 Pulley restraining flexor tendons against the phalanges.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "pulley",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a4-pulley"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "a5-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A5 Pulley",
+      "description": "Flexor tendon pulley A5 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "slug": "a5-pulley",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor tendon pulley A5 Pulley restraining flexor tendons against the phalanges.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "pulley",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|a5-pulley"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ain",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "AIN",
+      "description": "Anterior interosseous nerve branch of median nerve; motor to FPL and index FDP.",
+      "metadata": {
+        "slug": "ain",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Anterior interosseous nerve branch of median nerve; motor to FPL and index FDP.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ain"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "apl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "APL",
+      "description": "Abductor pollicis longus tendon abducting and extending the thumb.",
+      "metadata": {
+        "slug": "apl",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Abductor pollicis longus tendon abducting and extending the thumb.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|apl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "c1-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C1 Pulley",
+      "description": "Flexor tendon pulley C1 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "slug": "c1-pulley",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor tendon pulley C1 Pulley restraining flexor tendons against the phalanges.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "pulley",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|c1-pulley"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "c2-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C2 Pulley",
+      "description": "Flexor tendon pulley C2 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "slug": "c2-pulley",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor tendon pulley C2 Pulley restraining flexor tendons against the phalanges.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "pulley",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|c2-pulley"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "c3-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C3 Pulley",
+      "description": "Flexor tendon pulley C3 Pulley restraining flexor tendons against the phalanges.",
+      "metadata": {
+        "slug": "c3-pulley",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor tendon pulley C3 Pulley restraining flexor tendons against the phalanges.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "pulley",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|c3-pulley"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "capitate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Capitate",
+      "description": "Central distal carpal bone linking proximal and distal carpal rows.",
+      "metadata": {
+        "slug": "capitate",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "carpus",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Central distal carpal bone linking proximal and distal carpal rows.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|capitate"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "carpal-tunnel",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Carpal Tunnel",
+      "description": "Osteofibrous canal containing median nerve and flexor tendons beneath the transverse carpal ligament.",
+      "metadata": {
+        "slug": "carpal-tunnel",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Osteofibrous canal containing median nerve and flexor tendons beneath the transverse carpal ligament.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "canal",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|carpal-tunnel"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "cmc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "CMC Joint",
+      "description": "Carpometacarpal articulation; thumb CMC is saddle-shaped and highly mobile.",
+      "metadata": {
+        "slug": "cmc-joint",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "digit",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Carpometacarpal articulation; thumb CMC is saddle-shaped and highly mobile.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|cmc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "deep-palmar-arch",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deep Palmar Arch",
+      "description": "Deep palmar arterial arcade primarily from radial artery.",
+      "metadata": {
+        "slug": "deep-palmar-arch",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Deep palmar arterial arcade primarily from radial artery.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|deep-palmar-arch"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "digital-nerves",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Digital Nerves",
+      "description": "Proper digital nerves supplying sensibility to the fingers.",
+      "metadata": {
+        "slug": "digital-nerves",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Proper digital nerves supplying sensibility to the fingers.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|digital-nerves"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "dip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DIP Joint",
+      "description": "Distal interphalangeal articulation of digits 2–5 and IP of the thumb.",
+      "metadata": {
+        "slug": "dip-joint",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "digit",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Distal interphalangeal articulation of digits 2–5 and IP of the thumb.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|dip-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Phalanx",
+      "description": "Terminal phalangeal segment bearing the nail bed.",
+      "metadata": {
+        "slug": "distal-phalanx",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "digit",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Terminal phalangeal segment bearing the nail bed.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-phalanx"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Radius",
+      "description": "Distal radial metaphysis and articular surface at the wrist.",
+      "metadata": {
+        "slug": "distal-radius",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Distal radial metaphysis and articular surface at the wrist.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-radius"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-ulna",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Ulna",
+      "description": "Ulnar head and styloid region at the ulnar wrist.",
+      "metadata": {
+        "slug": "distal-ulna",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Ulnar head and styloid region at the ulnar wrist.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-ulna"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "druj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DRUJ",
+      "description": "Distal radioulnar joint stabilizers and ulnar-sided wrist linkage.",
+      "metadata": {
+        "slug": "druj",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Distal radioulnar joint stabilizers and ulnar-sided wrist linkage.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|druj"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ecu",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "ECU",
+      "description": "Extensor carpi ulnaris tendon depressor and ulnar deviator at the wrist.",
+      "metadata": {
+        "slug": "ecu",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Extensor carpi ulnaris tendon depressor and ulnar deviator at the wrist.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ecu"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "edc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EDC",
+      "description": "Extensor digitorum communis tendons extending MCP and IP joints.",
+      "metadata": {
+        "slug": "edc",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Extensor digitorum communis tendons extending MCP and IP joints.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|edc"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "epb",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EPB",
+      "description": "Extensor pollicis brevis tendon extending the thumb MCP joint.",
+      "metadata": {
+        "slug": "epb",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Extensor pollicis brevis tendon extending the thumb MCP joint.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|epb"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "epl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EPL",
+      "description": "Extensor pollicis longus tendon extending the thumb IP joint.",
+      "metadata": {
+        "slug": "epl",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Extensor pollicis longus tendon extending the thumb IP joint.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|epl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "extensor-tendon-zones",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Extensor Tendon Zones",
+      "description": "Zone I–VIII extensor tendon anatomic divisions governing repair and splinting strategy.",
+      "metadata": {
+        "slug": "extensor-tendon-zones",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Zone I–VIII extensor tendon anatomic divisions governing repair and splinting strategy.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "classification",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|extensor-tendon-zones"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fcr",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FCR",
+      "description": "Flexor carpi radialis tendon; volar wrist approach interval landmark.",
+      "metadata": {
+        "slug": "fcr",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor carpi radialis tendon; volar wrist approach interval landmark.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fcr"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fcu",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FCU",
+      "description": "Flexor carpi ulnaris tendon inserting on pisiform and stabilizing ulnar wrist.",
+      "metadata": {
+        "slug": "fcu",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor carpi ulnaris tendon inserting on pisiform and stabilizing ulnar wrist.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fcu"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fdp",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FDP",
+      "description": "Flexor digitorum profundus tendons flexing DIP joints; zone II no-man's land.",
+      "metadata": {
+        "slug": "fdp",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor digitorum profundus tendons flexing DIP joints; zone II no-man's land.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fdp"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fds",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FDS",
+      "description": "Flexor digitorum superficialis tendons flexing PIP joints.",
+      "metadata": {
+        "slug": "fds",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor digitorum superficialis tendons flexing PIP joints.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fds"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fifth-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fifth Metacarpal",
+      "description": "Small finger metacarpal; common site of boxer fractures.",
+      "metadata": {
+        "slug": "fifth-metacarpal",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "metacarpal",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Small finger metacarpal; common site of boxer fractures.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fifth-metacarpal"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "first-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "First Metacarpal",
+      "description": "Thumb metacarpal articulating with trapezium at the CMC joint.",
+      "metadata": {
+        "slug": "first-metacarpal",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "metacarpal",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Thumb metacarpal articulating with trapezium at the CMC joint.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|first-metacarpal"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "flexor-pulley-system",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Flexor Pulley System",
+      "description": "Annular (A1–A5) and cruciate (C1–C3) pulleys preventing bowstringing of flexor tendons.",
+      "metadata": {
+        "slug": "flexor-pulley-system",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "finger",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Annular (A1–A5) and cruciate (C1–C3) pulleys preventing bowstringing of flexor tendons.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "flexor-tendon-zones",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Flexor Tendon Zones",
+      "description": "Zone I–V flexor tendon anatomic divisions governing repair strategy and prognosis.",
+      "metadata": {
+        "slug": "flexor-tendon-zones",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Zone I–V flexor tendon anatomic divisions governing repair strategy and prognosis.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "classification",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|flexor-tendon-zones"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fourth-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fourth Metacarpal",
+      "description": "Ring finger metacarpal.",
+      "metadata": {
+        "slug": "fourth-metacarpal",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "metacarpal",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Ring finger metacarpal.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fourth-metacarpal"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fpl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FPL",
+      "description": "Flexor pollicis longus tendon flexing the thumb IP joint.",
+      "metadata": {
+        "slug": "fpl",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Flexor pollicis longus tendon flexing the thumb IP joint.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fpl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "guyon-canal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Guyon Canal",
+      "description": "Ulnar tunnel at the wrist containing ulnar nerve and artery.",
+      "metadata": {
+        "slug": "guyon-canal",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Ulnar tunnel at the wrist containing ulnar nerve and artery.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "canal",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|guyon-canal"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "hamate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hamate",
+      "description": "Ulnar-sided distal carpal bone with hook for flexor tendon passage.",
+      "metadata": {
+        "slug": "hamate",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "carpus",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Ulnar-sided distal carpal bone with hook for flexor tendon passage.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|hamate"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "hand-wrist-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hand & Wrist Anatomy Hub",
+      "description": "Composite forearm-to-fingertip model linking radius, ulna, carpus, metacarpals, digits, tendons, ligaments, nerves, and vessels for Prepare Hand rotation.",
+      "metadata": {
+        "slug": "hand-wrist-anatomy-hub",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand_wrist",
+        "cluster": "hand-wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Composite forearm-to-fingertip model linking radius, ulna, carpus, metacarpals, digits, tendons, ligaments, nerves, and vessels for Prepare Hand rotation.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "interosseous-membrane",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Interosseous Membrane",
+      "description": "Forearm longitudinal fibrous linkage transmitting axial load between radius and ulna.",
+      "metadata": {
+        "slug": "interosseous-membrane",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "forearm",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Forearm longitudinal fibrous linkage transmitting axial load between radius and ulna.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "membrane",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|interosseous-membrane"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lunate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lunate",
+      "description": "Central proximal carpal bone in perilunate and lunate dislocation patterns.",
+      "metadata": {
+        "slug": "lunate",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "carpus",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Central proximal carpal bone in perilunate and lunate dislocation patterns.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lunotriquetral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lunotriquetral Ligament",
+      "description": "Intrinsic ligament between lunate and triquetrum; LT injury contributes to ulnar-sided instability.",
+      "metadata": {
+        "slug": "lunotriquetral-ligament",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Intrinsic ligament between lunate and triquetrum; LT injury contributes to ulnar-sided instability.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lunotriquetral-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "mcp-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "MCP Joint",
+      "description": "Metacarpophalangeal articulation linking metacarpal to proximal phalanx.",
+      "metadata": {
+        "slug": "mcp-joint",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "digit",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Metacarpophalangeal articulation linking metacarpal to proximal phalanx.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|mcp-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "middle-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Middle Phalanx",
+      "description": "Middle segment of digits 2–5 between PIP and DIP.",
+      "metadata": {
+        "slug": "middle-phalanx",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "digit",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Middle segment of digits 2–5 between PIP and DIP.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|middle-phalanx"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pin",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PIN",
+      "description": "Posterior interosseous nerve branch of radial nerve at the proximal forearm.",
+      "metadata": {
+        "slug": "pin",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Posterior interosseous nerve branch of radial nerve at the proximal forearm.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pin"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PIP Joint",
+      "description": "Proximal interphalangeal articulation governing finger flexion cascade.",
+      "metadata": {
+        "slug": "pip-joint",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "digit",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Proximal interphalangeal articulation governing finger flexion cascade.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pip-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pisiform",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pisiform",
+      "description": "Sesamoid bone within FCU tendon at the ulnar wrist.",
+      "metadata": {
+        "slug": "pisiform",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "carpus",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Sesamoid bone within FCU tendon at the ulnar wrist.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pisiform"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "proximal-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Phalanx",
+      "description": "Proximal segment of each digit articulating at MCP and PIP.",
+      "metadata": {
+        "slug": "proximal-phalanx",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "digit",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Proximal segment of each digit articulating at MCP and PIP.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|proximal-phalanx"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pruj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PRUJ",
+      "description": "Proximal radioulnar joint enabling forearm rotation.",
+      "metadata": {
+        "slug": "pruj",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "forearm",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Proximal radioulnar joint enabling forearm rotation.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pruj"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "radial-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Artery",
+      "description": "Radial artery at the wrist forming part of the deep arch.",
+      "metadata": {
+        "slug": "radial-artery",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Radial artery at the wrist forming part of the deep arch.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radial-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radius",
+      "description": "Lateral forearm bone forming the radial side of the wrist and radiocarpal articulation.",
+      "metadata": {
+        "slug": "radius",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "forearm",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Lateral forearm bone forming the radial side of the wrist and radiocarpal articulation.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radius"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "scaphoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scaphoid",
+      "description": "Radial-sided carpal bone with retrograde blood supply and snuffbox tenderness landmark.",
+      "metadata": {
+        "slug": "scaphoid",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "carpus",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Radial-sided carpal bone with retrograde blood supply and snuffbox tenderness landmark.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|scaphoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "scapholunate-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scapholunate Ligament",
+      "description": "Intrinsic ligament between scaphoid and lunate; SL injury drives carpal instability.",
+      "metadata": {
+        "slug": "scapholunate-ligament",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Intrinsic ligament between scaphoid and lunate; SL injury drives carpal instability.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|scapholunate-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "second-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Second Metacarpal",
+      "description": "Index metacarpal with stable CMC articulation.",
+      "metadata": {
+        "slug": "second-metacarpal",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "metacarpal",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Index metacarpal with stable CMC articulation.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|second-metacarpal"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "superficial-palmar-arch",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Superficial Palmar Arch",
+      "description": "Palmar arterial arcade primarily from ulnar artery.",
+      "metadata": {
+        "slug": "superficial-palmar-arch",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Palmar arterial arcade primarily from ulnar artery.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|superficial-palmar-arch"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tfcc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "TFCC",
+      "description": "Triangular fibrocartilage complex stabilizing the ulnar wrist and DRUJ.",
+      "metadata": {
+        "slug": "tfcc",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Triangular fibrocartilage complex stabilizing the ulnar wrist and DRUJ.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|tfcc"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "third-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Third Metacarpal",
+      "description": "Middle finger metacarpal forming the central hand column.",
+      "metadata": {
+        "slug": "third-metacarpal",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "metacarpal",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Middle finger metacarpal forming the central hand column.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|third-metacarpal"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "thumb-ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Thumb UCL",
+      "description": "Ulnar collateral ligament of the thumb MCP joint; injured in skier/gamekeeper thumb.",
+      "metadata": {
+        "slug": "thumb-ucl",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Ulnar collateral ligament of the thumb MCP joint; injured in skier/gamekeeper thumb.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|thumb-ucl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "trapezium",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trapezium",
+      "description": "Radial-sided distal carpal bone articulating with the thumb metacarpal.",
+      "metadata": {
+        "slug": "trapezium",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "carpus",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Radial-sided distal carpal bone articulating with the thumb metacarpal.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|trapezium"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "trapezoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trapezoid",
+      "description": "Distal carpal bone between trapezium and capitate.",
+      "metadata": {
+        "slug": "trapezoid",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "carpus",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Distal carpal bone between trapezium and capitate.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|trapezoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "triquetrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Triquetrum",
+      "description": "Ulnar-sided proximal carpal bone articulating with the lunate and TFCC.",
+      "metadata": {
+        "slug": "triquetrum",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "carpus",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Ulnar-sided proximal carpal bone articulating with the lunate and TFCC.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|triquetrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ulna",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulna",
+      "description": "Medial forearm bone with distal ulnar head and styloid contributing to DRUJ stability.",
+      "metadata": {
+        "slug": "ulna",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "forearm",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Medial forearm bone with distal ulnar head and styloid contributing to DRUJ stability.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ulna"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ulnar-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Artery",
+      "description": "Ulnar artery at Guyon canal contributing to palmar arches.",
+      "metadata": {
+        "slug": "ulnar-artery",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Ulnar artery at Guyon canal contributing to palmar arches.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ulnar-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "volar-plate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Volar Plate",
+      "description": "Fibrocartilaginous volar restraint at PIP preventing hyperextension.",
+      "metadata": {
+        "slug": "volar-plate",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "region": "hand",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "description": "Fibrocartilaginous volar restraint at PIP preventing hyperextension.",
+        "owner_pilot": "hand-wrist-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|volar-plate"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "carpal-instability",
+      "entityType": "condition",
+      "preferredLabel": "Carpal Instability",
+      "description": "Cross-neighborhood reference stub for carpal-instability (owner: carpal-instability-neighborhood).",
+      "metadata": {
+        "slug": "carpal-instability",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.584Z",
+        "description": "Cross-neighborhood reference stub for carpal-instability (owner: carpal-instability-neighborhood).",
+        "owner_pilot": "carpal-instability-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|carpal-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "perilunate-dislocation",
+      "entityType": "condition",
+      "preferredLabel": "Perilunate Dislocation",
+      "description": "Cross-neighborhood reference stub for perilunate-dislocation (owner: perilunate-dislocation-neighborhood).",
+      "metadata": {
+        "slug": "perilunate-dislocation",
+        "pilot": "scaphoid-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T23:11:03.584Z",
+        "description": "Cross-neighborhood reference stub for perilunate-dislocation (owner: perilunate-dislocation-neighborhood).",
+        "owner_pilot": "perilunate-dislocation-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|perilunate-dislocation"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "scaphoid-fracture-key-complication",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|scaphoid-fracture|has_complication|scaphoid-fracture-key-complication",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|has_complication|scaphoid-fracture-key-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "scaphoid-fracture-key-imaging-finding",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "imaging",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|scaphoid-fracture|has_imaging_finding|scaphoid-fracture-key-imaging-finding",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "imaging",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|has_imaging_finding|scaphoid-fracture-key-imaging-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a1-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a1-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a2-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a2-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a3-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a3-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a4-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a4-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a5-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a5-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ain",
+      "predicate": "part_of",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "motor_branch",
+        "_provenance_fingerprint": "rel|ain|part_of|median-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "apl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|apl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "c1-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|c1-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "c2-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|c2-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "c3-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|c3-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "capitate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|capitate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "fdp",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|fdp"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "fds",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|fds"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "compression",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|median-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "cmc-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb",
+        "_provenance_fingerprint": "rel|cmc-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "deep-palmar-arch",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|deep-palmar-arch|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "digital-nerves",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "sensibility",
+        "_provenance_fingerprint": "rel|digital-nerves|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "dip-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|dip-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|distal-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|druj"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "radiocarpal",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "scaphoid",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "radiocarpal",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|scaphoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "part_of",
+      "objectSlug": "radius",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "wrist_articular",
+        "_provenance_fingerprint": "rel|distal-radius|part_of|radius"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-ulna",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|distal-ulna|articulates_with|druj"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-ulna",
+      "predicate": "part_of",
+      "objectSlug": "ulna",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|distal-ulna|part_of|ulna"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "druj",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "wrist_stability",
+        "_provenance_fingerprint": "rel|druj|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ecu",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|ecu|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "edc",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|edc|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "epb",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|epb|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "epl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|epl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-tendon-zones",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tendon_repair",
+        "_provenance_fingerprint": "rel|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fcr",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fcr|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fcu",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fcu|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fdp",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fdp|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fds",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fds|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fifth-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|fifth-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "first-metacarpal",
+      "predicate": "articulates_with",
+      "objectSlug": "trapezium",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb_cmc",
+        "_provenance_fingerprint": "rel|first-metacarpal|articulates_with|trapezium"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "first-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb",
+        "_provenance_fingerprint": "rel|first-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "contains",
+      "objectSlug": "fdp",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "zone_ii",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|contains|fdp"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "contains",
+      "objectSlug": "fds",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "zone_ii",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|contains|fds"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "flexor-tendon-zones",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tendon_repair",
+        "_provenance_fingerprint": "rel|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fourth-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|fourth-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fpl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fpl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "guyon-canal",
+      "predicate": "contains",
+      "objectSlug": "ulnar-artery",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|guyon-canal|contains|ulnar-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "guyon-canal",
+      "predicate": "contains",
+      "objectSlug": "ulnar-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "compression",
+        "_provenance_fingerprint": "rel|guyon-canal|contains|ulnar-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "hamate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|hamate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "hand-wrist-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "scaphoid-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|scaphoid-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "interosseous-membrane",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "forearm_load",
+        "_provenance_fingerprint": "rel|interosseous-membrane|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lunate",
+      "predicate": "articulates_with",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "proximal_row",
+        "_provenance_fingerprint": "rel|lunate|articulates_with|triquetrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lunate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|lunate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lunotriquetral-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lt_instability",
+        "_provenance_fingerprint": "rel|lunotriquetral-ligament|inserts_on|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lunotriquetral-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lt_instability",
+        "_provenance_fingerprint": "rel|lunotriquetral-ligament|inserts_on|triquetrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "mcp-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|mcp-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "median-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|median-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "middle-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|middle-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pin",
+      "predicate": "part_of",
+      "objectSlug": "radial-nerve",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "motor_branch",
+        "_provenance_fingerprint": "rel|pin|part_of|radial-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pip-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|pip-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pisiform",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|pisiform|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|proximal-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pruj",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "rotation",
+        "_provenance_fingerprint": "rel|pruj|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-artery",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|radial-artery|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|radial-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radius",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "forearm",
+        "_provenance_fingerprint": "rel|radius|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture-key-imaging-finding",
+      "predicate": "indicates_treatment",
+      "objectSlug": "scaphoid-fracture-operative-treatment",
+      "metadata": {
+        "confidence": 0.78,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture-key-imaging-finding|indicates_treatment|scaphoid-fracture-operative-treatment"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "differential_for",
+      "objectSlug": "carpal-instability",
+      "metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "relevance_reason": "clinical_association",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|differential_for|carpal-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "differential_for",
+      "objectSlug": "perilunate-dislocation",
+      "metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "relevance_reason": "clinical_association",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|differential_for|perilunate-dislocation"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "differential_for",
+      "objectSlug": "scaphoid-nonunion",
+      "metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "relevance_reason": "clinical_association",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|differential_for|scaphoid-nonunion"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "differential_for",
+      "objectSlug": "sl-ligament-injury",
+      "metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "relevance_reason": "clinical_association",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|differential_for|sl-ligament-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "radius",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anatomic_focus",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|injured_in|radius"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "scaphoid",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anatomic_focus",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|injured_in|scaphoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "scapholunate-ligament",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anatomic_focus",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|injured_in|scapholunate-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "radius",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|involves_anatomy|radius"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "scaphoid",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|involves_anatomy|scaphoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "scapholunate-ligament",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|involves_anatomy|scapholunate-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "scaphoid-fracture-operative-treatment",
+      "metadata": {
+        "review_status": "needs_review",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|scaphoid-fracture|treated_by|scaphoid-fracture-operative-treatment"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid",
+      "predicate": "articulates_with",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "proximal_row",
+        "_provenance_fingerprint": "rel|scaphoid|articulates_with|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|scaphoid|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scapholunate-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "sl_instability",
+        "_provenance_fingerprint": "rel|scapholunate-ligament|inserts_on|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scapholunate-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "scaphoid",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "sl_instability",
+        "_provenance_fingerprint": "rel|scapholunate-ligament|inserts_on|scaphoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "second-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|second-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "superficial-palmar-arch",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tfcc",
+      "predicate": "inserts_on",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|tfcc|inserts_on|triquetrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "third-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|third-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "thumb-ucl",
+      "predicate": "inserts_on",
+      "objectSlug": "proximal-phalanx",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb_stability",
+        "_provenance_fingerprint": "rel|thumb-ucl|inserts_on|proximal-phalanx"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "trapezium",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb_column",
+        "_provenance_fingerprint": "rel|trapezium|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "trapezoid",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|trapezoid|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "triquetrum",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|triquetrum|articulates_with|druj"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "triquetrum",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|triquetrum|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ulna",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "forearm",
+        "_provenance_fingerprint": "rel|ulna|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ulnar-artery",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|ulnar-artery|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ulnar-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|ulnar-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "volar-plate",
+      "predicate": "inserts_on",
+      "objectSlug": "proximal-phalanx",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pip_stability",
+        "_provenance_fingerprint": "rel|volar-plate|inserts_on|proximal-phalanx"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-scaphoid-fracture-anatomy-pearl",
+      "claimType": "anatomy_pearl",
+      "claimText": "Shared hand-wrist anatomy (scaphoid, scapholunate-ligament, radius) links Scaphoid Fracture to adjacent Prepare neighborhoods in the cluster graph.",
+      "primaryEntitySlug": "hand-wrist-anatomy-hub",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "scaphoid-fracture-neighborhood",
+        "draft_id": "claim-scaphoid-fracture-anatomy-pearl",
+        "verified": false,
+        "claim_text": "Shared hand-wrist anatomy (scaphoid, scapholunate-ligament, radius) links Scaphoid Fracture to adjacent Prepare neighborhoods in the cluster graph.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "clinic",
+          "or"
+        ],
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "primary_entity_slug": "hand-wrist-anatomy-hub",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-scaphoid-fracture-anatomy-pearl"
+      }
+    },
+    {
+      "draftId": "claim-scaphoid-fracture-board-trap",
+      "claimType": "board_trap",
+      "claimText": "Missing scaphoid assessment in scaphoid fracture is a common board and OITE trap.",
+      "primaryEntitySlug": "scaphoid",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "scaphoid-fracture-neighborhood",
+        "draft_id": "claim-scaphoid-fracture-board-trap",
+        "verified": false,
+        "claim_text": "Missing scaphoid assessment in scaphoid fracture is a common board and OITE trap.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.76,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "primary_entity_slug": "scaphoid",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-scaphoid-fracture-board-trap"
+      }
+    },
+    {
+      "draftId": "claim-scaphoid-fracture-clinical-script",
+      "claimType": "clinical_script",
+      "claimText": "Document neurovascular status, key anatomic structures (scaphoid, scapholunate-ligament, radius), stability assessment, and escalation plan for scaphoid fracture.",
+      "primaryEntitySlug": "scaphoid-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "scaphoid-fracture-neighborhood",
+        "draft_id": "claim-scaphoid-fracture-clinical-script",
+        "verified": false,
+        "claim_text": "Document neurovascular status, key anatomic structures (scaphoid, scapholunate-ligament, radius), stability assessment, and escalation plan for scaphoid fracture.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "primary_entity_slug": "scaphoid-fracture",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-scaphoid-fracture-clinical-script"
+      }
+    },
+    {
+      "draftId": "claim-scaphoid-fracture-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Treating scaphoid fracture in isolation without checking related wrist, tendon, or nerve neighborhoods in the cluster.",
+      "primaryEntitySlug": "scaphoid-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "scaphoid-fracture-neighborhood",
+        "draft_id": "claim-scaphoid-fracture-cognitive-trap",
+        "verified": false,
+        "claim_text": "Treating scaphoid fracture in isolation without checking related wrist, tendon, or nerve neighborhoods in the cluster.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.76,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "primary_entity_slug": "scaphoid-fracture",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "generated_by": "claim-builder-fallback",
+        "evidence_item_ids": [
+          "ev-proposal-history-36047d3f",
+          "ev-quality-signal-cb4331d9"
+        ],
+        "publication_eligible": false,
+        "_provenance_fingerprint": "claim|claim-scaphoid-fracture-cognitive-trap"
+      }
+    },
+    {
+      "draftId": "claim-scaphoid-fracture-imaging",
+      "claimType": "imaging_point",
+      "claimText": "Obtain appropriate hand/wrist imaging for scaphoid fracture and explicitly comment on articular alignment and adjacent joint stability.",
+      "primaryEntitySlug": "scaphoid-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "scaphoid-fracture-neighborhood",
+        "draft_id": "claim-scaphoid-fracture-imaging",
+        "verified": false,
+        "claim_text": "Obtain appropriate hand/wrist imaging for scaphoid fracture and explicitly comment on articular alignment and adjacent joint stability.",
+        "claim_type": "imaging_point",
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "primary_entity_slug": "scaphoid-fracture",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "generated_by": "claim-builder-fallback",
+        "evidence_item_ids": [
+          "ev-proposal-history-36047d3f",
+          "ev-quality-signal-cb4331d9"
+        ],
+        "publication_eligible": false,
+        "_provenance_fingerprint": "claim|claim-scaphoid-fracture-imaging"
+      }
+    },
+    {
+      "draftId": "claim-scaphoid-fracture-mechanism",
+      "claimType": "fact",
+      "claimText": "Scaphoid Fracture evaluation should anchor on mechanism, focused exam, and the anatomic structures most at risk (scaphoid, scapholunate-ligament, radius).",
+      "primaryEntitySlug": "scaphoid-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "scaphoid-fracture-neighborhood",
+        "draft_id": "claim-scaphoid-fracture-mechanism",
+        "verified": false,
+        "claim_text": "Scaphoid Fracture evaluation should anchor on mechanism, focused exam, and the anatomic structures most at risk (scaphoid, scapholunate-ligament, radius).",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "primary_entity_slug": "scaphoid-fracture",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "generated_by": "claim-builder-fallback",
+        "evidence_item_ids": [
+          "ev-proposal-history-36047d3f",
+          "ev-quality-signal-cb4331d9"
+        ],
+        "publication_eligible": false,
+        "_provenance_fingerprint": "claim|claim-scaphoid-fracture-mechanism"
+      }
+    },
+    {
+      "draftId": "claim-scaphoid-fracture-rehab",
+      "claimType": "rehab_pearl",
+      "claimText": "Early protected motion and therapy goals for scaphoid fracture should align with tendon, ligament, and joint stability constraints.",
+      "primaryEntitySlug": "scaphoid-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "scaphoid-fracture-neighborhood",
+        "draft_id": "claim-scaphoid-fracture-rehab",
+        "verified": false,
+        "claim_text": "Early protected motion and therapy goals for scaphoid fracture should align with tendon, ligament, and joint stability constraints.",
+        "claim_type": "rehab_pearl",
+        "curated_at": "2026-07-05T23:11:03.583Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.76,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:scaphoid-fracture-neighborhood",
+        "primary_entity_slug": "scaphoid-fracture",
+        "review_packet_label": "Scaphoid Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-scaphoid-fracture-rehab"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-scaphoid-fracture-nonoperative",
+      "subjectEntitySlug": "scaphoid-fracture",
+      "patternType": "nonoperative_eligible",
+      "trigger": "Stable pattern with acceptable alignment and intact neurovascular exam for scaphoid fracture",
+      "action": "Splint/immobilize with therapy plan, repeat exam and imaging, and clear return precautions",
+      "urgency": "routine",
+      "safetyCriticality": "none",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-scaphoid-fracture-operative",
+      "subjectEntitySlug": "scaphoid-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Unstable pattern, displacement, failed closed treatment, or functional deficit in scaphoid fracture",
+      "action": "Proceed with operative pathway when indicated; document fixation strategy, tendon/nerve protection, and postoperative plan",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [],
+  "stats": {
+    "entityCount": 72,
+    "relationshipCount": 95,
+    "claimCount": 7,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 7,
+    "conflictingRelationships": 0,
+    "metadataMerged": 9,
+    "provenanceAttached": 177
+  }
+}

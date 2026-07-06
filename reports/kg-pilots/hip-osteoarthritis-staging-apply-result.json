@@ -1,0 +1,303 @@
+{
+  "topicKey": "hip-osteoarthritis",
+  "pilotKey": "hip-osteoarthritis-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 69,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 69
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|condition|femoral-shaft-fracture",
+      "reason": "entity exists: femoral-shaft-fracture"
+    },
+    {
+      "fingerprint": "create|condition|tibial-shaft-fracture",
+      "reason": "entity exists: tibial-shaft-fracture"
+    },
+    {
+      "fingerprint": "create|condition|subtrochanteric-fracture",
+      "reason": "entity exists: subtrochanteric-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-neck",
+      "reason": "entity exists: femoral-neck"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hip-joint",
+      "reason": "entity exists: hip-joint"
+    },
+    {
+      "fingerprint": "create|condition|hip-prosthetic-joint-infection",
+      "reason": "entity exists: hip-prosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|greater-trochanter",
+      "reason": "entity exists: greater-trochanter"
+    },
+    {
+      "fingerprint": "create|condition|knee-prosthetic-joint-infection",
+      "reason": "entity exists: knee-prosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|condition|knee-osteoarthritis",
+      "reason": "entity exists: knee-osteoarthritis"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|bearing-surface-selection",
+      "reason": "entity exists: bearing-surface-selection"
+    },
+    {
+      "fingerprint": "create|procedure|polyethylene-wear-osteolysis",
+      "reason": "entity exists: polyethylene-wear-osteolysis"
+    },
+    {
+      "fingerprint": "create|procedure|total-hip-arthroplasty",
+      "reason": "entity exists: total-hip-arthroplasty"
+    },
+    {
+      "fingerprint": "create|imaging_finding|joint-space-narrowing-hip",
+      "reason": "entity exists: joint-space-narrowing-hip"
+    },
+    {
+      "fingerprint": "create|condition|distal-femur-fracture",
+      "reason": "entity exists: distal-femur-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|calcar",
+      "reason": "entity exists: calcar"
+    },
+    {
+      "fingerprint": "create|condition|periprosthetic-joint-infection",
+      "reason": "entity exists: periprosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|condition|femoral-neck-fracture",
+      "reason": "entity exists: femoral-neck-fracture"
+    },
+    {
+      "fingerprint": "create|condition|compartment-syndrome",
+      "reason": "entity exists: compartment-syndrome"
+    },
+    {
+      "fingerprint": "create|condition|intertrochanteric-fracture",
+      "reason": "entity exists: intertrochanteric-fracture"
+    },
+    {
+      "fingerprint": "create|procedure|adverse-local-tissue-reaction",
+      "reason": "entity exists: adverse-local-tissue-reaction"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|hip-abductor-mechanics",
+      "reason": "entity exists: hip-abductor-mechanics"
+    },
+    {
+      "fingerprint": "create|procedure|unicompartmental-knee-arthroplasty",
+      "reason": "entity exists: unicompartmental-knee-arthroplasty"
+    },
+    {
+      "fingerprint": "create|procedure|revision-arthroplasty",
+      "reason": "entity exists: revision-arthroplasty"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lesser-trochanter",
+      "reason": "entity exists: lesser-trochanter"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-head",
+      "reason": "entity exists: femoral-head"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sciatic-nerve",
+      "reason": "entity exists: sciatic-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-femur-anatomy-hub",
+      "reason": "entity exists: proximal-femur-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery",
+      "reason": "entity exists: medial-femoral-circumflex-artery"
+    },
+    {
+      "fingerprint": "create|condition|hip-osteoarthritis",
+      "reason": "entity exists: hip-osteoarthritis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|intertrochanteric-region",
+      "reason": "entity exists: intertrochanteric-region"
+    },
+    {
+      "fingerprint": "create|procedure|total-knee-arthroplasty",
+      "reason": "entity exists: total-knee-arthroplasty"
+    },
+    {
+      "fingerprint": "create|classification_system|kellgren-lawrence-hip",
+      "reason": "entity exists: kellgren-lawrence-hip"
+    },
+    {
+      "fingerprint": "rel|acetabulum|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|quadriceps-tendon|part_of|extensor-mechanism",
+      "reason": "missing slug resolution quadriceps-tendon -> extensor-mechanism"
+    },
+    {
+      "fingerprint": "rel|short-external-rotators|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution short-external-rotators -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|femoral-nerve|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution femoral-nerve -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|cruciate-ligaments|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution cruciate-ligaments -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|cement-mantle",
+      "reason": "missing slug resolution implant-concepts-hub -> cement-mantle"
+    },
+    {
+      "fingerprint": "rel|femoral-condyles|part_of|femur",
+      "reason": "missing slug resolution femoral-condyles -> femur"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|femoral-component",
+      "reason": "missing slug resolution implant-concepts-hub -> femoral-component"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|polyethylene-liner",
+      "reason": "missing slug resolution implant-concepts-hub -> polyethylene-liner"
+    },
+    {
+      "fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|hip-osteoarthritis",
+      "reason": "missing slug resolution adult-reconstruction-anatomy-hub -> hip-osteoarthritis"
+    },
+    {
+      "fingerprint": "rel|hip-osteoarthritis|involves_anatomy|acetabulum",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|intertrochanteric-fracture|prerequisite_for|hip-osteoarthritis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|subtrochanteric-fracture|prerequisite_for|hip-osteoarthritis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patellar-tendon|part_of|extensor-mechanism",
+      "reason": "missing slug resolution patellar-tendon -> extensor-mechanism"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|tibial-insert",
+      "reason": "missing slug resolution implant-concepts-hub -> tibial-insert"
+    },
+    {
+      "fingerprint": "rel|hip-capsule|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution hip-capsule -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|collateral-ligaments|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution collateral-ligaments -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|proximal-femur|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution proximal-femur -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|femoral-neck-fracture|prerequisite_for|hip-osteoarthritis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|labrum|part_of|acetabulum",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|acetabular-component",
+      "reason": "missing slug resolution implant-concepts-hub -> acetabular-component"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|patellar-component",
+      "reason": "missing slug resolution implant-concepts-hub -> patellar-component"
+    },
+    {
+      "fingerprint": "rel|hip-osteoarthritis|involves_anatomy|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution hip-osteoarthritis -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|gluteus-minimus|part_of|gluteus-medius",
+      "reason": "missing slug resolution gluteus-minimus -> gluteus-medius"
+    },
+    {
+      "fingerprint": "rel|tibia|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution tibia -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|tibial-baseplate",
+      "reason": "missing slug resolution implant-concepts-hub -> tibial-baseplate"
+    },
+    {
+      "fingerprint": "rel|hip-osteoarthritis|has_imaging_finding|joint-space-narrowing-hip",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pelvis|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution pelvis -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|gluteus-medius|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution gluteus-medius -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|femoral-stem",
+      "reason": "missing slug resolution implant-concepts-hub -> femoral-stem"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|press-fit-fixation",
+      "reason": "missing slug resolution implant-concepts-hub -> press-fit-fixation"
+    },
+    {
+      "fingerprint": "rel|femur|part_of|adult-reconstruction-anatomy-hub",
+      "reason": "missing slug resolution femur -> adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|hip-osteoarthritis",
+      "reason": "missing slug resolution implant-concepts-hub -> hip-osteoarthritis"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|cemented-fixation",
+      "reason": "missing slug resolution implant-concepts-hub -> cemented-fixation"
+    },
+    {
+      "fingerprint": "rel|hip-osteoarthritis|involves_anatomy|femoral-head",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|adult-recon-hip-osteoarthritis|hip-osteoarthritis",
+      "reason": "curriculum node not found"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

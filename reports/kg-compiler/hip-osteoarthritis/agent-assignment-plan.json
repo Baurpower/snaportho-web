@@ -1,0 +1,201 @@
+{
+  "generatedAt": "2026-07-05T22:44:52.319Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "hip-osteoarthritis",
+  "pilotKey": "hip-osteoarthritis-neighborhood",
+  "assignments": [
+    {
+      "workItemId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentName": "Clinical Entity Builder",
+      "type": "gap_resolution",
+      "gapCount": 10,
+      "gapIds": [
+        "gap-entity-neighbor-1",
+        "gap-entity-neighbor-8",
+        "gap-entity-neighbor-11",
+        "gap-entity-neighbor-14",
+        "gap-entity-neighbor-15",
+        "gap-entity-neighbor-16",
+        "gap-entity-neighbor-34",
+        "gap-entity-neighbor-37",
+        "gap-entity-neighbor-40",
+        "gap-entity-neighbor-47"
+      ],
+      "gapKinds": [
+        "missing_entity"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_entity",
+        "generic_fallback"
+      ]
+    },
+    {
+      "workItemId": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "agentName": "Relationship Builder",
+      "type": "gap_resolution",
+      "gapCount": 29,
+      "gapIds": [
+        "gap-rel-2",
+        "gap-rel-3",
+        "gap-rel-4",
+        "gap-rel-9",
+        "gap-rel-10",
+        "gap-rel-12",
+        "gap-rel-13",
+        "gap-rel-17",
+        "gap-rel-18",
+        "gap-rel-19",
+        "gap-rel-20",
+        "gap-rel-21",
+        "gap-rel-22",
+        "gap-rel-23",
+        "gap-rel-24",
+        "gap-rel-35",
+        "gap-rel-36",
+        "gap-rel-38",
+        "gap-rel-39",
+        "gap-rel-41",
+        "gap-rel-42",
+        "gap-rel-43",
+        "gap-rel-48",
+        "gap-proc-approach-53",
+        "gap-proc-approach-54",
+        "gap-proc-approach-55",
+        "gap-proc-approach-56",
+        "gap-proc-approach-57",
+        "gap-proc-approach-58"
+      ],
+      "gapKinds": [
+        "missing_relationship"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder",
+        "work-anatomy-builder"
+      ],
+      "estimatedConfidence": 0.8910344827586213,
+      "requiredReviewer": "attending",
+      "matchReasons": [
+        "handles_gap_kind:missing_relationship"
+      ]
+    },
+    {
+      "workItemId": "work-claim-builder",
+      "agentId": "claim-builder",
+      "agentName": "Claim Builder",
+      "type": "gap_resolution",
+      "gapCount": 13,
+      "gapIds": [
+        "gap-claim-5",
+        "gap-claim-type-6",
+        "gap-claim-type-7",
+        "gap-claim-25",
+        "gap-claim-type-26",
+        "gap-claim-type-27",
+        "gap-claim-type-28",
+        "gap-claim-type-29",
+        "gap-claim-44",
+        "gap-claim-type-45",
+        "gap-claim-type-46",
+        "gap-biomech-claim-51",
+        "gap-biomech-claim-52"
+      ],
+      "gapKinds": [
+        "missing_claim"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.7907692307692309,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_claim"
+      ]
+    },
+    {
+      "workItemId": "work-decision-point-builder",
+      "agentId": "decision-point-builder",
+      "agentName": "Decision Point Builder",
+      "type": "gap_resolution",
+      "gapCount": 3,
+      "gapIds": [
+        "gap-dp-30",
+        "gap-dp-pattern-31",
+        "gap-dp-pattern-32"
+      ],
+      "gapKinds": [
+        "missing_decision_point"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.8666666666666667,
+      "requiredReviewer": "attending",
+      "matchReasons": [
+        "handles_gap_kind:missing_decision_point"
+      ]
+    },
+    {
+      "workItemId": "work-metadata-builder",
+      "agentId": "metadata-builder",
+      "agentName": "Metadata Builder",
+      "type": "gap_resolution",
+      "gapCount": 1,
+      "gapIds": [
+        "gap-meta-rel-33"
+      ],
+      "gapKinds": [
+        "missing_metadata"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.9,
+      "requiredReviewer": "none",
+      "matchReasons": [
+        "handles_gap_kind:missing_metadata"
+      ]
+    },
+    {
+      "workItemId": "work-asset-linker",
+      "agentId": "asset-linker",
+      "agentName": "Asset Linker",
+      "type": "gap_resolution",
+      "gapCount": 2,
+      "gapIds": [
+        "gap-asset-card-49",
+        "gap-asset-question-50"
+      ],
+      "gapKinds": [
+        "missing_asset_link"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder"
+      ],
+      "estimatedConfidence": 0.8,
+      "requiredReviewer": "none",
+      "matchReasons": [
+        "handles_gap_kind:missing_asset_link"
+      ]
+    }
+  ],
+  "executionOrder": [
+    "work-clinical-entity-builder",
+    "work-anatomy-builder",
+    "work-relationship-builder",
+    "work-decision-point-builder",
+    "work-claim-builder",
+    "work-metadata-builder",
+    "work-asset-linker",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "registryAgentCount": 13
+}

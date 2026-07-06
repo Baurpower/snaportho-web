@@ -1,0 +1,111 @@
+{
+  "topicKey": "ucl-injury",
+  "pilotKey": "ucl-injury-neighborhood",
+  "primaryEntitySlug": "ucl-injury",
+  "displayName": "UCL Injury",
+  "generatedAt": "2026-07-05T23:07:25.489Z",
+  "nodes": [
+    {
+      "slug": "ucl-injury",
+      "entityType": "condition",
+      "preferredLabel": "UCL Injury",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "ucl-injury-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "UCL Injury Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ucl-injury-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "UCL Injury MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ucl-injury-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "UCL Injury Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ucl-injury-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "UCL Injury Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ucl-injury-complication",
+      "entityType": "complication",
+      "preferredLabel": "UCL Injury Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ucl-injury-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "UCL Injury Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-biceps-tendon-rupture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Biceps Tendon Rupture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "ucl-injury"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "ucl-injury-reconstruction"
+    ],
+    "classification": [
+      "ucl-injury-classification"
+    ],
+    "imaging": [
+      "ucl-injury-mri-finding"
+    ],
+    "complication": [
+      "ucl-injury-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "ucl-injury-rehab-protocol",
+      "ucl-injury-exam-maneuver",
+      "distal-biceps-tendon-rupture"
+    ]
+  }
+}

@@ -11,6 +11,10 @@ import type {
   QuestionProvider,
 } from './shared/types.js';
 import {
+  classifyPage,
+  isPageUsable,
+} from './shared/page-classification.js';
+import {
   detectSupportedQuestionProviderFromUrl,
   getConfiguredAppOrigin,
   isLikelySupportedQuestionUrl,
@@ -133,15 +137,16 @@ async function fetchJson(pathname: string, init?: RequestInit) {
   return json;
 }
 
-function isReadableQuestionContext(pageContext: OrthobulletsPageContext) {
-  if (pageContext.mode === 'curriculum_content') {
-    return Boolean(pageContext.contentText && pageContext.contentText.trim().length >= 500);
-  }
-  const hasQuestionIdentity = Boolean(pageContext.questionId || pageContext.stem);
-  const hasStem = typeof pageContext.stem === 'string' && pageContext.stem.trim().length > 0;
-  const hasChoices = pageContext.answerChoices.length >= 2;
+function enrichPageContext(pageContext: OrthobulletsPageContext) {
+  const classification = pageContext.classification ?? classifyPage(pageContext);
+  return {
+    ...pageContext,
+    classification,
+  };
+}
 
-  return hasQuestionIdentity && hasStem && hasChoices;
+function isReadablePageContext(pageContext: OrthobulletsPageContext) {
+  return isPageUsable(pageContext);
 }
 
 async function sendExtractionMessage(tabId: number): Promise<{
@@ -185,17 +190,19 @@ function buildExtractionDiagnostics(input: {
   fallbackInjectionAttempted?: boolean;
   injectionError?: string | null;
 }): OrthobulletsExtractionDiagnostics {
-  const pageContext = input.pageContext ?? null;
+  const pageContext = input.pageContext ? enrichPageContext(input.pageContext) : null;
   const urlProvider = detectSupportedQuestionProviderFromUrl(input.activeTabUrl);
   const provider = pageContext?.provider ?? urlProvider ?? 'unsupported';
   const providerSpecific = pageContext?.raw?.providerSpecific ?? {};
+  const classification = pageContext?.classification;
   return {
     activeTabId: input.activeTabId,
     activeTabUrl: input.activeTabUrl,
     activeTabStatus: input.activeTabStatus,
     contentScriptResponded: input.contentScriptResponded,
     provider,
-    readable: pageContext ? isReadableQuestionContext(pageContext) : false,
+    readable: pageContext ? isReadablePageContext(pageContext) : false,
+    classification,
     failureCode: input.failureCode,
     sendMessageError: input.sendMessageError ?? null,
     fallbackInjectionAttempted: input.fallbackInjectionAttempted ?? false,
@@ -332,18 +339,19 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
             'extraction_failure'
           );
         }
+        const pageContext = enrichPageContext(response.pageContext);
         const diagnostics = buildExtractionDiagnostics({
           activeTabId: tabSnapshot.tabId,
           activeTabUrl: tabSnapshot.url,
           activeTabStatus: tabSnapshot.status,
           contentScriptResponded: true,
-          pageContext: response.pageContext,
-          failureCode: isReadableQuestionContext(response.pageContext) ? undefined : 'page_not_readable',
+          pageContext,
+          failureCode: isReadablePageContext(pageContext) ? undefined : 'page_not_readable',
           sendMessageError,
           fallbackInjectionAttempted,
           injectionError,
         });
-        sendResponse({ ok: true, pageContext: response.pageContext, diagnostics });
+        sendResponse({ ok: true, pageContext, diagnostics });
         return;
       }
 
@@ -359,7 +367,10 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
             'Content-Type': 'application/json',
             [EXTENSION_TOKEN_HEADER]: deviceToken,
           },
-          body: JSON.stringify({ pageContext: message.pageContext }),
+          body: JSON.stringify({
+            pageContext: message.pageContext,
+            emphasis: message.emphasis,
+          }),
         });
 
         sendResponse({ ok: true, explanation });
@@ -404,6 +415,8 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
           body: JSON.stringify({
             pageContext: message.pageContext,
             explanation: message.explanation,
+            curriculumStudy: message.curriculumStudy,
+            emphasis: message.emphasis,
             history: message.history,
             userMessage: message.userMessage,
           }),

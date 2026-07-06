@@ -40,6 +40,8 @@ export type StripeReconciliationResult = {
 export type StripeReconciliationOptions = {
   dryRun?: boolean;
   userId?: string | null;
+  /** Verified auth email — used only as an unambiguous Stripe customer fallback. */
+  userEmail?: string | null;
   stripeCustomerId?: string | null;
   stripeSubscriptionId?: string | null;
   limitCustomers?: number | null;
@@ -294,6 +296,47 @@ async function listCustomerSubscriptions(params: {
   return subscriptions;
 }
 
+async function listStripeCustomersByMetadataUserId(userId: string) {
+  const stripe = getStripe();
+
+  try {
+    const result = await stripe.customers.search({
+      query: `metadata['user_id']:'${userId}'`,
+      limit: 10,
+    });
+    return result.data;
+  } catch (error) {
+    console.error('[stripe/reconcile] metadata user_id customer search failed', {
+      userId: userId.slice(0, 8),
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return [];
+  }
+}
+
+async function listStripeCustomersByVerifiedEmail(email: string) {
+  const stripe = getStripe();
+  const normalizedEmail = email.trim().toLowerCase();
+  if (!normalizedEmail) return [];
+
+  const listed = await stripe.customers.list({ email: normalizedEmail, limit: 10 });
+  const matches = listed.data.filter(
+    (customer) => (customer.email ?? '').trim().toLowerCase() === normalizedEmail
+  );
+
+  if (matches.length !== 1) {
+    if (matches.length > 1) {
+      console.warn('[stripe/reconcile] ambiguous email customer match; refusing email fallback', {
+        emailDomain: normalizedEmail.split('@')[1] ?? null,
+        matchCount: matches.length,
+      });
+    }
+    return [];
+  }
+
+  return matches;
+}
+
 async function listTargetCustomers(options: StripeReconciliationOptions) {
   const stripe = getStripe();
 
@@ -312,11 +355,27 @@ async function listTargetCustomers(options: StripeReconciliationOptions) {
       .order('updated_at', { ascending: false })
       .limit(20);
 
-    const ids = [
-      ...(existingRows ?? []).map((row) => row.provider_customer_id ?? row.stripe_customer_id).filter(Boolean),
-    ];
+    const customerIds = new Set<string>(
+      (existingRows ?? [])
+        .map((row) => row.provider_customer_id ?? row.stripe_customer_id)
+        .filter((id): id is string => Boolean(id))
+    );
 
-    return Promise.all(ids.map((id) => stripe.customers.retrieve(id as string)));
+    for (const customer of await listStripeCustomersByMetadataUserId(options.userId)) {
+      customerIds.add(customer.id);
+    }
+
+    if (options.userEmail) {
+      for (const customer of await listStripeCustomersByVerifiedEmail(options.userEmail)) {
+        customerIds.add(customer.id);
+      }
+    }
+
+    if (customerIds.size === 0) {
+      return [];
+    }
+
+    return Promise.all([...customerIds].map((id) => stripe.customers.retrieve(id)));
   }
 
   const customers: Array<Stripe.Customer | Stripe.DeletedCustomer> = [];

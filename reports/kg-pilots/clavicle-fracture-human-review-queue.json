@@ -1,0 +1,400 @@
+[
+  {
+    "proposal_fingerprint": "rel|clavicle-fracture|treated_by|clavicle-sling-immobilization",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "clavicle-fracture -[treated_by]-> clavicle-sling-immobilization",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|clavicle-fracture|treated_by|clavicle-sling-immobilization",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "clavicle-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "clavicle-sling-immobilization",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|clavicle-fracture|treated_by|clavicle-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "clavicle-fracture -[treated_by]-> clavicle-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|clavicle-fracture|treated_by|clavicle-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "clavicle-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "clavicle-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|midshaft-clavicle-fracture-pattern|indicates_treatment|clavicle-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "midshaft-clavicle-fracture-pattern -[indicates_treatment]-> clavicle-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: midshaft-clavicle-fracture-pattern -[indicates_treatment]-> clavicle-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "midshaft-clavicle-fracture-pattern",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "clavicle-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "note": "displacement and patient demand dependent"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-clav-midshaft-common",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-clav-midshaft-common",
+    "alternatives": [],
+    "evidence_summary": "trauma-clavicle-fractures-midshaft curriculum",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-clav-midshaft-common",
+      "claim_type": "fact",
+      "claim_text": "Midshaft clavicle fractures are the most common clavicle fracture location after shoulder-directed trauma.",
+      "primary_entity_slug": "clavicle-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-clav-sc-joint-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-clav-sc-joint-trap",
+    "alternatives": [],
+    "evidence_summary": "shoulder girdle trauma board pearls",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-clav-sc-joint-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Posterior sternoclavicular displacement can threaten mediastinal structures and is not a benign clavicle injury.",
+      "primary_entity_slug": "sternoclavicular-joint",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-clav-operative-shift",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-clav-operative-shift",
+    "alternatives": [],
+    "evidence_summary": "clavicle treatment evolution",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-clav-operative-shift",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Treating every displaced midshaft clavicle fracture as mandatory ORIF without discussing nonunion risk and patient goals.",
+      "primary_entity_slug": "midshaft-clavicle-fracture-pattern",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-clav-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-clav-case-script",
+    "alternatives": [],
+    "evidence_summary": "clavicle case presentation pattern",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-clav-case-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Describe fracture location, shortening, skin tenting, neurovascular exam, and sling versus operative plan with follow-up.",
+      "primary_entity_slug": "clavicle-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-clav-operative-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-clav-operative-orif",
+    "alternatives": [],
+    "evidence_summary": "clavicle operative indications",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-clav-operative-orif",
+      "subject_entity_slug": "clavicle-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Displaced midshaft clavicle fracture with shortening, comminution, or high functional demand",
+      "action": "Discuss clavicle ORIF with attending; document nonoperative risks and patient goals",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-clav-nonoperative-sling",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-clav-nonoperative-sling",
+    "alternatives": [],
+    "evidence_summary": "clavicle nonoperative pathway",
+    "metadata": {
+      "pilot": "clavicle-fracture-neighborhood",
+      "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+      "review_packet_label": "Clavicle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-clav-nonoperative-sling",
+      "subject_entity_slug": "clavicle-fracture",
+      "pattern_type": "nonoperative_eligible",
+      "trigger": "Acceptable alignment in patient suitable for sling immobilization",
+      "action": "Sling immobilization with pain control and gradual return of motion when healing permits",
+      "urgency": "routine",
+      "safety_criticality": "none",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T21:49:12.734Z"
+    }
+  }
+]

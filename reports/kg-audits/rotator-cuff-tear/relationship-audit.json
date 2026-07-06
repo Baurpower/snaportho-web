@@ -1,0 +1,61 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 65,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from rotator-cuff-tear",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "rotator-cuff-tear"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from rotator-cuff-tear",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "rotator-cuff-tear"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Low relationship density",
+      "evidence": "44 relationships / 42 entities = 1.05",
+      "reason": "Sparse graphs limit educational traversal and reasoning support.",
+      "severity": "medium",
+      "category": "relationship_quality",
+      "suggestedFix": "Add metadata-rich clinical and anatomy edges to improve connectivity.",
+      "impact": 4
+    },
+    {
+      "finding": "3 high-risk relationships lack approved review status",
+      "evidence": "Predicates: indicates_treatment, treated_by",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 44,
+    "relationshipDensity": 1.0476190476190477,
+    "missingClinicalEdgeCount": 2,
+    "highRiskUnreviewedCount": 3,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Add injured_in relationship via relationship-builder agent.",
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

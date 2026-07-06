@@ -31,6 +31,21 @@ export async function GET(request: Request) {
       subject.type === 'user' &&
       url.searchParams.get('debug') === '1';
     const entitlement = await getNormalizedBroBotEntitlement(subject, { includeDebug });
+
+    if (url.searchParams.get('source') === 'billing' && subject.type === 'user') {
+      console.info('[me/entitlements] billing_poll', {
+        user_id: subject.id.slice(0, 8),
+        access: entitlement.access,
+        planCode: entitlement.planCode,
+        provider: entitlement.provider,
+        status: entitlement.status,
+        selectedSubscriptionId: entitlement.selectedSubscriptionId?.slice(0, 12) ?? null,
+        resolutionSource: entitlement.resolutionSource,
+        legacySource: entitlement.data.source,
+        unlimited: entitlement.data.aiAccess.unlimited,
+      });
+    }
+
     const response = NextResponse.json(entitlement);
     response.headers.set('Cache-Control', 'no-store, max-age=0');
     if (guestCookieToSet) {

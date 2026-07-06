@@ -1,0 +1,47 @@
+{
+  "topicKey": "rolando-fracture",
+  "pilotKey": "rolando-fracture-neighborhood",
+  "primaryEntitySlug": "rolando-fracture",
+  "displayName": "Rolando Fracture",
+  "generatedAt": "2026-07-05T23:57:16.219Z",
+  "nodes": [
+    {
+      "slug": "rolando-fracture-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Rolando Fracture Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rolando-fracture-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "Rolando Fracture Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "rolando-fracture-operative-treatment"
+    ],
+    "classification": [],
+    "imaging": [
+      "rolando-fracture-key-imaging-finding"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

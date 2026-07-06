@@ -1,0 +1,101 @@
+{
+  "topicKey": "scaphoid-fracture",
+  "pilotKey": "scaphoid-fracture-neighborhood",
+  "primaryEntitySlug": "scaphoid-fracture",
+  "displayName": "Scaphoid Fracture",
+  "generatedAt": "2026-07-05T23:11:03.565Z",
+  "nodes": [
+    {
+      "slug": "sl-ligament-injury",
+      "entityType": "condition",
+      "preferredLabel": "Sl Ligament Injury",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "scaphoid-fracture-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Scaphoid Fracture Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "scaphoid-nonunion",
+      "entityType": "condition",
+      "preferredLabel": "Scaphoid Nonunion",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "scaphoid-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Scaphoid Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "scaphoid-fracture-key-complication",
+      "entityType": "complication",
+      "preferredLabel": "Scaphoid Fracture Key Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "scaphoid-fracture-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Scaphoid Fracture Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "scaphoid-fracture-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "Scaphoid Fracture Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 2,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "scaphoid-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "scaphoid-fracture-operative-treatment"
+    ],
+    "classification": [
+      "scaphoid-fracture-classification"
+    ],
+    "imaging": [
+      "scaphoid-fracture-key-imaging-finding"
+    ],
+    "complication": [
+      "scaphoid-fracture-key-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "sl-ligament-injury",
+      "scaphoid-nonunion"
+    ]
+  }
+}

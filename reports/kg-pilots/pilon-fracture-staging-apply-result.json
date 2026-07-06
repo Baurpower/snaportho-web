@@ -1,0 +1,307 @@
+{
+  "topicKey": "pilon-fracture",
+  "pilotKey": "pilon-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 70,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 70
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|anatomy_structure|sacrum",
+      "reason": "entity exists: sacrum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pubic-symphysis",
+      "reason": "entity exists: pubic-symphysis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|iliac-wing",
+      "reason": "entity exists: iliac-wing"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibial-plateau",
+      "reason": "entity exists: tibial-plateau"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|calcaneus",
+      "reason": "entity exists: calcaneus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|patella",
+      "reason": "entity exists: patella"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|popliteal-artery",
+      "reason": "entity exists: popliteal-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|midfoot",
+      "reason": "entity exists: midfoot"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|plantar-soft-tissues",
+      "reason": "entity exists: plantar-soft-tissues"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|acl",
+      "reason": "entity exists: acl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|leg-compartment-complex",
+      "reason": "entity exists: leg-compartment-complex"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|anterior-compartment",
+      "reason": "entity exists: anterior-compartment"
+    },
+    {
+      "fingerprint": "create|imaging_finding|soft-tissue-compromise-pilon",
+      "reason": "entity exists: soft-tissue-compromise-pilon"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub",
+      "reason": "entity exists: lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pcl",
+      "reason": "entity exists: pcl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|common-peroneal-nerve",
+      "reason": "entity exists: common-peroneal-nerve"
+    },
+    {
+      "fingerprint": "create|treatment_principle|staged-pilon-protocol",
+      "reason": "entity exists: staged-pilon-protocol"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sacroiliac-joint",
+      "reason": "entity exists: sacroiliac-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-diaphysis",
+      "reason": "entity exists: femoral-diaphysis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lisfranc-joint",
+      "reason": "entity exists: lisfranc-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|talus",
+      "reason": "entity exists: talus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fibula",
+      "reason": "entity exists: fibula"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|subtalar-joint",
+      "reason": "entity exists: subtalar-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pelvis",
+      "reason": "entity exists: pelvis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-femur",
+      "reason": "entity exists: distal-femur"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "reason": "entity exists: extensor-mechanism"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|acetabulum",
+      "reason": "entity exists: acetabulum"
+    },
+    {
+      "fingerprint": "create|condition|pilon-fracture",
+      "reason": "entity exists: pilon-fracture"
+    },
+    {
+      "fingerprint": "create|procedure|pilon-orif",
+      "reason": "entity exists: pilon-orif"
+    },
+    {
+      "fingerprint": "create|complication|pilon-wound-complication",
+      "reason": "entity exists: pilon-wound-complication"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibial-shaft",
+      "reason": "entity exists: tibial-shaft"
+    },
+    {
+      "fingerprint": "rel|pilon-fracture|involves_anatomy|talus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pilon-fracture|has_complication|pilon-wound-complication",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-femur|articulates_with|tibial-plateau",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|talus|articulates_with|calcaneus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tibial-shaft|part_of|leg-compartment-complex",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|pilon-fracture",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella|articulates_with|distal-femur",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pilon-fracture|involves_anatomy|fibula",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pubic-symphysis|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|anterior-compartment|part_of|leg-compartment-complex",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pilon-fracture|involves_anatomy|anterior-compartment",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pilon-fracture|injured_in|tibial-shaft",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pilon-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pilon-fracture|has_imaging_finding|soft-tissue-compromise-pilon",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pilon-orif|involves_anatomy|tibial-shaft",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|acetabulum|part_of|iliac-wing",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lisfranc-joint|part_of|midfoot",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|iliac-wing|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sacroiliac-joint|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sacrum|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|calcaneus|articulates_with|subtalar-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fibula|part_of|leg-compartment-complex",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella|part_of|extensor-mechanism",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|trauma-tibial-plafond-fractures|pilon-fracture",
+      "reason": "bridge exists"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "topicKey": "pilon-fracture",
+  "pilotKey": "pilon-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:45:34.424Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "17 proposals still awaiting human review",
+    "12 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "16 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Pilon ORIF neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Pilon ORIF missing outbound involves_anatomy (0/1).",
+    "[high] Pilon ORIF missing outbound at_risk_structure (0/1).",
+    "[critical] Pilon Fracture neighborhood has 0/3 anatomy_structure entities.",
+    "[high] Pilon Fracture neighborhood has 0/1 classification_system entities.",
+    "[critical] Pilon Fracture missing outbound injured_in (0/1).",
+    "[high] Pilon Fracture missing outbound involves_anatomy (0/1).",
+    "[high] Pilon Fracture missing outbound at_risk_structure (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 24,
+    "humanReviewItems": 17,
+    "attendingReviewItems": 12,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

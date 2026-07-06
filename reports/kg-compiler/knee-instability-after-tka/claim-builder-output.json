@@ -1,0 +1,782 @@
+{
+  "generatedAt": "2026-07-05T23:12:57.952Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-e6553aec",
+  "gapsAddressed": 7,
+  "gapsScheduled": 9,
+  "claimsGenerated": 9,
+  "claimsRejected": 6,
+  "redirectedToDecisionPoint": 4,
+  "candidates": [
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-knee-instability-after-t",
+      "claimText": "Knee Instability After TKA indication language.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-implant-and-fixation-voc",
+      "claimText": "Implant and fixation vocabulary.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-cross-neighborhood-traum",
+      "claimText": "Cross-neighborhood trauma links.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-shared-adult-reconstruct",
+      "claimText": "Shared adult reconstruction anatomy hub.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-implant-concepts-hub",
+      "claimText": "Implant concepts hub.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-trauma-neighborhood-brid",
+      "claimText": "Trauma neighborhood bridges.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-post-tka-instability-ref",
+      "claimText": "Post-TKA instability reflects ligament imbalance, component malposition, or excessive constraint mismatch.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "changes_management",
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-cognitive_trap-use-implant-component-vo",
+      "claimText": "Use implant component vocabulary.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-18",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-cognitive_trap-mention-infection-workup",
+      "claimText": "Mention infection workup when pain is unexplained.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-18",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-clinical_script-state-indication",
+      "claimText": "State indication.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-imaging_point-review-imaging",
+      "claimText": "Review imaging.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.caseSteps",
+      "gapId": "gap-claim-18",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-clinical_script-name-implant-fixation-co",
+      "claimText": "Name implant/fixation concepts.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-clinical_script-outline-escalation-pathw",
+      "claimText": "Outline escalation pathway.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimText": "Hip and knee joint surfaces.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-extensor-mechanism",
+      "claimText": "Extensor mechanism.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-implant-bone-interfaces",
+      "claimText": "Implant-bone interfaces.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-knee-reconstruction-clas",
+      "claimText": "Knee Reconstruction classification frameworks.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-imaging_point-weight-bearing-radiograp",
+      "claimText": "Weight-bearing radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-18",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-imaging_point-periprosthetic-lucency-a",
+      "claimText": "Periprosthetic lucency and osteolysis patterns.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-18",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-infection",
+      "claimText": "Infection.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-loosening",
+      "claimText": "Loosening.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-instability",
+      "claimText": "Instability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-periprosthetic-fracture",
+      "claimText": "Periprosthetic fracture.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-fact-recognize-core-concepts-",
+      "claimText": "Recognize core concepts in Knee Instability After TKA.",
+      "claimType": "fact",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-978aa6df"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-connect-knee-instability",
+      "claimText": "Connect Knee Instability After TKA to shared anatomy, implant concepts, and trauma neighborhoods.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "flexion-extension-gap-balance",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "changes_management",
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-978aa6df"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-instability-after-tka-clinical_script-outline-attending-level-",
+      "claimText": "Outline attending-level review priorities for Knee Instability After TKA.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "knee-instability-after-tka",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-978aa6df"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "What drives management in Knee Instability After TKA?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ]
+    },
+    {
+      "text": "When does this become a revision problem?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ]
+    },
+    {
+      "text": "Symptoms, implant stability, bone quality, infection exclusion",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ]
+    },
+    {
+      "text": "Nonoperative care",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ]
+    },
+    {
+      "text": "Primary arthroplasty",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ]
+    },
+    {
+      "text": "Revision and staged strategies",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-6169491c"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-flexion-extension-gap-balance-fact-knee-instability-after-t",
+      "draftId": "claim-flexion-extension-gap-balance-fact-knee-instability-after-t",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-flexion-extension-gap-balance-fact-implant-and-fixation-voc",
+      "draftId": "claim-flexion-extension-gap-balance-fact-implant-and-fixation-voc",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-flexion-extension-gap-balance-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-shared-adult-reconstruct",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-knee-instability-after-tka-cognitive_trap-use-implant-component-vo",
+      "draftId": "claim-knee-instability-after-tka-cognitive_trap-use-implant-component-vo",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-knee-instability-after-tka-imaging_point-review-imaging",
+      "draftId": "claim-knee-instability-after-tka-imaging_point-review-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-knee-instability-after-tka-cognitive_trap-mention-infection-workup",
+      "draftId": "claim-knee-instability-after-tka-cognitive_trap-mention-infection-workup",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-flexion-extension-gap-balance-fact-cross-neighborhood-traum",
+      "draftId": "claim-flexion-extension-gap-balance-fact-cross-neighborhood-traum",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-flexion-extension-gap-balance-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-implant-concepts-hub",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-flexion-extension-gap-balance-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-flexion-extension-gap-balance-anatomy_pearl-trauma-neighborhood-brid",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-61685388"
+      ],
+      "verified": false
+    }
+  ]
+}

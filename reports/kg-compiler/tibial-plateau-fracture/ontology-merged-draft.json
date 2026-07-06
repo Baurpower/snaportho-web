@@ -1,0 +1,1556 @@
+{
+  "topicKey": "tibial-plateau-fracture",
+  "pilotKey": "tibial-plateau-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:43:24.632Z",
+  "entities": [
+    {
+      "slug": "tibial-plateau-stiffness",
+      "entityType": "complication",
+      "preferredLabel": "Tibial Plateau Stiffness",
+      "metadata": {
+        "slug": "tibial-plateau-stiffness",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Post-traumatic knee stiffness after tibial plateau fracture and immobilization.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|tibial-plateau-stiffness",
+        "canonical_entity_id": "56220b1b-1c05-42ec-a6fa-1c1269f65b75",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|tibial-plateau-stiffness"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "bicondylar-tibial-plateau-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Bicondylar Tibial Plateau Fracture",
+      "metadata": {
+        "slug": "bicondylar-tibial-plateau-fracture",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Both medial and lateral plateau involvement indicating high-energy instability.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|bicondylar-tibial-plateau-fracture",
+        "canonical_entity_id": "f050a3d1-cdf1-4d18-9c83-529b30baf811",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|bicondylar-tibial-plateau-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-plateau-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Tibial Plateau ORIF",
+      "metadata": {
+        "slug": "tibial-plateau-orif",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Open reduction internal fixation of unstable tibial plateau fracture patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|tibial-plateau-orif",
+        "canonical_entity_id": "4ff827d2-43ac-4f47-8e72-50fdf4ff579f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|tibial-plateau-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "schatzker-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Schatzker Classification",
+      "metadata": {
+        "slug": "schatzker-classification",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Tibial plateau fracture classification by split, depression, and bicondylar patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|schatzker-classification",
+        "canonical_entity_id": "5279b0a3-0857-4ae8-8558-c4de8ebef9fa",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|schatzker-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+      "metadata": {
+        "slug": "acetabulum",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "anterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Compartment",
+      "description": "Anterior leg compartment at risk after tibial and pilon injuries.",
+      "metadata": {
+        "slug": "anterior-compartment",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "leg",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Anterior leg compartment at risk after tibial and pilon injuries.",
+        "owner_pilot": "tibial-shaft-fracture-neighborhood",
+        "anatomy_kind": "compartment",
+        "cross_cluster": "tibial-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|anterior-compartment"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+      "metadata": {
+        "slug": "calcaneus",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+      "metadata": {
+        "slug": "femoral-diaphysis",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "thigh",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-diaphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fibula",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fibula",
+      "description": "Lateral leg bone influencing alignment and length in leg injuries.",
+      "metadata": {
+        "slug": "fibula",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "leg",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Lateral leg bone influencing alignment and length in leg injuries.",
+        "owner_pilot": "tibial-shaft-fracture-neighborhood",
+        "anatomy_kind": "bone",
+        "cross_cluster": "tibial-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|fibula"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+      "metadata": {
+        "slug": "iliac-wing",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "leg-compartment-complex",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Leg Compartment Complex",
+      "description": "Four-compartment osteofascial model shared with compartment syndrome neighborhood.",
+      "metadata": {
+        "slug": "leg-compartment-complex",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "leg",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Four-compartment osteofascial model shared with compartment syndrome neighborhood.",
+        "owner_pilot": "tibial-shaft-fracture-neighborhood",
+        "anatomy_kind": "composite",
+        "cross_cluster": "tibial-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|leg-compartment-complex"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+      "metadata": {
+        "slug": "lisfranc-joint",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+      "metadata": {
+        "slug": "midfoot",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+      "metadata": {
+        "slug": "pelvis",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+      "metadata": {
+        "slug": "plantar-soft-tissues",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|plantar-soft-tissues"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+      "metadata": {
+        "slug": "pubic-symphysis",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pubic-symphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+      "metadata": {
+        "slug": "sacroiliac-joint",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacroiliac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+      "metadata": {
+        "slug": "sacrum",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+      "metadata": {
+        "slug": "subtalar-joint",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+      "metadata": {
+        "slug": "talus",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-shaft",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Shaft",
+      "description": "Subcutaneous tibial diaphysis with limited soft-tissue envelope.",
+      "metadata": {
+        "slug": "tibial-shaft",
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "region": "leg",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "description": "Subcutaneous tibial diaphysis with limited soft-tissue envelope.",
+        "owner_pilot": "tibial-shaft-fracture-neighborhood",
+        "anatomy_kind": "bone",
+        "cross_cluster": "tibial-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|tibial-shaft"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "acetabulum",
+      "predicate": "part_of",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_socket",
+        "_provenance_fingerprint": "rel|acetabulum|part_of|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "anterior-compartment",
+      "predicate": "part_of",
+      "objectSlug": "leg-compartment-complex",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "compartment",
+        "_provenance_fingerprint": "rel|anterior-compartment|part_of|leg-compartment-complex"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "bicondylar-tibial-plateau-fracture",
+      "predicate": "indicates_treatment",
+      "objectSlug": "tibial-plateau-orif",
+      "metadata": {
+        "note": "soft-tissue timing and staging attending-dependent",
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|bicondylar-tibial-plateau-fracture|indicates_treatment|tibial-plateau-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "articulates_with",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "common-peroneal-nerve",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "articulates_with",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral",
+        "_provenance_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-mechanism",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-diaphysis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "femoral_shaft",
+        "_provenance_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fibula",
+      "predicate": "part_of",
+      "objectSlug": "leg-compartment-complex",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_malleolus",
+        "_provenance_fingerprint": "rel|fibula|part_of|leg-compartment-complex"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "iliac-wing",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_pelvis",
+        "_provenance_fingerprint": "rel|iliac-wing|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-joint",
+      "predicate": "part_of",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "midfoot_stability",
+        "_provenance_fingerprint": "rel|lisfranc-joint|part_of|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lower-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "tibial-plateau-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|tibial-plateau-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "midfoot",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot",
+        "_provenance_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "articulates_with",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "patellofemoral",
+        "_provenance_fingerprint": "rel|patella|articulates_with|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pelvic_ring",
+        "_provenance_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "plantar-soft-tissues",
+      "predicate": "part_of",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "_provenance_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "popliteal-artery",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pubic-symphysis",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "_provenance_fingerprint": "rel|pubic-symphysis|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacroiliac-joint",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "_provenance_fingerprint": "rel|sacroiliac-joint|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacrum",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "_provenance_fingerprint": "rel|sacrum|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subtalar-joint",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "articulates_with",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "subtalar",
+        "_provenance_fingerprint": "rel|talus|articulates_with|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle",
+        "_provenance_fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "at_risk_structure",
+      "objectSlug": "common-peroneal-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_knee_nerve",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|at_risk_structure|common-peroneal-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "at_risk_structure",
+      "objectSlug": "popliteal-artery",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular_exam",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|at_risk_structure|popliteal-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "has_classification",
+      "objectSlug": "schatzker-classification",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|has_classification|schatzker-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "tibial-plateau-stiffness",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|has_complication|tibial-plateau-stiffness"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "bicondylar-tibial-plateau-fracture",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|has_imaging_finding|bicondylar-tibial-plateau-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|injured_in|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "acl",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_ligament_injury",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|involves_anatomy|acl"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral_alignment",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|involves_anatomy|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "tibial-plateau-orif",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|tibial-plateau-fracture|treated_by|tibial-plateau-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau-orif",
+      "predicate": "involves_anatomy",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular_reduction",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|tibial-plateau-orif|involves_anatomy|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-shaft",
+      "predicate": "part_of",
+      "objectSlug": "leg-compartment-complex",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diaphysis",
+        "_provenance_fingerprint": "rel|tibial-shaft|part_of|leg-compartment-complex"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-tpf-articular-soft-tissue",
+      "claimType": "fact",
+      "claimText": "Tibial plateau fractures combine articular injury, instability, and soft-tissue risk that often dictates operative timing.",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "draft_id": "claim-tpf-articular-soft-tissue",
+        "verified": false,
+        "claim_text": "Tibial plateau fractures combine articular injury, instability, and soft-tissue risk that often dictates operative timing.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "primary_entity_slug": "tibial-plateau-fracture",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-tpf-articular-soft-tissue"
+      }
+    },
+    {
+      "draftId": "claim-tpf-case-script",
+      "claimType": "clinical_script",
+      "claimText": "State mechanism, Schatzker pattern, compartment and NV exam, articular step-off, and OR timing with soft-tissue status.",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "draft_id": "claim-tpf-case-script",
+        "verified": false,
+        "claim_text": "State mechanism, Schatzker pattern, compartment and NV exam, articular step-off, and OR timing with soft-tissue status.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "primary_entity_slug": "tibial-plateau-fracture",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-tpf-case-script"
+      }
+    },
+    {
+      "draftId": "claim-tpf-peroneal-artery-risk",
+      "claimType": "anatomy_pearl",
+      "claimText": "Common peroneal nerve and popliteal artery vulnerability make neurovascular exam mandatory in tibial plateau injuries.",
+      "primaryEntitySlug": "common-peroneal-nerve",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "draft_id": "claim-tpf-peroneal-artery-risk",
+        "verified": false,
+        "claim_text": "Common peroneal nerve and popliteal artery vulnerability make neurovascular exam mandatory in tibial plateau injuries.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "primary_entity_slug": "common-peroneal-nerve",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-tpf-peroneal-artery-risk"
+      }
+    },
+    {
+      "draftId": "claim-tpf-schatzker-language",
+      "claimType": "fact",
+      "claimText": "Schatzker classification language communicates split versus depression patterns and guides treatment tendency.",
+      "primaryEntitySlug": "schatzker-classification",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "draft_id": "claim-tpf-schatzker-language",
+        "verified": false,
+        "claim_text": "Schatzker classification language communicates split versus depression patterns and guides treatment tendency.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "primary_entity_slug": "schatzker-classification",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-tpf-schatzker-language"
+      }
+    },
+    {
+      "draftId": "claim-tpf-soft-tissue-timing-trap",
+      "claimType": "board_trap",
+      "claimText": "Soft-tissue condition often dictates tibial plateau operative timing more than the fracture line alone.",
+      "primaryEntitySlug": "tibial-plateau-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "tibial-plateau-fracture-neighborhood",
+        "draft_id": "claim-tpf-soft-tissue-timing-trap",
+        "verified": false,
+        "claim_text": "Soft-tissue condition often dictates tibial plateau operative timing more than the fracture line alone.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:43:24.628Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8999999999999999,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "or"
+        ],
+        "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+        "primary_entity_slug": "tibial-plateau-fracture",
+        "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-tpf-soft-tissue-timing-trap"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-tpf-compartment-watch",
+      "subjectEntitySlug": "tibial-plateau-fracture",
+      "patternType": "operative_indication",
+      "trigger": "High-energy tibial plateau injury with tense compartments, escalating pain, or neurovascular change",
+      "action": "Escalate for compartment syndrome evaluation and fasciotomy consideration before definitive fixation",
+      "urgency": "emergent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tpf-unstable-orif",
+      "subjectEntitySlug": "tibial-plateau-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Unstable bicondylar or displaced tibial plateau fracture with articular step-off or ligamentous instability",
+      "action": "Plan ORIF when soft tissues allow; discuss external fixation bridge or delayed fixation if swelling is severe",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern tibial-plateau-fracture|operative_indication: dp-tpf-compartment-watch vs dp-tpf-unstable-orif"
+    }
+  ],
+  "stats": {
+    "entityCount": 21,
+    "relationshipCount": 41,
+    "claimCount": 5,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 4,
+    "conflictingRelationships": 0,
+    "metadataMerged": 4,
+    "provenanceAttached": 70
+  }
+}

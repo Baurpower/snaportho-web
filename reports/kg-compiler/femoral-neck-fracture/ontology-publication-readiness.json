@@ -1,0 +1,49 @@
+{
+  "topicKey": "femoral-neck-fracture",
+  "pilotKey": "femoral-neck-fracture-neighborhood",
+  "generatedAt": "2026-07-05T21:36:15.793Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "21 proposals still awaiting human review",
+    "12 items require attending review",
+    "Insufficient relationship metadata on essential edges",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "18 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+    "[critical] Femoral Neck Fracture missing outbound injured_in (0/1).",
+    "[high] Femoral Neck Fracture missing outbound involves_anatomy (0/1).",
+    "[high] Femoral Neck Fracture missing outbound at_risk_structure (0/1).",
+    "[high] Femoral Neck Fracture missing outbound has_grade (0/1).",
+    "[high] Femoral Neck Fracture missing outbound treated_by (0/1).",
+    "[high] Femoral Neck Fracture missing inbound prerequisite_for (0/1).",
+    "[high] Femoral Neck Fracture has 0/3 L1 claims.",
+    "Route ATTENDING_REVIEW queue to attending reviewer",
+    "Run curate step to normalize metadata"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 27,
+    "humanReviewItems": 21,
+    "attendingReviewItems": 12,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "topicKey": "essex-lopresti-injury",
+  "pilotKey": "essex-lopresti-injury-neighborhood",
+  "primaryEntitySlug": "essex-lopresti-injury",
+  "displayName": "Essex-Lopresti Injury",
+  "generatedAt": "2026-07-05T23:02:56.717Z",
+  "nodes": [
+    {
+      "slug": "essex-lopresti-injury-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Essex-Lopresti Injury Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "essex-lopresti-injury-key-complication",
+      "entityType": "complication",
+      "preferredLabel": "Essex-Lopresti Injury Key Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "essex-lopresti-injury-key-imaging-finding"
+    ],
+    "complication": [
+      "essex-lopresti-injury-key-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

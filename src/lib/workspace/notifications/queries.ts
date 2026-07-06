@@ -24,14 +24,24 @@ const NOTIFICATION_SELECT = `
   updated_at
 `;
 
+function requireProgramId(programId: string | null | undefined, label: string) {
+  if (!programId || !programId.trim()) {
+    throw new Error(`${label}: programId is required.`);
+  }
+
+  return programId.trim();
+}
+
 export async function createWorkspaceNotification(
   supabase: SupabaseClient,
   input: CreateWorkspaceNotificationInput
 ) {
+  const programId = requireProgramId(input.programId, "createWorkspaceNotification");
+
   const { data, error } = await supabase
     .from("workspace_notifications")
     .insert({
-      program_id: input.programId ?? null,
+      program_id: programId,
       recipient_user_id: input.recipientUserId,
       recipient_roster_id: input.recipientRosterId ?? null,
       actor_user_id: input.actorUserId ?? null,
@@ -58,14 +68,21 @@ export async function getNotificationsForCurrentUser(
   supabase: SupabaseClient,
   params: {
     userId: string;
+    programId: string;
     unreadOnly?: boolean;
     limit?: number;
   }
 ) {
+  const programId = requireProgramId(
+    params.programId,
+    "getNotificationsForCurrentUser"
+  );
+
   let query = supabase
     .from("workspace_notifications")
     .select(NOTIFICATION_SELECT)
     .eq("recipient_user_id", params.userId)
+    .eq("program_id", programId)
     .order("created_at", { ascending: false });
 
   if (params.unreadOnly) {
@@ -87,12 +104,21 @@ export async function getNotificationsForCurrentUser(
 
 export async function getUnreadNotificationCount(
   supabase: SupabaseClient,
-  userId: string
+  params: {
+    userId: string;
+    programId: string;
+  }
 ) {
+  const programId = requireProgramId(
+    params.programId,
+    "getUnreadNotificationCount"
+  );
+
   const { count, error } = await supabase
     .from("workspace_notifications")
     .select("id", { count: "exact", head: true })
-    .eq("recipient_user_id", userId)
+    .eq("recipient_user_id", params.userId)
+    .eq("program_id", programId)
     .is("read_at", null);
 
   if (error) {
@@ -107,8 +133,11 @@ export async function markNotificationRead(
   params: {
     notificationId: string;
     userId: string;
+    programId: string;
   }
 ) {
+  const programId = requireProgramId(params.programId, "markNotificationRead");
+
   const { data, error } = await supabase
     .from("workspace_notifications")
     .update({
@@ -117,6 +146,7 @@ export async function markNotificationRead(
     })
     .eq("id", params.notificationId)
     .eq("recipient_user_id", params.userId)
+    .eq("program_id", programId)
     .select(NOTIFICATION_SELECT)
     .maybeSingle();
 
@@ -129,8 +159,12 @@ export async function markNotificationRead(
 
 export async function markAllNotificationsRead(
   supabase: SupabaseClient,
-  userId: string
+  params: {
+    userId: string;
+    programId: string;
+  }
 ) {
+  const programId = requireProgramId(params.programId, "markAllNotificationsRead");
   const readAt = new Date().toISOString();
   const { error } = await supabase
     .from("workspace_notifications")
@@ -138,7 +172,8 @@ export async function markAllNotificationsRead(
       read_at: readAt,
       updated_at: readAt,
     })
-    .eq("recipient_user_id", userId)
+    .eq("recipient_user_id", params.userId)
+    .eq("program_id", programId)
     .is("read_at", null);
 
   if (error) {

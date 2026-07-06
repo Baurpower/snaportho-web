@@ -1,0 +1,622 @@
+[
+  {
+    "proposal_fingerprint": "rel|ucl-injury|tested_by|ucl-injury-exam-maneuver",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "ucl-injury -[tested_by]-> ucl-injury-exam-maneuver",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ucl-injury|tested_by|ucl-injury-exam-maneuver",
+    "alternatives": [],
+    "evidence_summary": "Relationship tested_by",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ucl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "ucl-injury-exam-maneuver",
+      "object_entity_type": "exam_maneuver",
+      "relationship_metadata": {
+        "educational_importance": "high",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ucl-injury-mri-finding|indicates_treatment|ucl-injury-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "ucl-injury-mri-finding -[indicates_treatment]-> ucl-injury-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: ucl-injury-mri-finding -[indicates_treatment]-> ucl-injury-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ucl-injury-mri-finding",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "ucl-injury-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "note": "operative indication attending-dependent"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ucl-injury|treated_by|ucl-injury-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "ucl-injury -[treated_by]-> ucl-injury-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ucl-injury|treated_by|ucl-injury-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ucl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "ucl-injury-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ucl-injury|treated_by|ucl-injury-rehab-protocol",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "ucl-injury -[treated_by]-> ucl-injury-rehab-protocol",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ucl-injury|treated_by|ucl-injury-rehab-protocol",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ucl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "ucl-injury-rehab-protocol",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ucl-injury|differential_for|distal-biceps-tendon-rupture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "ucl-injury -[differential_for]-> distal-biceps-tendon-rupture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ucl-injury|differential_for|distal-biceps-tendon-rupture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ucl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "distal-biceps-tendon-rupture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ucl-injury|differential_for|distal-humerus-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "ucl-injury -[differential_for]-> distal-humerus-fracture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ucl-injury|differential_for|distal-humerus-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ucl-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "distal-humerus-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_cluster": true,
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "trauma_overlap",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-uclinjury-oneliner",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-uclinjury-oneliner",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts ucl-injury",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-uclinjury-oneliner",
+      "claim_type": "fact",
+      "claim_text": "UCL injuries in throwers present with medial elbow pain and valgus instability requiring graded return-to-throw planning.",
+      "primary_entity_slug": "ucl-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-uclinjury-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-uclinjury-board-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts ucl-injury boardPearls",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-uclinjury-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating ucl injury.",
+      "primary_entity_slug": "ucl-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.74,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-uclinjury-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-uclinjury-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts ucl-injury pimpQuestions",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-uclinjury-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Do not anchor on a single exam maneuver for ucl injury — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primary_entity_slug": "ucl-injury",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.74,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-uclinjury-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-uclinjury-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts ucl-injury caseSteps",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-uclinjury-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for ucl injury.",
+      "primary_entity_slug": "ucl-injury",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-uclinjury-valgus",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-uclinjury-valgus",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts ucl-injury",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-uclinjury-valgus",
+      "claim_type": "fact",
+      "claim_text": "Valgus stress testing and throwing history are central to UCL injury evaluation.",
+      "primary_entity_slug": "ucl-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.74,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-uclinjury-operative-indication",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-uclinjury-operative-indication",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts ucl-injury decisionMaking",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-uclinjury-operative-indication",
+      "subject_entity_slug": "ucl-injury",
+      "pattern_type": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from ucl injury despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-uclinjury-return-to-play",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-uclinjury-return-to-play",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts ucl-injury treatmentOptions",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-uclinjury-return-to-play",
+      "subject_entity_slug": "ucl-injury",
+      "pattern_type": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after ucl injury treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-uclinjury-tommy-john",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-uclinjury-tommy-john",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts ucl-injury",
+    "metadata": {
+      "pilot": "ucl-injury-neighborhood",
+      "review_packet_key": "pilot:ucl-injury-neighborhood",
+      "review_packet_label": "UCL Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-uclinjury-tommy-john",
+      "subject_entity_slug": "ucl-injury",
+      "pattern_type": "operative_indication",
+      "trigger": "Throwing athlete with confirmed UCL tear and inability to return to sport after rehab",
+      "action": "Discuss UCL reconstruction (Tommy John) with graft selection and return-to-throw timeline",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.74,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:06:09.396Z"
+    }
+  }
+]

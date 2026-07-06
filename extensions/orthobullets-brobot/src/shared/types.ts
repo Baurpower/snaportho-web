@@ -29,7 +29,25 @@ export interface OrthobulletsImageMetadata {
 export type OrthobulletsPageKind = 'review' | 'current_test' | 'unknown';
 export type QuestionProvider = 'orthobullets' | 'rock';
 export type ExtractedPageMode = 'question' | 'curriculum_content';
+export type ClassifiedPageKind = 'question' | 'educational_content' | 'mixed' | 'unreadable';
 export type ProviderDetectionStatus = QuestionProvider | 'unsupported' | 'readable_unrecognized';
+
+export interface PageClassification {
+  pageKind: ClassifiedPageKind;
+  confidence: number;
+  reason: string;
+  detected: {
+    hasStem: boolean;
+    answerChoiceCount: number;
+    readableTextLength: number;
+    headings: string[];
+    referencesCount: number;
+    tablesCount: number;
+    imagesCount: number;
+    activeUrl: string;
+    title: string | null;
+  };
+}
 
 export type OrthobulletsExtractionFailureCode =
   | 'content_script_no_response'
@@ -56,6 +74,7 @@ export interface OrthobulletsExtractionDiagnostics {
   contentCharCount: number;
   sectionCount: number;
   headingCount: number;
+  classification?: PageClassification;
   breadcrumbCount: number;
   percentDistributionCount: number;
   imageCount: number;
@@ -87,10 +106,17 @@ export interface OrthobulletsPageContext {
   date?: string | null;
   sectionHeadings?: string[];
   contentText?: string | null;
+  contentMarkdown?: string | null;
   contentSections?: Array<{
     heading: string;
     text: string;
   }>;
+  learningObjectives?: string[];
+  tablesMarkdown?: string[];
+  references?: string[];
+  tablesCount?: number;
+  referencesCount?: number;
+  classification?: PageClassification;
   stem?: string;
   answerChoices: OrthobulletsChoice[];
   selectedAnswerKey?: string | null;
@@ -110,6 +136,74 @@ export interface OrthobulletsPageContext {
     matchedSelectors: Record<string, string[]>;
     extractorVersion: string;
   };
+}
+
+export type CurriculumExplainEmphasis = 'high_yield' | 'clinical' | 'boards' | 'or';
+
+export interface CurriculumMustKnowGroup {
+  title: string;
+  bullets: string[];
+}
+
+export interface CurriculumAttendingQuestion {
+  question: string;
+  answer: string;
+  difficulty: 'MS3' | 'PGY1' | 'PGY2+';
+}
+
+export interface CurriculumMiniQuizItem {
+  question: string;
+  choices?: string[];
+  answer: string;
+  explanation: string;
+}
+
+export interface CurriculumLearningObjectiveCoverage {
+  objective: string;
+  status?: 'covered' | 'partial' | 'not_covered';
+  highYieldPoint?: string;
+}
+
+export interface CurriculumComparisonTable {
+  headers: string[];
+  rows: string[][];
+}
+
+export interface CurriculumStudyResponse {
+  responseKind: 'curriculum';
+  explanationId: string;
+  emphasis: CurriculumExplainEmphasis;
+  oneSentenceTakeaway: string;
+  inThirtySeconds: string[];
+  mustKnow: CurriculumMustKnowGroup[];
+  clinicalPearls: string[];
+  commonMistakes: string[];
+  attendingQuestions: CurriculumAttendingQuestion[];
+  testableFacts: string[];
+  miniQuiz: CurriculumMiniQuizItem[];
+  memoryHooks: string[];
+  suggestedFollowUps: string[];
+  nextReviewTopics: string[];
+  learningObjectives: CurriculumLearningObjectiveCoverage[];
+  comparisonTable?: CurriculumComparisonTable;
+  deepDive: string[];
+  referencesNote?: string;
+  fallbackBullets?: string[];
+  parseError?: string;
+  warnings: string[];
+  usage?: {
+    remainingToday: number | null;
+    dailyCap: number | null;
+    unlimited: boolean;
+  };
+}
+
+export type BrobotExplainResult = OrthobulletsExplainResponse | CurriculumStudyResponse;
+
+export function isCurriculumStudyResponse(
+  value: BrobotExplainResult | null | undefined
+): value is CurriculumStudyResponse {
+  return Boolean(value && 'responseKind' in value && value.responseKind === 'curriculum');
 }
 
 export interface OrthobulletsExplainResponse {

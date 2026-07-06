@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 import { createBroBotCheckoutSession } from '@/lib/stripe';
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
-import { getAppBaseUrl } from '@/lib/config/app-url';
+import { getAppBaseUrl, getCheckoutSuccessUrl } from '@/lib/config/app-url';
 import { safeRedirectPath } from '@/lib/auth/redirects';
 
-function buildAbsoluteReturnUrl(path: string, flag: 'success' | 'canceled' | 'portal_return') {
+function buildAbsoluteReturnUrl(path: string, flag: 'canceled' | 'portal_return') {
   const url = new URL(path, getAppBaseUrl());
   url.searchParams.set(flag, 'true');
   return url.toString();
@@ -47,9 +47,7 @@ export async function POST(request: Request) {
         ? body.checkoutSource.trim()
         : 'website_authenticated_checkout';
     const returnTo = safeRedirectPath(body.returnTo, '');
-    const successUrl = returnTo
-      ? buildAbsoluteReturnUrl(returnTo, 'success')
-      : BROBOT_CONFIG.BILLING_SUCCESS_URL;
+    const successUrl = getCheckoutSuccessUrl(returnTo ? { returnTo } : undefined);
     const cancelUrl = returnTo
       ? buildAbsoluteReturnUrl(returnTo, 'canceled')
       : BROBOT_CONFIG.BILLING_CANCEL_URL;
@@ -137,8 +135,8 @@ export async function POST(request: Request) {
       user.id,
       interval,
       user.email ?? undefined,
-      returnTo ? successUrl : undefined,
-      returnTo ? cancelUrl : undefined,
+      successUrl,
+      cancelUrl,
       {
         enableTrial: trialRequested,
         source: checkoutSource,

@@ -1,0 +1,63 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 65,
+  "deductions": [
+    {
+      "finding": "1 orphan entities with no relationships",
+      "evidence": "Slugs: lower-extremity-trauma-anatomy-hub",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "lower-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
+    },
+    {
+      "finding": "2 dangling edges reference missing entities",
+      "evidence": "labrum -[part_of]-> sports-shoulder-anatomy-hub; patella -[part_of]-> extensor-mechanism",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "1 disconnected anatomy structures",
+      "evidence": "Disconnected: lower-extremity-trauma-anatomy-hub",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "lower-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern meniscus-tear|operative_indication: dp-meniscustear-locked-knee vs dp-meniscustear-operative-indication",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 38,
+    "relationshipCount": 43,
+    "orphanCount": 1,
+    "danglingEdgeCount": 2,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

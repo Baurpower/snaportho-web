@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-07-05T22:30:51.094Z",
+  "evidencePacketId": "ev-packet-c91ef138",
+  "traces": [
+    {
+      "draftId": "claim-pelvic-ring-injury-board_trap-recognize-unstable-pelvi",
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-board_trap-recognize-unstable-pelvi",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-apply-young-burgess-mech",
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-fact-apply-young-burgess-mech",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-board_trap-unstable-pelvic-ring-wit",
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-board_trap-unstable-pelvic-ring-wit",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-imaging_point-ap-pelvis",
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-imaging_point-ap-pelvis",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-cognitive_trap-use-young-burgess-apc-lc",
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-cognitive_trap-use-young-burgess-apc-lc",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-prioritize-binder-resusc",
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-fact-prioritize-binder-resusc",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-young-burgess-apc-lc-vs-",
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-fact-young-burgess-apc-lc-vs-",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-imaging_point-inlet-outlet-views",
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-imaging_point-inlet-outlet-views",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Hemodynamic status, ring instability, associated injuries"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Pelvic binder"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Pelvic external fixation"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Definitive ORIF when stable"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What makes a pelvic ring unstable?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is a pelvic binder indicated?"
+    }
+  ]
+}

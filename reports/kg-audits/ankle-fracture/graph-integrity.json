@@ -1,0 +1,30 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 96,
+  "deductions": [
+    {
+      "finding": "2 orphan entities with no relationships",
+      "evidence": "Slugs: weber-c, weber-a",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "weber-c",
+        "weber-a"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
+    }
+  ],
+  "metrics": {
+    "entityCount": 19,
+    "relationshipCount": 29,
+    "orphanCount": 2,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": []
+}

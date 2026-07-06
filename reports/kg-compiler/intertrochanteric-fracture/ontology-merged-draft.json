@@ -1,0 +1,1634 @@
+{
+  "topicKey": "intertrochanteric-fracture",
+  "pilotKey": "intertrochanteric-fracture-neighborhood",
+  "generatedAt": "2026-07-05T21:36:50.495Z",
+  "entities": [
+    {
+      "slug": "sliding-hip-screw",
+      "entityType": "implant",
+      "preferredLabel": "Sliding Hip Screw",
+      "metadata": {
+        "slug": "sliding-hip-screw",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Plate-and-screw construct for stable intertrochanteric fracture patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|implant|sliding-hip-screw",
+        "canonical_entity_id": "092d475b-49b2-4264-a95f-9a1cd553e2c0",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|implant|sliding-hip-screw"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "unstable-intertrochanteric-pattern",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Unstable Intertrochanteric Pattern",
+      "metadata": {
+        "slug": "unstable-intertrochanteric-pattern",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Radiographic pattern with posterior/medial comminution or reverse obliquity suggesting instability.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|unstable-intertrochanteric-pattern",
+        "canonical_entity_id": "613e3dc6-72eb-4193-b647-86f95e77931c",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|unstable-intertrochanteric-pattern"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "intertrochanteric-implant-failure",
+      "entityType": "complication",
+      "preferredLabel": "Intertrochanteric Implant Failure",
+      "metadata": {
+        "slug": "intertrochanteric-implant-failure",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Cutout, varus collapse, or fixation failure after intertrochanteric fracture treatment.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|intertrochanteric-implant-failure",
+        "canonical_entity_id": "446eef06-d2f9-4f2c-8c61-560cdb8d878d",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|intertrochanteric-implant-failure"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "reverse-obliquity-it-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Reverse Obliquity Intertrochanteric Fracture",
+      "metadata": {
+        "slug": "reverse-obliquity-it-fracture",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Reverse oblique intertrochanteric line with medial cortical failure risk.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|reverse-obliquity-it-fracture",
+        "canonical_entity_id": "ef8210be-bff3-455b-8b65-dc97e445aa0d",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|reverse-obliquity-it-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "intertrochanteric-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Intertrochanteric Fracture",
+      "metadata": {
+        "slug": "intertrochanteric-fracture",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Extracapsular proximal femur fracture through the intertrochanteric region.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|intertrochanteric-fracture",
+        "canonical_entity_id": "d64ea229-864f-4d04-bad9-bb13fae36c8b",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|intertrochanteric-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcar",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcar",
+      "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
+      "metadata": {
+        "slug": "calcar",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcar"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Head",
+      "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
+      "metadata": {
+        "slug": "femoral-head",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-head"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-neck",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Neck",
+      "description": "Intracapsular segment between femoral head and intertrochanteric region.",
+      "metadata": {
+        "slug": "femoral-neck",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Intracapsular segment between femoral head and intertrochanteric region.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-neck"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "greater-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Greater Trochanter",
+      "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
+      "metadata": {
+        "slug": "greater-trochanter",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|greater-trochanter"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "hip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Joint",
+      "description": "Ball-and-socket articulation between femoral head and acetabulum.",
+      "metadata": {
+        "slug": "hip-joint",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Ball-and-socket articulation between femoral head and acetabulum.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|hip-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "intertrochanteric-region",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Intertrochanteric Region",
+      "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
+      "metadata": {
+        "slug": "intertrochanteric-region",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|intertrochanteric-region"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lesser-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lesser Trochanter",
+      "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
+      "metadata": {
+        "slug": "lesser-trochanter",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lesser-trochanter"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "medial-femoral-circumflex-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Femoral Circumflex Artery",
+      "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
+      "metadata": {
+        "slug": "medial-femoral-circumflex-artery",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "proximal-femur-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Femur Anatomy Hub",
+      "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
+      "metadata": {
+        "slug": "proximal-femur-anatomy-hub",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "cluster": "hip-fracture",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sciatic-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sciatic Nerve",
+      "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
+      "metadata": {
+        "slug": "sciatic-nerve",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sciatic-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "cephalomedullary-nail",
+      "entityType": "implant",
+      "preferredLabel": "Cephalomedullary Nail",
+      "description": "Intramedullary implant for unstable intertrochanteric and subtrochanteric fracture patterns.",
+      "metadata": {
+        "slug": "cephalomedullary-nail",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Intramedullary implant for unstable intertrochanteric and subtrochanteric fracture patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|implant|cephalomedullary-nail"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "cephalomedullary-nailing",
+      "entityType": "procedure",
+      "preferredLabel": "Cephalomedullary Nailing",
+      "description": "Operative intramedullary fixation procedure using a cephalomedullary nail.",
+      "metadata": {
+        "slug": "cephalomedullary-nailing",
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "description": "Operative intramedullary fixation procedure using a cephalomedullary nail.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|procedure|cephalomedullary-nailing"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "intertrochanteric-implant-failure",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|intertrochanteric-fracture|has_complication|intertrochanteric-implant-failure",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|has_complication|intertrochanteric-implant-failure"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "unstable-intertrochanteric-pattern",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "instability",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|intertrochanteric-fracture|has_imaging_finding|unstable-intertrochanteric-pattern",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|has_imaging_finding|unstable-intertrochanteric-pattern"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "reverse-obliquity-it-fracture",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "instability",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|intertrochanteric-fracture|has_imaging_finding|reverse-obliquity-it-fracture",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|has_imaging_finding|reverse-obliquity-it-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcar",
+      "predicate": "part_of",
+      "objectSlug": "femoral-neck",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "stability",
+        "_provenance_fingerprint": "rel|calcar|part_of|femoral-neck"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "cephalomedullary-nailing",
+      "predicate": "involves_anatomy",
+      "objectSlug": "intertrochanteric-region",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "implant_path",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|cephalomedullary-nailing|involves_anatomy|intertrochanteric-region"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-head",
+      "predicate": "articulates_with",
+      "objectSlug": "hip-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-head|articulates_with|hip-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-head",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-head|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-neck",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-neck|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "greater-trochanter",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "landmark",
+        "_provenance_fingerprint": "rel|greater-trochanter|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "hip-joint",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|hip-joint|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "intertrochanteric-region",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|injured_in|intertrochanteric-region"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "calcar",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_support",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|involves_anatomy|calcar"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "greater-trochanter",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "fixation_landmark",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|involves_anatomy|greater-trochanter"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lesser-trochanter",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "stability",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|involves_anatomy|lesser-trochanter"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|involves_anatomy|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "cephalomedullary-nail",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|treated_by|cephalomedullary-nail"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "sliding-hip-screw",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|intertrochanteric-fracture|treated_by|sliding-hip-screw"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-region",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|intertrochanteric-region|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lesser-trochanter",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "landmark",
+        "_provenance_fingerprint": "rel|lesser-trochanter|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "medial-femoral-circumflex-artery",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "blood_supply",
+        "_provenance_fingerprint": "rel|medial-femoral-circumflex-artery|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-femur-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "intertrochanteric-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|proximal-femur-anatomy-hub|prerequisite_for|intertrochanteric-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "reverse-obliquity-it-fracture",
+      "predicate": "indicates_treatment",
+      "objectSlug": "cephalomedullary-nailing",
+      "metadata": {
+        "confidence": 0.85,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|reverse-obliquity-it-fracture|indicates_treatment|cephalomedullary-nailing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sciatic-nerve",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "safety",
+        "_provenance_fingerprint": "rel|sciatic-nerve|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "unstable-intertrochanteric-pattern",
+      "predicate": "explains_instability",
+      "objectSlug": "intertrochanteric-fracture",
+      "metadata": {
+        "confidence": 0.8,
+        "review_status": "unreviewed",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|unstable-intertrochanteric-pattern|explains_instability|intertrochanteric-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "unstable-intertrochanteric-pattern",
+      "predicate": "indicates_treatment",
+      "objectSlug": "cephalomedullary-nailing",
+      "metadata": {
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|unstable-intertrochanteric-pattern|indicates_treatment|cephalomedullary-nailing"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-intertrochanteric-fracture-board_trap-recognize-stable-versus-",
+      "claimType": "board_trap",
+      "claimText": "Recognize stable versus unstable intertrochanteric fracture patterns.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-intertrochanteric-fracture-board_trap-recognize-stable-versus-",
+        "claim_type": "board_trap",
+        "claim_text": "Recognize stable versus unstable intertrochanteric fracture patterns.",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "changes_management",
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-48edc282"
+        ],
+        "evidence_packet_id": "ev-packet-3fe2e8d1",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "_provenance_fingerprint": "claim|claim-intertrochanteric-fracture-board_trap-recognize-stable-versus-"
+      }
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-board_trap-stable-versus-unstable-p",
+      "claimType": "board_trap",
+      "claimText": "Stable versus unstable patterns.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-intertrochanteric-fracture-board_trap-stable-versus-unstable-p",
+        "claim_type": "board_trap",
+        "claim_text": "Stable versus unstable patterns.",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "changes_management",
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-dba16721"
+        ],
+        "evidence_packet_id": "ev-packet-3fe2e8d1",
+        "uncertainty_note": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "_provenance_fingerprint": "claim|claim-intertrochanteric-fracture-board_trap-stable-versus-unstable-p"
+      }
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-cognitive_trap-use-tip-apex-distance-la",
+      "claimType": "cognitive_trap",
+      "claimText": "Use tip-apex distance language when discussing lag screw.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-intertrochanteric-fracture-cognitive_trap-use-tip-apex-distance-la",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Use tip-apex distance language when discussing lag screw.",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-dba04cb5"
+        ],
+        "evidence_packet_id": "ev-packet-3fe2e8d1",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "_provenance_fingerprint": "claim|claim-intertrochanteric-fracture-cognitive_trap-use-tip-apex-distance-la"
+      }
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-fact-extracapsular-location",
+      "claimType": "fact",
+      "claimText": "Extracapsular location.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-intertrochanteric-fracture-fact-extracapsular-location",
+        "claim_type": "fact",
+        "claim_text": "Extracapsular location.",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-dba04cb5"
+        ],
+        "evidence_packet_id": "ev-packet-3fe2e8d1",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "_provenance_fingerprint": "claim|claim-intertrochanteric-fracture-fact-extracapsular-location"
+      }
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-fact-fracture-line-orientatio",
+      "claimType": "fact",
+      "claimText": "Fracture line orientation.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-intertrochanteric-fracture-fact-fracture-line-orientatio",
+        "claim_type": "fact",
+        "claim_text": "Fracture line orientation.",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-dba04cb5"
+        ],
+        "evidence_packet_id": "ev-packet-3fe2e8d1",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "_provenance_fingerprint": "claim|claim-intertrochanteric-fracture-fact-fracture-line-orientatio"
+      }
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-fact-identify-implant-failure",
+      "claimType": "fact",
+      "claimText": "Identify implant failure and varus collapse risks.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-intertrochanteric-fracture-fact-identify-implant-failure",
+        "claim_type": "fact",
+        "claim_text": "Identify implant failure and varus collapse risks.",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-48edc282"
+        ],
+        "evidence_packet_id": "ev-packet-3fe2e8d1",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "_provenance_fingerprint": "claim|claim-intertrochanteric-fracture-fact-identify-implant-failure"
+      }
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-fact-medial-comminution",
+      "claimType": "fact",
+      "claimText": "Medial comminution.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-intertrochanteric-fracture-fact-medial-comminution",
+        "claim_type": "fact",
+        "claim_text": "Medial comminution.",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-dba04cb5"
+        ],
+        "evidence_packet_id": "ev-packet-3fe2e8d1",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "_provenance_fingerprint": "claim|claim-intertrochanteric-fracture-fact-medial-comminution"
+      }
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-imaging_point-ap-and-lateral-hip-radio",
+      "claimType": "imaging_point",
+      "claimText": "AP and lateral hip radiographs.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-intertrochanteric-fracture-imaging_point-ap-and-lateral-hip-radio",
+        "claim_type": "imaging_point",
+        "claim_text": "AP and lateral hip radiographs.",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-dba16721"
+        ],
+        "evidence_packet_id": "ev-packet-3fe2e8d1",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "_provenance_fingerprint": "claim|claim-intertrochanteric-fracture-imaging_point-ap-and-lateral-hip-radio"
+      }
+    },
+    {
+      "draftId": "claim-it-case-script",
+      "claimType": "clinical_script",
+      "claimText": "Describe fracture line orientation, medial comminution, implant category, tip-apex distance language, and mobilization plan.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-it-case-script",
+        "verified": false,
+        "claim_text": "Describe fracture line orientation, medial comminution, implant category, tip-apex distance language, and mobilization plan.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-it-case-script"
+      }
+    },
+    {
+      "draftId": "claim-it-cutout-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Treating an unstable intertrochanteric pattern like a stable extra-articular fracture without implant selection adjustment.",
+      "primaryEntitySlug": "unstable-intertrochanteric-pattern",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-it-cutout-cognitive-trap",
+        "verified": false,
+        "claim_text": "Treating an unstable intertrochanteric pattern like a stable extra-articular fracture without implant selection adjustment.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "unstable-intertrochanteric-pattern",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-it-cutout-cognitive-trap"
+      }
+    },
+    {
+      "draftId": "claim-it-extracapsular-fixation",
+      "claimType": "fact",
+      "claimText": "Intertrochanteric fractures are extracapsular injuries where stability pattern drives sliding hip screw versus cephalomedullary nail selection.",
+      "primaryEntitySlug": "intertrochanteric-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-it-extracapsular-fixation",
+        "verified": false,
+        "claim_text": "Intertrochanteric fractures are extracapsular injuries where stability pattern drives sliding hip screw versus cephalomedullary nail selection.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "intertrochanteric-fracture",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-it-extracapsular-fixation"
+      }
+    },
+    {
+      "draftId": "claim-it-implant-failure",
+      "claimType": "fact",
+      "claimText": "Varus collapse and lag-screw cutout are classic failure modes after intertrochanteric fixation.",
+      "primaryEntitySlug": "intertrochanteric-implant-failure",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-it-implant-failure",
+        "verified": false,
+        "claim_text": "Varus collapse and lag-screw cutout are classic failure modes after intertrochanteric fixation.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "intertrochanteric-implant-failure",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-it-implant-failure"
+      }
+    },
+    {
+      "draftId": "claim-it-medial-cortical-support",
+      "claimType": "anatomy_pearl",
+      "claimText": "Calcar and medial cortical buttress integrity strongly influence intertrochanteric fracture stability.",
+      "primaryEntitySlug": "calcar",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-it-medial-cortical-support",
+        "verified": false,
+        "claim_text": "Calcar and medial cortical buttress integrity strongly influence intertrochanteric fracture stability.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "calcar",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-it-medial-cortical-support"
+      }
+    },
+    {
+      "draftId": "claim-it-reverse-obliquity-trap",
+      "claimType": "board_trap",
+      "claimText": "Reverse obliquity intertrochanteric fractures are unstable patterns where sliding hip screw fixation commonly fails.",
+      "primaryEntitySlug": "reverse-obliquity-it-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "intertrochanteric-fracture-neighborhood",
+        "draft_id": "claim-it-reverse-obliquity-trap",
+        "verified": false,
+        "claim_text": "Reverse obliquity intertrochanteric fractures are unstable patterns where sliding hip screw fixation commonly fails.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T21:36:50.491Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "or"
+        ],
+        "review_packet_key": "pilot:intertrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "reverse-obliquity-it-fracture",
+        "review_packet_label": "Intertrochanteric Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-it-reverse-obliquity-trap"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-it-cephalomedullary-unstable",
+      "subjectEntitySlug": "intertrochanteric-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Unstable intertrochanteric pattern, reverse obliquity, or poor medial cortical support",
+      "action": "Favor cephalomedullary nail fixation with attending confirmation of implant and reduction strategy",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-it-shs-stable",
+      "subjectEntitySlug": "intertrochanteric-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Stable intertrochanteric pattern with intact medial buttress suitable for sliding hip screw",
+      "action": "Proceed with sliding hip screw pathway when attending agrees stability assessment",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern intertrochanteric-fracture|operative_indication: dp-it-cephalomedullary-unstable vs dp-it-shs-stable"
+    }
+  ],
+  "stats": {
+    "entityCount": 17,
+    "relationshipCount": 25,
+    "claimCount": 14,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 5,
+    "conflictingRelationships": 0,
+    "metadataMerged": 8,
+    "provenanceAttached": 59
+  }
+}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Search } from "lucide-react";
+import { buildCaseReadinessHref } from "@/components/student-workspace/prepare/prepare-routes";
 import type {
   CurriculumSearchResult,
   CurriculumTopic,
@@ -18,10 +19,12 @@ export function CasePrepLauncher({
   topicValue,
   onTopicChange,
   onTopicSelect,
+  onTopicPick,
   searchResults,
   hasSearched,
   selectedTopic,
   relatedTopics,
+  rotationQuickPicks,
   context,
   rotationOptions,
   onChange,
@@ -30,10 +33,12 @@ export function CasePrepLauncher({
   topicValue: string;
   onTopicChange: (value: string) => void;
   onTopicSelect: (result: CurriculumSearchResult) => void;
+  onTopicPick: (topic: CurriculumTopic) => void;
   searchResults: CurriculumSearchResult[];
   hasSearched: boolean;
   selectedTopic?: CurriculumTopic;
   relatedTopics: CurriculumTopic[];
+  rotationQuickPicks: CurriculumTopic[];
   context: PrepareContextState;
   rotationOptions: Array<{ value: string; label: string }>;
   onChange: (next: PrepareContextState) => void;
@@ -43,7 +48,11 @@ export function CasePrepLauncher({
   const primaryLabel =
     activeMode === "deep" ? "Start Deep Study" : "Start Fast Prep";
   const readinessHref = selectedTopic
-    ? `/student-workspace/case-readiness/${selectedTopic.id}?mode=${activeMode}&time=${selectedMinutes}`
+    ? buildCaseReadinessHref({
+        topicId: selectedTopic.id,
+        mode: activeMode,
+        time: selectedMinutes,
+      })
     : null;
 
   return (
@@ -146,6 +155,26 @@ export function CasePrepLauncher({
         </div>
       </div>
 
+      {rotationQuickPicks.length > 0 ? (
+        <div className="mt-4 rounded-[1.25rem] border border-slate-200 bg-slate-50 p-4">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+            Quick picks for your rotation
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {rotationQuickPicks.map((topic) => (
+              <button
+                key={topic.id}
+                type="button"
+                onClick={() => onTopicPick(topic)}
+                className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:bg-sky-50"
+              >
+                {topic.title}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       <div className="mt-4 grid gap-3">
         {searchResults.map((result) => (
           <button
@@ -182,7 +211,8 @@ export function CasePrepLauncher({
 
         {hasSearched && searchResults.length === 0 ? (
           <div className="rounded-[1.25rem] border border-dashed border-slate-300 bg-white px-4 py-5 text-sm text-slate-600">
-            No exact match. Try a procedure, diagnosis, or common case.
+            No exact match. Try a procedure, diagnosis, or common case — or browse
+            by service below.
           </div>
         ) : null}
       </div>
@@ -217,14 +247,20 @@ export function CasePrepLauncher({
                 Learning objectives
               </p>
               <div className="mt-2 space-y-2">
-                {selectedTopic.learningObjectives.slice(0, 5).map((objective) => (
-                  <div
-                    key={objective.id}
-                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
-                  >
-                    {objective.objective}
+                {selectedTopic.learningObjectives.length > 0 ? (
+                  selectedTopic.learningObjectives.slice(0, 5).map((objective) => (
+                    <div
+                      key={objective.id}
+                      className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+                    >
+                      {objective.objective}
+                    </div>
+                  ))
+                ) : (
+                  <div className="rounded-xl border border-dashed border-slate-300 bg-white px-3 py-2 text-sm text-slate-500">
+                    Learning objectives are not available for this topic yet.
                   </div>
-                ))}
+                )}
               </div>
             </div>
 
@@ -234,14 +270,20 @@ export function CasePrepLauncher({
                   Common cases
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {selectedTopic.commonCases.map((curriculumCase) => (
-                    <span
-                      key={curriculumCase.id}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-semibold text-slate-700"
-                    >
-                      {curriculumCase.name}
+                  {selectedTopic.commonCases.length > 0 ? (
+                    selectedTopic.commonCases.map((curriculumCase) => (
+                      <span
+                        key={curriculumCase.id}
+                        className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-semibold text-slate-700"
+                      >
+                        {curriculumCase.name}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-sm text-slate-500">
+                      No common cases listed yet.
                     </span>
-                  ))}
+                  )}
                 </div>
               </div>
 
@@ -252,16 +294,21 @@ export function CasePrepLauncher({
                 <div className="mt-2 flex flex-wrap gap-2">
                   {relatedTopics.length > 0 ? (
                     relatedTopics.slice(0, 5).map((topic) => (
-                      <span
+                      <Link
                         key={topic.id}
-                        className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-semibold text-slate-700"
+                        href={buildCaseReadinessHref({
+                          topicId: topic.id,
+                          mode: activeMode,
+                          time: selectedMinutes,
+                        })}
+                        className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-semibold text-slate-700 transition hover:border-sky-300 hover:bg-sky-50"
                       >
                         {topic.title}
-                      </span>
+                      </Link>
                     ))
                   ) : (
                     <span className="text-sm text-slate-500">
-                      Related topics will appear here when available.
+                      No related topics linked for this topic yet.
                     </span>
                   )}
                 </div>

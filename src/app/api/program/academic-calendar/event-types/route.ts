@@ -155,6 +155,13 @@ export async function POST(request: NextRequest) {
       return jsonError("An event type with this name already exists", 409);
     }
 
+    if (error.code === "42501") {
+      return jsonError(
+        "Not allowed to create academic event type for this program",
+        403
+      );
+    }
+
     return jsonError("Failed to create event type", 500);
   }
 

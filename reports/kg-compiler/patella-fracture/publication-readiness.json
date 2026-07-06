@@ -1,0 +1,47 @@
+{
+  "topicKey": "patella-fracture",
+  "pilotKey": "patella-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:41:16.486Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "16 proposals still awaiting human review",
+    "11 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "18 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Patella Fracture neighborhood has 0/3 anatomy_structure entities.",
+    "[high] Patella Fracture neighborhood has 0/1 classification_system entities.",
+    "[high] Patella Fracture neighborhood has 0/1 imaging_finding entities.",
+    "[critical] Patella Fracture missing outbound injured_in (0/1).",
+    "[high] Patella Fracture missing outbound involves_anatomy (0/1).",
+    "[high] Patella Fracture missing outbound at_risk_structure (0/1).",
+    "[critical] Patella Fracture missing outbound has_classification (0/1).",
+    "[high] Patella Fracture missing outbound has_grade (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 25,
+    "humanReviewItems": 16,
+    "attendingReviewItems": 11,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

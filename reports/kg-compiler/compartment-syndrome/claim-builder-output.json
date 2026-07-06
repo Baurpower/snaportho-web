@@ -1,0 +1,790 @@
+{
+  "generatedAt": "2026-07-05T21:07:49.554Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-860a01c0",
+  "gapsAddressed": 8,
+  "gapsScheduled": 9,
+  "claimsGenerated": 9,
+  "claimsRejected": 5,
+  "redirectedToDecisionPoint": 3,
+  "candidates": [
+    {
+      "draftId": "claim-compartment-syndrome-red_flag-recognize-the-clinical-d",
+      "claimText": "Recognize the clinical diagnosis of compartment syndrome.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9add0773"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-explain-why-delayed-trea",
+      "claimText": "Explain why delayed treatment leads to irreversible damage.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9add0773"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-describe-emergent-manage",
+      "claimText": "Describe emergent management including fasciotomy principles.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9add0773"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-compartments-at-risk",
+      "claimText": "Compartments at risk.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-perfusion-pressure-conce",
+      "claimText": "Perfusion pressure concept.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-nerves-commonly-affected",
+      "claimText": "Nerves commonly affected.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-acute-traumatic-versus-e",
+      "claimText": "Acute traumatic versus exertional.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-imaging_point-no-imaging-should-delay-",
+      "claimText": "No imaging should delay treatment.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-14",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-imaging_point-pressure-checks-as-adjun",
+      "claimText": "Pressure checks as adjuncts only.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-14",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-board_trap-pulselessness-is-late-pa",
+      "claimText": "Pulselessness is late; pain with passive stretch is earlier and more useful.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-14",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-muscle-necrosis",
+      "claimText": "Muscle necrosis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-contracture",
+      "claimText": "Contracture.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-rhabdomyolysis",
+      "claimText": "Rhabdomyolysis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-amputation",
+      "claimText": "Amputation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-pain-out-of-proportion",
+      "claimText": "Pain out of proportion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-pain-with-passive-stretc",
+      "claimText": "pain with passive stretch.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-serial-exam-urgency",
+      "claimText": "serial exam urgency.",
+      "claimType": "fact",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-leg-compartments",
+      "claimText": "Leg compartments.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-forearm-compartments",
+      "claimText": "Forearm compartments.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-muscle-and-nerve-ischemi",
+      "claimText": "Muscle and nerve ischemia timeline.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "perfusion-pressure-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-3",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-red_flag-compartment-syndrome-is-",
+      "claimText": "Compartment syndrome is a clinical emergency where worsening pain and tense compartments trump waiting for tests.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.oneLiner",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-cognitive_trap-never-reassure-solely-fr",
+      "claimText": "Never reassure solely from present pulses.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-14",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-red_flag-use-time-sensitive-limb-",
+      "claimText": "Use time-sensitive limb emergency language.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "patient_safety"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-clinical_script-state-concern-immediatel",
+      "claimText": "State concern immediately.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-clinical_script-repeat-focused-exam",
+      "claimText": "Repeat focused exam.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-clinical_script-loosen-dressings",
+      "claimText": "Loosen dressings.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-clinical_script-escalate-for-fasciotomy",
+      "claimText": "Escalate for fasciotomy.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "compartment-syndrome",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "High suspicion and evolving exam findings favor fasciotomy",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ]
+    },
+    {
+      "text": "Emergent fasciotomy",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ]
+    },
+    {
+      "text": "Return trips for debridement and closure",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ]
+    },
+    {
+      "text": "Why are pulses unreliable?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ]
+    },
+    {
+      "text": "When do pressure measurements help?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-fact-explain-why-delayed-trea",
+      "draftId": "claim-perfusion-pressure-concept-fact-explain-why-delayed-trea",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9add0773"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-fact-describe-emergent-manage",
+      "draftId": "claim-perfusion-pressure-concept-fact-describe-emergent-manage",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9add0773"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-anatomy_pearl-compartments-at-risk",
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-compartments-at-risk",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-compartment-syndrome-imaging_point-no-imaging-should-delay-",
+      "draftId": "claim-compartment-syndrome-imaging_point-no-imaging-should-delay-",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-compartment-syndrome-board_trap-pulselessness-is-late-pa",
+      "draftId": "claim-compartment-syndrome-board_trap-pulselessness-is-late-pa",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-compartment-syndrome-imaging_point-pressure-checks-as-adjun",
+      "draftId": "claim-compartment-syndrome-imaging_point-pressure-checks-as-adjun",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-compartment-syndrome-cognitive_trap-never-reassure-solely-fr",
+      "draftId": "claim-compartment-syndrome-cognitive_trap-never-reassure-solely-fr",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-fact-acute-traumatic-versus-e",
+      "draftId": "claim-perfusion-pressure-concept-fact-acute-traumatic-versus-e",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-anatomy_pearl-perfusion-pressure-conce",
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-perfusion-pressure-conce",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "verified": false
+    }
+  ]
+}

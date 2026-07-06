@@ -1,0 +1,2842 @@
+{
+  "topicKey": "distal-radius-fracture",
+  "pilotKey": "distal-radius-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:43:07.744Z",
+  "entities": [
+    {
+      "slug": "distal-radius-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Radius Fracture",
+      "metadata": {
+        "slug": "distal-radius-fracture",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Fracture of the distal radius and wrist articular region.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|distal-radius-fracture",
+        "canonical_entity_id": "c9095783-a8a3-4062-ab65-eb8605a215ef",
+        "cluster": "hand-wrist",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|distal-radius-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "wrist-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Wrist Anatomy Hub",
+      "metadata": {
+        "slug": "wrist-anatomy-hub",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Composite wrist mental model linking distal radius, DRUJ, and median nerve.",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|wrist-anatomy-hub",
+        "canonical_entity_id": "5418aec8-1ea7-4986-9cfd-f317d14a0810",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "dorsal-comminution",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Dorsal Comminution",
+      "metadata": {
+        "slug": "dorsal-comminution",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Dorsal metaphyseal comminution suggesting instability after reduction.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|dorsal-comminution",
+        "canonical_entity_id": "7fdd7318-4867-4526-a84d-674ac221aeef",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|dorsal-comminution"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "druj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DRUJ",
+      "metadata": {
+        "slug": "druj",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T21:00:08.831Z",
+        "description": "Distal radioulnar joint stabilizers and ulnar-sided wrist linkage.",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|druj",
+        "canonical_entity_id": "9648cf12-8362-49ff-b281-d3e0eabd77af"
+      },
+      "source": "database"
+    },
+    {
+      "slug": "volar-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Volar Approach",
+      "metadata": {
+        "slug": "volar-approach",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Volar FCR interval approach to the distal radius.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|surgical_approach|volar-approach",
+        "canonical_entity_id": "365774f3-5186-422a-a3b5-c855331dcee2",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|surgical_approach|volar-approach"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "loss-of-reduction",
+      "entityType": "complication",
+      "preferredLabel": "Loss of Reduction",
+      "metadata": {
+        "slug": "loss-of-reduction",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Recurrent displacement after closed reduction and casting.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|loss-of-reduction",
+        "canonical_entity_id": "3889911b-19cf-4bb7-ae7f-820bcac94db4",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|loss-of-reduction"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Radius",
+      "metadata": {
+        "slug": "distal-radius",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T21:00:08.831Z",
+        "description": "Distal radial metaphysis and articular surface at the wrist.",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|distal-radius",
+        "canonical_entity_id": "1ef6f9d7-5fd3-49b5-b669-0b70bdeec64f"
+      },
+      "source": "database"
+    },
+    {
+      "slug": "radial-height-loss",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Radial Height Loss",
+      "metadata": {
+        "slug": "radial-height-loss",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Loss of radial length on wrist radiographs affecting alignment goals.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|radial-height-loss",
+        "canonical_entity_id": "eca25ca2-2b87-42fc-aae7-b6edd3151464",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|radial-height-loss"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "median-neuropathy",
+      "entityType": "complication",
+      "preferredLabel": "Median Neuropathy",
+      "metadata": {
+        "slug": "median-neuropathy",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Median nerve dysfunction after fracture swelling or operative injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|median-neuropathy",
+        "canonical_entity_id": "cd7f081d-0a5a-4a22-8ce9-83d3a2f8615b",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|median-neuropathy"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-radius-orif-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "ORIF",
+      "metadata": {
+        "slug": "distal-radius-orif-fixation",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Operative fixation method for unstable distal radius patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|fixation_method|distal-radius-orif-fixation",
+        "canonical_entity_id": "7d8332ef-a3c6-4db0-9383-0b2a4c85b366",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|fixation_method|distal-radius-orif-fixation"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tendon-irritation",
+      "entityType": "complication",
+      "preferredLabel": "Tendon Irritation",
+      "metadata": {
+        "slug": "tendon-irritation",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Flexor or extensor tendon irritation from prominent hardware.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|tendon-irritation",
+        "canonical_entity_id": "ea901202-3b44-4547-9d2c-8b07c84dfebe",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|tendon-irritation"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Median Nerve",
+      "metadata": {
+        "slug": "median-nerve",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "region": "wrist",
+        "verified": false,
+        "curated_at": "2026-07-05T21:00:08.831Z",
+        "description": "Median nerve at risk in carpal tunnel and volar wrist surgery.",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|median-nerve",
+        "canonical_entity_id": "b8c22ec6-1383-4b7e-ae89-a4e598722eb6"
+      },
+      "source": "database"
+    },
+    {
+      "slug": "distal-radius-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Distal Radius ORIF",
+      "metadata": {
+        "slug": "distal-radius-orif",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Open reduction and internal fixation of unstable distal radius fractures.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|distal-radius-orif",
+        "canonical_entity_id": "17471805-f52a-40a0-94ce-ff846efcf9f2",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|distal-radius-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "crps",
+      "entityType": "complication",
+      "preferredLabel": "CRPS",
+      "metadata": {
+        "slug": "crps",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Complex regional pain syndrome after wrist injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|crps",
+        "canonical_entity_id": "037a725c-5607-46af-957f-b711d0db517d",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|crps"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "galeazzi-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Galeazzi Fracture",
+      "metadata": {
+        "slug": "galeazzi-fracture",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Cross-neighborhood reference stub for galeazzi-fracture.",
+        "owner_pilot": "galeazzi-fracture-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|galeazzi-fracture",
+        "canonical_entity_id": "faa62919-98fc-4439-bd7e-0a047e07093e",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|galeazzi-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "druj-instability",
+      "entityType": "condition",
+      "preferredLabel": "Druj Instability",
+      "metadata": {
+        "slug": "druj-instability",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Cross-neighborhood reference stub for druj-instability.",
+        "owner_pilot": "druj-instability-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|druj-instability",
+        "canonical_entity_id": "5e718cb1-2795-47ba-afdd-254c36c60d1e",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|druj-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "essex-lopresti-injury",
+      "entityType": "condition",
+      "preferredLabel": "Essex Lopresti Injury",
+      "metadata": {
+        "slug": "essex-lopresti-injury",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Cross-neighborhood reference stub for essex-lopresti-injury.",
+        "owner_pilot": "essex-lopresti-injury-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|essex-lopresti-injury",
+        "canonical_entity_id": "34a88d3b-8bbd-47b3-8520-269bbd6813e7",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|essex-lopresti-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "carpal-instability",
+      "entityType": "condition",
+      "preferredLabel": "Carpal Instability",
+      "metadata": {
+        "slug": "carpal-instability",
+        "pilot": "distal-radius-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "description": "Cross-neighborhood reference stub for carpal-instability.",
+        "owner_pilot": "carpal-instability-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|carpal-instability",
+        "canonical_entity_id": "574d932a-b892-4761-8859-d154c149944d",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|carpal-instability"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "distal-radius-orif",
+      "predicate": "involves_anatomy",
+      "objectSlug": "distal-radius",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "approach",
+          "context_relevance": [
+            "or"
+          ]
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-orif|involves_anatomy|distal-radius",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "approach",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|distal-radius-orif|involves_anatomy|distal-radius"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "instability"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius|articulates_with|druj",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|druj"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "part_of",
+      "objectSlug": "wrist-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius|part_of|wrist-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|distal-radius|part_of|wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "wrist-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "distal-radius-fracture",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "clinic",
+            "or"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|wrist-anatomy-hub|prerequisite_for|distal-radius-fracture",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|wrist-anatomy-hub|prerequisite_for|distal-radius-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "druj",
+      "predicate": "part_of",
+      "objectSlug": "wrist-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "instability"
+        },
+        "created_from_proposal_fingerprint": "rel|druj|part_of|wrist-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "_provenance_fingerprint": "rel|druj|part_of|wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "median-nerve",
+      "predicate": "part_of",
+      "objectSlug": "wrist-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "neurovascular_risk"
+        },
+        "created_from_proposal_fingerprint": "rel|median-nerve|part_of|wrist-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular_risk",
+        "_provenance_fingerprint": "rel|median-nerve|part_of|wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "crps",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|has_complication|crps",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|has_complication|crps"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "median-neuropathy",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|has_complication|median-neuropathy",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|has_complication|median-neuropathy"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "tendon-irritation",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|has_complication|tendon-irritation",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|has_complication|tendon-irritation"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "loss-of-reduction",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|has_complication|loss-of-reduction",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|has_complication|loss-of-reduction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "dorsal-comminution",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "imaging",
+          "clinical_importance": "high",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|has_imaging_finding|dorsal-comminution",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "imaging",
+        "clinical_importance": "high",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|has_imaging_finding|dorsal-comminution"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "radial-height-loss",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "imaging",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|has_imaging_finding|radial-height-loss",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "imaging",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|has_imaging_finding|radial-height-loss"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "distal-radius",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "clinical_importance": "high",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|injured_in|distal-radius",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|injured_in|distal-radius"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "wrist-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|involves_anatomy|wrist-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|involves_anatomy|wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "druj",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "instability",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-radius-fracture|involves_anatomy|druj",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|involves_anatomy|druj"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a1-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a1-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a2-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a2-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a3-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a3-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a4-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a4-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "a5-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|a5-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ain",
+      "predicate": "part_of",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "motor_branch",
+        "_provenance_fingerprint": "rel|ain|part_of|median-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "apl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|apl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "c1-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|c1-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "c2-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|c2-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "c3-pulley",
+      "predicate": "part_of",
+      "objectSlug": "flexor-pulley-system",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "pulley",
+        "_provenance_fingerprint": "rel|c3-pulley|part_of|flexor-pulley-system"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "capitate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|capitate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "fdp",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|fdp"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "fds",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|fds"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "carpal-tunnel",
+      "predicate": "contains",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "compression",
+        "_provenance_fingerprint": "rel|carpal-tunnel|contains|median-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "cmc-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb",
+        "_provenance_fingerprint": "rel|cmc-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "deep-palmar-arch",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|deep-palmar-arch|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "digital-nerves",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "sensibility",
+        "_provenance_fingerprint": "rel|digital-nerves|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "dip-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|dip-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|distal-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "at_risk_structure",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular_risk",
+        "context_relevance": [
+          "clinic",
+          "or",
+          "call"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|at_risk_structure|median-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "differential_for",
+      "objectSlug": "carpal-instability",
+      "metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "cross_neighborhood": true,
+        "_provenance_fingerprint": "rel|distal-radius-fracture|differential_for|carpal-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "differential_for",
+      "objectSlug": "druj-instability",
+      "metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "cross_neighborhood": true,
+        "_provenance_fingerprint": "rel|distal-radius-fracture|differential_for|druj-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "differential_for",
+      "objectSlug": "essex-lopresti-injury",
+      "metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "cross_neighborhood": true,
+        "_provenance_fingerprint": "rel|distal-radius-fracture|differential_for|essex-lopresti-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "differential_for",
+      "objectSlug": "galeazzi-fracture",
+      "metadata": {
+        "cluster": "hand-wrist",
+        "review_status": "unreviewed",
+        "cross_neighborhood": true,
+        "_provenance_fingerprint": "rel|distal-radius-fracture|differential_for|galeazzi-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|involves_anatomy|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "tfcc",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|involves_anatomy|tfcc"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "distal-radius-orif",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|treated_by|distal-radius-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-fracture",
+      "predicate": "uses_fixation",
+      "objectSlug": "distal-radius-orif-fixation",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or",
+          "clinic"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-radius-fracture|uses_fixation|distal-radius-orif-fixation"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-orif",
+      "predicate": "at_risk_structure",
+      "objectSlug": "median-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular_risk",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|distal-radius-orif|at_risk_structure|median-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius-orif",
+      "predicate": "uses_approach",
+      "objectSlug": "volar-approach",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-radius-orif|uses_approach|volar-approach"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "radiocarpal",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "articulates_with",
+      "objectSlug": "scaphoid",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "radiocarpal",
+        "_provenance_fingerprint": "rel|distal-radius|articulates_with|scaphoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-radius",
+      "predicate": "part_of",
+      "objectSlug": "radius",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "wrist_articular",
+        "_provenance_fingerprint": "rel|distal-radius|part_of|radius"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-ulna",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|distal-ulna|articulates_with|druj"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-ulna",
+      "predicate": "part_of",
+      "objectSlug": "ulna",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|distal-ulna|part_of|ulna"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "dorsal-comminution",
+      "predicate": "indicates_treatment",
+      "objectSlug": "distal-radius-orif",
+      "metadata": {
+        "confidence": 0.82,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|dorsal-comminution|indicates_treatment|distal-radius-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "druj",
+      "predicate": "explains_instability",
+      "objectSlug": "distal-radius-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|druj|explains_instability|distal-radius-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "druj",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "wrist_stability",
+        "_provenance_fingerprint": "rel|druj|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ecu",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|ecu|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "edc",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|edc|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "epb",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|epb|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "epl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|epl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-tendon-zones",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tendon_repair",
+        "_provenance_fingerprint": "rel|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fcr",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fcr|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fcu",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fcu|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fdp",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fdp|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fds",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fds|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fifth-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|fifth-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "first-metacarpal",
+      "predicate": "articulates_with",
+      "objectSlug": "trapezium",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb_cmc",
+        "_provenance_fingerprint": "rel|first-metacarpal|articulates_with|trapezium"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "first-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb",
+        "_provenance_fingerprint": "rel|first-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "contains",
+      "objectSlug": "fdp",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "zone_ii",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|contains|fdp"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "contains",
+      "objectSlug": "fds",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "zone_ii",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|contains|fds"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "flexor-pulley-system",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|flexor-pulley-system|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "flexor-tendon-zones",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tendon_repair",
+        "_provenance_fingerprint": "rel|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fourth-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|fourth-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "fpl",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexor",
+        "_provenance_fingerprint": "rel|fpl|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "guyon-canal",
+      "predicate": "contains",
+      "objectSlug": "ulnar-artery",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|guyon-canal|contains|ulnar-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "guyon-canal",
+      "predicate": "contains",
+      "objectSlug": "ulnar-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "compression",
+        "_provenance_fingerprint": "rel|guyon-canal|contains|ulnar-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "hamate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|hamate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "hand-wrist-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "distal-radius-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|distal-radius-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "interosseous-membrane",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "forearm_load",
+        "_provenance_fingerprint": "rel|interosseous-membrane|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lunate",
+      "predicate": "articulates_with",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "proximal_row",
+        "_provenance_fingerprint": "rel|lunate|articulates_with|triquetrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lunate",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|lunate|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lunotriquetral-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lt_instability",
+        "_provenance_fingerprint": "rel|lunotriquetral-ligament|inserts_on|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lunotriquetral-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lt_instability",
+        "_provenance_fingerprint": "rel|lunotriquetral-ligament|inserts_on|triquetrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "mcp-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|mcp-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "median-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|median-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "middle-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|middle-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pin",
+      "predicate": "part_of",
+      "objectSlug": "radial-nerve",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "motor_branch",
+        "_provenance_fingerprint": "rel|pin|part_of|radial-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pip-joint",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|pip-joint|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pisiform",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|pisiform|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "proximal-phalanx",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|proximal-phalanx|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pruj",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "rotation",
+        "_provenance_fingerprint": "rel|pruj|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-artery",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|radial-artery|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-height-loss",
+      "predicate": "indicates_treatment",
+      "objectSlug": "distal-radius-orif",
+      "metadata": {
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|radial-height-loss|indicates_treatment|distal-radius-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|radial-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radius",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "forearm",
+        "_provenance_fingerprint": "rel|radius|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid",
+      "predicate": "articulates_with",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "proximal_row",
+        "_provenance_fingerprint": "rel|scaphoid|articulates_with|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scaphoid",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|scaphoid|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scapholunate-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "lunate",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "sl_instability",
+        "_provenance_fingerprint": "rel|scapholunate-ligament|inserts_on|lunate"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "scapholunate-ligament",
+      "predicate": "inserts_on",
+      "objectSlug": "scaphoid",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "sl_instability",
+        "_provenance_fingerprint": "rel|scapholunate-ligament|inserts_on|scaphoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "second-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|second-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "superficial-palmar-arch",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tfcc",
+      "predicate": "inserts_on",
+      "objectSlug": "triquetrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|tfcc|inserts_on|triquetrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "third-metacarpal",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "digit",
+        "_provenance_fingerprint": "rel|third-metacarpal|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "thumb-ucl",
+      "predicate": "inserts_on",
+      "objectSlug": "proximal-phalanx",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb_stability",
+        "_provenance_fingerprint": "rel|thumb-ucl|inserts_on|proximal-phalanx"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "trapezium",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "thumb_column",
+        "_provenance_fingerprint": "rel|trapezium|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "trapezoid",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|trapezoid|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "triquetrum",
+      "predicate": "articulates_with",
+      "objectSlug": "druj",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ulnar_wrist",
+        "_provenance_fingerprint": "rel|triquetrum|articulates_with|druj"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "triquetrum",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "carpus",
+        "_provenance_fingerprint": "rel|triquetrum|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ulna",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "forearm",
+        "_provenance_fingerprint": "rel|ulna|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ulnar-artery",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|ulnar-artery|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ulnar-nerve",
+      "predicate": "part_of",
+      "objectSlug": "hand-wrist-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|ulnar-nerve|part_of|hand-wrist-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "volar-plate",
+      "predicate": "inserts_on",
+      "objectSlug": "proximal-phalanx",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pip_stability",
+        "_provenance_fingerprint": "rel|volar-plate|inserts_on|proximal-phalanx"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-dr-volar-cortex",
+      "claimType": "anatomy_pearl",
+      "claimText": "The volar cortex serves as a key reduction reference when restoring length and volar tilt.",
+      "primaryEntitySlug": "distal-radius",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "unreviewed",
+      "metadata": {
+        "draft_id": "claim-dr-volar-cortex",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false
+      }
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-board_trap-malalignment-tolerance-i",
+      "claimType": "board_trap",
+      "claimText": "Malalignment tolerance is lower in active patients and articular injuries.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-distal-radius-fracture-board_trap-malalignment-tolerance-i",
+        "claim_type": "board_trap",
+        "claim_text": "Malalignment tolerance is lower in active patients and articular injuries.",
+        "primary_entity_slug": "distal-radius-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ea909f33"
+        ],
+        "evidence_packet_id": "ev-packet-1605edc3",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:43:07.738Z",
+        "_provenance_fingerprint": "claim|claim-distal-radius-fracture-board_trap-malalignment-tolerance-i"
+      }
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-cognitive_trap-know-acceptable-radial-h",
+      "claimType": "cognitive_trap",
+      "claimText": "Know acceptable radial height/inclination language.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-distal-radius-fracture-cognitive_trap-know-acceptable-radial-h",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Know acceptable radial height/inclination language.",
+        "primary_entity_slug": "distal-radius-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ea8d57a7"
+        ],
+        "evidence_packet_id": "ev-packet-1605edc3",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:43:07.738Z",
+        "_provenance_fingerprint": "claim|claim-distal-radius-fracture-cognitive_trap-know-acceptable-radial-h"
+      }
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-a-distal-radius-fracture",
+      "claimType": "fact",
+      "claimText": "A distal radius fracture is a high-frequency trauma problem where alignment and median nerve status drive urgency.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-distal-radius-fracture-fact-a-distal-radius-fracture",
+        "claim_type": "fact",
+        "claim_text": "A distal radius fracture is a high-frequency trauma problem where alignment and median nerve status drive urgency.",
+        "primary_entity_slug": "distal-radius-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ea8d57a7"
+        ],
+        "evidence_packet_id": "ev-packet-1605edc3",
+        "uncertainty_note": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:43:07.738Z",
+        "_provenance_fingerprint": "claim|claim-distal-radius-fracture-fact-a-distal-radius-fracture"
+      }
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-alignment",
+      "claimType": "fact",
+      "claimText": "alignment.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-distal-radius-fracture-fact-alignment",
+        "claim_type": "fact",
+        "claim_text": "alignment.",
+        "primary_entity_slug": "distal-radius-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ea8d57a7"
+        ],
+        "evidence_packet_id": "ev-packet-1605edc3",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:43:07.738Z",
+        "_provenance_fingerprint": "claim|claim-distal-radius-fracture-fact-alignment"
+      }
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-immobilization-choice",
+      "claimType": "fact",
+      "claimText": "immobilization choice.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-distal-radius-fracture-fact-immobilization-choice",
+        "claim_type": "fact",
+        "claim_text": "immobilization choice.",
+        "primary_entity_slug": "distal-radius-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ea8d57a7"
+        ],
+        "evidence_packet_id": "ev-packet-1605edc3",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "_provenance_fingerprint": "claim|claim-distal-radius-fracture-fact-immobilization-choice"
+      }
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-mechanism",
+      "claimType": "fact",
+      "claimText": "Mechanism.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-distal-radius-fracture-fact-mechanism",
+        "claim_type": "fact",
+        "claim_text": "Mechanism.",
+        "primary_entity_slug": "distal-radius-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ea8d57a7"
+        ],
+        "evidence_packet_id": "ev-packet-1605edc3",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "_provenance_fingerprint": "claim|claim-distal-radius-fracture-fact-mechanism"
+      }
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-median-nerve-exam",
+      "claimType": "fact",
+      "claimText": "median nerve exam.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-distal-radius-fracture-fact-median-nerve-exam",
+        "claim_type": "fact",
+        "claim_text": "median nerve exam.",
+        "primary_entity_slug": "distal-radius-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ea8d57a7"
+        ],
+        "evidence_packet_id": "ev-packet-1605edc3",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "_provenance_fingerprint": "claim|claim-distal-radius-fracture-fact-median-nerve-exam"
+      }
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-imaging_point-standard-wrist-radiograp",
+      "claimType": "imaging_point",
+      "claimText": "Standard wrist radiographs.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-distal-radius-fracture-imaging_point-standard-wrist-radiograp",
+        "claim_type": "imaging_point",
+        "claim_text": "Standard wrist radiographs.",
+        "primary_entity_slug": "distal-radius-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-ea909f33"
+        ],
+        "evidence_packet_id": "ev-packet-1605edc3",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "_provenance_fingerprint": "claim|claim-distal-radius-fracture-imaging_point-standard-wrist-radiograp"
+      }
+    },
+    {
+      "draftId": "claim-dr-dorsal-comminution",
+      "claimType": "imaging_point",
+      "claimText": "Dorsal comminution often signals instability and higher fixation likelihood after reduction.",
+      "primaryEntitySlug": "dorsal-comminution",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-dr-dorsal-comminution",
+        "verified": false,
+        "claim_text": "Dorsal comminution often signals instability and higher fixation likelihood after reduction.",
+        "claim_type": "imaging_point",
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "primary_entity_slug": "dorsal-comminution",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dr-dorsal-comminution"
+      }
+    },
+    {
+      "draftId": "claim-dr-druj-trap",
+      "claimType": "board_trap",
+      "claimText": "DRUJ instability after distal radius fixation can be missed if ulnar-sided wrist exam is skipped.",
+      "primaryEntitySlug": "druj",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-dr-druj-trap",
+        "verified": false,
+        "claim_text": "DRUJ instability after distal radius fixation can be missed if ulnar-sided wrist exam is skipped.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "primary_entity_slug": "druj",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dr-druj-trap"
+      }
+    },
+    {
+      "draftId": "claim-dr-malalignment-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Accepting malalignment in young or high-demand patients without reassessing instability criteria.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-dr-malalignment-trap",
+        "verified": false,
+        "claim_text": "Accepting malalignment in young or high-demand patients without reassessing instability criteria.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "primary_entity_slug": "distal-radius-fracture",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dr-malalignment-trap"
+      }
+    },
+    {
+      "draftId": "claim-dr-mechanism-nv",
+      "claimType": "fact",
+      "claimText": "Distal radius fracture management hinges on mechanism, alignment, median nerve exam, and appropriate immobilization choice.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-dr-mechanism-nv",
+        "verified": false,
+        "claim_text": "Distal radius fracture management hinges on mechanism, alignment, median nerve exam, and appropriate immobilization choice.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "primary_entity_slug": "distal-radius-fracture",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dr-mechanism-nv"
+      }
+    },
+    {
+      "draftId": "claim-dr-radiographic-params",
+      "claimType": "fact",
+      "claimText": "Radial height, inclination, and volar tilt language should anchor alignment discussions on wrist radiographs.",
+      "primaryEntitySlug": "radial-height-loss",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-dr-radiographic-params",
+        "verified": false,
+        "claim_text": "Radial height, inclination, and volar tilt language should anchor alignment discussions on wrist radiographs.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "primary_entity_slug": "radial-height-loss",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dr-radiographic-params"
+      }
+    },
+    {
+      "draftId": "claim-dr-shared-anatomy",
+      "claimType": "anatomy_pearl",
+      "claimText": "Hand-wrist shared anatomy hub links distal radius fractures to DRUJ, TFCC, scaphoid, and nerve compression neighborhoods.",
+      "primaryEntitySlug": "hand-wrist-anatomy-hub",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-dr-shared-anatomy",
+        "verified": false,
+        "claim_text": "Hand-wrist shared anatomy hub links distal radius fractures to DRUJ, TFCC, scaphoid, and nerve compression neighborhoods.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "clinic",
+          "or"
+        ],
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "primary_entity_slug": "hand-wrist-anatomy-hub",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-dr-shared-anatomy"
+      }
+    },
+    {
+      "draftId": "claim-dr-splint-plan",
+      "claimType": "clinical_script",
+      "claimText": "After reduction, document median nerve status, finger ROM, splint plan, and timing of post-reduction films.",
+      "primaryEntitySlug": "distal-radius-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-radius-fracture-neighborhood",
+        "draft_id": "claim-dr-splint-plan",
+        "verified": false,
+        "claim_text": "After reduction, document median nerve status, finger ROM, splint plan, and timing of post-reduction films.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:43:07.739Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_packet_key": "pilot:distal-radius-fracture-neighborhood",
+        "primary_entity_slug": "distal-radius-fracture",
+        "review_packet_label": "Distal Radius Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dr-splint-plan"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-dr-nonoperative-cast",
+      "subjectEntitySlug": "distal-radius-fracture",
+      "patternType": "nonoperative_eligible",
+      "trigger": "Acceptable alignment after closed reduction in patient suitable for casting",
+      "action": "Splint/cast with protected motion plan, repeat radiographs, and median nerve surveillance",
+      "urgency": "routine",
+      "safetyCriticality": "none",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-dr-operative-fixation",
+      "subjectEntitySlug": "distal-radius-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Unstable pattern with significant displacement, dorsal comminution, articular step-off, or failed closed reduction",
+      "action": "Proceed with operative fixation pathway (volar ORIF when indicated) with documented median nerve exam",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [],
+  "stats": {
+    "entityCount": 18,
+    "relationshipCount": 109,
+    "claimCount": 16,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 15,
+    "conflictingRelationships": 0,
+    "metadataMerged": 30,
+    "provenanceAttached": 143
+  }
+}

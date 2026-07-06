@@ -45,10 +45,12 @@ export const CANONICAL_ENTITY_TYPES = [
   "procedure",
   "anatomy_structure",
   "classification_system",
+  "classification_grade",
   "complication",
   "diagnostic_test",
   "imaging_finding",
   "implant",
+  "fixation_method",
   "treatment_principle",
   "biomechanics_concept",
   "exam_maneuver",
@@ -111,9 +113,83 @@ export const PREDICATE_REGISTRY: Record<string, PredicateRule> = {
   involves_anatomy: {
     subjectEndpointTypes: ["canonical_entity"],
     objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["condition", "procedure", "biomechanics_concept"],
+    objectEntityTypes: ["anatomy_structure", "biomechanics_concept"],
+    description:
+      "A condition or procedure involves an anatomic structure. Use for general involvement — prefer injured_in / at_risk_structure when more specific.",
+  },
+  injured_in: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["condition", "classification_grade", "complication"],
+    objectEntityTypes: ["anatomy_structure"],
+    description:
+      "A condition or grade specifically damages or localizes to an anatomical structure. More precise than involves_anatomy.",
+  },
+  at_risk_structure: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
     subjectEntityTypes: ["condition", "procedure"],
     objectEntityTypes: ["anatomy_structure"],
-    description: "A condition or procedure involves an anatomic structure.",
+    description:
+      "A nerve, vessel, or structure at risk from the pathology or its treatment. Requires human review before publication.",
+  },
+  has_imaging_finding: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["condition"],
+    objectEntityTypes: ["imaging_finding"],
+    description: "A condition is characterized by or evaluated with a named imaging finding.",
+  },
+  has_grade: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["condition"],
+    objectEntityTypes: ["classification_grade"],
+    description: "A condition is graded by a specific classification grade entity (e.g., Weber B).",
+  },
+  uses_fixation: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["condition"],
+    objectEntityTypes: ["fixation_method", "procedure"],
+    description: "A condition is managed with a fixation method or operative fixation procedure.",
+  },
+  explains_instability: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["anatomy_structure", "imaging_finding", "classification_grade"],
+    objectEntityTypes: ["condition", "biomechanics_concept"],
+    description:
+      "An anatomical structure or finding explains mechanical instability of a condition. Direction: explainer → unstable condition/concept.",
+  },
+  part_of: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["anatomy_structure"],
+    objectEntityTypes: ["anatomy_structure"],
+    description: "Anatomical hierarchy: child structure is part of parent (e.g., malleolus part_of ankle ring).",
+  },
+  contains: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["anatomy_structure"],
+    objectEntityTypes: ["anatomy_structure"],
+    description: "Parent anatomical region or compartment contains child structure.",
+  },
+  articulates_with: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["anatomy_structure"],
+    objectEntityTypes: ["anatomy_structure"],
+    description: "Bone or joint articulation relationship (e.g., talus articulates_with tibia).",
+  },
+  inserts_on: {
+    subjectEndpointTypes: ["canonical_entity"],
+    objectEndpointTypes: ["canonical_entity"],
+    subjectEntityTypes: ["anatomy_structure"],
+    objectEntityTypes: ["anatomy_structure"],
+    description: "Ligament or tendon insertion on bone. Subject is the soft-tissue structure.",
   },
   uses_implant: {
     subjectEndpointTypes: ["canonical_entity"],
@@ -146,9 +222,10 @@ export const PREDICATE_REGISTRY: Record<string, PredicateRule> = {
   indicates_treatment: {
     subjectEndpointTypes: ["canonical_entity"],
     objectEndpointTypes: ["canonical_entity"],
-    subjectEntityTypes: ["classification_system", "condition"],
-    objectEntityTypes: ["treatment_principle", "procedure"],
-    description: "A classification grade / condition indicates a treatment principle or procedure.",
+    subjectEntityTypes: ["classification_system", "classification_grade", "condition", "imaging_finding"],
+    objectEntityTypes: ["treatment_principle", "procedure", "fixation_method"],
+    description:
+      "A classification, grade, finding, or condition pattern indicates a treatment. Requires attending review when management-changing.",
   },
   has_complication: {
     subjectEndpointTypes: ["canonical_entity"],
@@ -328,11 +405,35 @@ export type GenerationRelationRule = {
  * shallow), but every entry is sourced from the registry rather than from a
  * hardcoded type list — so the generator and the validator can never drift.
  */
+/**
+ * Predicates the ankle pilot proposal generator may emit.
+ * Kept narrow — expand only after review workflow proves stable.
+ */
 export const GENERATION_PREDICATES = [
   "has_classification",
   "has_complication",
   "involves_anatomy",
+  "injured_in",
+  "at_risk_structure",
+  "has_imaging_finding",
+  "has_grade",
+  "uses_fixation",
+  "treated_by",
+  "part_of",
+  "articulates_with",
+  "inserts_on",
+  "explains_instability",
+  "indicates_treatment",
 ] as const;
+
+/** Predicates that must never auto-approve without human review. */
+export const HIGH_RISK_PREDICATES = new Set([
+  "at_risk_structure",
+  "indicates_treatment",
+  "treated_by",
+  "uses_fixation",
+  "explains_instability",
+]);
 
 export function getGenerationRelationRules(): GenerationRelationRule[] {
   return GENERATION_PREDICATES.map((predicate) => {

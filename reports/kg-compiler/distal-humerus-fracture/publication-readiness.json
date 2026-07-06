@@ -1,0 +1,47 @@
+{
+  "topicKey": "distal-humerus-fracture",
+  "pilotKey": "distal-humerus-fracture-neighborhood",
+  "generatedAt": "2026-07-05T21:57:59.378Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "20 proposals still awaiting human review",
+    "12 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "19 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Distal Humerus ORIF neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Distal Humerus ORIF missing outbound involves_anatomy (0/1).",
+    "[high] Distal Humerus ORIF missing outbound at_risk_structure (0/1).",
+    "[critical] Total Elbow Arthroplasty for Trauma neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Total Elbow Arthroplasty for Trauma missing outbound involves_anatomy (0/1).",
+    "[high] Total Elbow Arthroplasty for Trauma missing outbound at_risk_structure (0/1).",
+    "[critical] Distal Humerus Fracture neighborhood has 0/3 anatomy_structure entities.",
+    "[high] Distal Humerus Fracture neighborhood has 0/1 classification_system entities.",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 28,
+    "humanReviewItems": 20,
+    "attendingReviewItems": 12,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

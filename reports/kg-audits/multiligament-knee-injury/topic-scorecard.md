@@ -1,0 +1,123 @@
+# MULTILIGAMENT KNEE INJURY — Knowledge Factory Audit
+
+Generated: 2026-07-05T23:23:33.749Z
+Auditor: KF-018 v1.0.0
+
+## Overall
+
+| Metric | Score |
+|--------|------:|
+| **Overall** | **87** |
+| Ontology Completeness | 73 |
+| Evidence Quality | 85 |
+| Graph Integrity | 77 |
+| Shared Knowledge Reuse | 98 |
+| Relationship Quality | 77 |
+| Claim Quality | 84 |
+| Decision Points | 77 |
+| Metadata Quality | 92 |
+| Provenance Quality | 100 |
+| Review Calibration | 100 |
+| Agent Performance | 92 |
+| Compiler Quality | 89 |
+| Educational Quality | 94 |
+| Cross-Neighborhood Consistency | 96 |
+| Publication Readiness | 50 |
+| Publication | Blocked |
+
+## Publication
+
+- Status: **NOT_READY**
+- Maturity: 5 / 7
+
+### Blockers
+
+- 19 proposals still awaiting human review
+- 12 items require attending review
+- Claims and DPs are draft-only — publication gate must block verified consumption.
+- No approved canonical entities in database yet — proposals remain offline/spec.
+- 5 critical/high ontology gaps remain unresolved
+
+## Top Findings
+
+### [CRITICAL] 2 critical ontology gaps remain
+
+- **Evidence:** ontology-gap-report.json: gap-entity-neighbor-3, gap-rel-4
+- **Reason:** Required entities, relationships, claims, or decision points are missing per CKO §8–§9.
+- **Impact:** -15
+- **Fix:** Resolve critical gaps via assigned factory agents before publication review.
+
+### [CRITICAL] Low evidence coverage (0% of proposals cite evidence)
+
+- **Evidence:** 0/42 proposals have evidence_refs
+- **Reason:** Every proposal should cite supporting evidence per factory contract.
+- **Impact:** -15
+- **Fix:** Ensure claim/relationship builders attach evidence_refs from the evidence packet.
+
+### [CRITICAL] 12 dangling edges reference missing entities
+
+- **Evidence:** acl -[part_of]-> sports-knee-anatomy-hub; femoral-condyles -[part_of]-> sports-knee-anatomy-hub; labrum -[part_of]-> sports-shoulder-anatomy-hub
+- **Reason:** Relationships must resolve to entities in the neighborhood graph.
+- **Impact:** -15
+- **Fix:** Create missing entities or remove invalid relationship proposals.
+
+### [CRITICAL] Missing clinical edge: injured_in
+
+- **Evidence:** 0 outbound injured_in edges from multiligament-knee-injury
+- **Reason:** Core diagnosis neighborhoods require standard clinical relationship patterns.
+- **Impact:** -15
+- **Fix:** Add injured_in relationship via relationship-builder agent.
+
+### [CRITICAL] Missing decision point pattern: emergency_escalation
+
+- **Evidence:** 0 decision points with pattern emergency_escalation
+- **Reason:** Fracture neighborhoods require branching operative vs nonoperative pathways.
+- **Impact:** -15
+- **Fix:** Add emergency_escalation decision point with attending-gated review.
+
+### [CRITICAL] 5 critical/high ontology gaps remain unresolved
+
+- **Evidence:** publication-readiness.json blockers
+- **Reason:** Publication gate identified blocking condition.
+- **Impact:** -15
+- **Fix:** [high] Multiligament Knee Injury Classification neighborhood has 0/2 classification_grade entities.
+
+### [HIGH] 1 merge conflicts detected
+
+- **Evidence:** conflict-report.json: Conflicting DP pattern multiligament-knee-injury|operative_indication: dp-multiligamentkneeinjury-operative-indication vs dp-multiligamentkneeinjury-vascular-emergency
+- **Reason:** Unresolved merge conflicts indicate inconsistent agent outputs.
+- **Impact:** -8
+- **Fix:** Run conflict-resolver agent and reconcile metadata/text conflicts.
+
+### [HIGH] 5 high-risk relationships lack approved review status
+
+- **Evidence:** Predicates: indicates_treatment, at_risk_structure, treated_by
+- **Reason:** High-risk predicates require human review before publication.
+- **Impact:** -8
+- **Fix:** Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.
+
+## Prioritized Recommendations
+
+1. **[Ontology Completeness]** Resolve critical gaps via assigned factory agents before publication review. — _2 critical ontology gaps remain_
+2. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
+3. **[Graph Integrity]** Create missing entities or remove invalid relationship proposals. — _12 dangling edges reference missing entities_
+4. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
+5. **[Decision Points]** Add emergency_escalation decision point with attending-gated review. — _Missing decision point pattern: emergency_escalation_
+6. **[Publication Readiness]** [high] Multiligament Knee Injury Classification neighborhood has 0/2 classification_grade entities. — _5 critical/high ontology gaps remain unresolved_
+7. **[Graph Integrity]** Run conflict-resolver agent and reconcile metadata/text conflicts. — _1 merge conflicts detected_
+8. **[Relationship Quality]** Route at_risk_structure, treated_by, and indicates_treatment edges to attending review. — _5 high-risk relationships lack approved review status_
+9. **[Claim Quality]** Route claims through human review queue before publication. — _All claims remain generated_draft_
+10. **[Claim Quality]** Attach evidence_refs from evidence packet to each claim proposal. — _Insufficient evidence support on claim proposals_
+
+## Data Source
+
+- Neighborhood: merged_draft
+- Reports loaded: 13
+- Reports missing: none
+
+## Constraints
+
+- Database modified: **no**
+- Content generated: **no**
+- Auto-approved: **no**
+

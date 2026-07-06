@@ -1,0 +1,39 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 77,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from distal-radius-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "distal-radius-fracture"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "7 high-risk relationships lack approved review status",
+      "evidence": "Predicates: at_risk_structure, treated_by, uses_fixation, indicates_treatment, explains_instability",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 23,
+    "relationshipDensity": 1.6428571428571428,
+    "missingClinicalEdgeCount": 1,
+    "highRiskUnreviewedCount": 7,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Add has_classification relationship via relationship-builder agent.",
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

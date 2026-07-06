@@ -1,0 +1,121 @@
+{
+  "topicKey": "achilles-tendon-rupture",
+  "pilotKey": "achilles-tendon-rupture-neighborhood",
+  "primaryEntitySlug": "achilles-tendon-rupture",
+  "displayName": "Achilles Tendon Rupture",
+  "generatedAt": "2026-07-05T23:13:25.059Z",
+  "nodes": [
+    {
+      "slug": "achilles-tendon-rupture-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Achilles Tendon Rupture MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "chronic-lateral-ankle-instability",
+      "entityType": "condition",
+      "preferredLabel": "Chronic Lateral Ankle Instability",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "achilles-tendon-rupture-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Achilles Tendon Rupture Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "achilles-tendon-rupture",
+      "entityType": "condition",
+      "preferredLabel": "Achilles Tendon Rupture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "osteochondral-lesion-talus",
+      "entityType": "condition",
+      "preferredLabel": "Osteochondral Lesion Talus",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "achilles-tendon-rupture-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Achilles Tendon Rupture Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "achilles-tendon-rupture-complication",
+      "entityType": "complication",
+      "preferredLabel": "Achilles Tendon Rupture Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "achilles-tendon-rupture-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Achilles Tendon Rupture Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "achilles-tendon-rupture-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Achilles Tendon Rupture Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "achilles-tendon-rupture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "achilles-tendon-rupture-reconstruction"
+    ],
+    "classification": [
+      "achilles-tendon-rupture-classification"
+    ],
+    "imaging": [
+      "achilles-tendon-rupture-mri-finding"
+    ],
+    "complication": [
+      "achilles-tendon-rupture-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "chronic-lateral-ankle-instability",
+      "osteochondral-lesion-talus",
+      "achilles-tendon-rupture-rehab-protocol",
+      "achilles-tendon-rupture-exam-maneuver"
+    ]
+  }
+}

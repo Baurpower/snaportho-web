@@ -1,0 +1,786 @@
+{
+  "generatedAt": "2026-07-05T22:51:16.372Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-8444ae54",
+  "gapsAddressed": 4,
+  "gapsScheduled": 4,
+  "claimsGenerated": 8,
+  "claimsRejected": 6,
+  "redirectedToDecisionPoint": 4,
+  "candidates": [
+    {
+      "draftId": "claim-biofilm-concept-fact-recognize-core-concepts-",
+      "claimText": "Recognize core concepts in Hip Prosthetic Joint Infection.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-0af36467"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-anatomy_pearl-connect-hip-prosthetic-j",
+      "claimText": "Connect Hip Prosthetic Joint Infection to shared anatomy, implant concepts, and trauma neighborhoods.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-0af36467"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-clinical_script-outline-attending-level-",
+      "claimText": "Outline attending-level review priorities for Hip Prosthetic Joint Infection.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-0af36467"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimText": "Hip and knee joint surfaces.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-anatomy_pearl-extensor-mechanism",
+      "claimText": "Extensor mechanism.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-anatomy_pearl-implant-bone-interfaces",
+      "claimText": "Implant-bone interfaces.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-hip-reconstruction-class",
+      "claimText": "Hip Reconstruction classification frameworks.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-imaging_point-weight-bearing-radiograp",
+      "claimText": "Weight-bearing radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.imaging",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-imaging_point-periprosthetic-lucency-a",
+      "claimText": "Periprosthetic lucency and osteolysis patterns.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.imaging",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-board_trap-hip-pji-workup-requires-",
+      "claimText": "Hip PJI workup requires structured labs, aspiration, and timeline-based treatment planning.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.boardPearls",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7414999999999999,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-infection",
+      "claimText": "Infection.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-loosening",
+      "claimText": "Loosening.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-instability",
+      "claimText": "Instability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-periprosthetic-fracture",
+      "claimText": "Periprosthetic fracture.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-hip-prosthetic-joint-inf",
+      "claimText": "Hip Prosthetic Joint Infection indication language.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-implant-and-fixation-voc",
+      "claimText": "Implant and fixation vocabulary.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-cross-neighborhood-traum",
+      "claimText": "Cross-neighborhood trauma links.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-anatomy_pearl-shared-adult-reconstruct",
+      "claimText": "Shared adult reconstruction anatomy hub.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-anatomy_pearl-implant-concepts-hub",
+      "claimText": "Implant concepts hub.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-anatomy_pearl-trauma-neighborhood-brid",
+      "claimText": "Trauma neighborhood bridges.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-biofilm-concept-fact-hip-pji-workup-requires-",
+      "claimText": "Hip PJI workup requires structured labs, aspiration, and timeline-based treatment planning.",
+      "claimType": "fact",
+      "primaryEntitySlug": "biofilm-concept",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-cognitive_trap-use-implant-component-vo",
+      "claimText": "Use implant component vocabulary.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7414999999999999,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-cognitive_trap-mention-infection-workup",
+      "claimText": "Mention infection workup when pain is unexplained.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7414999999999999,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-clinical_script-state-indication",
+      "claimText": "State indication.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-imaging_point-review-imaging",
+      "claimText": "Review imaging.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-clinical_script-name-implant-fixation-co",
+      "claimText": "Name implant/fixation concepts.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-hip-prosthetic-joint-infection-clinical_script-outline-escalation-pathw",
+      "claimText": "Outline escalation pathway.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "hip-prosthetic-joint-infection",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Symptoms, implant stability, bone quality, infection exclusion",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ]
+    },
+    {
+      "text": "Nonoperative care",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ]
+    },
+    {
+      "text": "Primary arthroplasty",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ]
+    },
+    {
+      "text": "Revision and staged strategies",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ]
+    },
+    {
+      "text": "What drives management in Hip Prosthetic Joint Infection?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ]
+    },
+    {
+      "text": "When does this become a revision problem?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-56cc7230"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-biofilm-concept-fact-recognize-core-concepts-",
+      "draftId": "claim-biofilm-concept-fact-recognize-core-concepts-",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-0af36467"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-biofilm-concept-fact-hip-reconstruction-class",
+      "draftId": "claim-biofilm-concept-fact-hip-reconstruction-class",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-biofilm-concept-anatomy_pearl-connect-hip-prosthetic-j",
+      "draftId": "claim-biofilm-concept-anatomy_pearl-connect-hip-prosthetic-j",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-0af36467"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-biofilm-concept-fact-infection",
+      "draftId": "claim-biofilm-concept-fact-infection",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-biofilm-concept-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-biofilm-concept-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-biofilm-concept-anatomy_pearl-extensor-mechanism",
+      "draftId": "claim-biofilm-concept-anatomy_pearl-extensor-mechanism",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-biofilm-concept-anatomy_pearl-implant-bone-interfaces",
+      "draftId": "claim-biofilm-concept-anatomy_pearl-implant-bone-interfaces",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-biofilm-concept-fact-loosening",
+      "draftId": "claim-biofilm-concept-fact-loosening",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-56c92aa4"
+      ],
+      "verified": false
+    }
+  ]
+}

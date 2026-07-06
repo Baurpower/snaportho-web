@@ -12,17 +12,30 @@ function isUnreadCountResponse(
   return Boolean(payload && "count" in payload && typeof payload.count === "number");
 }
 
-export function useUnreadNotificationCount() {
+function buildUnreadCountUrl(programId: string) {
+  const searchParams = new URLSearchParams();
+  searchParams.set("programId", programId);
+  return `/api/workspace/notifications/unread-count?${searchParams.toString()}`;
+}
+
+export function useUnreadNotificationCount(params?: {
+  programId?: string | null;
+}) {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
+    if (!params?.programId) {
+      setCount(0);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/workspace/notifications/unread-count", {
+      const response = await fetch(buildUnreadCountUrl(params.programId), {
         credentials: "include",
         cache: "no-store",
       });
@@ -44,11 +57,21 @@ export function useUnreadNotificationCount() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [params?.programId]);
 
   useEffect(() => {
+    setCount(0);
+    setError(null);
+  }, [params?.programId]);
+
+  useEffect(() => {
+    if (!params?.programId) {
+      setLoading(false);
+      return;
+    }
+
     void refresh();
-  }, [refresh]);
+  }, [params?.programId, refresh]);
 
   return {
     count,

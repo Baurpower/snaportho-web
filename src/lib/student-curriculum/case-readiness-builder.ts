@@ -5,6 +5,12 @@ import {
   getTopicById,
   getTrackById,
 } from "@/lib/student-curriculum/curriculum-recommendations";
+import {
+  buildProcedurePrepModules,
+  type ProcedurePrepModule,
+} from "@/lib/student-curriculum/procedure-prep-modules";
+import { buildTopicBrobotActions } from "@/lib/student-curriculum/topic-brobot-actions";
+import type { StudentCasePrepContext } from "@/lib/student-curriculum/student-caseprep-context";
 import type {
   CurriculumRecommendation,
   CurriculumTopic,
@@ -101,6 +107,9 @@ export type CaseReadinessSession = {
   title: string;
   subtitle: string;
   objectives: CaseReadinessObjective[];
+  prepModules: ProcedurePrepModule[];
+  topicBrobotActions: CaseReadinessBrobotAction[];
+  casePrepContext: StudentCasePrepContext;
   relatedTopics: CurriculumTopic[];
   nextRecommendedTopic?: CurriculumRecommendation;
   nextTopicId?: string;
@@ -635,6 +644,8 @@ export function buildCaseReadinessSession(
   mode: StudyMode,
   options?: {
     selectedMinutes?: number;
+    completedTopicIds?: string[];
+    casePrepContext?: StudentCasePrepContext;
   }
 ): CaseReadinessSession | null {
   const topic = getTopicById(topicId);
@@ -651,12 +662,22 @@ export function buildCaseReadinessSession(
   const deepTemplate = getStudyTemplate(topicId, "deep") ?? topic.deepStudyTemplate;
   const selectedMinutes = resolveCaseReadinessMinutes(mode, options?.selectedMinutes);
   const relatedTopics = getRelatedTopics(topicId).slice(0, 4);
+  const completedTopicIds = options?.completedTopicIds ?? [];
   const nextRecommendedTopic = getRecommendedNextTopics({
     currentTopicId: topicId,
     trackId: topic.trackId,
-    completedTopicIds: [topicId],
+    completedTopicIds,
     limit: 1,
   })[0];
+  const casePrepContext =
+    options?.casePrepContext ?? {
+      status: "unavailable" as const,
+      slug: null,
+      title: null,
+      message:
+        "Certified CasePrep content is unavailable for this topic. This session uses the student curriculum templates.",
+      sections: [],
+    };
   const context: ObjectiveBuildContext = {
     topic,
     track,
@@ -666,8 +687,13 @@ export function buildCaseReadinessSession(
     deepTemplate,
   };
 
-  // TODO: This builder now mixes curriculum metadata with product workflow assembly.
-  // If the session shape grows further, consider moving it under student-workspace.
+  const prepModules = buildProcedurePrepModules({
+    topic,
+    fastTemplate,
+    deepTemplate,
+    certifiedSections: casePrepContext.sections,
+  }).filter((module) => module.hasContent);
+
   return {
     topic,
     track,
@@ -683,6 +709,14 @@ export function buildCaseReadinessSession(
       mode === "deep"
         ? buildDeepObjectives(context)
         : buildFastObjectives(context),
+    prepModules,
+    topicBrobotActions: buildTopicBrobotActions({
+      topic,
+      track,
+      studyMode: mode,
+      selectedMinutes,
+    }),
+    casePrepContext,
     relatedTopics,
     nextRecommendedTopic,
     nextTopicId: nextRecommendedTopic?.topic.id,

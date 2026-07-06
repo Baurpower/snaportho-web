@@ -1,0 +1,291 @@
+{
+  "topicKey": "supracondylar-humerus-fracture",
+  "pilotKey": "supracondylar-humerus-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 64,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 64
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|classification_system|gartland-classification",
+      "reason": "entity exists: gartland-classification"
+    },
+    {
+      "fingerprint": "create|imaging_finding|extension-type-supracondylar-fracture",
+      "reason": "entity exists: extension-type-supracondylar-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|olecranon-fossa",
+      "reason": "entity exists: olecranon-fossa"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-humerus",
+      "reason": "entity exists: distal-humerus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lateral-column",
+      "reason": "entity exists: lateral-column"
+    },
+    {
+      "fingerprint": "create|procedure|supracondylar-percutaneous-pinning",
+      "reason": "entity exists: supracondylar-percutaneous-pinning"
+    },
+    {
+      "fingerprint": "create|complication|cubitus-varus",
+      "reason": "entity exists: cubitus-varus"
+    },
+    {
+      "fingerprint": "create|imaging_finding|pulseless-supracondylar-hand",
+      "reason": "entity exists: pulseless-supracondylar-hand"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|capitellum",
+      "reason": "entity exists: capitellum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|median-nerve",
+      "reason": "entity exists: median-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|upper-extremity-trauma-anatomy-hub",
+      "reason": "entity exists: upper-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|medial-column",
+      "reason": "entity exists: medial-column"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|humeral-shaft",
+      "reason": "entity exists: humeral-shaft"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|brachial-artery",
+      "reason": "entity exists: brachial-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|elbow-joint",
+      "reason": "entity exists: elbow-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ac-joint",
+      "reason": "entity exists: ac-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|clavicle",
+      "reason": "entity exists: clavicle"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|surgical-neck",
+      "reason": "entity exists: surgical-neck"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-humerus",
+      "reason": "entity exists: proximal-humerus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|humeral-head",
+      "reason": "entity exists: humeral-head"
+    },
+    {
+      "fingerprint": "create|condition|supracondylar-humerus-fracture",
+      "reason": "entity exists: supracondylar-humerus-fracture"
+    },
+    {
+      "fingerprint": "create|complication|supracondylar-nerve-palsy",
+      "reason": "entity exists: supracondylar-nerve-palsy"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-nerve",
+      "reason": "entity exists: radial-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|trochlea",
+      "reason": "entity exists: trochlea"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|anterior-interosseous-nerve",
+      "reason": "entity exists: anterior-interosseous-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sternoclavicular-joint",
+      "reason": "entity exists: sternoclavicular-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-nerve",
+      "reason": "entity exists: ulnar-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|axillary-nerve",
+      "reason": "entity exists: axillary-nerve"
+    },
+    {
+      "fingerprint": "rel|distal-humerus|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|clavicle|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sternoclavicular-joint|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|axillary-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|medial-column|part_of|distal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|brachial-artery|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|humeral-head|part_of|proximal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|capitellum|articulates_with|elbow-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-percutaneous-pinning|involves_anatomy|distal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|radial-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ulnar-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|clavicle|articulates_with|sternoclavicular-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|elbow-joint|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|anterior-interosseous-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|surgical-neck|part_of|proximal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-humerus-fracture|involves_anatomy|elbow-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-humerus-fracture|injured_in|distal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|trochlea|part_of|medial-column",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|supracondylar-humerus-fracture",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-humerus-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-humerus-fracture|has_imaging_finding|pulseless-supracondylar-hand",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-humerus-fracture|has_complication|supracondylar-nerve-palsy",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-humerus-fracture|has_imaging_finding|extension-type-supracondylar-fracture",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-humerus-fracture|has_classification|gartland-classification",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supracondylar-humerus-fracture|has_complication|cubitus-varus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|capitellum|part_of|lateral-column",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|median-nerve|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|trochlea|articulates_with|elbow-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ac-joint|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|proximal-humerus|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|clavicle|articulates_with|ac-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|humeral-shaft|part_of|upper-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lateral-column|part_of|distal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|olecranon-fossa|part_of|distal-humerus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|pediatrics-supracondylar-fracture-pediatric|supracondylar-humerus-fracture",
+      "reason": "bridge exists"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  },
+  "cumulativeApply": {
+    "entities": 27,
+    "relationships": 34,
+    "bridges": 1,
+    "claims_draft": 2,
+    "applyPasses": 2,
+    "note": "Pass 1 created entities/shared anatomy; pass 2 resolved cross-slug relationships"
+  }
+}

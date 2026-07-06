@@ -1,3 +1,4 @@
+import { CURRICULUM_EXPANSION_SEEDS } from '@/lib/student-curriculum/curriculum-expansion-seeds';
 import type {
   CurriculumCase,
   CurriculumTopic,
@@ -2308,6 +2309,7 @@ const TOPIC_SEEDS: TopicSeed[] = [
       selfCheckQuestions: ['What belongs in every fracture consult presentation?', 'What detail should never be omitted?'],
     },
   },
+  ...CURRICULUM_EXPANSION_SEEDS,
 ];
 
 export const CURRICULUM_TOPICS: CurriculumTopic[] = TOPIC_SEEDS.map(createTopic);
@@ -2331,8 +2333,14 @@ export const CURRICULUM_TRACKS: CurriculumTrack[] = [
       'ankle-fracture',
       'hip-fracture',
       'tibial-shaft-fracture',
+      'tibial-plateau-fracture',
+      'pilon-fracture',
+      'pelvic-fracture',
+      'acetabulum-fracture',
+      'external-fixation',
       'compartment-syndrome',
       'open-fractures',
+      'polytrauma',
     ],
   },
   {
@@ -2348,6 +2356,7 @@ export const CURRICULUM_TRACKS: CurriculumTrack[] = [
       'rotator-cuff-tear',
       'shoulder-instability',
       'achilles-tendon-rupture',
+      'cartilage-restoration',
     ],
   },
   {
@@ -2363,6 +2372,8 @@ export const CURRICULUM_TRACKS: CurriculumTrack[] = [
       'total-hip-arthroplasty',
       'total-knee-arthroplasty',
       'periprosthetic-joint-infection',
+      'revision-arthroplasty',
+      'periprosthetic-fracture',
     ],
   },
   {
@@ -2405,8 +2416,12 @@ export const CURRICULUM_TRACKS: CurriculumTrack[] = [
     topicIds: [
       'lumbar-disc-herniation',
       'lumbar-spinal-stenosis',
+      'lumbar-decompression',
       'cervical-myelopathy',
+      'cervical-trauma',
       'cauda-equina-syndrome',
+      'acdf',
+      'tlif',
       'adult-spinal-deformity',
     ],
   },
@@ -2442,7 +2457,7 @@ export const CURRICULUM_TRACKS: CurriculumTrack[] = [
   },
   {
     id: 'tumor',
-    title: 'Tumor',
+    title: 'Oncology',
     description: 'Common lesion workups, oncologic guardrails, and durable-fixation thinking for bone disease.',
     rotationRelevance: 'Helpful for oncology clinic, inpatient lesion consults, and “do not biopsy casually” situations.',
     iconName: 'scan-search',
@@ -2457,8 +2472,8 @@ export const CURRICULUM_TRACKS: CurriculumTrack[] = [
   },
   {
     id: 'basic-science',
-    title: 'Basic Science',
-    description: 'Core orthopaedic biology and biomechanics that make clinical reasoning easier.',
+    title: 'Basic Science / OITE Review',
+    description: 'Core orthopaedic biology, biomechanics, and high-yield OITE review topics.',
     rotationRelevance: 'Best as pre-rotation groundwork or quick review before cases and teaching rounds.',
     iconName: 'atom',
     suggestedStartTopicId: 'fracture-healing',

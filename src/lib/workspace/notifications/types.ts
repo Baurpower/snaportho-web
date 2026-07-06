@@ -14,7 +14,7 @@ export type NotificationDeliveryPreference =
 
 export type WorkspaceNotification = {
   id: string;
-  program_id: string | null;
+  program_id: string;
   recipient_user_id: string;
   recipient_roster_id: string | null;
   actor_user_id: string | null;
@@ -33,7 +33,7 @@ export type WorkspaceNotification = {
 };
 
 export type CreateWorkspaceNotificationInput = {
-  programId?: string | null;
+  programId: string;
   recipientUserId: string;
   recipientRosterId?: string | null;
   actorUserId?: string | null;

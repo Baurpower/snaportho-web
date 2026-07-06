@@ -1,0 +1,90 @@
+{
+  "topicKey": "proximal-biceps-tendon-pathology",
+  "pilotKey": "proximal-biceps-tendon-pathology-neighborhood",
+  "primaryEntitySlug": "proximal-biceps-tendon-pathology",
+  "displayName": "Proximal Biceps Tendon Pathology",
+  "generatedAt": "2026-07-05T23:05:07.622Z",
+  "nodes": [
+    {
+      "slug": "proximal-biceps-tendon-pathology-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Proximal Biceps Tendon Pathology Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-biceps-tendon-pathology-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Proximal Biceps Tendon Pathology Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-biceps-tendon-pathology-complication",
+      "entityType": "complication",
+      "preferredLabel": "Proximal Biceps Tendon Pathology Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-biceps-tendon-pathology-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Proximal Biceps Tendon Pathology Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-biceps-tendon-pathology-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Proximal Biceps Tendon Pathology MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-biceps-tendon-pathology-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Proximal Biceps Tendon Pathology Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "proximal-biceps-tendon-pathology-reconstruction"
+    ],
+    "classification": [
+      "proximal-biceps-tendon-pathology-classification"
+    ],
+    "imaging": [
+      "proximal-biceps-tendon-pathology-mri-finding"
+    ],
+    "complication": [
+      "proximal-biceps-tendon-pathology-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "proximal-biceps-tendon-pathology-exam-maneuver",
+      "proximal-biceps-tendon-pathology-rehab-protocol"
+    ]
+  }
+}

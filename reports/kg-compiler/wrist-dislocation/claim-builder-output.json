@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-07-05T23:06:38.152Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-79655119",
+  "gapsAddressed": 4,
+  "gapsScheduled": 5,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-wrist-dislocation-cognitive-trap",
+      "draftId": "claim-wrist-dislocation-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-1754b45c",
+        "ev-quality-signal-9432b4da"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-wrist-dislocation-imaging",
+      "draftId": "claim-wrist-dislocation-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-1754b45c",
+        "ev-quality-signal-9432b4da"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-wrist-dislocation-mechanism",
+      "draftId": "claim-wrist-dislocation-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-1754b45c",
+        "ev-quality-signal-9432b4da"
+      ],
+      "verified": false
+    }
+  ]
+}

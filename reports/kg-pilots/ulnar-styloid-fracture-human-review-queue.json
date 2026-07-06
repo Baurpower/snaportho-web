@@ -1,0 +1,488 @@
+[
+  {
+    "proposal_fingerprint": "rel|ulnar-styloid-fracture|differential_for|distal-radius-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "ulnar-styloid-fracture -[differential_for]-> distal-radius-fracture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ulnar-styloid-fracture|differential_for|distal-radius-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ulnar-styloid-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "distal-radius-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ulnar-styloid-fracture|differential_for|druj-instability",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "ulnar-styloid-fracture -[differential_for]-> druj-instability",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ulnar-styloid-fracture|differential_for|druj-instability",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ulnar-styloid-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "druj-instability",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|ulnar-styloid-fracture|differential_for|tfcc-injury",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "ulnar-styloid-fracture -[differential_for]-> tfcc-injury",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|ulnar-styloid-fracture|differential_for|tfcc-injury",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "ulnar-styloid-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "tfcc-injury",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ulnar-styloid-fracture-mechanism",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ulnar-styloid-fracture-mechanism",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist-cluster-definitions.ts / distal-radius-wrist-trauma",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ulnar-styloid-fracture-mechanism",
+      "claim_type": "fact",
+      "claim_text": "Ulnar Styloid Fracture evaluation should anchor on mechanism, focused exam, and the anatomic structures most at risk (distal-ulna, tfcc, druj).",
+      "primary_entity_slug": "ulnar-styloid-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ulnar-styloid-fracture-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ulnar-styloid-fracture-board-trap",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ulnar-styloid-fracture-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Missing distal-ulna assessment in ulnar styloid fracture is a common board and OITE trap.",
+      "primary_entity_slug": "distal-ulna",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ulnar-styloid-fracture-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ulnar-styloid-fracture-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "cross-neighborhood connectivity requirement",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ulnar-styloid-fracture-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Treating ulnar styloid fracture in isolation without checking related wrist, tendon, or nerve neighborhoods in the cluster.",
+      "primary_entity_slug": "ulnar-styloid-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ulnar-styloid-fracture-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ulnar-styloid-fracture-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rotation script",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ulnar-styloid-fracture-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Document neurovascular status, key anatomic structures (distal-ulna, tfcc, druj), stability assessment, and escalation plan for ulnar styloid fracture.",
+      "primary_entity_slug": "ulnar-styloid-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ulnar-styloid-fracture-imaging",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ulnar-styloid-fracture-imaging",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ulnar-styloid-fracture-imaging",
+      "claim_type": "imaging_point",
+      "claim_text": "Obtain appropriate hand/wrist imaging for ulnar styloid fracture and explicitly comment on articular alignment and adjacent joint stability.",
+      "primary_entity_slug": "ulnar-styloid-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-ulnar-styloid-fracture-rehab",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-ulnar-styloid-fracture-rehab",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rehabilitation concept",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ulnar-styloid-fracture-rehab",
+      "claim_type": "rehab_pearl",
+      "claim_text": "Early protected motion and therapy goals for ulnar styloid fracture should align with tendon, ligament, and joint stability constraints.",
+      "primary_entity_slug": "ulnar-styloid-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-ulnar-styloid-fracture-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-ulnar-styloid-fracture-operative",
+    "alternatives": [],
+    "evidence_summary": "operative routing → ATTENDING_REVIEW",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-ulnar-styloid-fracture-operative",
+      "subject_entity_slug": "ulnar-styloid-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Unstable pattern, displacement, failed closed treatment, or functional deficit in ulnar styloid fracture",
+      "action": "Proceed with operative pathway when indicated; document fixation strategy, tendon/nerve protection, and postoperative plan",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-ulnar-styloid-fracture-nonoperative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-ulnar-styloid-fracture-nonoperative",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand nonoperative pathway",
+    "metadata": {
+      "pilot": "ulnar-styloid-fracture-neighborhood",
+      "review_packet_key": "pilot:ulnar-styloid-fracture-neighborhood",
+      "review_packet_label": "Ulnar Styloid Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-ulnar-styloid-fracture-nonoperative",
+      "subject_entity_slug": "ulnar-styloid-fracture",
+      "pattern_type": "nonoperative_eligible",
+      "trigger": "Stable pattern with acceptable alignment and intact neurovascular exam for ulnar styloid fracture",
+      "action": "Splint/immobilize with therapy plan, repeat exam and imaging, and clear return precautions",
+      "urgency": "routine",
+      "safety_criticality": "none",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:48:38.781Z"
+    }
+  }
+]

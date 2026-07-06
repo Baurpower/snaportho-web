@@ -1,0 +1,439 @@
+[
+  {
+    "proposal_fingerprint": "claim|claim-adverse-local-tissue-reaction-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8525000000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.853 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "adverse-local-tissue-reaction-neighborhood",
+      "draft_id": "claim-adverse-local-tissue-reaction-board-trap",
+      "verified": false,
+      "claim_text": "Board trap: oversimplifying adverse local tissue reaction without attending-level implant, fixation, or infection context.",
+      "claim_type": "board_trap",
+      "curated_at": "2026-07-05T23:00:26.085Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6599999999999999,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L1",
+      "context_relevance": [
+        "oite"
+      ],
+      "review_packet_key": "pilot:adverse-local-tissue-reaction-neighborhood",
+      "primary_entity_slug": "adverse-local-tissue-reaction",
+      "review_packet_label": "Adverse Local Tissue Reaction (Metal Reaction) Neighborhood"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-adverse-local-tissue-reaction-core",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8525000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.853 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+    "metadata": {
+      "pilot": "adverse-local-tissue-reaction-neighborhood",
+      "draft_id": "claim-adverse-local-tissue-reaction-core",
+      "verified": false,
+      "claim_text": "ALTR requires metal ion workup and soft tissue assessment before revision planning.",
+      "claim_type": "fact",
+      "curated_at": "2026-07-05T23:00:26.085Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6599999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L1",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "review_packet_key": "pilot:adverse-local-tissue-reaction-neighborhood",
+      "primary_entity_slug": "adverse-local-tissue-reaction",
+      "review_packet_label": "Adverse Local Tissue Reaction (Metal Reaction) Neighborhood"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-adverse-local-tissue-reaction-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.8525000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.853 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "adverse-local-tissue-reaction-neighborhood",
+      "draft_id": "claim-adverse-local-tissue-reaction-script",
+      "verified": false,
+      "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for adverse local tissue reaction.",
+      "claim_type": "clinical_script",
+      "curated_at": "2026-07-05T23:00:26.085Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6599999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L2",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "review_packet_key": "pilot:adverse-local-tissue-reaction-neighborhood",
+      "primary_entity_slug": "adverse-local-tissue-reaction",
+      "review_packet_label": "Adverse Local Tissue Reaction (Metal Reaction) Neighborhood"
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-metal-ion-elevation-fact-adverse-local-tissue-rea",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-d0f9250e",
+    "metadata": {
+      "pilot": "adverse-local-tissue-reaction-neighborhood",
+      "draft_id": "claim-metal-ion-elevation-fact-adverse-local-tissue-rea",
+      "claim_type": "fact",
+      "claim_text": "Adverse Local Tissue Reaction (Metal Reaction) indication language.",
+      "primary_entity_slug": "metal-ion-elevation",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-d0f9250e"
+      ],
+      "evidence_packet_id": "ev-packet-63b2576a",
+      "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:00:26.085Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-metal-ion-elevation-fact-cross-neighborhood-traum",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-d0f9250e",
+    "metadata": {
+      "pilot": "adverse-local-tissue-reaction-neighborhood",
+      "draft_id": "claim-metal-ion-elevation-fact-cross-neighborhood-traum",
+      "claim_type": "fact",
+      "claim_text": "Cross-neighborhood trauma links.",
+      "primary_entity_slug": "metal-ion-elevation",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-d0f9250e"
+      ],
+      "evidence_packet_id": "ev-packet-63b2576a",
+      "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:00:26.085Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-metal-ion-elevation-fact-implant-and-fixation-voc",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-d0f9250e",
+    "metadata": {
+      "pilot": "adverse-local-tissue-reaction-neighborhood",
+      "draft_id": "claim-metal-ion-elevation-fact-implant-and-fixation-voc",
+      "claim_type": "fact",
+      "claim_text": "Implant and fixation vocabulary.",
+      "primary_entity_slug": "metal-ion-elevation",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-d0f9250e"
+      ],
+      "evidence_packet_id": "ev-packet-63b2576a",
+      "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:00:26.085Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-metal-ion-elevation-fact-recognize-core-concepts-",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-1edb5219",
+    "metadata": {
+      "pilot": "adverse-local-tissue-reaction-neighborhood",
+      "draft_id": "claim-metal-ion-elevation-fact-recognize-core-concepts-",
+      "claim_type": "fact",
+      "claim_text": "Recognize core concepts in Adverse Local Tissue Reaction (Metal Reaction).",
+      "primary_entity_slug": "metal-ion-elevation",
+      "importance_level": "L3",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-1edb5219"
+      ],
+      "evidence_packet_id": "ev-packet-63b2576a",
+      "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:00:26.085Z"
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-adverse-local-tissue-reaction-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8400000000000001,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "adverse-local-tissue-reaction-neighborhood",
+      "action": "Discuss revision to alternate bearing with attending and assess soft tissue destruction",
+      "trigger": "Painful MoM THA with elevated metal ions or pseudotumor",
+      "urgency": "routine",
+      "draft_id": "dp-adverse-local-tissue-reaction-operative",
+      "verified": false,
+      "curated_at": "2026-07-05T23:00:26.085Z",
+      "pattern_type": "operative_indication",
+      "content_source": "generated_draft",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6599999999999999,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:adverse-local-tissue-reaction-neighborhood",
+      "safety_criticality": "moderate",
+      "review_packet_label": "Adverse Local Tissue Reaction (Metal Reaction) Neighborhood",
+      "subject_entity_slug": "adverse-local-tissue-reaction",
+      "requires_attending_review": true
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dup:label:adverse-local-tissue-reaction",
+    "proposal_type": "flag_duplicate_entity",
+    "route": "HUMAN_REVIEW",
+    "target": "adverse local tissue reaction",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.7725000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: low_confidence_or_high_ambiguity",
+      "Composite confidence 0.773 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review flag_duplicate_entity (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Duplicate labels map to slugs: adverse-local-tissue-reaction, adverse-local-tissue-reaction",
+    "metadata": {
+      "duplicate_slugs": [
+        "adverse-local-tissue-reaction",
+        "adverse-local-tissue-reaction"
+      ],
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.7224999999999999,
+        "evidence": 0.7,
+        "ambiguity": 0.65,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "low_confidence_or_high_ambiguity"
+      ],
+      "curated_at": "2026-07-05T23:00:26.085Z",
+      "verified": false
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  }
+]

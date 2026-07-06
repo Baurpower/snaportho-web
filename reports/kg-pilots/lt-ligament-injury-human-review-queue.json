@@ -1,0 +1,445 @@
+[
+  {
+    "proposal_fingerprint": "rel|lt-ligament-injury|differential_for|carpal-instability",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "lt-ligament-injury -[differential_for]-> carpal-instability",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lt-ligament-injury|differential_for|carpal-instability",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lt-ligament-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "carpal-instability",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:40:12.101Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|lt-ligament-injury|differential_for|tfcc-injury",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "lt-ligament-injury -[differential_for]-> tfcc-injury",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lt-ligament-injury|differential_for|tfcc-injury",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lt-ligament-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "tfcc-injury",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:40:12.101Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|lt-ligament-injury|differential_for|perilunate-dislocation",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "lt-ligament-injury -[differential_for]-> perilunate-dislocation",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lt-ligament-injury|differential_for|perilunate-dislocation",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lt-ligament-injury",
+      "subject_entity_type": "condition",
+      "object_slug": "perilunate-dislocation",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:40:12.101Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lt-ligament-injury-mechanism",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lt-ligament-injury-mechanism",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist-cluster-definitions.ts / carpal-trauma",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lt-ligament-injury-mechanism",
+      "claim_type": "fact",
+      "claim_text": "LT Ligament Injury evaluation should anchor on mechanism, focused exam, and the anatomic structures most at risk (lunotriquetral-ligament, lunate, triquetrum).",
+      "primary_entity_slug": "lt-ligament-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:40:12.102Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lt-ligament-injury-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lt-ligament-injury-board-trap",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lt-ligament-injury-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Missing lunotriquetral-ligament assessment in lt ligament injury is a common board and OITE trap.",
+      "primary_entity_slug": "lunotriquetral-ligament",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:40:12.102Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lt-ligament-injury-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lt-ligament-injury-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "cross-neighborhood connectivity requirement",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lt-ligament-injury-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Treating lt ligament injury in isolation without checking related wrist, tendon, or nerve neighborhoods in the cluster.",
+      "primary_entity_slug": "lt-ligament-injury",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:40:12.102Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lt-ligament-injury-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lt-ligament-injury-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rotation script",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lt-ligament-injury-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Document neurovascular status, key anatomic structures (lunotriquetral-ligament, lunate, triquetrum), stability assessment, and escalation plan for lt ligament injury.",
+      "primary_entity_slug": "lt-ligament-injury",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:40:12.102Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lt-ligament-injury-imaging",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lt-ligament-injury-imaging",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lt-ligament-injury-imaging",
+      "claim_type": "imaging_point",
+      "claim_text": "Obtain appropriate hand/wrist imaging for lt ligament injury and explicitly comment on articular alignment and adjacent joint stability.",
+      "primary_entity_slug": "lt-ligament-injury",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:40:12.102Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lt-ligament-injury-rehab",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lt-ligament-injury-rehab",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rehabilitation concept",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lt-ligament-injury-rehab",
+      "claim_type": "rehab_pearl",
+      "claim_text": "Early protected motion and therapy goals for lt ligament injury should align with tendon, ligament, and joint stability constraints.",
+      "primary_entity_slug": "lt-ligament-injury",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:40:12.102Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-lt-ligament-injury-nonoperative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-lt-ligament-injury-nonoperative",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand nonoperative pathway",
+    "metadata": {
+      "pilot": "lt-ligament-injury-neighborhood",
+      "review_packet_key": "pilot:lt-ligament-injury-neighborhood",
+      "review_packet_label": "LT Ligament Injury Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-lt-ligament-injury-nonoperative",
+      "subject_entity_slug": "lt-ligament-injury",
+      "pattern_type": "nonoperative_eligible",
+      "trigger": "Stable pattern with acceptable alignment and intact neurovascular exam for lt ligament injury",
+      "action": "Splint/immobilize with therapy plan, repeat exam and imaging, and clear return precautions",
+      "urgency": "routine",
+      "safety_criticality": "none",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:40:12.102Z"
+    }
+  }
+]

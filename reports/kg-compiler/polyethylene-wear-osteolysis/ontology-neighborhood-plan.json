@@ -1,0 +1,47 @@
+{
+  "topicKey": "polyethylene-wear-osteolysis",
+  "pilotKey": "polyethylene-wear-osteolysis-neighborhood",
+  "primaryEntitySlug": "polyethylene-wear-osteolysis",
+  "displayName": "Polyethylene Wear and Osteolysis",
+  "generatedAt": "2026-07-05T22:57:46.711Z",
+  "nodes": [
+    {
+      "slug": "focal-osteolysis",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Focal Periprosthetic Osteolysis",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "particulate-debris",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Particulate Debris",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "focal-osteolysis"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "particulate-debris"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

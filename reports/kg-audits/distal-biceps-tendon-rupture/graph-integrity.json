@@ -1,0 +1,68 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 69,
+  "deductions": [
+    {
+      "finding": "8 orphan entities with no relationships",
+      "evidence": "Slugs: ac-joint, axillary-nerve, clavicle, humeral-head, median-nerve, proximal-humerus, ulnar-nerve, upper-extremity-trauma-anatomy-hub",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "ac-joint",
+        "axillary-nerve",
+        "clavicle",
+        "humeral-head",
+        "median-nerve",
+        "proximal-humerus",
+        "ulnar-nerve",
+        "upper-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 8
+    },
+    {
+      "finding": "1 dangling edges reference missing entities",
+      "evidence": "femoral-condyles -[part_of]-> sports-knee-anatomy-hub",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "8 disconnected anatomy structures",
+      "evidence": "Disconnected: ac-joint, axillary-nerve, clavicle, humeral-head, median-nerve, proximal-humerus, ulnar-nerve, upper-extremity-trauma-anatomy-hub",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "ac-joint",
+        "axillary-nerve",
+        "clavicle",
+        "humeral-head",
+        "median-nerve",
+        "proximal-humerus",
+        "ulnar-nerve",
+        "upper-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 44,
+    "relationshipCount": 40,
+    "orphanCount": 8,
+    "danglingEdgeCount": 1,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+    "Create missing entities or remove invalid relationship proposals.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors."
+  ]
+}

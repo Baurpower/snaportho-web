@@ -1,0 +1,90 @@
+{
+  "topicKey": "multiligament-knee-injury",
+  "pilotKey": "multiligament-knee-injury-neighborhood",
+  "primaryEntitySlug": "multiligament-knee-injury",
+  "displayName": "Multiligament Knee Injury",
+  "generatedAt": "2026-07-05T22:49:03.397Z",
+  "nodes": [
+    {
+      "slug": "multiligament-knee-injury-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Multiligament Knee Injury Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "multiligament-knee-injury-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Multiligament Knee Injury MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "multiligament-knee-injury-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Multiligament Knee Injury Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "multiligament-knee-injury-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Multiligament Knee Injury Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "multiligament-knee-injury-complication",
+      "entityType": "complication",
+      "preferredLabel": "Multiligament Knee Injury Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "multiligament-knee-injury-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Multiligament Knee Injury Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "multiligament-knee-injury-reconstruction"
+    ],
+    "classification": [
+      "multiligament-knee-injury-classification"
+    ],
+    "imaging": [
+      "multiligament-knee-injury-mri-finding"
+    ],
+    "complication": [
+      "multiligament-knee-injury-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "multiligament-knee-injury-rehab-protocol",
+      "multiligament-knee-injury-exam-maneuver"
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-05T22:51:31.142Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-d55bea1a",
+  "gapsAddressed": 1,
+  "gapsScheduled": 2,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-druj-instability-cognitive-trap",
+      "draftId": "claim-druj-instability-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-4b43225f",
+        "ev-quality-signal-66676579",
+        "ev-quality-signal-ecdb21e0"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-druj-instability-imaging",
+      "draftId": "claim-druj-instability-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-4b43225f",
+        "ev-quality-signal-66676579",
+        "ev-quality-signal-ecdb21e0"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-druj-instability-mechanism",
+      "draftId": "claim-druj-instability-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-4b43225f",
+        "ev-quality-signal-66676579",
+        "ev-quality-signal-ecdb21e0"
+      ],
+      "verified": false
+    }
+  ]
+}

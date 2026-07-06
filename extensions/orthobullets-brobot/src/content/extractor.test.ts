@@ -491,9 +491,37 @@ assert.match(rockCurriculumContext.title ?? '', /Local Anesthesia/i);
 assert.ok((rockCurriculumContext.contentText ?? '').length >= 500);
 assert.ok((rockCurriculumContext.contentSections ?? []).length >= 3);
 assert.ok((rockCurriculumContext.sectionHeadings ?? []).includes('Learning Objectives'));
+assert.ok((rockCurriculumContext.learningObjectives ?? []).length >= 3);
+assert.match((rockCurriculumContext.learningObjectives ?? []).join(' '), /systemic toxicity/i);
 assert.ok(!rockCurriculumContext.contentText?.includes('Send feedback'));
 assert.equal(rockCurriculumContext.answerChoices.length, 0);
 assert.equal(rockCurriculumContext.raw?.providerSpecific?.hasCurriculumContent, true);
+assert.equal(rockCurriculumContext.classification?.pageKind, 'educational_content');
+assert.ok(rockCurriculumContext.contentMarkdown && rockCurriculumContext.contentMarkdown.length >= 500);
+
+const rockReferencesHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-curriculum-references.html'), 'utf8');
+assert.match(rockReferencesHtml, /Recommended Reading/);
+const { document: rockReferencesDocument } = parseHTML(rockReferencesHtml);
+const rockReferencesContext = extractQuestionContext({
+  document: rockReferencesDocument,
+  pageUrl: 'https://rock.aaos.org/coursecontent.aspx?id=READING',
+});
+
+assert.ok(rockReferencesContext, 'ROCK references-heavy page should be detected');
+assert.equal(rockReferencesContext.mode, 'curriculum_content');
+assert.ok((rockReferencesContext.references ?? []).length >= 3);
+assert.equal(rockReferencesContext.classification?.pageKind, 'educational_content');
+
+const rockTableHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-curriculum-with-table.html'), 'utf8');
+const { document: rockTableDocument } = parseHTML(rockTableHtml);
+const rockTableContext = extractQuestionContext({
+  document: rockTableDocument,
+  pageUrl: 'https://rock.aaos.org/coursecontent.aspx?id=COMPARTMENT',
+});
+
+assert.ok(rockTableContext, 'ROCK table page should be detected');
+assert.ok((rockTableContext.tablesCount ?? 0) >= 1);
+assert.match(rockTableContext.contentMarkdown ?? '', /\| Finding \| Timing \|/);
 
 const rockCurriculumMediaHtml = readFileSync(path.join(FIXTURES_DIR, 'rock-curriculum-media-article.html'), 'utf8');
 assert.match(rockCurriculumMediaHtml, /Synthetic ROCK curriculum fixture with media/);
@@ -549,8 +577,8 @@ assert.ok(unsupportedRockLikeContext, 'ROCK-like dashboard should return diagnos
 assert.equal(unsupportedRockLikeContext.provider, 'rock');
 assert.equal(unsupportedRockLikeContext.stem, undefined);
 assert.equal(unsupportedRockLikeContext.answerChoices.length, 0);
-assert.equal(unsupportedRockLikeContext.raw?.providerSpecific?.stemStrategy, 'not_found');
-assert.equal(unsupportedRockLikeContext.raw?.providerSpecific?.choicesStrategy, 'not_found');
+assert.equal(unsupportedRockLikeContext.raw?.providerSpecific?.stemStrategy, 'skipped_non_question_page');
+assert.equal(unsupportedRockLikeContext.raw?.providerSpecific?.choicesStrategy, 'skipped_non_question_page');
 assert.ok(unsupportedRockLikeContext.extractionWarnings.includes('stem_not_visible'));
 assert.ok(unsupportedRockLikeContext.extractionWarnings.includes('answer_choices_not_visible'));
 

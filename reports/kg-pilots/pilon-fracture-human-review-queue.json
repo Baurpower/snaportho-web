@@ -1,0 +1,401 @@
+[
+  {
+    "proposal_fingerprint": "rel|soft-tissue-compromise-pilon|indicates_treatment|staged-pilon-protocol",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "soft-tissue-compromise-pilon -[indicates_treatment]-> staged-pilon-protocol",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: soft-tissue-compromise-pilon -[indicates_treatment]-> staged-pilon-protocol",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "soft-tissue-compromise-pilon",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "staged-pilon-protocol",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.85,
+        "review_status": "needs_review",
+        "note": "do not rush definitive fixation through compromised skin"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pilon-fracture|treated_by|staged-pilon-protocol",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "pilon-fracture -[treated_by]-> staged-pilon-protocol",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pilon-fracture|treated_by|staged-pilon-protocol",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pilon-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "staged-pilon-protocol",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|pilon-fracture|treated_by|pilon-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "pilon-fracture -[treated_by]-> pilon-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|pilon-fracture|treated_by|pilon-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "pilon-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "pilon-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pilon-staged-soft-tissue",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pilon-staged-soft-tissue",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts pilon-fracture oneLiner",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pilon-staged-soft-tissue",
+      "claim_type": "fact",
+      "claim_text": "Pilon fractures are intra-articular distal tibial injuries where soft tissues often dictate staged reconstruction.",
+      "primary_entity_slug": "pilon-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pilon-rush-fixation-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pilon-rush-fixation-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts boardPearls",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pilon-rush-fixation-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Do not rush definitive pilon fixation through compromised skin — staging protects against wound catastrophe.",
+      "primary_entity_slug": "soft-tissue-compromise-pilon",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pilon-ct-articular-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pilon-ct-articular-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts imaging + selfCheckQuestions",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pilon-ct-articular-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Planning pilon ORIF from radiographs alone without CT articular mapping of comminution and step-off.",
+      "primary_entity_slug": "pilon-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-pilon-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-pilon-case-script",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts caseSteps",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-pilon-case-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Document soft-tissue status, articular injury pattern, fibula role, staging plan, and definitive fixation timing.",
+      "primary_entity_slug": "pilon-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-pilon-staged-spanning",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-pilon-staged-spanning",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts decisionMaking + treatmentOptions",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-pilon-staged-spanning",
+      "subject_entity_slug": "pilon-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Pilon fracture with severe swelling, fracture blisters, or soft-tissue compromise",
+      "action": "Apply staged pilon protocol with spanning external fixation and delayed definitive ORIF when skin allows",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-pilon-definitive-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-pilon-definitive-orif",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts treatmentOptions + surgicalApproach",
+    "metadata": {
+      "pilot": "pilon-fracture-neighborhood",
+      "review_packet_key": "pilot:pilon-fracture-neighborhood",
+      "review_packet_label": "Pilon Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-pilon-definitive-orif",
+      "subject_entity_slug": "pilon-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Soft tissues recovered with unacceptable articular step-off or instability on CT",
+      "action": "Proceed with definitive pilon ORIF including fibular length restoration and articular reduction",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:44:26.402Z"
+    }
+  }
+]

@@ -1,0 +1,137 @@
+{
+  "generatedAt": "2026-07-05T21:09:23.366Z",
+  "evidencePacketId": "ev-packet-48051ddc",
+  "traces": [
+    {
+      "draftId": "claim-ankle-fracture-fact-weber",
+      "proposalFingerprint": "claim|claim-ankle-fracture-fact-weber",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-ankle-fracture-fact-supination-external-rota",
+      "proposalFingerprint": "claim|claim-ankle-fracture-fact-supination-external-rota",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-ankle-fracture-board_trap-a-deltoid-injury-can-mak",
+      "proposalFingerprint": "claim|claim-ankle-fracture-board_trap-a-deltoid-injury-can-mak",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-ankle-fracture-imaging_point-ap-lateral-mortise-views",
+      "proposalFingerprint": "claim|claim-ankle-fracture-imaging_point-ap-lateral-mortise-views",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-ankle-fracture-cognitive_trap-mention-posterior-malleo",
+      "proposalFingerprint": "claim|claim-ankle-fracture-cognitive_trap-mention-posterior-malleo",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e45eb8"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mortise-stability-anatomy_pearl-ankle-ring-concept",
+      "proposalFingerprint": "claim|claim-mortise-stability-anatomy_pearl-ankle-ring-concept",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "claimType": "anatomy_pearl",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mortise-stability-anatomy_pearl-syndesmotic-stabilizers",
+      "proposalFingerprint": "claim|claim-mortise-stability-anatomy_pearl-syndesmotic-stabilizers",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "claimType": "anatomy_pearl",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mortise-stability-anatomy_pearl-posterior-malleolus-role",
+      "proposalFingerprint": "claim|claim-mortise-stability-anatomy_pearl-posterior-malleolus-role",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "claimType": "anatomy_pearl",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-ankle-fracture-imaging_point-stress-views",
+      "proposalFingerprint": "claim|claim-ankle-fracture-imaging_point-stress-views",
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Stable isolated fractures versus unstable patterns requiring fixation"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Boot/cast"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Reduction and splint"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-34e1172c"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "ORIF with syndesmotic fixation when indicated"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-34e45eb8"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What makes the fracture unstable?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-34e45eb8"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "How do stress views help?"
+    }
+  ]
+}

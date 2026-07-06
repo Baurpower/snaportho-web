@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getMobileBearerUser } from "@/app/api/mobile/_utils/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { WorkspacePermissionError } from "@/lib/workspace/access-control";
+import {
+  parseRequestedProgramId,
+  resolveNotificationProgramScope,
+} from "@/lib/workspace/notifications/access";
 import { markNotificationRead } from "@/lib/workspace/notifications/queries";
 
 type RouteContext = {
@@ -22,9 +27,15 @@ export async function POST(request: NextRequest, context: RouteContext) {
   if (response) return response;
 
   try {
+    const { programId } = await resolveNotificationProgramScope({
+      userId: user.id,
+      requestedProgramId: parseRequestedProgramId(request.nextUrl.searchParams),
+    });
+
     const item = await markNotificationRead(createAdminClient(), {
       notificationId,
       userId: user.id,
+      programId,
     });
 
     if (!item) {
@@ -36,6 +47,10 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
     return NextResponse.json({ item }, { status: 200 });
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     console.error("[mobile/notifications/read] error", {
       userId: user.id.slice(0, 8),
       notificationId,

@@ -52,7 +52,7 @@ const backupSlotDefinition: ProgramCallSlotDefinition = {
   callType: "Backup",
   colorKey: "sky",
   requiredMode: "conditional",
-  requiredWhenVisible: true,
+  requiredWhenVisible: false,
   countsTowardWorkload: true,
   sortOrder: 1,
   condition: {
@@ -171,11 +171,6 @@ const satisfiedStates = getBuddyDateStatesForMonth({
 });
 
 assert.equal(
-  satisfiedStates.filter((state) => state.isRequired).length,
-  0,
-  "No additional Buddy slots are required after two Buddy assignments"
-);
-assert.equal(
   satisfiedStates.some(
     (state) => state.dateKey === "2026-07-17" && state.isVisible && !state.isRequired
   ),
@@ -192,6 +187,11 @@ const satisfiedRequirements = getBuddyRequirementsForMonth({
   slotDefinitions: [buddySlotDefinition],
   assignments: baseAssignments,
 });
+assert.equal(
+  satisfiedRequirements[0]?.remainingNeeded,
+  0,
+  "Buddy requirement minimum is satisfied after two Buddy assignments"
+);
 assert.equal(
   satisfiedRequirements[0]?.remainingCapacity,
   1,

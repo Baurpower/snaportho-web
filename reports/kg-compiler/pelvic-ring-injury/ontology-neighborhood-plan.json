@@ -1,0 +1,90 @@
+{
+  "topicKey": "pelvic-ring-injury",
+  "pilotKey": "pelvic-ring-injury-neighborhood",
+  "primaryEntitySlug": "pelvic-ring-injury",
+  "displayName": "Pelvic Ring Injury",
+  "generatedAt": "2026-07-05T22:30:51.063Z",
+  "nodes": [
+    {
+      "slug": "pelvic-binder-application",
+      "entityType": "procedure",
+      "preferredLabel": "Pelvic Binder Application",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pelvic-ring-injury",
+      "entityType": "condition",
+      "preferredLabel": "Pelvic Ring Injury",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "young-burgess-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Young-Burgess Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pelvic-external-fixation",
+      "entityType": "procedure",
+      "preferredLabel": "Pelvic External Fixation",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "unstable-pelvic-ring-pattern",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Unstable Pelvic Ring Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pelvic-hemorrhage",
+      "entityType": "complication",
+      "preferredLabel": "Pelvic Hemorrhage",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "pelvic-ring-injury"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "pelvic-binder-application",
+      "pelvic-external-fixation"
+    ],
+    "classification": [
+      "young-burgess-classification"
+    ],
+    "imaging": [
+      "unstable-pelvic-ring-pattern"
+    ],
+    "complication": [
+      "pelvic-hemorrhage"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

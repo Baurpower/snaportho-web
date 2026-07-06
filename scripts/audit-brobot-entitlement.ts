@@ -258,10 +258,10 @@ async function main() {
   const supabase = createAdminClient();
   const now = new Date();
 
-  const [{ data: user }, { data: profiles }, { data: subscriptions, error: subscriptionError }, { data: usage }] =
+  const [{ data: user }, { data: userProfiles }, { data: subscriptions, error: subscriptionError }, { data: usage }] =
     await Promise.all([
       supabase.auth.admin.getUserById(userId),
-      supabase.from('profiles').select('*').eq('id', userId).limit(5),
+      supabase.from('user_profiles').select('user_id,email,display_name').eq('user_id', userId).limit(5),
       supabase
         .from('subscriptions')
         .select(`
@@ -353,14 +353,35 @@ async function main() {
   const todayUsage = (usage ?? []).find((row: { usage_date?: string }) => row.usage_date === today);
   const usedToday = typeof todayUsage?.count === 'number' ? todayUsage.count : 0;
   const freeLimit = Number(process.env.BROBOT_FREE_DAILY_CAP || '3');
+  const supabaseHost = (() => {
+    try {
+      return new URL(process.env.NEXT_PUBLIC_SUPABASE_URL ?? '').host;
+    } catch {
+      return null;
+    }
+  })();
+
+  const duplicateEmailUsers =
+    user.user?.email
+      ? (await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 })).data.users.filter(
+          (candidate) => candidate.email?.toLowerCase() === user.user!.email!.toLowerCase()
+        ).length
+      : 0;
 
   console.log(JSON.stringify({
     auditedAt: now.toISOString(),
+    environment: {
+      supabaseHost,
+      brobotPaidEnabled: process.env.BROBOT_PAID_ENABLED !== 'false',
+      brobotEnabled: process.env.BROBOT_ENABLED !== 'false',
+      nodeEnv: process.env.NODE_ENV ?? 'development',
+    },
     user: {
       id: user.user?.id ?? userId,
       email: user.user?.email ?? args.email,
+      duplicateAuthUsersWithSameEmail: duplicateEmailUsers,
     },
-    profiles: profiles ?? [],
+    userProfiles: userProfiles ?? [],
     stripeCustomerIds: customerIds,
     appleIdentifiers,
     usage: usage ?? [],
@@ -391,6 +412,35 @@ async function main() {
           selectedSubscriptionId: null,
           resolutionSource: 'free_quota',
           resolutionReason: resolutionReason(null),
+        },
+    apiMeEntitlements: selected
+      ? {
+          access: 'unlimited',
+          planCode: 'unlimited_brobot',
+          provider: selected.provider === 'apple' ? 'apple' : 'stripe',
+          status: selected.status,
+          currentPeriodEnd: selected.current_period_end,
+          resolutionSource: resolutionSource(selected),
+          resolutionReason: resolutionReason(selected),
+          selectedSubscriptionId: selectedProviderSubscriptionId,
+          legacySource: 'subscription',
+          legacyUnlimited: true,
+          freeQuotaRemaining: Math.max(0, freeLimit - usedToday),
+          isLimitReached: false,
+        }
+      : {
+          access: 'free',
+          planCode: 'free',
+          provider: 'none',
+          status: null,
+          currentPeriodEnd: null,
+          resolutionSource: 'free_quota',
+          resolutionReason: resolutionReason(null),
+          selectedSubscriptionId: null,
+          legacySource: 'free_quota',
+          legacyUnlimited: false,
+          freeQuotaRemaining: Math.max(0, freeLimit - usedToday),
+          isLimitReached: Math.max(0, freeLimit - usedToday) <= 0,
         },
     candidates,
     issues: detectIssues(rows, now),

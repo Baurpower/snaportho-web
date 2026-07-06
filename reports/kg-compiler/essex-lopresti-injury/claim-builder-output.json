@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-05T22:59:58.730Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-493e0c1d",
+  "gapsAddressed": 1,
+  "gapsScheduled": 2,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-essex-lopresti-injury-cognitive-trap",
+      "draftId": "claim-essex-lopresti-injury-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-e57ffa38",
+        "ev-quality-signal-13a0805e",
+        "ev-quality-signal-ca5b1827"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-essex-lopresti-injury-imaging",
+      "draftId": "claim-essex-lopresti-injury-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-e57ffa38",
+        "ev-quality-signal-13a0805e",
+        "ev-quality-signal-ca5b1827"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-essex-lopresti-injury-mechanism",
+      "draftId": "claim-essex-lopresti-injury-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-e57ffa38",
+        "ev-quality-signal-13a0805e",
+        "ev-quality-signal-ca5b1827"
+      ],
+      "verified": false
+    }
+  ]
+}

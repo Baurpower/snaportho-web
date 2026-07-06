@@ -1,0 +1,448 @@
+[
+  {
+    "proposal_fingerprint": "rel|femoral-shaft-fracture|at_risk_structure|sciatic-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "femoral-shaft-fracture -[at_risk_structure]-> sciatic-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|femoral-shaft-fracture|at_risk_structure|sciatic-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "femoral-shaft-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "sciatic-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "traction_pinning",
+        "clinical_importance": "high",
+        "context_relevance": [
+          "or",
+          "call"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|segmental-femoral-shaft-fracture|indicates_treatment|femoral-im-nailing",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "segmental-femoral-shaft-fracture -[indicates_treatment]-> femoral-im-nailing",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: segmental-femoral-shaft-fracture -[indicates_treatment]-> femoral-im-nailing",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "segmental-femoral-shaft-fracture",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "femoral-im-nailing",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.85,
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|femoral-shaft-fracture|uses_fixation|femoral-im-nail-fixation",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "femoral-shaft-fracture -[uses_fixation]-> femoral-im-nail-fixation",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|femoral-shaft-fracture|uses_fixation|femoral-im-nail-fixation",
+    "alternatives": [],
+    "evidence_summary": "Relationship uses_fixation",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "femoral-shaft-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "femoral-im-nail-fixation",
+      "object_entity_type": "fixation_method",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|femoral-shaft-fracture|treated_by|femoral-im-nailing",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "femoral-shaft-fracture -[treated_by]-> femoral-im-nailing",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|femoral-shaft-fracture|treated_by|femoral-im-nailing",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "femoral-shaft-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "femoral-im-nailing",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-fsf-im-nail-default",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-fsf-im-nail-default",
+    "alternatives": [],
+    "evidence_summary": "trauma-femoral-shaft-fractures curriculum",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-fsf-im-nail-default",
+      "claim_type": "fact",
+      "claim_text": "Femoral shaft fractures in adults are commonly stabilized with intramedullary nailing to restore length, rotation, and early mobilization potential.",
+      "primary_entity_slug": "femoral-shaft-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-fsf-fat-embolism-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-fsf-fat-embolism-trap",
+    "alternatives": [],
+    "evidence_summary": "femoral shaft systemic complications",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-fsf-fat-embolism-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Femoral shaft fractures carry fat embolism risk, especially with delayed stabilization after high-energy or polytrauma injury.",
+      "primary_entity_slug": "fat-embolism",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 1,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-fsf-rotation-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-fsf-rotation-trap",
+    "alternatives": [],
+    "evidence_summary": "femoral shaft alignment pitfalls",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-fsf-rotation-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Accepting femoral shaft malrotation because the fracture appears aligned on AP radiograph alone.",
+      "primary_entity_slug": "femoral-malunion",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 1,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-fsf-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-fsf-case-script",
+    "alternatives": [],
+    "evidence_summary": "femoral shaft case presentation pattern",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-fsf-case-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Describe fracture level, comminution, ipsilateral injuries, neurovascular exam, IM nail plan, and fat embolism monitoring.",
+      "primary_entity_slug": "femoral-shaft-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-fsf-im-nail-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-fsf-im-nail-operative",
+    "alternatives": [],
+    "evidence_summary": "femoral shaft operative pathway",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-fsf-im-nail-operative",
+      "subject_entity_slug": "femoral-shaft-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Unstable femoral shaft fracture, segmental pattern, or polytrauma patient needing early stabilization",
+      "action": "Discuss femoral IM nailing with attending; document alignment goals and systemic complication monitoring",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-fsf-open-fracture",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-fsf-open-fracture",
+    "alternatives": [],
+    "evidence_summary": "open femoral shaft management",
+    "metadata": {
+      "pilot": "femoral-shaft-fracture-neighborhood",
+      "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+      "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-fsf-open-fracture",
+      "subject_entity_slug": "femoral-shaft-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Open femoral shaft fracture or grossly contaminated soft-tissue injury",
+      "action": "Urgent irrigation and debridement with stabilization plan per attending and trauma protocol",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:34:21.650Z"
+    }
+  }
+]

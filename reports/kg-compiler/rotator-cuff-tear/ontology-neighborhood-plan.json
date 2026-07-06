@@ -1,0 +1,100 @@
+{
+  "topicKey": "rotator-cuff-tear",
+  "pilotKey": "rotator-cuff-tear-neighborhood",
+  "primaryEntitySlug": "rotator-cuff-tear",
+  "displayName": "Rotator Cuff Tear",
+  "generatedAt": "2026-07-05T22:56:31.236Z",
+  "nodes": [
+    {
+      "slug": "rotator-cuff-tear-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Rotator Cuff Tear Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rotator-cuff-tear-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Rotator Cuff Tear MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rotator-cuff-tear-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Rotator Cuff Tear Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rotator-cuff-tear-complication",
+      "entityType": "complication",
+      "preferredLabel": "Rotator Cuff Tear Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rotator-cuff-tear-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Rotator Cuff Tear Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rotator-cuff-tear-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Rotator Cuff Tear Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "proximal-biceps-tendon-pathology",
+      "entityType": "condition",
+      "preferredLabel": "Proximal Biceps Tendon Pathology",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "rotator-cuff-tear-reconstruction"
+    ],
+    "classification": [
+      "rotator-cuff-tear-classification"
+    ],
+    "imaging": [
+      "rotator-cuff-tear-mri-finding"
+    ],
+    "complication": [
+      "rotator-cuff-tear-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "rotator-cuff-tear-rehab-protocol",
+      "rotator-cuff-tear-exam-maneuver",
+      "proximal-biceps-tendon-pathology"
+    ]
+  }
+}

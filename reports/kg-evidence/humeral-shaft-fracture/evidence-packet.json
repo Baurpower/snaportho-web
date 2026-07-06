@@ -1,0 +1,3057 @@
+{
+  "packetId": "ev-packet-a6c65ede",
+  "topicId": "humeral-shaft-fracture",
+  "createdAt": "2026-07-05T21:57:22.325Z",
+  "packetVersion": "1.0.0",
+  "ontologyVersion": "2026-07-05",
+  "compilerVersion": "1.0.0",
+  "registryVersion": "2026-07-05",
+  "topicContext": {
+    "topicKey": "humeral-shaft-fracture",
+    "pilotKey": "humeral-shaft-fracture-neighborhood",
+    "displayName": "Humeral Shaft Fracture",
+    "primaryEntitySlug": "humeral-shaft-fracture",
+    "targetMaturityLevel": 7,
+    "curriculumNodeSlug": "trauma-humeral-shaft-fractures",
+    "prepareTopicId": "humeral-shaft-fracture",
+    "aliases": [
+      "humeral shaft fracture",
+      "humerus shaft fracture",
+      "trauma-humeral-shaft-fractures",
+      "humeral-shaft-fracture-neighborhood"
+    ]
+  },
+  "sourceManifest": [
+    {
+      "sourceId": "anki:trauma-humeral-shaft-fractures",
+      "sourceType": "anki_card",
+      "label": "Anki card mappings for trauma-humeral-shaft-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "humeral-shaft-fracture",
+      "sourceType": "static_prepare",
+      "label": "Prepare topic: Humeral Shaft Fracture",
+      "path": "trauma-humeral-shaft-fractures curriculum bridge",
+      "copyrightPolicy": "internal_draft_only",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "humeral-shaft-fracture-neighborhood:database",
+      "sourceType": "canonical_snapshot",
+      "label": "Canonical neighborhood snapshot (database)",
+      "path": "canonical_entities + canonical_relationships",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "humeral-shaft-fracture-neighborhood:proposals:database",
+      "sourceType": "proposal_history",
+      "label": "Proposal packet (database)",
+      "path": "kg_automation_proposals",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "humeral-shaft-fracture-neighborhood:quality",
+      "sourceType": "quality_signal",
+      "label": "Ontology quality signals",
+      "path": "kg-compiler/gap-analyzer.ts",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "humeral-shaft-fracture-neighborhood:review",
+      "sourceType": "review_history",
+      "label": "Proposal review history",
+      "path": "proposal.review_status fields",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "ob:trauma-humeral-shaft-fractures",
+      "sourceType": "orthobullets_question",
+      "label": "Orthobullets question mappings for trauma-humeral-shaft-fractures",
+      "path": "external_questions + curriculum_node mapping",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "trauma-humeral-shaft-fractures",
+      "sourceType": "curriculum_node",
+      "label": "Curriculum node: trauma-humeral-shaft-fractures",
+      "path": "curriculum_nodes.slug",
+      "copyrightPolicy": "reference_link_only",
+      "trustTier": "primary"
+    }
+  ],
+  "canonicalSnapshot": {
+    "source": "database",
+    "entityCount": 6,
+    "relationshipCount": 3,
+    "claimCount": 0,
+    "decisionPointCount": 0,
+    "primaryEntitySlug": "humeral-shaft-fracture",
+    "entitySlugs": [
+      "holstein-lewis-fracture",
+      "humeral-im-nailing",
+      "humeral-plate-osteosynthesis",
+      "humeral-shaft-fracture",
+      "humeral-shaft-nonunion",
+      "radial-nerve-palsy"
+    ],
+    "loaded": true
+  },
+  "sourceEvidence": [
+    {
+      "evidenceId": "ev-anki-card-36cb5091",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-humeral-shaft-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.92,
+      "provenanceHint": "anki_kg_mapping:trauma-humeral-shaft-fractures",
+      "label": "Anki card mapping count",
+      "summary": "10 high-confidence Anki card mapping(s) for curriculum node trauma-humeral-shaft-fractures",
+      "payload": {
+        "curriculumNodeSlug": "trauma-humeral-shaft-fractures",
+        "mappedCardCount": 10,
+        "deckBranchHint": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
+        "storesCardText": false,
+        "storesCardAnswer": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "anki",
+        "asset_signal",
+        "metadata_only"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-anki-card-f38d9a47",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-humeral-shaft-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "deck_branch_hint",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.85,
+      "provenanceHint": "anki_deck_branch:Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
+      "label": "Anki deck branch hint",
+      "summary": "Primary deck branch for humeral-shaft-fracture Anki cards (metadata only)",
+      "payload": {
+        "deckBranch": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
+        "storesCardText": false
+      },
+      "tags": [
+        "anki",
+        "deck_hint"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-10351119",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "humeral-shaft-fracture-neighborhood",
+      "extractionMethod": "neighborhood_counts",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.95,
+      "provenanceHint": "canonical_snapshot:database",
+      "label": "Neighborhood entity/relationship counts",
+      "summary": "6 entities, 3 relationships from database",
+      "payload": {
+        "source": "database",
+        "entityCount": 6,
+        "relationshipCount": 3,
+        "claimCount": 0,
+        "decisionPointCount": 0,
+        "primaryEntitySlug": "humeral-shaft-fracture",
+        "verified": false
+      },
+      "tags": [
+        "canonical",
+        "snapshot",
+        "database"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-af77add2",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "humeral-shaft-fracture-neighborhood",
+      "extractionMethod": "entity_index",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "entity_slugs:database",
+      "label": "Entity slug index",
+      "summary": "6 entity slug(s) in neighborhood",
+      "payload": {
+        "entitySlugs": [
+          "holstein-lewis-fracture",
+          "humeral-im-nailing",
+          "humeral-plate-osteosynthesis",
+          "humeral-shaft-fracture",
+          "humeral-shaft-nonunion",
+          "radial-nerve-palsy"
+        ],
+        "entityTypes": {
+          "humeral-shaft-fracture": "condition",
+          "humeral-shaft-nonunion": "complication",
+          "humeral-im-nailing": "procedure",
+          "holstein-lewis-fracture": "imaging_finding",
+          "radial-nerve-palsy": "complication",
+          "humeral-plate-osteosynthesis": "procedure"
+        }
+      },
+      "tags": [
+        "canonical",
+        "entity_index"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-c3187f72",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-humeral-shaft-fractures",
+      "extractionMethod": "alias_index",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "curriculum_node_aliases:trauma-humeral-shaft-fractures",
+      "label": "Topic aliases",
+      "summary": "4 topic alias(es) for resolution",
+      "payload": {
+        "aliases": [
+          "humeral shaft fracture",
+          "humerus shaft fracture",
+          "trauma-humeral-shaft-fractures",
+          "humeral-shaft-fracture-neighborhood"
+        ]
+      },
+      "tags": [
+        "curriculum",
+        "aliases"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-ef1ac19b",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-humeral-shaft-fractures",
+      "path": "curriculum_nodes.slug",
+      "extractionMethod": "slug_mapping",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.95,
+      "provenanceHint": "curriculum_node:trauma-humeral-shaft-fractures",
+      "label": "Curriculum node mapping",
+      "summary": "Primary curriculum node trauma-humeral-shaft-fractures maps to entity humeral-shaft-fracture",
+      "payload": {
+        "curriculumNodeSlug": "trauma-humeral-shaft-fractures",
+        "primaryEntitySlug": "humeral-shaft-fracture",
+        "topicKey": "humeral-shaft-fracture",
+        "pilotKey": "humeral-shaft-fracture-neighborhood",
+        "prepareTopicId": "humeral-shaft-fracture",
+        "legacyRetargetKey": "retarget:trauma-humeral-shaft-fractures"
+      },
+      "tags": [
+        "curriculum",
+        "node_mapping",
+        "humeral-shaft-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-orthobullets-question-9645257d",
+      "sourceType": "orthobullets_question",
+      "sourceId": "trauma-humeral-shaft-fractures",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "orthobullets_mapping:trauma-humeral-shaft-fractures",
+      "label": "Orthobullets question mapping count",
+      "summary": "47 Orthobullets question mapping(s) for trauma-humeral-shaft-fractures (metadata only — no stems/answers)",
+      "payload": {
+        "curriculumNodeSlug": "trauma-humeral-shaft-fractures",
+        "mappedQuestionCount": 47,
+        "prepareTopicId": "humeral-shaft-fracture",
+        "storesQuestionStem": false,
+        "storesAnswer": false,
+        "storesExplanation": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "orthobullets",
+        "metadata_only",
+        "asset_signal"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-proposal-history-2e1c977b",
+      "sourceType": "proposal_history",
+      "sourceId": "humeral-shaft-fracture-neighborhood",
+      "extractionMethod": "packet_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "proposal_packet:database",
+      "label": "Proposal packet summary",
+      "summary": "28 proposal(s) from database",
+      "payload": {
+        "source": "database",
+        "totalProposals": 28,
+        "byType": {
+          "add_canonical_relationship": 14,
+          "propose_educational_claim": 5,
+          "propose_decision_point": 2,
+          "create_canonical_entity": 6,
+          "link_curriculum_node_to_entity": 1
+        },
+        "byStatus": {
+          "needs_review": 14,
+          "applied": 14
+        },
+        "fingerprints": [
+          "bridge|trauma-humeral-shaft-fractures|humeral-shaft-fracture",
+          "claim|claim-hs-case-script",
+          "claim|claim-hs-holstein-lewis",
+          "claim|claim-hs-nailing-default",
+          "claim|claim-hs-radial-nerve-exam",
+          "claim|claim-hs-radial-trap",
+          "create|complication|humeral-shaft-nonunion",
+          "create|complication|radial-nerve-palsy",
+          "create|condition|humeral-shaft-fracture",
+          "create|imaging_finding|holstein-lewis-fracture",
+          "create|procedure|humeral-im-nailing",
+          "create|procedure|humeral-plate-osteosynthesis",
+          "dp|dp-hs-operative-nail",
+          "dp|dp-hs-radial-nerve-deficit",
+          "rel|holstein-lewis-fracture|explains_instability|humeral-shaft-fracture",
+          "rel|holstein-lewis-fracture|indicates_treatment|humeral-plate-osteosynthesis",
+          "rel|humeral-im-nailing|involves_anatomy|humeral-shaft",
+          "rel|humeral-plate-osteosynthesis|at_risk_structure|radial-nerve",
+          "rel|humeral-shaft-fracture|at_risk_structure|brachial-artery",
+          "rel|humeral-shaft-fracture|at_risk_structure|radial-nerve",
+          "rel|humeral-shaft-fracture|has_complication|humeral-shaft-nonunion",
+          "rel|humeral-shaft-fracture|has_complication|radial-nerve-palsy",
+          "rel|humeral-shaft-fracture|has_imaging_finding|holstein-lewis-fracture",
+          "rel|humeral-shaft-fracture|injured_in|humeral-shaft",
+          "rel|humeral-shaft-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+          "rel|humeral-shaft-fracture|treated_by|humeral-im-nailing",
+          "rel|humeral-shaft-fracture|treated_by|humeral-plate-osteosynthesis",
+          "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|humeral-shaft-fracture"
+        ]
+      },
+      "tags": [
+        "proposals",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-quality-signal-a60bb23d",
+      "sourceType": "quality_signal",
+      "sourceId": "humeral-shaft-fracture-neighborhood",
+      "extractionMethod": "gap_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "ontology_gaps:humeral-shaft-fracture-neighborhood",
+      "label": "Ontology gap summary",
+      "summary": "28 gap(s) across 6 kind(s)",
+      "payload": {
+        "gapCount": 28,
+        "gapsByKind": {
+          "missing_entity": 4,
+          "missing_relationship": 13,
+          "missing_claim": 5,
+          "missing_decision_point": 3,
+          "missing_metadata": 1,
+          "missing_asset_link": 2
+        },
+        "gapsByPriority": {
+          "critical": 10,
+          "high": 9,
+          "medium": 9
+        },
+        "topGaps": [
+          {
+            "id": "gap-entity-neighbor-1",
+            "kind": "missing_entity",
+            "priority": "critical",
+            "reason": "Humeral Shaft Fracture neighborhood has 0/3 anatomy_structure entities."
+          },
+          {
+            "id": "gap-entity-neighbor-2",
+            "kind": "missing_entity",
+            "priority": "high",
+            "reason": "Humeral Shaft Fracture neighborhood has 0/1 classification_system entities."
+          },
+          {
+            "id": "gap-rel-3",
+            "kind": "missing_relationship",
+            "priority": "critical",
+            "reason": "Humeral Shaft Fracture missing outbound injured_in (0/1)."
+          },
+          {
+            "id": "gap-rel-4",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Humeral Shaft Fracture missing outbound involves_anatomy (0/1)."
+          },
+          {
+            "id": "gap-rel-5",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Humeral Shaft Fracture missing outbound at_risk_structure (0/1)."
+          },
+          {
+            "id": "gap-rel-6",
+            "kind": "missing_relationship",
+            "priority": "critical",
+            "reason": "Humeral Shaft Fracture missing outbound has_classification (0/1)."
+          },
+          {
+            "id": "gap-rel-7",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Humeral Shaft Fracture missing outbound has_grade (0/1)."
+          },
+          {
+            "id": "gap-rel-8",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Humeral Shaft Fracture missing outbound treated_by (0/1)."
+          }
+        ]
+      },
+      "tags": [
+        "quality",
+        "gaps"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-review-history-c08f7234",
+      "sourceType": "review_history",
+      "sourceId": "humeral-shaft-fracture-neighborhood",
+      "extractionMethod": "status_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.92,
+      "provenanceHint": "review_status:humeral-shaft-fracture-neighborhood",
+      "label": "Review status distribution",
+      "summary": "0 reviewed, 0 pending of 28 proposals",
+      "payload": {
+        "total": 28,
+        "reviewedCount": 0,
+        "pendingCount": 0,
+        "approvedCount": 0,
+        "routes": {
+          "ATTENDING_REVIEW": 9,
+          "HUMAN_REVIEW": 4,
+          "AUTO_APPROVED_LOW_RISK": 14,
+          "AUTO_REVISED": 1
+        }
+      },
+      "tags": [
+        "review",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-360332f7",
+      "sourceType": "static_prepare",
+      "sourceId": "humeral-shaft-fracture",
+      "path": "trauma-humeral-shaft-fractures curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-humeral-shaft-fractures curriculum bridge#metadata",
+      "label": "Humeral Shaft Fracture — Topic metadata",
+      "summary": "Static Prepare Topic metadata for Humeral Shaft Fracture",
+      "payload": {
+        "section": "metadata",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "tags": [
+          "humerus",
+          "radial nerve",
+          "IM nail"
+        ],
+        "trackId": "trauma",
+        "subspecialty": "Trauma"
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "humeral-shaft-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-ec0d592e",
+      "sourceType": "static_prepare",
+      "sourceId": "humeral-shaft-fracture",
+      "path": "trauma-humeral-shaft-fractures curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-humeral-shaft-fractures curriculum bridge#deep",
+      "label": "Humeral Shaft Fracture — Deep study template",
+      "summary": "Static Prepare Deep study template for Humeral Shaft Fracture",
+      "payload": {
+        "section": "deep",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "anatomy": [
+          "Radial nerve in spiral groove",
+          "Brachial artery course"
+        ],
+        "classification": [
+          "Open versus closed",
+          "Spiral distal-third patterns"
+        ],
+        "imaging": [
+          "AP and lateral humerus radiographs"
+        ],
+        "decisionMaking": [
+          "Alignment, nerve status, open injury, patient factors"
+        ],
+        "treatmentOptions": [
+          "Functional bracing",
+          "IM nail",
+          "Plate osteosynthesis"
+        ],
+        "boardPearls": [
+          "Holstein-Lewis fractures are classic radial nerve board associations"
+        ],
+        "complications": [
+          "Radial nerve palsy",
+          "Nonunion",
+          "Malunion"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "humeral-shaft-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-ec0e6fba",
+      "sourceType": "static_prepare",
+      "sourceId": "humeral-shaft-fracture",
+      "path": "trauma-humeral-shaft-fractures curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-humeral-shaft-fractures curriculum bridge#fast",
+      "label": "Humeral Shaft Fracture — Fast study template",
+      "summary": "Static Prepare Fast study template for Humeral Shaft Fracture",
+      "payload": {
+        "section": "fast",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "mustKnow": [
+          "Alignment, radial nerve exam, brachial pulse, splint plan"
+        ],
+        "anatomyFocus": [
+          "Spiral groove radial nerve",
+          "Humeral diaphysis",
+          "Brachial artery"
+        ],
+        "oneLiner": "Humeral shaft fractures require serial radial nerve exams and clear alignment goals.",
+        "pimpQuestions": [
+          "What fracture pattern risks radial nerve injury?",
+          "When is IM nailing preferred?"
+        ],
+        "orSurvivalTips": [
+          "Repeat wrist extension after reduction",
+          "Know Holstein-Lewis association"
+        ],
+        "caseSteps": [
+          "Describe deformity",
+          "Document radial nerve baseline",
+          "State splint and operative plan"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "humeral-shaft-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-ef74c42d",
+      "sourceType": "static_prepare",
+      "sourceId": "humeral-shaft-fracture",
+      "path": "trauma-humeral-shaft-fractures curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-humeral-shaft-fractures curriculum bridge#learning_objectives",
+      "label": "Humeral Shaft Fracture — Learning objectives",
+      "summary": "Static Prepare Learning objectives for Humeral Shaft Fracture",
+      "payload": {
+        "section": "learning_objectives",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "objectives": [
+          "Document radial nerve function before and after reduction.",
+          "Recognize Holstein-Lewis fracture association.",
+          "Compare nonoperative versus operative stabilization pathways."
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "humeral-shaft-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:22.325Z"
+    }
+  ],
+  "extractedSignals": [
+    {
+      "signalId": "ev-signal-883a5718",
+      "signalType": "anki_card",
+      "sourceEvidenceIds": [
+        "ev-anki-card-36cb5091"
+      ],
+      "summary": "10 high-confidence Anki card mapping(s) for curriculum node trauma-humeral-shaft-fractures",
+      "strength": 0.92,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-4b5a1007",
+      "signalType": "orthobullets_question",
+      "sourceEvidenceIds": [
+        "ev-orthobullets-question-9645257d"
+      ],
+      "summary": "47 Orthobullets question mapping(s) for trauma-humeral-shaft-fractures (metadata only — no stems/answers)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-81e33599",
+      "signalType": "quality_signal",
+      "sourceEvidenceIds": [
+        "ev-quality-signal-a60bb23d"
+      ],
+      "summary": "28 gap(s) across 6 kind(s)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "gap_summary"
+      }
+    }
+  ],
+  "assetSignals": [
+    {
+      "assetType": "anki_card",
+      "sourceId": "trauma-humeral-shaft-fractures",
+      "mappedEntitySlug": "humeral-shaft-fracture",
+      "mappingCount": 10,
+      "confidenceHint": 0.92,
+      "metadataOnly": true
+    },
+    {
+      "assetType": "orthobullets_question",
+      "sourceId": "trauma-humeral-shaft-fractures",
+      "mappedEntitySlug": "humeral-shaft-fracture",
+      "mappingCount": 47,
+      "confidenceHint": 0.9,
+      "metadataOnly": true
+    }
+  ],
+  "existingProposals": [
+    {
+      "id": "28101314-7fce-47a2-9422-ad4c43f489c7",
+      "proposal_fingerprint": "rel|holstein-lewis-fracture|explains_instability|humeral-shaft-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "explains_instability",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship explains_instability",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "humeral-shaft-fracture",
+        "subject_slug": "holstein-lewis-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "condition",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "imaging_finding",
+        "relationship_metadata": {
+          "confidence": 0.75,
+          "review_status": "unreviewed",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:00.340098+00:00",
+      "updated_at": "2026-07-05T21:54:47.145258+00:00"
+    },
+    {
+      "id": "2c191daf-4573-442d-8d9d-655ee31aa084",
+      "proposal_fingerprint": "claim|claim-hs-case-script",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "humeral shaft case script",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "draft_id": "claim-hs-case-script",
+        "verified": false,
+        "claim_text": "Present mechanism, alignment, radial nerve exam, brachial pulse, splint plan, and operative versus nonoperative pathway.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "humeral-shaft-fracture",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:01.27497+00:00",
+      "updated_at": "2026-07-05T21:54:48.13009+00:00"
+    },
+    {
+      "id": "a60f2241-504e-4db8-9053-7325ac56a10e",
+      "proposal_fingerprint": "dp|dp-hs-radial-nerve-deficit",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "radial nerve management pathways",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "action": "Escalate to attending for exploration versus observation strategy with repeat neuro exam",
+        "trigger": "New radial nerve deficit after closed reduction or Holstein-Lewis pattern with progressive deficit",
+        "urgency": "urgent",
+        "draft_id": "dp-hs-radial-nerve-deficit",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.8,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "safety_criticality": "high",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_slug": "humeral-shaft-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:01.644388+00:00",
+      "updated_at": "2026-07-05T21:54:48.516658+00:00"
+    },
+    {
+      "id": "09f052e6-c449-4d6f-b583-0d4cfb12e615",
+      "proposal_fingerprint": "create|complication|radial-nerve-palsy",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-humeral-shaft-fractures",
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Radial Nerve Palsy",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Radial Nerve Palsy",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:55.797+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "radial-nerve-palsy",
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.597Z",
+        "description": "Wrist drop or posterior interosseous dysfunction after humeral shaft injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:52.133463+00:00",
+      "updated_at": "2026-07-05T21:54:55.88768+00:00"
+    },
+    {
+      "id": "1300e3f5-1b20-4d08-83a4-52241247c434",
+      "proposal_fingerprint": "create|complication|humeral-shaft-nonunion",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-humeral-shaft-fractures",
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Humeral Shaft Nonunion",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Humeral Shaft Nonunion",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:55.894+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "humeral-shaft-nonunion",
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.597Z",
+        "description": "Failure of humeral diaphyseal fracture healing.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:52.321416+00:00",
+      "updated_at": "2026-07-05T21:54:55.986251+00:00"
+    },
+    {
+      "id": "b004ee9e-cd12-4ae4-b2f3-f907d5861eb7",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|injured_in|humeral-shaft",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "injured_in",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship injured_in",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:55.989+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "humeral-shaft",
+        "subject_slug": "humeral-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "clinical_importance": "high",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:57.622553+00:00",
+      "updated_at": "2026-07-05T21:54:56.079452+00:00"
+    },
+    {
+      "id": "109a580c-2cd2-484e-9fc3-959ae145c854",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|has_complication|radial-nerve-palsy",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:56.081+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "radial-nerve-palsy",
+        "subject_slug": "humeral-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:59.9694+00:00",
+      "updated_at": "2026-07-05T21:54:56.172544+00:00"
+    },
+    {
+      "id": "1383ab79-b404-493e-b36b-f6fc52b54a65",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|has_complication|humeral-shaft-nonunion",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:56.174+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "humeral-shaft-nonunion",
+        "subject_slug": "humeral-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:00.154118+00:00",
+      "updated_at": "2026-07-05T21:54:56.26968+00:00"
+    },
+    {
+      "id": "41f0ba8a-c765-40f1-83cf-3734b7b02015",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:59.38+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "upper-extremity-trauma-anatomy-hub",
+        "subject_slug": "humeral-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:57.805703+00:00",
+      "updated_at": "2026-07-05T21:54:59.473299+00:00"
+    },
+    {
+      "id": "1f6cad8b-b724-4588-b1b5-d7b7697b0ec5",
+      "proposal_fingerprint": "create|imaging_finding|holstein-lewis-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-humeral-shaft-fractures",
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "imaging_finding",
+      "proposed_entity_label": "Holstein-Lewis Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Holstein-Lewis Fracture",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:56.271+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "holstein-lewis-fracture",
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.597Z",
+        "description": "Spiral distal-third humeral shaft fracture pattern associated with radial nerve injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:51.949766+00:00",
+      "updated_at": "2026-07-05T21:54:56.375636+00:00"
+    },
+    {
+      "id": "ec47e2bb-63a7-4eac-8a83-b0910fe09e3b",
+      "proposal_fingerprint": "create|procedure|humeral-im-nailing",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-humeral-shaft-fractures",
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "procedure",
+      "proposed_entity_label": "Humeral IM Nailing",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Humeral IM Nailing",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:58.651+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "humeral-im-nailing",
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.597Z",
+        "description": "Intramedullary nailing for unstable humeral shaft fracture patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:51.580142+00:00",
+      "updated_at": "2026-07-05T21:54:58.748539+00:00"
+    },
+    {
+      "id": "63ef6fdc-2781-4aa5-93a6-13749be1b3e3",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|at_risk_structure|radial-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "at_risk_structure",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship at_risk_structure",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "radial-nerve",
+        "subject_slug": "humeral-shaft-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "spiral_groove",
+          "context_relevance": [
+            "call",
+            "or"
+          ],
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:58.036279+00:00",
+      "updated_at": "2026-07-05T21:54:45.213078+00:00"
+    },
+    {
+      "id": "aaa5fe7e-aebd-4606-86ef-3887c78d61c5",
+      "proposal_fingerprint": "rel|holstein-lewis-fracture|indicates_treatment|humeral-plate-osteosynthesis",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "indicates_treatment",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship indicates_treatment",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "humeral-plate-osteosynthesis",
+        "subject_slug": "holstein-lewis-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "imaging_finding",
+        "relationship_metadata": {
+          "note": "operative strategy and nerve exploration attending-dependent",
+          "confidence": 0.7,
+          "review_status": "needs_review",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:58.855734+00:00",
+      "updated_at": "2026-07-05T21:54:45.791196+00:00"
+    },
+    {
+      "id": "ffd04b6b-57a0-491a-b987-f5c8b1a10874",
+      "proposal_fingerprint": "create|condition|humeral-shaft-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-humeral-shaft-fractures",
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "condition",
+      "proposed_entity_label": "Humeral Shaft Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Humeral Shaft Fracture",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:58.898+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "humeral-shaft-fracture",
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.597Z",
+        "description": "Diaphyseal humerus fracture with radial nerve risk in spiral distal-third patterns.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:51.395062+00:00",
+      "updated_at": "2026-07-05T21:54:58.990012+00:00"
+    },
+    {
+      "id": "1fc35db9-2de5-4a81-8ede-fbd5f93c3c32",
+      "proposal_fingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|humeral-shaft-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "prerequisite_for",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship prerequisite_for",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:58.992+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "humeral-shaft-fracture",
+        "subject_slug": "upper-extremity-trauma-anatomy-hub",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "condition",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "anatomy_structure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "call",
+            "or"
+          ],
+          "educational_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:57.43371+00:00",
+      "updated_at": "2026-07-05T21:54:59.086929+00:00"
+    },
+    {
+      "id": "b046df8c-da07-4869-afef-2385ffcd6dbc",
+      "proposal_fingerprint": "create|procedure|humeral-plate-osteosynthesis",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-humeral-shaft-fractures",
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "procedure",
+      "proposed_entity_label": "Humeral Plate Osteosynthesis",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Humeral Plate Osteosynthesis",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:59.183+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "humeral-plate-osteosynthesis",
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.597Z",
+        "description": "Open plating for humeral shaft fractures when nailing is unsuitable.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:51.770174+00:00",
+      "updated_at": "2026-07-05T21:54:59.272201+00:00"
+    },
+    {
+      "id": "35c6db85-2aee-4942-a6e4-c9656b36d182",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|has_imaging_finding|holstein-lewis-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_imaging_finding",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship has_imaging_finding",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:59.475+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "holstein-lewis-fracture",
+        "subject_slug": "humeral-shaft-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "imaging_finding",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "nerve_risk",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:58.409683+00:00",
+      "updated_at": "2026-07-05T21:54:59.566847+00:00"
+    },
+    {
+      "id": "252672ab-e158-4ca5-8e9d-5c7b3276a347",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|at_risk_structure|brachial-artery",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "at_risk_structure",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship at_risk_structure",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "brachial-artery",
+        "subject_slug": "humeral-shaft-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "vascular",
+          "context_relevance": [
+            "call"
+          ],
+          "clinical_importance": "moderate"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:58.224504+00:00",
+      "updated_at": "2026-07-05T21:54:45.408124+00:00"
+    },
+    {
+      "id": "57806441-8795-4880-a64a-79b0eecc1c5d",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|treated_by|humeral-im-nailing",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "humeral-im-nailing",
+        "subject_slug": "humeral-shaft-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:59.192602+00:00",
+      "updated_at": "2026-07-05T21:54:45.981886+00:00"
+    },
+    {
+      "id": "bea2b982-272e-407c-8201-7d91165aa955",
+      "proposal_fingerprint": "rel|humeral-plate-osteosynthesis|at_risk_structure|radial-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "at_risk_structure",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship at_risk_structure",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "radial-nerve",
+        "subject_slug": "humeral-plate-osteosynthesis",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "procedure",
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "posterior_approach",
+          "context_relevance": [
+            "or"
+          ],
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:59.778724+00:00",
+      "updated_at": "2026-07-05T21:54:46.564988+00:00"
+    },
+    {
+      "id": "afe93319-7259-46d6-9308-12f488e39a87",
+      "proposal_fingerprint": "claim|claim-hs-radial-trap",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "humeral shaft neurovascular traps",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "draft_id": "claim-hs-radial-trap",
+        "verified": false,
+        "claim_text": "Missing a new radial nerve deficit after closed reduction of a humeral shaft fracture.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.8,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call"
+        ],
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "radial-nerve",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:00.906231+00:00",
+      "updated_at": "2026-07-05T21:54:47.736274+00:00"
+    },
+    {
+      "id": "2e32399a-7f7a-443f-9647-d9ac06ea1840",
+      "proposal_fingerprint": "rel|humeral-shaft-fracture|treated_by|humeral-plate-osteosynthesis",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "humeral-plate-osteosynthesis",
+        "subject_slug": "humeral-shaft-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:59.381834+00:00",
+      "updated_at": "2026-07-05T21:54:46.179264+00:00"
+    },
+    {
+      "id": "53112601-8e78-48e8-87d6-91e10ed5b81e",
+      "proposal_fingerprint": "claim|claim-hs-radial-nerve-exam",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "trauma-humeral-shaft-fractures curriculum",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "draft_id": "claim-hs-radial-nerve-exam",
+        "verified": false,
+        "claim_text": "Document wrist extension and finger extension at presentation and after reduction of humeral shaft fractures.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call"
+        ],
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "humeral-shaft-fracture",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:00.531974+00:00",
+      "updated_at": "2026-07-05T21:54:47.350439+00:00"
+    },
+    {
+      "id": "cd9ad464-287d-42df-a0ee-b30674da6d01",
+      "proposal_fingerprint": "claim|claim-hs-nailing-default",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "humeral shaft treatment patterns",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "draft_id": "claim-hs-nailing-default",
+        "verified": false,
+        "claim_text": "Intramedullary nailing is a common operative answer for unstable humeral shaft fracture patterns.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "humeral-im-nailing",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:01.093088+00:00",
+      "updated_at": "2026-07-05T21:54:47.930311+00:00"
+    },
+    {
+      "id": "3312f9ff-1ce5-4def-8a76-a95bab12932a",
+      "proposal_fingerprint": "claim|claim-hs-holstein-lewis",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "humeral-shaft-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "humeral shaft board pearls",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "draft_id": "claim-hs-holstein-lewis",
+        "verified": false,
+        "claim_text": "Holstein-Lewis spiral distal-third humeral shaft fractures are classic radial nerve injury associations on boards.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.8,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite"
+        ],
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "holstein-lewis-fracture",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:00.716878+00:00",
+      "updated_at": "2026-07-05T21:54:47.543346+00:00"
+    },
+    {
+      "id": "c0b36762-6a0e-4453-a53f-7990a7c4abe2",
+      "proposal_fingerprint": "rel|humeral-im-nailing|involves_anatomy|humeral-shaft",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:59.625+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "object_slug": "humeral-shaft",
+        "subject_slug": "humeral-im-nailing",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_type": "procedure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "implant_path",
+          "context_relevance": [
+            "or"
+          ]
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:50:59.594695+00:00",
+      "updated_at": "2026-07-05T21:54:59.740601+00:00"
+    },
+    {
+      "id": "ef75b63e-e6fc-4cc4-b3a7-d71e716a5480",
+      "proposal_fingerprint": "bridge|trauma-humeral-shaft-fractures|humeral-shaft-fracture",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "source_signal_type": "curriculum_node",
+      "source_signal_ids": [
+        "trauma-humeral-shaft-fractures"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": "primary_coverage",
+      "confidence": 0.95,
+      "confidence_tier": "high",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "Bridge trauma-humeral-shaft-fractures to humeral-shaft-fracture entity",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:59.74+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_bridge"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.8,
+          "ambiguity": 0.2,
+          "confidence": 0.95,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "humeral-shaft-fracture",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "curriculum_node_slug": "trauma-humeral-shaft-fractures",
+        "legacy_card_mappings": 10,
+        "clinical_verification": false,
+        "legacy_question_mappings": 47
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:01.840267+00:00",
+      "updated_at": "2026-07-05T21:54:59.832963+00:00"
+    },
+    {
+      "id": "c5ade2db-b6aa-450e-975d-29e7bde42378",
+      "proposal_fingerprint": "dp|dp-hs-operative-nail",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "humeral_shaft_pilot_spec_v1",
+      "evidence_summary": "humeral shaft operative defaults",
+      "supporting_card_count": 10,
+      "supporting_question_count": 47,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "humeral-shaft-fracture-neighborhood",
+        "action": "Proceed with operative stabilization pathway (typically IM nail when suitable) with documented nerve exam",
+        "trigger": "Unstable humeral shaft alignment, open fracture, or pathologic pattern needing rigid fixation",
+        "urgency": "urgent",
+        "draft_id": "dp-hs-operative-nail",
+        "verified": false,
+        "curated_at": "2026-07-05T21:50:46.598Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.8,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:humeral-shaft-fracture-neighborhood",
+        "safety_criticality": "moderate",
+        "review_packet_label": "Humeral Shaft Fracture Neighborhood",
+        "subject_entity_slug": "humeral-shaft-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:01.460761+00:00",
+      "updated_at": "2026-07-05T21:54:48.320667+00:00"
+    }
+  ],
+  "reviewHistory": [
+    {
+      "proposalFingerprint": "rel|holstein-lewis-fracture|explains_instability|humeral-shaft-fracture",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-hs-case-script",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-hs-radial-nerve-deficit",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|radial-nerve-palsy",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|humeral-shaft-nonunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|injured_in|humeral-shaft",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|has_complication|radial-nerve-palsy",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|has_complication|humeral-shaft-nonunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|imaging_finding|holstein-lewis-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|procedure|humeral-im-nailing",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|at_risk_structure|radial-nerve",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|holstein-lewis-fracture|indicates_treatment|humeral-plate-osteosynthesis",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|condition|humeral-shaft-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|humeral-shaft-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|procedure|humeral-plate-osteosynthesis",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|has_imaging_finding|holstein-lewis-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|at_risk_structure|brachial-artery",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|treated_by|humeral-im-nailing",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-plate-osteosynthesis|at_risk_structure|radial-nerve",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-hs-radial-trap",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-shaft-fracture|treated_by|humeral-plate-osteosynthesis",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-hs-radial-nerve-exam",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-hs-nailing-default",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_REVISED",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-hs-holstein-lewis",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|humeral-im-nailing|involves_anatomy|humeral-shaft",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "bridge|trauma-humeral-shaft-fractures|humeral-shaft-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-hs-operative-nail",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    }
+  ],
+  "qualitySignals": {
+    "gapCount": 16,
+    "gapsByKind": {
+      "missing_relationship": 7,
+      "missing_entity": 1,
+      "missing_claim": 4,
+      "missing_decision_point": 1,
+      "missing_metadata": 1,
+      "missing_asset_link": 2
+    },
+    "gapsByPriority": {
+      "high": 5,
+      "critical": 3,
+      "medium": 8
+    },
+    "qualityWarnings": [],
+    "safetyFlags": []
+  },
+  "safetySignals": [],
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Upper Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "upper-extremity-trauma-anatomy-hub",
+      "subjectSlug": "upper-extremity-trauma-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-entity-neighbor-2",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "Humeral Shaft Fracture neighborhood has 0/1 classification_system entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.classification.system",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "entityType": "classification_system"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Humeral Shaft Fracture missing outbound has_classification (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.pred.has_classification",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "subjectSlug": "humeral-shaft-fracture",
+      "predicate": "has_classification"
+    },
+    {
+      "id": "gap-rel-4",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Humeral Shaft Fracture missing outbound has_grade (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.has_grade",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "subjectSlug": "humeral-shaft-fracture",
+      "predicate": "has_grade"
+    },
+    {
+      "id": "gap-claim-5",
+      "kind": "missing_claim",
+      "priority": "high",
+      "confidence": 0.88,
+      "reason": "Humeral Shaft Fracture has 1/3 L1 claims.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.claims.l1",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "claimType": "fact|board_trap|imaging_point|cognitive_trap"
+    },
+    {
+      "id": "gap-claim-type-6",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Humeral Shaft Fracture missing claim type: board_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.board_trap",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "claimType": "board_trap"
+    },
+    {
+      "id": "gap-claim-type-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Humeral Shaft Fracture missing claim type: imaging_point.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.imaging_point",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "claimType": "imaging_point"
+    },
+    {
+      "id": "gap-claim-type-8",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Humeral Shaft Fracture missing claim type: cognitive_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.cognitive_trap",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "claimType": "cognitive_trap"
+    },
+    {
+      "id": "gap-dp-pattern-9",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.85,
+      "reason": "Humeral Shaft Fracture missing decision point pattern: nonoperative_eligible.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management.nonoperative_eligible",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "decisionPointPattern": "nonoperative_eligible"
+    },
+    {
+      "id": "gap-meta-rel-10",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "1 clinical_importance gaps on Humeral Shaft Fracture injured_in/has_imaging_finding/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.meta.clinical_importance",
+      "anchorEntitySlug": "humeral-shaft-fracture",
+      "metadataField": "clinical_importance",
+      "predicate": "injured_in|has_imaging_finding|at_risk_structure"
+    },
+    {
+      "id": "gap-rel-11",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Humeral IM Nailing missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "humeral-im-nailing",
+      "subjectSlug": "humeral-im-nailing",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-rel-12",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Humeral Plate Osteosynthesis missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "humeral-plate-osteosynthesis",
+      "subjectSlug": "humeral-plate-osteosynthesis",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-asset-card-13",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "10 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "humeral-shaft-fracture"
+    },
+    {
+      "id": "gap-asset-question-14",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "47 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "humeral-shaft-fracture"
+    },
+    {
+      "id": "gap-proc-approach-15",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Humeral IM Nailing missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "humeral-im-nailing",
+      "subjectSlug": "humeral-im-nailing",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-16",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Humeral Plate Osteosynthesis missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "humeral-plate-osteosynthesis",
+      "subjectSlug": "humeral-plate-osteosynthesis",
+      "predicate": "uses_approach"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "CASEPREP_LINK_MISSING",
+      "message": "No CasePrep mapping for topic humeral-shaft-fracture",
+      "collectorId": "caseprep-link-collector",
+      "severity": "info"
+    }
+  ],
+  "auditTrail": [
+    {
+      "stage": "init",
+      "timestamp": "2026-07-05T21:57:22.325Z",
+      "action": "build_started",
+      "detail": "humeral-shaft-fracture"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:22.326Z",
+      "action": "collector_complete",
+      "detail": "4 section(s) from trauma-humeral-shaft-fractures curriculum bridge",
+      "collectorId": "static-prepare-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:22.326Z",
+      "action": "collector_complete",
+      "detail": "node=trauma-humeral-shaft-fractures",
+      "collectorId": "curriculum-node-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:22.327Z",
+      "action": "collector_complete",
+      "detail": "cards=10",
+      "collectorId": "anki-signal-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:22.327Z",
+      "action": "collector_complete",
+      "detail": "questions=47",
+      "collectorId": "orthobullets-metadata-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:22.327Z",
+      "action": "collector_complete",
+      "detail": "no mapping",
+      "collectorId": "caseprep-link-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:23.083Z",
+      "action": "collector_complete",
+      "detail": "source=database entities=6",
+      "collectorId": "canonical-snapshot-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:23.199Z",
+      "action": "collector_complete",
+      "detail": "proposals=28 source=database",
+      "collectorId": "proposal-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:23.295Z",
+      "action": "collector_complete",
+      "detail": "reviewed=0 pending=0",
+      "collectorId": "review-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:24.000Z",
+      "action": "collector_complete",
+      "detail": "gaps=28 safety=0",
+      "collectorId": "quality-signal-collector"
+    },
+    {
+      "stage": "assemble",
+      "timestamp": "2026-07-05T21:57:24.107Z",
+      "action": "packet_assembled",
+      "detail": "14 items, 16 gaps"
+    }
+  ],
+  "databaseModified": false
+}

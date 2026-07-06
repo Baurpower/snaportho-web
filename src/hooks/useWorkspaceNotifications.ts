@@ -13,7 +13,27 @@ function isNotificationListResponse(
   return Boolean(payload && "items" in payload && Array.isArray(payload.items));
 }
 
+function buildNotificationsUrl(params: {
+  programId: string;
+  unreadOnly?: boolean;
+  limit?: number;
+}) {
+  const searchParams = new URLSearchParams();
+  searchParams.set("programId", params.programId);
+
+  if (params.unreadOnly) {
+    searchParams.set("unreadOnly", "true");
+  }
+
+  if (typeof params.limit === "number") {
+    searchParams.set("limit", String(params.limit));
+  }
+
+  return `/api/workspace/notifications?${searchParams.toString()}`;
+}
+
 export function useWorkspaceNotifications(params?: {
+  programId?: string | null;
   unreadOnly?: boolean;
   limit?: number;
 }) {
@@ -22,20 +42,21 @@ export function useWorkspaceNotifications(params?: {
   const [error, setError] = useState<string | null>(null);
 
   const refresh = useCallback(async () => {
+    if (!params?.programId) {
+      setItems([]);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
-      const searchParams = new URLSearchParams();
-      if (params?.unreadOnly) {
-        searchParams.set("unreadOnly", "true");
-      }
-      if (typeof params?.limit === "number") {
-        searchParams.set("limit", String(params.limit));
-      }
-
       const response = await fetch(
-        `/api/workspace/notifications${searchParams.size ? `?${searchParams.toString()}` : ""}`,
+        buildNotificationsUrl({
+          programId: params.programId,
+          unreadOnly: params?.unreadOnly,
+          limit: params?.limit,
+        }),
         {
           credentials: "include",
           cache: "no-store",
@@ -61,11 +82,21 @@ export function useWorkspaceNotifications(params?: {
     } finally {
       setLoading(false);
     }
-  }, [params?.limit, params?.unreadOnly]);
+  }, [params?.limit, params?.programId, params?.unreadOnly]);
 
   useEffect(() => {
+    setItems([]);
+    setError(null);
+  }, [params?.programId]);
+
+  useEffect(() => {
+    if (!params?.programId) {
+      setLoading(false);
+      return;
+    }
+
     void refresh();
-  }, [refresh]);
+  }, [params?.programId, refresh]);
 
   return {
     items,

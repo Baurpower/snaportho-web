@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Bell } from "lucide-react";
 import NotificationDropdown from "./NotificationDropdown";
+import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 import { useWorkspaceNotifications } from "@/hooks/useWorkspaceNotifications";
 import { useUnreadNotificationCount } from "@/hooks/useUnreadNotificationCount";
 import { useMarkNotificationRead } from "@/hooks/useMarkNotificationRead";
@@ -10,12 +11,17 @@ import { useMarkAllNotificationsRead } from "@/hooks/useMarkAllNotificationsRead
 import type { WorkspaceNotification } from "@/lib/workspace/notifications/types";
 
 export default function NotificationBell() {
+  const { programId } = useWorkspacePermissions();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const notifications = useWorkspaceNotifications({ limit: 12 });
-  const unreadCount = useUnreadNotificationCount();
-  const markRead = useMarkNotificationRead();
-  const markAllRead = useMarkAllNotificationsRead();
+  const notifications = useWorkspaceNotifications({ programId, limit: 12 });
+  const unreadCount = useUnreadNotificationCount({ programId });
+  const markRead = useMarkNotificationRead({ programId });
+  const markAllRead = useMarkAllNotificationsRead({ programId });
+
+  useEffect(() => {
+    setOpen(false);
+  }, [programId]);
 
   useEffect(() => {
     if (!open) return;
@@ -59,8 +65,12 @@ export default function NotificationBell() {
     markAllRead.error ??
     null;
 
+  if (!programId) {
+    return null;
+  }
+
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative" key={programId}>
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}

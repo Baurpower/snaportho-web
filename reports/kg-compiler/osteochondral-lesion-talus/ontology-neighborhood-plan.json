@@ -1,0 +1,90 @@
+{
+  "topicKey": "osteochondral-lesion-talus",
+  "pilotKey": "osteochondral-lesion-talus-neighborhood",
+  "primaryEntitySlug": "osteochondral-lesion-talus",
+  "displayName": "Osteochondral Lesion of the Talus",
+  "generatedAt": "2026-07-05T23:23:00.683Z",
+  "nodes": [
+    {
+      "slug": "osteochondral-lesion-talus-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Osteochondral Lesion of the Talus Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-lesion-talus-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Osteochondral Lesion of the Talus Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-lesion-talus-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Osteochondral Lesion of the Talus Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-lesion-talus-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Osteochondral Lesion of the Talus MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-lesion-talus-complication",
+      "entityType": "complication",
+      "preferredLabel": "Osteochondral Lesion of the Talus Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-lesion-talus-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Osteochondral Lesion of the Talus Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "osteochondral-lesion-talus-reconstruction"
+    ],
+    "classification": [
+      "osteochondral-lesion-talus-classification"
+    ],
+    "imaging": [
+      "osteochondral-lesion-talus-mri-finding"
+    ],
+    "complication": [
+      "osteochondral-lesion-talus-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "osteochondral-lesion-talus-exam-maneuver",
+      "osteochondral-lesion-talus-rehab-protocol"
+    ]
+  }
+}

@@ -41,6 +41,8 @@ import BroBotProductTabs from './BroBotProductTabs';
 import ReadingRecommendationsPanel from './ReadingRecommendationsPanel';
 import { useChatScrollController } from './useChatScrollController';
 import { safeRedirectPath } from '@/lib/auth/redirects';
+import { fetchMeEntitlementsView, toWebUsageSnapshot } from '@/lib/brobot/billing-entitlement-state';
+import { useBroBotEntitlement } from '@/hooks/useBroBotEntitlement';
 
 type BroBotChatResponse = {
   conversationId: string;
@@ -467,6 +469,12 @@ export default function BroBotChatPage() {
   const [requestState, setRequestState] = useState<ChatRequestState>('idle');
   const [error, setError] = useState<ChatError | null>(null);
   const [usage, setUsage] = useState<UsageSnapshot | null>(null);
+  const {
+    usage: memberUsage,
+    isUnlimited,
+    refresh: refreshEntitlements,
+    loading: entitlementLoading,
+  } = useBroBotEntitlement('brobot_chat');
   const [pendingIntent, setPendingIntent] = useState<PendingIntent | null>(null);
   const [lastFailedPrompt, setLastFailedPrompt] = useState<string | null>(null);
   const [restoredPendingPrompt, setRestoredPendingPrompt] = useState(false);
@@ -532,40 +540,34 @@ export default function BroBotChatPage() {
   }, []);
 
   useEffect(() => {
+    if (authStatus === 'loading') {
+      setUsage(null);
+      return;
+    }
+
+    if (authStatus === 'authenticated') {
+      setUsage(memberUsage);
+      return;
+    }
+
     let isMounted = true;
 
-    async function loadUsage() {
-      if (authStatus === 'loading') {
-        setUsage(null);
-        return;
-      }
-
+    async function loadGuestUsage() {
       try {
-        const res = await fetch('/api/me/entitlements', {
-          cache: 'no-store',
-          credentials: 'include',
-        });
-        const body = await res.json();
-        const data = body?.data;
-
-        if (!isMounted || !data?.aiAccess) return;
-
-        setUsage({
-          unlimited: Boolean(data.aiAccess.unlimited),
-          dailyCap: data.aiAccess.dailyCap ?? null,
-          remainingToday: data.aiAccess.remainingToday ?? null,
-        });
+        const view = await fetchMeEntitlementsView({ source: 'brobot_chat_guest' });
+        if (!isMounted || !view) return;
+        setUsage(toWebUsageSnapshot(view));
       } catch {
         // Non-critical. The chat response updates this after a successful call.
       }
     }
 
-    void loadUsage();
+    void loadGuestUsage();
 
     return () => {
       isMounted = false;
     };
-  }, [authStatus]);
+  }, [authStatus, memberUsage]);
 
   useEffect(() => {
     if (authStatus !== 'authenticated') return;
@@ -669,11 +671,17 @@ export default function BroBotChatPage() {
           }
 
           if (intentRes.status === 429 || intentBody?.isLimitReached) {
-            setUsage((current) =>
-              current ? { ...current, remainingToday: 0 } : current
-            );
-            setLastFailedPrompt(submittedPrompt);
-            setError({ type: 'quota', dailyCap: intentBody?.dailyCap ?? null });
+            if (!isUnlimited) {
+              setUsage((current) =>
+                current ? { ...current, remainingToday: 0 } : current
+              );
+              setLastFailedPrompt(submittedPrompt);
+              setError({ type: 'quota', dailyCap: intentBody?.dailyCap ?? null });
+            } else {
+              void refreshEntitlements();
+              setLastFailedPrompt(submittedPrompt);
+              setError({ type: 'unexpected', message: 'BroBot access is still activating. Please try again.' });
+            }
             return;
           }
 
@@ -924,11 +932,17 @@ export default function BroBotChatPage() {
         }
 
         if (res.status === 429 || body?.isLimitReached) {
-          setUsage((current) =>
-            current ? { ...current, remainingToday: 0 } : current
-          );
-          setLastFailedPrompt(submittedPrompt);
-          setError({ type: 'quota', dailyCap: body?.dailyCap ?? null });
+          if (!isUnlimited) {
+            setUsage((current) =>
+              current ? { ...current, remainingToday: 0 } : current
+            );
+            setLastFailedPrompt(submittedPrompt);
+            setError({ type: 'quota', dailyCap: body?.dailyCap ?? null });
+          } else {
+            void refreshEntitlements();
+            setLastFailedPrompt(submittedPrompt);
+            setError({ type: 'unexpected', message: 'BroBot access is still activating. Please try again.' });
+          }
           return;
         }
 
@@ -1138,7 +1152,7 @@ export default function BroBotChatPage() {
                   New Chat
                 </button>
               )}
-              <BroBotUsageBanner usage={usage} />
+              <BroBotUsageBanner usage={usage} loading={authStatus === 'authenticated' && entitlementLoading} />
             </div>
           </div>
         </header>
@@ -2076,7 +2090,21 @@ function CompactSelect({
   );
 }
 
-function BroBotUsageBanner({ usage }: { usage: UsageSnapshot | null }) {
+function BroBotUsageBanner({
+  usage,
+  loading = false,
+}: {
+  usage: UsageSnapshot | null;
+  loading?: boolean;
+}) {
+  if (loading) {
+    return (
+      <div className="self-start rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs text-slate-500 shadow-sm sm:self-auto">
+        Checking BroBot access...
+      </div>
+    );
+  }
+
   if (!usage) return null;
 
   if (usage.unlimited) {

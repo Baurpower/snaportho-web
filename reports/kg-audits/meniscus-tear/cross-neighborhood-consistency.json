@@ -1,0 +1,24 @@
+{
+  "category": "cross_neighborhood_consistency",
+  "label": "Cross-Neighborhood Consistency",
+  "score": 96,
+  "deductions": [
+    {
+      "finding": "Low cross-neighborhood anatomy reuse",
+      "evidence": "45 shared anatomy slugs across 17 neighborhoods",
+      "reason": "Trauma clusters should share regional anatomy (e.g. proximal femur hub).",
+      "severity": "medium",
+      "category": "cross_neighborhood_consistency",
+      "suggestedFix": "Define batch-level shared anatomy slugs and retarget all neighborhoods.",
+      "impact": 4
+    }
+  ],
+  "metrics": {
+    "neighborhoodsCompared": 17,
+    "duplicateConceptCount": 0,
+    "sharedAnatomySlugCount": 45,
+    "crossNeighborhoodReuseRate": 0.08426966292134831,
+    "terminologyMismatchCount": 0
+  },
+  "recommendations": []
+}

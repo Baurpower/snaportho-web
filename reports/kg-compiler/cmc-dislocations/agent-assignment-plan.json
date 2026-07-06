@@ -1,0 +1,85 @@
+{
+  "generatedAt": "2026-07-06T00:05:43.352Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "cmc-dislocations",
+  "pilotKey": "cmc-dislocations-neighborhood",
+  "assignments": [
+    {
+      "workItemId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentName": "Clinical Entity Builder",
+      "type": "gap_resolution",
+      "gapCount": 1,
+      "gapIds": [
+        "gap-entity-neighbor-1"
+      ],
+      "gapKinds": [
+        "missing_entity"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_entity",
+        "generic_fallback"
+      ]
+    },
+    {
+      "workItemId": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "agentName": "Relationship Builder",
+      "type": "gap_resolution",
+      "gapCount": 3,
+      "gapIds": [
+        "gap-rel-2",
+        "gap-rel-3",
+        "gap-proc-approach-5"
+      ],
+      "gapKinds": [
+        "missing_relationship"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder",
+        "work-anatomy-builder"
+      ],
+      "estimatedConfidence": 0.8733333333333334,
+      "requiredReviewer": "attending",
+      "matchReasons": [
+        "handles_gap_kind:missing_relationship"
+      ]
+    },
+    {
+      "workItemId": "work-asset-linker",
+      "agentId": "asset-linker",
+      "agentName": "Asset Linker",
+      "type": "gap_resolution",
+      "gapCount": 1,
+      "gapIds": [
+        "gap-asset-question-4"
+      ],
+      "gapKinds": [
+        "missing_asset_link"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder"
+      ],
+      "estimatedConfidence": 0.8,
+      "requiredReviewer": "none",
+      "matchReasons": [
+        "handles_gap_kind:missing_asset_link"
+      ]
+    }
+  ],
+  "executionOrder": [
+    "work-clinical-entity-builder",
+    "work-anatomy-builder",
+    "work-relationship-builder",
+    "work-asset-linker",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "registryAgentCount": 13
+}

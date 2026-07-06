@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-05T23:11:43.835Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-3e56bca6",
+  "gapsAddressed": 1,
+  "gapsScheduled": 2,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-scaphoid-nonunion-cognitive-trap",
+      "draftId": "claim-scaphoid-nonunion-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-b0589303",
+        "ev-quality-signal-1e1edd85",
+        "ev-quality-signal-ed2a655c"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-scaphoid-nonunion-imaging",
+      "draftId": "claim-scaphoid-nonunion-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-b0589303",
+        "ev-quality-signal-1e1edd85",
+        "ev-quality-signal-ed2a655c"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-scaphoid-nonunion-mechanism",
+      "draftId": "claim-scaphoid-nonunion-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-b0589303",
+        "ev-quality-signal-1e1edd85",
+        "ev-quality-signal-ed2a655c"
+      ],
+      "verified": false
+    }
+  ]
+}

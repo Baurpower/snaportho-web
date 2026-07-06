@@ -1,0 +1,38 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 77,
+  "deductions": [
+    {
+      "finding": "11 dangling edges reference missing entities",
+      "evidence": "distal-humerus-fracture -[at_risk_structure]-> median-nerve; distal-humerus-fracture -[at_risk_structure]-> ulnar-nerve; distal-humerus-fracture -[injured_in]-> distal-humerus",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern distal-humerus-fracture|operative_indication: dp-dh-orif vs dp-dh-tea",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 6,
+    "relationshipCount": 17,
+    "orphanCount": 0,
+    "danglingEdgeCount": 11,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals.",
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

@@ -1,0 +1,1677 @@
+{
+  "topicKey": "lisfranc-injury",
+  "pilotKey": "lisfranc-injury-neighborhood",
+  "generatedAt": "2026-07-05T22:51:32.852Z",
+  "entities": [
+    {
+      "slug": "lisfranc-chronic-instability",
+      "entityType": "complication",
+      "preferredLabel": "Lisfranc Chronic Instability",
+      "metadata": {
+        "slug": "lisfranc-chronic-instability",
+        "pilot": "lisfranc-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.849Z",
+        "description": "Persistent midfoot collapse and pain after inadequately treated Lisfranc injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|lisfranc-chronic-instability",
+        "canonical_entity_id": "2ccbb037-7b07-49a7-9754-867e57128984",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|lisfranc-chronic-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-displacement",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Lisfranc Displacement",
+      "metadata": {
+        "slug": "lisfranc-displacement",
+        "pilot": "lisfranc-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.849Z",
+        "description": "Radiographic tarsometatarsal diastasis or instability on weight-bearing views.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|lisfranc-displacement",
+        "canonical_entity_id": "82135032-f2b8-4752-80ba-144570cf4ca5",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|lisfranc-displacement"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-injury",
+      "entityType": "condition",
+      "preferredLabel": "Lisfranc Injury",
+      "metadata": {
+        "slug": "lisfranc-injury",
+        "pilot": "lisfranc-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.849Z",
+        "description": "Tarsometatarsal ligamentous and osseous disruption threatening midfoot stability.",
+        "clinical_kind": "ligamentous_injury",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|lisfranc-injury",
+        "canonical_entity_id": "292de1f8-7c53-4efc-b355-2736c5775cfb",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|lisfranc-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Lisfranc ORIF",
+      "metadata": {
+        "slug": "lisfranc-orif",
+        "pilot": "lisfranc-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.849Z",
+        "description": "Open reduction internal fixation of unstable Lisfranc injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|lisfranc-orif",
+        "canonical_entity_id": "647f58b2-9d78-4b0d-bc52-eb043f955f8c",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|lisfranc-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-nonoperative-immobilization",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Lisfranc Nonoperative Immobilization",
+      "metadata": {
+        "slug": "lisfranc-nonoperative-immobilization",
+        "pilot": "lisfranc-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.849Z",
+        "description": "Protected weight-bearing and immobilization for stable nondisplaced Lisfranc patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|treatment_principle|lisfranc-nonoperative-immobilization",
+        "canonical_entity_id": "9b771778-4d31-42d6-b5e5-02e4c4b13188",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|treatment_principle|lisfranc-nonoperative-immobilization"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+      "metadata": {
+        "slug": "calcaneus",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+      "metadata": {
+        "slug": "iliac-wing",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+      "metadata": {
+        "slug": "lisfranc-joint",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+      "metadata": {
+        "slug": "midfoot",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+      "metadata": {
+        "slug": "plantar-soft-tissues",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|plantar-soft-tissues"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+      "metadata": {
+        "slug": "pubic-symphysis",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pubic-symphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+      "metadata": {
+        "slug": "sacroiliac-joint",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacroiliac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+      "metadata": {
+        "slug": "sacrum",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+      "metadata": {
+        "slug": "subtalar-joint",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+      "metadata": {
+        "slug": "talus",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-plateau",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Plateau",
+      "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+      "metadata": {
+        "slug": "tibial-plateau",
+        "pilot": "lisfranc-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|tibial-plateau"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "lisfranc-injury",
+      "predicate": "has_complication",
+      "objectSlug": "lisfranc-chronic-instability",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|lisfranc-injury|has_complication|lisfranc-chronic-instability",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|lisfranc-injury|has_complication|lisfranc-chronic-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-injury",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "lisfranc-displacement",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "instability",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|lisfranc-injury|has_imaging_finding|lisfranc-displacement",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|lisfranc-injury|has_imaging_finding|lisfranc-displacement"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabulum",
+      "predicate": "part_of",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_socket",
+        "_provenance_fingerprint": "rel|acetabulum|part_of|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "articulates_with",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "common-peroneal-nerve",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "articulates_with",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral",
+        "_provenance_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-mechanism",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-diaphysis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "femoral_shaft",
+        "_provenance_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "iliac-wing",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_pelvis",
+        "_provenance_fingerprint": "rel|iliac-wing|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-displacement",
+      "predicate": "indicates_treatment",
+      "objectSlug": "lisfranc-orif",
+      "metadata": {
+        "note": "weight-bearing films and clinical exam confirm instability",
+        "confidence": 0.85,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|lisfranc-displacement|indicates_treatment|lisfranc-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-injury",
+      "predicate": "injured_in",
+      "objectSlug": "lisfranc-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|lisfranc-injury|injured_in|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|lisfranc-injury|involves_anatomy|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "arch_stability",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|lisfranc-injury|involves_anatomy|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-injury",
+      "predicate": "treated_by",
+      "objectSlug": "lisfranc-nonoperative-immobilization",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|lisfranc-injury|treated_by|lisfranc-nonoperative-immobilization"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-injury",
+      "predicate": "treated_by",
+      "objectSlug": "lisfranc-orif",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|lisfranc-injury|treated_by|lisfranc-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-joint",
+      "predicate": "part_of",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "midfoot_stability",
+        "_provenance_fingerprint": "rel|lisfranc-joint|part_of|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-orif",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lisfranc-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "reduction",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|lisfranc-orif|involves_anatomy|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lower-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "lisfranc-injury",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|lisfranc-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "midfoot",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot",
+        "_provenance_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "articulates_with",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "patellofemoral",
+        "_provenance_fingerprint": "rel|patella|articulates_with|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pelvic_ring",
+        "_provenance_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "plantar-soft-tissues",
+      "predicate": "part_of",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "_provenance_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "popliteal-artery",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pubic-symphysis",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "_provenance_fingerprint": "rel|pubic-symphysis|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacroiliac-joint",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "_provenance_fingerprint": "rel|sacroiliac-joint|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacrum",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "_provenance_fingerprint": "rel|sacrum|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subtalar-joint",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "articulates_with",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "subtalar",
+        "_provenance_fingerprint": "rel|talus|articulates_with|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle",
+        "_provenance_fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-lisfranc-case-script",
+      "claimType": "clinical_script",
+      "claimText": "Document mechanism, plantar ecchymosis, weight-bearing alignment, stability exam, and operative versus immobilization plan.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-case-script",
+        "verified": false,
+        "claim_text": "Document mechanism, plantar ecchymosis, weight-bearing alignment, stability exam, and operative versus immobilization plan.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "primary_entity_slug": "lisfranc-injury",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-lisfranc-case-script"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-injury-board_trap-missed-lisfranc-instabil",
+      "claimType": "board_trap",
+      "claimText": "Missed Lisfranc instability leads to chronic midfoot collapse.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-injury-board_trap-missed-lisfranc-instabil",
+        "claim_type": "board_trap",
+        "claim_text": "Missed Lisfranc instability leads to chronic midfoot collapse.",
+        "primary_entity_slug": "lisfranc-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "changes_management",
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-bf1dfc7c"
+        ],
+        "evidence_packet_id": "ev-packet-4738c88c",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "_provenance_fingerprint": "claim|claim-lisfranc-injury-board_trap-missed-lisfranc-instabil"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-injury-cognitive_trap-ask-for-weight-bearing-v",
+      "claimType": "cognitive_trap",
+      "claimText": "Ask for weight-bearing views.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-injury-cognitive_trap-ask-for-weight-bearing-v",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Ask for weight-bearing views.",
+        "primary_entity_slug": "lisfranc-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-bf1d06e8"
+        ],
+        "evidence_packet_id": "ev-packet-4738c88c",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "_provenance_fingerprint": "claim|claim-lisfranc-injury-cognitive_trap-ask-for-weight-bearing-v"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-diastasis-language",
+      "claimType": "fact",
+      "claimText": "diastasis language.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-injury-fact-diastasis-language",
+        "claim_type": "fact",
+        "claim_text": "diastasis language.",
+        "primary_entity_slug": "lisfranc-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-bf1d06e8"
+        ],
+        "evidence_packet_id": "ev-packet-4738c88c",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "_provenance_fingerprint": "claim|claim-lisfranc-injury-fact-diastasis-language"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-instability",
+      "claimType": "fact",
+      "claimText": "instability.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-injury-fact-instability",
+        "claim_type": "fact",
+        "claim_text": "instability.",
+        "primary_entity_slug": "lisfranc-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "changes_management"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-bf1d06e8"
+        ],
+        "evidence_packet_id": "ev-packet-4738c88c",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "_provenance_fingerprint": "claim|claim-lisfranc-injury-fact-instability"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-interpret-weight-bearing",
+      "claimType": "fact",
+      "claimText": "Interpret weight-bearing radiographs when available.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-injury-fact-interpret-weight-bearing",
+        "claim_type": "fact",
+        "claim_text": "Interpret weight-bearing radiographs when available.",
+        "primary_entity_slug": "lisfranc-injury",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-868324bf"
+        ],
+        "evidence_packet_id": "ev-packet-4738c88c",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "_provenance_fingerprint": "claim|claim-lisfranc-injury-fact-interpret-weight-bearing"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-midfoot-pain",
+      "claimType": "fact",
+      "claimText": "Midfoot pain.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-injury-fact-midfoot-pain",
+        "claim_type": "fact",
+        "claim_text": "Midfoot pain.",
+        "primary_entity_slug": "lisfranc-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-bf1d06e8"
+        ],
+        "evidence_packet_id": "ev-packet-4738c88c",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "_provenance_fingerprint": "claim|claim-lisfranc-injury-fact-midfoot-pain"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-injury-fact-weight-bearing-films",
+      "claimType": "fact",
+      "claimText": "weight-bearing films.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-injury-fact-weight-bearing-films",
+        "claim_type": "fact",
+        "claim_text": "weight-bearing films.",
+        "primary_entity_slug": "lisfranc-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-bf1d06e8"
+        ],
+        "evidence_packet_id": "ev-packet-4738c88c",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "_provenance_fingerprint": "claim|claim-lisfranc-injury-fact-weight-bearing-films"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-injury-imaging_point-ap-oblique-weight-bearin",
+      "claimType": "imaging_point",
+      "claimText": "AP/oblique/weight-bearing foot radiographs.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-injury-imaging_point-ap-oblique-weight-bearin",
+        "claim_type": "imaging_point",
+        "claim_text": "AP/oblique/weight-bearing foot radiographs.",
+        "primary_entity_slug": "lisfranc-injury",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-bf1dfc7c"
+        ],
+        "evidence_packet_id": "ev-packet-4738c88c",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "_provenance_fingerprint": "claim|claim-lisfranc-injury-imaging_point-ap-oblique-weight-bearin"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-midfoot-stability",
+      "claimType": "fact",
+      "claimText": "Lisfranc injury threatens tarsometatarsal stability and midfoot arch integrity — missed diagnosis leads to chronic collapse.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-midfoot-stability",
+        "verified": false,
+        "claim_text": "Lisfranc injury threatens tarsometatarsal stability and midfoot arch integrity — missed diagnosis leads to chronic collapse.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "primary_entity_slug": "lisfranc-injury",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-lisfranc-midfoot-stability"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-missed-sprain-trap",
+      "claimType": "board_trap",
+      "claimText": "Labeling midfoot pain after athletic or low-energy injury as a simple sprain without checking Lisfranc alignment.",
+      "primaryEntitySlug": "lisfranc-displacement",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-missed-sprain-trap",
+        "verified": false,
+        "claim_text": "Labeling midfoot pain after athletic or low-energy injury as a simple sprain without checking Lisfranc alignment.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "call"
+        ],
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "primary_entity_slug": "lisfranc-displacement",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-lisfranc-missed-sprain-trap"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-stable-nonop-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Operating on every Lisfranc injury without distinguishing stable nondisplaced patterns suitable for immobilization.",
+      "primaryEntitySlug": "lisfranc-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-stable-nonop-trap",
+        "verified": false,
+        "claim_text": "Operating on every Lisfranc injury without distinguishing stable nondisplaced patterns suitable for immobilization.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "primary_entity_slug": "lisfranc-injury",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-lisfranc-stable-nonop-trap"
+      }
+    },
+    {
+      "draftId": "claim-lisfranc-weight-bearing-views",
+      "claimType": "anatomy_pearl",
+      "claimText": "Weight-bearing radiographs of the Lisfranc joint reveal diastasis that may be subtle on non-weight-bearing films.",
+      "primaryEntitySlug": "lisfranc-joint",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "lisfranc-injury-neighborhood",
+        "draft_id": "claim-lisfranc-weight-bearing-views",
+        "verified": false,
+        "claim_text": "Weight-bearing radiographs of the Lisfranc joint reveal diastasis that may be subtle on non-weight-bearing films.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:51:32.848Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:lisfranc-injury-neighborhood",
+        "primary_entity_slug": "lisfranc-joint",
+        "review_packet_label": "Lisfranc Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-lisfranc-weight-bearing-views"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-lisfranc-stable-immobilization",
+      "subjectEntitySlug": "lisfranc-injury",
+      "patternType": "operative_indication",
+      "trigger": "Nondisplaced stable Lisfranc injury without diastasis on weight-bearing views",
+      "action": "Apply Lisfranc nonoperative immobilization with protected weight-bearing and close follow-up for secondary displacement",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-lisfranc-unstable-orif",
+      "subjectEntitySlug": "lisfranc-injury",
+      "patternType": "operative_indication",
+      "trigger": "Unstable Lisfranc injury with tarsometatarsal diastasis or clinical instability on exam",
+      "action": "Proceed with Lisfranc ORIF to restore midfoot column alignment; document postoperative protected weight-bearing",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern lisfranc-injury|operative_indication: dp-lisfranc-stable-immobilization vs dp-lisfranc-unstable-orif"
+    }
+  ],
+  "stats": {
+    "entityCount": 16,
+    "relationshipCount": 35,
+    "claimCount": 13,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 5,
+    "conflictingRelationships": 0,
+    "metadataMerged": 7,
+    "provenanceAttached": 67
+  }
+}

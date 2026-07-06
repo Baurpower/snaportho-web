@@ -1,0 +1,3035 @@
+{
+  "packetId": "ev-packet-01334a91",
+  "topicId": "subtrochanteric-fracture",
+  "createdAt": "2026-07-05T21:37:31.530Z",
+  "packetVersion": "1.0.0",
+  "ontologyVersion": "2026-07-05",
+  "compilerVersion": "1.0.0",
+  "registryVersion": "2026-07-05",
+  "topicContext": {
+    "topicKey": "subtrochanteric-fracture",
+    "pilotKey": "subtrochanteric-fracture-neighborhood",
+    "displayName": "Subtrochanteric Fracture",
+    "primaryEntitySlug": "subtrochanteric-fracture",
+    "targetMaturityLevel": 7,
+    "curriculumNodeSlug": "trauma-subtrochanteric-fractures",
+    "prepareTopicId": "subtrochanteric-fracture",
+    "aliases": [
+      "subtrochanteric fracture",
+      "subtrochanteric femur fracture",
+      "trauma-subtrochanteric-fractures",
+      "subtrochanteric-fracture-neighborhood"
+    ]
+  },
+  "sourceManifest": [
+    {
+      "sourceId": "anki:trauma-subtrochanteric-fractures",
+      "sourceType": "anki_card",
+      "label": "Anki card mappings for trauma-subtrochanteric-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "ob:trauma-subtrochanteric-fractures",
+      "sourceType": "orthobullets_question",
+      "label": "Orthobullets question mappings for trauma-subtrochanteric-fractures",
+      "path": "external_questions + curriculum_node mapping",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "subtrochanteric-fracture",
+      "sourceType": "static_prepare",
+      "label": "Prepare topic: Subtrochanteric Fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split",
+      "copyrightPolicy": "internal_draft_only",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "subtrochanteric-fracture-neighborhood:database",
+      "sourceType": "canonical_snapshot",
+      "label": "Canonical neighborhood snapshot (database)",
+      "path": "canonical_entities + canonical_relationships",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "subtrochanteric-fracture-neighborhood:proposals:database",
+      "sourceType": "proposal_history",
+      "label": "Proposal packet (database)",
+      "path": "kg_automation_proposals",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "subtrochanteric-fracture-neighborhood:quality",
+      "sourceType": "quality_signal",
+      "label": "Ontology quality signals",
+      "path": "kg-compiler/gap-analyzer.ts",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "subtrochanteric-fracture-neighborhood:review",
+      "sourceType": "review_history",
+      "label": "Proposal review history",
+      "path": "proposal.review_status fields",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "trauma-subtrochanteric-fractures",
+      "sourceType": "curriculum_node",
+      "label": "Curriculum node: trauma-subtrochanteric-fractures",
+      "path": "curriculum_nodes.slug",
+      "copyrightPolicy": "reference_link_only",
+      "trustTier": "primary"
+    }
+  ],
+  "canonicalSnapshot": {
+    "source": "database",
+    "entityCount": 17,
+    "relationshipCount": 20,
+    "claimCount": 3,
+    "decisionPointCount": 0,
+    "primaryEntitySlug": "subtrochanteric-fracture",
+    "entitySlugs": [
+      "atypical-subtrochanteric-fracture",
+      "calcar",
+      "cephalomedullary-nail",
+      "cephalomedullary-nailing",
+      "femoral-head",
+      "femoral-neck",
+      "greater-trochanter",
+      "hip-joint",
+      "intertrochanteric-region",
+      "lesser-trochanter",
+      "medial-femoral-circumflex-artery",
+      "proximal-femur-anatomy-hub",
+      "sciatic-nerve",
+      "seinsheimer-classification",
+      "subtrochanteric-fracture",
+      "subtrochanteric-plate-osteosynthesis",
+      "subtrochanteric-varus-malunion"
+    ],
+    "loaded": true
+  },
+  "sourceEvidence": [
+    {
+      "evidenceId": "ev-anki-card-13f0c8fe",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-subtrochanteric-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.92,
+      "provenanceHint": "anki_kg_mapping:trauma-subtrochanteric-fractures",
+      "label": "Anki card mapping count",
+      "summary": "11 high-confidence Anki card mapping(s) for curriculum node trauma-subtrochanteric-fractures",
+      "payload": {
+        "curriculumNodeSlug": "trauma-subtrochanteric-fractures",
+        "mappedCardCount": 11,
+        "deckBranchHint": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Subtrochanteric Fractures",
+        "storesCardText": false,
+        "storesCardAnswer": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "anki",
+        "asset_signal",
+        "metadata_only"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-anki-card-22db3548",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-subtrochanteric-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "deck_branch_hint",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.85,
+      "provenanceHint": "anki_deck_branch:Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Subtrochanteric Fractures",
+      "label": "Anki deck branch hint",
+      "summary": "Primary deck branch for subtrochanteric-fracture Anki cards (metadata only)",
+      "payload": {
+        "deckBranch": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Subtrochanteric Fractures",
+        "storesCardText": false
+      },
+      "tags": [
+        "anki",
+        "deck_hint"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-701f419d",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "subtrochanteric-fracture-neighborhood",
+      "extractionMethod": "entity_index",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "entity_slugs:database",
+      "label": "Entity slug index",
+      "summary": "17 entity slug(s) in neighborhood",
+      "payload": {
+        "entitySlugs": [
+          "atypical-subtrochanteric-fracture",
+          "calcar",
+          "cephalomedullary-nail",
+          "cephalomedullary-nailing",
+          "femoral-head",
+          "femoral-neck",
+          "greater-trochanter",
+          "hip-joint",
+          "intertrochanteric-region",
+          "lesser-trochanter",
+          "medial-femoral-circumflex-artery",
+          "proximal-femur-anatomy-hub",
+          "sciatic-nerve",
+          "seinsheimer-classification",
+          "subtrochanteric-fracture",
+          "subtrochanteric-plate-osteosynthesis",
+          "subtrochanteric-varus-malunion"
+        ],
+        "entityTypes": {
+          "subtrochanteric-plate-osteosynthesis": "procedure",
+          "calcar": "anatomy_structure",
+          "proximal-femur-anatomy-hub": "anatomy_structure",
+          "cephalomedullary-nailing": "procedure",
+          "medial-femoral-circumflex-artery": "anatomy_structure",
+          "femoral-head": "anatomy_structure",
+          "intertrochanteric-region": "anatomy_structure",
+          "seinsheimer-classification": "classification_system",
+          "femoral-neck": "anatomy_structure",
+          "sciatic-nerve": "anatomy_structure",
+          "hip-joint": "anatomy_structure",
+          "lesser-trochanter": "anatomy_structure",
+          "subtrochanteric-fracture": "condition",
+          "atypical-subtrochanteric-fracture": "imaging_finding",
+          "greater-trochanter": "anatomy_structure",
+          "cephalomedullary-nail": "implant",
+          "subtrochanteric-varus-malunion": "complication"
+        }
+      },
+      "tags": [
+        "canonical",
+        "entity_index"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-c7aa0636",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "subtrochanteric-fracture-neighborhood",
+      "extractionMethod": "neighborhood_counts",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.95,
+      "provenanceHint": "canonical_snapshot:database",
+      "label": "Neighborhood entity/relationship counts",
+      "summary": "17 entities, 20 relationships from database",
+      "payload": {
+        "source": "database",
+        "entityCount": 17,
+        "relationshipCount": 20,
+        "claimCount": 3,
+        "decisionPointCount": 0,
+        "primaryEntitySlug": "subtrochanteric-fracture",
+        "verified": false
+      },
+      "tags": [
+        "canonical",
+        "snapshot",
+        "database"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-0dc1e214",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-subtrochanteric-fractures",
+      "path": "curriculum_nodes.slug",
+      "extractionMethod": "slug_mapping",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.95,
+      "provenanceHint": "curriculum_node:trauma-subtrochanteric-fractures",
+      "label": "Curriculum node mapping",
+      "summary": "Primary curriculum node trauma-subtrochanteric-fractures maps to entity subtrochanteric-fracture",
+      "payload": {
+        "curriculumNodeSlug": "trauma-subtrochanteric-fractures",
+        "primaryEntitySlug": "subtrochanteric-fracture",
+        "topicKey": "subtrochanteric-fracture",
+        "pilotKey": "subtrochanteric-fracture-neighborhood",
+        "prepareTopicId": "subtrochanteric-fracture",
+        "legacyRetargetKey": "retarget:trauma-subtrochanteric-fractures"
+      },
+      "tags": [
+        "curriculum",
+        "node_mapping",
+        "subtrochanteric-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-176823dd",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-subtrochanteric-fractures",
+      "extractionMethod": "alias_index",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "curriculum_node_aliases:trauma-subtrochanteric-fractures",
+      "label": "Topic aliases",
+      "summary": "4 topic alias(es) for resolution",
+      "payload": {
+        "aliases": [
+          "subtrochanteric fracture",
+          "subtrochanteric femur fracture",
+          "trauma-subtrochanteric-fractures",
+          "subtrochanteric-fracture-neighborhood"
+        ]
+      },
+      "tags": [
+        "curriculum",
+        "aliases"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-orthobullets-question-a2c910d2",
+      "sourceType": "orthobullets_question",
+      "sourceId": "trauma-subtrochanteric-fractures",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "orthobullets_mapping:trauma-subtrochanteric-fractures",
+      "label": "Orthobullets question mapping count",
+      "summary": "20 Orthobullets question mapping(s) for trauma-subtrochanteric-fractures (metadata only — no stems/answers)",
+      "payload": {
+        "curriculumNodeSlug": "trauma-subtrochanteric-fractures",
+        "mappedQuestionCount": 20,
+        "prepareTopicId": "subtrochanteric-fracture",
+        "storesQuestionStem": false,
+        "storesAnswer": false,
+        "storesExplanation": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "orthobullets",
+        "metadata_only",
+        "asset_signal"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-proposal-history-e3f93e34",
+      "sourceType": "proposal_history",
+      "sourceId": "subtrochanteric-fracture-neighborhood",
+      "extractionMethod": "packet_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "proposal_packet:database",
+      "label": "Proposal packet summary",
+      "summary": "27 proposal(s) from database",
+      "payload": {
+        "source": "database",
+        "totalProposals": 27,
+        "byType": {
+          "create_canonical_entity": 5,
+          "add_canonical_relationship": 13,
+          "propose_educational_claim": 6,
+          "propose_decision_point": 2,
+          "link_curriculum_node_to_entity": 1
+        },
+        "byStatus": {
+          "applied": 16,
+          "needs_review": 11
+        },
+        "fingerprints": [
+          "bridge|trauma-subtrochanteric-fractures|subtrochanteric-fracture",
+          "claim|claim-st-atypical-bisphosphonate",
+          "claim|claim-st-case-script",
+          "claim|claim-st-cephalomedullary-default",
+          "claim|claim-st-high-mechanical-demand",
+          "claim|claim-st-sciatic-safety",
+          "claim|claim-st-varus-malunion",
+          "create|classification_system|seinsheimer-classification",
+          "create|complication|subtrochanteric-varus-malunion",
+          "create|condition|subtrochanteric-fracture",
+          "create|imaging_finding|atypical-subtrochanteric-fracture",
+          "create|procedure|subtrochanteric-plate-osteosynthesis",
+          "dp|dp-st-atypical-workup",
+          "dp|dp-st-cephalomedullary-nail",
+          "rel|atypical-subtrochanteric-fracture|explains_instability|subtrochanteric-fracture",
+          "rel|cephalomedullary-nailing|involves_anatomy|lesser-trochanter",
+          "rel|proximal-femur-anatomy-hub|prerequisite_for|subtrochanteric-fracture",
+          "rel|subtrochanteric-fracture|has_classification|seinsheimer-classification",
+          "rel|subtrochanteric-fracture|has_complication|subtrochanteric-varus-malunion",
+          "rel|subtrochanteric-fracture|has_imaging_finding|atypical-subtrochanteric-fracture",
+          "rel|subtrochanteric-fracture|injured_in|lesser-trochanter",
+          "rel|subtrochanteric-fracture|involves_anatomy|greater-trochanter",
+          "rel|subtrochanteric-fracture|involves_anatomy|intertrochanteric-region",
+          "rel|subtrochanteric-fracture|involves_anatomy|proximal-femur-anatomy-hub",
+          "rel|subtrochanteric-fracture|treated_by|cephalomedullary-nail",
+          "rel|subtrochanteric-fracture|treated_by|subtrochanteric-plate-osteosynthesis",
+          "rel|subtrochanteric-plate-osteosynthesis|at_risk_structure|sciatic-nerve"
+        ]
+      },
+      "tags": [
+        "proposals",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-quality-signal-58ee7cd2",
+      "sourceType": "quality_signal",
+      "sourceId": "subtrochanteric-fracture-neighborhood",
+      "extractionMethod": "gap_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "ontology_gaps:subtrochanteric-fracture-neighborhood",
+      "label": "Ontology gap summary",
+      "summary": "23 gap(s) across 6 kind(s)",
+      "payload": {
+        "gapCount": 23,
+        "gapsByKind": {
+          "missing_entity": 2,
+          "missing_relationship": 9,
+          "missing_metadata": 2,
+          "missing_claim": 5,
+          "missing_decision_point": 3,
+          "missing_asset_link": 2
+        },
+        "gapsByPriority": {
+          "critical": 5,
+          "high": 8,
+          "medium": 10
+        },
+        "topGaps": [
+          {
+            "id": "gap-entity-neighbor-1",
+            "kind": "missing_entity",
+            "priority": "critical",
+            "reason": "Subtrochanteric Plate Osteosynthesis neighborhood has 0/1 anatomy_structure entities."
+          },
+          {
+            "id": "gap-rel-2",
+            "kind": "missing_relationship",
+            "priority": "critical",
+            "reason": "Subtrochanteric Plate Osteosynthesis missing outbound involves_anatomy (0/1)."
+          },
+          {
+            "id": "gap-rel-3",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Subtrochanteric Plate Osteosynthesis missing outbound at_risk_structure (0/1)."
+          },
+          {
+            "id": "gap-rel-4",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Proximal Femur Anatomy Hub missing outbound part_of (0/1)."
+          },
+          {
+            "id": "gap-rel-5",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Cephalomedullary Nailing missing outbound at_risk_structure (0/1)."
+          },
+          {
+            "id": "gap-meta-rel-6",
+            "kind": "missing_metadata",
+            "priority": "medium",
+            "reason": "2 context_relevance gaps on Cephalomedullary Nailing involves_anatomy/at_risk_structure edges."
+          },
+          {
+            "id": "gap-entity-neighbor-7",
+            "kind": "missing_entity",
+            "priority": "high",
+            "reason": "Seinsheimer Classification neighborhood has 0/2 classification_grade entities."
+          },
+          {
+            "id": "gap-rel-8",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Subtrochanteric Fracture missing outbound at_risk_structure (0/1)."
+          }
+        ]
+      },
+      "tags": [
+        "quality",
+        "gaps"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-review-history-b054a4fb",
+      "sourceType": "review_history",
+      "sourceId": "subtrochanteric-fracture-neighborhood",
+      "extractionMethod": "status_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.92,
+      "provenanceHint": "review_status:subtrochanteric-fracture-neighborhood",
+      "label": "Review status distribution",
+      "summary": "0 reviewed, 0 pending of 27 proposals",
+      "payload": {
+        "total": 27,
+        "reviewedCount": 0,
+        "pendingCount": 0,
+        "approvedCount": 0,
+        "routes": {
+          "AUTO_APPROVED_LOW_RISK": 16,
+          "ATTENDING_REVIEW": 6,
+          "HUMAN_REVIEW": 4,
+          "AUTO_REVISED": 1
+        }
+      },
+      "tags": [
+        "review",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-3b769b38",
+      "sourceType": "static_prepare",
+      "sourceId": "subtrochanteric-fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split#metadata",
+      "label": "Subtrochanteric Fracture — Topic metadata",
+      "summary": "Static Prepare Topic metadata for Subtrochanteric Fracture",
+      "payload": {
+        "section": "metadata",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "tags": [
+          "hip",
+          "subtrochanteric",
+          "proximal femur",
+          "cephalomedullary nail"
+        ],
+        "trackId": "trauma",
+        "subspecialty": "Trauma"
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "subtrochanteric-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-bf42b3e1",
+      "sourceType": "static_prepare",
+      "sourceId": "subtrochanteric-fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split#deep",
+      "label": "Subtrochanteric Fracture — Deep study template",
+      "summary": "Static Prepare Deep study template for Subtrochanteric Fracture",
+      "payload": {
+        "section": "deep",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "anatomy": [
+          "Lesser trochanter",
+          "Posterior proximal femur",
+          "Abductor lever arm"
+        ],
+        "classification": [
+          "Seinsheimer concepts"
+        ],
+        "imaging": [
+          "Full femur views when needed",
+          "Assess for atypical morphology"
+        ],
+        "decisionMaking": [
+          "Pattern stability, bone quality, metabolic bone disease concern"
+        ],
+        "treatmentOptions": [
+          "Cephalomedullary nail",
+          "Plate osteosynthesis in selected patterns"
+        ],
+        "boardPearls": [
+          "Cephalomedullary nailing is the common operative answer for most subtrochanteric fractures"
+        ],
+        "complications": [
+          "Varus malunion",
+          "Nonunion",
+          "Implant failure"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "subtrochanteric-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-bf45da75",
+      "sourceType": "static_prepare",
+      "sourceId": "subtrochanteric-fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split#fast",
+      "label": "Subtrochanteric Fracture — Fast study template",
+      "summary": "Static Prepare Fast study template for Subtrochanteric Fracture",
+      "payload": {
+        "section": "fast",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "mustKnow": [
+          "Fracture level",
+          "Comminution",
+          "Mechanical demands",
+          "Implant plan"
+        ],
+        "anatomyFocus": [
+          "Lesser trochanter landmark",
+          "Proximal femoral diaphysis",
+          "Sciatic nerve proximity"
+        ],
+        "oneLiner": "Subtrochanteric fractures are high-stress proximal femoral shaft injuries where reduction and implant choice determine alignment survival.",
+        "pimpQuestions": [
+          "Why is varus a major concern?",
+          "When is an atypical pattern suspected?"
+        ],
+        "orSurvivalTips": [
+          "Describe reduction tools and nail starting point language",
+          "Mention sciatic nerve protection with posterior exposure"
+        ],
+        "caseSteps": [
+          "Localize fracture relative to lesser trochanter",
+          "Assess comminution",
+          "State fixation plan",
+          "Outline weight-bearing restrictions"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "subtrochanteric-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-faa569c2",
+      "sourceType": "static_prepare",
+      "sourceId": "subtrochanteric-fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split#learning_objectives",
+      "label": "Subtrochanteric Fracture — Learning objectives",
+      "summary": "Static Prepare Learning objectives for Subtrochanteric Fracture",
+      "payload": {
+        "section": "learning_objectives",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "objectives": [
+          "Localize subtrochanteric fractures relative to the lesser trochanter.",
+          "Explain high mechanical demands and varus shortening forces.",
+          "Recognize atypical fracture morphology and sciatic nerve safety in fixation."
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "subtrochanteric-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:37:31.530Z"
+    }
+  ],
+  "extractedSignals": [
+    {
+      "signalId": "ev-signal-8a41e87d",
+      "signalType": "anki_card",
+      "sourceEvidenceIds": [
+        "ev-anki-card-13f0c8fe"
+      ],
+      "summary": "11 high-confidence Anki card mapping(s) for curriculum node trauma-subtrochanteric-fractures",
+      "strength": 0.92,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-31d53b23",
+      "signalType": "orthobullets_question",
+      "sourceEvidenceIds": [
+        "ev-orthobullets-question-a2c910d2"
+      ],
+      "summary": "20 Orthobullets question mapping(s) for trauma-subtrochanteric-fractures (metadata only — no stems/answers)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-ab633854",
+      "signalType": "quality_signal",
+      "sourceEvidenceIds": [
+        "ev-quality-signal-58ee7cd2"
+      ],
+      "summary": "23 gap(s) across 6 kind(s)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "gap_summary"
+      }
+    }
+  ],
+  "assetSignals": [
+    {
+      "assetType": "anki_card",
+      "sourceId": "trauma-subtrochanteric-fractures",
+      "mappedEntitySlug": "subtrochanteric-fracture",
+      "mappingCount": 11,
+      "confidenceHint": 0.92,
+      "metadataOnly": true
+    },
+    {
+      "assetType": "orthobullets_question",
+      "sourceId": "trauma-subtrochanteric-fractures",
+      "mappedEntitySlug": "subtrochanteric-fracture",
+      "mappingCount": 20,
+      "confidenceHint": 0.9,
+      "metadataOnly": true
+    }
+  ],
+  "existingProposals": [
+    {
+      "id": "ab867911-b64f-4396-bbd1-ccdb7e5844b4",
+      "proposal_fingerprint": "create|classification_system|seinsheimer-classification",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-subtrochanteric-fractures",
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "classification_system",
+      "proposed_entity_label": "Seinsheimer Classification",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Seinsheimer Classification",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:46.612+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "seinsheimer-classification",
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "description": "Subtrochanteric fracture classification by fracture line and comminution.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:05.288074+00:00",
+      "updated_at": "2026-07-05T21:34:46.696324+00:00"
+    },
+    {
+      "id": "d6ff83c1-8c5d-4a1b-af12-a8ea90518153",
+      "proposal_fingerprint": "create|condition|subtrochanteric-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-subtrochanteric-fractures",
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "condition",
+      "proposed_entity_label": "Subtrochanteric Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Subtrochanteric Fracture",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:47.507+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "subtrochanteric-fracture",
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "description": "Proximal femoral diaphyseal fracture distal to the lesser trochanter with high mechanical demands.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:04.263167+00:00",
+      "updated_at": "2026-07-05T21:34:47.595688+00:00"
+    },
+    {
+      "id": "e3e1bae3-a895-4b3d-8142-f115bdae1e40",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|treated_by|cephalomedullary-nail",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "cephalomedullary-nail",
+        "subject_slug": "subtrochanteric-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "implant",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:09.124208+00:00",
+      "updated_at": "2026-07-05T21:34:09.035+00:00"
+    },
+    {
+      "id": "ef1bd577-c12e-47c2-943e-f16bcc7c2a4a",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|involves_anatomy|greater-trochanter",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:48.094+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "greater-trochanter",
+        "subject_slug": "subtrochanteric-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "abductor_mechanics"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:08.571536+00:00",
+      "updated_at": "2026-07-05T21:34:48.18225+00:00"
+    },
+    {
+      "id": "8086ee22-9724-4a07-b66e-c4f4ffaa6885",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|has_complication|subtrochanteric-varus-malunion",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:48.188+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "subtrochanteric-varus-malunion",
+        "subject_slug": "subtrochanteric-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:09.900343+00:00",
+      "updated_at": "2026-07-05T21:34:48.27886+00:00"
+    },
+    {
+      "id": "327a8058-f878-4171-8dcf-2fc82d9b5268",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|treated_by|subtrochanteric-plate-osteosynthesis",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "subtrochanteric-plate-osteosynthesis",
+        "subject_slug": "subtrochanteric-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:09.324324+00:00",
+      "updated_at": "2026-07-05T21:34:09.231+00:00"
+    },
+    {
+      "id": "75cc87a1-3c09-4c7f-9c17-348e9fd36449",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|injured_in|lesser-trochanter",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "injured_in",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship injured_in",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:48.735+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "lesser-trochanter",
+        "subject_slug": "subtrochanteric-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "note": "subtrochanteric region defined distal to lesser trochanter",
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "landmark",
+          "clinical_importance": "high",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:08.177571+00:00",
+      "updated_at": "2026-07-05T21:34:49.179727+00:00"
+    },
+    {
+      "id": "9c21a40f-08b6-40dc-8b79-035d5768b04a",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|involves_anatomy|proximal-femur-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:49.184+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "proximal-femur-anatomy-hub",
+        "subject_slug": "subtrochanteric-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:08.755141+00:00",
+      "updated_at": "2026-07-05T21:34:49.271308+00:00"
+    },
+    {
+      "id": "4615bfc0-5106-4b10-b9a1-1f4efc1c8e04",
+      "proposal_fingerprint": "claim|claim-st-cephalomedullary-default",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "trauma-subtrochanteric treatment patterns",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "draft_id": "claim-st-cephalomedullary-default",
+        "verified": false,
+        "claim_text": "Cephalomedullary nailing is the common operative answer for most subtrochanteric fractures on board-style questions.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.82,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "or"
+        ],
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "cephalomedullary-nail",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:10.656559+00:00",
+      "updated_at": "2026-07-05T21:34:10.564+00:00"
+    },
+    {
+      "id": "1e72a875-36bb-4aa2-bbd5-47fed6ce42b5",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|involves_anatomy|intertrochanteric-region",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:49.378+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "intertrochanteric-region",
+        "subject_slug": "subtrochanteric-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "proximity",
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:08.392038+00:00",
+      "updated_at": "2026-07-05T21:34:49.469751+00:00"
+    },
+    {
+      "id": "46cd7d8f-2360-45dc-9bcb-f8470d198e64",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|has_imaging_finding|atypical-subtrochanteric-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_imaging_finding",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship has_imaging_finding",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:49.485+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "atypical-subtrochanteric-fracture",
+        "subject_slug": "subtrochanteric-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "imaging_finding",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "morphology",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:08.938017+00:00",
+      "updated_at": "2026-07-05T21:34:49.571577+00:00"
+    },
+    {
+      "id": "3c155e3b-30df-43e7-aa85-a0a635a727db",
+      "proposal_fingerprint": "rel|cephalomedullary-nailing|involves_anatomy|lesser-trochanter",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:49.585+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "lesser-trochanter",
+        "subject_slug": "cephalomedullary-nailing",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "procedure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "entry_landmark",
+          "context_relevance": [
+            "or"
+          ]
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:09.520441+00:00",
+      "updated_at": "2026-07-05T21:34:49.67065+00:00"
+    },
+    {
+      "id": "7645516e-d8f7-4a5d-8fde-a3dd142d64e6",
+      "proposal_fingerprint": "rel|subtrochanteric-fracture|has_classification|seinsheimer-classification",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_classification",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship has_classification",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:49.747+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "seinsheimer-classification",
+        "subject_slug": "subtrochanteric-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "classification_system",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic",
+            "oite"
+          ],
+          "educational_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:10.083658+00:00",
+      "updated_at": "2026-07-05T21:34:49.831757+00:00"
+    },
+    {
+      "id": "ab34df89-0f84-4965-9de7-ce2be6305a99",
+      "proposal_fingerprint": "rel|subtrochanteric-plate-osteosynthesis|at_risk_structure|sciatic-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "at_risk_structure",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship at_risk_structure",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "sciatic-nerve",
+        "subject_slug": "subtrochanteric-plate-osteosynthesis",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "procedure",
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "posterior_exposure",
+          "context_relevance": [
+            "or"
+          ],
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:09.703193+00:00",
+      "updated_at": "2026-07-05T21:34:09.614+00:00"
+    },
+    {
+      "id": "38c305f9-a76e-47a1-afc5-5919397693a2",
+      "proposal_fingerprint": "rel|atypical-subtrochanteric-fracture|explains_instability|subtrochanteric-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "explains_instability",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship explains_instability",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "subtrochanteric-fracture",
+        "subject_slug": "atypical-subtrochanteric-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "condition",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "imaging_finding",
+        "relationship_metadata": {
+          "confidence": 0.75,
+          "review_status": "unreviewed",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:10.275923+00:00",
+      "updated_at": "2026-07-05T21:34:10.185+00:00"
+    },
+    {
+      "id": "ef9b2dcd-94b0-492b-9cfa-1c5ddb03f53c",
+      "proposal_fingerprint": "claim|claim-st-atypical-bisphosphonate",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "subtrochanteric atypical fracture literature",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "draft_id": "claim-st-atypical-bisphosphonate",
+        "verified": false,
+        "claim_text": "Missing atypical subtrochanteric morphology in a low-energy patient on long-term bisphosphonates.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.82,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "atypical-subtrochanteric-fracture",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:10.855925+00:00",
+      "updated_at": "2026-07-05T21:34:10.753+00:00"
+    },
+    {
+      "id": "83d4903a-2095-4288-98ce-935be27a9877",
+      "proposal_fingerprint": "claim|claim-st-case-script",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "subtrochanteric case presentation pattern",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "draft_id": "claim-st-case-script",
+        "verified": false,
+        "claim_text": "Describe fracture level relative to lesser trochanter, comminution, implant plan, reduction strategy, and weight-bearing restrictions.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "subtrochanteric-fracture",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:11.424569+00:00",
+      "updated_at": "2026-07-05T21:34:11.339+00:00"
+    },
+    {
+      "id": "aa86ef25-43a7-46f1-b4fe-9869fa1084ae",
+      "proposal_fingerprint": "claim|claim-st-high-mechanical-demand",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "trauma-subtrochanteric curriculum + brobot topic context",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "draft_id": "claim-st-high-mechanical-demand",
+        "verified": false,
+        "claim_text": "Subtrochanteric fractures occur in a high-stress diaphyseal transition zone with significant varus and shortening forces.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "subtrochanteric-fracture",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:10.465917+00:00",
+      "updated_at": "2026-07-05T21:34:10.375+00:00"
+    },
+    {
+      "id": "097c9ccc-d0ae-4e86-9370-4f9d1e09c5e6",
+      "proposal_fingerprint": "dp|dp-st-cephalomedullary-nail",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "subtrochanteric operative defaults",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "action": "Proceed with cephalomedullary nail fixation with attending-confirmed reduction and implant strategy",
+        "trigger": "Unstable subtrochanteric fracture pattern requiring intramedullary stabilization",
+        "urgency": "urgent",
+        "draft_id": "dp-st-cephalomedullary-nail",
+        "verified": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.82,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "safety_criticality": "moderate",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_slug": "subtrochanteric-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:11.608166+00:00",
+      "updated_at": "2026-07-05T21:34:11.519+00:00"
+    },
+    {
+      "id": "86995401-422f-4a38-905d-3da8c2a3fa37",
+      "proposal_fingerprint": "claim|claim-st-varus-malunion",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "subtrochanteric complications",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "draft_id": "claim-st-varus-malunion",
+        "verified": false,
+        "claim_text": "Varus malunion after subtrochanteric fracture alters abductor tension and gait mechanics.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "subtrochanteric-varus-malunion",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:11.233656+00:00",
+      "updated_at": "2026-07-05T21:34:11.145+00:00"
+    },
+    {
+      "id": "2ee23e83-561e-4bcb-a4d1-ec0009cdc18e",
+      "proposal_fingerprint": "dp|dp-st-atypical-workup",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "atypical subtrochanteric fracture management",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "action": "Discuss extended workup, implant choice, and contralateral surveillance with attending before standard fragility pathway",
+        "trigger": "Atypical subtrochanteric morphology in low-energy patient with bisphosphonate or metabolic bone disease concern",
+        "urgency": "urgent",
+        "draft_id": "dp-st-atypical-workup",
+        "verified": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.82,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "safety_criticality": "high",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_slug": "subtrochanteric-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:11.792796+00:00",
+      "updated_at": "2026-07-05T21:34:11.705+00:00"
+    },
+    {
+      "id": "649dc1e1-02bc-4d3a-921b-57ab30d95063",
+      "proposal_fingerprint": "create|procedure|subtrochanteric-plate-osteosynthesis",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-subtrochanteric-fractures",
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "procedure",
+      "proposed_entity_label": "Subtrochanteric Plate Osteosynthesis",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Subtrochanteric Plate Osteosynthesis",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:45.727+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "subtrochanteric-plate-osteosynthesis",
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "description": "Plate fixation option for selected subtrochanteric fracture patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:04.819214+00:00",
+      "updated_at": "2026-07-05T21:34:45.815801+00:00"
+    },
+    {
+      "id": "3996bc0e-1fdd-455d-ac14-d9abe09fbc6c",
+      "proposal_fingerprint": "create|imaging_finding|atypical-subtrochanteric-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-subtrochanteric-fractures",
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "imaging_finding",
+      "proposed_entity_label": "Atypical Subtrochanteric Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Atypical Subtrochanteric Fracture",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:47.783+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "atypical-subtrochanteric-fracture",
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "description": "Transverse/beaking pattern suggesting bisphosphonate-related or low-energy atypical morphology.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:05.741132+00:00",
+      "updated_at": "2026-07-05T21:34:47.901508+00:00"
+    },
+    {
+      "id": "1137a1a6-6c88-4c9a-aa4d-713c5a951dd4",
+      "proposal_fingerprint": "bridge|trauma-subtrochanteric-fractures|subtrochanteric-fracture",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "source_signal_type": "curriculum_node",
+      "source_signal_ids": [
+        "trauma-subtrochanteric-fractures"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": "primary_coverage",
+      "confidence": 0.95,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Bridge trauma-subtrochanteric-fractures to subtrochanteric-fracture entity",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:49.837+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_bridge"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.95,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "subtrochanteric-fracture",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "curriculum_node_slug": "trauma-subtrochanteric-fractures",
+        "legacy_card_mappings": 11,
+        "clinical_verification": false,
+        "legacy_question_mappings": 20
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:11.982949+00:00",
+      "updated_at": "2026-07-05T21:34:49.927435+00:00"
+    },
+    {
+      "id": "39bd45fb-4ead-45ff-ada1-1fdec91ad39b",
+      "proposal_fingerprint": "rel|proximal-femur-anatomy-hub|prerequisite_for|subtrochanteric-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "prerequisite_for",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Relationship prerequisite_for",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:48.001+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "object_slug": "subtrochanteric-fracture",
+        "subject_slug": "proximal-femur-anatomy-hub",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "object_entity_type": "condition",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "subject_entity_type": "anatomy_structure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "call",
+            "or"
+          ],
+          "educational_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:07.990327+00:00",
+      "updated_at": "2026-07-05T21:34:48.090106+00:00"
+    },
+    {
+      "id": "8e2ea87d-cad9-4d03-b9ed-c763a7ca7e80",
+      "proposal_fingerprint": "create|complication|subtrochanteric-varus-malunion",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-subtrochanteric-fractures",
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Subtrochanteric Varus Malunion",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Subtrochanteric Varus Malunion",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:48.312+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "subtrochanteric-varus-malunion",
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "description": "Varus malalignment after subtrochanteric fracture with gait and abductor consequences.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:05.931379+00:00",
+      "updated_at": "2026-07-05T21:34:48.397004+00:00"
+    },
+    {
+      "id": "705d1028-157a-4b20-aa59-f57b7442859c",
+      "proposal_fingerprint": "claim|claim-st-sciatic-safety",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "subtrochanteric-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "subtrochanteric_pilot_spec_v1",
+      "evidence_summary": "proximal femur surgical anatomy",
+      "supporting_card_count": 11,
+      "supporting_question_count": 20,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:34:49.959+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "subtrochanteric-fracture-neighborhood",
+        "draft_id": "claim-st-sciatic-safety",
+        "verified": false,
+        "claim_text": "Posterior proximal femur exposure for plate fixation places the sciatic nerve at risk and requires deliberate protection.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T21:34:01.168Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "safety": 0.15,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "confidence": 0.88,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:subtrochanteric-fracture-neighborhood",
+        "primary_entity_slug": "sciatic-nerve",
+        "review_packet_label": "Subtrochanteric Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:34:11.045119+00:00",
+      "updated_at": "2026-07-05T21:34:50.072852+00:00"
+    }
+  ],
+  "reviewHistory": [
+    {
+      "proposalFingerprint": "create|classification_system|seinsheimer-classification",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|condition|subtrochanteric-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|treated_by|cephalomedullary-nail",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|involves_anatomy|greater-trochanter",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|has_complication|subtrochanteric-varus-malunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|treated_by|subtrochanteric-plate-osteosynthesis",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|injured_in|lesser-trochanter",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|involves_anatomy|proximal-femur-anatomy-hub",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-st-cephalomedullary-default",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|involves_anatomy|intertrochanteric-region",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|has_imaging_finding|atypical-subtrochanteric-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|cephalomedullary-nailing|involves_anatomy|lesser-trochanter",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-fracture|has_classification|seinsheimer-classification",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|subtrochanteric-plate-osteosynthesis|at_risk_structure|sciatic-nerve",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|atypical-subtrochanteric-fracture|explains_instability|subtrochanteric-fracture",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-st-atypical-bisphosphonate",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-st-case-script",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-st-high-mechanical-demand",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-st-cephalomedullary-nail",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-st-varus-malunion",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_REVISED",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-st-atypical-workup",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|procedure|subtrochanteric-plate-osteosynthesis",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|imaging_finding|atypical-subtrochanteric-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "bridge|trauma-subtrochanteric-fractures|subtrochanteric-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|proximal-femur-anatomy-hub|prerequisite_for|subtrochanteric-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|subtrochanteric-varus-malunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-st-sciatic-safety",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    }
+  ],
+  "qualitySignals": {
+    "gapCount": 16,
+    "gapsByKind": {
+      "missing_relationship": 7,
+      "missing_claim": 4,
+      "missing_decision_point": 1,
+      "missing_metadata": 1,
+      "missing_entity": 1,
+      "missing_asset_link": 2
+    },
+    "gapsByPriority": {
+      "high": 6,
+      "medium": 8,
+      "critical": 2
+    },
+    "qualityWarnings": [],
+    "safetyFlags": []
+  },
+  "safetySignals": [],
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Proximal Femur Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "proximal-femur-anatomy-hub",
+      "subjectSlug": "proximal-femur-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Subtrochanteric Fracture missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.at_risk_structure",
+      "anchorEntitySlug": "subtrochanteric-fracture",
+      "subjectSlug": "subtrochanteric-fracture",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Subtrochanteric Fracture missing outbound has_grade (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.has_grade",
+      "anchorEntitySlug": "subtrochanteric-fracture",
+      "subjectSlug": "subtrochanteric-fracture",
+      "predicate": "has_grade"
+    },
+    {
+      "id": "gap-claim-4",
+      "kind": "missing_claim",
+      "priority": "high",
+      "confidence": 0.88,
+      "reason": "Subtrochanteric Fracture has 1/3 L1 claims.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.claims.l1",
+      "anchorEntitySlug": "subtrochanteric-fracture",
+      "claimType": "fact|board_trap|imaging_point|cognitive_trap"
+    },
+    {
+      "id": "gap-claim-type-5",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Subtrochanteric Fracture missing claim type: board_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.board_trap",
+      "anchorEntitySlug": "subtrochanteric-fracture",
+      "claimType": "board_trap"
+    },
+    {
+      "id": "gap-claim-type-6",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Subtrochanteric Fracture missing claim type: imaging_point.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.imaging_point",
+      "anchorEntitySlug": "subtrochanteric-fracture",
+      "claimType": "imaging_point"
+    },
+    {
+      "id": "gap-claim-type-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Subtrochanteric Fracture missing claim type: cognitive_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.cognitive_trap",
+      "anchorEntitySlug": "subtrochanteric-fracture",
+      "claimType": "cognitive_trap"
+    },
+    {
+      "id": "gap-dp-pattern-8",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.85,
+      "reason": "Subtrochanteric Fracture missing decision point pattern: nonoperative_eligible.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management.nonoperative_eligible",
+      "anchorEntitySlug": "subtrochanteric-fracture",
+      "decisionPointPattern": "nonoperative_eligible"
+    },
+    {
+      "id": "gap-meta-rel-9",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "1 clinical_importance gaps on Subtrochanteric Fracture injured_in/has_imaging_finding/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.meta.clinical_importance",
+      "anchorEntitySlug": "subtrochanteric-fracture",
+      "metadataField": "clinical_importance",
+      "predicate": "injured_in|has_imaging_finding|at_risk_structure"
+    },
+    {
+      "id": "gap-rel-10",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Cephalomedullary Nailing missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "cephalomedullary-nailing",
+      "subjectSlug": "cephalomedullary-nailing",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-rel-11",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Subtrochanteric Plate Osteosynthesis missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "subtrochanteric-plate-osteosynthesis",
+      "subjectSlug": "subtrochanteric-plate-osteosynthesis",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-entity-neighbor-12",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "Seinsheimer Classification neighborhood has 0/2 classification_grade entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.grades",
+      "anchorEntitySlug": "seinsheimer-classification",
+      "entityType": "classification_grade"
+    },
+    {
+      "id": "gap-asset-card-13",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "11 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "subtrochanteric-fracture"
+    },
+    {
+      "id": "gap-asset-question-14",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "20 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "subtrochanteric-fracture"
+    },
+    {
+      "id": "gap-proc-approach-15",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Cephalomedullary Nailing missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "cephalomedullary-nailing",
+      "subjectSlug": "cephalomedullary-nailing",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-16",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Subtrochanteric Plate Osteosynthesis missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "subtrochanteric-plate-osteosynthesis",
+      "subjectSlug": "subtrochanteric-plate-osteosynthesis",
+      "predicate": "uses_approach"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "CASEPREP_LINK_MISSING",
+      "message": "No CasePrep mapping for topic subtrochanteric-fracture",
+      "collectorId": "caseprep-link-collector",
+      "severity": "info"
+    }
+  ],
+  "auditTrail": [
+    {
+      "stage": "init",
+      "timestamp": "2026-07-05T21:37:31.530Z",
+      "action": "build_started",
+      "detail": "subtrochanteric-fracture"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:31.532Z",
+      "action": "collector_complete",
+      "detail": "4 section(s) from src/lib/student-curriculum/curriculum-data.ts#hip-fracture-st-split",
+      "collectorId": "static-prepare-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:31.532Z",
+      "action": "collector_complete",
+      "detail": "node=trauma-subtrochanteric-fractures",
+      "collectorId": "curriculum-node-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:31.532Z",
+      "action": "collector_complete",
+      "detail": "cards=11",
+      "collectorId": "anki-signal-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:31.532Z",
+      "action": "collector_complete",
+      "detail": "questions=20",
+      "collectorId": "orthobullets-metadata-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:31.532Z",
+      "action": "collector_complete",
+      "detail": "no mapping",
+      "collectorId": "caseprep-link-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:41.051Z",
+      "action": "collector_complete",
+      "detail": "source=database entities=17",
+      "collectorId": "canonical-snapshot-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:42.433Z",
+      "action": "collector_complete",
+      "detail": "proposals=27 source=database",
+      "collectorId": "proposal-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:44.001Z",
+      "action": "collector_complete",
+      "detail": "reviewed=0 pending=0",
+      "collectorId": "review-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:37:59.039Z",
+      "action": "collector_complete",
+      "detail": "gaps=23 safety=0",
+      "collectorId": "quality-signal-collector"
+    },
+    {
+      "stage": "assemble",
+      "timestamp": "2026-07-05T21:38:00.502Z",
+      "action": "packet_assembled",
+      "detail": "14 items, 16 gaps"
+    }
+  ],
+  "databaseModified": false
+}

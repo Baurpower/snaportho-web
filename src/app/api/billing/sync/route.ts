@@ -4,12 +4,20 @@ import { reconcileStripeSubscriptions } from '@/lib/subscriptions/stripe-reconci
 import { BROBOT_CONFIG } from '@/lib/config/brobot';
 
 /**
- * Safe manual sync/fallback for BroBot subscription status.
- * Call this from the billing page (or anywhere) when success param is present
- * but Supabase has not yet reflected the active subscription (e.g. webhook delay).
+ * Safe manual Stripe-only sync/fallback for BroBot subscription status.
  *
- * Only for authenticated users. Uses server-side Stripe + admin Supabase.
- * Does not trust client data for activation.
+ * Call from /checkout/success or billing when webhook propagation is delayed.
+ * Only reconciles provider=stripe rows via reconcileStripeSubscriptions — never
+ * reads or mutates provider=apple subscriptions.
+ *
+ * Recovery order for first-time buyers:
+ *   1. Stripe customer ids already linked in subscriptions (provider=stripe)
+ *   2. Stripe customer.metadata.user_id search
+ *   3. Unambiguous verified auth email match in Stripe (exactly one customer)
+ *
+ * Stripe Dashboard replay (after middleware fix):
+ *   Developers → Webhooks → select endpoint → failed event → Resend
+ * Or run: npx tsx scripts/reconcile-brobot-stripe-subscriptions.ts --email <user>
  */
 export async function POST() {
   const supabase = await createClient();
@@ -33,6 +41,7 @@ export async function POST() {
     const customerId = subRows?.find((row) => row.stripe_customer_id)?.stripe_customer_id ?? null;
     const reconciliation = await reconcileStripeSubscriptions({
       userId: user.id,
+      userEmail: user.email ?? null,
       stripeCustomerId: customerId,
       dryRun: false,
     });

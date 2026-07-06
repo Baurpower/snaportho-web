@@ -22,6 +22,12 @@ export {
   buildCaseReadinessSession,
   resolveCaseReadinessMinutes,
 } from '@/lib/student-curriculum/case-readiness-builder';
+export { buildLearningPathView, getLearningPathWeeks } from '@/lib/student-curriculum/learning-paths';
+export { buildTodaysPreparationCards } from '@/lib/student-curriculum/prep-recommendations';
+export { buildRotationPrepProfile } from '@/lib/student-curriculum/rotation-prep-profile';
+export { getCasePrepSlugForTopic } from '@/lib/student-curriculum/caseprep-topic-mapping';
+export { buildProcedurePrepModules } from '@/lib/student-curriculum/procedure-prep-modules';
+export { getStudentCasePrepContext } from '@/lib/student-curriculum/student-caseprep-context';
 export type {
   CurriculumCommonStudentCase,
   CurriculumCommonStudentCaseTopicReference,

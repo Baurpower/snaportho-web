@@ -1,0 +1,47 @@
+{
+  "topicKey": "perilunate-dislocation",
+  "pilotKey": "perilunate-dislocation-neighborhood",
+  "primaryEntitySlug": "perilunate-dislocation",
+  "displayName": "Perilunate Dislocation",
+  "generatedAt": "2026-07-05T23:26:29.276Z",
+  "nodes": [
+    {
+      "slug": "perilunate-dislocation-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Perilunate Dislocation Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "perilunate-dislocation-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "Perilunate Dislocation Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "perilunate-dislocation-operative-treatment"
+    ],
+    "classification": [
+      "perilunate-dislocation-classification"
+    ],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

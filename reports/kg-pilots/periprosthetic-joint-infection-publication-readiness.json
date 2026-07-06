@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-05T23:23:52.218Z",
+  "pilotKey": "periprosthetic-joint-infection-neighborhood",
+  "ready": false,
+  "estimatedMaturityLevel": 5,
+  "blockers": [
+    "Validation failures must be resolved",
+    "5 proposals still awaiting human review",
+    "2 items require attending review"
+  ],
+  "recommendedActions": [
+    "Run validation engine and fix errors",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "metrics": {
+    "totalProposals": 81,
+    "approvedProposals": 76,
+    "pendingReview": 5,
+    "claimDrafts": 4,
+    "decisionPointDrafts": 1,
+    "autoApproved": 76,
+    "humanReviewQueue": 5,
+    "validationErrors": 1
+  }
+}

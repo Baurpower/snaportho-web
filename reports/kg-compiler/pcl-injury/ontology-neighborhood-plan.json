@@ -1,0 +1,101 @@
+{
+  "topicKey": "pcl-injury",
+  "pilotKey": "pcl-injury-neighborhood",
+  "primaryEntitySlug": "pcl-injury",
+  "displayName": "PCL Injury",
+  "generatedAt": "2026-07-05T22:41:56.082Z",
+  "nodes": [
+    {
+      "slug": "pcl-injury",
+      "entityType": "condition",
+      "preferredLabel": "PCL Injury",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "pcl-injury-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "PCL Injury Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pcl-injury-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "PCL Injury MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pcl-injury-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "PCL Injury Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pcl-injury-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "PCL Injury Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pcl-injury-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "PCL Injury Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pcl-injury-complication",
+      "entityType": "complication",
+      "preferredLabel": "PCL Injury Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "pcl-injury"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "pcl-injury-reconstruction"
+    ],
+    "classification": [
+      "pcl-injury-classification"
+    ],
+    "imaging": [
+      "pcl-injury-mri-finding"
+    ],
+    "complication": [
+      "pcl-injury-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "pcl-injury-exam-maneuver",
+      "pcl-injury-rehab-protocol"
+    ]
+  }
+}

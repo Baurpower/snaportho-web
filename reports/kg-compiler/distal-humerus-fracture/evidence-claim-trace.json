@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-07-05T21:57:59.371Z",
+  "evidencePacketId": "ev-packet-f09b905a",
+  "traces": [
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-extra-articular-versus-i",
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-fact-extra-articular-versus-i",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-elbow-stiffness",
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-fact-elbow-stiffness",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-board_trap-ulnar-nerve-protection-i",
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-board_trap-ulnar-nerve-protection-i",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-imaging_point-ap-and-lateral-elbow-rad",
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-imaging_point-ap-and-lateral-elbow-rad",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-cognitive_trap-use-dual-column-fixation",
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-cognitive_trap-use-dual-column-fixation",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-imaging_point-ct-for-complex-articular",
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-imaging_point-ct-for-complex-articular",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-nonunion",
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-fact-nonunion",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-ulnar-neuropathy",
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-fact-ulnar-neuropathy",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Articular involvement, bone quality, patient demand"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "ORIF"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Total elbow arthroplasty in selected elderly patients"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why do columns matter?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is total elbow arthroplasty considered?"
+    }
+  ]
+}

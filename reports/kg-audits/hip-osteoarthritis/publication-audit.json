@@ -1,0 +1,61 @@
+{
+  "status": "NOT_READY",
+  "ready": false,
+  "blockers": [
+    "12 proposals still awaiting human review",
+    "11 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "33 critical/high ontology gaps remain unresolved"
+  ],
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "score": 0,
+  "deductions": [
+    {
+      "finding": "12 proposals still awaiting human review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "11 items require attending review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "impact": 8
+    },
+    {
+      "finding": "33 critical/high ontology gaps remain unresolved",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Revision Arthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "impact": 15
+    }
+  ]
+}

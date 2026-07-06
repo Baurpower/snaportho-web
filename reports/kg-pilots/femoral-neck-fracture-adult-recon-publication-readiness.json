@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-07-05T22:47:30.243Z",
+  "pilotKey": "femoral-neck-fracture-adult-recon-neighborhood",
+  "ready": false,
+  "estimatedMaturityLevel": 5,
+  "blockers": [
+    "Validation failures must be resolved",
+    "7 proposals still awaiting human review",
+    "4 items require attending review",
+    "Insufficient relationship metadata on essential edges"
+  ],
+  "recommendedActions": [
+    "Run validation engine and fix errors",
+    "Route ATTENDING_REVIEW queue to attending reviewer",
+    "Run curate step to normalize metadata"
+  ],
+  "metrics": {
+    "totalProposals": 81,
+    "approvedProposals": 74,
+    "pendingReview": 7,
+    "claimDrafts": 4,
+    "decisionPointDrafts": 1,
+    "autoApproved": 74,
+    "humanReviewQueue": 7,
+    "validationErrors": 1
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-07-05T22:45:34.417Z",
+  "evidencePacketId": "ev-packet-07c359c5",
+  "traces": [
+    {
+      "draftId": "claim-pilon-fracture-fact-recognize-high-energy-ti",
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-recognize-high-energy-ti",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-explain-staged-managemen",
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-explain-staged-managemen",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-board_trap-definitive-fixation-thro",
+      "proposalFingerprint": "claim|claim-pilon-fracture-board_trap-definitive-fixation-thro",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-imaging_point-ap-lateral-ankle",
+      "proposalFingerprint": "claim|claim-pilon-fracture-imaging_point-ap-lateral-ankle",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-cognitive_trap-lead-with-soft-tissue-en",
+      "proposalFingerprint": "claim|claim-pilon-fracture-cognitive_trap-lead-with-soft-tissue-en",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-identify-wound-complicat",
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-identify-wound-complicat",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-soft-tissue-status",
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-soft-tissue-status",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-articular-comminution",
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-articular-comminution",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why stage pilon fixation?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is fibula fixation part of the plan?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Soft-tissue swelling, open injury, articular displacement"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Spanning external fixation"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Definitive pilon ORIF"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Ankle fusion in salvage"
+    }
+  ]
+}

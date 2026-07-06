@@ -1,0 +1,47 @@
+{
+  "topicKey": "lunate-fracture",
+  "pilotKey": "lunate-fracture-neighborhood",
+  "primaryEntitySlug": "lunate-fracture",
+  "displayName": "Lunate Fracture",
+  "generatedAt": "2026-07-05T23:21:11.282Z",
+  "nodes": [
+    {
+      "slug": "lunate-fracture-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Lunate Fracture Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lunate-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Lunate Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "lunate-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "lunate-fracture-key-imaging-finding"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

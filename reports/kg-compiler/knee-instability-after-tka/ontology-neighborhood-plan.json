@@ -1,0 +1,47 @@
+{
+  "topicKey": "knee-instability-after-tka",
+  "pilotKey": "knee-instability-after-tka-neighborhood",
+  "primaryEntitySlug": "knee-instability-after-tka",
+  "displayName": "Knee Instability After TKA",
+  "generatedAt": "2026-07-05T23:12:57.937Z",
+  "nodes": [
+    {
+      "slug": "flexion-extension-gap-balance",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Flexion-Extension Gap Balance",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "knee-instability-after-tka",
+      "entityType": "condition",
+      "preferredLabel": "Knee Instability After TKA",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "knee-instability-after-tka"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "flexion-extension-gap-balance"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

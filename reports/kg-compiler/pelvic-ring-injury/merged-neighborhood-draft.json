@@ -1,0 +1,1389 @@
+{
+  "topicKey": "pelvic-ring-injury",
+  "pilotKey": "pelvic-ring-injury-neighborhood",
+  "generatedAt": "2026-07-05T22:30:51.099Z",
+  "entities": [
+    {
+      "slug": "pelvic-binder-application",
+      "entityType": "procedure",
+      "preferredLabel": "Pelvic Binder Application",
+      "metadata": {
+        "slug": "pelvic-binder-application",
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:30:51.097Z",
+        "description": "Emergency circumferential compression to reduce pelvic volume and tamponade hemorrhage.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|pelvic-binder-application",
+        "canonical_entity_id": "5bc44522-d3af-4b33-94eb-82af3126e380",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|pelvic-binder-application"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvic-ring-injury",
+      "entityType": "condition",
+      "preferredLabel": "Pelvic Ring Injury",
+      "metadata": {
+        "slug": "pelvic-ring-injury",
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "description": "High-energy pelvic ring disruption with instability, hemorrhage, and resuscitation priorities.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|pelvic-ring-injury",
+        "canonical_entity_id": "b91c157a-0392-420d-86e6-562f3712ad81",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|pelvic-ring-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "young-burgess-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Young-Burgess Classification",
+      "metadata": {
+        "slug": "young-burgess-classification",
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "description": "Mechanism-based pelvic ring injury classification (APC, LC, VS).",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|young-burgess-classification",
+        "canonical_entity_id": "d7d064ac-535a-4552-9b6e-74d30223a9a9",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|young-burgess-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvic-external-fixation",
+      "entityType": "procedure",
+      "preferredLabel": "Pelvic External Fixation",
+      "metadata": {
+        "slug": "pelvic-external-fixation",
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:30:51.097Z",
+        "description": "Anterior frame stabilization for unstable pelvic ring injuries during resuscitation or definitive care.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|pelvic-external-fixation",
+        "canonical_entity_id": "529ffce1-21ba-4711-a9ff-6dcf91197b52",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|pelvic-external-fixation"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "unstable-pelvic-ring-pattern",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Unstable Pelvic Ring Pattern",
+      "metadata": {
+        "slug": "unstable-pelvic-ring-pattern",
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:30:51.097Z",
+        "description": "Radiographic pattern with anterior and/or posterior ring disruption indicating mechanical instability.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|unstable-pelvic-ring-pattern",
+        "canonical_entity_id": "84fc7250-6b4a-4e67-9993-3befb6375675",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|unstable-pelvic-ring-pattern"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvic-hemorrhage",
+      "entityType": "complication",
+      "preferredLabel": "Pelvic Hemorrhage",
+      "metadata": {
+        "slug": "pelvic-hemorrhage",
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "description": "Life-threatening retroperitoneal bleeding from pelvic ring and venous plexus injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|pelvic-hemorrhage",
+        "canonical_entity_id": "3e0672e5-1785-4ff2-8140-bbac49877aa4",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|pelvic-hemorrhage"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "has_classification",
+      "objectSlug": "young-burgess-classification",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic",
+            "oite"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|pelvic-ring-injury|has_classification|young-burgess-classification",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|has_classification|young-burgess-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "has_complication",
+      "objectSlug": "pelvic-hemorrhage",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|pelvic-ring-injury|has_complication|pelvic-hemorrhage",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|has_complication|pelvic-hemorrhage"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "unstable-pelvic-ring-pattern",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "instability",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|pelvic-ring-injury|has_imaging_finding|unstable-pelvic-ring-pattern",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|has_imaging_finding|unstable-pelvic-ring-pattern"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabulum",
+      "predicate": "part_of",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_socket",
+        "_provenance_fingerprint": "rel|acetabulum|part_of|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "articulates_with",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "common-peroneal-nerve",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "articulates_with",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral",
+        "_provenance_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-mechanism",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-diaphysis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "femoral_shaft",
+        "_provenance_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "iliac-wing",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_pelvis",
+        "_provenance_fingerprint": "rel|iliac-wing|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-joint",
+      "predicate": "part_of",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "midfoot_stability",
+        "_provenance_fingerprint": "rel|lisfranc-joint|part_of|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lower-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "pelvic-ring-injury",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|pelvic-ring-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "midfoot",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot",
+        "_provenance_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "articulates_with",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "patellofemoral",
+        "_provenance_fingerprint": "rel|patella|articulates_with|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-external-fixation",
+      "predicate": "involves_anatomy",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "approach",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|pelvic-external-fixation|involves_anatomy|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "at_risk_structure",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hemorrhage",
+        "context_relevance": [
+          "call"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|at_risk_structure|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "injured_in",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|injured_in|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "injured_in",
+      "objectSlug": "sacroiliac-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|injured_in|sacroiliac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "injured_in",
+      "objectSlug": "sacrum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|injured_in|sacrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|involves_anatomy|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "pubic-symphysis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|involves_anatomy|pubic-symphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "treated_by",
+      "objectSlug": "pelvic-binder-application",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "call"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|treated_by|pelvic-binder-application"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvic-ring-injury",
+      "predicate": "treated_by",
+      "objectSlug": "pelvic-external-fixation",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or",
+          "call"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|pelvic-ring-injury|treated_by|pelvic-external-fixation"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pelvic_ring",
+        "_provenance_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "plantar-soft-tissues",
+      "predicate": "part_of",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "_provenance_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "popliteal-artery",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pubic-symphysis",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "_provenance_fingerprint": "rel|pubic-symphysis|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacroiliac-joint",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "_provenance_fingerprint": "rel|sacroiliac-joint|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacrum",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "_provenance_fingerprint": "rel|sacrum|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subtalar-joint",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "articulates_with",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "subtalar",
+        "_provenance_fingerprint": "rel|talus|articulates_with|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle",
+        "_provenance_fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "unstable-pelvic-ring-pattern",
+      "predicate": "explains_instability",
+      "objectSlug": "pelvic-ring-injury",
+      "metadata": {
+        "confidence": 0.85,
+        "review_status": "unreviewed",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|unstable-pelvic-ring-pattern|explains_instability|pelvic-ring-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "unstable-pelvic-ring-pattern",
+      "predicate": "indicates_treatment",
+      "objectSlug": "pelvic-binder-application",
+      "metadata": {
+        "note": "resuscitation adjunct — not definitive fixation",
+        "confidence": 0.85,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|unstable-pelvic-ring-pattern|indicates_treatment|pelvic-binder-application"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "unstable-pelvic-ring-pattern",
+      "predicate": "indicates_treatment",
+      "objectSlug": "pelvic-external-fixation",
+      "metadata": {
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|unstable-pelvic-ring-pattern|indicates_treatment|pelvic-external-fixation"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-pelvic-ring-injury-board_trap-recognize-unstable-pelvi",
+      "claimType": "board_trap",
+      "claimText": "Recognize unstable pelvic ring patterns and hemorrhage risk.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pelvic-ring-injury-board_trap-recognize-unstable-pelvi",
+        "claim_type": "board_trap",
+        "claim_text": "Recognize unstable pelvic ring patterns and hemorrhage risk.",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "changes_management",
+          "board_trap",
+          "anatomical_reasoning"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-0ae75f0b"
+        ],
+        "evidence_packet_id": "ev-packet-c91ef138",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "_provenance_fingerprint": "claim|claim-pelvic-ring-injury-board_trap-recognize-unstable-pelvi"
+      }
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-board_trap-unstable-pelvic-ring-wit",
+      "claimType": "board_trap",
+      "claimText": "Unstable pelvic ring with hypotension is a hemorrhage emergency.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pelvic-ring-injury-board_trap-unstable-pelvic-ring-wit",
+        "claim_type": "board_trap",
+        "claim_text": "Unstable pelvic ring with hypotension is a hemorrhage emergency.",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "changes_management",
+          "board_trap",
+          "patient_safety",
+          "anatomical_reasoning"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-99af8848"
+        ],
+        "evidence_packet_id": "ev-packet-c91ef138",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "ATTENDING_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7815000000000001,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "_provenance_fingerprint": "claim|claim-pelvic-ring-injury-board_trap-unstable-pelvic-ring-wit"
+      }
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-cognitive_trap-use-young-burgess-apc-lc",
+      "claimType": "cognitive_trap",
+      "claimText": "Use Young-Burgess APC/LC/VS language.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pelvic-ring-injury-cognitive_trap-use-young-burgess-apc-lc",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Use Young-Burgess APC/LC/VS language.",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-99b2aedc"
+        ],
+        "evidence_packet_id": "ev-packet-c91ef138",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "_provenance_fingerprint": "claim|claim-pelvic-ring-injury-cognitive_trap-use-young-burgess-apc-lc"
+      }
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-apply-young-burgess-mech",
+      "claimType": "fact",
+      "claimText": "Apply Young-Burgess mechanism language to injury severity.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pelvic-ring-injury-fact-apply-young-burgess-mech",
+        "claim_type": "fact",
+        "claim_text": "Apply Young-Burgess mechanism language to injury severity.",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-0ae75f0b"
+        ],
+        "evidence_packet_id": "ev-packet-c91ef138",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "_provenance_fingerprint": "claim|claim-pelvic-ring-injury-fact-apply-young-burgess-mech"
+      }
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-prioritize-binder-resusc",
+      "claimType": "fact",
+      "claimText": "Prioritize binder, resuscitation, and stabilization before definitive fixation.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pelvic-ring-injury-fact-prioritize-binder-resusc",
+        "claim_type": "fact",
+        "claim_text": "Prioritize binder, resuscitation, and stabilization before definitive fixation.",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-0ae75f0b"
+        ],
+        "evidence_packet_id": "ev-packet-c91ef138",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "_provenance_fingerprint": "claim|claim-pelvic-ring-injury-fact-prioritize-binder-resusc"
+      }
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-young-burgess-apc-lc-vs-",
+      "claimType": "fact",
+      "claimText": "Young-Burgess APC, LC, VS patterns.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pelvic-ring-injury-fact-young-burgess-apc-lc-vs-",
+        "claim_type": "fact",
+        "claim_text": "Young-Burgess APC, LC, VS patterns.",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-99af8848"
+        ],
+        "evidence_packet_id": "ev-packet-c91ef138",
+        "uncertainty_note": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_REVISED",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "_provenance_fingerprint": "claim|claim-pelvic-ring-injury-fact-young-burgess-apc-lc-vs-"
+      }
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-imaging_point-ap-pelvis",
+      "claimType": "imaging_point",
+      "claimText": "AP pelvis.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pelvic-ring-injury-imaging_point-ap-pelvis",
+        "claim_type": "imaging_point",
+        "claim_text": "AP pelvis.",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-99af8848"
+        ],
+        "evidence_packet_id": "ev-packet-c91ef138",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "_provenance_fingerprint": "claim|claim-pelvic-ring-injury-imaging_point-ap-pelvis"
+      }
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-imaging_point-inlet-outlet-views",
+      "claimType": "imaging_point",
+      "claimText": "Inlet/outlet views.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pelvic-ring-injury-imaging_point-inlet-outlet-views",
+        "claim_type": "imaging_point",
+        "claim_text": "Inlet/outlet views.",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-99af8848"
+        ],
+        "evidence_packet_id": "ev-packet-c91ef138",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "_provenance_fingerprint": "claim|claim-pelvic-ring-injury-imaging_point-inlet-outlet-views"
+      }
+    },
+    {
+      "draftId": "claim-pri-binder-not-definitive",
+      "claimType": "board_trap",
+      "claimText": "Pelvic binder application temporizes hemorrhage but does not replace assessment of unstable ring patterns requiring definitive stabilization.",
+      "primaryEntitySlug": "pelvic-binder-application",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pri-binder-not-definitive",
+        "verified": false,
+        "claim_text": "Pelvic binder application temporizes hemorrhage but does not replace assessment of unstable ring patterns requiring definitive stabilization.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.88,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "oite"
+        ],
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "primary_entity_slug": "pelvic-binder-application",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-pri-binder-not-definitive"
+      }
+    },
+    {
+      "draftId": "claim-pri-case-script",
+      "claimType": "clinical_script",
+      "claimText": "State mechanism, hemodynamic status, binder placement, ring stability assessment, transfusion needs, and ex-fix versus definitive OR plan.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pri-case-script",
+        "verified": false,
+        "claim_text": "State mechanism, hemodynamic status, binder placement, ring stability assessment, transfusion needs, and ex-fix versus definitive OR plan.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-pri-case-script"
+      }
+    },
+    {
+      "draftId": "claim-pri-missed-posterior-ring",
+      "claimType": "cognitive_trap",
+      "claimText": "Focusing only on pubic symphysis widening without evaluating sacroiliac disruption in high-energy pelvic trauma.",
+      "primaryEntitySlug": "unstable-pelvic-ring-pattern",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pri-missed-posterior-ring",
+        "verified": false,
+        "claim_text": "Focusing only on pubic symphysis widening without evaluating sacroiliac disruption in high-energy pelvic trauma.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.88,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call"
+        ],
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "primary_entity_slug": "unstable-pelvic-ring-pattern",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-pri-missed-posterior-ring"
+      }
+    },
+    {
+      "draftId": "claim-pri-ring-instability",
+      "claimType": "fact",
+      "claimText": "Pelvic ring injuries are evaluated as anterior and posterior ring disruptions where instability pattern drives binder, ex-fix, and hemorrhage control priorities.",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pri-ring-instability",
+        "verified": false,
+        "claim_text": "Pelvic ring injuries are evaluated as anterior and posterior ring disruptions where instability pattern drives binder, ex-fix, and hemorrhage control priorities.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "primary_entity_slug": "pelvic-ring-injury",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-pri-ring-instability"
+      }
+    },
+    {
+      "draftId": "claim-pri-si-joint-stability",
+      "claimType": "anatomy_pearl",
+      "claimText": "Sacroiliac joint and pubic symphysis integrity define anterior versus posterior pelvic ring stability contributions.",
+      "primaryEntitySlug": "sacroiliac-joint",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "pelvic-ring-injury-neighborhood",
+        "draft_id": "claim-pri-si-joint-stability",
+        "verified": false,
+        "claim_text": "Sacroiliac joint and pubic symphysis integrity define anterior versus posterior pelvic ring stability contributions.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:30:51.096Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.88,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or",
+          "oite"
+        ],
+        "review_packet_key": "pilot:pelvic-ring-injury-neighborhood",
+        "primary_entity_slug": "sacroiliac-joint",
+        "review_packet_label": "Pelvic Ring Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-pri-si-joint-stability"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-pri-hemorrhage-control",
+      "subjectEntitySlug": "pelvic-ring-injury",
+      "patternType": "operative_indication",
+      "trigger": "Hemodynamically unstable patient with pelvic ring injury and suspected pelvic hemorrhage",
+      "action": "Activate massive transfusion pathway, pelvic binder, angioembolization discussion, and expedited ring stabilization per attending",
+      "urgency": "emergent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-pri-unstable-ring-stabilization",
+      "subjectEntitySlug": "pelvic-ring-injury",
+      "patternType": "operative_indication",
+      "trigger": "Unstable pelvic ring pattern with mechanical instability after resuscitation",
+      "action": "Apply pelvic binder if not in place; discuss anterior external fixation or definitive stabilization with trauma team and attending",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern pelvic-ring-injury|operative_indication: dp-pri-hemorrhage-control vs dp-pri-unstable-ring-stabilization"
+    }
+  ],
+  "stats": {
+    "entityCount": 6,
+    "relationshipCount": 41,
+    "claimCount": 13,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 6,
+    "conflictingRelationships": 0,
+    "metadataMerged": 9,
+    "provenanceAttached": 63
+  }
+}

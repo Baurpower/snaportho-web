@@ -1,0 +1,453 @@
+[
+  {
+    "proposal_fingerprint": "rel|tibial-plateau-fracture|at_risk_structure|common-peroneal-nerve",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "tibial-plateau-fracture -[at_risk_structure]-> common-peroneal-nerve",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|tibial-plateau-fracture|at_risk_structure|common-peroneal-nerve",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "tibial-plateau-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "common-peroneal-nerve",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "lateral_knee_nerve",
+        "clinical_importance": "high",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|tibial-plateau-fracture|at_risk_structure|popliteal-artery",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "tibial-plateau-fracture -[at_risk_structure]-> popliteal-artery",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|tibial-plateau-fracture|at_risk_structure|popliteal-artery",
+    "alternatives": [],
+    "evidence_summary": "Relationship at_risk_structure",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "tibial-plateau-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "popliteal-artery",
+      "object_entity_type": "anatomy_structure",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "vascular_exam",
+        "clinical_importance": "high",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|bicondylar-tibial-plateau-fracture|indicates_treatment|tibial-plateau-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "bicondylar-tibial-plateau-fracture -[indicates_treatment]-> tibial-plateau-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: bicondylar-tibial-plateau-fracture -[indicates_treatment]-> tibial-plateau-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "bicondylar-tibial-plateau-fracture",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "tibial-plateau-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "note": "soft-tissue timing and staging attending-dependent"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|tibial-plateau-fracture|treated_by|tibial-plateau-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "tibial-plateau-fracture -[treated_by]-> tibial-plateau-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|tibial-plateau-fracture|treated_by|tibial-plateau-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "tibial-plateau-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "tibial-plateau-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-tpf-articular-soft-tissue",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-tpf-articular-soft-tissue",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts tibial-plateau-fracture oneLiner",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-tpf-articular-soft-tissue",
+      "claim_type": "fact",
+      "claim_text": "Tibial plateau fractures combine articular injury, instability, and soft-tissue risk that often dictates operative timing.",
+      "primary_entity_slug": "tibial-plateau-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-tpf-schatzker-language",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-tpf-schatzker-language",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts tibial-plateau-fracture classification",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-tpf-schatzker-language",
+      "claim_type": "fact",
+      "claim_text": "Schatzker classification language communicates split versus depression patterns and guides treatment tendency.",
+      "primary_entity_slug": "schatzker-classification",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-tpf-soft-tissue-timing-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-tpf-soft-tissue-timing-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts boardPearls",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-tpf-soft-tissue-timing-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Soft-tissue condition often dictates tibial plateau operative timing more than the fracture line alone.",
+      "primary_entity_slug": "tibial-plateau-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-tpf-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-tpf-case-script",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts caseSteps",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-tpf-case-script",
+      "claim_type": "clinical_script",
+      "claim_text": "State mechanism, Schatzker pattern, compartment and NV exam, articular step-off, and OR timing with soft-tissue status.",
+      "primary_entity_slug": "tibial-plateau-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-tpf-unstable-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-tpf-unstable-orif",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts decisionMaking + treatmentOptions",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-tpf-unstable-orif",
+      "subject_entity_slug": "tibial-plateau-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Unstable bicondylar or displaced tibial plateau fracture with articular step-off or ligamentous instability",
+      "action": "Plan ORIF when soft tissues allow; discuss external fixation bridge or delayed fixation if swelling is severe",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-tpf-compartment-watch",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-tpf-compartment-watch",
+    "alternatives": [],
+    "evidence_summary": "curriculum-expansion-seeds.ts complications + pimpQuestions",
+    "metadata": {
+      "pilot": "tibial-plateau-fracture-neighborhood",
+      "review_packet_key": "pilot:tibial-plateau-fracture-neighborhood",
+      "review_packet_label": "Tibial Plateau Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-tpf-compartment-watch",
+      "subject_entity_slug": "tibial-plateau-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "High-energy tibial plateau injury with tense compartments, escalating pain, or neurovascular change",
+      "action": "Escalate for compartment syndrome evaluation and fasciotomy consideration before definitive fixation",
+      "urgency": "emergent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.8999999999999999,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:42:18.310Z"
+    }
+  }
+]

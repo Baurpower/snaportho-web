@@ -5,6 +5,7 @@ import {
   getStartOfWeekDateKey,
 } from "@/lib/student-workspace/date";
 import { getStudentWorkspaceDashboardState } from "@/lib/student-workspace/page-state";
+import { getStudentWorkspacePrepareProgressSnapshot } from "@/lib/student-workspace/curriculum-progress";
 import { getStudentWorkspaceScheduleEntriesForWeek } from "@/lib/student-workspace/schedule";
 
 export default async function StudentWorkspacePrepareRoute() {
@@ -13,10 +14,11 @@ export default async function StudentWorkspacePrepareRoute() {
   );
   const tomorrow = addDaysToDateKey(state.today, 1);
   const tomorrowWeekStart = getStartOfWeekDateKey(tomorrow);
-  const [currentWeekEntries, tomorrowWeekEntries] =
+  const [currentWeekEntries, tomorrowWeekEntries, progressSnapshot] =
     await Promise.all([
       getStudentWorkspaceScheduleEntriesForWeek(state.userId, state.weekStart),
       getStudentWorkspaceScheduleEntriesForWeek(state.userId, tomorrowWeekStart),
+      getStudentWorkspacePrepareProgressSnapshot(state.userId),
     ]);
 
   return (
@@ -31,6 +33,7 @@ export default async function StudentWorkspacePrepareRoute() {
         tomorrowWeekStart={tomorrowWeekStart}
         currentWeekEntries={currentWeekEntries}
         tomorrowWeekEntries={tomorrowWeekEntries}
+        progressSnapshot={progressSnapshot}
       />
     </>
   );

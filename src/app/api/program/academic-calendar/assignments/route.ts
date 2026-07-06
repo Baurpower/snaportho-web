@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { z } from "zod";
+import {
+  buildAssignmentsProgramFilter,
+  normalizeRequiredProgramId,
+  resolveAssignmentsListPermissionLevel,
+} from "@/lib/workspace/academic-calendar/assignments-list-access";
 import { requireAcademicCalendarAccess } from "@/lib/workspace/academic-calendar/permissions";
 
 const AssignmentStatusSchema = z.enum([
@@ -32,66 +37,113 @@ function jsonError(message: string, status = 400) {
   );
 }
 
-export async function GET(request: NextRequest) {
-  const supabase = await createClient();
+async function validateRosterBelongsToProgram(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  params: {
+    rosterId: string;
+    programId: string;
+  }
+) {
+  const { data, error } = await supabase
+    .from("program_roster")
+    .select("id")
+    .eq("id", params.rosterId)
+    .eq("program_id", params.programId)
+    .maybeSingle();
 
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
-
-  if (userError || !user) {
-    return jsonError("Unauthorized", 401);
+  if (error) {
+    throw new Error(`Failed to validate roster program scope: ${error.message}`);
   }
 
-  const searchParams = request.nextUrl.searchParams;
+  return Boolean(data?.id);
+}
 
-  const programId = searchParams.get("programId");
-  const eventId = searchParams.get("eventId");
-  const sessionId = searchParams.get("sessionId");
-  const rosterId = searchParams.get("rosterId");
-  const status = searchParams.get("status");
+export async function GET(request: NextRequest) {
+  try {
+    const supabase = await createClient();
 
-  // Default behavior: only return assignments for the logged-in user's roster row.
-  // Use mineOnly=false for admin/program-wide views.
-  const mineOnly = searchParams.get("mineOnly") !== "false";
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
 
-  if (programId) {
+    if (userError || !user) {
+      return jsonError("Unauthorized", 401);
+    }
+
+    const searchParams = request.nextUrl.searchParams;
+    const programId = normalizeRequiredProgramId(searchParams.get("programId"));
+
+    if (!programId) {
+      return jsonError("programId is required.", 400);
+    }
+
+    const eventId = searchParams.get("eventId");
+    const sessionId = searchParams.get("sessionId");
+    const rosterId = searchParams.get("rosterId");
+    const status = searchParams.get("status");
+    const mineOnly = searchParams.get("mineOnly") !== "false";
+    const permissionLevel = resolveAssignmentsListPermissionLevel(mineOnly);
+
     const access = await requireAcademicCalendarAccess({
       supabase,
       userId: user.id,
       programId,
-      level: "view",
+      level: permissionLevel,
     });
 
     if (!access.ok) {
-      return jsonError(access.error ?? "You do not have access to this academic calendar", 403);
-    }
-  }
-
-  let activeRosterId = rosterId;
-
-  if (mineOnly && programId && !rosterId) {
-    const { data: rosterRow, error: rosterError } = await supabase
-      .from("program_roster")
-      .select("id")
-      .eq("program_id", programId)
-      .eq("claimed_by_user_id", user.id)
-      .single();
-
-    if (rosterError || !rosterRow) {
-      return NextResponse.json({
-        data: [],
-        error: null,
-      });
+      return jsonError(
+        access.error ??
+          (permissionLevel === "edit"
+            ? "You do not have permission to view program-wide academic assignments."
+            : "You do not have access to this academic calendar."),
+        403
+      );
     }
 
-    activeRosterId = rosterRow.id;
-  }
+    const programFilter = buildAssignmentsProgramFilter(programId);
+    let activeRosterId = rosterId;
 
-  let query = supabase
-    .from("academic_event_assignments")
-    .select(`
+    if (rosterId) {
+      const rosterBelongsToProgram = await validateRosterBelongsToProgram(
+        supabase,
+        {
+          rosterId,
+          programId,
+        }
+      );
+
+      if (!rosterBelongsToProgram) {
+        return jsonError("Roster does not belong to this program.", 403);
+      }
+    }
+
+    if (mineOnly && !rosterId) {
+      const { data: rosterRow, error: rosterError } = await supabase
+        .from("program_roster")
+        .select("id")
+        .eq("program_id", programId)
+        .eq("claimed_by_user_id", user.id)
+        .maybeSingle();
+
+      if (rosterError) {
+        throw new Error(`Failed to resolve roster for assignments: ${rosterError.message}`);
+      }
+
+      if (!rosterRow?.id) {
+        return NextResponse.json({
+          data: [],
+          error: null,
+        });
+      }
+
+      activeRosterId = rosterRow.id;
+    }
+
+    let query = supabase
+      .from("academic_event_assignments")
+      .select(`
       id,
       academic_event_id,
       academic_event_session_id,
@@ -129,46 +181,51 @@ export async function GET(request: NextRequest) {
         grad_year
       )
     `)
-    .order("due_date", { ascending: true, nullsFirst: false })
-    .order("created_at", { ascending: true });
+      .eq("event.program_id", programFilter.eventProgramId)
+      .order("due_date", { ascending: true, nullsFirst: false })
+      .order("created_at", { ascending: true });
 
-  if (programId) {
-    query = query.eq("event.program_id", programId);
-  }
-
-  if (eventId) {
-    query = query.eq("academic_event_id", eventId);
-  }
-
-  if (sessionId) {
-    query = query.eq("academic_event_session_id", sessionId);
-  }
-
-  if (activeRosterId) {
-    query = query.eq("roster_id", activeRosterId);
-  }
-
-  if (status) {
-    const parsedStatus = AssignmentStatusSchema.safeParse(status);
-
-    if (!parsedStatus.success) {
-      return jsonError("Invalid assignment status", 400);
+    if (eventId) {
+      query = query.eq("academic_event_id", eventId);
     }
 
-    query = query.eq("status", parsedStatus.data);
+    if (sessionId) {
+      query = query.eq("academic_event_session_id", sessionId);
+    }
+
+    if (mineOnly && activeRosterId) {
+      query = query.eq("roster_id", activeRosterId);
+    } else if (!mineOnly && activeRosterId) {
+      query = query.eq("roster_id", activeRosterId);
+    }
+
+    if (status) {
+      const parsedStatus = AssignmentStatusSchema.safeParse(status);
+
+      if (!parsedStatus.success) {
+        return jsonError("Invalid assignment status", 400);
+      }
+
+      query = query.eq("status", parsedStatus.data);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Error fetching academic assignments:", error);
+      return jsonError("Failed to fetch assignments", 500);
+    }
+
+    return NextResponse.json({
+      data,
+      error: null,
+    });
+  } catch (error) {
+    return jsonError(
+      error instanceof Error ? error.message : "Failed to fetch assignments",
+      500
+    );
   }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Error fetching academic assignments:", error);
-    return jsonError("Failed to fetch assignments", 500);
-  }
-
-  return NextResponse.json({
-    data,
-    error: null,
-  });
 }
 
 export async function POST(request: NextRequest) {

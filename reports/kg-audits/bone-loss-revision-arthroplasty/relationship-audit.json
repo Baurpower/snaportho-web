@@ -1,0 +1,90 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 49,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from bone-loss-revision-arthroplasty",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "bone-loss-revision-arthroplasty"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_imaging_finding",
+      "evidence": "0 outbound has_imaging_finding edges from bone-loss-revision-arthroplasty",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "bone-loss-revision-arthroplasty"
+      ],
+      "suggestedFix": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from bone-loss-revision-arthroplasty",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "bone-loss-revision-arthroplasty"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from bone-loss-revision-arthroplasty",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "bone-loss-revision-arthroplasty"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_complication",
+      "evidence": "0 outbound has_complication edges from bone-loss-revision-arthroplasty",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "bone-loss-revision-arthroplasty"
+      ],
+      "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Low relationship density",
+      "evidence": "7 relationships / 66 entities = 0.11",
+      "reason": "Sparse graphs limit educational traversal and reasoning support.",
+      "severity": "medium",
+      "category": "relationship_quality",
+      "suggestedFix": "Add metadata-rich clinical and anatomy edges to improve connectivity.",
+      "impact": 4
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 7,
+    "relationshipDensity": 0.10606060606060606,
+    "missingClinicalEdgeCount": 5,
+    "highRiskUnreviewedCount": 0,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Add injured_in relationship via relationship-builder agent.",
+    "Add has_imaging_finding relationship via relationship-builder agent.",
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Add treated_by relationship via relationship-builder agent.",
+    "Add has_complication relationship via relationship-builder agent."
+  ]
+}

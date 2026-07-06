@@ -1,0 +1,122 @@
+# IMPLANT FIXATION PRINCIPLES — Knowledge Factory Audit
+
+Generated: 2026-07-05T23:32:00.876Z
+Auditor: KF-018 v1.0.0
+
+## Overall
+
+| Metric | Score |
+|--------|------:|
+| **Overall** | **83** |
+| Ontology Completeness | 81 |
+| Evidence Quality | 85 |
+| Graph Integrity | 84 |
+| Shared Knowledge Reuse | 98 |
+| Relationship Quality | 34 |
+| Claim Quality | 84 |
+| Decision Points | 69 |
+| Metadata Quality | 92 |
+| Provenance Quality | 100 |
+| Review Calibration | 100 |
+| Agent Performance | 92 |
+| Compiler Quality | 89 |
+| Educational Quality | 86 |
+| Cross-Neighborhood Consistency | 96 |
+| Publication Readiness | 68 |
+| Publication | Blocked |
+
+## Publication
+
+- Status: **NOT_READY**
+- Maturity: 5 / 8
+
+### Blockers
+
+- 8 proposals still awaiting human review
+- 7 items require attending review
+- Claims and DPs are draft-only — publication gate must block verified consumption.
+- No approved canonical entities in database yet — proposals remain offline/spec.
+
+## Top Findings
+
+### [CRITICAL] Low evidence coverage (0% of proposals cite evidence)
+
+- **Evidence:** 0/18 proposals have evidence_refs
+- **Reason:** Every proposal should cite supporting evidence per factory contract.
+- **Impact:** -15
+- **Fix:** Ensure claim/relationship builders attach evidence_refs from the evidence packet.
+
+### [CRITICAL] Missing clinical edge: injured_in
+
+- **Evidence:** 0 outbound injured_in edges from implant-fixation-principles
+- **Reason:** Core diagnosis neighborhoods require standard clinical relationship patterns.
+- **Impact:** -15
+- **Fix:** Add injured_in relationship via relationship-builder agent.
+
+### [CRITICAL] Missing clinical edge: has_classification
+
+- **Evidence:** 0 outbound has_classification edges from implant-fixation-principles
+- **Reason:** Core diagnosis neighborhoods require standard clinical relationship patterns.
+- **Impact:** -15
+- **Fix:** Add has_classification relationship via relationship-builder agent.
+
+### [CRITICAL] Missing decision point pattern: emergency_escalation
+
+- **Evidence:** 0 decision points with pattern emergency_escalation
+- **Reason:** Fracture neighborhoods require branching operative vs nonoperative pathways.
+- **Impact:** -15
+- **Fix:** Add emergency_escalation decision point with attending-gated review.
+
+### [HIGH] Missing claim requirements (10)
+
+- **Evidence:** 10 gaps of kind missing_claim
+- **Reason:** Ontology contract requires complete claim coverage.
+- **Impact:** -8
+- **Fix:** Run the matching builder agent for missing_claim.
+
+### [HIGH] No classification system present
+
+- **Evidence:** 0 classification entities in merged draft
+- **Reason:** Fracture diagnoses require classification when one exists clinically.
+- **Impact:** -8
+- **Fix:** Link has_classification and has_grade edges to a classification system.
+
+### [HIGH] 57 orphan entities with no relationships
+
+- **Evidence:** Slugs: primary-stability, bone-ingrowth, acetabulum, calcar, collateral-ligaments, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-condyles, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, labrum, lesser-trochanter, medial-femoral-circumflex-artery, patella, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau, bearing-surface-selection, compartment-syndrome, distal-femur-fracture, femoral-neck-fracture, femoral-shaft-fracture, hip-prosthetic-joint-infection, intertrochanteric-fracture, knee-osteoarthritis, knee-prosthetic-joint-infection, periprosthetic-joint-infection, subtrochanteric-fracture, acetabular-component, femoral-component, femoral-stem, patellar-component, polyethylene-liner, tibial-baseplate, tibial-insert, adverse-local-tissue-reaction, polyethylene-wear-osteolysis, revision-arthroplasty, unicompartmental-knee-arthroplasty
+- **Reason:** Orphan entities cannot be traversed by products and indicate incomplete graph wiring.
+- **Impact:** -8
+- **Fix:** Add inbound or outbound clinical/anatomy edges, or merge duplicates.
+
+### [HIGH] 33 disconnected anatomy structures
+
+- **Evidence:** Disconnected: acetabulum, calcar, collateral-ligaments, common-peroneal-nerve, cruciate-ligaments, distal-femur, extensor-mechanism, femoral-condyles, femoral-diaphysis, femoral-head, femoral-neck, femoral-nerve, femur, gluteus-medius, gluteus-minimus, greater-trochanter, hip-capsule, hip-joint, intertrochanteric-region, labrum, lesser-trochanter, medial-femoral-circumflex-artery, patella, patellar-tendon, pelvis, popliteal-artery, proximal-femur, proximal-femur-anatomy-hub, quadriceps-tendon, sciatic-nerve, short-external-rotators, tibia, tibial-plateau
+- **Reason:** Anatomy must connect to the condition graph for educational traversal.
+- **Impact:** -8
+- **Fix:** Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.
+
+## Prioritized Recommendations
+
+1. **[Evidence Quality]** Ensure claim/relationship builders attach evidence_refs from the evidence packet. — _Low evidence coverage (0% of proposals cite evidence)_
+2. **[Relationship Quality]** Add injured_in relationship via relationship-builder agent. — _Missing clinical edge: injured_in_
+3. **[Relationship Quality]** Add has_classification relationship via relationship-builder agent. — _Missing clinical edge: has_classification_
+4. **[Decision Points]** Add emergency_escalation decision point with attending-gated review. — _Missing decision point pattern: emergency_escalation_
+5. **[Ontology Completeness]** Run the matching builder agent for missing_claim. — _Missing claim requirements (10)_
+6. **[Ontology Completeness]** Link has_classification and has_grade edges to a classification system. — _No classification system present_
+7. **[Graph Integrity]** Add inbound or outbound clinical/anatomy edges, or merge duplicates. — _57 orphan entities with no relationships_
+8. **[Graph Integrity]** Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors. — _33 disconnected anatomy structures_
+9. **[Relationship Quality]** Add has_imaging_finding relationship via relationship-builder agent. — _Missing clinical edge: has_imaging_finding_
+10. **[Relationship Quality]** Add at_risk_structure relationship via relationship-builder agent. — _Missing clinical edge: at_risk_structure_
+
+## Data Source
+
+- Neighborhood: merged_draft
+- Reports loaded: 13
+- Reports missing: none
+
+## Constraints
+
+- Database modified: **no**
+- Content generated: **no**
+- Auto-approved: **no**
+

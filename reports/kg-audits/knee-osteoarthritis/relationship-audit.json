@@ -1,0 +1,100 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 34,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from knee-osteoarthritis",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "knee-osteoarthritis"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from knee-osteoarthritis",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "knee-osteoarthritis"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from knee-osteoarthritis",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "knee-osteoarthritis"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from knee-osteoarthritis",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "knee-osteoarthritis"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_complication",
+      "evidence": "0 outbound has_complication edges from knee-osteoarthritis",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "knee-osteoarthritis"
+      ],
+      "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Low relationship density",
+      "evidence": "8 relationships / 65 entities = 0.12",
+      "reason": "Sparse graphs limit educational traversal and reasoning support.",
+      "severity": "medium",
+      "category": "relationship_quality",
+      "suggestedFix": "Add metadata-rich clinical and anatomy edges to improve connectivity.",
+      "impact": 4
+    },
+    {
+      "finding": "2 high-risk relationships lack approved review status",
+      "evidence": "Predicates: indicates_treatment",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 8,
+    "relationshipDensity": 0.12307692307692308,
+    "missingClinicalEdgeCount": 5,
+    "highRiskUnreviewedCount": 2,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Add injured_in relationship via relationship-builder agent.",
+    "Add has_classification relationship via relationship-builder agent.",
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Add treated_by relationship via relationship-builder agent.",
+    "Add has_complication relationship via relationship-builder agent.",
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

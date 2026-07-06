@@ -1,0 +1,79 @@
+{
+  "topicKey": "intertrochanteric-fracture",
+  "pilotKey": "intertrochanteric-fracture-neighborhood",
+  "primaryEntitySlug": "intertrochanteric-fracture",
+  "displayName": "Intertrochanteric Fracture",
+  "generatedAt": "2026-07-05T21:36:50.468Z",
+  "nodes": [
+    {
+      "slug": "sliding-hip-screw",
+      "entityType": "implant",
+      "preferredLabel": "Sliding Hip Screw",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "unstable-intertrochanteric-pattern",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Unstable Intertrochanteric Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "intertrochanteric-implant-failure",
+      "entityType": "complication",
+      "preferredLabel": "Intertrochanteric Implant Failure",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "reverse-obliquity-it-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Reverse Obliquity Intertrochanteric Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "intertrochanteric-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Intertrochanteric Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "intertrochanteric-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "unstable-intertrochanteric-pattern",
+      "reverse-obliquity-it-fracture"
+    ],
+    "complication": [
+      "intertrochanteric-implant-failure"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [
+      "sliding-hip-screw"
+    ],
+    "supporting": []
+  }
+}

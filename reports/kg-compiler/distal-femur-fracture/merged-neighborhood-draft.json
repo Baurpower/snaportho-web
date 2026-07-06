@@ -1,0 +1,2052 @@
+{
+  "topicKey": "distal-femur-fracture",
+  "pilotKey": "distal-femur-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:39:09.426Z",
+  "entities": [
+    {
+      "slug": "distal-femur-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Femur Fracture",
+      "metadata": {
+        "slug": "distal-femur-fracture",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Supracondylar femur fracture with articular involvement and vascular proximity concerns.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|distal-femur-fracture",
+        "canonical_entity_id": "e12358e3-f3ce-4c46-9df1-2286c9fb4c09",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|distal-femur-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-femur-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Distal Femur ORIF",
+      "metadata": {
+        "slug": "distal-femur-orif",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Open reduction internal fixation of displaced distal femur fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|distal-femur-orif",
+        "canonical_entity_id": "316bbd7a-beee-47f0-9013-698867f22941",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|distal-femur-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "intra-articular-distal-femur-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Intra-Articular Distal Femur Fracture",
+      "metadata": {
+        "slug": "intra-articular-distal-femur-fracture",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Distal femur fracture with condylar articular step-off or comminution.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|intra-articular-distal-femur-fracture",
+        "canonical_entity_id": "852d4a5c-549a-4006-8f01-1ec8bed0abb7",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|intra-articular-distal-femur-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-femur-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Distal Femur Malunion",
+      "metadata": {
+        "slug": "distal-femur-malunion",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Angular or rotational malalignment after distal femur fracture healing.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|distal-femur-malunion",
+        "canonical_entity_id": "514ec184-25a1-4e7f-a681-99848ac6e9bf",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|distal-femur-malunion"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+      "metadata": {
+        "slug": "acetabulum",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Cruciate Ligament",
+      "description": "Primary knee stabilizer commonly injured with tibial plateau and knee trauma.",
+      "metadata": {
+        "slug": "acl",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Primary knee stabilizer commonly injured with tibial plateau and knee trauma.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|acl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+      "metadata": {
+        "slug": "calcaneus",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "common-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Peroneal Nerve",
+      "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+      "metadata": {
+        "slug": "common-peroneal-nerve",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|common-peroneal-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Femur",
+      "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+      "metadata": {
+        "slug": "distal-femur",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+      "metadata": {
+        "slug": "extensor-mechanism",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+      "metadata": {
+        "slug": "femoral-diaphysis",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "thigh",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-diaphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+      "metadata": {
+        "slug": "iliac-wing",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+      "metadata": {
+        "slug": "lisfranc-joint",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lower-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Trauma Anatomy Hub",
+      "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+      "metadata": {
+        "slug": "lower-extremity-trauma-anatomy-hub",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "lower_extremity",
+        "cluster": "lower-extremity-trauma",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+      "metadata": {
+        "slug": "midfoot",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
+      "metadata": {
+        "slug": "patella",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|patella"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterior Cruciate Ligament",
+      "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+      "metadata": {
+        "slug": "pcl",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+      "metadata": {
+        "slug": "pelvis",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+      "metadata": {
+        "slug": "plantar-soft-tissues",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|plantar-soft-tissues"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "popliteal-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Popliteal Artery",
+      "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
+      "metadata": {
+        "slug": "popliteal-artery",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|popliteal-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+      "metadata": {
+        "slug": "pubic-symphysis",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pubic-symphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+      "metadata": {
+        "slug": "sacroiliac-joint",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacroiliac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+      "metadata": {
+        "slug": "sacrum",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+      "metadata": {
+        "slug": "subtalar-joint",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+      "metadata": {
+        "slug": "talus",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-plateau",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Plateau",
+      "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+      "metadata": {
+        "slug": "tibial-plateau",
+        "pilot": "distal-femur-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|tibial-plateau"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "distal-femur-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "distal-femur-malunion",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-femur-fracture|has_complication|distal-femur-malunion",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|distal-femur-fracture|has_complication|distal-femur-malunion"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "intra-articular-distal-femur-fracture",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "articular_involvement",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-femur-fracture|has_imaging_finding|intra-articular-distal-femur-fracture",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular_involvement",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-femur-fracture|has_imaging_finding|intra-articular-distal-femur-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabulum",
+      "predicate": "part_of",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_socket",
+        "_provenance_fingerprint": "rel|acetabulum|part_of|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "articulates_with",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "common-peroneal-nerve",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur-fracture",
+      "predicate": "at_risk_structure",
+      "objectSlug": "popliteal-artery",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular_injury",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|distal-femur-fracture|at_risk_structure|popliteal-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|distal-femur-fracture|injured_in|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|distal-femur-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular_congruity",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|distal-femur-fracture|involves_anatomy|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "distal-femur-orif",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|distal-femur-fracture|treated_by|distal-femur-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur-orif",
+      "predicate": "involves_anatomy",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "approach",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|distal-femur-orif|involves_anatomy|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "articulates_with",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral",
+        "_provenance_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-mechanism",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-diaphysis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "femoral_shaft",
+        "_provenance_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "iliac-wing",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_pelvis",
+        "_provenance_fingerprint": "rel|iliac-wing|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intra-articular-distal-femur-fracture",
+      "predicate": "indicates_treatment",
+      "objectSlug": "distal-femur-orif",
+      "metadata": {
+        "note": "patient factors and soft-tissue status dependent",
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|intra-articular-distal-femur-fracture|indicates_treatment|distal-femur-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-joint",
+      "predicate": "part_of",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "midfoot_stability",
+        "_provenance_fingerprint": "rel|lisfranc-joint|part_of|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lower-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "distal-femur-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|distal-femur-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "midfoot",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot",
+        "_provenance_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "articulates_with",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "patellofemoral",
+        "_provenance_fingerprint": "rel|patella|articulates_with|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pelvic_ring",
+        "_provenance_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "plantar-soft-tissues",
+      "predicate": "part_of",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "_provenance_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "popliteal-artery",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pubic-symphysis",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "_provenance_fingerprint": "rel|pubic-symphysis|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacroiliac-joint",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "_provenance_fingerprint": "rel|sacroiliac-joint|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacrum",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "_provenance_fingerprint": "rel|sacrum|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subtalar-joint",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "articulates_with",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "subtalar",
+        "_provenance_fingerprint": "rel|talus|articulates_with|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle",
+        "_provenance_fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-dff-articular-reduction",
+      "claimType": "fact",
+      "claimText": "Distal femur fractures require assessment of articular involvement, coronal sagittal alignment, and popliteal artery proximity.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-dff-articular-reduction",
+        "verified": false,
+        "claim_text": "Distal femur fractures require assessment of articular involvement, coronal sagittal alignment, and popliteal artery proximity.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "primary_entity_slug": "distal-femur-fracture",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dff-articular-reduction"
+      }
+    },
+    {
+      "draftId": "claim-dff-case-script",
+      "claimType": "clinical_script",
+      "claimText": "Describe condylar involvement, vascular exam, soft-tissue condition, fixation construct plan, and malunion prevention goals.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-dff-case-script",
+        "verified": false,
+        "claim_text": "Describe condylar involvement, vascular exam, soft-tissue condition, fixation construct plan, and malunion prevention goals.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "primary_entity_slug": "distal-femur-fracture",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dff-case-script"
+      }
+    },
+    {
+      "draftId": "claim-dff-nonoperative-displaced",
+      "claimType": "cognitive_trap",
+      "claimText": "Managing displaced intra-articular distal femur fractures nonoperatively without articular reduction discussion.",
+      "primaryEntitySlug": "intra-articular-distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-dff-nonoperative-displaced",
+        "verified": false,
+        "claim_text": "Managing displaced intra-articular distal femur fractures nonoperatively without articular reduction discussion.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "primary_entity_slug": "intra-articular-distal-femur-fracture",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dff-nonoperative-displaced"
+      }
+    },
+    {
+      "draftId": "claim-dff-popliteal-trap",
+      "claimType": "board_trap",
+      "claimText": "High-energy distal femur fractures can injure the popliteal artery despite a warm foot and palpable dorsalis pedis pulse.",
+      "primaryEntitySlug": "popliteal-artery",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-dff-popliteal-trap",
+        "verified": false,
+        "claim_text": "High-energy distal femur fractures can injure the popliteal artery despite a warm foot and palpable dorsalis pedis pulse.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "oite"
+        ],
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "primary_entity_slug": "popliteal-artery",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-dff-popliteal-trap"
+      }
+    },
+    {
+      "draftId": "claim-dff-tibiofemoral-congruity",
+      "claimType": "anatomy_pearl",
+      "claimText": "Distal femur articular surface congruity with the tibial plateau determines knee joint loading after fracture healing.",
+      "primaryEntitySlug": "distal-femur",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-dff-tibiofemoral-congruity",
+        "verified": false,
+        "claim_text": "Distal femur articular surface congruity with the tibial plateau determines knee joint loading after fracture healing.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:distal-femur-fracture-neighborhood",
+        "primary_entity_slug": "distal-femur",
+        "review_packet_label": "Distal Femur Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-dff-tibiofemoral-congruity"
+      }
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-board_trap-articular-step-off-in-di",
+      "claimType": "board_trap",
+      "claimText": "Articular step-off in distal femur fractures often needs operative reduction.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-distal-femur-fracture-board_trap-articular-step-off-in-di",
+        "claim_type": "board_trap",
+        "claim_text": "Articular step-off in distal femur fractures often needs operative reduction.",
+        "primary_entity_slug": "distal-femur-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-1958e502"
+        ],
+        "evidence_packet_id": "ev-packet-bf6b1472",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "_provenance_fingerprint": "claim|claim-distal-femur-fracture-board_trap-articular-step-off-in-di"
+      }
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-cognitive_trap-mention-lateral-plating-",
+      "claimType": "cognitive_trap",
+      "claimText": "Mention lateral plating language.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-distal-femur-fracture-cognitive_trap-mention-lateral-plating-",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Mention lateral plating language.",
+        "primary_entity_slug": "distal-femur-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-19559996"
+        ],
+        "evidence_packet_id": "ev-packet-bf6b1472",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "_provenance_fingerprint": "claim|claim-distal-femur-fracture-cognitive_trap-mention-lateral-plating-"
+      }
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-alignment",
+      "claimType": "fact",
+      "claimText": "alignment.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-distal-femur-fracture-fact-alignment",
+        "claim_type": "fact",
+        "claim_text": "alignment.",
+        "primary_entity_slug": "distal-femur-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-19559996"
+        ],
+        "evidence_packet_id": "ev-packet-bf6b1472",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "_provenance_fingerprint": "claim|claim-distal-femur-fracture-fact-alignment"
+      }
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-articular-involvement",
+      "claimType": "fact",
+      "claimText": "Articular involvement.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-distal-femur-fracture-fact-articular-involvement",
+        "claim_type": "fact",
+        "claim_text": "Articular involvement.",
+        "primary_entity_slug": "distal-femur-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-19559996"
+        ],
+        "evidence_packet_id": "ev-packet-bf6b1472",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "_provenance_fingerprint": "claim|claim-distal-femur-fracture-fact-articular-involvement"
+      }
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-comminution",
+      "claimType": "fact",
+      "claimText": "comminution.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-distal-femur-fracture-fact-comminution",
+        "claim_type": "fact",
+        "claim_text": "comminution.",
+        "primary_entity_slug": "distal-femur-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-19559996"
+        ],
+        "evidence_packet_id": "ev-packet-bf6b1472",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "_provenance_fingerprint": "claim|claim-distal-femur-fracture-fact-comminution"
+      }
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-distal-femur-fractures-c",
+      "claimType": "fact",
+      "claimText": "Distal femur fractures combine metaphyseal comminution with articular restoration demands.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-distal-femur-fracture-fact-distal-femur-fractures-c",
+        "claim_type": "fact",
+        "claim_text": "Distal femur fractures combine metaphyseal comminution with articular restoration demands.",
+        "primary_entity_slug": "distal-femur-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-19559996"
+        ],
+        "evidence_packet_id": "ev-packet-bf6b1472",
+        "uncertainty_note": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "_provenance_fingerprint": "claim|claim-distal-femur-fracture-fact-distal-femur-fractures-c"
+      }
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-implant-category",
+      "claimType": "fact",
+      "claimText": "implant category.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-distal-femur-fracture-fact-implant-category",
+        "claim_type": "fact",
+        "claim_text": "implant category.",
+        "primary_entity_slug": "distal-femur-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-19559996"
+        ],
+        "evidence_packet_id": "ev-packet-bf6b1472",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "_provenance_fingerprint": "claim|claim-distal-femur-fracture-fact-implant-category"
+      }
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-imaging_point-ap-lateral-knee-radiogra",
+      "claimType": "imaging_point",
+      "claimText": "AP/lateral knee radiographs.",
+      "primaryEntitySlug": "distal-femur-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "distal-femur-fracture-neighborhood",
+        "draft_id": "claim-distal-femur-fracture-imaging_point-ap-lateral-knee-radiogra",
+        "claim_type": "imaging_point",
+        "claim_text": "AP/lateral knee radiographs.",
+        "primary_entity_slug": "distal-femur-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-1958e502"
+        ],
+        "evidence_packet_id": "ev-packet-bf6b1472",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:39:09.424Z",
+        "_provenance_fingerprint": "claim|claim-distal-femur-fracture-imaging_point-ap-lateral-knee-radiogra"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-dff-intra-articular-orif",
+      "subjectEntitySlug": "distal-femur-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Intra-articular distal femur fracture with articular step-off or instability",
+      "action": "Discuss distal femur ORIF with attending; document vascular exam and articular reduction goals",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-dff-vascular-workup",
+      "subjectEntitySlug": "distal-femur-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Distal femur fracture with abnormal ankle-brachial index, expanding hematoma, or ischemic signs",
+      "action": "Activate vascular surgery consultation and expedite imaging before definitive fixation per attending",
+      "urgency": "emergent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern distal-femur-fracture|operative_indication: dp-dff-intra-articular-orif vs dp-dff-vascular-workup"
+    }
+  ],
+  "stats": {
+    "entityCount": 26,
+    "relationshipCount": 34,
+    "claimCount": 13,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 4,
+    "conflictingRelationships": 0,
+    "metadataMerged": 6,
+    "provenanceAttached": 76
+  }
+}

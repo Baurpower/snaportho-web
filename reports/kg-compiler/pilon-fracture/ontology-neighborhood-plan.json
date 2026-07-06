@@ -1,0 +1,80 @@
+{
+  "topicKey": "pilon-fracture",
+  "pilotKey": "pilon-fracture-neighborhood",
+  "primaryEntitySlug": "pilon-fracture",
+  "displayName": "Pilon Fracture",
+  "generatedAt": "2026-07-05T22:45:34.388Z",
+  "nodes": [
+    {
+      "slug": "soft-tissue-compromise-pilon",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Soft Tissue Compromise in Pilon Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pilon-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Pilon ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "staged-pilon-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Staged Pilon Protocol",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pilon-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Pilon Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "pilon-wound-complication",
+      "entityType": "complication",
+      "preferredLabel": "Pilon Wound Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 2,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "pilon-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "pilon-orif"
+    ],
+    "classification": [],
+    "imaging": [
+      "soft-tissue-compromise-pilon"
+    ],
+    "complication": [
+      "pilon-wound-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "staged-pilon-protocol"
+    ]
+  }
+}

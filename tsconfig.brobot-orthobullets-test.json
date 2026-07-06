@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": ".test-dist/brobot/orthobullets",
+    "rootDir": "src/lib/brobot/orthobullets",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "lib": ["ES2022"]
+  },
+  "include": [
+    "src/lib/brobot/orthobullets/context-resolver.ts",
+    "src/lib/brobot/orthobullets/curriculum-types.ts",
+    "src/lib/brobot/orthobullets/curriculum-prompt-builder.ts",
+    "src/lib/brobot/orthobullets/curriculum-prompt-builder.test.ts",
+    "src/lib/brobot/orthobullets/curriculum-response-parser.ts",
+    "src/lib/brobot/orthobullets/curriculum-response-parser.test.ts",
+    "src/lib/brobot/orthobullets/types.ts"
+  ]
+}

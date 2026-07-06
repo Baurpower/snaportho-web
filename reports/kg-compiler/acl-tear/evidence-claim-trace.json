@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-07-05T22:37:34.771Z",
+  "evidencePacketId": "ev-packet-e915b0bd",
+  "traces": [
+    {
+      "draftId": "claim-acl-tear-fact-recognize-the-classic-hi",
+      "proposalFingerprint": "claim|claim-acl-tear-fact-recognize-the-classic-hi",
+      "evidenceItemIds": [
+        "ev-static-prepare-3c7710ae"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-imaging_point-mri-patterns",
+      "proposalFingerprint": "claim|claim-acl-tear-imaging_point-mri-patterns",
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-describe-associated-inju",
+      "proposalFingerprint": "claim|claim-acl-tear-fact-describe-associated-inju",
+      "evidenceItemIds": [
+        "ev-static-prepare-3c7710ae"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-pop",
+      "proposalFingerprint": "claim|claim-acl-tear-fact-pop",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-effusion",
+      "proposalFingerprint": "claim|claim-acl-tear-fact-effusion",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-lachman",
+      "proposalFingerprint": "claim|claim-acl-tear-fact-lachman",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-pivoting-instability",
+      "proposalFingerprint": "claim|claim-acl-tear-fact-pivoting-instability",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acl-tear-fact-rehab-importance",
+      "proposalFingerprint": "claim|claim-acl-tear-fact-rehab-importance",
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why is Lachman better than anterior drawer?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-4810bb59"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What associated injuries matter?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Instability symptoms, sport demands, age, concomitant injuries"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Rehab-only pathway"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-4811b4cd"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "ACL reconstruction with graft selection concepts"
+    }
+  ]
+}

@@ -1,0 +1,2518 @@
+{
+  "topicKey": "acl-tear",
+  "pilotKey": "acl-tear-neighborhood",
+  "generatedAt": "2026-07-05T22:39:31.340Z",
+  "entities": [
+    {
+      "slug": "subscapularis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subscapularis",
+      "metadata": {
+        "slug": "subscapularis",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Anterior cuff tendon providing internal rotation and anterior stability.",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|subscapularis",
+        "canonical_entity_id": "585db38b-2be1-4827-8d38-c523aa78b4cb",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|subscapularis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "teres-minor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Teres Minor",
+      "metadata": {
+        "slug": "teres-minor",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Inferior posterior cuff muscle contributing to external rotation.",
+        "anatomy_kind": "muscle",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|teres-minor",
+        "canonical_entity_id": "fd843f85-bec5-495f-85d0-564cafda0f3f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|teres-minor"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "biceps-anchor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Biceps Anchor",
+      "metadata": {
+        "slug": "biceps-anchor",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Superior labrum and biceps anchor complex at the glenoid origin.",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|biceps-anchor",
+        "canonical_entity_id": "cc6cb2b8-b76f-4330-a4b4-6e9bd22ad138",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|biceps-anchor"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-elbow-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Elbow Anatomy Hub",
+      "metadata": {
+        "slug": "sports-elbow-anatomy-hub",
+        "pilot": "acl-tear-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Elbow ligament and tendon structures relevant to throwing and flexion injuries.",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|sports-elbow-anatomy-hub",
+        "canonical_entity_id": "69e1e2e5-2e05-41b0-b9ab-537494f3cd0b",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Collateral Ligament",
+      "metadata": {
+        "slug": "ucl",
+        "pilot": "acl-tear-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Medial elbow stabilizer critical in throwing athletes.",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|ucl",
+        "canonical_entity_id": "c9bc0ccf-5b8f-4e74-92c7-e709412f197f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|ucl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "cfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneofibular Ligament",
+      "metadata": {
+        "slug": "cfl",
+        "pilot": "acl-tear-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Lateral ankle ligament stabilizing subtalar motion after inversion injury.",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|cfl",
+        "canonical_entity_id": "7333ed50-f332-49a1-bfa0-5c1363e9a803",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|cfl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "multiligament-knee-injury",
+      "entityType": "condition",
+      "preferredLabel": "Multiligament Knee Injury",
+      "metadata": {
+        "slug": "multiligament-knee-injury",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Cross-neighborhood reference to canonical condition multiligament-knee-injury.",
+        "owner_pilot": "multiligament-knee-injury-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|multiligament-knee-injury",
+        "canonical_entity_id": "6d205b0b-b37f-4f67-b149-ac28e97b84cf",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|multiligament-knee-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-plateau-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Tibial Plateau Fracture",
+      "metadata": {
+        "slug": "tibial-plateau-fracture",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Cross-neighborhood reference to canonical condition tibial-plateau-fracture.",
+        "owner_pilot": "tibial-plateau-fracture-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|tibial-plateau-fracture",
+        "canonical_entity_id": "abecba31-bf06-4d45-b98f-5e92723a87f3",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|tibial-plateau-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Collateral Ligament",
+      "metadata": {
+        "slug": "lcl",
+        "pilot": "acl-tear-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Primary lateral knee stabilizer resisting varus stress.",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|lcl",
+        "canonical_entity_id": "3104da27-ab60-46ed-9c53-c2c179464fa1",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|lcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lateral-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Meniscus",
+      "metadata": {
+        "slug": "lateral-meniscus",
+        "pilot": "acl-tear-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "More mobile lateral meniscus with popliteus hiatus; commonly torn with ACL injuries.",
+        "anatomy_kind": "meniscus",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|lateral-meniscus",
+        "canonical_entity_id": "b8a73f2a-47ae-409c-8de1-26c1d7f0618c",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|lateral-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "radial-collateral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Collateral Ligament",
+      "metadata": {
+        "slug": "radial-collateral-ligament",
+        "pilot": "acl-tear-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Lateral elbow stabilizer resisting varus stress.",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|radial-collateral-ligament",
+        "canonical_entity_id": "474c54ba-7e7b-4dcb-8475-801816675cc3",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|radial-collateral-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-biceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Biceps Tendon",
+      "metadata": {
+        "slug": "distal-biceps-tendon",
+        "pilot": "acl-tear-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Distal biceps insertion on the radial tuberosity enabling elbow flexion and supination.",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|distal-biceps-tendon",
+        "canonical_entity_id": "870bf11c-1e8d-47c3-afaa-6399a10cf2ff",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|distal-biceps-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl-tear-complication",
+      "entityType": "complication",
+      "preferredLabel": "ACL Tear Complication",
+      "metadata": {
+        "slug": "acl-tear-complication",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Common post-injury complication in acl tear.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|acl-tear-complication",
+        "canonical_entity_id": "ed5e2b63-877a-4e1c-8571-33ef84071a04",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|acl-tear-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-foot-ankle-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Foot & Ankle Anatomy Hub",
+      "metadata": {
+        "slug": "sports-foot-ankle-anatomy-hub",
+        "pilot": "acl-tear-neighborhood",
+        "region": "foot_ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Lateral ankle ligaments, syndesmosis, Achilles, and hindfoot structures for sports foot-ankle conditions.",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|sports-foot-ankle-anatomy-hub",
+        "canonical_entity_id": "3e939e52-6317-4f81-95a3-9ec30bec3b5e",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "atfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Talofibular Ligament",
+      "metadata": {
+        "slug": "atfl",
+        "pilot": "acl-tear-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Primary lateral ankle stabilizer injured in inversion sprains.",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|atfl",
+        "canonical_entity_id": "84ae62dc-cf45-492b-8872-e54696aa7ef3",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|atfl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "medial-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Meniscus",
+      "metadata": {
+        "slug": "medial-meniscus",
+        "pilot": "acl-tear-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "C-shaped medial meniscus distributing load and resisting shear at the medial compartment.",
+        "anatomy_kind": "meniscus",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|medial-meniscus",
+        "canonical_entity_id": "931aa889-cfbd-433a-b134-0e787fe152f9",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|medial-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "labrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid Labrum",
+      "metadata": {
+        "slug": "labrum",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Fibrocartilaginous rim deepening the glenoid and anchoring capsulolabral structures.",
+        "anatomy_kind": "labrum",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|labrum",
+        "canonical_entity_id": "6fcd6e56-5263-46c2-b109-7cb6de174f31",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|labrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl-tear-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "ACL Tear Reconstruction",
+      "metadata": {
+        "slug": "acl-tear-reconstruction",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Operative reconstruction concept for acl tear.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|acl-tear-reconstruction",
+        "canonical_entity_id": "8c602fee-6428-481e-aaf0-7ba89ab0320a",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|acl-tear-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl-tear-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "ACL Tear Rehabilitation",
+      "metadata": {
+        "slug": "acl-tear-rehab-protocol",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Return-to-play rehabilitation milestones for acl tear.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|treatment_principle|acl-tear-rehab-protocol",
+        "canonical_entity_id": "5a7fab56-f677-41aa-9a7b-b93b686122e7",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|treatment_principle|acl-tear-rehab-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl-tear-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "ACL Tear Physical Exam",
+      "metadata": {
+        "slug": "acl-tear-exam-maneuver",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Key physical examination maneuver for acl tear.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|exam_maneuver|acl-tear-exam-maneuver",
+        "canonical_entity_id": "d0451f25-2e4d-4374-927c-041f703dacc0",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|exam_maneuver|acl-tear-exam-maneuver"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "meniscus-tear",
+      "entityType": "condition",
+      "preferredLabel": "Meniscus Tear",
+      "metadata": {
+        "slug": "meniscus-tear",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Cross-neighborhood reference to canonical condition meniscus-tear.",
+        "owner_pilot": "meniscus-tear-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|meniscus-tear",
+        "canonical_entity_id": "a4d82a06-772f-4cff-a945-edf55f472489",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|meniscus-tear"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Achilles Tendon",
+      "metadata": {
+        "slug": "achilles-tendon",
+        "pilot": "acl-tear-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Conjoined gastrocnemius-soleus tendon inserting on the calcaneus.",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|achilles-tendon",
+        "canonical_entity_id": "6509a880-426e-43b4-9ff5-66220647aedb",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|achilles-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl-tear-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "ACL Tear Classification",
+      "metadata": {
+        "slug": "acl-tear-classification",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Educational classification framework for acl tear.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|acl-tear-classification",
+        "canonical_entity_id": "89f810f2-b6ae-41eb-a53a-6224bc76e353",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|acl-tear-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-medicine-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Medicine Anatomy Hub",
+      "metadata": {
+        "slug": "sports-medicine-anatomy-hub",
+        "pilot": "acl-tear-neighborhood",
+        "region": "sports_medicine",
+        "cluster": "sports-medicine",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Composite sports medicine model linking knee, shoulder, elbow, and foot-ankle regional hubs.",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|sports-medicine-anatomy-hub",
+        "canonical_entity_id": "b52d90ff-efb0-439d-88f7-f1d9bcd9d74e",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-shoulder-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Shoulder Anatomy Hub",
+      "metadata": {
+        "slug": "sports-shoulder-anatomy-hub",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Glenohumeral stabilizers, rotator cuff, and biceps anchor for shoulder sports conditions.",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|sports-shoulder-anatomy-hub",
+        "canonical_entity_id": "01d07455-5fca-4c09-9c9c-7fcf5726e36b",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "posterolateral-corner",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterolateral Corner",
+      "metadata": {
+        "slug": "posterolateral-corner",
+        "pilot": "acl-tear-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Posterolateral knee stabilizing complex including LCL, popliteus, and arcuate ligaments.",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|posterolateral-corner",
+        "canonical_entity_id": "c1719d7a-f6ec-4a8d-aa17-0405f30ffeeb",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|posterolateral-corner"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "supraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Supraspinatus",
+      "metadata": {
+        "slug": "supraspinatus",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Superior rotator cuff tendon initiating abduction and commonly torn in cuff pathology.",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|supraspinatus",
+        "canonical_entity_id": "0947e182-52fc-4f59-8d0b-829e117f48e7",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|supraspinatus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "rotator-cuff",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Rotator Cuff",
+      "metadata": {
+        "slug": "rotator-cuff",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Supraspinatus, infraspinatus, subscapularis, and teres minor force-couple complex.",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|rotator-cuff",
+        "canonical_entity_id": "93a6f92b-b229-4f7a-9df4-453f7f02de4f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "articular-cartilage",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Articular Cartilage",
+      "metadata": {
+        "slug": "articular-cartilage",
+        "pilot": "acl-tear-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Hyaline cartilage covering femoral condyles and tibial plateau.",
+        "anatomy_kind": "cartilage",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|articular-cartilage",
+        "canonical_entity_id": "21f83b8e-bf70-4576-a0a9-265f3c761bfe",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|articular-cartilage"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "mcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Collateral Ligament",
+      "metadata": {
+        "slug": "mcl",
+        "pilot": "acl-tear-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Primary medial knee stabilizer resisting valgus stress.",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|mcl",
+        "canonical_entity_id": "6ae60b9d-4932-4fe1-bba8-d8fa87b9528a",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|mcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-knee-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Knee Anatomy Hub",
+      "metadata": {
+        "slug": "sports-knee-anatomy-hub",
+        "pilot": "acl-tear-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Knee ligament, meniscus, extensor, and articular structures for sports knee conditions.",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|sports-knee-anatomy-hub",
+        "canonical_entity_id": "38ec5225-b723-4bef-acc3-cb2fd82b6226",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "glenoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid",
+      "metadata": {
+        "slug": "glenoid",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Scapular articular surface forming the socket of the glenohumeral joint.",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|glenoid",
+        "canonical_entity_id": "af0826ab-ffb3-474c-9fda-f267dd5e6cab",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|glenoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl-tear-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "ACL Tear MRI Pattern",
+      "metadata": {
+        "slug": "acl-tear-mri-finding",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Characteristic MRI findings in acl tear.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|acl-tear-mri-finding",
+        "canonical_entity_id": "92c4097e-b31f-43d2-99ad-9532b20df3f9",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|acl-tear-mri-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "infraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Infraspinatus",
+      "metadata": {
+        "slug": "infraspinatus",
+        "pilot": "acl-tear-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Posterior cuff tendon providing external rotation strength.",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|infraspinatus",
+        "canonical_entity_id": "5fc12c89-407a-426a-85aa-ad62693de408",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|infraspinatus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-condyles",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Condyles",
+      "metadata": {
+        "slug": "femoral-condyles",
+        "pilot": "acl-tear-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "description": "Medial and lateral femoral condyles forming the proximal tibiofemoral articulation.",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|femoral-condyles",
+        "canonical_entity_id": "01649fb1-4e23-4354-9bc6-290fec4011ff",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-condyles"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl-tear",
+      "entityType": "condition",
+      "preferredLabel": "ACL Tear",
+      "description": "Anterior cruciate ligament tear causing rotational knee instability.",
+      "metadata": {
+        "slug": "acl-tear",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Anterior cruciate ligament tear causing rotational knee instability.",
+        "clinical_kind": "sports_soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|acl-tear"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "patellar-instability",
+      "entityType": "condition",
+      "preferredLabel": "Patellar Instability",
+      "description": "Cross-neighborhood reference to canonical condition patellar-instability.",
+      "metadata": {
+        "slug": "patellar-instability",
+        "pilot": "acl-tear-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:39:31.336Z",
+        "description": "Cross-neighborhood reference to canonical condition patellar-instability.",
+        "owner_pilot": "patellar-instability-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|patellar-instability"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "femoral-condyles",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "articular"
+        },
+        "created_from_proposal_fingerprint": "rel|femoral-condyles|part_of|sports-knee-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular",
+        "_provenance_fingerprint": "rel|femoral-condyles|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-shoulder-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "shoulder"
+        },
+        "created_from_proposal_fingerprint": "rel|sports-shoulder-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "shoulder",
+        "_provenance_fingerprint": "rel|sports-shoulder-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "supraspinatus",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "abduction"
+        },
+        "created_from_proposal_fingerprint": "rel|supraspinatus|part_of|rotator-cuff",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "abduction",
+        "_provenance_fingerprint": "rel|supraspinatus|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "articular-cartilage",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "cartilage"
+        },
+        "created_from_proposal_fingerprint": "rel|articular-cartilage|part_of|sports-knee-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cartilage",
+        "_provenance_fingerprint": "rel|articular-cartilage|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "lateral_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|lcl|part_of|sports-knee-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_stability",
+        "_provenance_fingerprint": "rel|lcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-knee-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "knee"
+        },
+        "created_from_proposal_fingerprint": "rel|sports-knee-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|sports-knee-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-foot-ankle-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "foot_ankle"
+        },
+        "created_from_proposal_fingerprint": "rel|sports-foot-ankle-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot_ankle",
+        "_provenance_fingerprint": "rel|sports-foot-ankle-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-collateral-ligament",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "lateral_elbow"
+        },
+        "created_from_proposal_fingerprint": "rel|radial-collateral-ligament|part_of|sports-elbow-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_elbow",
+        "_provenance_fingerprint": "rel|radial-collateral-ligament|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subscapularis",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "internal_rotation"
+        },
+        "created_from_proposal_fingerprint": "rel|subscapularis|part_of|rotator-cuff",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "internal_rotation",
+        "_provenance_fingerprint": "rel|subscapularis|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "infraspinatus",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "external_rotation"
+        },
+        "created_from_proposal_fingerprint": "rel|infraspinatus|part_of|rotator-cuff",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "external_rotation",
+        "_provenance_fingerprint": "rel|infraspinatus|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "achilles-tendon",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "plantarflexion"
+        },
+        "created_from_proposal_fingerprint": "rel|achilles-tendon|part_of|sports-foot-ankle-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "plantarflexion",
+        "_provenance_fingerprint": "rel|achilles-tendon|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-elbow-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "elbow"
+        },
+        "created_from_proposal_fingerprint": "rel|sports-elbow-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "elbow",
+        "_provenance_fingerprint": "rel|sports-elbow-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "mcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "medial_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|mcl|part_of|sports-knee-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_stability",
+        "_provenance_fingerprint": "rel|mcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "labrum",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "stability"
+        },
+        "created_from_proposal_fingerprint": "rel|labrum|part_of|sports-shoulder-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "stability",
+        "_provenance_fingerprint": "rel|labrum|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "cfl",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "lateral_ankle"
+        },
+        "created_from_proposal_fingerprint": "rel|cfl|part_of|sports-foot-ankle-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_ankle",
+        "_provenance_fingerprint": "rel|cfl|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "atfl",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "lateral_ankle"
+        },
+        "created_from_proposal_fingerprint": "rel|atfl|part_of|sports-foot-ankle-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_ankle",
+        "_provenance_fingerprint": "rel|atfl|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-biceps-tendon",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "flexion_supination"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-biceps-tendon|part_of|sports-elbow-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexion_supination",
+        "_provenance_fingerprint": "rel|distal-biceps-tendon|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "medial-meniscus",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "meniscus"
+        },
+        "created_from_proposal_fingerprint": "rel|medial-meniscus|part_of|sports-knee-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "meniscus",
+        "_provenance_fingerprint": "rel|medial-meniscus|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "rotator-cuff",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "dynamic_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|rotator-cuff|part_of|sports-shoulder-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "dynamic_stability",
+        "_provenance_fingerprint": "rel|rotator-cuff|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "glenoid",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "socket"
+        },
+        "created_from_proposal_fingerprint": "rel|glenoid|part_of|sports-shoulder-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "socket",
+        "_provenance_fingerprint": "rel|glenoid|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lateral-meniscus",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "meniscus"
+        },
+        "created_from_proposal_fingerprint": "rel|lateral-meniscus|part_of|sports-knee-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "meniscus",
+        "_provenance_fingerprint": "rel|lateral-meniscus|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "posterolateral-corner",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "rotational_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|posterolateral-corner|part_of|sports-knee-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "rotational_stability",
+        "_provenance_fingerprint": "rel|posterolateral-corner|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "medial_elbow"
+        },
+        "created_from_proposal_fingerprint": "rel|ucl|part_of|sports-elbow-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_elbow",
+        "_provenance_fingerprint": "rel|ucl|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "biceps-anchor",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "biceps_labrum"
+        },
+        "created_from_proposal_fingerprint": "rel|biceps-anchor|part_of|sports-shoulder-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "biceps_labrum",
+        "_provenance_fingerprint": "rel|biceps-anchor|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "teres-minor",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "external_rotation"
+        },
+        "created_from_proposal_fingerprint": "rel|teres-minor|part_of|rotator-cuff",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "external_rotation",
+        "_provenance_fingerprint": "rel|teres-minor|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear-exam-maneuver",
+      "predicate": "examines",
+      "objectSlug": "acl",
+      "metadata": {
+        "review_status": "unreviewed",
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear-exam-maneuver|examines|acl"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear-mri-finding",
+      "predicate": "indicates_treatment",
+      "objectSlug": "acl-tear-reconstruction",
+      "metadata": {
+        "note": "operative indication attending-dependent",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear-mri-finding|indicates_treatment|acl-tear-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "differential_for",
+      "objectSlug": "meniscus-tear",
+      "metadata": {
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_injury",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|differential_for|meniscus-tear"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "differential_for",
+      "objectSlug": "multiligament-knee-injury",
+      "metadata": {
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_injury",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|differential_for|multiligament-knee-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "differential_for",
+      "objectSlug": "patellar-instability",
+      "metadata": {
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_injury",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|differential_for|patellar-instability"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "differential_for",
+      "objectSlug": "tibial-plateau-fracture",
+      "metadata": {
+        "cross_cluster": true,
+        "review_status": "unreviewed",
+        "relevance_reason": "trauma_overlap",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|differential_for|tibial-plateau-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "has_classification",
+      "objectSlug": "acl-tear-classification",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|has_classification|acl-tear-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "has_complication",
+      "objectSlug": "acl-tear-complication",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|acl-tear|has_complication|acl-tear-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "acl-tear-mri-finding",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "workup",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|has_imaging_finding|acl-tear-mri-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "involves_anatomy",
+      "objectSlug": "acl",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "primary_pathology",
+        "_provenance_fingerprint": "rel|acl-tear|involves_anatomy|acl"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "involves_anatomy",
+      "objectSlug": "femoral-condyles",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|involves_anatomy|femoral-condyles"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lateral-meniscus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|involves_anatomy|lateral-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "involves_anatomy",
+      "objectSlug": "medial-meniscus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|involves_anatomy|medial-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "involves_anatomy",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|acl-tear|involves_anatomy|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "tested_by",
+      "objectSlug": "acl-tear-exam-maneuver",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|tested_by|acl-tear-exam-maneuver"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "treated_by",
+      "objectSlug": "acl-tear-reconstruction",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|treated_by|acl-tear-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl-tear",
+      "predicate": "treated_by",
+      "objectSlug": "acl-tear-rehab-protocol",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|acl-tear|treated_by|acl-tear-rehab-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|acl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|pcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-knee-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "acl-tear",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|sports-knee-anatomy-hub|prerequisite_for|acl-tear"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-acltear-anatomy-pearl",
+      "claimType": "anatomy_pearl",
+      "claimText": "ACL Tear pathoanatomy centers on acl, medial-meniscus, lateral-meniscus and related stabilizers.",
+      "primaryEntitySlug": "acl",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "acl-tear-neighborhood",
+        "draft_id": "claim-acltear-anatomy-pearl",
+        "verified": false,
+        "claim_text": "ACL Tear pathoanatomy centers on acl, medial-meniscus, lateral-meniscus and related stabilizers.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "primary_entity_slug": "acl",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-acltear-anatomy-pearl"
+      }
+    },
+    {
+      "draftId": "claim-acltear-board-trap",
+      "claimType": "board_trap",
+      "claimText": "Students often underweight exam findings and over-rely on imaging when evaluating acl tear.",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acl-tear-neighborhood",
+        "draft_id": "claim-acltear-board-trap",
+        "verified": false,
+        "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating acl tear.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.96,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite"
+        ],
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "primary_entity_slug": "acl-tear",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acltear-board-trap"
+      }
+    },
+    {
+      "draftId": "claim-acltear-bone-bruise",
+      "claimType": "fact",
+      "claimText": "Lateral femoral condyle and posterior tibial plateau bone bruise pattern on MRI supports ACL injury mechanism.",
+      "primaryEntitySlug": "acl-tear-mri-finding",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acl-tear-neighborhood",
+        "draft_id": "claim-acltear-bone-bruise",
+        "verified": false,
+        "claim_text": "Lateral femoral condyle and posterior tibial plateau bone bruise pattern on MRI supports ACL injury mechanism.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [],
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "primary_entity_slug": "acl-tear-mri-finding",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acltear-bone-bruise"
+      }
+    },
+    {
+      "draftId": "claim-acltear-clinical-script",
+      "claimType": "clinical_script",
+      "claimText": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for acl tear.",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acl-tear-neighborhood",
+        "draft_id": "claim-acltear-clinical-script",
+        "verified": false,
+        "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for acl tear.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "primary_entity_slug": "acl-tear",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acltear-clinical-script"
+      }
+    },
+    {
+      "draftId": "claim-acltear-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Do not anchor on a single exam maneuver for acl tear — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acl-tear-neighborhood",
+        "draft_id": "claim-acltear-cognitive-trap",
+        "verified": false,
+        "claim_text": "Do not anchor on a single exam maneuver for acl tear — integrate mechanism, instability symptoms, and imaging pattern.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.96,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "primary_entity_slug": "acl-tear",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acltear-cognitive-trap"
+      }
+    },
+    {
+      "draftId": "claim-acltear-lachman",
+      "claimType": "fact",
+      "claimText": "Lachman test is more sensitive than anterior drawer for ACL insufficiency in the acute setting.",
+      "primaryEntitySlug": "acl-tear-exam-maneuver",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acl-tear-neighborhood",
+        "draft_id": "claim-acltear-lachman",
+        "verified": false,
+        "claim_text": "Lachman test is more sensitive than anterior drawer for ACL insufficiency in the acute setting.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [],
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "primary_entity_slug": "acl-tear-exam-maneuver",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acltear-lachman"
+      }
+    },
+    {
+      "draftId": "claim-acltear-oneliner",
+      "claimType": "fact",
+      "claimText": "ACL tears are instability injuries diagnosed by history and exam, with reconstruction decisions shaped by goals and associated pathology.",
+      "primaryEntitySlug": "acl-tear",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acl-tear-neighborhood",
+        "draft_id": "claim-acltear-oneliner",
+        "verified": false,
+        "claim_text": "ACL tears are instability injuries diagnosed by history and exam, with reconstruction decisions shaped by goals and associated pathology.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "primary_entity_slug": "acl-tear",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acltear-oneliner"
+      }
+    },
+    {
+      "draftId": "claim-acltear-rehab-milestone",
+      "claimType": "fact",
+      "claimText": "Rehabilitation milestones and return-to-play criteria for acl tear require attending-defined progression gates.",
+      "primaryEntitySlug": "acl-tear-rehab-protocol",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acl-tear-neighborhood",
+        "draft_id": "claim-acltear-rehab-milestone",
+        "verified": false,
+        "claim_text": "Rehabilitation milestones and return-to-play criteria for acl tear require attending-defined progression gates.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:39:31.335Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.96,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:acl-tear-neighborhood",
+        "primary_entity_slug": "acl-tear-rehab-protocol",
+        "review_packet_label": "ACL Tear Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acltear-rehab-milestone"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-acltear-operative-indication",
+      "subjectEntitySlug": "acl-tear",
+      "patternType": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from acl tear despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-acltear-prehab",
+      "subjectEntitySlug": "acl-tear",
+      "patternType": "rehabilitation_protocol",
+      "trigger": "ACL tear planned for reconstruction with limited preoperative motion",
+      "action": "Prioritize prehab to regain extension and reduce arthrofibrosis risk before surgery",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-acltear-return-to-play",
+      "subjectEntitySlug": "acl-tear",
+      "patternType": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after acl tear treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [],
+  "stats": {
+    "entityCount": 37,
+    "relationshipCount": 46,
+    "claimCount": 8,
+    "decisionPointCount": 3,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 35,
+    "conflictingRelationships": 0,
+    "metadataMerged": 60,
+    "provenanceAttached": 95
+  }
+}

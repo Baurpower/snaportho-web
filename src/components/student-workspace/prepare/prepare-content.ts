@@ -385,9 +385,16 @@ export function buildRotationReadiness(params: {
       helper: "Based on rotation and schedule",
     },
     {
-      label: "Weak areas",
-      value: params.selectedTopic ? `Need more reps in ${params.selectedTopic}` : "Anatomy and pimp questions",
-      helper: "What to tighten up next",
+      label: "Study focus",
+      value:
+        params.selectedTopic ||
+        params.currentRotation?.service?.trim() ||
+        "Select a topic to focus",
+      helper: params.selectedTopic
+        ? "Based on your selected topic"
+        : params.currentRotation
+          ? "Match prep to your current rotation service"
+          : "Add a rotation or pick a curriculum topic",
     },
   ];
 }

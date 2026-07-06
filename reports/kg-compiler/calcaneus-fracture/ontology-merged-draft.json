@@ -1,0 +1,2123 @@
+{
+  "topicKey": "calcaneus-fracture",
+  "pilotKey": "calcaneus-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:47:36.616Z",
+  "entities": [
+    {
+      "slug": "calcaneus-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Calcaneus ORIF",
+      "metadata": {
+        "slug": "calcaneus-orif",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Open reduction internal fixation of displaced intra-articular calcaneus fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|calcaneus-orif",
+        "canonical_entity_id": "b38935f0-0035-4766-b596-2f300412b4a4",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|calcaneus-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subtalar-arthritis",
+      "entityType": "complication",
+      "preferredLabel": "Subtalar Arthritis",
+      "metadata": {
+        "slug": "subtalar-arthritis",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Post-traumatic subtalar joint degeneration after calcaneus fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|subtalar-arthritis",
+        "canonical_entity_id": "5038a383-9387-4a9c-b4a6-3ffb760c6ebb",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|subtalar-arthritis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Calcaneus Fracture",
+      "metadata": {
+        "slug": "calcaneus-fracture",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "High-energy hindfoot fracture with posterior facet involvement and soft-tissue-sensitive operative timing.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|calcaneus-fracture",
+        "canonical_entity_id": "4abafffb-e699-4ddc-87b1-c18ce91c7a20",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|calcaneus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sanders-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Sanders Classification",
+      "metadata": {
+        "slug": "sanders-classification",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "CT-based posterior facet calcaneus fracture classification system.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|sanders-classification",
+        "canonical_entity_id": "bf28f677-ede7-4fb8-a041-174aa1582947",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|sanders-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "intra-articular-calcaneus-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Intra-Articular Calcaneus Fracture",
+      "metadata": {
+        "slug": "intra-articular-calcaneus-fracture",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Posterior facet articular involvement on CT requiring anatomic reduction consideration.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|intra-articular-calcaneus-fracture",
+        "canonical_entity_id": "69a69fd0-df61-4b73-874b-7ff01d12cc1c",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|intra-articular-calcaneus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+      "metadata": {
+        "slug": "acetabulum",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Cruciate Ligament",
+      "description": "Primary knee stabilizer commonly injured with tibial plateau and knee trauma.",
+      "metadata": {
+        "slug": "acl",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Primary knee stabilizer commonly injured with tibial plateau and knee trauma.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|acl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+      "metadata": {
+        "slug": "calcaneus",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "common-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Peroneal Nerve",
+      "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+      "metadata": {
+        "slug": "common-peroneal-nerve",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|common-peroneal-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Femur",
+      "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+      "metadata": {
+        "slug": "distal-femur",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+      "metadata": {
+        "slug": "extensor-mechanism",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+      "metadata": {
+        "slug": "femoral-diaphysis",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "thigh",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-diaphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+      "metadata": {
+        "slug": "iliac-wing",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+      "metadata": {
+        "slug": "lisfranc-joint",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lower-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Trauma Anatomy Hub",
+      "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+      "metadata": {
+        "slug": "lower-extremity-trauma-anatomy-hub",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "lower_extremity",
+        "cluster": "lower-extremity-trauma",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+      "metadata": {
+        "slug": "midfoot",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
+      "metadata": {
+        "slug": "patella",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|patella"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterior Cruciate Ligament",
+      "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+      "metadata": {
+        "slug": "pcl",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+      "metadata": {
+        "slug": "pelvis",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+      "metadata": {
+        "slug": "plantar-soft-tissues",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|plantar-soft-tissues"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "popliteal-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Popliteal Artery",
+      "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
+      "metadata": {
+        "slug": "popliteal-artery",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|popliteal-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+      "metadata": {
+        "slug": "pubic-symphysis",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pubic-symphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+      "metadata": {
+        "slug": "sacroiliac-joint",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacroiliac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+      "metadata": {
+        "slug": "sacrum",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+      "metadata": {
+        "slug": "subtalar-joint",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+      "metadata": {
+        "slug": "talus",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-plateau",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Plateau",
+      "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+      "metadata": {
+        "slug": "tibial-plateau",
+        "pilot": "calcaneus-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|tibial-plateau"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "calcaneus-fracture",
+      "predicate": "has_classification",
+      "objectSlug": "sanders-classification",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic",
+            "oite"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|calcaneus-fracture|has_classification|sanders-classification",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|calcaneus-fracture|has_classification|sanders-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "subtalar-arthritis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|calcaneus-fracture|has_complication|subtalar-arthritis",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|calcaneus-fracture|has_complication|subtalar-arthritis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "intra-articular-calcaneus-fracture",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "articular_planning",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|calcaneus-fracture|has_imaging_finding|intra-articular-calcaneus-fracture",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular_planning",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|calcaneus-fracture|has_imaging_finding|intra-articular-calcaneus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabulum",
+      "predicate": "part_of",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_socket",
+        "_provenance_fingerprint": "rel|acetabulum|part_of|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|calcaneus-fracture|injured_in|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|calcaneus-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "plantar-soft-tissues",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|calcaneus-fracture|involves_anatomy|plantar-soft-tissues"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular_involvement",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|calcaneus-fracture|involves_anatomy|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "calcaneus-orif",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|calcaneus-fracture|treated_by|calcaneus-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus-orif",
+      "predicate": "involves_anatomy",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_facet_reduction",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|calcaneus-orif|involves_anatomy|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "articulates_with",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "common-peroneal-nerve",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "articulates_with",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral",
+        "_provenance_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-mechanism",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-diaphysis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "femoral_shaft",
+        "_provenance_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "iliac-wing",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_pelvis",
+        "_provenance_fingerprint": "rel|iliac-wing|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intra-articular-calcaneus-fracture",
+      "predicate": "indicates_treatment",
+      "objectSlug": "calcaneus-orif",
+      "metadata": {
+        "note": "operative candidacy and timing attending-dependent",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|intra-articular-calcaneus-fracture|indicates_treatment|calcaneus-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-joint",
+      "predicate": "part_of",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "midfoot_stability",
+        "_provenance_fingerprint": "rel|lisfranc-joint|part_of|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lower-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "calcaneus-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|calcaneus-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "midfoot",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot",
+        "_provenance_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "articulates_with",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "patellofemoral",
+        "_provenance_fingerprint": "rel|patella|articulates_with|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pelvic_ring",
+        "_provenance_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "plantar-soft-tissues",
+      "predicate": "part_of",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "_provenance_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "popliteal-artery",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pubic-symphysis",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "_provenance_fingerprint": "rel|pubic-symphysis|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacroiliac-joint",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "_provenance_fingerprint": "rel|sacroiliac-joint|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacrum",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "_provenance_fingerprint": "rel|sacrum|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subtalar-joint",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "articulates_with",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "subtalar",
+        "_provenance_fingerprint": "rel|talus|articulates_with|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle",
+        "_provenance_fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-calc-case-script",
+      "claimType": "clinical_script",
+      "claimText": "State axial-load mechanism, skin and blister status, Sanders/CT language, and delayed fixation plan with spine screening.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calc-case-script",
+        "verified": false,
+        "claim_text": "State axial-load mechanism, skin and blister status, Sanders/CT language, and delayed fixation plan with spine screening.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "primary_entity_slug": "calcaneus-fracture",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-calc-case-script"
+      }
+    },
+    {
+      "draftId": "claim-calc-skin-timing-trap",
+      "claimType": "board_trap",
+      "claimText": "Swollen calcaneus skin can dictate operative timing more than the fracture pattern on initial radiographs.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calc-skin-timing-trap",
+        "verified": false,
+        "claim_text": "Swollen calcaneus skin can dictate operative timing more than the fracture pattern on initial radiographs.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.82,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "or"
+        ],
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "primary_entity_slug": "calcaneus-fracture",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-calc-skin-timing-trap"
+      }
+    },
+    {
+      "draftId": "claim-calc-soft-tissue-timing",
+      "claimType": "fact",
+      "claimText": "Calcaneus fractures are high-energy hindfoot injuries where soft-tissue swelling often delays operative fixation.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calc-soft-tissue-timing",
+        "verified": false,
+        "claim_text": "Calcaneus fractures are high-energy hindfoot injuries where soft-tissue swelling often delays operative fixation.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "primary_entity_slug": "calcaneus-fracture",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-calc-soft-tissue-timing"
+      }
+    },
+    {
+      "draftId": "claim-calc-spine-screen-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Treating calcaneus fracture as an isolated foot injury without considering associated axial-load spine injuries.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calc-spine-screen-trap",
+        "verified": false,
+        "claim_text": "Treating calcaneus fracture as an isolated foot injury without considering associated axial-load spine injuries.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.82,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call"
+        ],
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "primary_entity_slug": "calcaneus-fracture",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-calc-spine-screen-trap"
+      }
+    },
+    {
+      "draftId": "claim-calc-subtalar-facet",
+      "claimType": "anatomy_pearl",
+      "claimText": "Posterior facet and subtalar joint involvement drive calcaneus fracture classification and long-term arthritis risk.",
+      "primaryEntitySlug": "subtalar-joint",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calc-subtalar-facet",
+        "verified": false,
+        "claim_text": "Posterior facet and subtalar joint involvement drive calcaneus fracture classification and long-term arthritis risk.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.82,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:calcaneus-fracture-neighborhood",
+        "primary_entity_slug": "subtalar-joint",
+        "review_packet_label": "Calcaneus Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-calc-subtalar-facet"
+      }
+    },
+    {
+      "draftId": "claim-calcaneus-fracture-board_trap-severe-soft-tissue-swell",
+      "claimType": "board_trap",
+      "claimText": "Severe soft-tissue swelling can delay operative calcaneus fixation.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calcaneus-fracture-board_trap-severe-soft-tissue-swell",
+        "claim_type": "board_trap",
+        "claim_text": "Severe soft-tissue swelling can delay operative calcaneus fixation.",
+        "primary_entity_slug": "calcaneus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-34b0b300"
+        ],
+        "evidence_packet_id": "ev-packet-6955c970",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "_provenance_fingerprint": "claim|claim-calcaneus-fracture-board_trap-severe-soft-tissue-swell"
+      }
+    },
+    {
+      "draftId": "claim-calcaneus-fracture-cognitive_trap-measure-b-hler-angle-on-",
+      "claimType": "cognitive_trap",
+      "claimText": "Measure Böhler angle on lateral.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calcaneus-fracture-cognitive_trap-measure-b-hler-angle-on-",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Measure Böhler angle on lateral.",
+        "primary_entity_slug": "calcaneus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-34af9894"
+        ],
+        "evidence_packet_id": "ev-packet-6955c970",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "_provenance_fingerprint": "claim|claim-calcaneus-fracture-cognitive_trap-measure-b-hler-angle-on-"
+      }
+    },
+    {
+      "draftId": "claim-calcaneus-fracture-fact-b-hler-angle",
+      "claimType": "fact",
+      "claimText": "Böhler angle.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calcaneus-fracture-fact-b-hler-angle",
+        "claim_type": "fact",
+        "claim_text": "Böhler angle.",
+        "primary_entity_slug": "calcaneus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-34af9894"
+        ],
+        "evidence_packet_id": "ev-packet-6955c970",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "_provenance_fingerprint": "claim|claim-calcaneus-fracture-fact-b-hler-angle"
+      }
+    },
+    {
+      "draftId": "claim-calcaneus-fracture-fact-compare-nonoperative-car",
+      "claimType": "fact",
+      "claimText": "Compare nonoperative care with calcaneus ORIF in appropriate patients.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calcaneus-fracture-fact-compare-nonoperative-car",
+        "claim_type": "fact",
+        "claim_text": "Compare nonoperative care with calcaneus ORIF in appropriate patients.",
+        "primary_entity_slug": "calcaneus-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-33618743"
+        ],
+        "evidence_packet_id": "ev-packet-6955c970",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "_provenance_fingerprint": "claim|claim-calcaneus-fracture-fact-compare-nonoperative-car"
+      }
+    },
+    {
+      "draftId": "claim-calcaneus-fracture-fact-explain-sanders-articula",
+      "claimType": "fact",
+      "claimText": "Explain Sanders articular classification relevance.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calcaneus-fracture-fact-explain-sanders-articula",
+        "claim_type": "fact",
+        "claim_text": "Explain Sanders articular classification relevance.",
+        "primary_entity_slug": "calcaneus-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-33618743"
+        ],
+        "evidence_packet_id": "ev-packet-6955c970",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "_provenance_fingerprint": "claim|claim-calcaneus-fracture-fact-explain-sanders-articula"
+      }
+    },
+    {
+      "draftId": "claim-calcaneus-fracture-fact-interpret-b-hler-angle-a",
+      "claimType": "fact",
+      "claimText": "Interpret Böhler angle and hindfoot alignment after calcaneus fracture.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calcaneus-fracture-fact-interpret-b-hler-angle-a",
+        "claim_type": "fact",
+        "claim_text": "Interpret Böhler angle and hindfoot alignment after calcaneus fracture.",
+        "primary_entity_slug": "calcaneus-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-33618743"
+        ],
+        "evidence_packet_id": "ev-packet-6955c970",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "_provenance_fingerprint": "claim|claim-calcaneus-fracture-fact-interpret-b-hler-angle-a"
+      }
+    },
+    {
+      "draftId": "claim-calcaneus-fracture-fact-mechanism",
+      "claimType": "fact",
+      "claimText": "Mechanism.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calcaneus-fracture-fact-mechanism",
+        "claim_type": "fact",
+        "claim_text": "Mechanism.",
+        "primary_entity_slug": "calcaneus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-34af9894"
+        ],
+        "evidence_packet_id": "ev-packet-6955c970",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "_provenance_fingerprint": "claim|claim-calcaneus-fracture-fact-mechanism"
+      }
+    },
+    {
+      "draftId": "claim-calcaneus-fracture-imaging_point-review-lateral-radiograp",
+      "claimType": "imaging_point",
+      "claimText": "Review lateral radiograph.",
+      "primaryEntitySlug": "calcaneus-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "calcaneus-fracture-neighborhood",
+        "draft_id": "claim-calcaneus-fracture-imaging_point-review-lateral-radiograp",
+        "claim_type": "imaging_point",
+        "claim_text": "Review lateral radiograph.",
+        "primary_entity_slug": "calcaneus-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "imaging_decision"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-34af9894"
+        ],
+        "evidence_packet_id": "ev-packet-6955c970",
+        "uncertainty_note": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:47:36.612Z",
+        "_provenance_fingerprint": "claim|claim-calcaneus-fracture-imaging_point-review-lateral-radiograp"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-calc-delayed-orif",
+      "subjectEntitySlug": "calcaneus-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Displaced intra-articular calcaneus fracture with acceptable soft tissues after swelling interval",
+      "action": "Proceed with delayed calcaneus ORIF for posterior facet restoration; document non-weight-bearing plan",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-calc-soft-tissue-hold",
+      "subjectEntitySlug": "calcaneus-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Calcaneus fracture with severe hindfoot swelling, blisters, or compromised plantar skin",
+      "action": "Splint and elevate; delay definitive fixation until soft tissues recover; screen for associated spine injury",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern calcaneus-fracture|operative_indication: dp-calc-delayed-orif vs dp-calc-soft-tissue-hold"
+    }
+  ],
+  "stats": {
+    "entityCount": 27,
+    "relationshipCount": 36,
+    "claimCount": 13,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 5,
+    "conflictingRelationships": 0,
+    "metadataMerged": 8,
+    "provenanceAttached": 79
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "topicKey": "metacarpal-fracture",
+  "pilotKey": "metacarpal-fracture-neighborhood",
+  "primaryEntitySlug": "metacarpal-fracture",
+  "displayName": "Metacarpal Fracture",
+  "generatedAt": "2026-07-05T23:48:45.239Z",
+  "nodes": [
+    {
+      "slug": "metacarpal-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Metacarpal Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "metacarpal-fracture-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Metacarpal Fracture Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "boxer-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Boxer Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "metacarpal-fracture-nonoperative-principle",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Metacarpal Fracture Nonoperative Principle",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "bennett-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Bennett Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "rolando-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Rolando Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cmc-dislocations",
+      "entityType": "condition",
+      "preferredLabel": "Cmc Dislocations",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "metacarpal-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "metacarpal-fracture-key-imaging-finding"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "boxer-fracture",
+      "metacarpal-fracture-nonoperative-principle",
+      "bennett-fracture",
+      "rolando-fracture",
+      "cmc-dislocations"
+    ]
+  }
+}

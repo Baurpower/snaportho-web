@@ -1,0 +1,2650 @@
+{
+  "topicKey": "femoral-shaft-fracture",
+  "pilotKey": "femoral-shaft-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:35:44.004Z",
+  "entities": [
+    {
+      "slug": "femoral-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Femoral Shaft Fracture",
+      "metadata": {
+        "slug": "femoral-shaft-fracture",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Diaphyseal femur fracture often managed with intramedullary fixation in adults.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|femoral-shaft-fracture",
+        "canonical_entity_id": "39f7a246-a9ca-4827-8faf-83835302db06",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|femoral-shaft-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-im-nailing",
+      "entityType": "procedure",
+      "preferredLabel": "Femoral IM Nailing",
+      "metadata": {
+        "slug": "femoral-im-nailing",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Intramedullary nailing for unstable or operative femoral shaft fracture patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|femoral-im-nailing",
+        "canonical_entity_id": "09f951cb-5058-4a7d-a3ec-cfd275c993d5",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|femoral-im-nailing"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-im-nail-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Femoral IM Nail Fixation",
+      "metadata": {
+        "slug": "femoral-im-nail-fixation",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Intramedullary nail fixation method for femoral diaphyseal fractures.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|fixation_method|femoral-im-nail-fixation",
+        "canonical_entity_id": "df147906-4e5e-48be-8e25-257dc85f0474",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|fixation_method|femoral-im-nail-fixation"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "segmental-femoral-shaft-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Segmental Femoral Shaft Fracture",
+      "metadata": {
+        "slug": "segmental-femoral-shaft-fracture",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Two or more noncontiguous femoral shaft fracture segments indicating high-energy injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|segmental-femoral-shaft-fracture",
+        "canonical_entity_id": "6c3414d8-23e0-4ff3-9641-1f0f2e53b075",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|segmental-femoral-shaft-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Femoral Malunion",
+      "metadata": {
+        "slug": "femoral-malunion",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Angular, rotational, or length malalignment after femoral shaft fracture healing.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|femoral-malunion",
+        "canonical_entity_id": "fb20359a-fa22-4886-8806-ecd33234057e",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|femoral-malunion"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "fat-embolism",
+      "entityType": "complication",
+      "preferredLabel": "Fat Embolism",
+      "metadata": {
+        "slug": "fat-embolism",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Systemic fat embolism syndrome risk after long-bone and femoral shaft trauma.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|fat-embolism",
+        "canonical_entity_id": "eff02f28-53b8-4a53-83c7-6a6c3bf8f21f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|fat-embolism"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+      "metadata": {
+        "slug": "acetabulum",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Cruciate Ligament",
+      "description": "Primary knee stabilizer commonly injured with tibial plateau and knee trauma.",
+      "metadata": {
+        "slug": "acl",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Primary knee stabilizer commonly injured with tibial plateau and knee trauma.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|acl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+      "metadata": {
+        "slug": "calcaneus",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcar",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcar",
+      "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
+      "metadata": {
+        "slug": "calcar",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcar"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "common-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Peroneal Nerve",
+      "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+      "metadata": {
+        "slug": "common-peroneal-nerve",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|common-peroneal-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Femur",
+      "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+      "metadata": {
+        "slug": "distal-femur",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+      "metadata": {
+        "slug": "extensor-mechanism",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+      "metadata": {
+        "slug": "femoral-diaphysis",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "thigh",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-diaphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Head",
+      "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
+      "metadata": {
+        "slug": "femoral-head",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-head"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-neck",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Neck",
+      "description": "Intracapsular segment between femoral head and intertrochanteric region.",
+      "metadata": {
+        "slug": "femoral-neck",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Intracapsular segment between femoral head and intertrochanteric region.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-neck"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "greater-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Greater Trochanter",
+      "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
+      "metadata": {
+        "slug": "greater-trochanter",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|greater-trochanter"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "hip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Joint",
+      "description": "Ball-and-socket articulation between femoral head and acetabulum.",
+      "metadata": {
+        "slug": "hip-joint",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Ball-and-socket articulation between femoral head and acetabulum.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|hip-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+      "metadata": {
+        "slug": "iliac-wing",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "intertrochanteric-region",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Intertrochanteric Region",
+      "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
+      "metadata": {
+        "slug": "intertrochanteric-region",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|intertrochanteric-region"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lesser-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lesser Trochanter",
+      "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
+      "metadata": {
+        "slug": "lesser-trochanter",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lesser-trochanter"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+      "metadata": {
+        "slug": "lisfranc-joint",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lower-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Trauma Anatomy Hub",
+      "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+      "metadata": {
+        "slug": "lower-extremity-trauma-anatomy-hub",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "lower_extremity",
+        "cluster": "lower-extremity-trauma",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "medial-femoral-circumflex-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Femoral Circumflex Artery",
+      "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
+      "metadata": {
+        "slug": "medial-femoral-circumflex-artery",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+      "metadata": {
+        "slug": "midfoot",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
+      "metadata": {
+        "slug": "patella",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|patella"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterior Cruciate Ligament",
+      "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+      "metadata": {
+        "slug": "pcl",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+      "metadata": {
+        "slug": "pelvis",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+      "metadata": {
+        "slug": "plantar-soft-tissues",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|plantar-soft-tissues"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "popliteal-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Popliteal Artery",
+      "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
+      "metadata": {
+        "slug": "popliteal-artery",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|popliteal-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "proximal-femur-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Femur Anatomy Hub",
+      "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
+      "metadata": {
+        "slug": "proximal-femur-anatomy-hub",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "cluster": "hip-fracture",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+      "metadata": {
+        "slug": "pubic-symphysis",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|pubic-symphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+      "metadata": {
+        "slug": "sacroiliac-joint",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacroiliac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+      "metadata": {
+        "slug": "sacrum",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sacrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sciatic-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sciatic Nerve",
+      "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
+      "metadata": {
+        "slug": "sciatic-nerve",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sciatic-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+      "metadata": {
+        "slug": "subtalar-joint",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+      "metadata": {
+        "slug": "talus",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|talus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-plateau",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Plateau",
+      "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+      "metadata": {
+        "slug": "tibial-plateau",
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|tibial-plateau"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "femoral-shaft-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "femoral-malunion",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|femoral-shaft-fracture|has_complication|femoral-malunion",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|femoral-shaft-fracture|has_complication|femoral-malunion"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-shaft-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "fat-embolism",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|femoral-shaft-fracture|has_complication|fat-embolism",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|femoral-shaft-fracture|has_complication|fat-embolism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-shaft-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "segmental-femoral-shaft-fracture",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "high_energy",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|femoral-shaft-fracture|has_imaging_finding|segmental-femoral-shaft-fracture",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "high_energy",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|femoral-shaft-fracture|has_imaging_finding|segmental-femoral-shaft-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabulum",
+      "predicate": "part_of",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_socket",
+        "_provenance_fingerprint": "rel|acetabulum|part_of|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "articulates_with",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcar",
+      "predicate": "part_of",
+      "objectSlug": "femoral-neck",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "stability",
+        "_provenance_fingerprint": "rel|calcar|part_of|femoral-neck"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "common-peroneal-nerve",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "articulates_with",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral",
+        "_provenance_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-mechanism",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-diaphysis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "femoral_shaft",
+        "_provenance_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-head",
+      "predicate": "articulates_with",
+      "objectSlug": "hip-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-head|articulates_with|hip-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-head",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-head|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-im-nailing",
+      "predicate": "involves_anatomy",
+      "objectSlug": "femoral-diaphysis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "implant_path",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|femoral-im-nailing|involves_anatomy|femoral-diaphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-neck",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-neck|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-shaft-fracture",
+      "predicate": "at_risk_structure",
+      "objectSlug": "sciatic-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "traction_pinning",
+        "context_relevance": [
+          "or",
+          "call"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|femoral-shaft-fracture|at_risk_structure|sciatic-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-shaft-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "femoral-diaphysis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|femoral-shaft-fracture|injured_in|femoral-diaphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-shaft-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|femoral-shaft-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-shaft-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "femoral-im-nailing",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|femoral-shaft-fracture|treated_by|femoral-im-nailing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-shaft-fracture",
+      "predicate": "uses_fixation",
+      "objectSlug": "femoral-im-nail-fixation",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|femoral-shaft-fracture|uses_fixation|femoral-im-nail-fixation"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "greater-trochanter",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "landmark",
+        "_provenance_fingerprint": "rel|greater-trochanter|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "hip-joint",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|hip-joint|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "iliac-wing",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_pelvis",
+        "_provenance_fingerprint": "rel|iliac-wing|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-region",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|intertrochanteric-region|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lesser-trochanter",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "landmark",
+        "_provenance_fingerprint": "rel|lesser-trochanter|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-joint",
+      "predicate": "part_of",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "midfoot_stability",
+        "_provenance_fingerprint": "rel|lisfranc-joint|part_of|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lower-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "femoral-shaft-fracture",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|femoral-shaft-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "medial-femoral-circumflex-artery",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "blood_supply",
+        "_provenance_fingerprint": "rel|medial-femoral-circumflex-artery|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "midfoot",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot",
+        "_provenance_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "articulates_with",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "patellofemoral",
+        "_provenance_fingerprint": "rel|patella|articulates_with|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pelvic_ring",
+        "_provenance_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "plantar-soft-tissues",
+      "predicate": "part_of",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "_provenance_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "popliteal-artery",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pubic-symphysis",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "_provenance_fingerprint": "rel|pubic-symphysis|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacroiliac-joint",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "_provenance_fingerprint": "rel|sacroiliac-joint|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacrum",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "_provenance_fingerprint": "rel|sacrum|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sciatic-nerve",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "safety",
+        "_provenance_fingerprint": "rel|sciatic-nerve|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "segmental-femoral-shaft-fracture",
+      "predicate": "indicates_treatment",
+      "objectSlug": "femoral-im-nailing",
+      "metadata": {
+        "confidence": 0.85,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|segmental-femoral-shaft-fracture|indicates_treatment|femoral-im-nailing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subtalar-joint",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "articulates_with",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "subtalar",
+        "_provenance_fingerprint": "rel|talus|articulates_with|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle",
+        "_provenance_fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-femoral-shaft-fracture-board_trap-early-femoral-stabilizat",
+      "claimType": "board_trap",
+      "claimText": "Early femoral stabilization can help polytrauma resuscitation.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-femoral-shaft-fracture-board_trap-early-femoral-stabilizat",
+        "claim_type": "board_trap",
+        "claim_text": "Early femoral stabilization can help polytrauma resuscitation.",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-eef77ffa"
+        ],
+        "evidence_packet_id": "ev-packet-f6f79f8a",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "_provenance_fingerprint": "claim|claim-femoral-shaft-fracture-board_trap-early-femoral-stabilizat"
+      }
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-cognitive_trap-mention-antegrade-nail-l",
+      "claimType": "cognitive_trap",
+      "claimText": "Mention antegrade nail language.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-femoral-shaft-fracture-cognitive_trap-mention-antegrade-nail-l",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Mention antegrade nail language.",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-eef4386e"
+        ],
+        "evidence_packet_id": "ev-packet-f6f79f8a",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "_provenance_fingerprint": "claim|claim-femoral-shaft-fracture-cognitive_trap-mention-antegrade-nail-l"
+      }
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-alignment",
+      "claimType": "fact",
+      "claimText": "Alignment.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-femoral-shaft-fracture-fact-alignment",
+        "claim_type": "fact",
+        "claim_text": "Alignment.",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-eef4386e"
+        ],
+        "evidence_packet_id": "ev-packet-f6f79f8a",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "_provenance_fingerprint": "claim|claim-femoral-shaft-fracture-fact-alignment"
+      }
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-compare-im-nailing-with-",
+      "claimType": "fact",
+      "claimText": "Compare IM nailing with bridge external fixation concepts.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-femoral-shaft-fracture-fact-compare-im-nailing-with-",
+        "claim_type": "fact",
+        "claim_text": "Compare IM nailing with bridge external fixation concepts.",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3eee31f9"
+        ],
+        "evidence_packet_id": "ev-packet-f6f79f8a",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "_provenance_fingerprint": "claim|claim-femoral-shaft-fracture-fact-compare-im-nailing-with-"
+      }
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-polytrauma-context",
+      "claimType": "fact",
+      "claimText": "polytrauma context.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-femoral-shaft-fracture-fact-polytrauma-context",
+        "claim_type": "fact",
+        "claim_text": "polytrauma context.",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-eef4386e"
+        ],
+        "evidence_packet_id": "ev-packet-f6f79f8a",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "_provenance_fingerprint": "claim|claim-femoral-shaft-fracture-fact-polytrauma-context"
+      }
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-soft-tissues",
+      "claimType": "fact",
+      "claimText": "soft tissues.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-femoral-shaft-fracture-fact-soft-tissues",
+        "claim_type": "fact",
+        "claim_text": "soft tissues.",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-eef4386e"
+        ],
+        "evidence_packet_id": "ev-packet-f6f79f8a",
+        "uncertainty_note": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "_provenance_fingerprint": "claim|claim-femoral-shaft-fracture-fact-soft-tissues"
+      }
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-fact-stabilize-femoral-shaft-",
+      "claimType": "fact",
+      "claimText": "Stabilize femoral shaft fractures in polytrauma patients.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L3",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-femoral-shaft-fracture-fact-stabilize-femoral-shaft-",
+        "claim_type": "fact",
+        "claim_text": "Stabilize femoral shaft fractures in polytrauma patients.",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "importance_level": "L3",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3eee31f9"
+        ],
+        "evidence_packet_id": "ev-packet-f6f79f8a",
+        "uncertainty_note": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "default_human_review"
+        ],
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "_provenance_fingerprint": "claim|claim-femoral-shaft-fracture-fact-stabilize-femoral-shaft-"
+      }
+    },
+    {
+      "draftId": "claim-femoral-shaft-fracture-imaging_point-ap-lateral-femur",
+      "claimType": "imaging_point",
+      "claimText": "AP/lateral femur.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-femoral-shaft-fracture-imaging_point-ap-lateral-femur",
+        "claim_type": "imaging_point",
+        "claim_text": "AP/lateral femur.",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-eef77ffa"
+        ],
+        "evidence_packet_id": "ev-packet-f6f79f8a",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "_provenance_fingerprint": "claim|claim-femoral-shaft-fracture-imaging_point-ap-lateral-femur"
+      }
+    },
+    {
+      "draftId": "claim-fsf-case-script",
+      "claimType": "clinical_script",
+      "claimText": "Describe fracture level, comminution, ipsilateral injuries, neurovascular exam, IM nail plan, and fat embolism monitoring.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-fsf-case-script",
+        "verified": false,
+        "claim_text": "Describe fracture level, comminution, ipsilateral injuries, neurovascular exam, IM nail plan, and fat embolism monitoring.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:35:43.998Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-fsf-case-script"
+      }
+    },
+    {
+      "draftId": "claim-fsf-fat-embolism-trap",
+      "claimType": "board_trap",
+      "claimText": "Femoral shaft fractures carry fat embolism risk, especially with delayed stabilization after high-energy or polytrauma injury.",
+      "primaryEntitySlug": "fat-embolism",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-fsf-fat-embolism-trap",
+        "verified": false,
+        "claim_text": "Femoral shaft fractures carry fat embolism risk, especially with delayed stabilization after high-energy or polytrauma injury.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 1,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "oite"
+        ],
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "fat-embolism",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-fsf-fat-embolism-trap"
+      }
+    },
+    {
+      "draftId": "claim-fsf-im-nail-default",
+      "claimType": "fact",
+      "claimText": "Femoral shaft fractures in adults are commonly stabilized with intramedullary nailing to restore length, rotation, and early mobilization potential.",
+      "primaryEntitySlug": "femoral-shaft-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-fsf-im-nail-default",
+        "verified": false,
+        "claim_text": "Femoral shaft fractures in adults are commonly stabilized with intramedullary nailing to restore length, rotation, and early mobilization potential.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "femoral-shaft-fracture",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-fsf-im-nail-default"
+      }
+    },
+    {
+      "draftId": "claim-fsf-rotation-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Accepting femoral shaft malrotation because the fracture appears aligned on AP radiograph alone.",
+      "primaryEntitySlug": "femoral-malunion",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-fsf-rotation-trap",
+        "verified": false,
+        "claim_text": "Accepting femoral shaft malrotation because the fracture appears aligned on AP radiograph alone.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 1,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "femoral-malunion",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-fsf-rotation-trap"
+      }
+    },
+    {
+      "draftId": "claim-fsf-sciatic-nerve",
+      "claimType": "anatomy_pearl",
+      "claimText": "Sciatic nerve vulnerability matters during femoral traction and percutaneous proximal femoral access maneuvers.",
+      "primaryEntitySlug": "sciatic-nerve",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "femoral-shaft-fracture-neighborhood",
+        "draft_id": "claim-fsf-sciatic-nerve",
+        "verified": false,
+        "claim_text": "Sciatic nerve vulnerability matters during femoral traction and percutaneous proximal femoral access maneuvers.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:35:43.999Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:femoral-shaft-fracture-neighborhood",
+        "primary_entity_slug": "sciatic-nerve",
+        "review_packet_label": "Femoral Shaft Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-fsf-sciatic-nerve"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-fsf-im-nail-operative",
+      "subjectEntitySlug": "femoral-shaft-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Unstable femoral shaft fracture, segmental pattern, or polytrauma patient needing early stabilization",
+      "action": "Discuss femoral IM nailing with attending; document alignment goals and systemic complication monitoring",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-fsf-open-fracture",
+      "subjectEntitySlug": "femoral-shaft-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Open femoral shaft fracture or grossly contaminated soft-tissue injury",
+      "action": "Urgent irrigation and debridement with stabilization plan per attending and trauma protocol",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern femoral-shaft-fracture|operative_indication: dp-fsf-im-nail-operative vs dp-fsf-open-fracture"
+    }
+  ],
+  "stats": {
+    "entityCount": 38,
+    "relationshipCount": 46,
+    "claimCount": 13,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 6,
+    "conflictingRelationships": 0,
+    "metadataMerged": 9,
+    "provenanceAttached": 100
+  }
+}

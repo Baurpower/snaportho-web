@@ -1,0 +1,3533 @@
+{
+  "packetId": "ev-packet-7ca86001",
+  "topicId": "femoral-neck-fracture",
+  "createdAt": "2026-07-05T21:36:12.702Z",
+  "packetVersion": "1.0.0",
+  "ontologyVersion": "2026-07-05",
+  "compilerVersion": "1.0.0",
+  "registryVersion": "2026-07-05",
+  "topicContext": {
+    "topicKey": "femoral-neck-fracture",
+    "pilotKey": "femoral-neck-fracture-neighborhood",
+    "displayName": "Femoral Neck Fracture",
+    "primaryEntitySlug": "femoral-neck-fracture",
+    "targetMaturityLevel": 7,
+    "curriculumNodeSlug": "trauma-femoral-neck-fractures",
+    "prepareTopicId": "femoral-neck-fracture",
+    "aliases": [
+      "femoral neck fracture",
+      "femoral-neck-fracture",
+      "trauma-femoral-neck-fractures",
+      "femoral-neck-fracture-neighborhood"
+    ]
+  },
+  "sourceManifest": [
+    {
+      "sourceId": "anki:trauma-femoral-neck-fractures",
+      "sourceType": "anki_card",
+      "label": "Anki card mappings for trauma-femoral-neck-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "femoral-neck-fracture",
+      "sourceType": "static_prepare",
+      "label": "Prepare topic: Femoral Neck Fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split",
+      "copyrightPolicy": "internal_draft_only",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "femoral-neck-fracture-neighborhood:database",
+      "sourceType": "canonical_snapshot",
+      "label": "Canonical neighborhood snapshot (database)",
+      "path": "canonical_entities + canonical_relationships",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "femoral-neck-fracture-neighborhood:proposals:database",
+      "sourceType": "proposal_history",
+      "label": "Proposal packet (database)",
+      "path": "kg_automation_proposals",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "femoral-neck-fracture-neighborhood:quality",
+      "sourceType": "quality_signal",
+      "label": "Ontology quality signals",
+      "path": "kg-compiler/gap-analyzer.ts",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "femoral-neck-fracture-neighborhood:review",
+      "sourceType": "review_history",
+      "label": "Proposal review history",
+      "path": "proposal.review_status fields",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "ob:trauma-femoral-neck-fractures",
+      "sourceType": "orthobullets_question",
+      "label": "Orthobullets question mappings for trauma-femoral-neck-fractures",
+      "path": "external_questions + curriculum_node mapping",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "trauma-femoral-neck-fractures",
+      "sourceType": "curriculum_node",
+      "label": "Curriculum node: trauma-femoral-neck-fractures",
+      "path": "curriculum_nodes.slug",
+      "copyrightPolicy": "reference_link_only",
+      "trustTier": "primary"
+    }
+  ],
+  "canonicalSnapshot": {
+    "source": "database",
+    "entityCount": 8,
+    "relationshipCount": 4,
+    "claimCount": 0,
+    "decisionPointCount": 0,
+    "primaryEntitySlug": "femoral-neck-fracture",
+    "entitySlugs": [
+      "avascular-necrosis",
+      "cannulated-screw-fixation",
+      "displaced-femoral-neck-fracture",
+      "femoral-neck-fracture",
+      "femoral-neck-nonunion",
+      "femoral-neck-orif",
+      "garden-classification",
+      "hip-hemiarthroplasty"
+    ],
+    "loaded": true
+  },
+  "sourceEvidence": [
+    {
+      "evidenceId": "ev-anki-card-2671dc78",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-femoral-neck-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "deck_branch_hint",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.85,
+      "provenanceHint": "anki_deck_branch:Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Femoral Neck Fractures",
+      "label": "Anki deck branch hint",
+      "summary": "Primary deck branch for femoral-neck-fracture Anki cards (metadata only)",
+      "payload": {
+        "deckBranch": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Femoral Neck Fractures",
+        "storesCardText": false
+      },
+      "tags": [
+        "anki",
+        "deck_hint"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-anki-card-c540368e",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-femoral-neck-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.92,
+      "provenanceHint": "anki_kg_mapping:trauma-femoral-neck-fractures",
+      "label": "Anki card mapping count",
+      "summary": "9 high-confidence Anki card mapping(s) for curriculum node trauma-femoral-neck-fractures",
+      "payload": {
+        "curriculumNodeSlug": "trauma-femoral-neck-fractures",
+        "mappedCardCount": 9,
+        "deckBranchHint": "Marty McFlyin's Ortho Deck::2) Pocket Pimped::09 Hip::09.02 Trauma::Femoral Neck Fractures",
+        "storesCardText": false,
+        "storesCardAnswer": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "anki",
+        "asset_signal",
+        "metadata_only"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-9c1dc56d",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "femoral-neck-fracture-neighborhood",
+      "extractionMethod": "entity_index",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "entity_slugs:database",
+      "label": "Entity slug index",
+      "summary": "8 entity slug(s) in neighborhood",
+      "payload": {
+        "entitySlugs": [
+          "avascular-necrosis",
+          "cannulated-screw-fixation",
+          "displaced-femoral-neck-fracture",
+          "femoral-neck-fracture",
+          "femoral-neck-nonunion",
+          "femoral-neck-orif",
+          "garden-classification",
+          "hip-hemiarthroplasty"
+        ],
+        "entityTypes": {
+          "femoral-neck-fracture": "condition",
+          "garden-classification": "classification_system",
+          "hip-hemiarthroplasty": "procedure",
+          "avascular-necrosis": "complication",
+          "cannulated-screw-fixation": "fixation_method",
+          "femoral-neck-nonunion": "complication",
+          "femoral-neck-orif": "procedure",
+          "displaced-femoral-neck-fracture": "imaging_finding"
+        }
+      },
+      "tags": [
+        "canonical",
+        "entity_index"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-b1adb446",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "femoral-neck-fracture-neighborhood",
+      "extractionMethod": "neighborhood_counts",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.95,
+      "provenanceHint": "canonical_snapshot:database",
+      "label": "Neighborhood entity/relationship counts",
+      "summary": "8 entities, 4 relationships from database",
+      "payload": {
+        "source": "database",
+        "entityCount": 8,
+        "relationshipCount": 4,
+        "claimCount": 0,
+        "decisionPointCount": 0,
+        "primaryEntitySlug": "femoral-neck-fracture",
+        "verified": false
+      },
+      "tags": [
+        "canonical",
+        "snapshot",
+        "database"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-2b65112d",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-femoral-neck-fractures",
+      "extractionMethod": "alias_index",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "curriculum_node_aliases:trauma-femoral-neck-fractures",
+      "label": "Topic aliases",
+      "summary": "4 topic alias(es) for resolution",
+      "payload": {
+        "aliases": [
+          "femoral neck fracture",
+          "femoral-neck-fracture",
+          "trauma-femoral-neck-fractures",
+          "femoral-neck-fracture-neighborhood"
+        ]
+      },
+      "tags": [
+        "curriculum",
+        "aliases"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-4e302ba4",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-femoral-neck-fractures",
+      "path": "curriculum_nodes.slug",
+      "extractionMethod": "slug_mapping",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.95,
+      "provenanceHint": "curriculum_node:trauma-femoral-neck-fractures",
+      "label": "Curriculum node mapping",
+      "summary": "Primary curriculum node trauma-femoral-neck-fractures maps to entity femoral-neck-fracture",
+      "payload": {
+        "curriculumNodeSlug": "trauma-femoral-neck-fractures",
+        "primaryEntitySlug": "femoral-neck-fracture",
+        "topicKey": "femoral-neck-fracture",
+        "pilotKey": "femoral-neck-fracture-neighborhood",
+        "prepareTopicId": "femoral-neck-fracture",
+        "legacyRetargetKey": "retarget:trauma-femoral-neck-fractures"
+      },
+      "tags": [
+        "curriculum",
+        "node_mapping",
+        "femoral-neck-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-orthobullets-question-a4ce6322",
+      "sourceType": "orthobullets_question",
+      "sourceId": "trauma-femoral-neck-fractures",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "orthobullets_mapping:trauma-femoral-neck-fractures",
+      "label": "Orthobullets question mapping count",
+      "summary": "64 Orthobullets question mapping(s) for trauma-femoral-neck-fractures (metadata only — no stems/answers)",
+      "payload": {
+        "curriculumNodeSlug": "trauma-femoral-neck-fractures",
+        "mappedQuestionCount": 64,
+        "prepareTopicId": "femoral-neck-fracture",
+        "storesQuestionStem": false,
+        "storesAnswer": false,
+        "storesExplanation": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "orthobullets",
+        "metadata_only",
+        "asset_signal"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-proposal-history-436c6944",
+      "sourceType": "proposal_history",
+      "sourceId": "femoral-neck-fracture-neighborhood",
+      "extractionMethod": "packet_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "proposal_packet:database",
+      "label": "Proposal packet summary",
+      "summary": "34 proposal(s) from database",
+      "payload": {
+        "source": "database",
+        "totalProposals": 34,
+        "byType": {
+          "add_canonical_relationship": 16,
+          "create_canonical_entity": 8,
+          "propose_educational_claim": 7,
+          "propose_decision_point": 2,
+          "link_curriculum_node_to_entity": 1
+        },
+        "byStatus": {
+          "applied": 21,
+          "needs_review": 13
+        },
+        "fingerprints": [
+          "bridge|trauma-femoral-neck-fractures|femoral-neck-fracture",
+          "claim|claim-fnf-case-script",
+          "claim|claim-fnf-displaced-older-arthroplasty",
+          "claim|claim-fnf-garden-language",
+          "claim|claim-fnf-intracapsular-urgency",
+          "claim|claim-fnf-mfca-avn",
+          "claim|claim-fnf-nonunion-risk",
+          "claim|claim-fnf-younger-orif",
+          "create|classification_system|garden-classification",
+          "create|complication|avascular-necrosis",
+          "create|complication|femoral-neck-nonunion",
+          "create|condition|femoral-neck-fracture",
+          "create|fixation_method|cannulated-screw-fixation",
+          "create|imaging_finding|displaced-femoral-neck-fracture",
+          "create|procedure|femoral-neck-orif",
+          "create|procedure|hip-hemiarthroplasty",
+          "dp|dp-fnf-arthroplasty-pathway",
+          "dp|dp-fnf-head-preservation-orif",
+          "rel|displaced-femoral-neck-fracture|indicates_treatment|hip-hemiarthroplasty",
+          "rel|femoral-neck-fracture|at_risk_structure|medial-femoral-circumflex-artery",
+          "rel|femoral-neck-fracture|has_classification|garden-classification",
+          "rel|femoral-neck-fracture|has_complication|avascular-necrosis",
+          "rel|femoral-neck-fracture|has_complication|femoral-neck-nonunion",
+          "rel|femoral-neck-fracture|has_imaging_finding|displaced-femoral-neck-fracture",
+          "rel|femoral-neck-fracture|injured_in|femoral-neck",
+          "rel|femoral-neck-fracture|involves_anatomy|calcar",
+          "rel|femoral-neck-fracture|involves_anatomy|femoral-head",
+          "rel|femoral-neck-fracture|involves_anatomy|medial-femoral-circumflex-artery",
+          "rel|femoral-neck-fracture|involves_anatomy|proximal-femur-anatomy-hub",
+          "rel|femoral-neck-fracture|treated_by|femoral-neck-orif",
+          "rel|femoral-neck-fracture|treated_by|hip-hemiarthroplasty",
+          "rel|femoral-neck-fracture|uses_fixation|cannulated-screw-fixation",
+          "rel|femoral-neck-orif|involves_anatomy|femoral-neck",
+          "rel|proximal-femur-anatomy-hub|prerequisite_for|femoral-neck-fracture"
+        ]
+      },
+      "tags": [
+        "proposals",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-quality-signal-64e41ec2",
+      "sourceType": "quality_signal",
+      "sourceId": "femoral-neck-fracture-neighborhood",
+      "extractionMethod": "gap_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "ontology_gaps:femoral-neck-fracture-neighborhood",
+      "label": "Ontology gap summary",
+      "summary": "27 gap(s) across 6 kind(s)",
+      "payload": {
+        "gapCount": 27,
+        "gapsByKind": {
+          "missing_entity": 4,
+          "missing_relationship": 12,
+          "missing_claim": 5,
+          "missing_decision_point": 3,
+          "missing_metadata": 1,
+          "missing_asset_link": 2
+        },
+        "gapsByPriority": {
+          "critical": 9,
+          "high": 9,
+          "medium": 9
+        },
+        "topGaps": [
+          {
+            "id": "gap-entity-neighbor-1",
+            "kind": "missing_entity",
+            "priority": "critical",
+            "reason": "Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities."
+          },
+          {
+            "id": "gap-rel-2",
+            "kind": "missing_relationship",
+            "priority": "critical",
+            "reason": "Femoral Neck Fracture missing outbound injured_in (0/1)."
+          },
+          {
+            "id": "gap-rel-3",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Femoral Neck Fracture missing outbound involves_anatomy (0/1)."
+          },
+          {
+            "id": "gap-rel-4",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Femoral Neck Fracture missing outbound at_risk_structure (0/1)."
+          },
+          {
+            "id": "gap-rel-5",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Femoral Neck Fracture missing outbound has_grade (0/1)."
+          },
+          {
+            "id": "gap-rel-6",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Femoral Neck Fracture missing outbound treated_by (0/1)."
+          },
+          {
+            "id": "gap-rel-7",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Femoral Neck Fracture missing inbound prerequisite_for (0/1)."
+          },
+          {
+            "id": "gap-claim-8",
+            "kind": "missing_claim",
+            "priority": "high",
+            "reason": "Femoral Neck Fracture has 0/3 L1 claims."
+          }
+        ]
+      },
+      "tags": [
+        "quality",
+        "gaps"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-review-history-05002ecb",
+      "sourceType": "review_history",
+      "sourceId": "femoral-neck-fracture-neighborhood",
+      "extractionMethod": "status_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.92,
+      "provenanceHint": "review_status:femoral-neck-fracture-neighborhood",
+      "label": "Review status distribution",
+      "summary": "0 reviewed, 0 pending of 34 proposals",
+      "payload": {
+        "total": 34,
+        "reviewedCount": 0,
+        "pendingCount": 0,
+        "approvedCount": 0,
+        "routes": {
+          "AUTO_APPROVED_LOW_RISK": 21,
+          "ATTENDING_REVIEW": 7,
+          "HUMAN_REVIEW": 4,
+          "AUTO_REVISED": 2
+        }
+      },
+      "tags": [
+        "review",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-33dad5d2",
+      "sourceType": "static_prepare",
+      "sourceId": "femoral-neck-fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split#learning_objectives",
+      "label": "Femoral Neck Fracture — Learning objectives",
+      "summary": "Static Prepare Learning objectives for Femoral Neck Fracture",
+      "payload": {
+        "section": "learning_objectives",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "objectives": [
+          "Explain intracapsular anatomy and blood supply risk after femoral neck fracture.",
+          "Differentiate fixation versus arthroplasty pathways by age, displacement, and function.",
+          "Communicate AVN and nonunion risks with appropriate urgency."
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "femoral-neck-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-3543a1f1",
+      "sourceType": "static_prepare",
+      "sourceId": "femoral-neck-fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split#deep",
+      "label": "Femoral Neck Fracture — Deep study template",
+      "summary": "Static Prepare Deep study template for Femoral Neck Fracture",
+      "payload": {
+        "section": "deep",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "anatomy": [
+          "Retinacular blood supply",
+          "MFCA vulnerability",
+          "Calcar buttress"
+        ],
+        "classification": [
+          "Garden displacement concepts"
+        ],
+        "imaging": [
+          "Pelvis and hip radiographs",
+          "MRI for occult fracture"
+        ],
+        "decisionMaking": [
+          "Age, baseline function, displacement, head viability, medical risk"
+        ],
+        "treatmentOptions": [
+          "Cannulated screws",
+          "Femoral neck ORIF",
+          "Hemiarthroplasty",
+          "Total hip arthroplasty"
+        ],
+        "boardPearls": [
+          "Displaced femoral neck fractures in older adults are often arthroplasty problems"
+        ],
+        "complications": [
+          "Avascular necrosis",
+          "Nonunion",
+          "Delirium"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "femoral-neck-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-3546cc65",
+      "sourceType": "static_prepare",
+      "sourceId": "femoral-neck-fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split#fast",
+      "label": "Femoral Neck Fracture — Fast study template",
+      "summary": "Static Prepare Fast study template for Femoral Neck Fracture",
+      "payload": {
+        "section": "fast",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "mustKnow": [
+          "Intracapsular location",
+          "Displacement",
+          "Head viability language",
+          "Medical optimization"
+        ],
+        "anatomyFocus": [
+          "Femoral neck",
+          "Femoral head blood supply",
+          "MFCA / retinacular vessels",
+          "Calcar"
+        ],
+        "oneLiner": "Femoral neck fracture is an intracapsular injury where displacement and blood supply determine fixation versus arthroplasty.",
+        "pimpQuestions": [
+          "Why are displaced femoral neck fractures different?",
+          "What changes management in younger patients?"
+        ],
+        "orSurvivalTips": [
+          "Use intracapsular language",
+          "Mention DVT prophylaxis and AVN surveillance when relevant"
+        ],
+        "caseSteps": [
+          "Confirm intracapsular location",
+          "State displacement",
+          "Describe optimization need",
+          "Outline fixation vs arthroplasty pathway"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "femoral-neck-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-cdc21128",
+      "sourceType": "static_prepare",
+      "sourceId": "femoral-neck-fracture",
+      "path": "src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split#metadata",
+      "label": "Femoral Neck Fracture — Topic metadata",
+      "summary": "Static Prepare Topic metadata for Femoral Neck Fracture",
+      "payload": {
+        "section": "metadata",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "tags": [
+          "hip",
+          "femoral neck",
+          "intracapsular",
+          "AVN",
+          "arthroplasty"
+        ],
+        "trackId": "trauma",
+        "subspecialty": "Trauma"
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "femoral-neck-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:36:12.702Z"
+    }
+  ],
+  "extractedSignals": [
+    {
+      "signalId": "ev-signal-fd2e2d7b",
+      "signalType": "anki_card",
+      "sourceEvidenceIds": [
+        "ev-anki-card-c540368e"
+      ],
+      "summary": "9 high-confidence Anki card mapping(s) for curriculum node trauma-femoral-neck-fractures",
+      "strength": 0.92,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-dee2264b",
+      "signalType": "orthobullets_question",
+      "sourceEvidenceIds": [
+        "ev-orthobullets-question-a4ce6322"
+      ],
+      "summary": "64 Orthobullets question mapping(s) for trauma-femoral-neck-fractures (metadata only — no stems/answers)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-47b7042d",
+      "signalType": "quality_signal",
+      "sourceEvidenceIds": [
+        "ev-quality-signal-64e41ec2"
+      ],
+      "summary": "27 gap(s) across 6 kind(s)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "gap_summary"
+      }
+    }
+  ],
+  "assetSignals": [
+    {
+      "assetType": "anki_card",
+      "sourceId": "trauma-femoral-neck-fractures",
+      "mappedEntitySlug": "femoral-neck-fracture",
+      "mappingCount": 9,
+      "confidenceHint": 0.92,
+      "metadataOnly": true
+    },
+    {
+      "assetType": "orthobullets_question",
+      "sourceId": "trauma-femoral-neck-fractures",
+      "mappedEntitySlug": "femoral-neck-fracture",
+      "mappingCount": 64,
+      "confidenceHint": 0.9,
+      "metadataOnly": true
+    }
+  ],
+  "existingProposals": [
+    {
+      "id": "2493e873-a4ef-46bb-a59f-c0e0b866191c",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|involves_anatomy|proximal-femur-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:41.123+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "proximal-femur-anatomy-hub",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:44.355274+00:00",
+      "updated_at": "2026-07-05T21:35:41.215007+00:00"
+    },
+    {
+      "id": "9640acdf-77f7-46aa-9c06-75bf7825150a",
+      "proposal_fingerprint": "create|condition|femoral-neck-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures",
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "condition",
+      "proposed_entity_label": "Femoral Neck Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Femoral Neck Fracture",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:41.778+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "femoral-neck-fracture",
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "description": "Intracapsular proximal femur fracture with head viability and AVN risk concerns.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:39.882778+00:00",
+      "updated_at": "2026-07-05T21:35:41.8652+00:00"
+    },
+    {
+      "id": "380d1e01-c2a0-4634-b838-cde38a02652c",
+      "proposal_fingerprint": "create|fixation_method|cannulated-screw-fixation",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures",
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "fixation_method",
+      "proposed_entity_label": "Cannulated Screw Fixation",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Cannulated Screw Fixation",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:41.872+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "cannulated-screw-fixation",
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "description": "Parallel screw fixation for selected femoral neck fracture patterns.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:40.661543+00:00",
+      "updated_at": "2026-07-05T21:35:41.965362+00:00"
+    },
+    {
+      "id": "a0359bba-a493-4365-886a-278712803b44",
+      "proposal_fingerprint": "rel|proximal-femur-anatomy-hub|prerequisite_for|femoral-neck-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "prerequisite_for",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship prerequisite_for",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:42.072+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "femoral-neck-fracture",
+        "subject_slug": "proximal-femur-anatomy-hub",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "condition",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "anatomy_structure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "call",
+            "or"
+          ],
+          "educational_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:43.376166+00:00",
+      "updated_at": "2026-07-05T21:35:42.165589+00:00"
+    },
+    {
+      "id": "3a059398-17e8-4cc4-ade0-5329ef22c1f5",
+      "proposal_fingerprint": "create|complication|femoral-neck-nonunion",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures",
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Femoral Neck Nonunion",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Femoral Neck Nonunion",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:39.382+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "femoral-neck-nonunion",
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "description": "Failure of femoral neck fracture healing with mechanical symptoms.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:41.21659+00:00",
+      "updated_at": "2026-07-05T21:35:39.470915+00:00"
+    },
+    {
+      "id": "51f970d0-56c4-4b01-9c64-e106fb1d7fee",
+      "proposal_fingerprint": "create|procedure|femoral-neck-orif",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures",
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "procedure",
+      "proposed_entity_label": "Femoral Neck ORIF",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Femoral Neck ORIF",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:39.477+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "femoral-neck-orif",
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "description": "Open reduction internal fixation of femoral neck fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:40.847391+00:00",
+      "updated_at": "2026-07-05T21:35:39.564214+00:00"
+    },
+    {
+      "id": "c94df06b-1b53-42c4-8fdc-0ff36bcda1a0",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|injured_in|femoral-neck",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "injured_in",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship injured_in",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:39.666+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "femoral-neck",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "clinical_importance": "high",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:43.583372+00:00",
+      "updated_at": "2026-07-05T21:35:39.753136+00:00"
+    },
+    {
+      "id": "81e844a9-33d6-461a-b51c-ff2d25f56e05",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|involves_anatomy|medial-femoral-circumflex-artery",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:39.815+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "medial-femoral-circumflex-artery",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "blood_supply",
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:43.961696+00:00",
+      "updated_at": "2026-07-05T21:35:39.908739+00:00"
+    },
+    {
+      "id": "52f88e1d-98e4-4787-a20e-21e3d0846ee9",
+      "proposal_fingerprint": "rel|displaced-femoral-neck-fracture|indicates_treatment|hip-hemiarthroplasty",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "indicates_treatment",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship indicates_treatment",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "hip-hemiarthroplasty",
+        "subject_slug": "displaced-femoral-neck-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "imaging_finding",
+        "relationship_metadata": {
+          "note": "age and function dependent — attending review required",
+          "confidence": 0.75,
+          "review_status": "needs_review",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:44.909205+00:00",
+      "updated_at": "2026-07-05T21:35:31.245873+00:00"
+    },
+    {
+      "id": "346bc3eb-83ec-4ec8-87dd-13a08fd4982f",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|treated_by|femoral-neck-orif",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "femoral-neck-orif",
+        "subject_slug": "femoral-neck-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:45.307375+00:00",
+      "updated_at": "2026-07-05T21:35:31.619503+00:00"
+    },
+    {
+      "id": "c8470297-5b0e-4f4b-840f-c585bc946560",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|treated_by|hip-hemiarthroplasty",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "hip-hemiarthroplasty",
+        "subject_slug": "femoral-neck-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:45.524996+00:00",
+      "updated_at": "2026-07-05T21:35:31.807183+00:00"
+    },
+    {
+      "id": "bc376f4f-d019-4103-bd64-c64b64dbadf8",
+      "proposal_fingerprint": "claim|claim-fnf-displaced-older-arthroplasty",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture deep.boardPearls",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "draft_id": "claim-fnf-displaced-older-arthroplasty",
+        "verified": false,
+        "claim_text": "Displaced femoral neck fractures in older adults are often arthroplasty problems rather than screw fixation problems.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.78,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "primary_entity_slug": "displaced-femoral-neck-fracture",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:46.872636+00:00",
+      "updated_at": "2026-07-05T21:35:33.495962+00:00"
+    },
+    {
+      "id": "e5cd2538-d207-4b4e-a1ad-843ce717963b",
+      "proposal_fingerprint": "claim|claim-fnf-younger-orif",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture fast.pimpQuestions",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "draft_id": "claim-fnf-younger-orif",
+        "verified": false,
+        "claim_text": "Applying geriatric arthroplasty defaults to young active patients with femoral neck fractures without head-preservation discussion.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.78,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call"
+        ],
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "primary_entity_slug": "femoral-neck-fracture",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:47.066244+00:00",
+      "updated_at": "2026-07-05T21:35:33.681949+00:00"
+    },
+    {
+      "id": "4529f3e3-8961-4ae0-83f6-742a11a75cca",
+      "proposal_fingerprint": "claim|claim-fnf-garden-language",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture deep.classification",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "draft_id": "claim-fnf-garden-language",
+        "verified": false,
+        "claim_text": "Garden displacement language helps communicate femoral neck fracture stability and treatment tendency.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "primary_entity_slug": "garden-classification",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:47.294044+00:00",
+      "updated_at": "2026-07-05T21:35:33.874499+00:00"
+    },
+    {
+      "id": "bfd7bc50-3c82-4857-add3-018f8cdd33b9",
+      "proposal_fingerprint": "claim|claim-fnf-case-script",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture fast.caseSteps",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "draft_id": "claim-fnf-case-script",
+        "verified": false,
+        "claim_text": "State fracture location, displacement, medical optimization urgency, DVT prophylaxis, and likely fixation versus arthroplasty pathway.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "primary_entity_slug": "femoral-neck-fracture",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:47.480997+00:00",
+      "updated_at": "2026-07-05T21:35:34.064752+00:00"
+    },
+    {
+      "id": "e1e56743-7827-4d03-8dee-1533f4906116",
+      "proposal_fingerprint": "dp|dp-fnf-head-preservation-orif",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture fast.pimpQuestions + deep.treatmentOptions",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "action": "Urgent anatomic reduction and stable fixation (typically cannulated screws) with AVN surveillance plan",
+        "trigger": "Younger patient with displaced or non-displaced femoral neck fracture where head preservation is prioritized",
+        "urgency": "urgent",
+        "draft_id": "dp-fnf-head-preservation-orif",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.78,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "safety_criticality": "high",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_slug": "femoral-neck-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:48.077641+00:00",
+      "updated_at": "2026-07-05T21:35:34.742187+00:00"
+    },
+    {
+      "id": "07ae8230-e482-4024-a1d5-055fc1687530",
+      "proposal_fingerprint": "dp|dp-fnf-arthroplasty-pathway",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture deep.decisionMaking + treatmentOptions",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "action": "Discuss hemiarthroplasty versus total hip arthroplasty with attending; document medical optimization and DVT prophylaxis",
+        "trigger": "Displaced femoral neck fracture in older adult with low functional reserve or poor healing potential",
+        "urgency": "urgent",
+        "draft_id": "dp-fnf-arthroplasty-pathway",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.78,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "safety_criticality": "moderate",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_slug": "femoral-neck-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:47.876442+00:00",
+      "updated_at": "2026-07-05T21:35:34.552906+00:00"
+    },
+    {
+      "id": "12c98708-4847-45f0-baa5-b72dcfb1629b",
+      "proposal_fingerprint": "create|procedure|hip-hemiarthroplasty",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures",
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "procedure",
+      "proposed_entity_label": "Hip Hemiarthroplasty",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Hip Hemiarthroplasty",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:40.618+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "hip-hemiarthroplasty",
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "description": "Partial hip replacement for select displaced femoral neck fractures in older adults.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:40.260081+00:00",
+      "updated_at": "2026-07-05T21:35:40.708206+00:00"
+    },
+    {
+      "id": "c7297ed3-abea-46cd-89c4-af776ed62b67",
+      "proposal_fingerprint": "create|classification_system|garden-classification",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures",
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "classification_system",
+      "proposed_entity_label": "Garden Classification",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Garden Classification",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:40.713+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "garden-classification",
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "description": "Displacement-based femoral neck fracture classification framework.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:40.070524+00:00",
+      "updated_at": "2026-07-05T21:35:40.807422+00:00"
+    },
+    {
+      "id": "b39243df-89fe-47b0-a36c-ccb30ff23472",
+      "proposal_fingerprint": "create|imaging_finding|displaced-femoral-neck-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures",
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "imaging_finding",
+      "proposed_entity_label": "Displaced Femoral Neck Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Displaced Femoral Neck Fracture",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:40.843+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "displaced-femoral-neck-fracture",
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "description": "Radiographic displacement pattern altering fixation versus arthroplasty calculus.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:41.031538+00:00",
+      "updated_at": "2026-07-05T21:35:40.929761+00:00"
+    },
+    {
+      "id": "216ef15c-096a-408a-a95d-ec1ae1599a20",
+      "proposal_fingerprint": "create|complication|avascular-necrosis",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures",
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Avascular Necrosis",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Avascular Necrosis",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:40.938+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "avascular-necrosis",
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "description": "Femoral head osteonecrosis after compromised retinacular blood supply.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:40.47502+00:00",
+      "updated_at": "2026-07-05T21:35:41.02343+00:00"
+    },
+    {
+      "id": "8634d941-3c1b-4495-b1a5-c01715ebe75b",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|has_complication|avascular-necrosis",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:41.031+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "avascular-necrosis",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:45.898215+00:00",
+      "updated_at": "2026-07-05T21:35:41.117232+00:00"
+    },
+    {
+      "id": "fac3698c-67f2-48ef-b524-78be160396e6",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|has_complication|femoral-neck-nonunion",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:41.22+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "femoral-neck-nonunion",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:46.080052+00:00",
+      "updated_at": "2026-07-05T21:35:41.305652+00:00"
+    },
+    {
+      "id": "79fd75b0-8497-48d2-80ef-9fc62b961691",
+      "proposal_fingerprint": "bridge|trauma-femoral-neck-fractures|femoral-neck-fracture",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "source_signal_type": "curriculum_node",
+      "source_signal_ids": [
+        "trauma-femoral-neck-fractures"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": "primary_coverage",
+      "confidence": 0.95,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Bridge trauma-femoral-neck-fractures to femoral-neck-fracture entity",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:41.319+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_bridge"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.95,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "primary_entity_slug": "femoral-neck-fracture",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "curriculum_node_slug": "trauma-femoral-neck-fractures",
+        "legacy_card_mappings": 9,
+        "clinical_verification": false,
+        "legacy_question_mappings": 64
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:48.262667+00:00",
+      "updated_at": "2026-07-05T21:35:41.402849+00:00"
+    },
+    {
+      "id": "8dd99705-58f2-4fa9-ab47-3612077c4884",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|has_imaging_finding|displaced-femoral-neck-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_imaging_finding",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship has_imaging_finding",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:41.407+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "displaced-femoral-neck-fracture",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "imaging_finding",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "displacement",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:44.724964+00:00",
+      "updated_at": "2026-07-05T21:35:41.493222+00:00"
+    },
+    {
+      "id": "8b3fba32-4df2-4342-8560-b18ea366dc5b",
+      "proposal_fingerprint": "rel|femoral-neck-orif|involves_anatomy|femoral-neck",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:41.497+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "femoral-neck",
+        "subject_slug": "femoral-neck-orif",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "procedure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "approach",
+          "context_relevance": [
+            "or"
+          ]
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:45.712346+00:00",
+      "updated_at": "2026-07-05T21:35:41.585542+00:00"
+    },
+    {
+      "id": "ed4b59ef-a52f-4d4e-96e0-3106134f3a21",
+      "proposal_fingerprint": "claim|claim-fnf-mfca-avn",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture deep.anatomy",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:42.446+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "draft_id": "claim-fnf-mfca-avn",
+        "verified": false,
+        "claim_text": "Medial femoral circumflex and retinacular blood supply vulnerability explains AVN risk after femoral neck fracture.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "safety": 0.15,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.88,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or",
+          "oite"
+        ],
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "primary_entity_slug": "medial-femoral-circumflex-artery",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:46.682682+00:00",
+      "updated_at": "2026-07-05T21:35:42.535446+00:00"
+    },
+    {
+      "id": "ac850485-7c31-4cf7-a6d3-fa78c244119e",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|involves_anatomy|femoral-head",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:42.171+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "femoral-head",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "viability",
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:43.777086+00:00",
+      "updated_at": "2026-07-05T21:35:42.258025+00:00"
+    },
+    {
+      "id": "2357ee37-e03f-498f-9195-94efc9549d82",
+      "proposal_fingerprint": "claim|claim-fnf-intracapsular-urgency",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture fast.oneLiner + learningObjectives",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "draft_id": "claim-fnf-intracapsular-urgency",
+        "verified": false,
+        "claim_text": "Femoral neck fractures are intracapsular injuries where fracture location and displacement drive fixation versus arthroplasty decisions.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "primary_entity_slug": "femoral-neck-fracture",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:46.476868+00:00",
+      "updated_at": "2026-07-05T21:35:33.103923+00:00"
+    },
+    {
+      "id": "14fb6f78-1f2f-4640-81a3-17707c9f7249",
+      "proposal_fingerprint": "claim|claim-fnf-nonunion-risk",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "femoral-neck-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "curriculum-data.ts hip-fracture deep.complications",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "draft_id": "claim-fnf-nonunion-risk",
+        "verified": false,
+        "claim_text": "Femoral neck nonunion remains a major failure mode when reduction, fixation, or biology are unfavorable.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "primary_entity_slug": "femoral-neck-nonunion",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:47.678614+00:00",
+      "updated_at": "2026-07-05T21:35:34.367168+00:00"
+    },
+    {
+      "id": "c0bad631-a68a-499c-bfa2-fbe255a70e32",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|involves_anatomy|calcar",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:42.263+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "calcar",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "stability"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:44.163789+00:00",
+      "updated_at": "2026-07-05T21:35:42.350425+00:00"
+    },
+    {
+      "id": "28d24640-7b6f-4944-a502-fea6b4a90c30",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|at_risk_structure|medial-femoral-circumflex-artery",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "at_risk_structure",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship at_risk_structure",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "medial-femoral-circumflex-artery",
+        "subject_slug": "femoral-neck-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "blood_supply",
+          "context_relevance": [
+            "or"
+          ],
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:44.535893+00:00",
+      "updated_at": "2026-07-05T21:35:30.852458+00:00"
+    },
+    {
+      "id": "d552876c-07a8-466e-a9da-4880e4019c3e",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|uses_fixation|cannulated-screw-fixation",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "uses_fixation",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship uses_fixation",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "cannulated-screw-fixation",
+        "subject_slug": "femoral-neck-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "fixation_method",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or",
+            "clinic"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:45.116375+00:00",
+      "updated_at": "2026-07-05T21:35:31.433591+00:00"
+    },
+    {
+      "id": "7b9b0d1c-7e0d-4ddc-9df0-1bffe5460a82",
+      "proposal_fingerprint": "rel|femoral-neck-fracture|has_classification|garden-classification",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_classification",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "femoral_neck_pilot_spec_v1",
+      "evidence_summary": "Relationship has_classification",
+      "supporting_card_count": 9,
+      "supporting_question_count": 64,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:35:42.354+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "femoral-neck-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:32:35.999Z",
+        "object_slug": "garden-classification",
+        "subject_slug": "femoral-neck-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.78,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:femoral-neck-fracture-neighborhood",
+        "object_entity_type": "classification_system",
+        "review_packet_label": "Femoral Neck Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic",
+            "oite"
+          ],
+          "educational_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:32:46.276388+00:00",
+      "updated_at": "2026-07-05T21:35:42.441082+00:00"
+    }
+  ],
+  "reviewHistory": [
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|involves_anatomy|proximal-femur-anatomy-hub",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|condition|femoral-neck-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|fixation_method|cannulated-screw-fixation",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|proximal-femur-anatomy-hub|prerequisite_for|femoral-neck-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|femoral-neck-nonunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|procedure|femoral-neck-orif",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|injured_in|femoral-neck",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|involves_anatomy|medial-femoral-circumflex-artery",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|displaced-femoral-neck-fracture|indicates_treatment|hip-hemiarthroplasty",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|treated_by|femoral-neck-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|treated_by|hip-hemiarthroplasty",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-fnf-displaced-older-arthroplasty",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-fnf-younger-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-fnf-garden-language",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_REVISED",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-fnf-case-script",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-fnf-head-preservation-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-fnf-arthroplasty-pathway",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|procedure|hip-hemiarthroplasty",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|classification_system|garden-classification",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|imaging_finding|displaced-femoral-neck-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|avascular-necrosis",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|has_complication|avascular-necrosis",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|has_complication|femoral-neck-nonunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "bridge|trauma-femoral-neck-fractures|femoral-neck-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|has_imaging_finding|displaced-femoral-neck-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-orif|involves_anatomy|femoral-neck",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-fnf-mfca-avn",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|involves_anatomy|femoral-head",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-fnf-intracapsular-urgency",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-fnf-nonunion-risk",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_REVISED",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|involves_anatomy|calcar",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|at_risk_structure|medial-femoral-circumflex-artery",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|uses_fixation|cannulated-screw-fixation",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|femoral-neck-fracture|has_classification|garden-classification",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    }
+  ],
+  "qualitySignals": {
+    "gapCount": 16,
+    "gapsByKind": {
+      "missing_relationship": 7,
+      "missing_claim": 3,
+      "missing_decision_point": 1,
+      "missing_metadata": 1,
+      "missing_entity": 2,
+      "missing_asset_link": 2
+    },
+    "gapsByPriority": {
+      "high": 6,
+      "medium": 7,
+      "critical": 3
+    },
+    "qualityWarnings": [],
+    "safetyFlags": []
+  },
+  "safetySignals": [],
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Proximal Femur Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "proximal-femur-anatomy-hub",
+      "subjectSlug": "proximal-femur-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Femoral Neck Fracture missing outbound has_grade (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.has_grade",
+      "anchorEntitySlug": "femoral-neck-fracture",
+      "subjectSlug": "femoral-neck-fracture",
+      "predicate": "has_grade"
+    },
+    {
+      "id": "gap-claim-3",
+      "kind": "missing_claim",
+      "priority": "high",
+      "confidence": 0.88,
+      "reason": "Femoral Neck Fracture has 2/3 L1 claims.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.claims.l1",
+      "anchorEntitySlug": "femoral-neck-fracture",
+      "claimType": "fact|board_trap|imaging_point|cognitive_trap"
+    },
+    {
+      "id": "gap-claim-type-4",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Femoral Neck Fracture missing claim type: board_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.board_trap",
+      "anchorEntitySlug": "femoral-neck-fracture",
+      "claimType": "board_trap"
+    },
+    {
+      "id": "gap-claim-type-5",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Femoral Neck Fracture missing claim type: imaging_point.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.imaging_point",
+      "anchorEntitySlug": "femoral-neck-fracture",
+      "claimType": "imaging_point"
+    },
+    {
+      "id": "gap-dp-pattern-6",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.85,
+      "reason": "Femoral Neck Fracture missing decision point pattern: nonoperative_eligible.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management.nonoperative_eligible",
+      "anchorEntitySlug": "femoral-neck-fracture",
+      "decisionPointPattern": "nonoperative_eligible"
+    },
+    {
+      "id": "gap-meta-rel-7",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "1 clinical_importance gaps on Femoral Neck Fracture injured_in/has_imaging_finding/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.meta.clinical_importance",
+      "anchorEntitySlug": "femoral-neck-fracture",
+      "metadataField": "clinical_importance",
+      "predicate": "injured_in|has_imaging_finding|at_risk_structure"
+    },
+    {
+      "id": "gap-entity-neighbor-8",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "Garden Classification neighborhood has 0/2 classification_grade entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.grades",
+      "anchorEntitySlug": "garden-classification",
+      "entityType": "classification_grade"
+    },
+    {
+      "id": "gap-entity-neighbor-9",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Hip Hemiarthroplasty neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "hip-hemiarthroplasty",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-10",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Hip Hemiarthroplasty missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "hip-hemiarthroplasty",
+      "subjectSlug": "hip-hemiarthroplasty",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-11",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Hip Hemiarthroplasty missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "hip-hemiarthroplasty",
+      "subjectSlug": "hip-hemiarthroplasty",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-rel-12",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Femoral Neck ORIF missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "femoral-neck-orif",
+      "subjectSlug": "femoral-neck-orif",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-asset-card-13",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "9 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "femoral-neck-fracture"
+    },
+    {
+      "id": "gap-asset-question-14",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "64 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "femoral-neck-fracture"
+    },
+    {
+      "id": "gap-proc-approach-15",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Hip Hemiarthroplasty missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "hip-hemiarthroplasty",
+      "subjectSlug": "hip-hemiarthroplasty",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-16",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Femoral Neck ORIF missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "femoral-neck-orif",
+      "subjectSlug": "femoral-neck-orif",
+      "predicate": "uses_approach"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "CASEPREP_LINK_MISSING",
+      "message": "No CasePrep mapping for topic femoral-neck-fracture",
+      "collectorId": "caseprep-link-collector",
+      "severity": "info"
+    }
+  ],
+  "auditTrail": [
+    {
+      "stage": "init",
+      "timestamp": "2026-07-05T21:36:12.702Z",
+      "action": "build_started",
+      "detail": "femoral-neck-fracture"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:12.704Z",
+      "action": "collector_complete",
+      "detail": "4 section(s) from src/lib/student-curriculum/curriculum-data.ts#hip-fracture-neck-split",
+      "collectorId": "static-prepare-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:12.705Z",
+      "action": "collector_complete",
+      "detail": "node=trauma-femoral-neck-fractures",
+      "collectorId": "curriculum-node-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:12.705Z",
+      "action": "collector_complete",
+      "detail": "cards=9",
+      "collectorId": "anki-signal-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:12.705Z",
+      "action": "collector_complete",
+      "detail": "questions=64",
+      "collectorId": "orthobullets-metadata-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:12.705Z",
+      "action": "collector_complete",
+      "detail": "no mapping",
+      "collectorId": "caseprep-link-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:13.571Z",
+      "action": "collector_complete",
+      "detail": "source=database entities=8",
+      "collectorId": "canonical-snapshot-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:13.708Z",
+      "action": "collector_complete",
+      "detail": "proposals=34 source=database",
+      "collectorId": "proposal-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:13.829Z",
+      "action": "collector_complete",
+      "detail": "reviewed=0 pending=0",
+      "collectorId": "review-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:36:14.561Z",
+      "action": "collector_complete",
+      "detail": "gaps=27 safety=0",
+      "collectorId": "quality-signal-collector"
+    },
+    {
+      "stage": "assemble",
+      "timestamp": "2026-07-05T21:36:14.683Z",
+      "action": "packet_assembled",
+      "detail": "14 items, 16 gaps"
+    }
+  ],
+  "databaseModified": false
+}

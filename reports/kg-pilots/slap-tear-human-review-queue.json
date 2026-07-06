@@ -1,0 +1,669 @@
+[
+  {
+    "proposal_fingerprint": "rel|slap-tear|tested_by|slap-tear-exam-maneuver",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "slap-tear -[tested_by]-> slap-tear-exam-maneuver",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|slap-tear|tested_by|slap-tear-exam-maneuver",
+    "alternatives": [],
+    "evidence_summary": "Relationship tested_by",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "slap-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "slap-tear-exam-maneuver",
+      "object_entity_type": "exam_maneuver",
+      "relationship_metadata": {
+        "educational_importance": "high",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|slap-tear-mri-finding|indicates_treatment|slap-tear-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "slap-tear-mri-finding -[indicates_treatment]-> slap-tear-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: slap-tear-mri-finding -[indicates_treatment]-> slap-tear-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "slap-tear-mri-finding",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "slap-tear-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "note": "operative indication attending-dependent"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|slap-tear|treated_by|slap-tear-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "slap-tear -[treated_by]-> slap-tear-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|slap-tear|treated_by|slap-tear-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "slap-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "slap-tear-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|slap-tear|treated_by|slap-tear-rehab-protocol",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "slap-tear -[treated_by]-> slap-tear-rehab-protocol",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|slap-tear|treated_by|slap-tear-rehab-protocol",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "slap-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "slap-tear-rehab-protocol",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|slap-tear|differential_for|anterior-shoulder-instability",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "slap-tear -[differential_for]-> anterior-shoulder-instability",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|slap-tear|differential_for|anterior-shoulder-instability",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "slap-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "anterior-shoulder-instability",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|slap-tear|differential_for|proximal-biceps-tendon-pathology",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "slap-tear -[differential_for]-> proximal-biceps-tendon-pathology",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|slap-tear|differential_for|proximal-biceps-tendon-pathology",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "slap-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "proximal-biceps-tendon-pathology",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|slap-tear|differential_for|rotator-cuff-tear",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "slap-tear -[differential_for]-> rotator-cuff-tear",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|slap-tear|differential_for|rotator-cuff-tear",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "slap-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "rotator-cuff-tear",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|slap-tear|differential_for|proximal-humerus-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "slap-tear -[differential_for]-> proximal-humerus-fracture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|slap-tear|differential_for|proximal-humerus-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "slap-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "proximal-humerus-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_cluster": true,
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "trauma_overlap",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-slaptear-oneliner",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-slaptear-oneliner",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts slap-tear",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-slaptear-oneliner",
+      "claim_type": "fact",
+      "claim_text": "SLAP tears are superior labrum-biceps anchor injuries that mimic instability and impingement presentations.",
+      "primary_entity_slug": "slap-tear",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-slaptear-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-slaptear-board-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts slap-tear boardPearls",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-slaptear-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating slap tear.",
+      "primary_entity_slug": "slap-tear",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-slaptear-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-slaptear-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts slap-tear pimpQuestions",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-slaptear-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Do not anchor on a single exam maneuver for slap tear — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primary_entity_slug": "slap-tear",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-slaptear-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-slaptear-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts slap-tear caseSteps",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-slaptear-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for slap tear.",
+      "primary_entity_slug": "slap-tear",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-slaptear-obriens",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-slaptear-obriens",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts slap-tear",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-slaptear-obriens",
+      "claim_type": "fact",
+      "claim_text": "O'Brien and crank tests help screen for superior labrum pathology in overhead athletes.",
+      "primary_entity_slug": "slap-tear",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-slaptear-operative-indication",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-slaptear-operative-indication",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts slap-tear decisionMaking",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-slaptear-operative-indication",
+      "subject_entity_slug": "slap-tear",
+      "pattern_type": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from slap tear despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-slaptear-return-to-play",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-slaptear-return-to-play",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts slap-tear treatmentOptions",
+    "metadata": {
+      "pilot": "slap-tear-neighborhood",
+      "review_packet_key": "pilot:slap-tear-neighborhood",
+      "review_packet_label": "SLAP Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-slaptear-return-to-play",
+      "subject_entity_slug": "slap-tear",
+      "pattern_type": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after slap tear treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:01:03.904Z"
+    }
+  }
+]

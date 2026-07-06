@@ -1,0 +1,47 @@
+{
+  "topicKey": "wrist-dislocation",
+  "pilotKey": "wrist-dislocation-neighborhood",
+  "generatedAt": "2026-07-05T23:06:38.158Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "12 proposals still awaiting human review",
+    "6 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "20 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Wrist Dislocation Operative Treatment neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Wrist Dislocation Operative Treatment missing outbound involves_anatomy (0/1).",
+    "[high] Wrist Dislocation Operative Treatment missing outbound at_risk_structure (0/1).",
+    "[critical] Wrist Dislocation neighborhood has 0/3 anatomy_structure entities.",
+    "[high] Wrist Dislocation neighborhood has 0/1 classification_system entities.",
+    "[high] Wrist Dislocation neighborhood has 0/1 imaging_finding entities.",
+    "[critical] Wrist Dislocation missing outbound injured_in (0/1).",
+    "[high] Wrist Dislocation missing outbound involves_anatomy (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 28,
+    "humanReviewItems": 12,
+    "attendingReviewItems": 6,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

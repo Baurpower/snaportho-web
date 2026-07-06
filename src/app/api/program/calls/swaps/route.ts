@@ -68,18 +68,18 @@ export async function GET(request: NextRequest) {
     const completedStatuses = ["approved", "rejected", "declined", "cancelled", "expired"] as const;
 
     if (view === "incoming") {
-      const items = await getIncomingSwapRequestsForUser(
-        adminSupabase,
-        membership.roster_id
-      );
+      const items = await getIncomingSwapRequestsForUser(adminSupabase, {
+        programId: membership.program_id,
+        recipientRosterId: membership.roster_id,
+      });
       return NextResponse.json({ items }, { status: 200 });
     }
 
     if (view === "outgoing") {
-      const items = await getOutgoingSwapRequestsForUser(
-        adminSupabase,
-        membership.roster_id
-      );
+      const items = await getOutgoingSwapRequestsForUser(adminSupabase, {
+        programId: membership.program_id,
+        requesterRosterId: membership.roster_id,
+      });
       return NextResponse.json({ items }, { status: 200 });
     }
 
@@ -105,14 +105,28 @@ export async function GET(request: NextRequest) {
             includeExpired: true,
           })
         : [
-            ...(await getIncomingSwapRequestsForUser(adminSupabase, membership.roster_id, {
-              statuses: [...completedStatuses],
-              includeExpired: true,
-            })),
-            ...(await getOutgoingSwapRequestsForUser(adminSupabase, membership.roster_id, {
-              statuses: [...completedStatuses],
-              includeExpired: true,
-            })),
+            ...(await getIncomingSwapRequestsForUser(
+              adminSupabase,
+              {
+                programId: membership.program_id,
+                recipientRosterId: membership.roster_id,
+              },
+              {
+                statuses: [...completedStatuses],
+                includeExpired: true,
+              }
+            )),
+            ...(await getOutgoingSwapRequestsForUser(
+              adminSupabase,
+              {
+                programId: membership.program_id,
+                requesterRosterId: membership.roster_id,
+              },
+              {
+                statuses: [...completedStatuses],
+                includeExpired: true,
+              }
+            )),
           ];
 
       const items = Array.from(new Map(baseItems.map((item) => [item.id, item])).values());
@@ -125,12 +139,26 @@ export async function GET(request: NextRequest) {
             includeExpired: true,
           })
         : [
-            ...(await getIncomingSwapRequestsForUser(adminSupabase, membership.roster_id, {
-              includeExpired: true,
-            })),
-            ...(await getOutgoingSwapRequestsForUser(adminSupabase, membership.roster_id, {
-              includeExpired: true,
-            })),
+            ...(await getIncomingSwapRequestsForUser(
+              adminSupabase,
+              {
+                programId: membership.program_id,
+                recipientRosterId: membership.roster_id,
+              },
+              {
+                includeExpired: true,
+              }
+            )),
+            ...(await getOutgoingSwapRequestsForUser(
+              adminSupabase,
+              {
+                programId: membership.program_id,
+                requesterRosterId: membership.roster_id,
+              },
+              {
+                includeExpired: true,
+              }
+            )),
           ];
 
       const items = Array.from(new Map(baseItems.map((item) => [item.id, item])).values());

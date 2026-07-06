@@ -3,9 +3,13 @@
 export function CaseReadinessProgress({
   completedCount,
   totalCount,
+  persisted = false,
+  isSaving = false,
 }: {
   completedCount: number;
   totalCount: number;
+  persisted?: boolean;
+  isSaving?: boolean;
 }) {
   const percent =
     totalCount === 0 ? 0 : Math.round((completedCount / totalCount) * 100);
@@ -25,7 +29,9 @@ export function CaseReadinessProgress({
           <p className="text-xl font-black tracking-tight text-slate-950">
             {percent}%
           </p>
-          <p className="text-xs text-slate-500">Local checklist only</p>
+          <p className="text-xs text-slate-500">
+            {isSaving ? "Saving..." : persisted ? "Saved to workspace" : "Local checklist only"}
+          </p>
         </div>
       </div>
       <div className="mt-4 h-2 overflow-hidden rounded-full bg-slate-100">

@@ -6,6 +6,9 @@ import type {
   ExtensionMessageResponse,
 } from '../shared/messages.js';
 import type {
+  BrobotExplainResult,
+  CurriculumExplainEmphasis,
+  CurriculumStudyResponse,
   ExtensionFetchDiagnostics,
   OrthobulletsChatResponse,
   OrthobulletsChatTurn,
@@ -14,16 +17,22 @@ import type {
   OrthobulletsHintResponse,
   OrthobulletsPageContext,
 } from '../shared/types.js';
+import { isCurriculumStudyResponse } from '../shared/types.js';
+import { isClinicallyImportantWarning, resolveCurriculumChatChips } from '../shared/curriculum-chips.js';
 import {
+  classifyPage,
   hasReviewData,
   isExplainEligible,
   isHintEligible,
+  isPageUsable,
   isUnansweredQuestion,
+  preferredBrobotMode,
 } from '../shared/page-classification.js';
+import type { PageClassification } from '../shared/types.js';
+import { renderCurriculumChatChips, renderCurriculumStudyPanel } from './explain-study-panel.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
 const DEFAULT_FOLLOW_UP_PROMPTS = ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
-
 const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean }> = {
   unsupported_page: { title: 'This page is not supported.', canRetry: false },
   not_linked: { title: 'Extension is not linked to a SnapOrtho account.', canRetry: false },
@@ -32,7 +41,7 @@ const ERROR_COPY: Record<ExtensionErrorCode, { title: string; canRetry: boolean 
   invalid_request: { title: 'This page context could not be processed.', canRetry: true },
   api_failure: { title: 'BroBot could not generate an explanation.', canRetry: true },
   parse_failure: { title: "BroBot's response could not be parsed.", canRetry: true },
-  extraction_failure: { title: 'Could not read this question page.', canRetry: true },
+  extraction_failure: { title: 'Could not read this page.', canRetry: true },
   network_failure: { title: 'Could not reach SnapOrtho.', canRetry: true },
   unknown: { title: 'Something went wrong.', canRetry: true },
 };
@@ -95,14 +104,25 @@ function renderStringList(items: string[]) {
     .join('')}</ul>`;
 }
 
-function isReadableReviewPage(pageContext: OrthobulletsPageContext) {
-  if (pageContext.mode === 'curriculum_content') {
-    return Boolean(pageContext.contentText?.trim() && pageContext.contentText.length >= 500);
+function getPageClassification(pageContext: OrthobulletsPageContext | null): PageClassification | null {
+  if (!pageContext) return null;
+  return pageContext.classification ?? classifyPage(pageContext);
+}
+
+function extractionFailureMessage(classification: PageClassification | null) {
+  if (!classification) {
+    return 'Could not extract enough visible page content yet.';
   }
-  const hasQuestionIdentity = Boolean(pageContext.questionId || pageContext.stem);
-  const hasStem = Boolean(pageContext.stem?.trim());
-  const hasChoices = pageContext.answerChoices.length >= 2;
-  return hasQuestionIdentity && hasStem && hasChoices;
+  if (classification.pageKind === 'unreadable' && classification.detected.hasStem && classification.detected.answerChoiceCount < 2) {
+    return 'Could not detect a question. BroBot needs a visible stem and at least two answer choices for Question Tutor mode.';
+  }
+  if (classification.pageKind === 'unreadable' && classification.detected.readableTextLength > 0) {
+    return 'Could not extract enough page text for Explain mode yet.';
+  }
+  if (classification.detected.referencesCount >= 3) {
+    return 'This page is mostly references; BroBot can still summarize the key cited themes once enough text is visible.';
+  }
+  return classification.reason;
 }
 
 function isLikelyCurrentTestUrl(url: string | null | undefined) {
@@ -142,19 +162,26 @@ function renderCard(title: string, contentHtml: string, tone: 'neutral' | 'accen
   </article>`;
 }
 
-function renderExplanation(explanation: OrthobulletsExplainResponse) {
+function renderExplanation(explanation: OrthobulletsExplainResponse, mode: 'question_tutor' | 'explain_page' = 'question_tutor') {
   const cards: string[] = [];
-  cards.push(renderCard('Bottom Line', renderTextBlock(explanation.bottomLine, true), 'accent'));
+  const summaryTitle = mode === 'explain_page' ? 'Quick summary' : 'Bottom Line';
+  const conceptTitle = mode === 'explain_page' ? 'High-yield concepts' : 'Tested Concept';
+  const teachingTitle = mode === 'explain_page' ? 'Teaching explanation' : 'Why Correct';
+  const trapTitle = mode === 'explain_page' ? 'What students usually miss' : 'Board Trap';
+  const pearlTitle = mode === 'explain_page' ? 'Clinical pearl' : 'Pearl / Takeaway';
+  const studyTitle = mode === 'explain_page' ? 'What to review next' : 'Study Next';
+
+  cards.push(renderCard(summaryTitle, renderTextBlock(explanation.bottomLine, true), 'accent'));
 
   if (explanation.testedConcept) {
-    cards.push(renderCard('Tested Concept', renderTextBlock(explanation.testedConcept)));
+    cards.push(renderCard(conceptTitle, renderTextBlock(explanation.testedConcept)));
   }
 
   if (explanation.whyCorrect) {
-    cards.push(renderCard('Why Correct', renderTextBlock(explanation.whyCorrect)));
+    cards.push(renderCard(teachingTitle, renderTextBlock(explanation.whyCorrect)));
   }
 
-  if (explanation.whyWrong.length) {
+  if (mode === 'question_tutor' && explanation.whyWrong.length) {
     cards.push(
       renderCard(
         'Why Wrong',
@@ -173,15 +200,15 @@ function renderExplanation(explanation: OrthobulletsExplainResponse) {
 
   const boardTrap = getBoardTrap(explanation);
   if (boardTrap) {
-    cards.push(renderCard('Board Trap', renderTextBlock(boardTrap), 'warning'));
+    cards.push(renderCard(trapTitle, renderTextBlock(boardTrap), 'warning'));
   }
 
   if (explanation.boardPearl) {
-    cards.push(renderCard('Pearl / Takeaway', renderTextBlock(explanation.boardPearl, true), 'warning'));
+    cards.push(renderCard(pearlTitle, renderTextBlock(explanation.boardPearl, true), 'warning'));
   }
 
   if (explanation.studyNext.length) {
-    cards.push(renderCard('Study Next', renderStringList(explanation.studyNext)));
+    cards.push(renderCard(studyTitle, renderStringList(explanation.studyNext)));
   }
 
   return `<section style="display:grid;gap:12px;">${cards.join('')}</section>`;
@@ -274,6 +301,7 @@ function renderDebugSummary(input: {
     linkedConceptCount: input.diagnostics?.linkedConceptCount ?? input.pageContext?.linkedConcepts.length ?? 0,
     warnings: input.diagnostics?.warnings ?? input.pageContext?.extractionWarnings ?? [],
     matchedSelectors: input.pageContext?.debug?.matchedSelectors ?? {},
+    classification: input.diagnostics?.classification ?? input.pageContext?.classification ?? null,
     lastErrorCode: input.errorCode,
   };
 
@@ -290,7 +318,7 @@ function getStatusCopy(input: {
   auth: AuthState | null;
   operation: OperationState;
   pageContext: OrthobulletsPageContext | null;
-  explanation: OrthobulletsExplainResponse | null;
+  explanation: BrobotExplainResult | null;
   hints: OrthobulletsHintResponse[];
   error: { message: string; code: ExtensionErrorCode } | null;
 }) {
@@ -330,6 +358,15 @@ function getStatusCopy(input: {
   if (input.pageContext && isUnansweredQuestion(input.pageContext)) {
     return { label: 'Hint Mode ready', detail: 'This page looks unanswered, so you can ask for progressive hints before revealing the reasoning.' };
   }
+  if (input.pageContext) {
+    const classification = getPageClassification(input.pageContext);
+    if (classification?.pageKind === 'educational_content') {
+      return { label: 'Learning page detected', detail: 'BroBot can explain this curriculum or article content without forcing Question Tutor mode.' };
+    }
+    if (classification?.pageKind === 'mixed') {
+      return { label: 'Mixed page detected', detail: 'Question Tutor is available, and you can switch to Explain mode for the surrounding educational text.' };
+    }
+  }
   if (input.pageContext && hasReviewData(input.pageContext)) {
     if (input.pageContext.mode === 'curriculum_content') {
       return { label: 'ROCK curriculum page detected', detail: 'Use Explain with BroBot for a resident-friendly teaching summary of this page.' };
@@ -350,13 +387,17 @@ export function mountSidePanelApp(root: HTMLElement) {
     pageContext: OrthobulletsPageContext | null;
     extractionDiagnostics: OrthobulletsExtractionDiagnostics | null;
     fetchDiagnostics: ExtensionFetchDiagnostics | null;
-    explanation: OrthobulletsExplainResponse | null;
+    explanation: BrobotExplainResult | null;
+    curriculumStudy: CurriculumStudyResponse | null;
+    explainEmphasis: CurriculumExplainEmphasis;
     hints: OrthobulletsHintResponse[];
     error: { message: string; code: ExtensionErrorCode } | null;
     chatHistory: OrthobulletsChatTurn[];
     chatDraft: string;
     chatPrompts: string[];
     usage: UsageState;
+    brobotMode: 'question_tutor' | 'explain_page';
+    forceQuestionMode: boolean;
   } = {
     activePage: null,
     auth: null,
@@ -368,12 +409,16 @@ export function mountSidePanelApp(root: HTMLElement) {
     extractionDiagnostics: null,
     fetchDiagnostics: null,
     explanation: null,
+    curriculumStudy: null,
+    explainEmphasis: 'high_yield',
     hints: [],
     error: null,
     chatHistory: [],
     chatDraft: '',
     chatPrompts: [],
     usage: null,
+    brobotMode: 'question_tutor',
+    forceQuestionMode: false,
   };
 
   async function refreshBaseState() {
@@ -388,6 +433,23 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.activePage = pageResult.ok && 'activePage' in pageResult ? pageResult.activePage : null;
     state.auth = authResult.ok && 'auth' in authResult ? authResult.auth : null;
     state.loading = false;
+    render();
+
+    if (state.activePage?.supported && state.auth?.status === 'linked') {
+      void prefetchPageContext();
+    }
+  }
+
+  async function prefetchPageContext() {
+    state.operation = 'extracting';
+    state.error = null;
+    render();
+
+    const pageContext = await extractPageContext({ allowPartial: true, preserveError: false });
+    state.operation = 'idle';
+    if (pageContext) {
+      state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(pageContext);
+    }
     render();
   }
 
@@ -439,11 +501,17 @@ export function mountSidePanelApp(root: HTMLElement) {
     }, 3000);
   }
 
-  async function extractPageContext() {
+  async function extractPageContext(options: { allowPartial?: boolean; preserveError?: boolean; forceQuestionMode?: boolean } = {}) {
     if (!state.activePage?.tabId) {
-      state.error = { message: 'No active supported question tab is available.', code: 'unsupported_page' };
-      render();
+      if (!options.preserveError) {
+        state.error = { message: 'No active supported page tab is available.', code: 'unsupported_page' };
+        render();
+      }
       return null;
+    }
+
+    if (options.forceQuestionMode != null) {
+      state.forceQuestionMode = options.forceQuestionMode;
     }
 
     const extractResult = await sendMessage({
@@ -454,9 +522,11 @@ export function mountSidePanelApp(root: HTMLElement) {
     if (!extractResult.ok || !('pageContext' in extractResult)) {
       state.extractionDiagnostics = !extractResult.ok && 'diagnostics' in extractResult ? extractResult.diagnostics ?? null : null;
       state.fetchDiagnostics = !extractResult.ok && 'fetchDiagnostics' in extractResult ? extractResult.fetchDiagnostics ?? null : null;
-      state.error = extractResult.ok
-        ? { message: 'Failed to extract page context.', code: 'extraction_failure' }
-        : { message: extractResult.error, code: extractResult.code ?? 'extraction_failure' };
+      if (!options.preserveError) {
+        state.error = extractResult.ok
+          ? { message: 'Failed to extract page context.', code: 'extraction_failure' }
+          : { message: extractResult.error, code: extractResult.code ?? 'extraction_failure' };
+      }
       render();
       return null;
     }
@@ -464,14 +534,21 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.pageContext = extractResult.pageContext;
     state.extractionDiagnostics = extractResult.diagnostics;
     state.fetchDiagnostics = null;
+    state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(extractResult.pageContext);
 
-    if (!isReadableReviewPage(extractResult.pageContext)) {
+    const usable = isPageUsable(extractResult.pageContext, { forceQuestionMode: state.forceQuestionMode });
+    if (!usable && !options.allowPartial) {
+      const classification = getPageClassification(extractResult.pageContext);
       state.error = {
-        message: 'This page did not expose enough visible question content yet. BroBot needs the stem and at least two answer choices to continue.',
+        message: extractionFailureMessage(classification),
         code: 'extraction_failure',
       };
       render();
       return null;
+    }
+
+    if (usable) {
+      state.error = null;
     }
 
     return extractResult.pageContext;
@@ -480,6 +557,7 @@ export function mountSidePanelApp(root: HTMLElement) {
   async function runHint(hintLevel: 1 | 2 | 3) {
     state.error = null;
     state.explanation = null;
+    state.curriculumStudy = null;
     state.chatHistory = [];
     state.chatDraft = '';
     state.chatPrompts = [];
@@ -526,28 +604,36 @@ export function mountSidePanelApp(root: HTMLElement) {
     render();
   }
 
-  async function runExplain(options: { revealRequested?: boolean } = {}) {
+  async function runExplain(options: { revealRequested?: boolean; emphasis?: CurriculumExplainEmphasis } = {}) {
     state.error = null;
-    state.explanation = null;
-    state.chatHistory = [];
-    state.chatPrompts = [];
-    state.chatDraft = '';
+    if (!options.emphasis) {
+      state.explanation = null;
+      state.curriculumStudy = null;
+      state.chatHistory = [];
+      state.chatPrompts = [];
+      state.chatDraft = '';
+    }
+    if (options.emphasis) {
+      state.explainEmphasis = options.emphasis;
+    }
     state.operation = 'extracting';
     render();
 
-    const pageContext = await extractPageContext();
+    const pageContext = await extractPageContext({ forceQuestionMode: state.forceQuestionMode });
     if (!pageContext) {
       state.operation = 'idle';
       render();
       return;
     }
 
+    state.brobotMode = state.forceQuestionMode ? 'question_tutor' : preferredBrobotMode(pageContext);
     state.operation = 'explaining';
     render();
 
     const explainResult = await sendMessage({
       type: 'ob:explain',
       pageContext,
+      emphasis: state.explainEmphasis,
     });
 
     if (!explainResult.ok || !('explanation' in explainResult)) {
@@ -562,7 +648,11 @@ export function mountSidePanelApp(root: HTMLElement) {
 
     state.operation = 'idle';
     state.explanation = explainResult.explanation;
-    state.chatPrompts = DEFAULT_FOLLOW_UP_PROMPTS;
+    state.curriculumStudy = isCurriculumStudyResponse(explainResult.explanation) ? explainResult.explanation : null;
+    state.chatPrompts =
+      state.brobotMode === 'explain_page' && state.pageContext
+        ? resolveCurriculumChatChips(state.pageContext, state.curriculumStudy)
+        : DEFAULT_FOLLOW_UP_PROMPTS;
     state.usage = explainResult.explanation.usage ?? null;
     render();
   }
@@ -581,7 +671,9 @@ export function mountSidePanelApp(root: HTMLElement) {
     const result = await sendMessage({
       type: 'ob:chat',
       pageContext: state.pageContext,
-      explanation: state.explanation,
+      explanation: isCurriculumStudyResponse(state.explanation) ? undefined : state.explanation,
+      curriculumStudy: state.curriculumStudy ?? undefined,
+      emphasis: state.explainEmphasis,
       history: priorHistory,
       userMessage,
     });
@@ -606,7 +698,16 @@ export function mountSidePanelApp(root: HTMLElement) {
       { role: 'user', content: userMessage },
       { role: 'assistant', content: result.chat.answer },
     ];
-    state.chatPrompts = result.chat.suggestedPrompts.length ? result.chat.suggestedPrompts : DEFAULT_FOLLOW_UP_PROMPTS;
+    state.chatPrompts =
+      state.brobotMode === 'explain_page' && state.pageContext
+        ? resolveCurriculumChatChips(state.pageContext, {
+            suggestedFollowUps: result.chat.suggestedPrompts.length
+              ? result.chat.suggestedPrompts
+              : state.curriculumStudy?.suggestedFollowUps ?? [],
+          })
+        : result.chat.suggestedPrompts.length
+          ? result.chat.suggestedPrompts
+          : DEFAULT_FOLLOW_UP_PROMPTS;
     state.usage = result.chat.usage ?? state.usage;
     render();
   }
@@ -614,6 +715,7 @@ export function mountSidePanelApp(root: HTMLElement) {
   async function unlink() {
     await sendMessage({ type: 'ob:clear-link' });
     state.explanation = null;
+    state.curriculumStudy = null;
     state.hints = [];
     state.chatHistory = [];
     state.chatDraft = '';
@@ -639,12 +741,19 @@ export function mountSidePanelApp(root: HTMLElement) {
       error: state.error,
     });
 
-    const isCurriculumPage = state.pageContext?.mode === 'curriculum_content';
-    const pageLooksHintEligible = state.pageContext
-      ? isHintEligible(state.pageContext)
-      : isLikelyCurrentTestUrl(state.activePage?.url);
-    const pageLooksExplainEligible = state.pageContext ? isExplainEligible(state.pageContext) : false;
+    const classification = getPageClassification(state.pageContext);
+    const isEducationalPage = classification?.pageKind === 'educational_content';
+    const isMixedPage = classification?.pageKind === 'mixed';
+    const isUnreadablePage = classification?.pageKind === 'unreadable';
+    const isCurriculumPage = state.pageContext?.mode === 'curriculum_content' || isEducationalPage;
+    const pageLooksHintEligible =
+      state.brobotMode === 'question_tutor' &&
+      (state.pageContext ? isHintEligible(state.pageContext) : isLikelyCurrentTestUrl(state.activePage?.url));
+    const pageLooksExplainEligible = state.pageContext
+      ? isExplainEligible(state.pageContext) || isEducationalPage || isMixedPage
+      : false;
     const hintNextLevel = state.hints.length === 0 ? 1 : state.hints.length === 1 ? 2 : 3;
+    const panelTitle = state.brobotMode === 'explain_page' ? 'Explain with BroBot' : 'Question Tutor';
 
     const container = createElement('div', {
       html: `
@@ -653,7 +762,7 @@ export function mountSidePanelApp(root: HTMLElement) {
             <img src="${BROBOT_ICON_URL}" alt="BroBot" width="32" height="32" style="display:block;width:32px;height:32px;border-radius:8px;" />
             <div>
               <p style="margin:0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#0f766e;font-weight:700;">BroBot</p>
-              <h1 style="margin:6px 0 0;font-size:24px;line-height:1.2;">Question Tutor</h1>
+              <h1 style="margin:6px 0 0;font-size:24px;line-height:1.2;">${escapeHtml(panelTitle)}</h1>
             </div>
           </div>
         </div>
@@ -712,7 +821,61 @@ export function mountSidePanelApp(root: HTMLElement) {
           ? 'Extracting...'
           : state.operation === 'explaining'
             ? 'Generating...'
-            : 'Explain with BroBot';
+            : state.brobotMode === 'explain_page'
+              ? 'Explain this page with BroBot'
+              : 'Explain with BroBot';
+
+      if (isEducationalPage && !state.explanation && !pageLooksHintEligible) {
+        content.appendChild(
+          createElement('div', {
+            html: `<div style="padding:14px;border-radius:16px;background:#f0fdfa;border:1px solid #99f6e4;display:grid;gap:10px;">
+              <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">Learning page detected</p>
+              <p style="margin:0;color:#384152;line-height:1.5;">This looks like a learning page, not a question. BroBot can teach the visible curriculum content instead of forcing Question Tutor mode.</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button id="explain-page" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
+                <button id="force-question" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:white;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Try question detection anyway</button>
+                <button id="unlink-edu" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>
+              </div>
+            </div>`,
+          })
+        );
+        content.querySelector('#explain-page')?.addEventListener('click', () => {
+          state.forceQuestionMode = false;
+          void runExplain();
+        });
+        content.querySelector('#unlink-edu')?.addEventListener('click', () => void unlink());
+        content.querySelector('#force-question')?.addEventListener('click', async () => {
+          state.forceQuestionMode = true;
+          state.brobotMode = 'question_tutor';
+          const pageContext = await extractPageContext({ forceQuestionMode: true });
+          if (!pageContext) {
+            const nextClassification = getPageClassification(state.pageContext);
+            state.error = {
+              message: extractionFailureMessage(nextClassification),
+              code: 'extraction_failure',
+            };
+            render();
+            return;
+          }
+          state.error = null;
+          render();
+        });
+      } else if (isMixedPage && !state.explanation) {
+        content.appendChild(
+          createElement('div', {
+            html: `<div style="padding:14px;border-radius:16px;background:#f8fafc;border:1px solid #cbd5e1;display:grid;gap:8px;">
+              <p style="margin:0;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#0f766e;font-weight:700;">Question + learning content detected</p>
+              <p style="margin:0;color:#384152;line-height:1.5;">BroBot will default to Question Tutor, but you can switch to Explain mode for the surrounding educational text.</p>
+              <button id="switch-explain" ${isBusy ? 'disabled' : ''} style="justify-self:start;border:1px solid #d2cab8;border-radius:999px;background:white;color:#18202b;padding:8px 12px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Switch to Explain mode</button>
+            </div>`,
+          })
+        );
+        content.querySelector('#switch-explain')?.addEventListener('click', () => {
+          state.forceQuestionMode = false;
+          state.brobotMode = 'explain_page';
+          render();
+        });
+      }
 
       if (pageLooksHintEligible) {
         const hintButtonLabel =
@@ -753,26 +916,40 @@ export function mountSidePanelApp(root: HTMLElement) {
         );
       }
 
-      const controls = createElement('div', {
-        html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
-          <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? providerLabel(state.activePage.provider))}</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button id="explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
-            ${pageLooksHintEligible ? '' : `<button id="unlink" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>`}
-          </div>
-          <p style="margin:0;font-size:12px;color:#5c6574;">${isCurriculumPage ? 'Curriculum content detected. Use Explain with BroBot for a teaching summary.' : pageLooksExplainEligible ? 'Review data detected. Use Explain with BroBot for full reasoning.' : 'Use Explain with BroBot for full review-mode reasoning. Hint Mode stays answer-sparing until you explicitly reveal.'}</p>
-        </div>`,
-      });
-      content.appendChild(controls);
-      controls.querySelector('#explain')?.addEventListener('click', () => void runExplain());
-      controls.querySelector('#unlink')?.addEventListener('click', () => void unlink());
+      if (!isEducationalPage || state.explanation || pageLooksHintEligible) {
+        const controls = createElement('div', {
+          html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:10px;">
+            <p style="margin:0;color:#5c6574;line-height:1.45;">Active page: ${escapeHtml(state.activePage.title ?? state.activePage.url ?? providerLabel(state.activePage.provider))}</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button id="explain" ${isBusy ? 'disabled' : ''} style="border:none;border-radius:999px;background:${isBusy ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">${escapeHtml(explainButtonLabel)}</button>
+              ${pageLooksHintEligible ? '' : `<button id="unlink" ${isBusy ? 'disabled' : ''} style="border:1px solid #d2cab8;border-radius:999px;background:#f7f5ef;color:#18202b;padding:10px 14px;font-weight:700;cursor:${isBusy ? 'default' : 'pointer'};">Unlink</button>`}
+            </div>
+            <p style="margin:0;font-size:12px;color:#5c6574;">${
+              isCurriculumPage || state.brobotMode === 'explain_page'
+                ? 'Explain mode teaches the visible page content with high-yield clinical framing.'
+                : pageLooksExplainEligible
+                  ? 'Review data detected. Use Explain with BroBot for full reasoning.'
+                  : 'Use Explain with BroBot for full review-mode reasoning. Hint Mode stays answer-sparing until you explicitly reveal.'
+            }</p>
+          </div>`,
+        });
+        content.appendChild(controls);
+        controls.querySelector('#explain')?.addEventListener('click', () => void runExplain());
+        controls.querySelector('#unlink')?.addEventListener('click', () => void unlink());
+      }
     }
 
-    if (state.error) {
+    if (state.error && !(isEducationalPage && !state.forceQuestionMode)) {
       const copy = ERROR_COPY[state.error.code] ?? ERROR_COPY.unknown;
+      const errorTitle =
+        isUnreadablePage && classification?.detected.referencesCount
+          ? 'References-heavy page'
+          : isUnreadablePage && classification?.detected.hasStem
+            ? 'Could not detect a question'
+            : copy.title;
       const errorCard = createElement('div', {
         html: `<div style="padding:14px;border-radius:16px;background:#fff0ef;border:1px solid #f0c0bc;color:#a02d1f;display:grid;gap:8px;">
-          <p style="margin:0;font-weight:700;">${escapeHtml(copy.title)}</p>
+          <p style="margin:0;font-weight:700;">${escapeHtml(errorTitle)}</p>
           <p style="margin:0;line-height:1.5;">${escapeHtml(state.error.message)}</p>
           ${
             state.extractionDiagnostics?.failureCode
@@ -829,40 +1006,51 @@ export function mountSidePanelApp(root: HTMLElement) {
     }
 
     if (state.explanation) {
-      content.appendChild(createElement('div', { html: renderExplanation(state.explanation) }));
+      if (state.brobotMode === 'explain_page' && state.curriculumStudy && state.pageContext) {
+        const studyPanel = createElement('div', {
+          html: renderCurriculumStudyPanel(state.curriculumStudy, state.pageContext),
+        });
+        content.appendChild(studyPanel);
+        studyPanel.querySelectorAll<HTMLButtonElement>('[data-emphasis-tab]').forEach((button) => {
+          button.addEventListener('click', () => {
+            const emphasis = button.dataset.emphasisTab as CurriculumExplainEmphasis | undefined;
+            if (!emphasis || emphasis === state.explainEmphasis) return;
+            void runExplain({ emphasis });
+          });
+        });
+      } else {
+        content.appendChild(createElement('div', { html: renderExplanation(state.explanation as OrthobulletsExplainResponse, state.brobotMode) }));
+      }
 
-      if (state.explanation.warnings.length) {
+      const questionWarnings = state.explanation.warnings.filter(isClinicallyImportantWarning);
+      if (questionWarnings.length && state.brobotMode !== 'explain_page') {
         content.appendChild(
           createElement('div', {
-            html: `<div style="padding:12px;border-radius:14px;background:#fffaf0;border:1px solid #f5d7a1;color:#7c2d12;">
-              <p style="margin:0;font-size:12px;line-height:1.5;">BroBot notes: ${escapeHtml(state.explanation.warnings.join(' | '))}</p>
+            html: `<div style="padding:10px;border-radius:12px;background:#fffaf0;border:1px solid #f5d7a1;color:#7c2d12;">
+              <p style="margin:0;font-size:12px;line-height:1.4;">BroBot notes: ${escapeHtml(questionWarnings.join(' · '))}</p>
             </div>`,
           })
         );
       }
 
+      const chatPadding = state.brobotMode === 'explain_page' ? '10px' : '14px';
+      const chatGap = state.brobotMode === 'explain_page' ? '8px' : '12px';
       const chatCard = createElement('div', {
-        html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:12px;">
-          <div style="display:grid;gap:6px;">
-            <h3 style="margin:0;font-size:18px;">Follow-up chat</h3>
-            <p style="margin:0;color:#5c6574;line-height:1.5;">Ask BroBot about this exact question without leaving the side panel.</p>
+        html: `<div style="padding:${chatPadding};border-radius:14px;background:white;border:1px solid #ded7c8;display:grid;gap:${chatGap};">
+          <div style="display:grid;gap:4px;">
+            <h3 style="margin:0;font-size:16px;">Ask BroBot</h3>
+            ${
+              state.brobotMode !== 'explain_page'
+                ? '<p style="margin:0;color:#5c6574;line-height:1.4;font-size:12px;">Ask about this exact question without leaving the side panel.</p>'
+                : ''
+            }
           </div>
-          ${state.chatHistory.length || state.operation === 'chatting' ? renderChatTranscript(state.chatHistory, state.operation === 'chatting') : '<p style="margin:0;color:#5c6574;">Try: “Why not the trap answer?” or “Give me an Anki-style card.”</p>'}
-          ${
-            state.chatPrompts.length
-              ? `<div style="display:flex;gap:8px;flex-wrap:wrap;">${state.chatPrompts
-                  .map(
-                    (prompt, index) =>
-                      `<button data-prompt-index="${index}" style="border:1px solid #cbd5e1;border-radius:999px;background:#f8fafc;color:#0f172a;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer;">${escapeHtml(prompt)}</button>`
-                  )
-                  .join('')}</div>`
-              : ''
-          }
-          <form id="chat-form" style="display:grid;gap:8px;">
-            <textarea id="chat-input" rows="3" placeholder="Ask a follow-up..." style="width:100%;box-sizing:border-box;border:1px solid #d2cab8;border-radius:14px;padding:12px;font:inherit;resize:vertical;">${escapeHtml(state.chatDraft)}</textarea>
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
-              <p style="margin:0;font-size:12px;color:#5c6574;">Extracted question context is only sent when you submit a question.</p>
-              <button type="submit" ${state.operation === 'chatting' ? 'disabled' : ''} style="border:none;border-radius:999px;background:${state.operation === 'chatting' ? '#94a3b8' : '#0f766e'};color:white;padding:10px 14px;font-weight:700;cursor:${state.operation === 'chatting' ? 'default' : 'pointer'};">${state.operation === 'chatting' ? 'Sending...' : 'Ask BroBot'}</button>
+          ${state.chatHistory.length || state.operation === 'chatting' ? renderChatTranscript(state.chatHistory, state.operation === 'chatting') : `<p style="margin:0;color:#5c6574;font-size:12px;">${state.brobotMode === 'explain_page' ? 'Pick a topic-specific question below to go deeper.' : 'Try: “Why not the trap answer?” or “Give me an Anki-style card.”'}</p>`}
+          ${state.brobotMode === 'explain_page' ? renderCurriculumChatChips(state.chatPrompts) : state.chatPrompts.length ? renderCurriculumChatChips(state.chatPrompts) : ''}
+          <form id="chat-form" style="display:grid;gap:6px;">
+            <textarea id="chat-input" rows="2" placeholder="Ask a follow-up..." style="width:100%;box-sizing:border-box;border:1px solid #d2cab8;border-radius:12px;padding:10px;font:inherit;resize:vertical;font-size:13px;">${escapeHtml(state.chatDraft)}</textarea>
+            <div style="display:flex;justify-content:flex-end;align-items:center;gap:8px;">
+              <button type="submit" ${state.operation === 'chatting' ? 'disabled' : ''} style="border:none;border-radius:999px;background:${state.operation === 'chatting' ? '#94a3b8' : '#0f766e'};color:white;padding:8px 12px;font-weight:700;font-size:12px;cursor:${state.operation === 'chatting' ? 'default' : 'pointer'};">${state.operation === 'chatting' ? 'Sending...' : 'Ask BroBot'}</button>
             </div>
           </form>
         </div>`,

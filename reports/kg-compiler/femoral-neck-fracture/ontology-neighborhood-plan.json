@@ -1,0 +1,111 @@
+{
+  "topicKey": "femoral-neck-fracture",
+  "pilotKey": "femoral-neck-fracture-neighborhood",
+  "primaryEntitySlug": "femoral-neck-fracture",
+  "displayName": "Femoral Neck Fracture",
+  "generatedAt": "2026-07-05T21:36:15.763Z",
+  "nodes": [
+    {
+      "slug": "femoral-neck-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Femoral Neck Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "garden-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Garden Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-hemiarthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Hip Hemiarthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "avascular-necrosis",
+      "entityType": "complication",
+      "preferredLabel": "Avascular Necrosis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cannulated-screw-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cannulated Screw Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-neck-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Femoral Neck Nonunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-neck-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Femoral Neck ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "displaced-femoral-neck-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Displaced Femoral Neck Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 4,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "femoral-neck-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "hip-hemiarthroplasty",
+      "femoral-neck-orif"
+    ],
+    "classification": [
+      "garden-classification"
+    ],
+    "imaging": [
+      "displaced-femoral-neck-fracture"
+    ],
+    "complication": [
+      "avascular-necrosis",
+      "femoral-neck-nonunion"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [
+      "cannulated-screw-fixation"
+    ],
+    "supporting": []
+  }
+}

@@ -1,0 +1,810 @@
+{
+  "generatedAt": "2026-07-05T22:45:34.417Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-07c359c5",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 6,
+  "redirectedToDecisionPoint": 4,
+  "candidates": [
+    {
+      "draftId": "claim-pilon-fracture-fact-recognize-high-energy-ti",
+      "claimText": "Recognize high-energy tibial plafond fractures with soft-tissue risk.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-explain-staged-managemen",
+      "claimText": "Explain staged management with external fixation bridging.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-identify-wound-complicat",
+      "claimText": "Identify wound complications and articular restoration priorities.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-soft-tissue-status",
+      "claimText": "Soft tissue status.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-articular-comminution",
+      "claimText": "articular comminution.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-staged-fixation",
+      "claimText": "staged fixation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-fibula-role",
+      "claimText": "fibula role.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-anatomy_pearl-tibial-plafond",
+      "claimText": "Tibial plafond.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-anatomy_pearl-distal-tibia-articular-s",
+      "claimText": "Distal tibia articular surface.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mortise-stability-anatomy_pearl-ankle-mortise",
+      "claimText": "Ankle mortise.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "mortise-stability",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-anatomy_pearl-plantar-soft-tissues",
+      "claimText": "Plantar soft tissues.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-pilon-fractures-are-ankl",
+      "claimText": "Pilon fractures are ankle-spanning injuries where soft tissues often dictate staged operative timing.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-cognitive_trap-lead-with-soft-tissue-en",
+      "claimText": "Lead with soft-tissue envelope language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-cognitive_trap-mention-spanning-ex-fix-",
+      "claimText": "Mention spanning ex-fix bridge.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-clinical_script-assess-soft-tissues",
+      "claimText": "Assess soft tissues.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-clinical_script-describe-articular-injur",
+      "claimText": "Describe articular injury.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-clinical_script-apply-splint-ex-fix-brid",
+      "claimText": "Apply splint/ex-fix bridge.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-clinical_script-plan-delayed-orif",
+      "claimText": "Plan delayed ORIF.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-anatomy_pearl-ankle-joint-surface",
+      "claimText": "Ankle joint surface.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-anatomy_pearl-distal-fibula-relationsh",
+      "claimText": "Distal fibula relationship.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-ruedi-allgower-concepts",
+      "claimText": "Ruedi-Allgower concepts.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-ao-pilon-patterns",
+      "claimText": "AO pilon patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-imaging_point-ap-lateral-ankle",
+      "claimText": "AP/lateral ankle.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-imaging_point-ct-for-articular-mapping",
+      "claimText": "CT for articular mapping.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-board_trap-definitive-fixation-thro",
+      "claimText": "Definitive fixation through compromised soft tissues increases wound failure risk.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-wound-breakdown",
+      "claimText": "Wound breakdown.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-infection",
+      "claimText": "Infection.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pilon-fracture-fact-post-traumatic-arthritis",
+      "claimText": "Post-traumatic arthritis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pilon-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-13",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Why stage pilon fixation?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ]
+    },
+    {
+      "text": "When is fibula fixation part of the plan?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ]
+    },
+    {
+      "text": "Soft-tissue swelling, open injury, articular displacement",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ]
+    },
+    {
+      "text": "Spanning external fixation",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ]
+    },
+    {
+      "text": "Definitive pilon ORIF",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ]
+    },
+    {
+      "text": "Ankle fusion in salvage",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-recognize-high-energy-ti",
+      "draftId": "claim-pilon-fracture-fact-recognize-high-energy-ti",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-explain-staged-managemen",
+      "draftId": "claim-pilon-fracture-fact-explain-staged-managemen",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pilon-fracture-board_trap-definitive-fixation-thro",
+      "draftId": "claim-pilon-fracture-board_trap-definitive-fixation-thro",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pilon-fracture-imaging_point-ap-lateral-ankle",
+      "draftId": "claim-pilon-fracture-imaging_point-ap-lateral-ankle",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc49835"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pilon-fracture-cognitive_trap-lead-with-soft-tissue-en",
+      "draftId": "claim-pilon-fracture-cognitive_trap-lead-with-soft-tissue-en",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-identify-wound-complicat",
+      "draftId": "claim-pilon-fracture-fact-identify-wound-complicat",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-30004216"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-soft-tissue-status",
+      "draftId": "claim-pilon-fracture-fact-soft-tissue-status",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pilon-fracture-fact-articular-comminution",
+      "draftId": "claim-pilon-fracture-fact-articular-comminution",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-7fc3a2a1"
+      ],
+      "verified": false
+    }
+  ]
+}

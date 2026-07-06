@@ -1,0 +1,335 @@
+{
+  "topicKey": "implant-fixation-principles",
+  "pilotKey": "implant-fixation-principles-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 77,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 77
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|condition|intertrochanteric-fracture",
+      "reason": "entity exists: intertrochanteric-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "reason": "entity exists: extensor-mechanism"
+    },
+    {
+      "fingerprint": "create|condition|subtrochanteric-fracture",
+      "reason": "entity exists: subtrochanteric-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub",
+      "reason": "entity exists: adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|collateral-ligaments",
+      "reason": "entity exists: collateral-ligaments"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|short-external-rotators",
+      "reason": "entity exists: short-external-rotators"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femur",
+      "reason": "entity exists: femur"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibia",
+      "reason": "entity exists: tibia"
+    },
+    {
+      "fingerprint": "create|implant|polyethylene-liner",
+      "reason": "entity exists: polyethylene-liner"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-head",
+      "reason": "entity exists: femoral-head"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|common-peroneal-nerve",
+      "reason": "entity exists: common-peroneal-nerve"
+    },
+    {
+      "fingerprint": "create|procedure|total-hip-arthroplasty",
+      "reason": "entity exists: total-hip-arthroplasty"
+    },
+    {
+      "fingerprint": "create|condition|knee-osteoarthritis",
+      "reason": "entity exists: knee-osteoarthritis"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|implant-fixation-principles",
+      "reason": "entity exists: implant-fixation-principles"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-diaphysis",
+      "reason": "entity exists: femoral-diaphysis"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|primary-stability",
+      "reason": "entity exists: primary-stability"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|bone-ingrowth",
+      "reason": "entity exists: bone-ingrowth"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|labrum",
+      "reason": "entity exists: labrum"
+    },
+    {
+      "fingerprint": "create|implant|tibial-insert",
+      "reason": "entity exists: tibial-insert"
+    },
+    {
+      "fingerprint": "create|fixation_method|press-fit-fixation",
+      "reason": "entity exists: press-fit-fixation"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibial-plateau",
+      "reason": "entity exists: tibial-plateau"
+    },
+    {
+      "fingerprint": "create|condition|distal-femur-fracture",
+      "reason": "entity exists: distal-femur-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-condyles",
+      "reason": "entity exists: femoral-condyles"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|quadriceps-tendon",
+      "reason": "entity exists: quadriceps-tendon"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hip-joint",
+      "reason": "entity exists: hip-joint"
+    },
+    {
+      "fingerprint": "create|procedure|total-knee-arthroplasty",
+      "reason": "entity exists: total-knee-arthroplasty"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|gluteus-minimus",
+      "reason": "entity exists: gluteus-minimus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|cruciate-ligaments",
+      "reason": "entity exists: cruciate-ligaments"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|patella",
+      "reason": "entity exists: patella"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-neck",
+      "reason": "entity exists: femoral-neck"
+    },
+    {
+      "fingerprint": "create|procedure|unicompartmental-knee-arthroplasty",
+      "reason": "entity exists: unicompartmental-knee-arthroplasty"
+    },
+    {
+      "fingerprint": "create|procedure|revision-arthroplasty",
+      "reason": "entity exists: revision-arthroplasty"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|bearing-surface-selection",
+      "reason": "entity exists: bearing-surface-selection"
+    },
+    {
+      "fingerprint": "create|procedure|polyethylene-wear-osteolysis",
+      "reason": "entity exists: polyethylene-wear-osteolysis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|greater-trochanter",
+      "reason": "entity exists: greater-trochanter"
+    },
+    {
+      "fingerprint": "create|condition|periprosthetic-joint-infection",
+      "reason": "entity exists: periprosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|condition|femoral-shaft-fracture",
+      "reason": "entity exists: femoral-shaft-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-nerve",
+      "reason": "entity exists: femoral-nerve"
+    },
+    {
+      "fingerprint": "create|condition|hip-prosthetic-joint-infection",
+      "reason": "entity exists: hip-prosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-femur",
+      "reason": "entity exists: proximal-femur"
+    },
+    {
+      "fingerprint": "create|procedure|adverse-local-tissue-reaction",
+      "reason": "entity exists: adverse-local-tissue-reaction"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-femur",
+      "reason": "entity exists: distal-femur"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|gluteus-medius",
+      "reason": "entity exists: gluteus-medius"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|acetabulum",
+      "reason": "entity exists: acetabulum"
+    },
+    {
+      "fingerprint": "create|condition|knee-prosthetic-joint-infection",
+      "reason": "entity exists: knee-prosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|implant|femoral-component",
+      "reason": "entity exists: femoral-component"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|calcar",
+      "reason": "entity exists: calcar"
+    },
+    {
+      "fingerprint": "create|condition|femoral-neck-fracture",
+      "reason": "entity exists: femoral-neck-fracture"
+    },
+    {
+      "fingerprint": "create|condition|compartment-syndrome",
+      "reason": "entity exists: compartment-syndrome"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|popliteal-artery",
+      "reason": "entity exists: popliteal-artery"
+    },
+    {
+      "fingerprint": "create|implant|acetabular-component",
+      "reason": "entity exists: acetabular-component"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hip-capsule",
+      "reason": "entity exists: hip-capsule"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|patellar-tendon",
+      "reason": "entity exists: patellar-tendon"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|implant-concepts-hub",
+      "reason": "entity exists: implant-concepts-hub"
+    },
+    {
+      "fingerprint": "create|fixation_method|cement-mantle",
+      "reason": "entity exists: cement-mantle"
+    },
+    {
+      "fingerprint": "create|condition|tibial-shaft-fracture",
+      "reason": "entity exists: tibial-shaft-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|intertrochanteric-region",
+      "reason": "entity exists: intertrochanteric-region"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lesser-trochanter",
+      "reason": "entity exists: lesser-trochanter"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-femur-anatomy-hub",
+      "reason": "entity exists: proximal-femur-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery",
+      "reason": "entity exists: medial-femoral-circumflex-artery"
+    },
+    {
+      "fingerprint": "create|implant|femoral-stem",
+      "reason": "entity exists: femoral-stem"
+    },
+    {
+      "fingerprint": "create|implant|patellar-component",
+      "reason": "entity exists: patellar-component"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sciatic-nerve",
+      "reason": "entity exists: sciatic-nerve"
+    },
+    {
+      "fingerprint": "create|fixation_method|cemented-fixation",
+      "reason": "entity exists: cemented-fixation"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pelvis",
+      "reason": "entity exists: pelvis"
+    },
+    {
+      "fingerprint": "create|implant|tibial-baseplate",
+      "reason": "entity exists: tibial-baseplate"
+    },
+    {
+      "fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|implant-fixation-principles",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|implant-fixation-principles|involves_anatomy|adult-reconstruction-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|implant-fixation-principles",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|press-fit-fixation|prerequisite_for|implant-fixation-principles",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|cemented-fixation|prerequisite_for|implant-fixation-principles",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|cement-mantle|prerequisite_for|implant-fixation-principles",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tibial-shaft-fracture|prerequisite_for|implant-fixation-principles",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|total-hip-arthroplasty|prerequisite_for|implant-fixation-principles",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|total-knee-arthroplasty|prerequisite_for|implant-fixation-principles",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|adult-recon-implant-fixation|implant-fixation-principles",
+      "reason": "curriculum node not found"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

@@ -10,12 +10,14 @@ export function ReadinessObjectiveCard({
   completed,
   onToggleExpanded,
   onToggleCompleted,
+  onBrobotLaunch,
 }: {
   objective: CaseReadinessObjective;
   expanded: boolean;
   completed: boolean;
   onToggleExpanded: () => void;
   onToggleCompleted: () => void;
+  onBrobotLaunch?: () => void;
 }) {
   return (
     <article className="rounded-[1.5rem] border border-slate-200 bg-white shadow-sm">
@@ -111,7 +113,10 @@ export function ReadinessObjectiveCard({
               ) : null}
 
               <div className="mt-4">
-                <CaseReadinessActions actions={objective.brobotActions} />
+                <CaseReadinessActions
+                  actions={objective.brobotActions}
+                  onLaunch={onBrobotLaunch}
+                />
               </div>
             </div>
           ) : null}

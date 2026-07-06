@@ -1,0 +1,3307 @@
+{
+  "packetId": "ev-packet-f09b905a",
+  "topicId": "distal-humerus-fracture",
+  "createdAt": "2026-07-05T21:57:56.418Z",
+  "packetVersion": "1.0.0",
+  "ontologyVersion": "2026-07-05",
+  "compilerVersion": "1.0.0",
+  "registryVersion": "2026-07-05",
+  "topicContext": {
+    "topicKey": "distal-humerus-fracture",
+    "pilotKey": "distal-humerus-fracture-neighborhood",
+    "displayName": "Distal Humerus Fracture",
+    "primaryEntitySlug": "distal-humerus-fracture",
+    "targetMaturityLevel": 7,
+    "curriculumNodeSlug": "trauma-distal-humerus-fractures",
+    "prepareTopicId": "distal-humerus-fracture",
+    "aliases": [
+      "distal humerus fracture",
+      "trauma-distal-humerus-fractures",
+      "distal-humerus-fracture-neighborhood"
+    ]
+  },
+  "sourceManifest": [
+    {
+      "sourceId": "anki:trauma-distal-humerus-fractures",
+      "sourceType": "anki_card",
+      "label": "Anki card mappings for trauma-distal-humerus-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "distal-humerus-fracture",
+      "sourceType": "static_prepare",
+      "label": "Prepare topic: Distal Humerus Fracture",
+      "path": "trauma-distal-humerus-fractures curriculum bridge",
+      "copyrightPolicy": "internal_draft_only",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "distal-humerus-fracture-neighborhood:database",
+      "sourceType": "canonical_snapshot",
+      "label": "Canonical neighborhood snapshot (database)",
+      "path": "canonical_entities + canonical_relationships",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "distal-humerus-fracture-neighborhood:proposals:database",
+      "sourceType": "proposal_history",
+      "label": "Proposal packet (database)",
+      "path": "kg_automation_proposals",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "distal-humerus-fracture-neighborhood:quality",
+      "sourceType": "quality_signal",
+      "label": "Ontology quality signals",
+      "path": "kg-compiler/gap-analyzer.ts",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "distal-humerus-fracture-neighborhood:review",
+      "sourceType": "review_history",
+      "label": "Proposal review history",
+      "path": "proposal.review_status fields",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "ob:trauma-distal-humerus-fractures",
+      "sourceType": "orthobullets_question",
+      "label": "Orthobullets question mappings for trauma-distal-humerus-fractures",
+      "path": "external_questions + curriculum_node mapping",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "trauma-distal-humerus-fractures",
+      "sourceType": "curriculum_node",
+      "label": "Curriculum node: trauma-distal-humerus-fractures",
+      "path": "curriculum_nodes.slug",
+      "copyrightPolicy": "reference_link_only",
+      "trustTier": "primary"
+    }
+  ],
+  "canonicalSnapshot": {
+    "source": "database",
+    "entityCount": 6,
+    "relationshipCount": 3,
+    "claimCount": 0,
+    "decisionPointCount": 0,
+    "primaryEntitySlug": "distal-humerus-fracture",
+    "entitySlugs": [
+      "distal-humerus-fracture",
+      "distal-humerus-nonunion",
+      "distal-humerus-orif",
+      "elbow-stiffness",
+      "intra-articular-distal-humerus-fracture",
+      "total-elbow-arthroplasty-trauma"
+    ],
+    "loaded": true
+  },
+  "sourceEvidence": [
+    {
+      "evidenceId": "ev-anki-card-c1229eb5",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-distal-humerus-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.92,
+      "provenanceHint": "anki_kg_mapping:trauma-distal-humerus-fractures",
+      "label": "Anki card mapping count",
+      "summary": "7 high-confidence Anki card mapping(s) for curriculum node trauma-distal-humerus-fractures",
+      "payload": {
+        "curriculumNodeSlug": "trauma-distal-humerus-fractures",
+        "mappedCardCount": 7,
+        "deckBranchHint": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
+        "storesCardText": false,
+        "storesCardAnswer": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "anki",
+        "asset_signal",
+        "metadata_only"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-anki-card-e2dcb5e3",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-distal-humerus-fractures",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "deck_branch_hint",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.85,
+      "provenanceHint": "anki_deck_branch:Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
+      "label": "Anki deck branch hint",
+      "summary": "Primary deck branch for distal-humerus-fracture Anki cards (metadata only)",
+      "payload": {
+        "deckBranch": "Marty McFlyin's Ortho Deck::3) OrthoBullets::Trauma::Upper Extremity",
+        "storesCardText": false
+      },
+      "tags": [
+        "anki",
+        "deck_hint"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-b2cbe6b6",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "distal-humerus-fracture-neighborhood",
+      "extractionMethod": "entity_index",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "entity_slugs:database",
+      "label": "Entity slug index",
+      "summary": "6 entity slug(s) in neighborhood",
+      "payload": {
+        "entitySlugs": [
+          "distal-humerus-fracture",
+          "distal-humerus-nonunion",
+          "distal-humerus-orif",
+          "elbow-stiffness",
+          "intra-articular-distal-humerus-fracture",
+          "total-elbow-arthroplasty-trauma"
+        ],
+        "entityTypes": {
+          "distal-humerus-orif": "procedure",
+          "total-elbow-arthroplasty-trauma": "procedure",
+          "elbow-stiffness": "complication",
+          "distal-humerus-fracture": "condition",
+          "distal-humerus-nonunion": "complication",
+          "intra-articular-distal-humerus-fracture": "imaging_finding"
+        }
+      },
+      "tags": [
+        "canonical",
+        "entity_index"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-e4ce04bd",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "distal-humerus-fracture-neighborhood",
+      "extractionMethod": "neighborhood_counts",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.95,
+      "provenanceHint": "canonical_snapshot:database",
+      "label": "Neighborhood entity/relationship counts",
+      "summary": "6 entities, 3 relationships from database",
+      "payload": {
+        "source": "database",
+        "entityCount": 6,
+        "relationshipCount": 3,
+        "claimCount": 0,
+        "decisionPointCount": 0,
+        "primaryEntitySlug": "distal-humerus-fracture",
+        "verified": false
+      },
+      "tags": [
+        "canonical",
+        "snapshot",
+        "database"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-56d0cfd6",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-distal-humerus-fractures",
+      "extractionMethod": "alias_index",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "curriculum_node_aliases:trauma-distal-humerus-fractures",
+      "label": "Topic aliases",
+      "summary": "3 topic alias(es) for resolution",
+      "payload": {
+        "aliases": [
+          "distal humerus fracture",
+          "trauma-distal-humerus-fractures",
+          "distal-humerus-fracture-neighborhood"
+        ]
+      },
+      "tags": [
+        "curriculum",
+        "aliases"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-a2fcf63f",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-distal-humerus-fractures",
+      "path": "curriculum_nodes.slug",
+      "extractionMethod": "slug_mapping",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.95,
+      "provenanceHint": "curriculum_node:trauma-distal-humerus-fractures",
+      "label": "Curriculum node mapping",
+      "summary": "Primary curriculum node trauma-distal-humerus-fractures maps to entity distal-humerus-fracture",
+      "payload": {
+        "curriculumNodeSlug": "trauma-distal-humerus-fractures",
+        "primaryEntitySlug": "distal-humerus-fracture",
+        "topicKey": "distal-humerus-fracture",
+        "pilotKey": "distal-humerus-fracture-neighborhood",
+        "prepareTopicId": "distal-humerus-fracture",
+        "legacyRetargetKey": "retarget:trauma-distal-humerus-fractures"
+      },
+      "tags": [
+        "curriculum",
+        "node_mapping",
+        "distal-humerus-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-orthobullets-question-e2afb859",
+      "sourceType": "orthobullets_question",
+      "sourceId": "trauma-distal-humerus-fractures",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "orthobullets_mapping:trauma-distal-humerus-fractures",
+      "label": "Orthobullets question mapping count",
+      "summary": "26 Orthobullets question mapping(s) for trauma-distal-humerus-fractures (metadata only — no stems/answers)",
+      "payload": {
+        "curriculumNodeSlug": "trauma-distal-humerus-fractures",
+        "mappedQuestionCount": 26,
+        "prepareTopicId": "distal-humerus-fracture",
+        "storesQuestionStem": false,
+        "storesAnswer": false,
+        "storesExplanation": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "orthobullets",
+        "metadata_only",
+        "asset_signal"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-proposal-history-11a0c51f",
+      "sourceType": "proposal_history",
+      "sourceId": "distal-humerus-fracture-neighborhood",
+      "extractionMethod": "packet_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "proposal_packet:database",
+      "label": "Proposal packet summary",
+      "summary": "31 proposal(s) from database",
+      "payload": {
+        "source": "database",
+        "totalProposals": 31,
+        "byType": {
+          "create_canonical_entity": 6,
+          "add_canonical_relationship": 17,
+          "propose_educational_claim": 5,
+          "link_curriculum_node_to_entity": 1,
+          "propose_decision_point": 2
+        },
+        "byStatus": {
+          "applied": 19,
+          "needs_review": 12
+        },
+        "fingerprints": [
+          "bridge|trauma-distal-humerus-fractures|distal-humerus-fracture",
+          "claim|claim-dh-case-script",
+          "claim|claim-dh-column-concept",
+          "claim|claim-dh-stiffness",
+          "claim|claim-dh-tea-elderly",
+          "claim|claim-dh-ulnar-nerve",
+          "create|complication|distal-humerus-nonunion",
+          "create|complication|elbow-stiffness",
+          "create|condition|distal-humerus-fracture",
+          "create|imaging_finding|intra-articular-distal-humerus-fracture",
+          "create|procedure|distal-humerus-orif",
+          "create|procedure|total-elbow-arthroplasty-trauma",
+          "dp|dp-dh-orif",
+          "dp|dp-dh-tea",
+          "rel|distal-humerus-fracture|at_risk_structure|median-nerve",
+          "rel|distal-humerus-fracture|at_risk_structure|ulnar-nerve",
+          "rel|distal-humerus-fracture|has_complication|distal-humerus-nonunion",
+          "rel|distal-humerus-fracture|has_complication|elbow-stiffness",
+          "rel|distal-humerus-fracture|has_imaging_finding|intra-articular-distal-humerus-fracture",
+          "rel|distal-humerus-fracture|injured_in|distal-humerus",
+          "rel|distal-humerus-fracture|involves_anatomy|capitellum",
+          "rel|distal-humerus-fracture|involves_anatomy|lateral-column",
+          "rel|distal-humerus-fracture|involves_anatomy|medial-column",
+          "rel|distal-humerus-fracture|involves_anatomy|trochlea",
+          "rel|distal-humerus-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+          "rel|distal-humerus-fracture|treated_by|distal-humerus-orif",
+          "rel|distal-humerus-fracture|treated_by|total-elbow-arthroplasty-trauma",
+          "rel|distal-humerus-orif|at_risk_structure|ulnar-nerve",
+          "rel|distal-humerus-orif|involves_anatomy|distal-humerus",
+          "rel|intra-articular-distal-humerus-fracture|indicates_treatment|distal-humerus-orif",
+          "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|distal-humerus-fracture"
+        ]
+      },
+      "tags": [
+        "proposals",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-quality-signal-a89b1db9",
+      "sourceType": "quality_signal",
+      "sourceId": "distal-humerus-fracture-neighborhood",
+      "extractionMethod": "gap_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "ontology_gaps:distal-humerus-fracture-neighborhood",
+      "label": "Ontology gap summary",
+      "summary": "28 gap(s) across 6 kind(s)",
+      "payload": {
+        "gapCount": 28,
+        "gapsByKind": {
+          "missing_entity": 4,
+          "missing_relationship": 13,
+          "missing_claim": 5,
+          "missing_decision_point": 3,
+          "missing_metadata": 1,
+          "missing_asset_link": 2
+        },
+        "gapsByPriority": {
+          "critical": 10,
+          "high": 9,
+          "medium": 9
+        },
+        "topGaps": [
+          {
+            "id": "gap-entity-neighbor-1",
+            "kind": "missing_entity",
+            "priority": "critical",
+            "reason": "Distal Humerus ORIF neighborhood has 0/1 anatomy_structure entities."
+          },
+          {
+            "id": "gap-rel-2",
+            "kind": "missing_relationship",
+            "priority": "critical",
+            "reason": "Distal Humerus ORIF missing outbound involves_anatomy (0/1)."
+          },
+          {
+            "id": "gap-rel-3",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Distal Humerus ORIF missing outbound at_risk_structure (0/1)."
+          },
+          {
+            "id": "gap-entity-neighbor-4",
+            "kind": "missing_entity",
+            "priority": "critical",
+            "reason": "Total Elbow Arthroplasty for Trauma neighborhood has 0/1 anatomy_structure entities."
+          },
+          {
+            "id": "gap-rel-5",
+            "kind": "missing_relationship",
+            "priority": "critical",
+            "reason": "Total Elbow Arthroplasty for Trauma missing outbound involves_anatomy (0/1)."
+          },
+          {
+            "id": "gap-rel-6",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Total Elbow Arthroplasty for Trauma missing outbound at_risk_structure (0/1)."
+          },
+          {
+            "id": "gap-entity-neighbor-7",
+            "kind": "missing_entity",
+            "priority": "critical",
+            "reason": "Distal Humerus Fracture neighborhood has 0/3 anatomy_structure entities."
+          },
+          {
+            "id": "gap-entity-neighbor-8",
+            "kind": "missing_entity",
+            "priority": "high",
+            "reason": "Distal Humerus Fracture neighborhood has 0/1 classification_system entities."
+          }
+        ]
+      },
+      "tags": [
+        "quality",
+        "gaps"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-review-history-f740a110",
+      "sourceType": "review_history",
+      "sourceId": "distal-humerus-fracture-neighborhood",
+      "extractionMethod": "status_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.92,
+      "provenanceHint": "review_status:distal-humerus-fracture-neighborhood",
+      "label": "Review status distribution",
+      "summary": "0 reviewed, 0 pending of 31 proposals",
+      "payload": {
+        "total": 31,
+        "reviewedCount": 0,
+        "pendingCount": 0,
+        "approvedCount": 0,
+        "routes": {
+          "AUTO_APPROVED_LOW_RISK": 19,
+          "ATTENDING_REVIEW": 8,
+          "HUMAN_REVIEW": 3,
+          "AUTO_REVISED": 1
+        }
+      },
+      "tags": [
+        "review",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-a1c5d62a",
+      "sourceType": "static_prepare",
+      "sourceId": "distal-humerus-fracture",
+      "path": "trauma-distal-humerus-fractures curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-distal-humerus-fractures curriculum bridge#deep",
+      "label": "Distal Humerus Fracture — Deep study template",
+      "summary": "Static Prepare Deep study template for Distal Humerus Fracture",
+      "payload": {
+        "section": "deep",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "anatomy": [
+          "Medial and lateral columns",
+          "Olecranon fossa",
+          "Trochlea and capitellum"
+        ],
+        "classification": [
+          "Extra-articular versus intra-articular patterns"
+        ],
+        "imaging": [
+          "AP and lateral elbow radiographs",
+          "CT for complex articular planning"
+        ],
+        "decisionMaking": [
+          "Articular involvement, bone quality, patient demand"
+        ],
+        "treatmentOptions": [
+          "ORIF",
+          "Total elbow arthroplasty in selected elderly patients"
+        ],
+        "boardPearls": [
+          "Ulnar nerve protection is essential in posterior exposure"
+        ],
+        "complications": [
+          "Elbow stiffness",
+          "Nonunion",
+          "Ulnar neuropathy"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "distal-humerus-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-a1c6cbbe",
+      "sourceType": "static_prepare",
+      "sourceId": "distal-humerus-fracture",
+      "path": "trauma-distal-humerus-fractures curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-distal-humerus-fractures curriculum bridge#fast",
+      "label": "Distal Humerus Fracture — Fast study template",
+      "summary": "Static Prepare Fast study template for Distal Humerus Fracture",
+      "payload": {
+        "section": "fast",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "mustKnow": [
+          "Articular involvement, column comminution, nerve exam, splint position"
+        ],
+        "anatomyFocus": [
+          "Medial and lateral columns",
+          "Capitellum and trochlea",
+          "Ulnar nerve"
+        ],
+        "oneLiner": "Distal humerus fractures are elbow injuries where articular restoration and nerve protection drive operative planning.",
+        "pimpQuestions": [
+          "Why do columns matter?",
+          "When is total elbow arthroplasty considered?"
+        ],
+        "orSurvivalTips": [
+          "Use dual-column fixation language",
+          "Mention ulnar nerve transposition/protection"
+        ],
+        "caseSteps": [
+          "Describe articular step-off",
+          "Check ulnar nerve",
+          "State ORIF versus arthroplasty pathway"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "distal-humerus-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-dd6e2ff3",
+      "sourceType": "static_prepare",
+      "sourceId": "distal-humerus-fracture",
+      "path": "trauma-distal-humerus-fractures curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-distal-humerus-fractures curriculum bridge#metadata",
+      "label": "Distal Humerus Fracture — Topic metadata",
+      "summary": "Static Prepare Topic metadata for Distal Humerus Fracture",
+      "payload": {
+        "section": "metadata",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "tags": [
+          "elbow",
+          "intra-articular",
+          "column fixation"
+        ],
+        "trackId": "trauma",
+        "subspecialty": "Trauma"
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "distal-humerus-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-e29a70a9",
+      "sourceType": "static_prepare",
+      "sourceId": "distal-humerus-fracture",
+      "path": "trauma-distal-humerus-fractures curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-distal-humerus-fractures curriculum bridge#learning_objectives",
+      "label": "Distal Humerus Fracture — Learning objectives",
+      "summary": "Static Prepare Learning objectives for Distal Humerus Fracture",
+      "payload": {
+        "section": "learning_objectives",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "objectives": [
+          "Use column and articular concepts for distal humerus fractures.",
+          "Identify ulnar and median nerve risks during fixation.",
+          "Discuss ORIF versus arthroplasty in elderly patients."
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "distal-humerus-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:57:56.418Z"
+    }
+  ],
+  "extractedSignals": [
+    {
+      "signalId": "ev-signal-a0c49c48",
+      "signalType": "anki_card",
+      "sourceEvidenceIds": [
+        "ev-anki-card-c1229eb5"
+      ],
+      "summary": "7 high-confidence Anki card mapping(s) for curriculum node trauma-distal-humerus-fractures",
+      "strength": 0.92,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-21e3753b",
+      "signalType": "orthobullets_question",
+      "sourceEvidenceIds": [
+        "ev-orthobullets-question-e2afb859"
+      ],
+      "summary": "26 Orthobullets question mapping(s) for trauma-distal-humerus-fractures (metadata only — no stems/answers)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-35ce5037",
+      "signalType": "quality_signal",
+      "sourceEvidenceIds": [
+        "ev-quality-signal-a89b1db9"
+      ],
+      "summary": "28 gap(s) across 6 kind(s)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "gap_summary"
+      }
+    }
+  ],
+  "assetSignals": [
+    {
+      "assetType": "anki_card",
+      "sourceId": "trauma-distal-humerus-fractures",
+      "mappedEntitySlug": "distal-humerus-fracture",
+      "mappingCount": 7,
+      "confidenceHint": 0.92,
+      "metadataOnly": true
+    },
+    {
+      "assetType": "orthobullets_question",
+      "sourceId": "trauma-distal-humerus-fractures",
+      "mappedEntitySlug": "distal-humerus-fracture",
+      "mappingCount": 26,
+      "confidenceHint": 0.9,
+      "metadataOnly": true
+    }
+  ],
+  "existingProposals": [
+    {
+      "id": "0e1518b2-f6f5-4b80-81fe-85529e3ecc02",
+      "proposal_fingerprint": "create|imaging_finding|intra-articular-distal-humerus-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-distal-humerus-fractures",
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "imaging_finding",
+      "proposed_entity_label": "Intra-articular Distal Humerus Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Intra-articular Distal Humerus Fracture",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:26.171+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "intra-articular-distal-humerus-fracture",
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "description": "Articular involvement of capitellum and/or trochlea requiring anatomic restoration.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:37.763824+00:00",
+      "updated_at": "2026-07-05T21:55:26.262761+00:00"
+    },
+    {
+      "id": "7464953b-2d0f-4611-8a48-bb564845fc77",
+      "proposal_fingerprint": "create|procedure|total-elbow-arthroplasty-trauma",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-distal-humerus-fractures",
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "procedure",
+      "proposed_entity_label": "Total Elbow Arthroplasty for Trauma",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Total Elbow Arthroplasty for Trauma",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:26.261+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "total-elbow-arthroplasty-trauma",
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "description": "Arthroplasty option for unreconstructable distal humerus fracture in elderly patients.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:38.147094+00:00",
+      "updated_at": "2026-07-05T21:55:26.35279+00:00"
+    },
+    {
+      "id": "f4bb4a33-3360-4a41-971c-2eb7b21ebede",
+      "proposal_fingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|distal-humerus-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "prerequisite_for",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship prerequisite_for",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:26.355+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "distal-humerus-fracture",
+        "subject_slug": "upper-extremity-trauma-anatomy-hub",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "condition",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "anatomy_structure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "call",
+            "or"
+          ],
+          "educational_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:43.69497+00:00",
+      "updated_at": "2026-07-05T21:55:26.446085+00:00"
+    },
+    {
+      "id": "86da97eb-9eac-406d-8c24-cefaedb83baf",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|injured_in|distal-humerus",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "injured_in",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship injured_in",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:26.451+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "distal-humerus",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "clinical_importance": "high",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:43.890026+00:00",
+      "updated_at": "2026-07-05T21:55:26.542581+00:00"
+    },
+    {
+      "id": "8c26be91-971e-4f39-ac98-145f8ad5f823",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|at_risk_structure|ulnar-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "at_risk_structure",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship at_risk_structure",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "ulnar-nerve",
+        "subject_slug": "distal-humerus-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "posteromedial_exposure",
+          "context_relevance": [
+            "or"
+          ],
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:45.018858+00:00",
+      "updated_at": "2026-07-05T21:55:14.475154+00:00"
+    },
+    {
+      "id": "a58b719f-1607-47d1-9593-3da39b90a634",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:26.542+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "upper-extremity-trauma-anatomy-hub",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:44.828441+00:00",
+      "updated_at": "2026-07-05T21:55:26.632213+00:00"
+    },
+    {
+      "id": "db2102b1-3b20-4d08-89c6-db728e44b9c2",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|involves_anatomy|medial-column",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:26.732+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "medial-column",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "column_fixation",
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:44.074417+00:00",
+      "updated_at": "2026-07-05T21:55:26.827006+00:00"
+    },
+    {
+      "id": "ef0e201e-8947-4fcf-98f8-69f4fc3447b3",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|involves_anatomy|trochlea",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:26.826+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "trochlea",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "articular"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:44.637469+00:00",
+      "updated_at": "2026-07-05T21:55:26.918279+00:00"
+    },
+    {
+      "id": "36918dfd-a483-44dd-85d9-d2e89871f22f",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|treated_by|distal-humerus-orif",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "distal-humerus-orif",
+        "subject_slug": "distal-humerus-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:45.781844+00:00",
+      "updated_at": "2026-07-05T21:55:15.270877+00:00"
+    },
+    {
+      "id": "a4a1fda9-7454-4544-be4c-a7d83e097b0c",
+      "proposal_fingerprint": "claim|claim-dh-tea-elderly",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "distal humerus elderly treatment",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "draft_id": "claim-dh-tea-elderly",
+        "verified": false,
+        "claim_text": "Attempting complex ORIF in unreconstructable osteoporotic distal humerus fractures without discussing arthroplasty.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T21:51:32.613Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.74,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "distal-humerus-fracture",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:47.457146+00:00",
+      "updated_at": "2026-07-05T21:55:16.850086+00:00"
+    },
+    {
+      "id": "641037f3-b2db-499e-af07-fa255351feb3",
+      "proposal_fingerprint": "claim|claim-dh-stiffness",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "distal humerus complications",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "draft_id": "claim-dh-stiffness",
+        "verified": false,
+        "claim_text": "Elbow stiffness is a major functional complication after distal humerus fracture treatment.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:51:32.613Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "elbow-stiffness",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:47.653367+00:00",
+      "updated_at": "2026-07-05T21:55:17.033232+00:00"
+    },
+    {
+      "id": "1b8b8051-90a8-43c3-a03d-c3f3457dcfc6",
+      "proposal_fingerprint": "bridge|trauma-distal-humerus-fractures|distal-humerus-fracture",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "source_signal_type": "curriculum_node",
+      "source_signal_ids": [
+        "trauma-distal-humerus-fractures"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": "primary_coverage",
+      "confidence": 0.95,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Bridge trauma-distal-humerus-fractures to distal-humerus-fracture entity",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:27.273+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.613Z",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_bridge"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.95,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "distal-humerus-fracture",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "curriculum_node_slug": "trauma-distal-humerus-fractures",
+        "legacy_card_mappings": 7,
+        "clinical_verification": false,
+        "legacy_question_mappings": 26
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:48.400818+00:00",
+      "updated_at": "2026-07-05T21:55:27.365972+00:00"
+    },
+    {
+      "id": "e365653f-b372-4df7-be37-b1f9298fbad7",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|involves_anatomy|lateral-column",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:30.039+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "lateral-column",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "column_fixation",
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:44.26841+00:00",
+      "updated_at": "2026-07-05T21:55:30.131403+00:00"
+    },
+    {
+      "id": "bc15090b-a37d-462f-b806-9e9151c7947a",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|has_complication|distal-humerus-nonunion",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:30.65+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "distal-humerus-nonunion",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:46.722894+00:00",
+      "updated_at": "2026-07-05T21:55:30.743228+00:00"
+    },
+    {
+      "id": "e5491152-02c4-48d1-9928-fd855476377b",
+      "proposal_fingerprint": "create|condition|distal-humerus-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-distal-humerus-fractures",
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "condition",
+      "proposed_entity_label": "Distal Humerus Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Distal Humerus Fracture",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:29.511+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "distal-humerus-fracture",
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "description": "Fracture of the distal humeral articular region with column and nerve risk.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:37.571743+00:00",
+      "updated_at": "2026-07-05T21:55:29.599896+00:00"
+    },
+    {
+      "id": "07228ab5-cf87-4ee4-b340-6e087a03049b",
+      "proposal_fingerprint": "create|procedure|distal-humerus-orif",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-distal-humerus-fractures",
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "procedure",
+      "proposed_entity_label": "Distal Humerus ORIF",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Distal Humerus ORIF",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:29.602+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "distal-humerus-orif",
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "description": "Dual-column open reduction internal fixation of distal humerus fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:37.955889+00:00",
+      "updated_at": "2026-07-05T21:55:29.698541+00:00"
+    },
+    {
+      "id": "5813782e-361f-4dde-a771-2b042743f0bb",
+      "proposal_fingerprint": "create|complication|distal-humerus-nonunion",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-distal-humerus-fractures",
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Distal Humerus Nonunion",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Distal Humerus Nonunion",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:29.708+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "distal-humerus-nonunion",
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "description": "Failure of distal humerus fracture healing with instability.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:38.521177+00:00",
+      "updated_at": "2026-07-05T21:55:29.79928+00:00"
+    },
+    {
+      "id": "bc5bc67d-5eb9-48d4-9a18-c5f438552aeb",
+      "proposal_fingerprint": "rel|intra-articular-distal-humerus-fracture|indicates_treatment|distal-humerus-orif",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "indicates_treatment",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship indicates_treatment",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "distal-humerus-orif",
+        "subject_slug": "intra-articular-distal-humerus-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "imaging_finding",
+        "relationship_metadata": {
+          "confidence": 0.8,
+          "review_status": "needs_review",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:45.584918+00:00",
+      "updated_at": "2026-07-05T21:55:15.045659+00:00"
+    },
+    {
+      "id": "4fc71ed4-9ad7-46d6-b2a5-5ab441512296",
+      "proposal_fingerprint": "create|complication|elbow-stiffness",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-distal-humerus-fractures",
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Elbow Stiffness",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Elbow Stiffness",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:29.821+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "elbow-stiffness",
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "description": "Loss of elbow motion after distal humerus fracture and immobilization.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:38.329206+00:00",
+      "updated_at": "2026-07-05T21:55:29.93229+00:00"
+    },
+    {
+      "id": "1ec67b95-fd9e-4f88-80ae-e9967bfb9d87",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|involves_anatomy|capitellum",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:29.942+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "capitellum",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "articular"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:44.452521+00:00",
+      "updated_at": "2026-07-05T21:55:30.035045+00:00"
+    },
+    {
+      "id": "ad552900-959f-4854-b4bc-068941821308",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|treated_by|total-elbow-arthroplasty-trauma",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "total-elbow-arthroplasty-trauma",
+        "subject_slug": "distal-humerus-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:45.967745+00:00",
+      "updated_at": "2026-07-05T21:55:15.458951+00:00"
+    },
+    {
+      "id": "0a890d25-a74c-4480-b8db-e5954dfac575",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|has_imaging_finding|intra-articular-distal-humerus-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_imaging_finding",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship has_imaging_finding",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:30.133+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "intra-articular-distal-humerus-fracture",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "imaging_finding",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "articular",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:45.3839+00:00",
+      "updated_at": "2026-07-05T21:55:30.225877+00:00"
+    },
+    {
+      "id": "96de78c7-0717-4f2c-af0d-8058fb7855ee",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|has_complication|elbow-stiffness",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:30.233+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "elbow-stiffness",
+        "subject_slug": "distal-humerus-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:46.539615+00:00",
+      "updated_at": "2026-07-05T21:55:30.327823+00:00"
+    },
+    {
+      "id": "a037c9b2-7e18-4e5b-adb9-9ae26321b8c1",
+      "proposal_fingerprint": "rel|distal-humerus-fracture|at_risk_structure|median-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "at_risk_structure",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship at_risk_structure",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "median-nerve",
+        "subject_slug": "distal-humerus-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "anterior_exposure",
+          "context_relevance": [
+            "or"
+          ],
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:45.204348+00:00",
+      "updated_at": "2026-07-05T21:55:14.66596+00:00"
+    },
+    {
+      "id": "625e56e2-80ff-4b42-a1b3-7f3b8778b34b",
+      "proposal_fingerprint": "rel|distal-humerus-orif|at_risk_structure|ulnar-nerve",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "at_risk_structure",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship at_risk_structure",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "ulnar-nerve",
+        "subject_slug": "distal-humerus-orif",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "procedure",
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "must_protect",
+          "context_relevance": [
+            "or"
+          ],
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:46.336458+00:00",
+      "updated_at": "2026-07-05T21:55:15.843906+00:00"
+    },
+    {
+      "id": "e5d425ed-b368-4c12-b5f5-d1622864115d",
+      "proposal_fingerprint": "claim|claim-dh-column-concept",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "trauma-distal-humerus-fractures curriculum",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:32.582+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "draft_id": "claim-dh-column-concept",
+        "verified": false,
+        "claim_text": "Distal humerus fracture thinking uses medial and lateral column restoration with articular surface reconstruction.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T21:51:32.613Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "safety": 0.15,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.88,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "distal-humerus",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:47.080713+00:00",
+      "updated_at": "2026-07-05T21:55:32.674709+00:00"
+    },
+    {
+      "id": "c2fc44be-ff67-4d5f-8e41-49689ef66da2",
+      "proposal_fingerprint": "dp|dp-dh-orif",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "distal humerus ORIF indications",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "action": "Plan dual-column ORIF with attending; document nerve protection and articular reduction goals",
+        "trigger": "Displaced intra-articular distal humerus fracture with reconstructable columns in suitable patient",
+        "urgency": "urgent",
+        "draft_id": "dp-dh-orif",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.613Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.74,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "safety_criticality": "high",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_slug": "distal-humerus-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:48.025589+00:00",
+      "updated_at": "2026-07-05T21:55:17.684582+00:00"
+    },
+    {
+      "id": "72d4bcb4-60a3-4792-bcbb-7696a98ee85c",
+      "proposal_fingerprint": "rel|distal-humerus-orif|involves_anatomy|distal-humerus",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:55:30.549+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:51:32.612Z",
+        "object_slug": "distal-humerus",
+        "subject_slug": "distal-humerus-orif",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_type": "procedure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "approach",
+          "context_relevance": [
+            "or"
+          ]
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:46.154153+00:00",
+      "updated_at": "2026-07-05T21:55:30.641319+00:00"
+    },
+    {
+      "id": "0fd24fd7-f51d-4606-9601-c3c4149e2da2",
+      "proposal_fingerprint": "claim|claim-dh-ulnar-nerve",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "distal humerus surgical anatomy",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "draft_id": "claim-dh-ulnar-nerve",
+        "verified": false,
+        "claim_text": "Ulnar nerve identification and protection are essential during posterior distal humerus exposure.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T21:51:32.613Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.74,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "or"
+        ],
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "ulnar-nerve",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:47.271181+00:00",
+      "updated_at": "2026-07-05T21:55:16.665103+00:00"
+    },
+    {
+      "id": "80e12f25-9c0b-40e7-8741-ab08631d388b",
+      "proposal_fingerprint": "claim|claim-dh-case-script",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "distal-humerus-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "distal humerus case script",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "draft_id": "claim-dh-case-script",
+        "verified": false,
+        "claim_text": "Describe articular involvement, column comminution, nerve exam, splint position, and ORIF versus arthroplasty discussion.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T21:51:32.613Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.74,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "primary_entity_slug": "distal-humerus-fracture",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:47.834748+00:00",
+      "updated_at": "2026-07-05T21:55:17.486349+00:00"
+    },
+    {
+      "id": "1c4f712a-08e5-44f0-b5e4-fc0b822ce528",
+      "proposal_fingerprint": "dp|dp-dh-tea",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "distal_humerus_pilot_spec_v1",
+      "evidence_summary": "distal humerus arthroplasty pathway",
+      "supporting_card_count": 7,
+      "supporting_question_count": 26,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "distal-humerus-fracture-neighborhood",
+        "action": "Discuss total elbow arthroplasty with attending and postoperative activity restrictions",
+        "trigger": "Unreconstructable distal humerus fracture in elderly low-demand patient",
+        "urgency": "urgent",
+        "draft_id": "dp-dh-tea",
+        "verified": false,
+        "curated_at": "2026-07-05T21:51:32.613Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.74,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:distal-humerus-fracture-neighborhood",
+        "safety_criticality": "moderate",
+        "review_packet_label": "Distal Humerus Fracture Neighborhood",
+        "subject_entity_slug": "distal-humerus-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:51:48.21643+00:00",
+      "updated_at": "2026-07-05T21:55:17.864264+00:00"
+    }
+  ],
+  "reviewHistory": [
+    {
+      "proposalFingerprint": "create|imaging_finding|intra-articular-distal-humerus-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|procedure|total-elbow-arthroplasty-trauma",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|distal-humerus-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|injured_in|distal-humerus",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|at_risk_structure|ulnar-nerve",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|involves_anatomy|medial-column",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|involves_anatomy|trochlea",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|treated_by|distal-humerus-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-dh-tea-elderly",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-dh-stiffness",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_REVISED",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "bridge|trauma-distal-humerus-fractures|distal-humerus-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|involves_anatomy|lateral-column",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|has_complication|distal-humerus-nonunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|condition|distal-humerus-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|procedure|distal-humerus-orif",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|distal-humerus-nonunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|intra-articular-distal-humerus-fracture|indicates_treatment|distal-humerus-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|elbow-stiffness",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|involves_anatomy|capitellum",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|treated_by|total-elbow-arthroplasty-trauma",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|has_imaging_finding|intra-articular-distal-humerus-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|has_complication|elbow-stiffness",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-fracture|at_risk_structure|median-nerve",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-orif|at_risk_structure|ulnar-nerve",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-dh-column-concept",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-dh-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|distal-humerus-orif|involves_anatomy|distal-humerus",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-dh-ulnar-nerve",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-dh-case-script",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-dh-tea",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    }
+  ],
+  "qualitySignals": {
+    "gapCount": 17,
+    "gapsByKind": {
+      "missing_relationship": 7,
+      "missing_entity": 2,
+      "missing_claim": 4,
+      "missing_decision_point": 1,
+      "missing_metadata": 1,
+      "missing_asset_link": 2
+    },
+    "gapsByPriority": {
+      "high": 5,
+      "critical": 4,
+      "medium": 8
+    },
+    "qualityWarnings": [],
+    "safetyFlags": []
+  },
+  "safetySignals": [],
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Upper Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "upper-extremity-trauma-anatomy-hub",
+      "subjectSlug": "upper-extremity-trauma-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-entity-neighbor-2",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "Distal Humerus Fracture neighborhood has 0/1 classification_system entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.classification.system",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "entityType": "classification_system"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Distal Humerus Fracture missing outbound has_classification (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.pred.has_classification",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "subjectSlug": "distal-humerus-fracture",
+      "predicate": "has_classification"
+    },
+    {
+      "id": "gap-rel-4",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Distal Humerus Fracture missing outbound has_grade (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.has_grade",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "subjectSlug": "distal-humerus-fracture",
+      "predicate": "has_grade"
+    },
+    {
+      "id": "gap-claim-5",
+      "kind": "missing_claim",
+      "priority": "high",
+      "confidence": 0.88,
+      "reason": "Distal Humerus Fracture has 1/3 L1 claims.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.claims.l1",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "claimType": "fact|board_trap|imaging_point|cognitive_trap"
+    },
+    {
+      "id": "gap-claim-type-6",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Distal Humerus Fracture missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.fact",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Distal Humerus Fracture missing claim type: board_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.board_trap",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "claimType": "board_trap"
+    },
+    {
+      "id": "gap-claim-type-8",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Distal Humerus Fracture missing claim type: imaging_point.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.imaging_point",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "claimType": "imaging_point"
+    },
+    {
+      "id": "gap-dp-pattern-9",
+      "kind": "missing_decision_point",
+      "priority": "critical",
+      "confidence": 0.85,
+      "reason": "Distal Humerus Fracture missing decision point pattern: nonoperative_eligible.",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.dp.management.nonoperative_eligible",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "decisionPointPattern": "nonoperative_eligible"
+    },
+    {
+      "id": "gap-meta-rel-10",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "1 clinical_importance gaps on Distal Humerus Fracture injured_in/has_imaging_finding/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.meta.clinical_importance",
+      "anchorEntitySlug": "distal-humerus-fracture",
+      "metadataField": "clinical_importance",
+      "predicate": "injured_in|has_imaging_finding|at_risk_structure"
+    },
+    {
+      "id": "gap-entity-neighbor-11",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Total Elbow Arthroplasty for Trauma neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "total-elbow-arthroplasty-trauma",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-12",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Total Elbow Arthroplasty for Trauma missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "total-elbow-arthroplasty-trauma",
+      "subjectSlug": "total-elbow-arthroplasty-trauma",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-13",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Total Elbow Arthroplasty for Trauma missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "total-elbow-arthroplasty-trauma",
+      "subjectSlug": "total-elbow-arthroplasty-trauma",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-asset-card-14",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "7 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "distal-humerus-fracture"
+    },
+    {
+      "id": "gap-asset-question-15",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "26 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "distal-humerus-fracture"
+    },
+    {
+      "id": "gap-proc-approach-16",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Distal Humerus ORIF missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "distal-humerus-orif",
+      "subjectSlug": "distal-humerus-orif",
+      "predicate": "uses_approach"
+    },
+    {
+      "id": "gap-proc-approach-17",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Total Elbow Arthroplasty for Trauma missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "total-elbow-arthroplasty-trauma",
+      "subjectSlug": "total-elbow-arthroplasty-trauma",
+      "predicate": "uses_approach"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "CASEPREP_LINK_MISSING",
+      "message": "No CasePrep mapping for topic distal-humerus-fracture",
+      "collectorId": "caseprep-link-collector",
+      "severity": "info"
+    }
+  ],
+  "auditTrail": [
+    {
+      "stage": "init",
+      "timestamp": "2026-07-05T21:57:56.418Z",
+      "action": "build_started",
+      "detail": "distal-humerus-fracture"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:56.419Z",
+      "action": "collector_complete",
+      "detail": "4 section(s) from trauma-distal-humerus-fractures curriculum bridge",
+      "collectorId": "static-prepare-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:56.419Z",
+      "action": "collector_complete",
+      "detail": "node=trauma-distal-humerus-fractures",
+      "collectorId": "curriculum-node-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:56.420Z",
+      "action": "collector_complete",
+      "detail": "cards=7",
+      "collectorId": "anki-signal-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:56.420Z",
+      "action": "collector_complete",
+      "detail": "questions=26",
+      "collectorId": "orthobullets-metadata-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:56.420Z",
+      "action": "collector_complete",
+      "detail": "no mapping",
+      "collectorId": "caseprep-link-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:57.185Z",
+      "action": "collector_complete",
+      "detail": "source=database entities=6",
+      "collectorId": "canonical-snapshot-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:57.293Z",
+      "action": "collector_complete",
+      "detail": "proposals=31 source=database",
+      "collectorId": "proposal-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:57.394Z",
+      "action": "collector_complete",
+      "detail": "reviewed=0 pending=0",
+      "collectorId": "review-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:57:58.295Z",
+      "action": "collector_complete",
+      "detail": "gaps=28 safety=0",
+      "collectorId": "quality-signal-collector"
+    },
+    {
+      "stage": "assemble",
+      "timestamp": "2026-07-05T21:57:58.404Z",
+      "action": "packet_assembled",
+      "detail": "14 items, 17 gaps"
+    }
+  ],
+  "databaseModified": false
+}

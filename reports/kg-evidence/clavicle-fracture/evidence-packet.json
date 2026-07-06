@@ -1,0 +1,2858 @@
+{
+  "packetId": "ev-packet-e491f52a",
+  "topicId": "clavicle-fracture",
+  "createdAt": "2026-07-05T21:56:13.041Z",
+  "packetVersion": "1.0.0",
+  "ontologyVersion": "2026-07-05",
+  "compilerVersion": "1.0.0",
+  "registryVersion": "2026-07-05",
+  "topicContext": {
+    "topicKey": "clavicle-fracture",
+    "pilotKey": "clavicle-fracture-neighborhood",
+    "displayName": "Clavicle Fracture",
+    "primaryEntitySlug": "clavicle-fracture",
+    "targetMaturityLevel": 7,
+    "curriculumNodeSlug": "trauma-clavicle-fractures-midshaft",
+    "prepareTopicId": "clavicle-fracture",
+    "aliases": [
+      "clavicle fracture",
+      "midshaft clavicle fracture",
+      "trauma-clavicle-fractures-midshaft",
+      "clavicle-fracture-neighborhood"
+    ]
+  },
+  "sourceManifest": [
+    {
+      "sourceId": "anki:trauma-clavicle-fractures-midshaft",
+      "sourceType": "anki_card",
+      "label": "Anki card mappings for trauma-clavicle-fractures-midshaft",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "clavicle-fracture",
+      "sourceType": "static_prepare",
+      "label": "Prepare topic: Clavicle Fracture",
+      "path": "trauma-clavicle-fractures-midshaft curriculum bridge",
+      "copyrightPolicy": "internal_draft_only",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "clavicle-fracture-neighborhood:database",
+      "sourceType": "canonical_snapshot",
+      "label": "Canonical neighborhood snapshot (database)",
+      "path": "canonical_entities + canonical_relationships",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "primary"
+    },
+    {
+      "sourceId": "clavicle-fracture-neighborhood:proposals:database",
+      "sourceType": "proposal_history",
+      "label": "Proposal packet (database)",
+      "path": "kg_automation_proposals",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "clavicle-fracture-neighborhood:quality",
+      "sourceType": "quality_signal",
+      "label": "Ontology quality signals",
+      "path": "kg-compiler/gap-analyzer.ts",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "clavicle-fracture-neighborhood:review",
+      "sourceType": "review_history",
+      "label": "Proposal review history",
+      "path": "proposal.review_status fields",
+      "copyrightPolicy": "spec_snapshot",
+      "trustTier": "derived"
+    },
+    {
+      "sourceId": "ob:trauma-clavicle-fractures-midshaft",
+      "sourceType": "orthobullets_question",
+      "label": "Orthobullets question mappings for trauma-clavicle-fractures-midshaft",
+      "path": "external_questions + curriculum_node mapping",
+      "copyrightPolicy": "metadata_only",
+      "trustTier": "secondary"
+    },
+    {
+      "sourceId": "trauma-clavicle-fractures-midshaft",
+      "sourceType": "curriculum_node",
+      "label": "Curriculum node: trauma-clavicle-fractures-midshaft",
+      "path": "curriculum_nodes.slug",
+      "copyrightPolicy": "reference_link_only",
+      "trustTier": "primary"
+    }
+  ],
+  "canonicalSnapshot": {
+    "source": "database",
+    "entityCount": 6,
+    "relationshipCount": 3,
+    "claimCount": 0,
+    "decisionPointCount": 0,
+    "primaryEntitySlug": "clavicle-fracture",
+    "entitySlugs": [
+      "clavicle-fracture",
+      "clavicle-malunion",
+      "clavicle-nonunion",
+      "clavicle-orif",
+      "clavicle-sling-immobilization",
+      "midshaft-clavicle-fracture-pattern"
+    ],
+    "loaded": true
+  },
+  "sourceEvidence": [
+    {
+      "evidenceId": "ev-anki-card-63405cc0",
+      "sourceType": "anki_card",
+      "sourceId": "trauma-clavicle-fractures-midshaft",
+      "path": "reports/anki-kg-mapping-v1-report.md",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.5,
+      "provenanceHint": "anki_kg_mapping:trauma-clavicle-fractures-midshaft",
+      "label": "Anki card mapping count",
+      "summary": "0 high-confidence Anki card mapping(s) for curriculum node trauma-clavicle-fractures-midshaft",
+      "payload": {
+        "curriculumNodeSlug": "trauma-clavicle-fractures-midshaft",
+        "mappedCardCount": 0,
+        "deckBranchHint": null,
+        "storesCardText": false,
+        "storesCardAnswer": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "anki",
+        "asset_signal",
+        "metadata_only"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-96c3e706",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "clavicle-fracture-neighborhood",
+      "extractionMethod": "entity_index",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "entity_slugs:database",
+      "label": "Entity slug index",
+      "summary": "6 entity slug(s) in neighborhood",
+      "payload": {
+        "entitySlugs": [
+          "clavicle-fracture",
+          "clavicle-malunion",
+          "clavicle-nonunion",
+          "clavicle-orif",
+          "clavicle-sling-immobilization",
+          "midshaft-clavicle-fracture-pattern"
+        ],
+        "entityTypes": {
+          "clavicle-malunion": "complication",
+          "clavicle-fracture": "condition",
+          "clavicle-sling-immobilization": "treatment_principle",
+          "midshaft-clavicle-fracture-pattern": "imaging_finding",
+          "clavicle-orif": "procedure",
+          "clavicle-nonunion": "complication"
+        }
+      },
+      "tags": [
+        "canonical",
+        "entity_index"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-canonical-snapshot-f7b2224d",
+      "sourceType": "canonical_snapshot",
+      "sourceId": "clavicle-fracture-neighborhood",
+      "extractionMethod": "neighborhood_counts",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.95,
+      "provenanceHint": "canonical_snapshot:database",
+      "label": "Neighborhood entity/relationship counts",
+      "summary": "6 entities, 3 relationships from database",
+      "payload": {
+        "source": "database",
+        "entityCount": 6,
+        "relationshipCount": 3,
+        "claimCount": 0,
+        "decisionPointCount": 0,
+        "primaryEntitySlug": "clavicle-fracture",
+        "verified": false
+      },
+      "tags": [
+        "canonical",
+        "snapshot",
+        "database"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-431961ea",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-clavicle-fractures-midshaft",
+      "path": "curriculum_nodes.slug",
+      "extractionMethod": "slug_mapping",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.95,
+      "provenanceHint": "curriculum_node:trauma-clavicle-fractures-midshaft",
+      "label": "Curriculum node mapping",
+      "summary": "Primary curriculum node trauma-clavicle-fractures-midshaft maps to entity clavicle-fracture",
+      "payload": {
+        "curriculumNodeSlug": "trauma-clavicle-fractures-midshaft",
+        "primaryEntitySlug": "clavicle-fracture",
+        "topicKey": "clavicle-fracture",
+        "pilotKey": "clavicle-fracture-neighborhood",
+        "prepareTopicId": "clavicle-fracture",
+        "legacyRetargetKey": "retarget:trauma-clavicle-fractures-midshaft"
+      },
+      "tags": [
+        "curriculum",
+        "node_mapping",
+        "clavicle-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-curriculum-node-88d8a323",
+      "sourceType": "curriculum_node",
+      "sourceId": "trauma-clavicle-fractures-midshaft",
+      "extractionMethod": "alias_index",
+      "copyrightPolicy": "reference_link_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "curriculum_node_aliases:trauma-clavicle-fractures-midshaft",
+      "label": "Topic aliases",
+      "summary": "4 topic alias(es) for resolution",
+      "payload": {
+        "aliases": [
+          "clavicle fracture",
+          "midshaft clavicle fracture",
+          "trauma-clavicle-fractures-midshaft",
+          "clavicle-fracture-neighborhood"
+        ]
+      },
+      "tags": [
+        "curriculum",
+        "aliases"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-orthobullets-question-0ebd9aac",
+      "sourceType": "orthobullets_question",
+      "sourceId": "trauma-clavicle-fractures-midshaft",
+      "extractionMethod": "mapping_count",
+      "copyrightPolicy": "metadata_only",
+      "confidenceHint": 0.9,
+      "provenanceHint": "orthobullets_mapping:trauma-clavicle-fractures-midshaft",
+      "label": "Orthobullets question mapping count",
+      "summary": "22 Orthobullets question mapping(s) for trauma-clavicle-fractures-midshaft (metadata only — no stems/answers)",
+      "payload": {
+        "curriculumNodeSlug": "trauma-clavicle-fractures-midshaft",
+        "mappedQuestionCount": 22,
+        "prepareTopicId": "clavicle-fracture",
+        "storesQuestionStem": false,
+        "storesAnswer": false,
+        "storesExplanation": false,
+        "signalType": "mapping_count"
+      },
+      "tags": [
+        "orthobullets",
+        "metadata_only",
+        "asset_signal"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-proposal-history-2bbe11ef",
+      "sourceType": "proposal_history",
+      "sourceId": "clavicle-fracture-neighborhood",
+      "extractionMethod": "packet_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "proposal_packet:database",
+      "label": "Proposal packet summary",
+      "summary": "26 proposal(s) from database",
+      "payload": {
+        "source": "database",
+        "totalProposals": 26,
+        "byType": {
+          "create_canonical_entity": 6,
+          "add_canonical_relationship": 12,
+          "propose_educational_claim": 5,
+          "propose_decision_point": 2,
+          "link_curriculum_node_to_entity": 1
+        },
+        "byStatus": {
+          "applied": 16,
+          "needs_review": 10
+        },
+        "fingerprints": [
+          "bridge|trauma-clavicle-fractures-midshaft|clavicle-fracture",
+          "claim|claim-clav-case-script",
+          "claim|claim-clav-midshaft-common",
+          "claim|claim-clav-nonunion",
+          "claim|claim-clav-operative-shift",
+          "claim|claim-clav-sc-joint-trap",
+          "create|complication|clavicle-malunion",
+          "create|complication|clavicle-nonunion",
+          "create|condition|clavicle-fracture",
+          "create|imaging_finding|midshaft-clavicle-fracture-pattern",
+          "create|procedure|clavicle-orif",
+          "create|treatment_principle|clavicle-sling-immobilization",
+          "dp|dp-clav-nonoperative-sling",
+          "dp|dp-clav-operative-orif",
+          "rel|clavicle-fracture|has_complication|clavicle-malunion",
+          "rel|clavicle-fracture|has_complication|clavicle-nonunion",
+          "rel|clavicle-fracture|has_imaging_finding|midshaft-clavicle-fracture-pattern",
+          "rel|clavicle-fracture|injured_in|clavicle",
+          "rel|clavicle-fracture|involves_anatomy|ac-joint",
+          "rel|clavicle-fracture|involves_anatomy|sternoclavicular-joint",
+          "rel|clavicle-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+          "rel|clavicle-fracture|treated_by|clavicle-orif",
+          "rel|clavicle-fracture|treated_by|clavicle-sling-immobilization",
+          "rel|clavicle-orif|involves_anatomy|clavicle",
+          "rel|midshaft-clavicle-fracture-pattern|indicates_treatment|clavicle-orif",
+          "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|clavicle-fracture"
+        ]
+      },
+      "tags": [
+        "proposals",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-quality-signal-0641b489",
+      "sourceType": "quality_signal",
+      "sourceId": "clavicle-fracture-neighborhood",
+      "extractionMethod": "gap_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.9,
+      "provenanceHint": "ontology_gaps:clavicle-fracture-neighborhood",
+      "label": "Ontology gap summary",
+      "summary": "23 gap(s) across 6 kind(s)",
+      "payload": {
+        "gapCount": 23,
+        "gapsByKind": {
+          "missing_entity": 3,
+          "missing_relationship": 10,
+          "missing_claim": 5,
+          "missing_decision_point": 3,
+          "missing_metadata": 1,
+          "missing_asset_link": 1
+        },
+        "gapsByPriority": {
+          "critical": 8,
+          "high": 8,
+          "medium": 7
+        },
+        "topGaps": [
+          {
+            "id": "gap-entity-neighbor-1",
+            "kind": "missing_entity",
+            "priority": "critical",
+            "reason": "Clavicle Fracture neighborhood has 0/3 anatomy_structure entities."
+          },
+          {
+            "id": "gap-entity-neighbor-2",
+            "kind": "missing_entity",
+            "priority": "high",
+            "reason": "Clavicle Fracture neighborhood has 0/1 classification_system entities."
+          },
+          {
+            "id": "gap-rel-3",
+            "kind": "missing_relationship",
+            "priority": "critical",
+            "reason": "Clavicle Fracture missing outbound injured_in (0/1)."
+          },
+          {
+            "id": "gap-rel-4",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Clavicle Fracture missing outbound involves_anatomy (0/1)."
+          },
+          {
+            "id": "gap-rel-5",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Clavicle Fracture missing outbound at_risk_structure (0/1)."
+          },
+          {
+            "id": "gap-rel-6",
+            "kind": "missing_relationship",
+            "priority": "critical",
+            "reason": "Clavicle Fracture missing outbound has_classification (0/1)."
+          },
+          {
+            "id": "gap-rel-7",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Clavicle Fracture missing outbound has_grade (0/1)."
+          },
+          {
+            "id": "gap-rel-8",
+            "kind": "missing_relationship",
+            "priority": "high",
+            "reason": "Clavicle Fracture missing outbound treated_by (0/1)."
+          }
+        ]
+      },
+      "tags": [
+        "quality",
+        "gaps"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-review-history-75042760",
+      "sourceType": "review_history",
+      "sourceId": "clavicle-fracture-neighborhood",
+      "extractionMethod": "status_summary",
+      "copyrightPolicy": "spec_snapshot",
+      "confidenceHint": 0.92,
+      "provenanceHint": "review_status:clavicle-fracture-neighborhood",
+      "label": "Review status distribution",
+      "summary": "0 reviewed, 0 pending of 26 proposals",
+      "payload": {
+        "total": 26,
+        "reviewedCount": 0,
+        "pendingCount": 0,
+        "approvedCount": 0,
+        "routes": {
+          "AUTO_APPROVED_LOW_RISK": 16,
+          "ATTENDING_REVIEW": 5,
+          "HUMAN_REVIEW": 4,
+          "AUTO_REVISED": 1
+        }
+      },
+      "tags": [
+        "review",
+        "history"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-455e7259",
+      "sourceType": "static_prepare",
+      "sourceId": "clavicle-fracture",
+      "path": "trauma-clavicle-fractures-midshaft curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-clavicle-fractures-midshaft curriculum bridge#learning_objectives",
+      "label": "Clavicle Fracture — Learning objectives",
+      "summary": "Static Prepare Learning objectives for Clavicle Fracture",
+      "payload": {
+        "section": "learning_objectives",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "objectives": [
+          "Recognize common midshaft clavicle fracture patterns.",
+          "Identify medial clavicle and sternoclavicular red flags.",
+          "Compare nonoperative sling versus operative fixation indications."
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "clavicle-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-ecea1203",
+      "sourceType": "static_prepare",
+      "sourceId": "clavicle-fracture",
+      "path": "trauma-clavicle-fractures-midshaft curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-clavicle-fractures-midshaft curriculum bridge#metadata",
+      "label": "Clavicle Fracture — Topic metadata",
+      "summary": "Static Prepare Topic metadata for Clavicle Fracture",
+      "payload": {
+        "section": "metadata",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "tags": [
+          "clavicle",
+          "shoulder girdle",
+          "midshaft fracture"
+        ],
+        "trackId": "trauma",
+        "subspecialty": "Trauma"
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "clavicle-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-f037d55a",
+      "sourceType": "static_prepare",
+      "sourceId": "clavicle-fracture",
+      "path": "trauma-clavicle-fractures-midshaft curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-clavicle-fractures-midshaft curriculum bridge#deep",
+      "label": "Clavicle Fracture — Deep study template",
+      "summary": "Static Prepare Deep study template for Clavicle Fracture",
+      "payload": {
+        "section": "deep",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "anatomy": [
+          "Clavicular blood supply",
+          "SC joint stability",
+          "AC joint relationship"
+        ],
+        "classification": [
+          "Midshaft versus lateral versus medial patterns"
+        ],
+        "imaging": [
+          "AP clavicle radiographs",
+          "Serendipity view for medial injuries when needed"
+        ],
+        "decisionMaking": [
+          "Displacement, shortening, comminution, activity demands"
+        ],
+        "treatmentOptions": [
+          "Sling immobilization",
+          "Open reduction internal fixation"
+        ],
+        "boardPearls": [
+          "Posterior sternoclavicular displacement is not a benign clavicle injury"
+        ],
+        "complications": [
+          "Malunion",
+          "Nonunion",
+          "Neurovascular compromise with medial injuries"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "clavicle-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    },
+    {
+      "evidenceId": "ev-static-prepare-f038cece",
+      "sourceType": "static_prepare",
+      "sourceId": "clavicle-fracture",
+      "path": "trauma-clavicle-fractures-midshaft curriculum bridge",
+      "extractionMethod": "section_extract",
+      "copyrightPolicy": "internal_draft_only",
+      "confidenceHint": 0.88,
+      "provenanceHint": "internal_draft_source:trauma-clavicle-fractures-midshaft curriculum bridge#fast",
+      "label": "Clavicle Fracture — Fast study template",
+      "summary": "Static Prepare Fast study template for Clavicle Fracture",
+      "payload": {
+        "section": "fast",
+        "contentRole": "internal_draft_source",
+        "verified": false,
+        "publishable": false,
+        "mustKnow": [
+          "Fracture location, shortening, skin tenting, neurovascular exam"
+        ],
+        "anatomyFocus": [
+          "Clavicle",
+          "AC joint",
+          "Sternoclavicular joint"
+        ],
+        "oneLiner": "Midshaft clavicle fractures are common shoulder girdle injuries where displacement and patient goals drive operative versus sling treatment.",
+        "pimpQuestions": [
+          "When is operative fixation considered?",
+          "What makes medial clavicle injuries dangerous?"
+        ],
+        "orSurvivalTips": [
+          "Comment on shortening and comminution",
+          "Screen for SC joint posterior displacement language"
+        ],
+        "caseSteps": [
+          "Describe fracture site",
+          "Check skin and NV exam",
+          "State sling versus ORIF plan",
+          "Set follow-up expectations"
+        ]
+      },
+      "tags": [
+        "prepare",
+        "internal_draft",
+        "clavicle-fracture"
+      ],
+      "collectedAt": "2026-07-05T21:56:13.041Z"
+    }
+  ],
+  "extractedSignals": [
+    {
+      "signalId": "ev-signal-859d6a35",
+      "signalType": "anki_card",
+      "sourceEvidenceIds": [
+        "ev-anki-card-63405cc0"
+      ],
+      "summary": "0 high-confidence Anki card mapping(s) for curriculum node trauma-clavicle-fractures-midshaft",
+      "strength": 0.5,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-25a31ab4",
+      "signalType": "orthobullets_question",
+      "sourceEvidenceIds": [
+        "ev-orthobullets-question-0ebd9aac"
+      ],
+      "summary": "22 Orthobullets question mapping(s) for trauma-clavicle-fractures-midshaft (metadata only — no stems/answers)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "mapping_count"
+      }
+    },
+    {
+      "signalId": "ev-signal-ae4ceacf",
+      "signalType": "quality_signal",
+      "sourceEvidenceIds": [
+        "ev-quality-signal-0641b489"
+      ],
+      "summary": "23 gap(s) across 6 kind(s)",
+      "strength": 0.9,
+      "metadata": {
+        "extractionMethod": "gap_summary"
+      }
+    }
+  ],
+  "assetSignals": [
+    {
+      "assetType": "anki_card",
+      "sourceId": "trauma-clavicle-fractures-midshaft",
+      "mappedEntitySlug": "clavicle-fracture",
+      "mappingCount": 0,
+      "confidenceHint": 0.5,
+      "metadataOnly": true
+    },
+    {
+      "assetType": "orthobullets_question",
+      "sourceId": "trauma-clavicle-fractures-midshaft",
+      "mappedEntitySlug": "clavicle-fracture",
+      "mappingCount": 22,
+      "confidenceHint": 0.9,
+      "metadataOnly": true
+    }
+  ],
+  "existingProposals": [
+    {
+      "id": "f528725b-80f8-4bdc-b875-6ffe64263408",
+      "proposal_fingerprint": "create|treatment_principle|clavicle-sling-immobilization",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-clavicle-fractures-midshaft",
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "treatment_principle",
+      "proposed_entity_label": "Clavicle Sling Immobilization",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Clavicle Sling Immobilization",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:57.354+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "clavicle-sling-immobilization",
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "description": "Nonoperative sling support for acceptable clavicle fracture alignment.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:19.249718+00:00",
+      "updated_at": "2026-07-05T21:53:57.44643+00:00"
+    },
+    {
+      "id": "50aded5b-316f-442a-a7d6-a1cc87116843",
+      "proposal_fingerprint": "rel|clavicle-fracture|has_complication|clavicle-nonunion",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:57.252+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "clavicle-nonunion",
+        "subject_slug": "clavicle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:27.112644+00:00",
+      "updated_at": "2026-07-05T21:53:57.353263+00:00"
+    },
+    {
+      "id": "0279a401-5814-4431-ace2-c0eda7a5da07",
+      "proposal_fingerprint": "rel|clavicle-fracture|treated_by|clavicle-orif",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "clavicle-orif",
+        "subject_slug": "clavicle-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "or"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:26.353518+00:00",
+      "updated_at": "2026-07-05T21:53:49.518693+00:00"
+    },
+    {
+      "id": "91c6afbb-ac33-47a0-bb54-f0a6cd635a26",
+      "proposal_fingerprint": "claim|claim-clav-sc-joint-trap",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "shoulder girdle trauma board pearls",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "draft_id": "claim-clav-sc-joint-trap",
+        "verified": false,
+        "claim_text": "Posterior sternoclavicular displacement can threaten mediastinal structures and is not a benign clavicle injury.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.6,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "oite"
+        ],
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "primary_entity_slug": "sternoclavicular-joint",
+        "review_packet_label": "Clavicle Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:27.482958+00:00",
+      "updated_at": "2026-07-05T21:53:51.051513+00:00"
+    },
+    {
+      "id": "14ba4a09-a34a-4715-a4a1-9304bf044ec1",
+      "proposal_fingerprint": "claim|claim-clav-nonunion",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "clavicle complications",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "draft_id": "claim-clav-nonunion",
+        "verified": false,
+        "claim_text": "Clavicle nonunion can present with persistent pain, motion limitation, or hardware issues after failed healing.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "primary_entity_slug": "clavicle-nonunion",
+        "review_packet_label": "Clavicle Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:28.034443+00:00",
+      "updated_at": "2026-07-05T21:53:51.674394+00:00"
+    },
+    {
+      "id": "a562a09d-b5df-4502-8481-c7760acabff4",
+      "proposal_fingerprint": "rel|clavicle-fracture|has_complication|clavicle-malunion",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_complication",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship has_complication",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:58.753+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "clavicle-malunion",
+        "subject_slug": "clavicle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "complication",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:26.922653+00:00",
+      "updated_at": "2026-07-05T21:53:58.843599+00:00"
+    },
+    {
+      "id": "18e002a3-3c97-45cf-b7b7-163522c01bad",
+      "proposal_fingerprint": "rel|midshaft-clavicle-fracture-pattern|indicates_treatment|clavicle-orif",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "indicates_treatment",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship indicates_treatment",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "clavicle-orif",
+        "subject_slug": "midshaft-clavicle-fracture-pattern",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "procedure",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "imaging_finding",
+        "relationship_metadata": {
+          "note": "displacement and patient demand dependent",
+          "confidence": 0.75,
+          "review_status": "needs_review",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:26.542029+00:00",
+      "updated_at": "2026-07-05T21:53:49.706762+00:00"
+    },
+    {
+      "id": "c716e1c6-72ca-4d0b-a8cb-99f0f9461939",
+      "proposal_fingerprint": "claim|claim-clav-operative-shift",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "clavicle treatment evolution",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "draft_id": "claim-clav-operative-shift",
+        "verified": false,
+        "claim_text": "Treating every displaced midshaft clavicle fracture as mandatory ORIF without discussing nonunion risk and patient goals.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.55,
+          "evidence": 0.6,
+          "ambiguity": 0.35,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "primary_entity_slug": "midshaft-clavicle-fracture-pattern",
+        "review_packet_label": "Clavicle Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:27.667644+00:00",
+      "updated_at": "2026-07-05T21:53:51.236414+00:00"
+    },
+    {
+      "id": "2c93a769-e444-4ca7-a8f7-daed0d8e9157",
+      "proposal_fingerprint": "dp|dp-clav-operative-orif",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "clavicle operative indications",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "action": "Discuss clavicle ORIF with attending; document nonoperative risks and patient goals",
+        "trigger": "Displaced midshaft clavicle fracture with shortening, comminution, or high functional demand",
+        "urgency": "routine",
+        "draft_id": "dp-clav-operative-orif",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "pattern_type": "operative_indication",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.6,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "safety_criticality": "moderate",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_slug": "clavicle-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:28.222962+00:00",
+      "updated_at": "2026-07-05T21:53:51.859896+00:00"
+    },
+    {
+      "id": "ec5450ad-b3d1-4b57-8fdd-d78dd7afcfed",
+      "proposal_fingerprint": "create|procedure|clavicle-orif",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-clavicle-fractures-midshaft",
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "procedure",
+      "proposed_entity_label": "Clavicle ORIF",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Clavicle ORIF",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:58.843+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "clavicle-orif",
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "description": "Operative plate fixation for selected displaced clavicle fractures.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:19.047138+00:00",
+      "updated_at": "2026-07-05T21:53:58.936375+00:00"
+    },
+    {
+      "id": "7347d22d-6f28-4880-bf6a-5364fac15d84",
+      "proposal_fingerprint": "create|complication|clavicle-nonunion",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-clavicle-fractures-midshaft",
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Clavicle Nonunion",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Clavicle Nonunion",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:58.939+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "clavicle-nonunion",
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "description": "Failure of clavicle fracture healing with persistent pain or instability.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:19.663813+00:00",
+      "updated_at": "2026-07-05T21:53:59.033082+00:00"
+    },
+    {
+      "id": "d67b461a-0259-4d55-8b63-3a11411e5a43",
+      "proposal_fingerprint": "claim|claim-clav-midshaft-common",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "trauma-clavicle-fractures-midshaft curriculum",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "draft_id": "claim-clav-midshaft-common",
+        "verified": false,
+        "claim_text": "Midshaft clavicle fractures are the most common clavicle fracture location after shoulder-directed trauma.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "primary_entity_slug": "clavicle-fracture",
+        "review_packet_label": "Clavicle Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:27.296555+00:00",
+      "updated_at": "2026-07-05T21:53:50.602494+00:00"
+    },
+    {
+      "id": "4c4a1b76-64b6-4a85-8e76-0a4be4dfd607",
+      "proposal_fingerprint": "claim|claim-clav-case-script",
+      "proposal_type": "propose_educational_claim",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.75,
+      "confidence_tier": "medium",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "clavicle case presentation pattern",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "draft_id": "claim-clav-case-script",
+        "verified": false,
+        "claim_text": "Describe fracture location, shortening, skin tenting, neurovascular exam, and sling versus operative plan with follow-up.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.75,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "primary_entity_slug": "clavicle-fracture",
+        "review_packet_label": "Clavicle Fracture Neighborhood"
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:27.852309+00:00",
+      "updated_at": "2026-07-05T21:53:51.415702+00:00"
+    },
+    {
+      "id": "3e761217-85c5-4e8a-90ba-11f450083901",
+      "proposal_fingerprint": "dp|dp-clav-nonoperative-sling",
+      "proposal_type": "propose_decision_point",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.7,
+      "confidence_tier": "medium",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "clavicle nonoperative pathway",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "action": "Sling immobilization with pain control and gradual return of motion when healing permits",
+        "trigger": "Acceptable alignment in patient suitable for sling immobilization",
+        "urgency": "routine",
+        "draft_id": "dp-clav-nonoperative-sling",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "pattern_type": "nonoperative_eligible",
+        "content_source": "generated_draft",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "decision_point_requires_attending"
+        ],
+        "curation_scores": {
+          "safety": 0.85,
+          "evidence": 0.6,
+          "ambiguity": 0.4,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "safety_criticality": "none",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_slug": "clavicle-fracture",
+        "requires_attending_review": true
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:28.40746+00:00",
+      "updated_at": "2026-07-05T21:53:52.040707+00:00"
+    },
+    {
+      "id": "8c99d212-d5da-483a-9888-69e62a2acec0",
+      "proposal_fingerprint": "create|imaging_finding|midshaft-clavicle-fracture-pattern",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-clavicle-fractures-midshaft",
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "imaging_finding",
+      "proposed_entity_label": "Midshaft Clavicle Fracture Pattern",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Midshaft Clavicle Fracture Pattern",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:59.034+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "midshaft-clavicle-fracture-pattern",
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.733Z",
+        "description": "Typical middle-third clavicle fracture displacement pattern.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:18.857365+00:00",
+      "updated_at": "2026-07-05T21:53:59.128946+00:00"
+    },
+    {
+      "id": "df9c796a-60e3-4254-aae3-d64a4176e128",
+      "proposal_fingerprint": "create|complication|clavicle-malunion",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-clavicle-fractures-midshaft",
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "complication",
+      "proposed_entity_label": "Clavicle Malunion",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Clavicle Malunion",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:59.13+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "clavicle-malunion",
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "description": "Healed clavicle deformity affecting shoulder contour or function.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:19.446952+00:00",
+      "updated_at": "2026-07-05T21:53:59.223909+00:00"
+    },
+    {
+      "id": "13ec432e-3275-4eb4-9885-53042ea180cd",
+      "proposal_fingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|clavicle-fracture",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "prerequisite_for",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship prerequisite_for",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:00.418+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "clavicle-fracture",
+        "subject_slug": "upper-extremity-trauma-anatomy-hub",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "condition",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "anatomy_structure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "call",
+            "clinic"
+          ],
+          "educational_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:24.603967+00:00",
+      "updated_at": "2026-07-05T21:54:00.510963+00:00"
+    },
+    {
+      "id": "65c70980-8513-4466-bcf9-03aa777faba1",
+      "proposal_fingerprint": "rel|clavicle-fracture|treated_by|clavicle-sling-immobilization",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "treated_by",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship treated_by",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "needs_review",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": null,
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": true,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "clavicle-sling-immobilization",
+        "subject_slug": "clavicle-fracture",
+        "curation_route": "ATTENDING_REVIEW",
+        "curation_rules": [
+          "high_risk_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.75,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "treatment_principle",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "relationship_metadata": {
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic"
+          ],
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:26.168218+00:00",
+      "updated_at": "2026-07-05T21:53:49.3254+00:00"
+    },
+    {
+      "id": "5eff39f7-cb04-4cae-8bc8-fb94b7b89cff",
+      "proposal_fingerprint": "bridge|trauma-clavicle-fractures-midshaft|clavicle-fracture",
+      "proposal_type": "link_curriculum_node_to_entity",
+      "source_signal_type": "curriculum_node",
+      "source_signal_ids": [
+        "trauma-clavicle-fractures-midshaft"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": "primary_coverage",
+      "confidence": 0.95,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Bridge trauma-clavicle-fractures-midshaft to clavicle-fracture entity",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:01.352+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_bridge"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.95,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "primary_entity_slug": "clavicle-fracture",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "curriculum_node_slug": "trauma-clavicle-fractures-midshaft",
+        "legacy_card_mappings": 0,
+        "clinical_verification": false,
+        "legacy_question_mappings": 22
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:28.622941+00:00",
+      "updated_at": "2026-07-05T21:54:01.443137+00:00"
+    },
+    {
+      "id": "e7e6c923-8d9d-40c7-82c7-2441b203d77a",
+      "proposal_fingerprint": "rel|clavicle-fracture|has_imaging_finding|midshaft-clavicle-fracture-pattern",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "has_imaging_finding",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship has_imaging_finding",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:01.64+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "midshaft-clavicle-fracture-pattern",
+        "subject_slug": "clavicle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "imaging_finding",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "pattern",
+          "management_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:25.826084+00:00",
+      "updated_at": "2026-07-05T21:54:01.736214+00:00"
+    },
+    {
+      "id": "c1a67881-ee63-46bf-a4d2-68e90d688e14",
+      "proposal_fingerprint": "create|condition|clavicle-fracture",
+      "proposal_type": "create_canonical_entity",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [
+        "trauma-clavicle-fractures-midshaft",
+        "clavicle-fracture"
+      ],
+      "specialty_id": null,
+      "proposed_entity_type": "condition",
+      "proposed_entity_label": "Clavicle Fracture",
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": null,
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Pilot entity: Clavicle Fracture",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:58.65+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "slug": "clavicle-fracture",
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T21:49:12.733Z",
+        "description": "Fracture of the clavicle, commonly midshaft in traumatic shoulder girdle injuries.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "clinical_verification": false
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:18.667339+00:00",
+      "updated_at": "2026-07-05T21:53:58.750774+00:00"
+    },
+    {
+      "id": "b25e378e-122d-44cf-a61b-b55568376542",
+      "proposal_fingerprint": "rel|clavicle-orif|involves_anatomy|clavicle",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:53:59.232+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "clavicle",
+        "subject_slug": "clavicle-orif",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "procedure",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "approach",
+          "context_relevance": [
+            "or"
+          ]
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:26.737578+00:00",
+      "updated_at": "2026-07-05T21:53:59.327536+00:00"
+    },
+    {
+      "id": "20850c42-7829-4468-b1d9-a6c510218ede",
+      "proposal_fingerprint": "rel|clavicle-fracture|involves_anatomy|ac-joint",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:01.015+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "ac-joint",
+        "subject_slug": "clavicle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "lateral_clavicle"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:24.974336+00:00",
+      "updated_at": "2026-07-05T21:54:01.108555+00:00"
+    },
+    {
+      "id": "54cf543a-05bb-4a28-8166-e64eeeea5254",
+      "proposal_fingerprint": "rel|clavicle-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:01.254+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "upper-extremity-trauma-anatomy-hub",
+        "subject_slug": "clavicle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:25.353901+00:00",
+      "updated_at": "2026-07-05T21:54:01.351+00:00"
+    },
+    {
+      "id": "ea6f0e3f-4708-48a2-b278-8c3a630908b0",
+      "proposal_fingerprint": "rel|clavicle-fracture|injured_in|clavicle",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "injured_in",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship injured_in",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:00.642+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "clavicle",
+        "subject_slug": "clavicle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "clinical_importance": "high",
+          "relationship_strength": "core"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:24.787349+00:00",
+      "updated_at": "2026-07-05T21:54:00.732603+00:00"
+    },
+    {
+      "id": "6125bc53-8dfd-4990-be12-81ece4ecc453",
+      "proposal_fingerprint": "rel|clavicle-fracture|involves_anatomy|sternoclavicular-joint",
+      "proposal_type": "add_canonical_relationship",
+      "source_signal_type": "reference_import",
+      "source_signal_ids": [],
+      "specialty_id": null,
+      "proposed_entity_type": null,
+      "proposed_entity_label": null,
+      "proposed_existing_entity_id": null,
+      "proposed_subject_entity_id": null,
+      "proposed_predicate": "involves_anatomy",
+      "proposed_object_entity_id": null,
+      "proposed_alias": null,
+      "proposed_bridge_type": null,
+      "confidence": 0.85,
+      "confidence_tier": "high",
+      "confidence_reason": "clavicle_pilot_spec_v1",
+      "evidence_summary": "Relationship involves_anatomy",
+      "supporting_card_count": 0,
+      "supporting_question_count": 22,
+      "supporting_curriculum_node_count": 1,
+      "supporting_source_count": 2,
+      "conflict_count": 0,
+      "review_status": "applied",
+      "reviewed_by": null,
+      "reviewed_at": null,
+      "reviewer_notes": null,
+      "applied_at": "2026-07-05T21:54:01.148+00:00",
+      "superseded_by": null,
+      "metadata": {
+        "pilot": "clavicle-fracture-neighborhood",
+        "verified": false,
+        "high_risk": false,
+        "curated_at": "2026-07-05T21:49:12.734Z",
+        "object_slug": "sternoclavicular-joint",
+        "subject_slug": "clavicle-fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "deterministic_clinical_or_anatomy_predicate"
+        ],
+        "curation_scores": {
+          "safety": 0.1,
+          "evidence": 0.6,
+          "ambiguity": 0.2,
+          "confidence": 0.92,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:clavicle-fracture-neighborhood",
+        "object_entity_type": "anatomy_structure",
+        "review_packet_label": "Clavicle Fracture Neighborhood",
+        "subject_entity_type": "condition",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "medial_clavicle",
+          "clinical_importance": "high"
+        }
+      },
+      "comments": null,
+      "is_active": true,
+      "created_at": "2026-07-05T21:49:25.170358+00:00",
+      "updated_at": "2026-07-05T21:54:01.252697+00:00"
+    }
+  ],
+  "reviewHistory": [
+    {
+      "proposalFingerprint": "create|treatment_principle|clavicle-sling-immobilization",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|has_complication|clavicle-nonunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|treated_by|clavicle-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clav-sc-joint-trap",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clav-nonunion",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_REVISED",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|has_complication|clavicle-malunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|midshaft-clavicle-fracture-pattern|indicates_treatment|clavicle-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clav-operative-shift",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-clav-operative-orif",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|procedure|clavicle-orif",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|clavicle-nonunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clav-midshaft-common",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-clav-case-script",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "HUMAN_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "dp|dp-clav-nonoperative-sling",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|imaging_finding|midshaft-clavicle-fracture-pattern",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|complication|clavicle-malunion",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|upper-extremity-trauma-anatomy-hub|prerequisite_for|clavicle-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|treated_by|clavicle-sling-immobilization",
+      "reviewStatus": "needs_review",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "ATTENDING_REVIEW",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "bridge|trauma-clavicle-fractures-midshaft|clavicle-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|has_imaging_finding|midshaft-clavicle-fracture-pattern",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "create|condition|clavicle-fracture",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-orif|involves_anatomy|clavicle",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|involves_anatomy|ac-joint",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|involves_anatomy|upper-extremity-trauma-anatomy-hub",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|injured_in|clavicle",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    },
+    {
+      "proposalFingerprint": "rel|clavicle-fracture|involves_anatomy|sternoclavicular-joint",
+      "reviewStatus": "applied",
+      "reviewedBy": null,
+      "reviewedAt": null,
+      "curationRoute": "AUTO_APPROVED_LOW_RISK",
+      "clinicalVerification": false
+    }
+  ],
+  "qualitySignals": {
+    "gapCount": 13,
+    "gapsByKind": {
+      "missing_relationship": 6,
+      "missing_entity": 1,
+      "missing_claim": 4,
+      "missing_metadata": 1,
+      "missing_asset_link": 1
+    },
+    "gapsByPriority": {
+      "high": 6,
+      "critical": 1,
+      "medium": 6
+    },
+    "qualityWarnings": [],
+    "safetyFlags": []
+  },
+  "safetySignals": [],
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Upper Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "upper-extremity-trauma-anatomy-hub",
+      "subjectSlug": "upper-extremity-trauma-anatomy-hub",
+      "predicate": "part_of"
+    },
+    {
+      "id": "gap-entity-neighbor-2",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "Clavicle Fracture neighborhood has 0/1 classification_system entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.classification.system",
+      "anchorEntitySlug": "clavicle-fracture",
+      "entityType": "classification_system"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Clavicle Fracture missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.at_risk_structure",
+      "anchorEntitySlug": "clavicle-fracture",
+      "subjectSlug": "clavicle-fracture",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-rel-4",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Clavicle Fracture missing outbound has_classification (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "condition.pred.has_classification",
+      "anchorEntitySlug": "clavicle-fracture",
+      "subjectSlug": "clavicle-fracture",
+      "predicate": "has_classification"
+    },
+    {
+      "id": "gap-rel-5",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Clavicle Fracture missing outbound has_grade (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.pred.has_grade",
+      "anchorEntitySlug": "clavicle-fracture",
+      "subjectSlug": "clavicle-fracture",
+      "predicate": "has_grade"
+    },
+    {
+      "id": "gap-claim-6",
+      "kind": "missing_claim",
+      "priority": "high",
+      "confidence": 0.88,
+      "reason": "Clavicle Fracture has 1/3 L1 claims.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "condition.claims.l1",
+      "anchorEntitySlug": "clavicle-fracture",
+      "claimType": "fact|board_trap|imaging_point|cognitive_trap"
+    },
+    {
+      "id": "gap-claim-type-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Clavicle Fracture missing claim type: board_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.board_trap",
+      "anchorEntitySlug": "clavicle-fracture",
+      "claimType": "board_trap"
+    },
+    {
+      "id": "gap-claim-type-8",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Clavicle Fracture missing claim type: imaging_point.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.imaging_point",
+      "anchorEntitySlug": "clavicle-fracture",
+      "claimType": "imaging_point"
+    },
+    {
+      "id": "gap-claim-type-9",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Clavicle Fracture missing claim type: cognitive_trap.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.claims.l1.cognitive_trap",
+      "anchorEntitySlug": "clavicle-fracture",
+      "claimType": "cognitive_trap"
+    },
+    {
+      "id": "gap-meta-rel-10",
+      "kind": "missing_metadata",
+      "priority": "medium",
+      "confidence": 0.9,
+      "reason": "1 clinical_importance gaps on Clavicle Fracture injured_in/has_imaging_finding/at_risk_structure edges.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "condition.meta.clinical_importance",
+      "anchorEntitySlug": "clavicle-fracture",
+      "metadataField": "clinical_importance",
+      "predicate": "injured_in|has_imaging_finding|at_risk_structure"
+    },
+    {
+      "id": "gap-rel-11",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Clavicle ORIF missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "clavicle-orif",
+      "subjectSlug": "clavicle-orif",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-asset-question-12",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "22 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "clavicle-fracture"
+    },
+    {
+      "id": "gap-proc-approach-13",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Clavicle ORIF missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "clavicle-orif",
+      "subjectSlug": "clavicle-orif",
+      "predicate": "uses_approach"
+    }
+  ],
+  "warnings": [
+    {
+      "code": "ANKI_SIGNALS_UNAVAILABLE",
+      "message": "No Anki mapping count registered for topic clavicle-fracture",
+      "collectorId": "anki-signal-collector",
+      "severity": "info"
+    },
+    {
+      "code": "CASEPREP_LINK_MISSING",
+      "message": "No CasePrep mapping for topic clavicle-fracture",
+      "collectorId": "caseprep-link-collector",
+      "severity": "info"
+    }
+  ],
+  "auditTrail": [
+    {
+      "stage": "init",
+      "timestamp": "2026-07-05T21:56:13.041Z",
+      "action": "build_started",
+      "detail": "clavicle-fracture"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:13.042Z",
+      "action": "collector_complete",
+      "detail": "4 section(s) from trauma-clavicle-fractures-midshaft curriculum bridge",
+      "collectorId": "static-prepare-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:13.042Z",
+      "action": "collector_complete",
+      "detail": "node=trauma-clavicle-fractures-midshaft",
+      "collectorId": "curriculum-node-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:13.042Z",
+      "action": "collector_complete",
+      "detail": "cards=0",
+      "collectorId": "anki-signal-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:13.042Z",
+      "action": "collector_complete",
+      "detail": "questions=22",
+      "collectorId": "orthobullets-metadata-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:13.042Z",
+      "action": "collector_complete",
+      "detail": "no mapping",
+      "collectorId": "caseprep-link-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:14.305Z",
+      "action": "collector_complete",
+      "detail": "source=database entities=6",
+      "collectorId": "canonical-snapshot-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:14.513Z",
+      "action": "collector_complete",
+      "detail": "proposals=26 source=database",
+      "collectorId": "proposal-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:14.672Z",
+      "action": "collector_complete",
+      "detail": "reviewed=0 pending=0",
+      "collectorId": "review-history-collector"
+    },
+    {
+      "stage": "collect",
+      "timestamp": "2026-07-05T21:56:15.439Z",
+      "action": "collector_complete",
+      "detail": "gaps=23 safety=0",
+      "collectorId": "quality-signal-collector"
+    },
+    {
+      "stage": "assemble",
+      "timestamp": "2026-07-05T21:56:15.577Z",
+      "action": "packet_assembled",
+      "detail": "13 items, 13 gaps"
+    }
+  ],
+  "databaseModified": false
+}

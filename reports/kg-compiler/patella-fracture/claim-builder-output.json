@@ -1,0 +1,740 @@
+{
+  "generatedAt": "2026-07-05T22:41:16.483Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-2b934510",
+  "gapsAddressed": 4,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 6,
+  "redirectedToDecisionPoint": 4,
+  "candidates": [
+    {
+      "draftId": "claim-patella-fracture-fact-assess-extensor-mechanis",
+      "claimText": "Assess extensor mechanism integrity after patella fracture.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-differentiate-nondisplac",
+      "claimText": "Differentiate nondisplaced from operative fracture patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-recognize-patella-baja-a",
+      "claimText": "Recognize patella baja and hardware complications.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-extensor-mechanism-exam",
+      "claimText": "Extensor mechanism exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-fracture-displacement",
+      "claimText": "fracture displacement.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-articular-step-off",
+      "claimText": "articular step-off.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-anatomy_pearl-patella",
+      "claimText": "Patella.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-anatomy_pearl-quadriceps-tendon",
+      "claimText": "Quadriceps tendon.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-anatomy_pearl-patellar-tendon",
+      "claimText": "Patellar tendon.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-anatomy_pearl-extensor-mechanism",
+      "claimText": "Extensor mechanism.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-patella-fracture-managem",
+      "claimText": "Patella fracture management centers on whether the extensor mechanism remains functional.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-cognitive_trap-perform-active-extension",
+      "claimText": "Perform active extension check.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-cognitive_trap-mention-tension-band-fix",
+      "claimText": "Mention tension band fixation language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-clinical_script-test-extension",
+      "claimText": "Test extension.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-clinical_script-describe-fracture-patter",
+      "claimText": "Describe fracture pattern.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-clinical_script-state-splint-versus-orif",
+      "claimText": "State splint versus ORIF.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-clinical_script-plan-early-motion",
+      "claimText": "Plan early motion.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-anatomy_pearl-patellar-articular-surfa",
+      "claimText": "Patellar articular surface.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-anatomy_pearl-quadriceps-patellar-tend",
+      "claimText": "Quadriceps-patellar tendon linkage.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-transverse-comminuted-sl",
+      "claimText": "Transverse, comminuted, sleeve patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-imaging_point-merchant-sunrise-views-w",
+      "claimText": "Merchant/sunrise views when needed.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-imaging_point-lateral-for-displacement",
+      "claimText": "Lateral for displacement.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-patella-baja",
+      "claimText": "Patella baja.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-hardware-prominence",
+      "claimText": "Hardware prominence.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-stiffness",
+      "claimText": "Stiffness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "patella-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-12",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "How do you test extensor mechanism?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ]
+    },
+    {
+      "text": "When is ORIF indicated?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ]
+    },
+    {
+      "text": "Extensor lag, displacement, articular involvement",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ]
+    },
+    {
+      "text": "Cylinder cast",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ]
+    },
+    {
+      "text": "Patella ORIF with tension band",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ]
+    },
+    {
+      "text": "Loss of active extension is an operative indication",
+      "reason": "MANAGEMENT_LOGIC: if/then or treatment pathway — route to Decision Point Builder",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-assess-extensor-mechanis",
+      "draftId": "claim-patella-fracture-fact-assess-extensor-mechanis",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-differentiate-nondisplac",
+      "draftId": "claim-patella-fracture-fact-differentiate-nondisplac",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-patella-fracture-imaging_point-merchant-sunrise-views-w",
+      "draftId": "claim-patella-fracture-imaging_point-merchant-sunrise-views-w",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-patella-fracture-cognitive_trap-perform-active-extension",
+      "draftId": "claim-patella-fracture-cognitive_trap-perform-active-extension",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-recognize-patella-baja-a",
+      "draftId": "claim-patella-fracture-fact-recognize-patella-baja-a",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-extensor-mechanism-exam",
+      "draftId": "claim-patella-fracture-fact-extensor-mechanism-exam",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-fracture-displacement",
+      "draftId": "claim-patella-fracture-fact-fracture-displacement",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-articular-step-off",
+      "draftId": "claim-patella-fracture-fact-articular-step-off",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "verified": false
+    }
+  ]
+}

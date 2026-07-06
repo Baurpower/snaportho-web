@@ -6,6 +6,7 @@ import type {
   StudentWorkspaceRotation,
   StudentWorkspaceScheduleEntry,
 } from "@/lib/student-workspace/types";
+import type { StudentWorkspacePrepareProgressSnapshot } from "@/lib/student-workspace/curriculum-progress";
 
 export type PrepareModeId =
   | "deep_dive"
@@ -151,6 +152,7 @@ export type PreparePageProps = {
   tomorrowWeekStart: string;
   currentWeekEntries: StudentWorkspaceScheduleEntry[];
   tomorrowWeekEntries: StudentWorkspaceScheduleEntry[];
+  progressSnapshot: StudentWorkspacePrepareProgressSnapshot;
 };
 
 export type DerivedScheduleData = {

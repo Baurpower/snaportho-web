@@ -1,0 +1,307 @@
+{
+  "generatedAt": "2026-07-05T22:23:01.860Z",
+  "auditorVersion": "1.0.0",
+  "topicKey": "ankle-fracture",
+  "pilotKey": "ankle-fracture-neighborhood",
+  "displayName": "Ankle Fracture",
+  "dataSource": {
+    "neighborhood": "merged_draft",
+    "reportsLoaded": [
+      "ontology-compiler-plan.json",
+      "ontology-gap-report.json",
+      "ontology-work-plan.json",
+      "agent-execution-report.json",
+      "merged-neighborhood-draft.json",
+      "publication-readiness.json",
+      "ontology-auto-review.json",
+      "ontology-human-review-queue.json",
+      "conflict-report.json",
+      "agent-assignment-plan.json",
+      "ontology-neighborhood-plan.json",
+      "evidence-packet.json"
+    ],
+    "reportsMissing": []
+  },
+  "overallScore": 87,
+  "categories": {
+    "ontology_completeness": 54,
+    "evidence_quality": 85,
+    "graph_integrity": 96,
+    "shared_knowledge_reuse": 98,
+    "relationship_quality": 92,
+    "claim_quality": 84,
+    "decision_point_quality": 77,
+    "metadata_quality": 90,
+    "provenance_quality": 100,
+    "review_calibration": 100,
+    "agent_performance": 92,
+    "compiler_quality": 84,
+    "educational_quality": 92,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 45
+  },
+  "publication": {
+    "status": "NOT_READY",
+    "ready": false,
+    "blockers": [
+      "22 proposals still awaiting human review",
+      "16 items require attending review",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "10 critical/high ontology gaps remain unresolved"
+    ],
+    "currentLevel": 5,
+    "requiredLevel": 7,
+    "score": 45,
+    "deductions": [
+      {
+        "finding": "22 proposals still awaiting human review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "16 items require attending review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "10 critical/high ontology gaps remain unresolved",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "critical",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+        "impact": 15
+      }
+    ]
+  },
+  "topFindings": [
+    {
+      "finding": "3 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-dp-10, gap-dp-pattern-11, gap-dp-pattern-12",
+      "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "suggestedFix": "Resolve critical gaps via assigned factory agents before publication review.",
+      "impact": 15
+    },
+    {
+      "finding": "Low evidence coverage (0% of proposals cite evidence)",
+      "evidence": "0/58 proposals have evidence_refs",
+      "reason": "Every proposal should cite supporting evidence per factory contract.",
+      "severity": "critical",
+      "category": "evidence_quality",
+      "suggestedFix": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing decision point pattern: emergency_escalation",
+      "evidence": "0 decision points with pattern emergency_escalation",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "critical",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "impact": 15
+    },
+    {
+      "finding": "10 critical/high ontology gaps remain unresolved",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+      "impact": 15
+    },
+    {
+      "finding": "7 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship, missing_claim",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 12,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "Missing relationship requirements (9)",
+      "evidence": "9 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "Missing claim requirements (9)",
+      "evidence": "9 gaps of kind missing_claim",
+      "reason": "Ontology contract requires complete claim coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_claim."
+    },
+    {
+      "finding": "8 high-risk relationships lack approved review status",
+      "evidence": "Predicates: at_risk_structure, treated_by, uses_fixation, explains_instability, indicates_treatment",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    },
+    {
+      "finding": "All claims remain generated_draft",
+      "evidence": "16/16 claims are unreviewed drafts",
+      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Route claims through human review queue before publication.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient evidence support on claim proposals",
+      "evidence": "0% of claim proposals cite evidence",
+      "reason": "Every claim should cite supporting evidence.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "impact": 8
+    },
+    {
+      "finding": "No emergent/high-safety decision pathways",
+      "evidence": "0 decision points with safetyCriticality=high or urgency=emergent",
+      "reason": "Trauma neighborhoods require emergency escalation pathways.",
+      "severity": "high",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add emergency_escalation decision point for compartment syndrome, open fracture, etc.",
+      "impact": 8
+    },
+    {
+      "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
+      "evidence": "Entity ankle-fracture metadata keys: slug, pilot, verified, curated_at, description, clinical_kind, staging_apply, curation_route, curation_rules, curation_scores, factory_version, maturity_target, staging_reviewer, review_packet_key, review_packet_label, clinical_verification, created_from_proposal_fingerprint, canonical_entity_id, _provenance_fingerprint",
+      "reason": "Primary condition entities require educational and curriculum metadata.",
+      "severity": "high",
+      "category": "metadata_quality",
+      "affectedSlugs": [
+        "ankle-fracture"
+      ],
+      "suggestedFix": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
+      "impact": 8
+    },
+    {
+      "finding": "7 underperforming agent(s)",
+      "evidence": "asset-linker (F), decision-point-builder (D), metadata-builder (F), duplicate-detector (F), quality-scorer (F), conflict-resolver (F), publication-validator (F)",
+      "reason": "Low-grading agents reduce neighborhood quality and increase review burden.",
+      "severity": "high",
+      "category": "agent_performance",
+      "suggestedFix": "Review agent report cards and address weaknesses per agent.",
+      "impact": 8
+    },
+    {
+      "finding": "22 proposals still awaiting human review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+      "impact": 8
+    },
+    {
+      "finding": "16 items require attending review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+      "impact": 8
+    }
+  ],
+  "prioritizedRecommendations": [
+    {
+      "priority": 1,
+      "action": "Resolve critical gaps via assigned factory agents before publication review.",
+      "category": "ontology_completeness",
+      "impact": "3 critical ontology gaps remain"
+    },
+    {
+      "priority": 2,
+      "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "category": "evidence_quality",
+      "impact": "Low evidence coverage (0% of proposals cite evidence)"
+    },
+    {
+      "priority": 3,
+      "action": "Add emergency_escalation decision point with attending-gated review.",
+      "category": "decision_point_quality",
+      "impact": "Missing decision point pattern: emergency_escalation"
+    },
+    {
+      "priority": 4,
+      "action": "[high] Ankle ORIF missing outbound at_risk_structure (0/1).",
+      "category": "publication_readiness",
+      "impact": "10 critical/high ontology gaps remain unresolved"
+    },
+    {
+      "priority": 5,
+      "action": "Schedule gap-resolution work items from ontology-work-plan.json.",
+      "category": "ontology_completeness",
+      "impact": "7 high-priority ontology gaps"
+    },
+    {
+      "priority": 6,
+      "action": "Run the matching builder agent for missing_relationship.",
+      "category": "ontology_completeness",
+      "impact": "Missing relationship requirements (9)"
+    },
+    {
+      "priority": 7,
+      "action": "Run the matching builder agent for missing_claim.",
+      "category": "ontology_completeness",
+      "impact": "Missing claim requirements (9)"
+    },
+    {
+      "priority": 8,
+      "action": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "category": "relationship_quality",
+      "impact": "8 high-risk relationships lack approved review status"
+    },
+    {
+      "priority": 9,
+      "action": "Route claims through human review queue before publication.",
+      "category": "claim_quality",
+      "impact": "All claims remain generated_draft"
+    },
+    {
+      "priority": 10,
+      "action": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "category": "claim_quality",
+      "impact": "Insufficient evidence support on claim proposals"
+    }
+  ],
+  "databaseModified": false
+}

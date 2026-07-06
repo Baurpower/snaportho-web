@@ -4,14 +4,24 @@ import { Suspense, useState } from 'react';
 import { useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
-import type { BroBotEntitlement } from '@/lib/brobot/entitlements';
 import { safeRedirectPath } from '@/lib/auth/redirects';
+import {
+  deriveBillingActivationPhase,
+  getBillingPlanLabel,
+  getBillingStatusBadge,
+  parseMeEntitlementsPayload,
+  shouldShowFreeQuotaUsage,
+  type BillingActivationPhase,
+  type BillingEntitlementView,
+  type MeEntitlementsPayload,
+} from '@/lib/brobot/billing-entitlement-state';
 import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 import {
   trackCheckoutStartedConversion,
   trackSubscriptionConversion,
 } from '@/lib/analytics/googleAds';
 import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
+import { invalidateBroBotEntitlementCache } from '@/lib/brobot/brobot-entitlement-events';
 
 // ─── Main content ─────────────────────────────────────────────────────────────
 
@@ -20,12 +30,14 @@ function BillingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [entitlement, setEntitlement] = useState<BroBotEntitlement | null>(null);
+  const [billingView, setBillingView] = useState<BillingEntitlementView | null>(null);
   const [loading, setLoading] = useState(true);
+  const [pollTimedOut, setPollTimedOut] = useState(false);
 
-  // Handle success/cancel feedback from Stripe redirects
   const success = searchParams?.get('success') === 'true';
   const canceled = searchParams?.get('canceled') === 'true';
+  const checkoutSessionId = searchParams?.get('session_id');
+  const awaitingCheckoutConfirmation = success || Boolean(checkoutSessionId);
   const returnTo = safeRedirectPath(searchParams?.get('returnTo'), '');
 
   useEffect(() => {
@@ -45,54 +57,86 @@ function BillingContent() {
     let isMounted = true;
     let pollInterval: NodeJS.Timeout | null = null;
 
-    const fetchEntitlement = async (): Promise<BroBotEntitlement | null> => {
+    const fetchEntitlement = async (): Promise<BillingEntitlementView | null> => {
       try {
-        const res = await fetch('/api/me/entitlements', {
+        const res = await fetch('/api/me/entitlements?source=billing', {
           cache: 'no-store',
           credentials: 'include',
         });
-        const data = await res.json();
-        return data.data || null;
+        const payload = (await res.json()) as MeEntitlementsPayload;
+        const view = parseMeEntitlementsPayload(payload);
+
+        console.info('[billing] entitlement_poll_result', {
+          access: view.access,
+          isPaid: view.isPaid,
+          isUnlimited: view.isUnlimited,
+          status: view.status,
+          provider: view.entitlement?.provider ?? null,
+          selectedSubscriptionId: view.entitlement?.stripeSubscriptionId?.slice(0, 12) ?? null,
+        });
+
+        return view;
       } catch (e) {
-        console.error(e);
+        console.error('[billing] entitlement_poll_failed', e);
         return null;
       }
     };
 
+    const applyEntitlementView = (view: BillingEntitlementView | null) => {
+      if (!view) return;
+      setBillingView(view);
+      if (view.isPaid) {
+        setPollTimedOut(false);
+        invalidateBroBotEntitlementCache();
+        console.info('[billing] activation_resolved', {
+          access: view.access,
+          status: view.status,
+          phase: 'active',
+        });
+      }
+    };
+
     const load = async () => {
-      const data = await fetchEntitlement();
+      const view = await fetchEntitlement();
       if (!isMounted) return;
-      setEntitlement(data);
+      applyEntitlementView(view);
       setLoading(false);
 
-      // If we have success=true (either directly or after auth redirect), poll for the subscription to appear
-      const hasSuccessParam = searchParams?.get('success') === 'true';
-      if (hasSuccessParam && data?.source !== 'subscription') {
+      if (awaitingCheckoutConfirmation && !view?.isPaid) {
         let attempts = 0;
-        const maxAttempts = 15; // ~15 seconds to allow for webhook + session hydration
+        const maxAttempts = 25;
 
         pollInterval = setInterval(async () => {
           attempts++;
           const latest = await fetchEntitlement();
           if (!isMounted) return;
 
-          setEntitlement(latest);
+          if (latest) applyEntitlementView(latest);
 
-          if (latest?.source === 'subscription' || attempts >= maxAttempts) {
+          if (latest?.isPaid) {
             if (pollInterval) clearInterval(pollInterval);
+            return;
+          }
 
-            // Final fallback: if still not active after polling but we have success param,
-            // trigger a safe server-side sync from Stripe (webhook may have been delayed/missed)
-            if (attempts >= maxAttempts && hasSuccessParam && latest?.source !== 'subscription') {
-              try {
-                await fetch('/api/billing/sync', { method: 'POST' });
-                const afterSync = await fetchEntitlement();
-                if (isMounted && afterSync) {
-                  setEntitlement(afterSync);
+          if (attempts >= maxAttempts) {
+            if (pollInterval) clearInterval(pollInterval);
+            setPollTimedOut(true);
+            console.warn('[billing] activation_poll_timed_out', { attempts });
+
+            try {
+              await fetch('/api/billing/sync', { method: 'POST' });
+              const afterSync = await fetchEntitlement();
+              if (isMounted && afterSync) {
+                applyEntitlementView(afterSync);
+                if (!afterSync.isPaid) {
+                  console.warn('[billing] activation_sync_fallback_incomplete', {
+                    access: afterSync.access,
+                    status: afterSync.status,
+                  });
                 }
-              } catch (e) {
-                console.error('[billing] manual sync fallback failed', e);
               }
+            } catch (e) {
+              console.error('[billing] manual sync fallback failed', e);
             }
           }
         }, 1000);
@@ -105,24 +149,47 @@ function BillingContent() {
       isMounted = false;
       if (pollInterval) clearInterval(pollInterval);
     };
-  }, [authLoading, user, router, searchParams]);
+  }, [authLoading, awaitingCheckoutConfirmation, user, router, searchParams]);
 
   useEffect(() => {
-    if (!success || entitlement?.source !== 'subscription' || !entitlement.stripeSubscriptionId) {
+    const stripeSubscriptionId = billingView?.entitlement?.stripeSubscriptionId;
+    if (!awaitingCheckoutConfirmation || !billingView?.isPaid || !stripeSubscriptionId) {
       return;
     }
 
-    const storageKey = `google_ads_subscription_conversion:${entitlement.stripeSubscriptionId}`;
+    const storageKey = `google_ads_subscription_conversion:${stripeSubscriptionId}`;
     if (window.localStorage.getItem(storageKey)) {
       return;
     }
 
     trackSubscriptionConversion({
       currency: 'USD',
-      transactionId: entitlement.stripeSubscriptionId,
+      transactionId: stripeSubscriptionId,
     });
     window.localStorage.setItem(storageKey, 'sent');
-  }, [success, entitlement]);
+  }, [awaitingCheckoutConfirmation, billingView]);
+
+  const handleRestoreSubscription = async () => {
+    setPollTimedOut(false);
+    setLoading(true);
+    try {
+      await fetch('/api/billing/sync', { method: 'POST' });
+      const res = await fetch('/api/me/entitlements?source=billing', {
+        cache: 'no-store',
+        credentials: 'include',
+      });
+      const view = parseMeEntitlementsPayload((await res.json()) as MeEntitlementsPayload);
+      setBillingView(view);
+      if (!view.isPaid) {
+        setPollTimedOut(true);
+      }
+    } catch (e) {
+      console.error('[billing] restore_subscription_failed', e);
+      setPollTimedOut(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleUpgrade = async (interval: 'month' | 'year') => {
     try {
@@ -169,21 +236,29 @@ function BillingContent() {
     );
   }
 
-  const isUnlimited = entitlement?.aiAccess?.unlimited === true;
-  const isPaid = entitlement?.source === 'subscription';
-  const isActivating = success && !isPaid && !loading;
-  const expiresAt = entitlement?.expiresAt;
-  const remaining = entitlement?.aiAccess?.remainingToday ?? 0;
-  const dailyCap = entitlement?.aiAccess?.dailyCap ?? null;
-
-  // New cancellation-aware state
-  const cancelAtPeriodEnd = entitlement?.cancelAtPeriodEnd === true;
-  const subStatus = entitlement?.status;
+  const isUnlimited = billingView?.isUnlimited === true;
+  const isPaid = billingView?.isPaid === true;
+  const activationPhase: BillingActivationPhase = deriveBillingActivationPhase({
+    awaitingCheckoutConfirmation,
+    isPaid,
+    pollTimedOut,
+  });
+  const planLabel = getBillingPlanLabel({ isUnlimited, activationPhase });
+  const statusBadge = getBillingStatusBadge({
+    isUnlimited,
+    activationPhase,
+    status: billingView?.status ?? null,
+    cancelAtPeriodEnd: billingView?.cancelAtPeriodEnd === true,
+  });
+  const showFreeQuota = shouldShowFreeQuotaUsage({ isUnlimited, activationPhase });
+  const showUpgradePrompt = !isUnlimited && activationPhase === 'idle';
+  const showTrialPromo = showUpgradePrompt;
+  const expiresAt = billingView?.expiresAt;
+  const remaining = billingView?.remainingToday ?? 0;
+  const dailyCap = billingView?.dailyCap ?? null;
+  const cancelAtPeriodEnd = billingView?.cancelAtPeriodEnd === true;
+  const subStatus = billingView?.status;
   const isCanceledAtPeriodEnd = isPaid && cancelAtPeriodEnd;
-
-  if (process.env.NODE_ENV !== 'production' && isPaid) {
-    console.log('[billing] Subscription state', { subStatus, cancelAtPeriodEnd, expiresAt, isUnlimited });
-  }
 
   return (
     <div className="min-h-screen bg-[#f8f7f2] text-[#1A1C2C]">
@@ -210,13 +285,28 @@ function BillingContent() {
           </div>
         </div>
 
-        {/* Stripe Redirect Feedback Banners */}
-        {(success || canceled) && (
+        {(awaitingCheckoutConfirmation || canceled) && (
           <div className="mt-8 max-w-2xl mx-auto">
-            {success && (
+            {awaitingCheckoutConfirmation && activationPhase === 'activating' && (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-4 text-amber-900">
+                <div className="font-semibold">Payment received. Confirming BroBot Unlimited...</div>
+                <div className="text-sm mt-0.5">
+                  We are syncing your subscription now. This usually takes a few seconds.
+                </div>
+              </div>
+            )}
+            {awaitingCheckoutConfirmation && activationPhase === 'active' && (
               <div className="rounded-2xl border border-teal-200 bg-teal-50 px-6 py-4 text-teal-800">
                 <div className="font-semibold">Subscription activated successfully.</div>
                 <div className="text-sm mt-0.5">You now have unlimited BroBot access across SnapOrtho.</div>
+              </div>
+            )}
+            {awaitingCheckoutConfirmation && activationPhase === 'delayed' && (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-4 text-amber-900">
+                <div className="font-semibold">Payment received. Activation is taking longer than expected.</div>
+                <div className="text-sm mt-0.5">
+                  Use Restore Subscription below or contact support if access does not appear soon.
+                </div>
               </div>
             )}
             {canceled && (
@@ -235,24 +325,33 @@ function BillingContent() {
           <div>
             <div className="uppercase text-xs tracking-[1.5px] text-gray-500 font-medium">Your current plan</div>
             <div className="mt-1 flex items-baseline gap-3">
-              <span className="text-4xl font-semibold tracking-tight">
-                {isActivating ? 'Activating...' : isUnlimited ? 'Unlimited BroBot' : 'Free'}
-              </span>
+              <span className="text-4xl font-semibold tracking-tight">{planLabel}</span>
 
-              {/* Status badges */}
-              {isActivating && (
+              {statusBadge === 'processing' && (
                 <span className="inline-block rounded-full bg-amber-100 text-amber-700 text-xs font-semibold px-3 py-1 animate-pulse">
                   PROCESSING
                 </span>
               )}
 
-              {isPaid && !isActivating && !isCanceledAtPeriodEnd && (
+              {statusBadge === 'delayed' && (
+                <span className="inline-block rounded-full bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1">
+                  SYNC DELAYED
+                </span>
+              )}
+
+              {statusBadge === 'trial' && (
+                <span className="inline-block rounded-full bg-sky-100 text-sky-800 text-xs font-semibold px-3 py-1">
+                  TRIAL ACTIVE
+                </span>
+              )}
+
+              {statusBadge === 'active' && (
                 <span className="inline-block rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold px-3 py-1">
                   ACTIVE
                 </span>
               )}
 
-              {isCanceledAtPeriodEnd && (
+              {statusBadge === 'canceling' && (
                 <span className="inline-block rounded-full bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1">
                   CANCELING
                 </span>
@@ -274,12 +373,18 @@ function BillingContent() {
               </div>
             )}
 
-            {!isUnlimited && (
+            {showFreeQuota && (
               <div className="mt-2 text-sm">
                 <span className="font-medium text-gray-700">
                   {remaining} / {dailyCap}
                 </span>{' '}
                 <span className="text-gray-500">free preps used today</span>
+              </div>
+            )}
+
+            {activationPhase === 'delayed' && (
+              <div className="mt-2 text-sm text-amber-800">
+                Your Stripe payment succeeded. We are still syncing your unlimited access.
               </div>
             )}
           </div>
@@ -289,18 +394,25 @@ function BillingContent() {
               <button
                 onClick={handleManageBilling}
                 className={`rounded-2xl px-8 py-3 text-sm font-semibold transition-colors ${
-                  isCanceledAtPeriodEnd 
-                    ? 'border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100' 
+                  isCanceledAtPeriodEnd
+                    ? 'border border-amber-300 bg-amber-50 text-amber-800 hover:bg-amber-100'
                     : 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 active:bg-gray-100'
                 }`}
               >
-                {isCanceledAtPeriodEnd ? 'Manage or Reactivate Subscription' : 'Manage Billing &amp; Subscription'}
+                {isCanceledAtPeriodEnd ? 'Manage or Reactivate Subscription' : 'Manage Billing & Subscription'}
               </button>
-            ) : (
+            ) : activationPhase === 'delayed' ? (
+              <button
+                onClick={handleRestoreSubscription}
+                className="rounded-2xl border border-amber-300 bg-amber-50 px-8 py-3 text-sm font-semibold text-amber-900 transition-colors hover:bg-amber-100"
+              >
+                Restore Subscription
+              </button>
+            ) : showUpgradePrompt ? (
               <div className="text-sm text-gray-500 max-w-[260px]">
                 Upgrade to remove daily limits and unlock BroBot across the entire SnapOrtho platform.
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
@@ -348,7 +460,7 @@ function BillingContent() {
           </p>
         </div>
 
-        {!isUnlimited && (
+        {showTrialPromo && (
           <div className="mx-auto mb-6 max-w-4xl rounded-3xl border border-teal-200 bg-white/80 p-5 shadow-sm">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>

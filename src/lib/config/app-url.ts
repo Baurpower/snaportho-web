@@ -41,8 +41,21 @@ export function getAppBaseUrl(): string {
   return 'http://localhost:3000';
 }
 
+/**
+ * Canonical Stripe Checkout success redirect for web flows.
+ * Stripe replaces {CHECKOUT_SESSION_ID} after payment.
+ */
+export function getCheckoutSuccessUrl(options?: { returnTo?: string }): string {
+  const url = new URL('/checkout/success', getAppBaseUrl());
+  url.searchParams.set('session_id', '{CHECKOUT_SESSION_ID}');
+  if (options?.returnTo) {
+    url.searchParams.set('return_to', options.returnTo);
+  }
+  return url.toString();
+}
+
 export function getBillingSuccessUrl(): string {
-  return `${getAppBaseUrl()}/account/billing?success=true`;
+  return getCheckoutSuccessUrl();
 }
 
 export function getBillingCancelUrl(): string {

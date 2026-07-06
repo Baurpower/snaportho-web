@@ -1,0 +1,2258 @@
+{
+  "topicKey": "multiligament-knee-injury",
+  "pilotKey": "multiligament-knee-injury-neighborhood",
+  "generatedAt": "2026-07-05T22:49:03.429Z",
+  "entities": [
+    {
+      "slug": "multiligament-knee-injury-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Multiligament Knee Injury Classification",
+      "metadata": {
+        "slug": "multiligament-knee-injury-classification",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Educational classification framework for multiligament knee injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|multiligament-knee-injury-classification",
+        "canonical_entity_id": "32652fd2-296d-4e4e-b5a3-d48b7ee94e2f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|multiligament-knee-injury-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "multiligament-knee-injury-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Multiligament Knee Injury MRI Pattern",
+      "metadata": {
+        "slug": "multiligament-knee-injury-mri-finding",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Characteristic MRI findings in multiligament knee injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|multiligament-knee-injury-mri-finding",
+        "canonical_entity_id": "0cfa3c5f-1713-4233-b680-eb7be498a8d6",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|multiligament-knee-injury-mri-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "multiligament-knee-injury-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Multiligament Knee Injury Reconstruction",
+      "metadata": {
+        "slug": "multiligament-knee-injury-reconstruction",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Operative reconstruction concept for multiligament knee injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|multiligament-knee-injury-reconstruction",
+        "canonical_entity_id": "0db99072-906a-440a-9703-0701194adaae",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|multiligament-knee-injury-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "multiligament-knee-injury-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Multiligament Knee Injury Rehabilitation",
+      "metadata": {
+        "slug": "multiligament-knee-injury-rehab-protocol",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Return-to-play rehabilitation milestones for multiligament knee injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|treatment_principle|multiligament-knee-injury-rehab-protocol",
+        "canonical_entity_id": "27cb96f2-3611-42b9-ae44-98f0506af5b5",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|treatment_principle|multiligament-knee-injury-rehab-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "multiligament-knee-injury-complication",
+      "entityType": "complication",
+      "preferredLabel": "Multiligament Knee Injury Complication",
+      "metadata": {
+        "slug": "multiligament-knee-injury-complication",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Common post-injury complication in multiligament knee injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|multiligament-knee-injury-complication",
+        "canonical_entity_id": "fb5943fe-0ae1-4dbc-bbcf-893dea385411",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|multiligament-knee-injury-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "multiligament-knee-injury-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Multiligament Knee Injury Physical Exam",
+      "metadata": {
+        "slug": "multiligament-knee-injury-exam-maneuver",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Key physical examination maneuver for multiligament knee injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|exam_maneuver|multiligament-knee-injury-exam-maneuver",
+        "canonical_entity_id": "b4da8d96-f03e-423a-b6a5-b86caf73255a",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|exam_maneuver|multiligament-knee-injury-exam-maneuver"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "achilles-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Achilles Tendon",
+      "description": "Conjoined gastrocnemius-soleus tendon inserting on the calcaneus.",
+      "metadata": {
+        "slug": "achilles-tendon",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "description": "Conjoined gastrocnemius-soleus tendon inserting on the calcaneus.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|achilles-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "articular-cartilage",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Articular Cartilage",
+      "description": "Hyaline cartilage covering femoral condyles and tibial plateau.",
+      "metadata": {
+        "slug": "articular-cartilage",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "description": "Hyaline cartilage covering femoral condyles and tibial plateau.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "cartilage",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|articular-cartilage"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "atfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Talofibular Ligament",
+      "description": "Primary lateral ankle stabilizer injured in inversion sprains.",
+      "metadata": {
+        "slug": "atfl",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "description": "Primary lateral ankle stabilizer injured in inversion sprains.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|atfl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "biceps-anchor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Biceps Anchor",
+      "description": "Superior labrum and biceps anchor complex at the glenoid origin.",
+      "metadata": {
+        "slug": "biceps-anchor",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "description": "Superior labrum and biceps anchor complex at the glenoid origin.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|biceps-anchor"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "cfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneofibular Ligament",
+      "description": "Lateral ankle ligament stabilizing subtalar motion after inversion injury.",
+      "metadata": {
+        "slug": "cfl",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Lateral ankle ligament stabilizing subtalar motion after inversion injury.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|cfl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-biceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Biceps Tendon",
+      "description": "Distal biceps insertion on the radial tuberosity enabling elbow flexion and supination.",
+      "metadata": {
+        "slug": "distal-biceps-tendon",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Distal biceps insertion on the radial tuberosity enabling elbow flexion and supination.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|distal-biceps-tendon"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "glenoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid",
+      "description": "Scapular articular surface forming the socket of the glenohumeral joint.",
+      "metadata": {
+        "slug": "glenoid",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Scapular articular surface forming the socket of the glenohumeral joint.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|glenoid"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "infraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Infraspinatus",
+      "description": "Posterior cuff tendon providing external rotation strength.",
+      "metadata": {
+        "slug": "infraspinatus",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Posterior cuff tendon providing external rotation strength.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|infraspinatus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lateral-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Meniscus",
+      "description": "More mobile lateral meniscus with popliteus hiatus; commonly torn with ACL injuries.",
+      "metadata": {
+        "slug": "lateral-meniscus",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "More mobile lateral meniscus with popliteus hiatus; commonly torn with ACL injuries.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "meniscus",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lateral-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Collateral Ligament",
+      "description": "Primary lateral knee stabilizer resisting varus stress.",
+      "metadata": {
+        "slug": "lcl",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Primary lateral knee stabilizer resisting varus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "mcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Collateral Ligament",
+      "description": "Primary medial knee stabilizer resisting valgus stress.",
+      "metadata": {
+        "slug": "mcl",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Primary medial knee stabilizer resisting valgus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|mcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "medial-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Meniscus",
+      "description": "C-shaped medial meniscus distributing load and resisting shear at the medial compartment.",
+      "metadata": {
+        "slug": "medial-meniscus",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "C-shaped medial meniscus distributing load and resisting shear at the medial compartment.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "meniscus",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|medial-meniscus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "posterolateral-corner",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterolateral Corner",
+      "description": "Posterolateral knee stabilizing complex including LCL, popliteus, and arcuate ligaments.",
+      "metadata": {
+        "slug": "posterolateral-corner",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Posterolateral knee stabilizing complex including LCL, popliteus, and arcuate ligaments.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|posterolateral-corner"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "radial-collateral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Collateral Ligament",
+      "description": "Lateral elbow stabilizer resisting varus stress.",
+      "metadata": {
+        "slug": "radial-collateral-ligament",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Lateral elbow stabilizer resisting varus stress.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|radial-collateral-ligament"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "rotator-cuff",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Rotator Cuff",
+      "description": "Supraspinatus, infraspinatus, subscapularis, and teres minor force-couple complex.",
+      "metadata": {
+        "slug": "rotator-cuff",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Supraspinatus, infraspinatus, subscapularis, and teres minor force-couple complex.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-elbow-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Elbow Anatomy Hub",
+      "description": "Elbow ligament and tendon structures relevant to throwing and flexion injuries.",
+      "metadata": {
+        "slug": "sports-elbow-anatomy-hub",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Elbow ligament and tendon structures relevant to throwing and flexion injuries.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-foot-ankle-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Foot & Ankle Anatomy Hub",
+      "description": "Lateral ankle ligaments, syndesmosis, Achilles, and hindfoot structures for sports foot-ankle conditions.",
+      "metadata": {
+        "slug": "sports-foot-ankle-anatomy-hub",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "foot_ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Lateral ankle ligaments, syndesmosis, Achilles, and hindfoot structures for sports foot-ankle conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-knee-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Knee Anatomy Hub",
+      "description": "Knee ligament, meniscus, extensor, and articular structures for sports knee conditions.",
+      "metadata": {
+        "slug": "sports-knee-anatomy-hub",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Knee ligament, meniscus, extensor, and articular structures for sports knee conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-medicine-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Medicine Anatomy Hub",
+      "description": "Composite sports medicine model linking knee, shoulder, elbow, and foot-ankle regional hubs.",
+      "metadata": {
+        "slug": "sports-medicine-anatomy-hub",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "sports_medicine",
+        "cluster": "sports-medicine",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Composite sports medicine model linking knee, shoulder, elbow, and foot-ankle regional hubs.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sports-shoulder-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Shoulder Anatomy Hub",
+      "description": "Glenohumeral stabilizers, rotator cuff, and biceps anchor for shoulder sports conditions.",
+      "metadata": {
+        "slug": "sports-shoulder-anatomy-hub",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Glenohumeral stabilizers, rotator cuff, and biceps anchor for shoulder sports conditions.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subscapularis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subscapularis",
+      "description": "Anterior cuff tendon providing internal rotation and anterior stability.",
+      "metadata": {
+        "slug": "subscapularis",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Anterior cuff tendon providing internal rotation and anterior stability.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|subscapularis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "supraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Supraspinatus",
+      "description": "Superior rotator cuff tendon initiating abduction and commonly torn in cuff pathology.",
+      "metadata": {
+        "slug": "supraspinatus",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Superior rotator cuff tendon initiating abduction and commonly torn in cuff pathology.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "tendon",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|supraspinatus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "teres-minor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Teres Minor",
+      "description": "Inferior posterior cuff muscle contributing to external rotation.",
+      "metadata": {
+        "slug": "teres-minor",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "shoulder",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Inferior posterior cuff muscle contributing to external rotation.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "muscle",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|teres-minor"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Collateral Ligament",
+      "description": "Medial elbow stabilizer critical in throwing athletes.",
+      "metadata": {
+        "slug": "ucl",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "region": "elbow",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Medial elbow stabilizer critical in throwing athletes.",
+        "owner_pilot": "sports-medicine-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|ucl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl-tear",
+      "entityType": "condition",
+      "preferredLabel": "Acl Tear",
+      "description": "Cross-neighborhood reference to canonical condition acl-tear.",
+      "metadata": {
+        "slug": "acl-tear",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Cross-neighborhood reference to canonical condition acl-tear.",
+        "owner_pilot": "acl-tear-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|acl-tear"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "multiligament-knee-injury",
+      "entityType": "condition",
+      "preferredLabel": "Multiligament Knee Injury",
+      "description": "Combined knee ligament injury pattern.",
+      "metadata": {
+        "slug": "multiligament-knee-injury",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Combined knee ligament injury pattern.",
+        "clinical_kind": "sports_soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|multiligament-knee-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pcl-injury",
+      "entityType": "condition",
+      "preferredLabel": "Pcl Injury",
+      "description": "Cross-neighborhood reference to canonical condition pcl-injury.",
+      "metadata": {
+        "slug": "pcl-injury",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Cross-neighborhood reference to canonical condition pcl-injury.",
+        "owner_pilot": "pcl-injury-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|pcl-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-plateau-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Tibial Plateau Fracture",
+      "description": "Cross-neighborhood reference to canonical condition tibial-plateau-fracture.",
+      "metadata": {
+        "slug": "tibial-plateau-fracture",
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:49:03.425Z",
+        "description": "Cross-neighborhood reference to canonical condition tibial-plateau-fracture.",
+        "owner_pilot": "tibial-plateau-fracture-neighborhood",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "cross_neighborhood": true,
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|condition|tibial-plateau-fracture"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "achilles-tendon",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "plantarflexion",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|achilles-tendon|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|acl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "articular-cartilage",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cartilage",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|articular-cartilage|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "atfl",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_ankle",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|atfl|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "biceps-anchor",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "biceps_labrum",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|biceps-anchor|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "cfl",
+      "predicate": "part_of",
+      "objectSlug": "sports-foot-ankle-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_ankle",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|cfl|part_of|sports-foot-ankle-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-biceps-tendon",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "flexion_supination",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|distal-biceps-tendon|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-condyles",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "articular",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|femoral-condyles|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "glenoid",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "socket",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|glenoid|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "infraspinatus",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "external_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|infraspinatus|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "labrum",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|labrum|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lateral-meniscus",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "meniscus",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|lateral-meniscus|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|lcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "mcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|mcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "medial-meniscus",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "meniscus",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|medial-meniscus|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury-mri-finding",
+      "predicate": "indicates_treatment",
+      "objectSlug": "multiligament-knee-injury-reconstruction",
+      "metadata": {
+        "note": "operative indication attending-dependent",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury-mri-finding|indicates_treatment|multiligament-knee-injury-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "at_risk_structure",
+      "objectSlug": "common-peroneal-nerve",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|at_risk_structure|common-peroneal-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "at_risk_structure",
+      "objectSlug": "popliteal-artery",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|at_risk_structure|popliteal-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "differential_for",
+      "objectSlug": "acl-tear",
+      "metadata": {
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_injury",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|differential_for|acl-tear"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "differential_for",
+      "objectSlug": "distal-femur-fracture",
+      "metadata": {
+        "cross_cluster": true,
+        "review_status": "unreviewed",
+        "relevance_reason": "trauma_overlap",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|differential_for|distal-femur-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "differential_for",
+      "objectSlug": "pcl-injury",
+      "metadata": {
+        "review_status": "unreviewed",
+        "relevance_reason": "associated_injury",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|differential_for|pcl-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "differential_for",
+      "objectSlug": "tibial-plateau-fracture",
+      "metadata": {
+        "cross_cluster": true,
+        "review_status": "unreviewed",
+        "relevance_reason": "trauma_overlap",
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|differential_for|tibial-plateau-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "has_classification",
+      "objectSlug": "multiligament-knee-injury-classification",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|has_classification|multiligament-knee-injury-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "has_complication",
+      "objectSlug": "multiligament-knee-injury-complication",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|has_complication|multiligament-knee-injury-complication"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "multiligament-knee-injury-mri-finding",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "workup",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|has_imaging_finding|multiligament-knee-injury-mri-finding"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "acl",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|involves_anatomy|acl"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "common-peroneal-nerve",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|involves_anatomy|common-peroneal-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lcl",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|involves_anatomy|lcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "mcl",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|involves_anatomy|mcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "pcl",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|involves_anatomy|pcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "popliteal-artery",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|involves_anatomy|popliteal-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "posterolateral-corner",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pathoanatomy",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|involves_anatomy|posterolateral-corner"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "involves_anatomy",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|involves_anatomy|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "tested_by",
+      "objectSlug": "multiligament-knee-injury-exam-maneuver",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|tested_by|multiligament-knee-injury-exam-maneuver"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "treated_by",
+      "objectSlug": "multiligament-knee-injury-reconstruction",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|treated_by|multiligament-knee-injury-reconstruction"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "multiligament-knee-injury",
+      "predicate": "treated_by",
+      "objectSlug": "multiligament-knee-injury-rehab-protocol",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|multiligament-knee-injury|treated_by|multiligament-knee-injury-rehab-protocol"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "cross_cluster",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|pcl|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "posterolateral-corner",
+      "predicate": "part_of",
+      "objectSlug": "sports-knee-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "rotational_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|posterolateral-corner|part_of|sports-knee-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "radial-collateral-ligament",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|radial-collateral-ligament|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "rotator-cuff",
+      "predicate": "part_of",
+      "objectSlug": "sports-shoulder-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "dynamic_stability",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|rotator-cuff|part_of|sports-shoulder-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-elbow-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-elbow-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-foot-ankle-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot_ankle",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-foot-ankle-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-knee-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-knee-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-knee-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "multiligament-knee-injury",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|sports-knee-anatomy-hub|prerequisite_for|multiligament-knee-injury"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sports-shoulder-anatomy-hub",
+      "predicate": "part_of",
+      "objectSlug": "sports-medicine-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "shoulder",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|sports-shoulder-anatomy-hub|part_of|sports-medicine-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subscapularis",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "internal_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|subscapularis|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "supraspinatus",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "abduction",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|supraspinatus|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "teres-minor",
+      "predicate": "part_of",
+      "objectSlug": "rotator-cuff",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "external_rotation",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|teres-minor|part_of|rotator-cuff"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "ucl",
+      "predicate": "part_of",
+      "objectSlug": "sports-elbow-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "medial_elbow",
+        "shared_reference": true,
+        "_provenance_fingerprint": "rel|ucl|part_of|sports-elbow-anatomy-hub"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-multiligamentkneeinjury-anatomy-pearl",
+      "claimType": "anatomy_pearl",
+      "claimText": "Multiligament Knee Injury pathoanatomy centers on acl, pcl, mcl and related stabilizers.",
+      "primaryEntitySlug": "acl",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "draft_id": "claim-multiligamentkneeinjury-anatomy-pearl",
+        "verified": false,
+        "claim_text": "Multiligament Knee Injury pathoanatomy centers on acl, pcl, mcl and related stabilizers.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "primary_entity_slug": "acl",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-multiligamentkneeinjury-anatomy-pearl"
+      }
+    },
+    {
+      "draftId": "claim-multiligamentkneeinjury-board-trap",
+      "claimType": "board_trap",
+      "claimText": "Students often underweight exam findings and over-rely on imaging when evaluating multiligament knee injury.",
+      "primaryEntitySlug": "multiligament-knee-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "draft_id": "claim-multiligamentkneeinjury-board-trap",
+        "verified": false,
+        "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating multiligament knee injury.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite"
+        ],
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "primary_entity_slug": "multiligament-knee-injury",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-multiligamentkneeinjury-board-trap"
+      }
+    },
+    {
+      "draftId": "claim-multiligamentkneeinjury-clinical-script",
+      "claimType": "clinical_script",
+      "claimText": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for multiligament knee injury.",
+      "primaryEntitySlug": "multiligament-knee-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "draft_id": "claim-multiligamentkneeinjury-clinical-script",
+        "verified": false,
+        "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for multiligament knee injury.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "primary_entity_slug": "multiligament-knee-injury",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-multiligamentkneeinjury-clinical-script"
+      }
+    },
+    {
+      "draftId": "claim-multiligamentkneeinjury-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "claimText": "Do not anchor on a single exam maneuver for multiligament knee injury — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primaryEntitySlug": "multiligament-knee-injury",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "draft_id": "claim-multiligamentkneeinjury-cognitive-trap",
+        "verified": false,
+        "claim_text": "Do not anchor on a single exam maneuver for multiligament knee injury — integrate mechanism, instability symptoms, and imaging pattern.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "primary_entity_slug": "multiligament-knee-injury",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-multiligamentkneeinjury-cognitive-trap"
+      }
+    },
+    {
+      "draftId": "claim-multiligamentkneeinjury-oneliner",
+      "claimType": "fact",
+      "claimText": "Multiligament knee injuries demand vascular exam, reduction, and staged reconstruction planning.",
+      "primaryEntitySlug": "multiligament-knee-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "draft_id": "claim-multiligamentkneeinjury-oneliner",
+        "verified": false,
+        "claim_text": "Multiligament knee injuries demand vascular exam, reduction, and staged reconstruction planning.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "primary_entity_slug": "multiligament-knee-injury",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-multiligamentkneeinjury-oneliner"
+      }
+    },
+    {
+      "draftId": "claim-multiligamentkneeinjury-rehab-milestone",
+      "claimType": "fact",
+      "claimText": "Rehabilitation milestones and return-to-play criteria for multiligament knee injury require attending-defined progression gates.",
+      "primaryEntitySlug": "multiligament-knee-injury-rehab-protocol",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "draft_id": "claim-multiligamentkneeinjury-rehab-milestone",
+        "verified": false,
+        "claim_text": "Rehabilitation milestones and return-to-play criteria for multiligament knee injury require attending-defined progression gates.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_REVISED",
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "primary_entity_slug": "multiligament-knee-injury-rehab-protocol",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-multiligamentkneeinjury-rehab-milestone"
+      }
+    },
+    {
+      "draftId": "claim-multiligamentkneeinjury-vascular",
+      "claimType": "red_flag",
+      "claimText": "Knee dislocation and multiligament injury require documented distal perfusion and ABI when indicated.",
+      "primaryEntitySlug": "multiligament-knee-injury",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "multiligament-knee-injury-neighborhood",
+        "draft_id": "claim-multiligamentkneeinjury-vascular",
+        "verified": false,
+        "claim_text": "Knee dislocation and multiligament injury require documented distal perfusion and ABI when indicated.",
+        "claim_type": "red_flag",
+        "curated_at": "2026-07-05T22:49:03.424Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 0.72,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [],
+        "review_packet_key": "pilot:multiligament-knee-injury-neighborhood",
+        "primary_entity_slug": "multiligament-knee-injury",
+        "review_packet_label": "Multiligament Knee Injury Neighborhood",
+        "_provenance_fingerprint": "claim|claim-multiligamentkneeinjury-vascular"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-multiligamentkneeinjury-operative-indication",
+      "subjectEntitySlug": "multiligament-knee-injury",
+      "patternType": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from multiligament knee injury despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-multiligamentkneeinjury-return-to-play",
+      "subjectEntitySlug": "multiligament-knee-injury",
+      "patternType": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after multiligament knee injury treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-multiligamentkneeinjury-vascular-emergency",
+      "subjectEntitySlug": "multiligament-knee-injury",
+      "patternType": "operative_indication",
+      "trigger": "Multiligament knee injury with absent or diminished distal pulses",
+      "action": "Emergent vascular evaluation and revascularization before definitive ligament reconstruction",
+      "urgency": "emergent",
+      "safetyCriticality": "emergency",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern multiligament-knee-injury|operative_indication: dp-multiligamentkneeinjury-operative-indication vs dp-multiligamentkneeinjury-vascular-emergency"
+    }
+  ],
+  "stats": {
+    "entityCount": 34,
+    "relationshipCount": 50,
+    "claimCount": 7,
+    "decisionPointCount": 3,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 6,
+    "conflictingRelationships": 0,
+    "metadataMerged": 6,
+    "provenanceAttached": 95
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "topicKey": "bennett-fracture",
+  "pilotKey": "bennett-fracture-neighborhood",
+  "primaryEntitySlug": "bennett-fracture",
+  "displayName": "Bennett Fracture",
+  "generatedAt": "2026-07-05T23:51:53.181Z",
+  "nodes": [
+    {
+      "slug": "thumb-ucl-injury",
+      "entityType": "condition",
+      "preferredLabel": "Thumb Ucl Injury",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "bennett-fracture-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Bennett Fracture Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "bennett-fracture-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "Bennett Fracture Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "bennett-fracture-operative-treatment"
+    ],
+    "classification": [],
+    "imaging": [
+      "bennett-fracture-key-imaging-finding"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "thumb-ucl-injury"
+    ]
+  }
+}

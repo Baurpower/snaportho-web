@@ -1,0 +1,105 @@
+{
+  "generatedAt": "2026-07-05T22:54:52.464Z",
+  "gaps": [
+    {
+      "id": "gap-entity-neighbor-1",
+      "kind": "missing_entity",
+      "priority": "high",
+      "confidence": 0.95,
+      "reason": "DRUJ Instability Classification neighborhood has 0/2 classification_grade entities.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.grades",
+      "anchorEntitySlug": "druj-instability-classification",
+      "entityType": "classification_grade"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "DRUJ Instability Classification missing inbound has_classification (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "classification.pred.has_classification_inbound",
+      "anchorEntitySlug": "druj-instability-classification",
+      "predicate": "has_classification",
+      "objectSlug": "druj-instability-classification"
+    },
+    {
+      "id": "gap-entity-neighbor-3",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "DRUJ Instability Operative Treatment neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "druj-instability-operative-treatment",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-4",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "DRUJ Instability Operative Treatment missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "druj-instability-operative-treatment",
+      "subjectSlug": "druj-instability-operative-treatment",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-5",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "DRUJ Instability Operative Treatment missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "druj-instability-operative-treatment",
+      "subjectSlug": "druj-instability-operative-treatment",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-asset-question-6",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "18 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "druj-instability"
+    },
+    {
+      "id": "gap-proc-approach-7",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure DRUJ Instability Operative Treatment missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "druj-instability-operative-treatment",
+      "subjectSlug": "druj-instability-operative-treatment",
+      "predicate": "uses_approach"
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "byKind": {
+      "missing_entity": 2,
+      "missing_relationship": 4,
+      "missing_asset_link": 1
+    },
+    "byPriority": {
+      "high": 3,
+      "critical": 2,
+      "medium": 2
+    }
+  }
+}

@@ -1,0 +1,2930 @@
+{
+  "topicKey": "acetabular-fracture",
+  "pilotKey": "acetabular-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:33:19.277Z",
+  "entities": [
+    {
+      "slug": "pcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterior Cruciate Ligament",
+      "metadata": {
+        "slug": "pcl",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Posterior knee stabilizer relevant in high-energy knee and plateau injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|pcl",
+        "canonical_entity_id": "ffca4b51-3055-40f8-b65e-771336fbf194",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|pcl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "metadata": {
+        "slug": "pelvis",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Bony pelvic ring formed by ilium, ischium, pubis, and sacrum.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|pelvis",
+        "canonical_entity_id": "c515851f-0b9a-44eb-9541-32e80b3765ab",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lower-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Trauma Anatomy Hub",
+      "metadata": {
+        "slug": "lower-extremity-trauma-anatomy-hub",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "lower_extremity",
+        "cluster": "lower-extremity-trauma",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Composite pelvis-to-foot model linking pelvic ring, knee, leg, and hindfoot structures for trauma neighborhoods.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub",
+        "canonical_entity_id": "b1479705-294b-4d3a-8f76-dbcd3f625327",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "distal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Femur",
+      "metadata": {
+        "slug": "distal-femur",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Distal femoral metaphysis and condylar region forming the proximal knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|distal-femur",
+        "canonical_entity_id": "e53bd296-d076-4e6f-afec-5a2589d69e75",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "metadata": {
+        "slug": "lisfranc-joint",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Tarsometatarsal articulation complex; instability defines Lisfranc injury.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|lisfranc-joint",
+        "canonical_entity_id": "c3c8eb81-36f6-4082-9094-6556581c1a79",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|lisfranc-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "posterior-wall-acetabular-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Posterior Wall Acetabular Fracture",
+      "metadata": {
+        "slug": "posterior-wall-acetabular-fracture",
+        "pilot": "acetabular-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.273Z",
+        "description": "Posterior wall fragment pattern with hip instability risk after injury.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|imaging_finding|posterior-wall-acetabular-fracture",
+        "canonical_entity_id": "91b4069d-c414-425e-b4d8-4fa01a633a5f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|imaging_finding|posterior-wall-acetabular-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "metadata": {
+        "slug": "sacroiliac-joint",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Posterior pelvic articulation between sacrum and ilium; key pelvic ring stability structure.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|sacroiliac-joint",
+        "canonical_entity_id": "40337e1a-8d8e-46a8-a0c0-bb8fe1557bec",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|sacroiliac-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "metadata": {
+        "slug": "sacrum",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Posterior pelvic anchor articulating with ilia at the sacroiliac joints.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|sacrum",
+        "canonical_entity_id": "d980ac8f-d2b3-4fa4-9489-67678a19b439",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|sacrum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "metadata": {
+        "slug": "iliac-wing",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Lateral pelvic ilium region relevant to acetabular column and pelvic ring injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|iliac-wing",
+        "canonical_entity_id": "e3372694-7192-4c14-aaa3-749012b38d88",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "metadata": {
+        "slug": "extensor-mechanism",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Quadriceps-patella-tibial tubercle linkage enabling knee extension.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|extensor-mechanism",
+        "canonical_entity_id": "d22f71b0-9268-4174-9946-5d80791e1e1f",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "common-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Peroneal Nerve",
+      "metadata": {
+        "slug": "common-peroneal-nerve",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Lateral knee nerve at risk in tibial plateau and proximal fibular injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|common-peroneal-nerve",
+        "canonical_entity_id": "02470a37-a249-42e6-a0c5-9ea3b43db887",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|common-peroneal-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabular-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Acetabular Fracture",
+      "metadata": {
+        "slug": "acetabular-fracture",
+        "pilot": "acetabular-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.273Z",
+        "description": "Intra-articular hip socket fracture with column, wall, and congruity concerns.",
+        "clinical_kind": "fracture",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "maturity_target": 6,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|condition|acetabular-fracture",
+        "canonical_entity_id": "5ac4182a-84f7-4d11-9145-4aa115a51dee",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|condition|acetabular-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "metadata": {
+        "slug": "plantar-soft-tissues",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Plantar fascia and soft-tissue envelope relevant to calcaneus fracture swelling and wound risk.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "soft_tissue",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|plantar-soft-tissues",
+        "canonical_entity_id": "dcdcdcd9-d582-4108-8a0a-8a193ee5852b",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|plantar-soft-tissues"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "metadata": {
+        "slug": "midfoot",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Central foot region including navicular, cuneiforms, and cuboid linking hindfoot to forefoot.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|midfoot",
+        "canonical_entity_id": "19492edc-544a-4d3b-a1e3-7dab9a42ba71",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabular-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Acetabular ORIF",
+      "metadata": {
+        "slug": "acetabular-orif",
+        "pilot": "acetabular-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.273Z",
+        "description": "Open reduction internal fixation of displaced acetabular fracture.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|procedure|acetabular-orif",
+        "canonical_entity_id": "5384f6a8-f1fd-4dbe-9e93-7bd270d8aa58",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|procedure|acetabular-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "metadata": {
+        "slug": "acetabulum",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Hip socket formed by ilium, ischium, and pubis; injured in acetabular fractures.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|acetabulum",
+        "canonical_entity_id": "cc4e00c3-e978-4f25-ad2a-ebd7c72e60fd",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "metadata": {
+        "slug": "subtalar-joint",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Talocalcaneal articulation governing hindfoot alignment after calcaneus and talus injuries.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|subtalar-joint",
+        "canonical_entity_id": "44224283-dd38-4db0-a732-b5bc3cd0715a",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "judet-letournel-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Judet-Letournel Classification",
+      "metadata": {
+        "slug": "judet-letournel-classification",
+        "pilot": "acetabular-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.273Z",
+        "description": "Column-and-wall acetabular fracture classification framework.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|classification_system|judet-letournel-classification",
+        "canonical_entity_id": "76c6be34-84fc-46ec-9afc-723568950534",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|classification_system|judet-letournel-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acetabular-post-traumatic-arthritis",
+      "entityType": "complication",
+      "preferredLabel": "Acetabular Post-Traumatic Arthritis",
+      "metadata": {
+        "slug": "acetabular-post-traumatic-arthritis",
+        "pilot": "acetabular-fracture-neighborhood",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.273Z",
+        "description": "Degenerative hip arthritis after acetabular malunion or articular incongruity.",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|complication|acetabular-post-traumatic-arthritis",
+        "canonical_entity_id": "b6342d94-fda2-4dd6-a753-d1904b84981a",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|complication|acetabular-post-traumatic-arthritis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "tibial-plateau",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Plateau",
+      "metadata": {
+        "slug": "tibial-plateau",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Proximal tibial articular surface bearing medial and lateral condylar load.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|tibial-plateau",
+        "canonical_entity_id": "515df3e3-951a-462a-8710-4f4777f08d46",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "metadata": {
+        "slug": "pubic-symphysis",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "pelvis",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Anterior midline pelvic articulation; disruption indicates pelvic ring instability.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|pubic-symphysis",
+        "canonical_entity_id": "49c374d3-b0c7-442b-ad27-e30592e90e76",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|pubic-symphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "popliteal-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Popliteal Artery",
+      "metadata": {
+        "slug": "popliteal-artery",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Major knee-region artery at risk in tibial plateau, distal femur, and knee dislocation trauma.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|popliteal-artery",
+        "canonical_entity_id": "534d7f3c-9f81-4e42-b433-d18caa7ed910",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|popliteal-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "acl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Cruciate Ligament",
+      "metadata": {
+        "slug": "acl",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Primary knee stabilizer commonly injured with tibial plateau and knee trauma.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "ligament",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|acl",
+        "canonical_entity_id": "850e2c40-054b-487f-9089-6ac253f787a2",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|acl"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "metadata": {
+        "slug": "femoral-diaphysis",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "thigh",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Femoral shaft between proximal and distal metaphyseal regions.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|femoral-diaphysis",
+        "canonical_entity_id": "a902a7d7-1739-49da-9915-c08114950b2b",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-diaphysis"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "metadata": {
+        "slug": "calcaneus",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "foot",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Hindfoot bone articulating with talus at the subtalar joint.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|calcaneus",
+        "canonical_entity_id": "df9f225f-494e-46c2-b0b4-66682b738eec",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "metadata": {
+        "slug": "patella",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "knee",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Sesamoid bone within the extensor mechanism at the anterior knee.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "created_from_proposal_fingerprint": "create|anatomy_structure|patella",
+        "canonical_entity_id": "7b3d603f-9fb2-47b3-bd5e-553187064918",
+        "applied_by_script": "apply-pilot-approved",
+        "_provenance_fingerprint": "create|anatomy_structure|patella"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "calcar",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcar",
+      "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
+      "metadata": {
+        "slug": "calcar",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Dense medial femoral neck cortical buttress supporting head-neck load transfer.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|calcar"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Head",
+      "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
+      "metadata": {
+        "slug": "femoral-head",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Articular femoral head supplied largely by retinacular and circumflex vessels.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-head"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "femoral-neck",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Neck",
+      "description": "Intracapsular segment between femoral head and intertrochanteric region.",
+      "metadata": {
+        "slug": "femoral-neck",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Intracapsular segment between femoral head and intertrochanteric region.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|femoral-neck"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "greater-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Greater Trochanter",
+      "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
+      "metadata": {
+        "slug": "greater-trochanter",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Lateral proximal femur with abductor insertions; intertrochanteric fixation landmark.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|greater-trochanter"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "hip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Joint",
+      "description": "Ball-and-socket articulation between femoral head and acetabulum.",
+      "metadata": {
+        "slug": "hip-joint",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Ball-and-socket articulation between femoral head and acetabulum.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "joint",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|hip-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "intertrochanteric-region",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Intertrochanteric Region",
+      "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
+      "metadata": {
+        "slug": "intertrochanteric-region",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Extracapsular metaphyseal zone between neck and subtrochanteric diaphysis.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|intertrochanteric-region"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "lesser-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lesser Trochanter",
+      "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
+      "metadata": {
+        "slug": "lesser-trochanter",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Medial proximal femur attachment for iliopsoas; key subtrochanteric landmark.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|lesser-trochanter"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "medial-femoral-circumflex-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Femoral Circumflex Artery",
+      "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
+      "metadata": {
+        "slug": "medial-femoral-circumflex-artery",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Dominant retinacular blood supply to the femoral head; vulnerable in neck fractures.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "vessel",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "proximal-femur-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Femur Anatomy Hub",
+      "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
+      "metadata": {
+        "slug": "proximal-femur-anatomy-hub",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "cluster": "hip-fracture",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Composite proximal femur model linking head, neck, trochanters, calcar, and hip joint.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "composite",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "sciatic-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sciatic Nerve",
+      "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
+      "metadata": {
+        "slug": "sciatic-nerve",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "hip",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Posterior hip nerve at risk during proximal femur exposure and reduction maneuvers.",
+        "owner_pilot": "hip-fracture-cluster-shared",
+        "anatomy_kind": "nerve",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|sciatic-nerve"
+      },
+      "source": "proposal"
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+      "metadata": {
+        "slug": "talus",
+        "pilot": "acetabular-fracture-neighborhood",
+        "region": "ankle",
+        "verified": false,
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "description": "Tibiotalar and subtalar articular bone with limited vascular supply.",
+        "owner_pilot": "lower-extremity-trauma-cluster-shared",
+        "anatomy_kind": "bone",
+        "staging_apply": true,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "factory_version": "kf-016",
+        "hierarchy_level": "structure",
+        "shared_reference": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "create|anatomy_structure|talus"
+      },
+      "source": "proposal"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "common-peroneal-nerve",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "neurovascular"
+        },
+        "created_from_proposal_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "neurovascular",
+        "_provenance_fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "midfoot",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "foot"
+        },
+        "created_from_proposal_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "foot",
+        "_provenance_fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacroiliac-joint",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "posterior_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|sacroiliac-joint|part_of|pelvis",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_stability",
+        "_provenance_fingerprint": "rel|sacroiliac-joint|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "subtalar-joint",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "hindfoot"
+        },
+        "created_from_proposal_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pubic-symphysis",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "anterior_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|pubic-symphysis|part_of|pelvis",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "anterior_stability",
+        "_provenance_fingerprint": "rel|pubic-symphysis|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "tibial-plateau",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "knee"
+        },
+        "created_from_proposal_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "popliteal-artery",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "vascular"
+        },
+        "created_from_proposal_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "vascular",
+        "_provenance_fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-orif",
+      "predicate": "involves_anatomy",
+      "objectSlug": "acetabulum",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "approach",
+          "context_relevance": [
+            "or"
+          ]
+        },
+        "created_from_proposal_fingerprint": "rel|acetabular-orif|involves_anatomy|acetabulum",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "approach",
+        "context_relevance": [
+          "or"
+        ],
+        "_provenance_fingerprint": "rel|acetabular-orif|involves_anatomy|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-fracture",
+      "predicate": "has_classification",
+      "objectSlug": "judet-letournel-classification",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "context_relevance": [
+            "clinic",
+            "oite"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|acetabular-fracture|has_classification|judet-letournel-classification",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "clinic",
+          "oite"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|acetabular-fracture|has_classification|judet-letournel-classification"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "acetabular-post-traumatic-arthritis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed"
+        },
+        "created_from_proposal_fingerprint": "rel|acetabular-fracture|has_complication|acetabular-post-traumatic-arthritis",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|acetabular-fracture|has_complication|acetabular-post-traumatic-arthritis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-fracture",
+      "predicate": "has_imaging_finding",
+      "objectSlug": "posterior-wall-acetabular-fracture",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "instability",
+          "management_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|acetabular-fracture|has_imaging_finding|posterior-wall-acetabular-fracture",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "instability",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|acetabular-fracture|has_imaging_finding|posterior-wall-acetabular-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-fracture",
+      "predicate": "injured_in",
+      "objectSlug": "acetabulum",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "clinical_importance": "high",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|acetabular-fracture|injured_in|acetabulum",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "clinical_importance": "high",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|acetabular-fracture|injured_in|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "column",
+          "clinical_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|acetabular-fracture|involves_anatomy|iliac-wing",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "column",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|acetabular-fracture|involves_anatomy|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "relationship_strength": "core"
+        },
+        "created_from_proposal_fingerprint": "rel|acetabular-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "_provenance_fingerprint": "rel|acetabular-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "articulates_with",
+      "objectSlug": "distal-femur",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "patellofemoral"
+        },
+        "created_from_proposal_fingerprint": "rel|patella|articulates_with|distal-femur",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "patellofemoral",
+        "_provenance_fingerprint": "rel|patella|articulates_with|distal-femur"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "patella",
+      "predicate": "part_of",
+      "objectSlug": "extensor-mechanism",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "extensor"
+        },
+        "created_from_proposal_fingerprint": "rel|patella|part_of|extensor-mechanism",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "extensor",
+        "_provenance_fingerprint": "rel|patella|part_of|extensor-mechanism"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "knee_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-diaphysis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "femoral_shaft"
+        },
+        "created_from_proposal_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "femoral_shaft",
+        "_provenance_fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lower-extremity-trauma-anatomy-hub",
+      "predicate": "prerequisite_for",
+      "objectSlug": "acetabular-fracture",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "diagnosis",
+          "context_relevance": [
+            "call",
+            "or"
+          ],
+          "educational_importance": "high"
+        },
+        "created_from_proposal_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|acetabular-fracture",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "educational_importance": "high",
+        "_provenance_fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|acetabular-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lisfranc-joint",
+      "predicate": "part_of",
+      "objectSlug": "midfoot",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "midfoot_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|lisfranc-joint|part_of|midfoot",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "midfoot_stability",
+        "_provenance_fingerprint": "rel|lisfranc-joint|part_of|midfoot"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pelvis",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "pelvic_ring"
+        },
+        "created_from_proposal_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "pelvic_ring",
+        "_provenance_fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabulum",
+      "predicate": "part_of",
+      "objectSlug": "iliac-wing",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "hip_socket"
+        },
+        "created_from_proposal_fingerprint": "rel|acetabulum|part_of|iliac-wing",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_socket",
+        "_provenance_fingerprint": "rel|acetabulum|part_of|iliac-wing"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "extensor-mechanism",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "knee"
+        },
+        "created_from_proposal_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sacrum",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "posterior_ring"
+        },
+        "created_from_proposal_fingerprint": "rel|sacrum|part_of|pelvis",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "posterior_ring",
+        "_provenance_fingerprint": "rel|sacrum|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "plantar-soft-tissues",
+      "predicate": "part_of",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "soft_tissue_envelope"
+        },
+        "created_from_proposal_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "soft_tissue_envelope",
+        "_provenance_fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "articulates_with",
+      "objectSlug": "subtalar-joint",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "hindfoot"
+        },
+        "created_from_proposal_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|articulates_with|subtalar-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcaneus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "hindfoot"
+        },
+        "created_from_proposal_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hindfoot",
+        "_provenance_fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "iliac-wing",
+      "predicate": "part_of",
+      "objectSlug": "pelvis",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "lateral_pelvis"
+        },
+        "created_from_proposal_fingerprint": "rel|iliac-wing|part_of|pelvis",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "lateral_pelvis",
+        "_provenance_fingerprint": "rel|iliac-wing|part_of|pelvis"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "articulates_with",
+      "objectSlug": "tibial-plateau",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "tibiofemoral"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "tibiofemoral",
+        "_provenance_fingerprint": "rel|distal-femur|articulates_with|tibial-plateau"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "distal-femur",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "essential",
+          "review_status": "unreviewed",
+          "relevance_reason": "knee"
+        },
+        "created_from_proposal_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee",
+        "_provenance_fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "pcl",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "staging_apply": true,
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "clinical_verification": false,
+        "relationship_metadata": {
+          "anatomy_role": "supporting",
+          "review_status": "unreviewed",
+          "relevance_reason": "knee_stability"
+        },
+        "created_from_proposal_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "knee_stability",
+        "_provenance_fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "femoral-head",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "congruity",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|acetabular-fracture|involves_anatomy|femoral-head"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "acetabular-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "acetabular-orif",
+      "metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|acetabular-fracture|treated_by|acetabular-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "calcar",
+      "predicate": "part_of",
+      "objectSlug": "femoral-neck",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "stability",
+        "_provenance_fingerprint": "rel|calcar|part_of|femoral-neck"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-head",
+      "predicate": "articulates_with",
+      "objectSlug": "acetabulum",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "hip_joint",
+        "clinical_importance": "high",
+        "_provenance_fingerprint": "rel|femoral-head|articulates_with|acetabulum"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-head",
+      "predicate": "articulates_with",
+      "objectSlug": "hip-joint",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-head|articulates_with|hip-joint"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-head",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-head|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "femoral-neck",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|femoral-neck|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "greater-trochanter",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "landmark",
+        "_provenance_fingerprint": "rel|greater-trochanter|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "hip-joint",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|hip-joint|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "intertrochanteric-region",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "diagnosis",
+        "_provenance_fingerprint": "rel|intertrochanteric-region|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "lesser-trochanter",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "landmark",
+        "_provenance_fingerprint": "rel|lesser-trochanter|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "medial-femoral-circumflex-artery",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "blood_supply",
+        "_provenance_fingerprint": "rel|medial-femoral-circumflex-artery|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "posterior-wall-acetabular-fracture",
+      "predicate": "explains_instability",
+      "objectSlug": "acetabular-fracture",
+      "metadata": {
+        "confidence": 0.85,
+        "review_status": "unreviewed",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|posterior-wall-acetabular-fracture|explains_instability|acetabular-fracture"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "posterior-wall-acetabular-fracture",
+      "predicate": "indicates_treatment",
+      "objectSlug": "acetabular-orif",
+      "metadata": {
+        "note": "displacement and instability dependent",
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "management_importance": "high",
+        "_provenance_fingerprint": "rel|posterior-wall-acetabular-fracture|indicates_treatment|acetabular-orif"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "sciatic-nerve",
+      "predicate": "part_of",
+      "objectSlug": "proximal-femur-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "relevance_reason": "safety",
+        "_provenance_fingerprint": "rel|sciatic-nerve|part_of|proximal-femur-anatomy-hub"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "articulates_with",
+      "objectSlug": "calcaneus",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "subtalar",
+        "_provenance_fingerprint": "rel|talus|articulates_with|calcaneus"
+      },
+      "source": "proposal"
+    },
+    {
+      "subjectSlug": "talus",
+      "predicate": "part_of",
+      "objectSlug": "lower-extremity-trauma-anatomy-hub",
+      "metadata": {
+        "anatomy_role": "essential",
+        "review_status": "unreviewed",
+        "relevance_reason": "ankle",
+        "_provenance_fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub"
+      },
+      "source": "proposal"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-acet-case-script",
+      "claimType": "clinical_script",
+      "claimText": "Describe fracture pattern, hip stability exam, column-wall language, surgical approach plan, and post-traumatic arthritis counseling.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acet-case-script",
+        "verified": false,
+        "claim_text": "Describe fracture pattern, hip stability exam, column-wall language, surgical approach plan, and post-traumatic arthritis counseling.",
+        "claim_type": "clinical_script",
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L2",
+        "context_relevance": [
+          "call",
+          "clinic"
+        ],
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "primary_entity_slug": "acetabular-fracture",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acet-case-script"
+      }
+    },
+    {
+      "draftId": "claim-acet-column-wall",
+      "claimType": "fact",
+      "claimText": "Acetabular fractures are classified and managed by column-and-wall patterns with articular reduction and hip congruity goals.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acet-column-wall",
+        "verified": false,
+        "claim_text": "Acetabular fractures are classified and managed by column-and-wall patterns with articular reduction and hip congruity goals.",
+        "claim_type": "fact",
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "l1_management_fact"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "call",
+          "or"
+        ],
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "primary_entity_slug": "acetabular-fracture",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acet-column-wall"
+      }
+    },
+    {
+      "draftId": "claim-acet-femoral-head-congruity",
+      "claimType": "anatomy_pearl",
+      "claimText": "Femoral head-acetabulum congruity after reduction is the central determinant of long-term hip function after acetabular fracture.",
+      "primaryEntitySlug": "femoral-head",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "approved",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acet-femoral-head-congruity",
+        "verified": false,
+        "claim_text": "Femoral head-acetabulum congruity after reduction is the central determinant of long-term hip function after acetabular fracture.",
+        "claim_type": "anatomy_pearl",
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "staging_apply": true,
+        "content_source": "generated_draft",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_rules": [
+          "anatomy_pearl_on_hub"
+        ],
+        "curation_scores": {
+          "confidence": 0.88,
+          "evidence": 1,
+          "ambiguity": 0.2,
+          "safety": 0.15,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "staging_reviewer": "staging_test_reviewer_not_clinical",
+        "applied_by_script": "apply-pilot-approved",
+        "context_relevance": [
+          "or",
+          "oite"
+        ],
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "primary_entity_slug": "femoral-head",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "clinical_verification": false,
+        "_provenance_fingerprint": "claim|claim-acet-femoral-head-congruity"
+      }
+    },
+    {
+      "draftId": "claim-acet-nonoperative-displaced",
+      "claimType": "cognitive_trap",
+      "claimText": "Treating displaced intra-articular acetabular fractures as stable injuries without column, wall, and congruity assessment.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acet-nonoperative-displaced",
+        "verified": false,
+        "claim_text": "Treating displaced intra-articular acetabular fractures as stable injuries without column, wall, and congruity assessment.",
+        "claim_type": "cognitive_trap",
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 1,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "or"
+        ],
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "primary_entity_slug": "acetabular-fracture",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acet-nonoperative-displaced"
+      }
+    },
+    {
+      "draftId": "claim-acet-posterior-wall-trap",
+      "claimType": "board_trap",
+      "claimText": "Posterior wall acetabular fractures can present with subtle instability and are operative problems when hip subluxation risk is present.",
+      "primaryEntitySlug": "posterior-wall-acetabular-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acet-posterior-wall-trap",
+        "verified": false,
+        "claim_text": "Posterior wall acetabular fractures can present with subtle instability and are operative problems when hip subluxation risk is present.",
+        "claim_type": "board_trap",
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "content_source": "generated_draft",
+        "curation_route": "HUMAN_REVIEW",
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curation_scores": {
+          "confidence": 0.75,
+          "evidence": 1,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "factory_version": "kf-016",
+        "importance_level": "L1",
+        "context_relevance": [
+          "oite",
+          "or"
+        ],
+        "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+        "primary_entity_slug": "posterior-wall-acetabular-fracture",
+        "review_packet_label": "Acetabular Fracture Neighborhood",
+        "_provenance_fingerprint": "claim|claim-acet-posterior-wall-trap"
+      }
+    },
+    {
+      "draftId": "claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+      "claimType": "board_trap",
+      "claimText": "Articular incongruity predicts post-traumatic arthritis.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+        "claim_type": "board_trap",
+        "claim_text": "Articular incongruity predicts post-traumatic arthritis.",
+        "primary_entity_slug": "acetabular-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "board_trap"
+        ],
+        "context_relevance": [
+          "oite"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3f5a6c9b"
+        ],
+        "evidence_packet_id": "ev-packet-05a7be6b",
+        "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "_provenance_fingerprint": "claim|claim-acetabular-fracture-board_trap-articular-incongruity-pr"
+      }
+    },
+    {
+      "draftId": "claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+      "claimType": "cognitive_trap",
+      "claimText": "Use column and wall language.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+        "claim_type": "cognitive_trap",
+        "claim_text": "Use column and wall language.",
+        "primary_entity_slug": "acetabular-fracture",
+        "importance_level": "L1",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic",
+          "call",
+          "oite",
+          "or"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3f5b660f"
+        ],
+        "evidence_packet_id": "ev-packet-05a7be6b",
+        "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.7915,
+          "evidence": 0.7,
+          "ambiguity": 0.35,
+          "safety": 0.55,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "_provenance_fingerprint": "claim|claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang"
+      }
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-heterotopic-ossification",
+      "claimType": "fact",
+      "claimText": "Heterotopic ossification.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acetabular-fracture-fact-heterotopic-ossification",
+        "claim_type": "fact",
+        "claim_text": "Heterotopic ossification.",
+        "primary_entity_slug": "acetabular-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3f5a6c9b"
+        ],
+        "evidence_packet_id": "ev-packet-05a7be6b",
+        "uncertainty_note": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_REVISED",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "_provenance_fingerprint": "claim|claim-acetabular-fracture-fact-heterotopic-ossification"
+      }
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-judet-letournel-column-w",
+      "claimType": "fact",
+      "claimText": "Judet-Letournel column/wall patterns.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acetabular-fracture-fact-judet-letournel-column-w",
+        "claim_type": "fact",
+        "claim_text": "Judet-Letournel column/wall patterns.",
+        "primary_entity_slug": "acetabular-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3f5a6c9b"
+        ],
+        "evidence_packet_id": "ev-packet-05a7be6b",
+        "uncertainty_note": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_REVISED",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "_provenance_fingerprint": "claim|claim-acetabular-fracture-fact-judet-letournel-column-w"
+      }
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-post-traumatic-arthritis",
+      "claimType": "fact",
+      "claimText": "Post-traumatic arthritis.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acetabular-fracture-fact-post-traumatic-arthritis",
+        "claim_type": "fact",
+        "claim_text": "Post-traumatic arthritis.",
+        "primary_entity_slug": "acetabular-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3f5a6c9b"
+        ],
+        "evidence_packet_id": "ev-packet-05a7be6b",
+        "uncertainty_note": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_REVISED",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "_provenance_fingerprint": "claim|claim-acetabular-fracture-fact-post-traumatic-arthritis"
+      }
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-sciatic-nerve-injury",
+      "claimType": "fact",
+      "claimText": "Sciatic nerve injury.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acetabular-fracture-fact-sciatic-nerve-injury",
+        "claim_type": "fact",
+        "claim_text": "Sciatic nerve injury.",
+        "primary_entity_slug": "acetabular-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3f5a6c9b"
+        ],
+        "evidence_packet_id": "ev-packet-05a7be6b",
+        "uncertainty_note": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "AUTO_REVISED",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "l2_fact_light_review"
+        ],
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "_provenance_fingerprint": "claim|claim-acetabular-fracture-fact-sciatic-nerve-injury"
+      }
+    },
+    {
+      "draftId": "claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+      "claimType": "imaging_point",
+      "claimText": "CT with articular mapping.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+        "claim_type": "imaging_point",
+        "claim_text": "CT with articular mapping.",
+        "primary_entity_slug": "acetabular-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "imaging_decision"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3f5a6c9b"
+        ],
+        "evidence_packet_id": "ev-packet-05a7be6b",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "_provenance_fingerprint": "claim|claim-acetabular-fracture-imaging_point-ct-with-articular-mappin"
+      }
+    },
+    {
+      "draftId": "claim-acetabular-fracture-imaging_point-judet-views",
+      "claimType": "imaging_point",
+      "claimText": "Judet views.",
+      "primaryEntitySlug": "acetabular-fracture",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "pilot": "acetabular-fracture-neighborhood",
+        "draft_id": "claim-acetabular-fracture-imaging_point-judet-views",
+        "claim_type": "imaging_point",
+        "claim_text": "Judet views.",
+        "primary_entity_slug": "acetabular-fracture",
+        "importance_level": "L2",
+        "content_source": "generated_draft",
+        "verified": false,
+        "why_it_matters": [
+          "clinical_reasoning"
+        ],
+        "context_relevance": [
+          "clinic"
+        ],
+        "learner_stage": "clerkship",
+        "evidence_item_ids": [
+          "ev-static-prepare-3f5a6c9b"
+        ],
+        "evidence_packet_id": "ev-packet-05a7be6b",
+        "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+        "review_route_hint": "HUMAN_REVIEW",
+        "generated_by": "claim-builder-v2",
+        "publication_eligible": false,
+        "curation_route": "HUMAN_REVIEW",
+        "curation_scores": {
+          "confidence": 0.8365,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.8
+        },
+        "curation_rules": [
+          "educational_judgment_claim"
+        ],
+        "curated_at": "2026-07-05T22:33:19.272Z",
+        "_provenance_fingerprint": "claim|claim-acetabular-fracture-imaging_point-judet-views"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-acet-displaced-orif",
+      "subjectEntitySlug": "acetabular-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Displaced acetabular fracture with intra-articular step-off or column disruption",
+      "action": "Plan open reduction with column-specific approach per Judet-Letournel pattern and attending preference",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-acet-posterior-wall-orif",
+      "subjectEntitySlug": "acetabular-fracture",
+      "patternType": "operative_indication",
+      "trigger": "Posterior wall acetabular fracture with hip instability or significant articular displacement",
+      "action": "Discuss acetabular ORIF with attending; document instability exam and congruity goals",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [
+    {
+      "kind": "decision_point_conflict",
+      "description": "Conflicting DP pattern acetabular-fracture|operative_indication: dp-acet-displaced-orif vs dp-acet-posterior-wall-orif"
+    }
+  ],
+  "stats": {
+    "entityCount": 37,
+    "relationshipCount": 48,
+    "claimCount": 13,
+    "decisionPointCount": 2,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 26,
+    "conflictingRelationships": 0,
+    "metadataMerged": 57,
+    "provenanceAttached": 101
+  }
+}

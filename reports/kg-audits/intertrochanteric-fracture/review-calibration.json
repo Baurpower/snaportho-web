@@ -1,0 +1,25 @@
+{
+  "category": "review_calibration",
+  "label": "Review Calibration",
+  "score": 96,
+  "deductions": [
+    {
+      "finding": "High attending review burden",
+      "evidence": "27% EXPERT_REVIEW (16 items)",
+      "reason": "Excessive attending review slows publication velocity.",
+      "severity": "medium",
+      "category": "review_calibration",
+      "suggestedFix": "Improve claim atomicity and decision point specificity to reduce EXPERT_REVIEW routing.",
+      "impact": 4
+    }
+  ],
+  "metrics": {
+    "autoReviewLoaded": true,
+    "humanReviewPercent": 33.9,
+    "autoApprovedPercent": 66.1,
+    "estimatedFalsePositiveRate": 0,
+    "estimatedFalseNegativeRate": 0,
+    "expertReviewCount": 16
+  },
+  "recommendations": []
+}

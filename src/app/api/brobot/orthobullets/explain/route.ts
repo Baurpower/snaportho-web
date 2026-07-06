@@ -2,9 +2,15 @@ import { createHash } from 'node:crypto';
 import { NextResponse } from 'next/server';
 
 import { getOpenAI } from '@/lib/brobot/openai-client';
-import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
+import { getBroBotAccessGate } from '@/lib/brobot/brobot-entitlement-access';
+import { type Subject } from '@/lib/brobot/entitlements';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
 import { authenticateDeviceLinkedRequest } from '@/lib/brobot/device-link';
+import { buildCurriculumExplainMessages } from '@/lib/brobot/orthobullets/curriculum-prompt-builder';
+import {
+  CurriculumParseError,
+  parseCurriculumStudyResponse,
+} from '@/lib/brobot/orthobullets/curriculum-response-parser';
 import { buildOrthobulletsExplainMessages } from '@/lib/brobot/orthobullets/prompt-builder';
 import { OrthobulletsParseError, parseOrthobulletsExplainResponse } from '@/lib/brobot/orthobullets/response-parser';
 import { resolveOrthobulletsContext } from '@/lib/brobot/orthobullets/context-resolver';
@@ -66,18 +72,19 @@ export async function POST(request: Request) {
   }
 
   const subject: Subject = { type: 'user', id: auth.userId };
-  const entitlement = await getRemainingAIUses(subject);
+  const gate = await getBroBotAccessGate(subject);
+  const entitlement = gate.normalized.data;
 
-  if (entitlement.source === 'disabled') {
+  if (gate.source === 'disabled') {
     return disabledResponse();
   }
 
-  if (entitlement.isLimitReached) {
+  if (gate.isLimitReached) {
     await recordUsageEvent({
       subject,
       outcome: 'limit_hit',
     });
-    return limitReachedResponse(entitlement.aiAccess.dailyCap);
+    return limitReachedResponse(gate.dailyCap);
   }
 
   const requestId = crypto.randomUUID();
@@ -104,6 +111,9 @@ export async function POST(request: Request) {
     kgMatched: Boolean(kgLookup?.matchedQuestionId),
   });
 
+  const isCurriculum = resolvedContext.pageContext.mode === 'curriculum_content';
+  const emphasis = parsed.data.emphasis ?? 'high_yield';
+
   try {
     const completion = await getOpenAI().chat.completions.create({
       model: getAnswerModelForRoute({
@@ -114,7 +124,9 @@ export async function POST(request: Request) {
       }),
       temperature: 0.2,
       response_format: { type: 'json_object' },
-      messages: buildOrthobulletsExplainMessages(resolvedContext),
+      messages: isCurriculum
+        ? buildCurriculumExplainMessages({ context: resolvedContext, emphasis })
+        : buildOrthobulletsExplainMessages(resolvedContext),
     });
 
     const latencyMs = Date.now() - startedAt;
@@ -124,13 +136,22 @@ export async function POST(request: Request) {
         ? Math.max(0, entitlement.aiAccess.dailyCap - usedAfter)
         : null;
 
-    const response = parseOrthobulletsExplainResponse({
-      raw: completion.choices[0]?.message?.content ?? '',
-      explanationId: crypto.randomUUID(),
-      remainingToday,
-      dailyCap: entitlement.aiAccess.dailyCap,
-      unlimited: entitlement.aiAccess.unlimited,
-    });
+    const response = isCurriculum
+      ? parseCurriculumStudyResponse({
+          raw: completion.choices[0]?.message?.content ?? '',
+          explanationId: crypto.randomUUID(),
+          emphasis,
+          remainingToday,
+          dailyCap: entitlement.aiAccess.dailyCap,
+          unlimited: entitlement.aiAccess.unlimited,
+        })
+      : parseOrthobulletsExplainResponse({
+          raw: completion.choices[0]?.message?.content ?? '',
+          explanationId: crypto.randomUUID(),
+          remainingToday,
+          dailyCap: entitlement.aiAccess.dailyCap,
+          unlimited: entitlement.aiAccess.unlimited,
+        });
 
     console.log('[brobot-orthobullets] explain_success', {
       requestId,
@@ -155,7 +176,7 @@ export async function POST(request: Request) {
       error: error instanceof Error ? error.message : 'Unknown error',
     });
 
-    if (error instanceof OrthobulletsParseError) {
+    if (error instanceof OrthobulletsParseError || error instanceof CurriculumParseError) {
       return NextResponse.json(
         { error: 'parse_failure', message: "BroBot's response could not be parsed. Please try again." },
         { status: 502 }

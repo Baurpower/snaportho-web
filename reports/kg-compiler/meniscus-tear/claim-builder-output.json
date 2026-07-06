@@ -1,0 +1,597 @@
+{
+  "generatedAt": "2026-07-05T22:42:27.487Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-fd0f062a",
+  "gapsAddressed": 1,
+  "gapsScheduled": 1,
+  "claimsGenerated": 1,
+  "claimsRejected": 8,
+  "redirectedToDecisionPoint": 5,
+  "candidates": [
+    {
+      "draftId": "claim-meniscus-tear-anatomy_pearl-meniscal-roots-and-horn-",
+      "claimText": "Meniscal roots and horn attachments.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-anatomy_pearl-hoop-stress-function",
+      "claimText": "Hoop stress function.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-imaging_point-mri-tear-patterns-and-ex",
+      "claimText": "MRI tear patterns and extrusion.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-type-5",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-board_trap-peripheral-longitudinal-",
+      "claimText": "Peripheral longitudinal tears in young knees are the classic repairable lesion.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "section": "deep.boardPearls",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-persistent-pain",
+      "claimText": "Persistent pain.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-re-tear",
+      "claimText": "Re-tear.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-accelerated-arthritis-af",
+      "claimText": "Accelerated arthritis after meniscectomy.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "section": "deep.complications",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-joint-line-tenderness",
+      "claimText": "Joint line tenderness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.mustKnow",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-mechanical-symptoms",
+      "claimText": "mechanical symptoms.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.mustKnow",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-tear-location-matters",
+      "claimText": "tear location matters.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.mustKnow",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-anatomy_pearl-medial-vs-lateral-menisc",
+      "claimText": "Medial vs lateral meniscus.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-anatomy_pearl-red-red-and-white-white-",
+      "claimText": "Red-red and white-white zones.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-meniscus-tears-range-fro",
+      "claimText": "Meniscus tears range from rehab problems to repairable mechanical lesions depending on pattern and symptoms.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.oneLiner",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-cognitive_trap-use-peripheral-vasculari",
+      "claimText": "Use peripheral vascularity language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-cognitive_trap-mention-locked-knee-urge",
+      "claimText": "Mention locked knee urgency.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-clinical_script-describe-symptoms",
+      "claimText": "Describe symptoms.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-clinical_script-state-exam-maneuvers",
+      "claimText": "State exam maneuvers.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-clinical_script-mention-when-mri-helps",
+      "claimText": "Mention when MRI helps.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-clinical_script-outline-basic-treatment-",
+      "claimText": "Outline basic treatment categories.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-differentiate-traumatic-",
+      "claimText": "Differentiate traumatic from degenerative meniscus tears.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-861af159"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-use-exam-and-mri-thought",
+      "claimText": "Use exam and MRI thoughtfully when symptoms suggest meniscal pathology.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-861af159"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-meniscus-tear-fact-explain-repair-versus-me",
+      "claimText": "Explain repair versus meniscectomy considerations.",
+      "claimType": "fact",
+      "primaryEntitySlug": "meniscus-tear",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-861af159"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Radial, vertical, horizontal, root, bucket-handle tears",
+      "reason": "LIST_ASSERTION: multiple assertions in one claim",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ]
+    },
+    {
+      "text": "Age, symptoms, tear pattern, ACL status, repairability",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ]
+    },
+    {
+      "text": "PT and activity modification",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ]
+    },
+    {
+      "text": "Repair",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ]
+    },
+    {
+      "text": "Partial meniscectomy",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ]
+    },
+    {
+      "text": "Root repair concepts",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ]
+    },
+    {
+      "text": "Why do some tears get repaired?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ]
+    },
+    {
+      "text": "What symptoms favor surgery?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-meniscus-tear-imaging_point-mri-tear-patterns-and-ex",
+      "draftId": "claim-meniscus-tear-imaging_point-mri-tear-patterns-and-ex",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "verified": false
+    }
+  ]
+}

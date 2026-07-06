@@ -72,7 +72,9 @@ function makeSlotDraft(
       slotCondition: opts.condition,
       slotCountsTowardWorkload: opts.countsTowardWorkload,
       slotSortOrder: opts.sortOrder,
-      slotRequiredWhenVisible: opts.requiredWhenVisible ?? true,
+      slotRequiredWhenVisible:
+        opts.requiredWhenVisible ??
+        (opts.callType === "Backup" ? false : true),
     }),
   };
 }
@@ -115,7 +117,7 @@ export function createDefaultOrthoRulePreset(
     })
   );
 
-  // Backup: only required when primary is PGY-1 or PGY-2
+  // Backup: visible when primary is PGY-1 or PGY-2, but optional unless explicitly required
   drafts.push(
     makeSlotDraft("slot-backup", {
       label: "Backup",
@@ -125,7 +127,7 @@ export function createDefaultOrthoRulePreset(
       requiredMode: "conditional",
       countsTowardWorkload: true,
       sortOrder: 1,
-      requiredWhenVisible: true,
+      requiredWhenVisible: false,
       condition: {
         type: "when_pgy_scheduled",
         pgyYears: [1, 2],

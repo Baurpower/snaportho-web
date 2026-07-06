@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-07-05T22:33:19.270Z",
+  "evidencePacketId": "ev-packet-05a7be6b",
+  "traces": [
+    {
+      "draftId": "claim-acetabular-fracture-fact-judet-letournel-column-w",
+      "proposalFingerprint": "claim|claim-acetabular-fracture-fact-judet-letournel-column-w",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-post-traumatic-arthritis",
+      "proposalFingerprint": "claim|claim-acetabular-fracture-fact-post-traumatic-arthritis",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+      "proposalFingerprint": "claim|claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-imaging_point-judet-views",
+      "proposalFingerprint": "claim|claim-acetabular-fracture-imaging_point-judet-views",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+      "proposalFingerprint": "claim|claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+      "proposalFingerprint": "claim|claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-sciatic-nerve-injury",
+      "proposalFingerprint": "claim|claim-acetabular-fracture-fact-sciatic-nerve-injury",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-acetabular-fracture-fact-heterotopic-ossification",
+      "proposalFingerprint": "claim|claim-acetabular-fracture-fact-heterotopic-ossification",
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Displacement, instability, articular involvement, patient factors"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Nonoperative in select patterns"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Acetabular ORIF"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What columns are involved?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is operative fixation indicated?"
+    }
+  ]
+}

@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { WorkspacePermissionError } from "@/lib/workspace/access-control";
+import {
+  parseRequestedProgramId,
+  resolveNotificationProgramScope,
+} from "@/lib/workspace/notifications/access";
 import { markNotificationRead } from "@/lib/workspace/notifications/queries";
 
 type RouteContext = {
@@ -9,7 +14,7 @@ type RouteContext = {
   }>;
 };
 
-export async function POST(_request: NextRequest, context: RouteContext) {
+export async function POST(request: NextRequest, context: RouteContext) {
   try {
     const { notificationId } = await context.params;
 
@@ -37,9 +42,15 @@ export async function POST(_request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
 
+    const { programId } = await resolveNotificationProgramScope({
+      userId: user.id,
+      requestedProgramId: parseRequestedProgramId(request.nextUrl.searchParams),
+    });
+
     const item = await markNotificationRead(createAdminClient(), {
       notificationId,
       userId: user.id,
+      programId,
     });
 
     if (!item) {
@@ -51,6 +62,10 @@ export async function POST(_request: NextRequest, context: RouteContext) {
 
     return NextResponse.json({ item }, { status: 200 });
   } catch (error) {
+    if (error instanceof WorkspacePermissionError) {
+      return NextResponse.json({ error: error.message }, { status: error.status });
+    }
+
     return NextResponse.json(
       {
         error:

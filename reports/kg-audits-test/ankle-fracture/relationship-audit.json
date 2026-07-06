@@ -1,0 +1,26 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 92,
+  "deductions": [
+    {
+      "finding": "8 high-risk relationships lack approved review status",
+      "evidence": "Predicates: at_risk_structure, treated_by, uses_fixation, explains_instability, indicates_treatment",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 29,
+    "relationshipDensity": 1.5263157894736843,
+    "missingClinicalEdgeCount": 0,
+    "highRiskUnreviewedCount": 8,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

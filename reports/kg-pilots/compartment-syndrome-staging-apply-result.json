@@ -1,0 +1,30 @@
+{
+  "topicKey": "compartment-syndrome",
+  "pilotKey": "compartment-syndrome-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 36,
+  "applied": {
+    "entities": 14,
+    "relationships": 20,
+    "bridges": 1,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 36
+  },
+  "skipped": [],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

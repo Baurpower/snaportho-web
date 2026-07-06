@@ -1,0 +1,136 @@
+{
+  "generatedAt": "2026-07-05T22:43:07.734Z",
+  "evidencePacketId": "ev-packet-1605edc3",
+  "traces": [
+    {
+      "draftId": "claim-distal-radius-fracture-fact-mechanism",
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-mechanism",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-alignment",
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-alignment",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-board_trap-malalignment-tolerance-i",
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-board_trap-malalignment-tolerance-i",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-imaging_point-standard-wrist-radiograp",
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-imaging_point-standard-wrist-radiograp",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-cognitive_trap-know-acceptable-radial-h",
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-cognitive_trap-know-acceptable-radial-h",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-median-nerve-exam",
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-median-nerve-exam",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-immobilization-choice",
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-immobilization-choice",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-radius-fracture-fact-a-distal-radius-fracture",
+      "proposalFingerprint": "claim|claim-distal-radius-fracture-fact-a-distal-radius-fracture",
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What radiographic parameters matter?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ea8d57a7"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is dorsal comminution important?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Assess displacement, instability, articular step-off, patient demand"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Splint/cast"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Closed reduction"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Percutaneous fixation"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ea909f33"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Volar plating"
+    }
+  ]
+}

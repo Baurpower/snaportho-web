@@ -1,0 +1,44 @@
+{
+  "topicKey": "tibial-plateau-fracture",
+  "pilotKey": "tibial-plateau-fracture-neighborhood",
+  "generatedAt": "2026-07-05T22:43:24.632Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "10 proposals still awaiting human review",
+    "9 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "5 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Tibial Plateau ORIF neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Tibial Plateau ORIF missing outbound involves_anatomy (0/1).",
+    "[high] Tibial Plateau ORIF missing outbound at_risk_structure (0/1).",
+    "[high] Schatzker Classification neighborhood has 0/2 classification_grade entities.",
+    "[high] Schatzker Classification missing inbound has_classification (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 8,
+    "humanReviewItems": 10,
+    "attendingReviewItems": 9,
+    "effortBand": "medium"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

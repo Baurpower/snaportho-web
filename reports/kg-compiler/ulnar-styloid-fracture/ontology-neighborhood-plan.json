@@ -1,0 +1,47 @@
+{
+  "topicKey": "ulnar-styloid-fracture",
+  "pilotKey": "ulnar-styloid-fracture-neighborhood",
+  "primaryEntitySlug": "ulnar-styloid-fracture",
+  "displayName": "Ulnar Styloid Fracture",
+  "generatedAt": "2026-07-05T22:50:59.809Z",
+  "nodes": [
+    {
+      "slug": "ulnar-styloid-fracture-key-imaging-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Ulnar Styloid Fracture Key Imaging Finding",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tfcc-injury",
+      "entityType": "condition",
+      "preferredLabel": "Tfcc Injury",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "ulnar-styloid-fracture-key-imaging-finding"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "tfcc-injury"
+    ]
+  }
+}

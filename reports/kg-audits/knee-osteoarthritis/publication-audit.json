@@ -1,0 +1,61 @@
+{
+  "status": "NOT_READY",
+  "ready": false,
+  "blockers": [
+    "10 proposals still awaiting human review",
+    "9 items require attending review",
+    "Insufficient relationship metadata on essential edges",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec."
+  ],
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "score": 60,
+  "deductions": [
+    {
+      "finding": "10 proposals still awaiting human review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+      "impact": 8
+    },
+    {
+      "finding": "9 items require attending review",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient relationship metadata on essential edges",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+      "impact": 8
+    },
+    {
+      "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+      "impact": 8
+    },
+    {
+      "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "high",
+      "category": "publication_readiness",
+      "suggestedFix": "Route ATTENDING_REVIEW queue to attending reviewer",
+      "impact": 8
+    }
+  ]
+}

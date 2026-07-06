@@ -1,0 +1,100 @@
+{
+  "topicKey": "meniscus-tear",
+  "pilotKey": "meniscus-tear-neighborhood",
+  "primaryEntitySlug": "meniscus-tear",
+  "displayName": "Meniscus Tear",
+  "generatedAt": "2026-07-05T22:44:17.781Z",
+  "nodes": [
+    {
+      "slug": "meniscus-tear-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Meniscus Tear Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "meniscus-tear-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Meniscus Tear Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "meniscus-tear-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Meniscus Tear Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "meniscus-tear-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Meniscus Tear Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "meniscus-tear-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Meniscus Tear MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "osteochondral-defect-knee",
+      "entityType": "condition",
+      "preferredLabel": "Osteochondral Defect Knee",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "meniscus-tear-complication",
+      "entityType": "complication",
+      "preferredLabel": "Meniscus Tear Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "meniscus-tear-reconstruction"
+    ],
+    "classification": [
+      "meniscus-tear-classification"
+    ],
+    "imaging": [
+      "meniscus-tear-mri-finding"
+    ],
+    "complication": [
+      "meniscus-tear-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "meniscus-tear-rehab-protocol",
+      "meniscus-tear-exam-maneuver",
+      "osteochondral-defect-knee"
+    ]
+  }
+}

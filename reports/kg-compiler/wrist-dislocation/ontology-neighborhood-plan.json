@@ -1,0 +1,79 @@
+{
+  "topicKey": "wrist-dislocation",
+  "pilotKey": "wrist-dislocation-neighborhood",
+  "primaryEntitySlug": "wrist-dislocation",
+  "displayName": "Wrist Dislocation",
+  "generatedAt": "2026-07-05T23:06:38.134Z",
+  "nodes": [
+    {
+      "slug": "wrist-dislocation-operative-treatment",
+      "entityType": "procedure",
+      "preferredLabel": "Wrist Dislocation Operative Treatment",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "wrist-dislocation",
+      "entityType": "condition",
+      "preferredLabel": "Wrist Dislocation",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "perilunate-dislocation",
+      "entityType": "condition",
+      "preferredLabel": "Perilunate Dislocation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "wrist-dislocation-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Wrist Dislocation Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lunate-dislocation",
+      "entityType": "condition",
+      "preferredLabel": "Lunate Dislocation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "wrist-dislocation"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "wrist-dislocation-operative-treatment"
+    ],
+    "classification": [
+      "wrist-dislocation-classification"
+    ],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "perilunate-dislocation",
+      "lunate-dislocation"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-05T22:44:48.688Z",
+  "pilotKey": "meniscus-tear-neighborhood",
+  "ready": false,
+  "estimatedMaturityLevel": 5,
+  "blockers": [
+    "Validation failures must be resolved",
+    "16 proposals still awaiting human review",
+    "6 items require attending review"
+  ],
+  "recommendedActions": [
+    "Run validation engine and fix errors",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "metrics": {
+    "totalProposals": 101,
+    "approvedProposals": 85,
+    "pendingReview": 16,
+    "claimDrafts": 7,
+    "decisionPointDrafts": 3,
+    "autoApproved": 85,
+    "humanReviewQueue": 15,
+    "validationErrors": 4
+  }
+}

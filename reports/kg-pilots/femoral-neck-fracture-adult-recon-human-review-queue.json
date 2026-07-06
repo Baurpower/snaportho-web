@@ -1,0 +1,305 @@
+[
+  {
+    "proposal_fingerprint": "rel|femoral-neck-fracture-adult-recon|indicates_treatment|hip-hemiarthroplasty",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "femoral-neck-fracture-adult-recon -[indicates_treatment]-> hip-hemiarthroplasty",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: femoral-neck-fracture-adult-recon -[indicates_treatment]-> hip-hemiarthroplasty",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_key": "pilot:femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_label": "Femoral Neck Fracture (Adult Recon Perspective) Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "femoral-neck-fracture-adult-recon",
+      "subject_entity_type": "condition",
+      "object_slug": "hip-hemiarthroplasty",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:45:53.987Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|femoral-neck-fracture-adult-recon|indicates_treatment|total-hip-arthroplasty",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "femoral-neck-fracture-adult-recon -[indicates_treatment]-> total-hip-arthroplasty",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: femoral-neck-fracture-adult-recon -[indicates_treatment]-> total-hip-arthroplasty",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_key": "pilot:femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_label": "Femoral Neck Fracture (Adult Recon Perspective) Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "femoral-neck-fracture-adult-recon",
+      "subject_entity_type": "condition",
+      "object_slug": "total-hip-arthroplasty",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:45:53.987Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|displaced-femoral-neck-fracture|indicates_treatment|hip-hemiarthroplasty",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "displaced-femoral-neck-fracture -[indicates_treatment]-> hip-hemiarthroplasty",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: displaced-femoral-neck-fracture -[indicates_treatment]-> hip-hemiarthroplasty",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_key": "pilot:femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_label": "Femoral Neck Fracture (Adult Recon Perspective) Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "displaced-femoral-neck-fracture",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "hip-hemiarthroplasty",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:45:53.987Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-core",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-femoral-neck-fracture-adult-recon-core",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+    "metadata": {
+      "pilot": "femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_key": "pilot:femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_label": "Femoral Neck Fracture (Adult Recon Perspective) Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-femoral-neck-fracture-adult-recon-core",
+      "claim_type": "fact",
+      "claim_text": "Displaced femoral neck fractures in older adults are often arthroplasty problems rather than screw fixation problems.",
+      "primary_entity_slug": "femoral-neck-fracture-adult-recon",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:45:53.987Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-femoral-neck-fracture-adult-recon-board-trap",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_key": "pilot:femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_label": "Femoral Neck Fracture (Adult Recon Perspective) Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-femoral-neck-fracture-adult-recon-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Board trap: oversimplifying femoral neck fracture adult recon without attending-level implant, fixation, or infection context.",
+      "primary_entity_slug": "femoral-neck-fracture-adult-recon",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.78,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:45:53.987Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-femoral-neck-fracture-adult-recon-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-femoral-neck-fracture-adult-recon-script",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_key": "pilot:femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_label": "Femoral Neck Fracture (Adult Recon Perspective) Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-femoral-neck-fracture-adult-recon-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for femoral neck fracture adult recon.",
+      "primary_entity_slug": "femoral-neck-fracture-adult-recon",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.78,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:45:53.987Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-femoral-neck-fracture-adult-recon-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-femoral-neck-fracture-adult-recon-operative",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_key": "pilot:femoral-neck-fracture-adult-recon-neighborhood",
+      "review_packet_label": "Femoral Neck Fracture (Adult Recon Perspective) Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-femoral-neck-fracture-adult-recon-operative",
+      "subject_entity_slug": "femoral-neck-fracture-adult-recon",
+      "pattern_type": "operative_indication",
+      "trigger": "Displaced femoral neck fracture in older adult with low healing potential",
+      "action": "Discuss hemiarthroplasty versus THA with attending; document optimization and DVT prophylaxis",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.78,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:45:53.987Z"
+    }
+  }
+]

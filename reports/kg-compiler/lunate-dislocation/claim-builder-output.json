@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-05T23:27:27.278Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-e77f04b5",
+  "gapsAddressed": 1,
+  "gapsScheduled": 2,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-lunate-dislocation-cognitive-trap",
+      "draftId": "claim-lunate-dislocation-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-3782c030",
+        "ev-quality-signal-053aa60f",
+        "ev-quality-signal-5ba947f6"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-lunate-dislocation-imaging",
+      "draftId": "claim-lunate-dislocation-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-3782c030",
+        "ev-quality-signal-053aa60f",
+        "ev-quality-signal-5ba947f6"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-lunate-dislocation-mechanism",
+      "draftId": "claim-lunate-dislocation-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-3782c030",
+        "ev-quality-signal-053aa60f",
+        "ev-quality-signal-5ba947f6"
+      ],
+      "verified": false
+    }
+  ]
+}

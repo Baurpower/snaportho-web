@@ -1,0 +1,99 @@
+{
+  "generatedAt": "2026-07-05T23:02:35.989Z",
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Knee Mechanical Axis missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "mechanical-axis-knee",
+      "predicate": "involves_anatomy",
+      "objectSlug": "mechanical-axis-knee"
+    },
+    {
+      "id": "gap-claim-2",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Knee Mechanical Axis has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "mechanical-axis-knee",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-3",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Knee Mechanical Axis missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "mechanical-axis-knee",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-4",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Knee Mechanical Axis missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "mechanical-axis-knee",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-asset-card-5",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "16 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "knee-osteoarthritis"
+    },
+    {
+      "id": "gap-asset-question-6",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "68 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "knee-osteoarthritis"
+    },
+    {
+      "id": "gap-biomech-claim-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.82,
+      "reason": "Biomechanics concept Knee Mechanical Axis has no teaching claim (e.g., mortise instability).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "mechanical-axis-knee",
+      "claimType": "fact"
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "byKind": {
+      "missing_relationship": 1,
+      "missing_claim": 4,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "medium": 7
+    }
+  }
+}

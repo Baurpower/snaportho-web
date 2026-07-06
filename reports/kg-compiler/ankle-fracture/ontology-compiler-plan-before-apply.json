@@ -1,0 +1,142 @@
+{
+  "topicKey": "ankle-fracture",
+  "pilotKey": "ankle-fracture-neighborhood",
+  "displayName": "Ankle Fracture",
+  "generatedAt": "2026-07-05T20:03:31.861Z",
+  "stages": [
+    {
+      "stage": 1,
+      "name": "Neighborhood Resolution",
+      "status": "completed",
+      "summary": "Resolved 19 entities for Ankle Fracture.",
+      "outputs": [
+        "neighborhood_plan"
+      ]
+    },
+    {
+      "stage": 2,
+      "name": "Ontology Requirement Expansion",
+      "status": "completed",
+      "summary": "Derived requirements from CKO spec §8–§9 and anatomy ontology plan.",
+      "outputs": [
+        "ontology_rules_applied"
+      ]
+    },
+    {
+      "stage": 3,
+      "name": "Gap Analysis",
+      "status": "completed",
+      "summary": "Identified 14 gaps across 4 kinds.",
+      "outputs": [
+        "ontology-gap-report.json"
+      ]
+    },
+    {
+      "stage": 4,
+      "name": "Work Planning",
+      "status": "completed",
+      "summary": "Scheduled 7 work items for 7 agent families.",
+      "outputs": [
+        "ontology-work-plan.json"
+      ]
+    },
+    {
+      "stage": 5,
+      "name": "Agent Orchestration",
+      "status": "planned",
+      "summary": "Compiler schedules work; factory agents execute (no DB writes in compile pass).",
+      "outputs": [
+        "work-anatomy-builder",
+        "work-relationship-builder",
+        "work-claim-builder",
+        "work-metadata-builder",
+        "work-asset-linker",
+        "work-review-assistant",
+        "work-publication-validator"
+      ]
+    },
+    {
+      "stage": 6,
+      "name": "Merge",
+      "status": "completed",
+      "summary": "Merged draft: 19 entities, 29 relationships.",
+      "outputs": [
+        "merged_neighborhood_draft"
+      ]
+    },
+    {
+      "stage": 7,
+      "name": "Intelligent Auto Review",
+      "status": "completed",
+      "summary": "72.4% auto-approved; 27.6% escalated.",
+      "outputs": [
+        "ontology-auto-review.json"
+      ]
+    },
+    {
+      "stage": 8,
+      "name": "Human Review Packet",
+      "status": "completed",
+      "summary": "15 items in human queue.",
+      "outputs": [
+        "human_review_packet"
+      ]
+    },
+    {
+      "stage": 9,
+      "name": "Publication Readiness",
+      "status": "completed",
+      "summary": "Maturity 5/7; ready=false.",
+      "outputs": [
+        "ontology-publication-readiness.json"
+      ]
+    }
+  ],
+  "neighborhood": {
+    "entityCount": 19,
+    "relationshipCount": 29,
+    "claimCount": 7,
+    "decisionPointCount": 2
+  },
+  "gaps": {
+    "total": 14,
+    "byKind": {
+      "missing_claim": 5,
+      "missing_metadata": 1,
+      "missing_relationship": 6,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "medium": 11,
+      "high": 3
+    }
+  },
+  "workPlan": {
+    "workItemCount": 7,
+    "agentsRequired": [
+      "Claim Builder",
+      "Metadata Builder",
+      "Anatomy Builder",
+      "Asset Linker",
+      "Relationship Builder",
+      "Review Assistant",
+      "Publication Validator"
+    ]
+  },
+  "review": {
+    "totalProposals": 58,
+    "autoApproved": 42,
+    "humanReview": 15,
+    "humanReviewPercent": 27.6
+  },
+  "publication": {
+    "currentMaturityLevel": 5,
+    "requiredMaturityLevel": 7,
+    "ready": false,
+    "blockerCount": 5
+  },
+  "constraints": {
+    "databaseModified": false,
+    "autoPublished": false
+  }
+}

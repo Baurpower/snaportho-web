@@ -1,0 +1,1006 @@
+[
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|condition|ankle-fracture",
+    "description": "Create condition: Ankle Fracture",
+    "payload": {
+      "entity_type": "condition",
+      "preferred_label": "Ankle Fracture",
+      "slug": "ankle-fracture",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ankle-fracture",
+        "description": "Fracture involving the ankle mortise and malleolar structures.",
+        "clinical_kind": "fracture",
+        "maturity_target": 6,
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.853Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|classification_system|weber-classification",
+    "description": "Create classification_system: Weber Classification",
+    "payload": {
+      "entity_type": "classification_system",
+      "preferred_label": "Weber Classification",
+      "slug": "weber-classification",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "weber-classification",
+        "description": "Ankle fracture classification based on fibular fracture level relative to syndesmosis.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|classification_grade|weber-a",
+    "description": "Create classification_grade: Weber A",
+    "payload": {
+      "entity_type": "classification_grade",
+      "preferred_label": "Weber A",
+      "slug": "weber-a",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "weber-a",
+        "description": "Infrasyndesmotic fibular fracture.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|classification_grade|weber-b",
+    "description": "Create classification_grade: Weber B",
+    "payload": {
+      "entity_type": "classification_grade",
+      "preferred_label": "Weber B",
+      "slug": "weber-b",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "weber-b",
+        "description": "Transyndesmotic fibular fracture at syndesmosis level.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|classification_grade|weber-c",
+    "description": "Create classification_grade: Weber C",
+    "payload": {
+      "entity_type": "classification_grade",
+      "preferred_label": "Weber C",
+      "slug": "weber-c",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "weber-c",
+        "description": "Suprasyndesmotic fibular fracture.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|imaging_finding|medial-clear-space-widening",
+    "description": "Create imaging_finding: Medial Clear Space Widening",
+    "payload": {
+      "entity_type": "imaging_finding",
+      "preferred_label": "Medial Clear Space Widening",
+      "slug": "medial-clear-space-widening",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "medial-clear-space-widening",
+        "description": "Radiographic widening suggesting deltoid incompetence and mortise instability.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|biomechanics_concept|mortise-stability",
+    "description": "Create biomechanics_concept: Mortise Stability",
+    "payload": {
+      "entity_type": "biomechanics_concept",
+      "preferred_label": "Mortise Stability",
+      "slug": "mortise-stability",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "mortise-stability",
+        "description": "Ankle joint congruity and stability of the mortise ring.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|procedure|ankle-orif",
+    "description": "Create procedure: Ankle ORIF",
+    "payload": {
+      "entity_type": "procedure",
+      "preferred_label": "Ankle ORIF",
+      "slug": "ankle-orif",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ankle-orif",
+        "description": "Open reduction and internal fixation of unstable ankle fracture patterns.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|fixation_method|ankle-orif-fixation",
+    "description": "Create fixation_method: ORIF",
+    "payload": {
+      "entity_type": "fixation_method",
+      "preferred_label": "ORIF",
+      "slug": "ankle-orif-fixation",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ankle-orif-fixation",
+        "description": "Operative fixation method for unstable ankle fractures.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|complication|ankle-malunion",
+    "description": "Create complication: Ankle Malunion",
+    "payload": {
+      "entity_type": "complication",
+      "preferred_label": "Ankle Malunion",
+      "slug": "ankle-malunion",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ankle-malunion",
+        "description": "Malreduced ankle fracture with persistent mortise incongruity.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|complication|post-traumatic-ankle-arthritis",
+    "description": "Create complication: Post-traumatic Ankle Arthritis",
+    "payload": {
+      "entity_type": "complication",
+      "preferred_label": "Post-traumatic Ankle Arthritis",
+      "slug": "post-traumatic-ankle-arthritis",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "post-traumatic-ankle-arthritis",
+        "description": "Degenerative joint disease after ankle fracture injury.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|complication|syndesmotic-malreduction",
+    "description": "Create complication: Syndesmotic Malreduction",
+    "payload": {
+      "entity_type": "complication",
+      "preferred_label": "Syndesmotic Malreduction",
+      "slug": "syndesmotic-malreduction",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "syndesmotic-malreduction",
+        "description": "Inadequate restoration of syndesmotic alignment after fixation.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|anatomy_structure|ankle-ring",
+    "description": "Create anatomy_structure: Ankle Ring",
+    "payload": {
+      "entity_type": "anatomy_structure",
+      "preferred_label": "Ankle Ring",
+      "slug": "ankle-ring",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "ankle-ring",
+        "description": "Composite mortise ring mental model connecting malleoli, syndesmosis, and deltoid.",
+        "anatomy_kind": "composite",
+        "hierarchy_level": "structure",
+        "region": "ankle",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|anatomy_structure|lateral-malleolus",
+    "description": "Create anatomy_structure: Lateral Malleolus",
+    "payload": {
+      "entity_type": "anatomy_structure",
+      "preferred_label": "Lateral Malleolus",
+      "slug": "lateral-malleolus",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "lateral-malleolus",
+        "description": "Distal fibular lateral malleolus.",
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "ankle",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|anatomy_structure|medial-malleolus",
+    "description": "Create anatomy_structure: Medial Malleolus",
+    "payload": {
+      "entity_type": "anatomy_structure",
+      "preferred_label": "Medial Malleolus",
+      "slug": "medial-malleolus",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "medial-malleolus",
+        "description": "Distal tibial medial malleolus.",
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "ankle",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|anatomy_structure|talus",
+    "description": "Create anatomy_structure: Talus",
+    "payload": {
+      "entity_type": "anatomy_structure",
+      "preferred_label": "Talus",
+      "slug": "talus",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "talus",
+        "description": "Talar dome and talar body at the ankle joint.",
+        "anatomy_kind": "bone",
+        "hierarchy_level": "structure",
+        "region": "ankle",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|anatomy_structure|syndesmosis",
+    "description": "Create anatomy_structure: Syndesmosis",
+    "payload": {
+      "entity_type": "anatomy_structure",
+      "preferred_label": "Syndesmosis",
+      "slug": "syndesmosis",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "syndesmosis",
+        "description": "Distal tibiofibular syndesmotic complex.",
+        "anatomy_kind": "ligament",
+        "hierarchy_level": "structure",
+        "region": "ankle",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|anatomy_structure|deltoid-ligament",
+    "description": "Create anatomy_structure: Deltoid Ligament",
+    "payload": {
+      "entity_type": "anatomy_structure",
+      "preferred_label": "Deltoid Ligament",
+      "slug": "deltoid-ligament",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "deltoid-ligament",
+        "description": "Medial ankle deltoid ligament complex.",
+        "anatomy_kind": "ligament",
+        "hierarchy_level": "structure",
+        "region": "ankle",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "entity_create",
+    "proposal_fingerprint": "create|anatomy_structure|superficial-peroneal-nerve",
+    "description": "Create anatomy_structure: Superficial Peroneal Nerve",
+    "payload": {
+      "entity_type": "anatomy_structure",
+      "preferred_label": "Superficial Peroneal Nerve",
+      "slug": "superficial-peroneal-nerve",
+      "metadata": {
+        "pilot": "ankle-fracture-neighborhood",
+        "review_packet_key": "pilot:ankle-fracture-neighborhood",
+        "review_packet_label": "Ankle Fracture Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "superficial-peroneal-nerve",
+        "description": "Superficial peroneal nerve at risk in lateral ankle surgery.",
+        "anatomy_kind": "nerve",
+        "hierarchy_level": "structure",
+        "region": "ankle",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.84,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-05T20:08:03.854Z",
+        "verified": false
+      }
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|lateral-malleolus|part_of|ankle-ring",
+    "description": "lateral-malleolus -[part_of]-> ankle-ring",
+    "payload": {
+      "predicate": "part_of",
+      "subject_slug": "lateral-malleolus",
+      "object_slug": "ankle-ring",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|medial-malleolus|part_of|ankle-ring",
+    "description": "medial-malleolus -[part_of]-> ankle-ring",
+    "payload": {
+      "predicate": "part_of",
+      "subject_slug": "medial-malleolus",
+      "object_slug": "ankle-ring",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|syndesmosis|part_of|ankle-ring",
+    "description": "syndesmosis -[part_of]-> ankle-ring",
+    "payload": {
+      "predicate": "part_of",
+      "subject_slug": "syndesmosis",
+      "object_slug": "ankle-ring",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "instability",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|deltoid-ligament|part_of|ankle-ring",
+    "description": "deltoid-ligament -[part_of]-> ankle-ring",
+    "payload": {
+      "predicate": "part_of",
+      "subject_slug": "deltoid-ligament",
+      "object_slug": "ankle-ring",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "instability",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|talus|articulates_with|lateral-malleolus",
+    "description": "talus -[articulates_with]-> lateral-malleolus",
+    "payload": {
+      "predicate": "articulates_with",
+      "subject_slug": "talus",
+      "object_slug": "lateral-malleolus",
+      "relationship_metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "diagnosis",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|deltoid-ligament|inserts_on|medial-malleolus",
+    "description": "deltoid-ligament -[inserts_on]-> medial-malleolus",
+    "payload": {
+      "predicate": "inserts_on",
+      "subject_slug": "deltoid-ligament",
+      "object_slug": "medial-malleolus",
+      "relationship_metadata": {
+        "anatomy_role": "supporting",
+        "relevance_reason": "instability",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-ring|prerequisite_for|ankle-fracture",
+    "description": "ankle-ring -[prerequisite_for]-> ankle-fracture",
+    "payload": {
+      "predicate": "prerequisite_for",
+      "subject_slug": "ankle-ring",
+      "object_slug": "ankle-fracture",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "educational_importance": "high",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|injured_in|lateral-malleolus",
+    "description": "ankle-fracture -[injured_in]-> lateral-malleolus",
+    "payload": {
+      "predicate": "injured_in",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "lateral-malleolus",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "clinical_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|injured_in|medial-malleolus",
+    "description": "ankle-fracture -[injured_in]-> medial-malleolus",
+    "payload": {
+      "predicate": "injured_in",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "medial-malleolus",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|involves_anatomy|ankle-ring",
+    "description": "ankle-fracture -[involves_anatomy]-> ankle-ring",
+    "payload": {
+      "predicate": "involves_anatomy",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "ankle-ring",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "diagnosis",
+        "relationship_strength": "core",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|involves_anatomy|syndesmosis",
+    "description": "ankle-fracture -[involves_anatomy]-> syndesmosis",
+    "payload": {
+      "predicate": "involves_anatomy",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "syndesmosis",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "instability",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|involves_anatomy|deltoid-ligament",
+    "description": "ankle-fracture -[involves_anatomy]-> deltoid-ligament",
+    "payload": {
+      "predicate": "involves_anatomy",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "deltoid-ligament",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "instability",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|has_classification|weber-classification",
+    "description": "ankle-fracture -[has_classification]-> weber-classification",
+    "payload": {
+      "predicate": "has_classification",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "weber-classification",
+      "relationship_metadata": {
+        "board_relevance": "high",
+        "educational_importance": "high",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|has_grade|weber-b",
+    "description": "ankle-fracture -[has_grade]-> weber-b",
+    "payload": {
+      "predicate": "has_grade",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "weber-b",
+      "relationship_metadata": {
+        "board_relevance": "high",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|weber-b|injured_in|lateral-malleolus",
+    "description": "weber-b -[injured_in]-> lateral-malleolus",
+    "payload": {
+      "predicate": "injured_in",
+      "subject_slug": "weber-b",
+      "object_slug": "lateral-malleolus",
+      "relationship_metadata": {
+        "relevance_reason": "classification",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|has_imaging_finding|medial-clear-space-widening",
+    "description": "ankle-fracture -[has_imaging_finding]-> medial-clear-space-widening",
+    "payload": {
+      "predicate": "has_imaging_finding",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "medial-clear-space-widening",
+      "relationship_metadata": {
+        "relevance_reason": "imaging",
+        "management_importance": "high",
+        "clinical_importance": "high",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|involves_anatomy|mortise-stability",
+    "description": "ankle-fracture -[involves_anatomy]-> mortise-stability",
+    "payload": {
+      "predicate": "involves_anatomy",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "mortise-stability",
+      "relationship_metadata": {
+        "relevance_reason": "instability",
+        "note": "biomechanics_concept linked via involves_anatomy until dedicated predicate exists",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|has_complication|ankle-malunion",
+    "description": "ankle-fracture -[has_complication]-> ankle-malunion",
+    "payload": {
+      "predicate": "has_complication",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "ankle-malunion",
+      "relationship_metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|has_complication|post-traumatic-ankle-arthritis",
+    "description": "ankle-fracture -[has_complication]-> post-traumatic-ankle-arthritis",
+    "payload": {
+      "predicate": "has_complication",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "post-traumatic-ankle-arthritis",
+      "relationship_metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-fracture|has_complication|syndesmotic-malreduction",
+    "description": "ankle-fracture -[has_complication]-> syndesmotic-malreduction",
+    "payload": {
+      "predicate": "has_complication",
+      "subject_slug": "ankle-fracture",
+      "object_slug": "syndesmotic-malreduction",
+      "relationship_metadata": {
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "relationship_create",
+    "proposal_fingerprint": "rel|ankle-orif|involves_anatomy|lateral-malleolus",
+    "description": "ankle-orif -[involves_anatomy]-> lateral-malleolus",
+    "payload": {
+      "predicate": "involves_anatomy",
+      "subject_slug": "ankle-orif",
+      "object_slug": "lateral-malleolus",
+      "relationship_metadata": {
+        "anatomy_role": "essential",
+        "relevance_reason": "approach",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "validation_errors": []
+    }
+  },
+  {
+    "kind": "claim_create_draft",
+    "proposal_fingerprint": "claim|claim-ankle-ring-concept",
+    "description": "Insert draft claim claim-ankle-ring-concept",
+    "payload": {
+      "pilot": "ankle-fracture-neighborhood",
+      "review_packet_key": "pilot:ankle-fracture-neighborhood",
+      "review_packet_label": "Ankle Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-ankle-ring-concept",
+      "claim_type": "anatomy_pearl",
+      "claim_text": "The ankle ring concept links malleoli, syndesmosis, and deltoid function — instability reflects ring disruption.",
+      "primary_entity_slug": "ankle-ring",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "AUTO_APPROVED_LOW_RISK",
+      "curation_scores": {
+        "confidence": 0.88,
+        "evidence": 0.84,
+        "ambiguity": 0.2,
+        "safety": 0.15,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "anatomy_pearl_on_hub"
+      ],
+      "curated_at": "2026-07-05T20:08:03.854Z",
+      "review_status": "unreviewed"
+    }
+  },
+  {
+    "kind": "bridge_create",
+    "proposal_fingerprint": "bridge|trauma-ankle-fractures|ankle-fracture",
+    "description": "Bridge trauma-ankle-fractures -> ankle-fracture",
+    "payload": {
+      "curriculum_node_slug": "trauma-ankle-fractures",
+      "bridge_type": "primary_coverage"
+    }
+  }
+]

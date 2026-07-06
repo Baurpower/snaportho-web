@@ -1,0 +1,90 @@
+{
+  "topicKey": "clavicle-fracture",
+  "pilotKey": "clavicle-fracture-neighborhood",
+  "primaryEntitySlug": "clavicle-fracture",
+  "displayName": "Clavicle Fracture",
+  "generatedAt": "2026-07-05T21:56:16.858Z",
+  "nodes": [
+    {
+      "slug": "clavicle-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Clavicle Malunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "clavicle-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Clavicle Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "clavicle-sling-immobilization",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Clavicle Sling Immobilization",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "midshaft-clavicle-fracture-pattern",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Midshaft Clavicle Fracture Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "clavicle-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Clavicle ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "clavicle-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Clavicle Nonunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "clavicle-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "clavicle-orif"
+    ],
+    "classification": [],
+    "imaging": [
+      "midshaft-clavicle-fracture-pattern"
+    ],
+    "complication": [
+      "clavicle-malunion",
+      "clavicle-nonunion"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "clavicle-sling-immobilization"
+    ]
+  }
+}

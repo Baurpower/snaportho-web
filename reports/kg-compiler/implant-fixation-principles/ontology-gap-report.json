@@ -1,0 +1,197 @@
+{
+  "generatedAt": "2026-07-05T23:29:15.210Z",
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Implant Fixation Principles missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "implant-fixation-principles",
+      "predicate": "involves_anatomy",
+      "objectSlug": "implant-fixation-principles"
+    },
+    {
+      "id": "gap-claim-2",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Implant Fixation Principles has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "implant-fixation-principles",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-3",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Implant Fixation Principles missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "implant-fixation-principles",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-rel-4",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Primary Stability missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "primary-stability",
+      "predicate": "involves_anatomy",
+      "objectSlug": "primary-stability"
+    },
+    {
+      "id": "gap-claim-5",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Primary Stability has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "primary-stability",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-6",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Primary Stability missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "primary-stability",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Primary Stability missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "primary-stability",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-rel-8",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Bone Ingrowth missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "bone-ingrowth",
+      "predicate": "involves_anatomy",
+      "objectSlug": "bone-ingrowth"
+    },
+    {
+      "id": "gap-claim-9",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Bone Ingrowth has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "bone-ingrowth",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-10",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Bone Ingrowth missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "bone-ingrowth",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-11",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Bone Ingrowth missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "bone-ingrowth",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-asset-card-12",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "10 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "implant-fixation-principles"
+    },
+    {
+      "id": "gap-asset-question-13",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "38 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "implant-fixation-principles"
+    },
+    {
+      "id": "gap-biomech-claim-14",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.82,
+      "reason": "Biomechanics concept Primary Stability has no teaching claim (e.g., mortise instability).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "primary-stability",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-biomech-claim-15",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.82,
+      "reason": "Biomechanics concept Bone Ingrowth has no teaching claim (e.g., mortise instability).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "bone-ingrowth",
+      "claimType": "fact"
+    }
+  ],
+  "summary": {
+    "total": 15,
+    "byKind": {
+      "missing_relationship": 3,
+      "missing_claim": 10,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "medium": 15
+    }
+  }
+}

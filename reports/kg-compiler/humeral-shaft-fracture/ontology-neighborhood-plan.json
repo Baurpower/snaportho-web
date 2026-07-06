@@ -1,0 +1,89 @@
+{
+  "topicKey": "humeral-shaft-fracture",
+  "pilotKey": "humeral-shaft-fracture-neighborhood",
+  "primaryEntitySlug": "humeral-shaft-fracture",
+  "displayName": "Humeral Shaft Fracture",
+  "generatedAt": "2026-07-05T21:57:25.222Z",
+  "nodes": [
+    {
+      "slug": "humeral-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Humeral Shaft Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "humeral-shaft-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Humeral Shaft Nonunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "humeral-im-nailing",
+      "entityType": "procedure",
+      "preferredLabel": "Humeral IM Nailing",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "holstein-lewis-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Holstein-Lewis Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "radial-nerve-palsy",
+      "entityType": "complication",
+      "preferredLabel": "Radial Nerve Palsy",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "humeral-plate-osteosynthesis",
+      "entityType": "procedure",
+      "preferredLabel": "Humeral Plate Osteosynthesis",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "humeral-shaft-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "humeral-im-nailing",
+      "humeral-plate-osteosynthesis"
+    ],
+    "classification": [],
+    "imaging": [
+      "holstein-lewis-fracture"
+    ],
+    "complication": [
+      "humeral-shaft-nonunion",
+      "radial-nerve-palsy"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

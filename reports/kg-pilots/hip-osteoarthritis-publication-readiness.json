@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-05T22:45:23.195Z",
+  "pilotKey": "hip-osteoarthritis-neighborhood",
+  "ready": false,
+  "estimatedMaturityLevel": 5,
+  "blockers": [
+    "Validation failures must be resolved",
+    "5 proposals still awaiting human review",
+    "2 items require attending review"
+  ],
+  "recommendedActions": [
+    "Run validation engine and fix errors",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "metrics": {
+    "totalProposals": 112,
+    "approvedProposals": 107,
+    "pendingReview": 5,
+    "claimDrafts": 4,
+    "decisionPointDrafts": 1,
+    "autoApproved": 107,
+    "humanReviewQueue": 5,
+    "validationErrors": 3
+  }
+}

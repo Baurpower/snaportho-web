@@ -260,6 +260,7 @@ function syncSlotModeIntoRequiredRule(
     created.config = sanitizeRuleConfig(REQUIRED_DAILY_CALL_SLOTS_RULE, {
       ...created.config,
       requiredCallTypes,
+      backupRequiredExplicit: scheduleSlotMode === "Both",
     });
     return [created, ...rules];
   }
@@ -272,6 +273,7 @@ function syncSlotModeIntoRequiredRule(
     config: sanitizeRuleConfig(REQUIRED_DAILY_CALL_SLOTS_RULE, {
       ...existing.config,
       requiredCallTypes,
+      backupRequiredExplicit: scheduleSlotMode === "Both",
     }),
   };
 
@@ -1632,13 +1634,19 @@ function slotDraftToDefinition(rule: RuleDraft): ProgramCallSlotDefinition {
     countsTowardWorkload: typeof c.slotCountsTowardWorkload === "boolean" ? c.slotCountsTowardWorkload : true,
     maxPerMonth: typeof c.slotMaxPerMonth === "number" ? c.slotMaxPerMonth : null,
     sortOrder: typeof c.slotSortOrder === "number" ? c.slotSortOrder : 0,
-    requiredWhenVisible: typeof c.slotRequiredWhenVisible === "boolean" ? (c.slotRequiredWhenVisible as boolean) : true,
+    requiredWhenVisible:
+      typeof c.slotRequiredWhenVisible === "boolean"
+        ? (c.slotRequiredWhenVisible as boolean)
+        : ((c.slotCallType as string) ?? "Primary") === "Backup"
+        ? false
+        : true,
   };
 }
 
 function updateSlotConfig(rule: RuleDraft, patch: Partial<ProgramCallSlotDefinition>): RuleDraft {
   const def = slotDraftToDefinition(rule);
   const merged = { ...def, ...patch };
+  const existingConfig = (rule.config ?? {}) as Record<string, unknown>;
   return {
     ...rule,
     name: merged.label,
@@ -1654,6 +1662,14 @@ function updateSlotConfig(rule: RuleDraft, patch: Partial<ProgramCallSlotDefinit
       slotMaxPerMonth: merged.maxPerMonth,
       slotSortOrder: merged.sortOrder,
       slotRequiredWhenVisible: merged.requiredWhenVisible,
+      backupRequiredExplicit:
+        merged.callType === "Backup" && merged.requiredWhenVisible === true
+          ? true
+          : merged.callType === "Backup" && merged.requiredWhenVisible === false
+          ? false
+          : typeof existingConfig.backupRequiredExplicit === "boolean"
+          ? existingConfig.backupRequiredExplicit
+          : undefined,
     }),
   };
 }
@@ -1871,7 +1887,7 @@ function CallSlotCard({
 
 const DEFAULT_SLOT_CONFIGS: Array<Partial<ProgramCallSlotDefinition> & { label: string }> = [
   { label: "Primary", shortLabel: "1°", callType: "Primary", colorKey: "amber", requiredMode: "always", countsTowardWorkload: true, sortOrder: 0, requiredWhenVisible: true },
-  { label: "Backup", shortLabel: "2°", callType: "Backup", colorKey: "sky", requiredMode: "optional", countsTowardWorkload: true, sortOrder: 1, requiredWhenVisible: true },
+  { label: "Backup", shortLabel: "2°", callType: "Backup", colorKey: "sky", requiredMode: "optional", countsTowardWorkload: true, sortOrder: 1, requiredWhenVisible: false },
   { label: "Buddy", shortLabel: "B°", callType: "Buddy", colorKey: "violet", requiredMode: "conditional", countsTowardWorkload: false, sortOrder: 2, requiredWhenVisible: false },
 ];
 

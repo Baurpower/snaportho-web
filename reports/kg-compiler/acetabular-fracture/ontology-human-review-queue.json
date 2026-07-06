@@ -1,0 +1,635 @@
+[
+  {
+    "proposal_fingerprint": "claim|claim-acet-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.8525000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.853 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "acetabular case presentation pattern",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "draft_id": "claim-acet-case-script",
+      "verified": false,
+      "claim_text": "Describe fracture pattern, hip stability exam, column-wall language, surgical approach plan, and post-traumatic arthritis counseling.",
+      "claim_type": "clinical_script",
+      "curated_at": "2026-07-05T22:33:19.272Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L2",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "primary_entity_slug": "acetabular-fracture",
+      "review_packet_label": "Acetabular Fracture Neighborhood"
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-acet-column-wall",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8525000000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact",
+      "Composite confidence 0.853 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "trauma-acetabular-fractures curriculum",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "draft_id": "claim-acet-column-wall",
+      "verified": false,
+      "claim_text": "Acetabular fractures are classified and managed by column-and-wall patterns with articular reduction and hip congruity goals.",
+      "claim_type": "fact",
+      "curated_at": "2026-07-05T22:33:19.272Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L1",
+      "context_relevance": [
+        "call",
+        "or"
+      ],
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "primary_entity_slug": "acetabular-fracture",
+      "review_packet_label": "Acetabular Fracture Neighborhood"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-acet-nonoperative-displaced",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8525000000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.853 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "acetabular decision-making pitfalls",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "draft_id": "claim-acet-nonoperative-displaced",
+      "verified": false,
+      "claim_text": "Treating displaced intra-articular acetabular fractures as stable injuries without column, wall, and congruity assessment.",
+      "claim_type": "cognitive_trap",
+      "curated_at": "2026-07-05T22:33:19.272Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 1,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L1",
+      "context_relevance": [
+        "or"
+      ],
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "primary_entity_slug": "acetabular-fracture",
+      "review_packet_label": "Acetabular Fracture Neighborhood"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-acet-posterior-wall-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8525000000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.853 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "acetabular board pearls",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "draft_id": "claim-acet-posterior-wall-trap",
+      "verified": false,
+      "claim_text": "Posterior wall acetabular fractures can present with subtle instability and are operative problems when hip subluxation risk is present.",
+      "claim_type": "board_trap",
+      "curated_at": "2026-07-05T22:33:19.272Z",
+      "content_source": "generated_draft",
+      "curation_route": "HUMAN_REVIEW",
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 1,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "factory_version": "kf-016",
+      "importance_level": "L1",
+      "context_relevance": [
+        "oite",
+        "or"
+      ],
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "primary_entity_slug": "posterior-wall-acetabular-fracture",
+      "review_packet_label": "Acetabular Fracture Neighborhood"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7828750000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.783 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-3f5a6c9b",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "draft_id": "claim-acetabular-fracture-board_trap-articular-incongruity-pr",
+      "claim_type": "board_trap",
+      "claim_text": "Articular incongruity predicts post-traumatic arthritis.",
+      "primary_entity_slug": "acetabular-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "board_trap"
+      ],
+      "context_relevance": [
+        "oite"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "evidence_packet_id": "ev-packet-05a7be6b",
+      "uncertainty_note": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.7915,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:33:19.272Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+    "proposal_type": "propose_educational_claim",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.7828750000000001,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.783 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-3f5b660f",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "draft_id": "claim-acetabular-fracture-cognitive_trap-use-column-and-wall-lang",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Use column and wall language.",
+      "primary_entity_slug": "acetabular-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-3f5b660f"
+      ],
+      "evidence_packet_id": "ev-packet-05a7be6b",
+      "uncertainty_note": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.7915,
+        "evidence": 0.7,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:33:19.272Z"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-3f5a6c9b",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "draft_id": "claim-acetabular-fracture-imaging_point-ct-with-articular-mappin",
+      "claim_type": "imaging_point",
+      "claim_text": "CT with articular mapping.",
+      "primary_entity_slug": "acetabular-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "imaging_decision"
+      ],
+      "context_relevance": [
+        "clinic"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "evidence_packet_id": "ev-packet-05a7be6b",
+      "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:33:19.272Z"
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "claim|claim-acetabular-fracture-imaging_point-judet-views",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: SAFE_REVIEW",
+    "confidence": 0.7941250000000001,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim",
+      "Composite confidence 0.794 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_educational_claim (SAFE_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Generated from evidence items: ev-static-prepare-3f5a6c9b",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "draft_id": "claim-acetabular-fracture-imaging_point-judet-views",
+      "claim_type": "imaging_point",
+      "claim_text": "Judet views.",
+      "primary_entity_slug": "acetabular-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "verified": false,
+      "why_it_matters": [
+        "clinical_reasoning"
+      ],
+      "context_relevance": [
+        "clinic"
+      ],
+      "learner_stage": "clerkship",
+      "evidence_item_ids": [
+        "ev-static-prepare-3f5a6c9b"
+      ],
+      "evidence_packet_id": "ev-packet-05a7be6b",
+      "uncertainty_note": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "review_route_hint": "HUMAN_REVIEW",
+      "generated_by": "claim-builder-v2",
+      "publication_eligible": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.8365,
+        "evidence": 0.7,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:33:19.272Z"
+    },
+    "auto_review_category": "SAFE_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-acet-displaced-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8400000000000001,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "acetabular ORIF pathway",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "action": "Plan open reduction with column-specific approach per Judet-Letournel pattern and attending preference",
+      "trigger": "Displaced acetabular fracture with intra-articular step-off or column disruption",
+      "urgency": "urgent",
+      "draft_id": "dp-acet-displaced-orif",
+      "verified": false,
+      "curated_at": "2026-07-05T22:33:19.273Z",
+      "pattern_type": "operative_indication",
+      "content_source": "generated_draft",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "safety_criticality": "moderate",
+      "review_packet_label": "Acetabular Fracture Neighborhood",
+      "subject_entity_slug": "acetabular-fracture",
+      "requires_attending_review": true
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|dp-acet-posterior-wall-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8400000000000001,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.840 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "acetabular operative indications",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "action": "Discuss acetabular ORIF with attending; document instability exam and congruity goals",
+      "trigger": "Posterior wall acetabular fracture with hip instability or significant articular displacement",
+      "urgency": "urgent",
+      "draft_id": "dp-acet-posterior-wall-orif",
+      "verified": false,
+      "curated_at": "2026-07-05T22:33:19.273Z",
+      "pattern_type": "operative_indication",
+      "content_source": "generated_draft",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "safety_criticality": "high",
+      "review_packet_label": "Acetabular Fracture Neighborhood",
+      "subject_entity_slug": "acetabular-fracture",
+      "requires_attending_review": true
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|acetabular-fracture|treated_by|acetabular-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "acetabular-fracture -[treated_by]-> acetabular-orif",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8999999999999999,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.900 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "verified": false,
+      "high_risk": true,
+      "curated_at": "2026-07-05T22:33:19.273Z",
+      "object_slug": "acetabular-orif",
+      "subject_slug": "acetabular-fracture",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "object_entity_type": "procedure",
+      "review_packet_label": "Acetabular Fracture Neighborhood",
+      "subject_entity_type": "condition",
+      "relationship_metadata": {
+        "review_status": "unreviewed",
+        "context_relevance": [
+          "or"
+        ],
+        "management_importance": "high"
+      }
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|posterior-wall-acetabular-fracture|explains_instability|acetabular-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "posterior-wall-acetabular-fracture -[explains_instability]-> acetabular-fracture",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8999999999999999,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.900 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Relationship explains_instability",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "verified": false,
+      "high_risk": true,
+      "curated_at": "2026-07-05T22:33:19.273Z",
+      "object_slug": "acetabular-fracture",
+      "subject_slug": "posterior-wall-acetabular-fracture",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "object_entity_type": "condition",
+      "review_packet_label": "Acetabular Fracture Neighborhood",
+      "subject_entity_type": "imaging_finding",
+      "relationship_metadata": {
+        "confidence": 0.85,
+        "review_status": "unreviewed",
+        "management_importance": "high"
+      }
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "rel|posterior-wall-acetabular-fracture|indicates_treatment|acetabular-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "posterior-wall-acetabular-fracture -[indicates_treatment]-> acetabular-orif",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.8999999999999999,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate",
+      "Composite confidence 0.900 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship (EXPERT_REVIEW)",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "acetabular-fracture-neighborhood",
+      "verified": false,
+      "high_risk": true,
+      "curated_at": "2026-07-05T22:33:19.273Z",
+      "object_slug": "acetabular-orif",
+      "subject_slug": "posterior-wall-acetabular-fracture",
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 1,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "factory_version": "kf-016",
+      "review_packet_key": "pilot:acetabular-fracture-neighborhood",
+      "object_entity_type": "procedure",
+      "review_packet_label": "Acetabular Fracture Neighborhood",
+      "subject_entity_type": "imaging_finding",
+      "relationship_metadata": {
+        "note": "displacement and instability dependent",
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "management_importance": "high"
+      }
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  }
+]

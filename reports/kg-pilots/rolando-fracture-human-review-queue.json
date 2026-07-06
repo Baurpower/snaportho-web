@@ -1,0 +1,532 @@
+[
+  {
+    "proposal_fingerprint": "rel|rolando-fracture|differential_for|bennett-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "rolando-fracture -[differential_for]-> bennett-fracture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rolando-fracture|differential_for|bennett-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rolando-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "bennett-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rolando-fracture|differential_for|thumb-ucl-injury",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "rolando-fracture -[differential_for]-> thumb-ucl-injury",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rolando-fracture|differential_for|thumb-ucl-injury",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rolando-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "thumb-ucl-injury",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rolando-fracture|treated_by|rolando-fracture-operative-treatment",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "rolando-fracture -[treated_by]-> rolando-fracture-operative-treatment",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rolando-fracture|treated_by|rolando-fracture-operative-treatment",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rolando-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "rolando-fracture-operative-treatment",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rolando-fracture-key-imaging-finding|indicates_treatment|rolando-fracture-operative-treatment",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "rolando-fracture-key-imaging-finding -[indicates_treatment]-> rolando-fracture-operative-treatment",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: rolando-fracture-key-imaging-finding -[indicates_treatment]-> rolando-fracture-operative-treatment",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rolando-fracture-key-imaging-finding",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "rolando-fracture-operative-treatment",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.78,
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rolando-fracture-mechanism",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rolando-fracture-mechanism",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist-cluster-definitions.ts / metacarpal-trauma",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rolando-fracture-mechanism",
+      "claim_type": "fact",
+      "claim_text": "Rolando Fracture evaluation should anchor on mechanism, focused exam, and the anatomic structures most at risk (first-metacarpal, trapezium, cmc-joint).",
+      "primary_entity_slug": "rolando-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rolando-fracture-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rolando-fracture-board-trap",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rolando-fracture-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Missing first-metacarpal assessment in rolando fracture is a common board and OITE trap.",
+      "primary_entity_slug": "first-metacarpal",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rolando-fracture-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rolando-fracture-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "cross-neighborhood connectivity requirement",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rolando-fracture-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Treating rolando fracture in isolation without checking related wrist, tendon, or nerve neighborhoods in the cluster.",
+      "primary_entity_slug": "rolando-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rolando-fracture-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rolando-fracture-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rotation script",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rolando-fracture-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Document neurovascular status, key anatomic structures (first-metacarpal, trapezium, cmc-joint), stability assessment, and escalation plan for rolando fracture.",
+      "primary_entity_slug": "rolando-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rolando-fracture-imaging",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rolando-fracture-imaging",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rolando-fracture-imaging",
+      "claim_type": "imaging_point",
+      "claim_text": "Obtain appropriate hand/wrist imaging for rolando fracture and explicitly comment on articular alignment and adjacent joint stability.",
+      "primary_entity_slug": "rolando-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rolando-fracture-rehab",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rolando-fracture-rehab",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rehabilitation concept",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rolando-fracture-rehab",
+      "claim_type": "rehab_pearl",
+      "claim_text": "Early protected motion and therapy goals for rolando fracture should align with tendon, ligament, and joint stability constraints.",
+      "primary_entity_slug": "rolando-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-rolando-fracture-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-rolando-fracture-operative",
+    "alternatives": [],
+    "evidence_summary": "operative routing → ATTENDING_REVIEW",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-rolando-fracture-operative",
+      "subject_entity_slug": "rolando-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Unstable pattern, displacement, failed closed treatment, or functional deficit in rolando fracture",
+      "action": "Proceed with operative pathway when indicated; document fixation strategy, tendon/nerve protection, and postoperative plan",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-rolando-fracture-nonoperative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-rolando-fracture-nonoperative",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand nonoperative pathway",
+    "metadata": {
+      "pilot": "rolando-fracture-neighborhood",
+      "review_packet_key": "pilot:rolando-fracture-neighborhood",
+      "review_packet_label": "Rolando Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-rolando-fracture-nonoperative",
+      "subject_entity_slug": "rolando-fracture",
+      "pattern_type": "nonoperative_eligible",
+      "trigger": "Stable pattern with acceptable alignment and intact neurovascular exam for rolando fracture",
+      "action": "Splint/immobilize with therapy plan, repeat exam and imaging, and clear return precautions",
+      "urgency": "routine",
+      "safety_criticality": "none",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:52:55.007Z"
+    }
+  }
+]

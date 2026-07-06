@@ -2182,7 +2182,7 @@ function generateSingleCallSchedule({
     //   - no custom slot defs: use legacy global flag (globalBackupRequired)
     const shouldFillBackupThisDay = !current.backupRosterId && (
       hasCustomBackupDefs
-        ? backupDef !== null  // visible per slot definition (required or optional)
+        ? backupDef !== null
         : globalBackupRequired && !buddyActiveThisDay
     );
 

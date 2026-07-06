@@ -1,0 +1,22 @@
+# Database Quality — Essex-Lopresti Injury
+
+Source: **database**
+Maturity: **Level 6**
+
+## Metrics
+- proposalCount: 177
+- approvedProposalCount: 166
+- entityProposalCount: 73
+- relationshipProposalCount: 94
+- claimProposalCount: 7
+- dpProposalCount: 2
+- autoApprovedCount: 166
+- humanReviewCount: 11
+- canonicalEntityCount: 2
+- canonicalRelationshipCount: 588
+- educationalClaimCount: 77
+- decisionPointCount: 0
+- provenanceCompleteness: 1
+- reviewCompleteness: 0.9378531073446328
+- publicationReadiness: false
+

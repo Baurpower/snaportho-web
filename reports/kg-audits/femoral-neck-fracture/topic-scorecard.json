@@ -1,0 +1,320 @@
+{
+  "generatedAt": "2026-07-05T22:23:10.235Z",
+  "auditorVersion": "1.0.0",
+  "topicKey": "femoral-neck-fracture",
+  "pilotKey": "femoral-neck-fracture-neighborhood",
+  "displayName": "Femoral Neck Fracture",
+  "dataSource": {
+    "neighborhood": "merged_draft",
+    "reportsLoaded": [
+      "ontology-compiler-plan.json",
+      "ontology-gap-report.json",
+      "ontology-work-plan.json",
+      "agent-execution-report.json",
+      "merged-neighborhood-draft.json",
+      "publication-readiness.json",
+      "ontology-auto-review.json",
+      "ontology-human-review-queue.json",
+      "conflict-report.json",
+      "agent-assignment-plan.json",
+      "ontology-neighborhood-plan.json",
+      "evidence-packet.json"
+    ],
+    "reportsMissing": []
+  },
+  "overallScore": 84,
+  "categories": {
+    "ontology_completeness": 38,
+    "evidence_quality": 85,
+    "graph_integrity": 77,
+    "shared_knowledge_reuse": 100,
+    "relationship_quality": 92,
+    "claim_quality": 84,
+    "decision_point_quality": 77,
+    "metadata_quality": 90,
+    "provenance_quality": 100,
+    "review_calibration": 92,
+    "agent_performance": 92,
+    "compiler_quality": 80,
+    "educational_quality": 96,
+    "cross_neighborhood_consistency": 92,
+    "publication_readiness": 7
+  },
+  "publication": {
+    "status": "NOT_READY",
+    "ready": false,
+    "blockers": [
+      "21 proposals still awaiting human review",
+      "12 items require attending review",
+      "Insufficient relationship metadata on essential edges",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "18 critical/high ontology gaps remain unresolved"
+    ],
+    "currentLevel": 5,
+    "requiredLevel": 7,
+    "score": 7,
+    "deductions": [
+      {
+        "finding": "21 proposals still awaiting human review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "12 items require attending review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "Insufficient relationship metadata on essential edges",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 8
+      },
+      {
+        "finding": "18 critical/high ontology gaps remain unresolved",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "critical",
+        "category": "publication_readiness",
+        "suggestedFix": "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+        "impact": 15
+      }
+    ]
+  },
+  "topFindings": [
+    {
+      "finding": "9 critical ontology gaps remain",
+      "evidence": "ontology-gap-report.json: gap-entity-neighbor-1, gap-rel-2, gap-dp-13",
+      "reason": "Required entities, relationships, claims, or decision points are missing per CKO §8–§9.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "suggestedFix": "Resolve critical gaps via assigned factory agents before publication review.",
+      "impact": 15
+    },
+    {
+      "finding": "Only 0 anatomy structures (minimum 3 required)",
+      "evidence": "Entity slugs: ",
+      "reason": "Condition neighborhoods require regional anatomy per condition.anatomy.min_structures.",
+      "severity": "critical",
+      "category": "ontology_completeness",
+      "affectedSlugs": [
+        "femoral-neck-fracture"
+      ],
+      "suggestedFix": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "impact": 15
+    },
+    {
+      "finding": "Low evidence coverage (0% of proposals cite evidence)",
+      "evidence": "0/34 proposals have evidence_refs",
+      "reason": "Every proposal should cite supporting evidence per factory contract.",
+      "severity": "critical",
+      "category": "evidence_quality",
+      "suggestedFix": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "impact": 15
+    },
+    {
+      "finding": "8 dangling edges reference missing entities",
+      "evidence": "femoral-neck-fracture -[at_risk_structure]-> medial-femoral-circumflex-artery; femoral-neck-fracture -[injured_in]-> femoral-neck; femoral-neck-fracture -[involves_anatomy]-> calcar",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing decision point pattern: emergency_escalation",
+      "evidence": "0 decision points with pattern emergency_escalation",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "critical",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "impact": 15
+    },
+    {
+      "finding": "18 critical/high ontology gaps remain unresolved",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "impact": 15
+    },
+    {
+      "finding": "9 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship, missing_claim, missing_entity",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 12,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "Missing relationship requirements (12)",
+      "evidence": "12 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern femoral-neck-fracture|operative_indication: dp-fnf-arthroplasty-pathway vs dp-fnf-head-preservation-orif",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    },
+    {
+      "finding": "5 high-risk relationships lack approved review status",
+      "evidence": "Predicates: indicates_treatment, at_risk_structure, treated_by, uses_fixation",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    },
+    {
+      "finding": "All claims remain generated_draft",
+      "evidence": "15/15 claims are unreviewed drafts",
+      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Route claims through human review queue before publication.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient evidence support on claim proposals",
+      "evidence": "0% of claim proposals cite evidence",
+      "reason": "Every claim should cite supporting evidence.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing decision point pattern: nonoperative_eligible",
+      "evidence": "Femoral Neck Fracture missing decision point pattern: nonoperative_eligible.",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "high",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add nonoperative_eligible decision point with attending-gated review.",
+      "impact": 8
+    },
+    {
+      "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
+      "evidence": "Entity femoral-neck-fracture metadata keys: slug, pilot, verified, curated_at, description, clinical_kind, staging_apply, curation_route, curation_rules, curation_scores, factory_version, maturity_target, staging_reviewer, review_packet_key, review_packet_label, clinical_verification, created_from_proposal_fingerprint, canonical_entity_id, applied_by_script, _provenance_fingerprint",
+      "reason": "Primary condition entities require educational and curriculum metadata.",
+      "severity": "high",
+      "category": "metadata_quality",
+      "affectedSlugs": [
+        "femoral-neck-fracture"
+      ],
+      "suggestedFix": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
+      "impact": 8
+    },
+    {
+      "finding": "8 underperforming agent(s)",
+      "evidence": "clinical-entity-builder (F), asset-linker (F), decision-point-builder (D), metadata-builder (F), duplicate-detector (F), quality-scorer (F), conflict-resolver (F), publication-validator (F)",
+      "reason": "Low-grading agents reduce neighborhood quality and increase review burden.",
+      "severity": "high",
+      "category": "agent_performance",
+      "suggestedFix": "Review agent report cards and address weaknesses per agent.",
+      "impact": 8
+    }
+  ],
+  "prioritizedRecommendations": [
+    {
+      "priority": 1,
+      "action": "Resolve critical gaps via assigned factory agents before publication review.",
+      "category": "ontology_completeness",
+      "impact": "9 critical ontology gaps remain"
+    },
+    {
+      "priority": 2,
+      "action": "Add essential regional anatomy via anatomy builder or shared anatomy reuse.",
+      "category": "ontology_completeness",
+      "impact": "Only 0 anatomy structures (minimum 3 required)"
+    },
+    {
+      "priority": 3,
+      "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "category": "evidence_quality",
+      "impact": "Low evidence coverage (0% of proposals cite evidence)"
+    },
+    {
+      "priority": 4,
+      "action": "Create missing entities or remove invalid relationship proposals.",
+      "category": "graph_integrity",
+      "impact": "8 dangling edges reference missing entities"
+    },
+    {
+      "priority": 5,
+      "action": "Add emergency_escalation decision point with attending-gated review.",
+      "category": "decision_point_quality",
+      "impact": "Missing decision point pattern: emergency_escalation"
+    },
+    {
+      "priority": 6,
+      "action": "[critical] Femoral Neck Fracture neighborhood has 0/3 anatomy_structure entities.",
+      "category": "publication_readiness",
+      "impact": "18 critical/high ontology gaps remain unresolved"
+    },
+    {
+      "priority": 7,
+      "action": "Schedule gap-resolution work items from ontology-work-plan.json.",
+      "category": "ontology_completeness",
+      "impact": "9 high-priority ontology gaps"
+    },
+    {
+      "priority": 8,
+      "action": "Run the matching builder agent for missing_relationship.",
+      "category": "ontology_completeness",
+      "impact": "Missing relationship requirements (12)"
+    },
+    {
+      "priority": 9,
+      "action": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "category": "graph_integrity",
+      "impact": "1 merge conflicts detected"
+    },
+    {
+      "priority": 10,
+      "action": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "category": "relationship_quality",
+      "impact": "5 high-risk relationships lack approved review status"
+    }
+  ],
+  "databaseModified": false
+}

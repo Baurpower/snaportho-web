@@ -1,0 +1,291 @@
+{
+  "topicKey": "acetabular-fracture",
+  "pilotKey": "acetabular-fracture-neighborhood",
+  "primaryEntitySlug": "acetabular-fracture",
+  "displayName": "Acetabular Fracture",
+  "generatedAt": "2026-07-05T22:33:19.244Z",
+  "nodes": [
+    {
+      "slug": "pcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterior Cruciate Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lower-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Trauma Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 13,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Femur",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-wall-acetabular-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Posterior Wall Acetabular Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "common-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Peroneal Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acetabular-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Acetabular Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 6
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acetabular-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Acetabular ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "judet-letournel-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Judet-Letournel Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "acetabular-post-traumatic-arthritis",
+      "entityType": "complication",
+      "preferredLabel": "Acetabular Post-Traumatic Arthritis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibial-plateau",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Plateau",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "popliteal-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Popliteal Artery",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Cruciate Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    }
+  ],
+  "edgeCount": 31,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "acetabular-fracture"
+    ],
+    "neighboring_anatomy": [
+      "pcl",
+      "pelvis",
+      "lower-extremity-trauma-anatomy-hub",
+      "distal-femur",
+      "lisfranc-joint",
+      "sacroiliac-joint",
+      "sacrum",
+      "iliac-wing",
+      "extensor-mechanism",
+      "common-peroneal-nerve",
+      "plantar-soft-tissues",
+      "midfoot",
+      "acetabulum",
+      "subtalar-joint",
+      "tibial-plateau",
+      "pubic-symphysis",
+      "popliteal-artery",
+      "acl",
+      "femoral-diaphysis",
+      "calcaneus",
+      "patella"
+    ],
+    "procedure": [
+      "acetabular-orif"
+    ],
+    "classification": [
+      "judet-letournel-classification"
+    ],
+    "imaging": [
+      "posterior-wall-acetabular-fracture"
+    ],
+    "complication": [
+      "acetabular-post-traumatic-arthritis"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

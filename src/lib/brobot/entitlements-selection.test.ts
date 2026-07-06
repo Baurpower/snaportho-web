@@ -105,15 +105,37 @@ const activeResubscription = {
   updated_at: '2026-06-06T00:00:00.000Z',
 };
 
+const trialingResubscription = {
+  ...activeResubscription,
+  status: 'trialing',
+  current_period_end: '2026-08-05T00:00:00.000Z',
+  stripe_subscription_id: 'sub_1TpvOKArNRAa5suAmjj2bXhN',
+  updated_at: '2026-07-05T00:00:00.000Z',
+};
+
 assert.equal(
   pickBestEntitlingSubscriptionRow([expiredCanceled, activeResubscription], now)?.stripe_subscription_id,
   'sub_new'
 );
 
 assert.equal(
+  pickBestEntitlingSubscriptionRow([expiredCanceled, trialingResubscription], now)?.stripe_subscription_id,
+  'sub_1TpvOKArNRAa5suAmjj2bXhN'
+);
+
+assert.equal(
   pickBestEntitlingSubscriptionRow([expiredCanceled], now),
   null
 );
+
+const secondCanceledStripe = {
+  ...expiredCanceled,
+  stripe_subscription_id: 'sub_old_2',
+  current_period_end: '2026-05-01T00:00:00.000Z',
+  updated_at: '2026-05-01T00:00:00.000Z',
+};
+
+assert.equal(pickBestEntitlingSubscriptionRow([expiredCanceled, secondCanceledStripe], now), null);
 
 const cancelingButStillEntitled = {
   ...baseRow,
@@ -266,6 +288,21 @@ const newerStripeActive = {
 assert.equal(
   pickBestEntitlingSubscriptionRow([appleSandboxActive, newerStripeActive], now)?.stripe_subscription_id,
   'sub_newer_than_apple'
+);
+
+const canceledStripeOnly = {
+  ...expiredCanceled,
+  current_period_end: '2026-08-01T00:00:00.000Z',
+};
+
+assert.equal(
+  pickBestEntitlingSubscriptionRow([appleSandboxActive, canceledStripeOnly], now)?.provider,
+  'apple'
+);
+
+assert.equal(
+  pickBestEntitlingSubscriptionRow([appleExpiredButStaleActive, trialingResubscription], now)?.stripe_subscription_id,
+  'sub_1TpvOKArNRAa5suAmjj2bXhN'
 );
 
 console.log('brobot entitlement selection tests passed');

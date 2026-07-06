@@ -1,0 +1,53 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 73,
+  "deductions": [
+    {
+      "finding": "1 orphan entities with no relationships",
+      "evidence": "Slugs: lower-extremity-trauma-anatomy-hub",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "lower-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
+    },
+    {
+      "finding": "1 dangling edges reference missing entities",
+      "evidence": "osteochondral-defect-knee -[involves_anatomy]-> tibial-plateau",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "1 disconnected anatomy structures",
+      "evidence": "Disconnected: lower-extremity-trauma-anatomy-hub",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "lower-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 39,
+    "relationshipCount": 42,
+    "orphanCount": 1,
+    "danglingEdgeCount": 1,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors."
+  ]
+}

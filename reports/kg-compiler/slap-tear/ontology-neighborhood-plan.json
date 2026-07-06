@@ -1,0 +1,90 @@
+{
+  "topicKey": "slap-tear",
+  "pilotKey": "slap-tear-neighborhood",
+  "primaryEntitySlug": "slap-tear",
+  "displayName": "SLAP Tear",
+  "generatedAt": "2026-07-05T23:02:25.212Z",
+  "nodes": [
+    {
+      "slug": "slap-tear-complication",
+      "entityType": "complication",
+      "preferredLabel": "SLAP Tear Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "slap-tear-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "SLAP Tear Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "slap-tear-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "SLAP Tear MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "slap-tear-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "SLAP Tear Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "slap-tear-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "SLAP Tear Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "slap-tear-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "SLAP Tear Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "slap-tear-reconstruction"
+    ],
+    "classification": [
+      "slap-tear-classification"
+    ],
+    "imaging": [
+      "slap-tear-mri-finding"
+    ],
+    "complication": [
+      "slap-tear-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "slap-tear-exam-maneuver",
+      "slap-tear-rehab-protocol"
+    ]
+  }
+}

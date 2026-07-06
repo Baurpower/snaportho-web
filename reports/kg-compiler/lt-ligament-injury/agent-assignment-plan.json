@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-07-05T23:44:39.913Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "lt-ligament-injury",
+  "pilotKey": "lt-ligament-injury-neighborhood",
+  "assignments": [
+    {
+      "workItemId": "work-asset-linker",
+      "agentId": "asset-linker",
+      "agentName": "Asset Linker",
+      "type": "gap_resolution",
+      "gapCount": 1,
+      "gapIds": [
+        "gap-asset-question-1"
+      ],
+      "gapKinds": [
+        "missing_asset_link"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder"
+      ],
+      "estimatedConfidence": 0.8,
+      "requiredReviewer": "none",
+      "matchReasons": [
+        "handles_gap_kind:missing_asset_link"
+      ]
+    }
+  ],
+  "executionOrder": [
+    "work-clinical-entity-builder",
+    "work-asset-linker",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "registryAgentCount": 13
+}

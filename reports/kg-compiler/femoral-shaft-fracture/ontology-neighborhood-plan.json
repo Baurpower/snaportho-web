@@ -1,0 +1,90 @@
+{
+  "topicKey": "femoral-shaft-fracture",
+  "pilotKey": "femoral-shaft-fracture-neighborhood",
+  "primaryEntitySlug": "femoral-shaft-fracture",
+  "displayName": "Femoral Shaft Fracture",
+  "generatedAt": "2026-07-05T22:35:43.963Z",
+  "nodes": [
+    {
+      "slug": "femoral-shaft-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Femoral Shaft Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "femoral-im-nailing",
+      "entityType": "procedure",
+      "preferredLabel": "Femoral IM Nailing",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-im-nail-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Femoral IM Nail Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "segmental-femoral-shaft-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Segmental Femoral Shaft Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Femoral Malunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fat-embolism",
+      "entityType": "complication",
+      "preferredLabel": "Fat Embolism",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "femoral-shaft-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "femoral-im-nailing"
+    ],
+    "classification": [],
+    "imaging": [
+      "segmental-femoral-shaft-fracture"
+    ],
+    "complication": [
+      "femoral-malunion",
+      "fat-embolism"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [
+      "femoral-im-nail-fixation"
+    ],
+    "supporting": []
+  }
+}

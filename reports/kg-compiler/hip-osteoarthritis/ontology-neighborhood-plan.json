@@ -1,0 +1,181 @@
+{
+  "topicKey": "hip-osteoarthritis",
+  "pilotKey": "hip-osteoarthritis-neighborhood",
+  "primaryEntitySlug": "hip-osteoarthritis",
+  "displayName": "Hip Osteoarthritis",
+  "generatedAt": "2026-07-05T22:44:52.280Z",
+  "nodes": [
+    {
+      "slug": "revision-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Revision Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "periprosthetic-joint-infection",
+      "entityType": "condition",
+      "preferredLabel": "Periprosthetic Joint Infection",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-prosthetic-joint-infection",
+      "entityType": "condition",
+      "preferredLabel": "Hip Prosthetic Joint Infection",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "knee-prosthetic-joint-infection",
+      "entityType": "condition",
+      "preferredLabel": "Knee Prosthetic Joint Infection",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "knee-osteoarthritis",
+      "entityType": "condition",
+      "preferredLabel": "Knee Osteoarthritis",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "joint-space-narrowing-hip",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Hip Joint Space Narrowing",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "bearing-surface-selection",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Bearing Surface Selection",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "adverse-local-tissue-reaction",
+      "entityType": "procedure",
+      "preferredLabel": "Adverse Local Tissue Reaction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "unicompartmental-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Unicompartmental Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-osteoarthritis",
+      "entityType": "condition",
+      "preferredLabel": "Hip Osteoarthritis",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "polyethylene-wear-osteolysis",
+      "entityType": "procedure",
+      "preferredLabel": "Polyethylene Wear Osteolysis",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "total-hip-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Hip Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "total-knee-arthroplasty",
+      "entityType": "procedure",
+      "preferredLabel": "Total Knee Arthroplasty",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-abductor-mechanics",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Hip Abductor Mechanics",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "kellgren-lawrence-hip",
+      "entityType": "classification_system",
+      "preferredLabel": "Kellgren-Lawrence Hip OA",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "hip-osteoarthritis"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "revision-arthroplasty",
+      "adverse-local-tissue-reaction",
+      "unicompartmental-knee-arthroplasty",
+      "polyethylene-wear-osteolysis",
+      "total-hip-arthroplasty",
+      "total-knee-arthroplasty"
+    ],
+    "classification": [
+      "kellgren-lawrence-hip"
+    ],
+    "imaging": [
+      "joint-space-narrowing-hip"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "bearing-surface-selection",
+      "hip-abductor-mechanics"
+    ],
+    "fixation": [],
+    "supporting": [
+      "periprosthetic-joint-infection",
+      "hip-prosthetic-joint-infection",
+      "knee-prosthetic-joint-infection",
+      "knee-osteoarthritis"
+    ]
+  }
+}

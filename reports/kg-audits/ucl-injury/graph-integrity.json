@@ -1,0 +1,70 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 76,
+  "deductions": [
+    {
+      "finding": "9 orphan entities with no relationships",
+      "evidence": "Slugs: ac-joint, axillary-nerve, clavicle, humeral-head, median-nerve, proximal-humerus, radial-nerve, ulnar-nerve, upper-extremity-trauma-anatomy-hub",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "ac-joint",
+        "axillary-nerve",
+        "clavicle",
+        "humeral-head",
+        "median-nerve",
+        "proximal-humerus",
+        "radial-nerve",
+        "ulnar-nerve",
+        "upper-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 8
+    },
+    {
+      "finding": "9 disconnected anatomy structures",
+      "evidence": "Disconnected: ac-joint, axillary-nerve, clavicle, humeral-head, median-nerve, proximal-humerus, radial-nerve, ulnar-nerve, upper-extremity-trauma-anatomy-hub",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "ac-joint",
+        "axillary-nerve",
+        "clavicle",
+        "humeral-head",
+        "median-nerve",
+        "proximal-humerus",
+        "radial-nerve",
+        "ulnar-nerve",
+        "upper-extremity-trauma-anatomy-hub"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern ucl-injury|operative_indication: dp-uclinjury-operative-indication vs dp-uclinjury-tommy-john",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 45,
+    "relationshipCount": 39,
+    "orphanCount": 9,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

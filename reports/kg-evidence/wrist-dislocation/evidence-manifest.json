@@ -1,0 +1,24 @@
+{
+  "packetId": "ev-packet-79655119",
+  "topicId": "wrist-dislocation",
+  "createdAt": "2026-07-05T23:06:34.465Z",
+  "packetVersion": "1.0.0",
+  "sourceCount": 7,
+  "evidenceItemCount": 9,
+  "signalCount": 3,
+  "proposalCount": 175,
+  "gapCount": 26,
+  "warningCount": 3,
+  "collectorsRun": [
+    "static-prepare-collector",
+    "curriculum-node-collector",
+    "anki-signal-collector",
+    "orthobullets-metadata-collector",
+    "caseprep-link-collector",
+    "canonical-snapshot-collector",
+    "proposal-history-collector",
+    "review-history-collector",
+    "quality-signal-collector"
+  ],
+  "databaseModified": false
+}

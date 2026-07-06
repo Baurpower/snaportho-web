@@ -1,0 +1,101 @@
+{
+  "topicKey": "ac-joint-separation",
+  "pilotKey": "ac-joint-separation-neighborhood",
+  "primaryEntitySlug": "ac-joint-separation",
+  "displayName": "AC Joint Separation",
+  "generatedAt": "2026-07-05T23:00:02.179Z",
+  "nodes": [
+    {
+      "slug": "ac-joint-separation-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "AC Joint Separation Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ac-joint-separation",
+      "entityType": "condition",
+      "preferredLabel": "AC Joint Separation",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "ac-joint-separation-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "AC Joint Separation Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ac-joint-separation-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "AC Joint Separation MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ac-joint-separation-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "AC Joint Separation Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ac-joint-separation-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "AC Joint Separation Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ac-joint-separation-complication",
+      "entityType": "complication",
+      "preferredLabel": "AC Joint Separation Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "ac-joint-separation"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "ac-joint-separation-reconstruction"
+    ],
+    "classification": [
+      "ac-joint-separation-classification"
+    ],
+    "imaging": [
+      "ac-joint-separation-mri-finding"
+    ],
+    "complication": [
+      "ac-joint-separation-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "ac-joint-separation-exam-maneuver",
+      "ac-joint-separation-rehab-protocol"
+    ]
+  }
+}

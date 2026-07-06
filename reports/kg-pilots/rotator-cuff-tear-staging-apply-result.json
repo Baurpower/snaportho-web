@@ -1,0 +1,351 @@
+{
+  "topicKey": "rotator-cuff-tear",
+  "pilotKey": "rotator-cuff-tear-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 81,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 81
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|condition|rotator-cuff-tear",
+      "reason": "entity exists: rotator-cuff-tear"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|humeral-head",
+      "reason": "entity exists: humeral-head"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-medicine-anatomy-hub",
+      "reason": "entity exists: sports-medicine-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|posterolateral-corner",
+      "reason": "entity exists: posterolateral-corner"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|medial-meniscus",
+      "reason": "entity exists: medial-meniscus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|articular-cartilage",
+      "reason": "entity exists: articular-cartilage"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|infraspinatus",
+      "reason": "entity exists: infraspinatus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|biceps-anchor",
+      "reason": "entity exists: biceps-anchor"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lateral-meniscus",
+      "reason": "entity exists: lateral-meniscus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-humerus",
+      "reason": "entity exists: proximal-humerus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|axillary-nerve",
+      "reason": "entity exists: axillary-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ac-joint",
+      "reason": "entity exists: ac-joint"
+    },
+    {
+      "fingerprint": "create|classification_system|rotator-cuff-tear-classification",
+      "reason": "entity exists: rotator-cuff-tear-classification"
+    },
+    {
+      "fingerprint": "create|procedure|rotator-cuff-tear-reconstruction",
+      "reason": "entity exists: rotator-cuff-tear-reconstruction"
+    },
+    {
+      "fingerprint": "create|complication|rotator-cuff-tear-complication",
+      "reason": "entity exists: rotator-cuff-tear-complication"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-biceps-tendon",
+      "reason": "entity exists: distal-biceps-tendon"
+    },
+    {
+      "fingerprint": "create|exam_maneuver|rotator-cuff-tear-exam-maneuver",
+      "reason": "entity exists: rotator-cuff-tear-exam-maneuver"
+    },
+    {
+      "fingerprint": "create|condition|proximal-biceps-tendon-pathology",
+      "reason": "entity exists: proximal-biceps-tendon-pathology"
+    },
+    {
+      "fingerprint": "create|condition|proximal-humerus-fracture",
+      "reason": "entity exists: proximal-humerus-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|subscapularis",
+      "reason": "entity exists: subscapularis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-collateral-ligament",
+      "reason": "entity exists: radial-collateral-ligament"
+    },
+    {
+      "fingerprint": "create|treatment_principle|rotator-cuff-tear-rehab-protocol",
+      "reason": "entity exists: rotator-cuff-tear-rehab-protocol"
+    },
+    {
+      "fingerprint": "create|imaging_finding|rotator-cuff-tear-mri-finding",
+      "reason": "entity exists: rotator-cuff-tear-mri-finding"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lcl",
+      "reason": "entity exists: lcl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|supraspinatus",
+      "reason": "entity exists: supraspinatus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-elbow-anatomy-hub",
+      "reason": "entity exists: sports-elbow-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|achilles-tendon",
+      "reason": "entity exists: achilles-tendon"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-shoulder-anatomy-hub",
+      "reason": "entity exists: sports-shoulder-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|mcl",
+      "reason": "entity exists: mcl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|labrum",
+      "reason": "entity exists: labrum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ucl",
+      "reason": "entity exists: ucl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|elbow-joint",
+      "reason": "entity exists: elbow-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|glenoid",
+      "reason": "entity exists: glenoid"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|cfl",
+      "reason": "entity exists: cfl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-foot-ankle-anatomy-hub",
+      "reason": "entity exists: sports-foot-ankle-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-condyles",
+      "reason": "entity exists: femoral-condyles"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sports-knee-anatomy-hub",
+      "reason": "entity exists: sports-knee-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|rotator-cuff",
+      "reason": "entity exists: rotator-cuff"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|teres-minor",
+      "reason": "entity exists: teres-minor"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|upper-extremity-trauma-anatomy-hub",
+      "reason": "entity exists: upper-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|atfl",
+      "reason": "entity exists: atfl"
+    },
+    {
+      "fingerprint": "create|condition|anterior-shoulder-instability",
+      "reason": "entity exists: anterior-shoulder-instability"
+    },
+    {
+      "fingerprint": "rel|articular-cartilage|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-shoulder-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-foot-ankle-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|posterolateral-corner|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-condyles|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|has_classification|rotator-cuff-tear-classification",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|has_imaging_finding|rotator-cuff-tear-mri-finding",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|labrum|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-knee-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-elbow-anatomy-hub|part_of|sports-medicine-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|subscapularis|part_of|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|biceps-anchor|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-biceps-tendon|part_of|sports-elbow-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|cfl|part_of|sports-foot-ankle-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|achilles-tendon|part_of|sports-foot-ankle-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|humeral-head|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ucl|part_of|sports-elbow-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|glenoid|articulates_with|humeral-head",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sports-shoulder-anatomy-hub|prerequisite_for|rotator-cuff-tear",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|involves_anatomy|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|involves_anatomy|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|infraspinatus|part_of|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lcl|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|glenoid|part_of|sports-shoulder-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|supraspinatus|part_of|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|has_complication|rotator-cuff-tear-complication",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|radial-collateral-ligament|part_of|sports-elbow-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|involves_anatomy|supraspinatus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|involves_anatomy|humeral-head",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|involves_anatomy|infraspinatus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|rotator-cuff-tear|involves_anatomy|subscapularis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|medial-meniscus|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lateral-meniscus|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|mcl|part_of|sports-knee-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|teres-minor|part_of|rotator-cuff",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|atfl|part_of|sports-foot-ankle-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|shoulder-elbow-rotator-cuff-tear|rotator-cuff-tear",
+      "reason": "curriculum node not found"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

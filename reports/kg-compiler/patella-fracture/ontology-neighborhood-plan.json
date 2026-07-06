@@ -1,0 +1,79 @@
+{
+  "topicKey": "patella-fracture",
+  "pilotKey": "patella-fracture-neighborhood",
+  "primaryEntitySlug": "patella-fracture",
+  "displayName": "Patella Fracture",
+  "generatedAt": "2026-07-05T22:41:16.472Z",
+  "nodes": [
+    {
+      "slug": "extensor-mechanism-disruption",
+      "entityType": "complication",
+      "preferredLabel": "Extensor Mechanism Disruption",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patella-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Patella Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "patella-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Patella ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patella-baja",
+      "entityType": "complication",
+      "preferredLabel": "Patella Baja",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tension-band-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Tension Band Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 2,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "patella-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "patella-orif"
+    ],
+    "classification": [],
+    "imaging": [],
+    "complication": [
+      "extensor-mechanism-disruption",
+      "patella-baja"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [
+      "tension-band-fixation"
+    ],
+    "supporting": []
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "category": "claim_quality",
+  "label": "Claim Quality",
+  "score": 84,
+  "deductions": [
+    {
+      "finding": "All claims remain generated_draft",
+      "evidence": "12/12 claims are unreviewed drafts",
+      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Route claims through human review queue before publication.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient evidence support on claim proposals",
+      "evidence": "0% of claim proposals cite evidence",
+      "reason": "Every claim should cite supporting evidence.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "claimCount": 12,
+    "l1ClaimCount": 9,
+    "atomicityScore": 1,
+    "ambiguityRate": 0.08333333333333333,
+    "evidenceSupportRate": 0
+  },
+  "recommendations": [
+    "Route claims through human review queue before publication.",
+    "Attach evidence_refs from evidence packet to each claim proposal."
+  ]
+}

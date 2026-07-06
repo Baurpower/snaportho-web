@@ -1,0 +1,777 @@
+{
+  "generatedAt": "2026-07-05T22:49:36.350Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-6066860e",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 5,
+  "redirectedToDecisionPoint": 3,
+  "candidates": [
+    {
+      "draftId": "claim-talus-fracture-fact-recognize-talar-neck-fra",
+      "claimText": "Recognize talar neck fracture blood supply risk.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-eb52e0fd"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-explain-hawkins-classifi",
+      "claimText": "Explain Hawkins classification and AVN surveillance.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-eb52e0fd"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-clinical_script-outline-fixation-and-non",
+      "claimText": "Outline fixation and nonoperative pathways by displacement.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-eb52e0fd"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-talar-neck-location",
+      "claimText": "Talar neck location.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-displacement",
+      "claimText": "displacement.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-avn-risk",
+      "claimText": "AVN risk.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-hindfoot-alignment",
+      "claimText": "hindfoot alignment.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-anatomy_pearl-talus",
+      "claimText": "Talus.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-anatomy_pearl-talar-neck",
+      "claimText": "Talar neck.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-anatomy_pearl-talar-body-blood-supply",
+      "claimText": "Talar body blood supply.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-anatomy_pearl-subtalar-and-ankle-joint",
+      "claimText": "Subtalar and ankle joints.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-talar-neck-fractures-are",
+      "claimText": "Talar neck fractures are hindfoot injuries where displacement predicts avascular necrosis risk.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-cognitive_trap-use-hawkins-language",
+      "claimText": "Use Hawkins language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-red_flag-mention-urgent-reduction",
+      "claimText": "Mention urgent reduction/fixation for displaced neck fractures.",
+      "claimType": "red_flag",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-clinical_script-describe-neck-fracture-d",
+      "claimText": "Describe neck fracture displacement.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-clinical_script-assess-hindfoot-alignmen",
+      "claimText": "Assess hindfoot alignment.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-clinical_script-state-reduction-urgency",
+      "claimText": "State reduction urgency.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-clinical_script-plan-avn-surveillance",
+      "claimText": "Plan AVN surveillance.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-anatomy_pearl-talar-neck-vascular-wate",
+      "claimText": "Talar neck vascular watershed.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-anatomy_pearl-body-and-head-perfusion",
+      "claimText": "Body and head perfusion.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-hawkins-i-iv-patterns",
+      "claimText": "Hawkins I–IV patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-imaging_point-canale-view-concept",
+      "claimText": "Canale view concept.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-imaging_point-ct-for-displacement-deta",
+      "claimText": "CT for displacement detail.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-board_trap-displaced-talar-neck-fra",
+      "claimText": "Displaced talar neck fractures carry high AVN risk.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-avascular-necrosis",
+      "claimText": "Avascular necrosis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-subtalar-arthritis",
+      "claimText": "Subtalar arthritis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-talus-fracture-fact-malunion",
+      "claimText": "Malunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "talus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Why is the talus vulnerable to AVN?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ]
+    },
+    {
+      "text": "What changes management with displacement?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ]
+    },
+    {
+      "text": "Displacement, open injury, associated subtalar/ankle involvement",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ]
+    },
+    {
+      "text": "Cast immobilization in select patterns",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ]
+    },
+    {
+      "text": "Talus ORIF",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-talus-fracture-fact-recognize-talar-neck-fra",
+      "draftId": "claim-talus-fracture-fact-recognize-talar-neck-fra",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-eb52e0fd"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-talus-fracture-fact-explain-hawkins-classifi",
+      "draftId": "claim-talus-fracture-fact-explain-hawkins-classifi",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-eb52e0fd"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-talus-fracture-board_trap-displaced-talar-neck-fra",
+      "draftId": "claim-talus-fracture-board_trap-displaced-talar-neck-fra",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-talus-fracture-imaging_point-canale-view-concept",
+      "draftId": "claim-talus-fracture-imaging_point-canale-view-concept",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-faedce7e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-talus-fracture-cognitive_trap-use-hawkins-language",
+      "draftId": "claim-talus-fracture-cognitive_trap-use-hawkins-language",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-talus-fracture-fact-talar-neck-location",
+      "draftId": "claim-talus-fracture-fact-talar-neck-location",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-talus-fracture-fact-displacement",
+      "draftId": "claim-talus-fracture-fact-displacement",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-talus-fracture-fact-avn-risk",
+      "draftId": "claim-talus-fracture-fact-avn-risk",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-faeaa7ea"
+      ],
+      "verified": false
+    }
+  ]
+}

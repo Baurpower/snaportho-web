@@ -2,7 +2,8 @@ import { createHash } from 'node:crypto';
 import { NextResponse } from 'next/server';
 
 import { authenticateDeviceLinkedRequest } from '@/lib/brobot/device-link';
-import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
+import { getBroBotAccessGate } from '@/lib/brobot/brobot-entitlement-access';
+import { type Subject } from '@/lib/brobot/entitlements';
 import { getAnswerModelForRoute } from '@/lib/brobot/model-config';
 import { getOpenAI } from '@/lib/brobot/openai-client';
 import { buildOrthobulletsHintMessages } from '@/lib/brobot/orthobullets/prompt-builder';
@@ -84,18 +85,19 @@ export async function POST(request: Request) {
   }
 
   const subject: Subject = { type: 'user', id: auth.userId };
-  const entitlement = await getRemainingAIUses(subject);
+  const gate = await getBroBotAccessGate(subject);
+  const entitlement = gate.normalized.data;
 
-  if (entitlement.source === 'disabled') {
+  if (gate.source === 'disabled') {
     return disabledResponse();
   }
 
-  if (entitlement.isLimitReached) {
+  if (gate.isLimitReached) {
     await recordUsageEvent({
       subject,
       outcome: 'limit_hit',
     });
-    return limitReachedResponse(entitlement.aiAccess.dailyCap);
+    return limitReachedResponse(gate.dailyCap);
   }
 
   const requestId = crypto.randomUUID();

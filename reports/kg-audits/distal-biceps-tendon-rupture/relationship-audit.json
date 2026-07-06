@@ -1,0 +1,48 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 73,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from distal-biceps-tendon-rupture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "distal-biceps-tendon-rupture"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Low relationship density",
+      "evidence": "40 relationships / 44 entities = 0.91",
+      "reason": "Sparse graphs limit educational traversal and reasoning support.",
+      "severity": "medium",
+      "category": "relationship_quality",
+      "suggestedFix": "Add metadata-rich clinical and anatomy edges to improve connectivity.",
+      "impact": 4
+    },
+    {
+      "finding": "4 high-risk relationships lack approved review status",
+      "evidence": "Predicates: indicates_treatment, at_risk_structure, treated_by",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 40,
+    "relationshipDensity": 0.9090909090909091,
+    "missingClinicalEdgeCount": 1,
+    "highRiskUnreviewedCount": 4,
+    "predicateCorrectness": 0.975
+  },
+  "recommendations": [
+    "Add injured_in relationship via relationship-builder agent.",
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

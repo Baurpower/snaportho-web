@@ -1,0 +1,107 @@
+{
+  "topicKey": "tibial-shaft-fracture",
+  "pilotKey": "tibial-shaft-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 32,
+  "applied": {
+    "entities": 0,
+    "relationships": 11,
+    "bridges": 1,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 32
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|condition|tibial-shaft-fracture",
+      "reason": "entity exists: tibial-shaft-fracture"
+    },
+    {
+      "fingerprint": "create|procedure|tibial-im-nail",
+      "reason": "entity exists: tibial-im-nail"
+    },
+    {
+      "fingerprint": "create|fixation_method|im-nail-fixation",
+      "reason": "entity exists: im-nail-fixation"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fibula",
+      "reason": "entity exists: fibula"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibial-shaft",
+      "reason": "entity exists: tibial-shaft"
+    },
+    {
+      "fingerprint": "create|complication|tibial-malunion",
+      "reason": "entity exists: tibial-malunion"
+    },
+    {
+      "fingerprint": "create|complication|tibial-nonunion",
+      "reason": "entity exists: tibial-nonunion"
+    },
+    {
+      "fingerprint": "create|complication|tibial-infection",
+      "reason": "entity exists: tibial-infection"
+    },
+    {
+      "fingerprint": "create|imaging_finding|segmental-tibial-fracture",
+      "reason": "entity exists: segmental-tibial-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|anterior-compartment",
+      "reason": "entity exists: anterior-compartment"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibia-leg-anatomy-hub",
+      "reason": "entity exists: tibia-leg-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|tibial-blood-supply",
+      "reason": "entity exists: tibial-blood-supply"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|leg-compartment-complex",
+      "reason": "entity exists: leg-compartment-complex"
+    },
+    {
+      "fingerprint": "rel|tibial-im-nail|involves_anatomy|tibial-shaft",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fibula|articulates_with|tibial-shaft",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tibial-shaft|part_of|tibia-leg-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fibula|part_of|tibia-leg-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|anterior-compartment|part_of|leg-compartment-complex",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tibial-shaft-fracture|involves_anatomy|leg-compartment-complex",
+      "reason": "relationship exists"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

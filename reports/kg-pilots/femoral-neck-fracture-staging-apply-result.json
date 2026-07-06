@@ -1,0 +1,132 @@
+{
+  "topicKey": "femoral-neck-fracture",
+  "pilotKey": "femoral-neck-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 31,
+  "cumulativeApply": {
+    "entities": 8,
+    "relationships": 11,
+    "bridges": 1,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "applyPasses": 2,
+    "note": "Pass 1 created shared anatomy + initial edges; pass 2 resolved cross-slug relationships after global slug map warm-up"
+  },
+  "applied": {
+    "entities": 0,
+    "relationships": 7,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 31
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|complication|femoral-neck-nonunion",
+      "reason": "entity exists: femoral-neck-nonunion"
+    },
+    {
+      "fingerprint": "create|procedure|femoral-neck-orif",
+      "reason": "entity exists: femoral-neck-orif"
+    },
+    {
+      "fingerprint": "create|procedure|hip-hemiarthroplasty",
+      "reason": "entity exists: hip-hemiarthroplasty"
+    },
+    {
+      "fingerprint": "create|classification_system|garden-classification",
+      "reason": "entity exists: garden-classification"
+    },
+    {
+      "fingerprint": "create|imaging_finding|displaced-femoral-neck-fracture",
+      "reason": "entity exists: displaced-femoral-neck-fracture"
+    },
+    {
+      "fingerprint": "create|complication|avascular-necrosis",
+      "reason": "entity exists: avascular-necrosis"
+    },
+    {
+      "fingerprint": "create|condition|femoral-neck-fracture",
+      "reason": "entity exists: femoral-neck-fracture"
+    },
+    {
+      "fingerprint": "create|fixation_method|cannulated-screw-fixation",
+      "reason": "entity exists: cannulated-screw-fixation"
+    },
+    {
+      "fingerprint": "rel|medial-femoral-circumflex-artery|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lesser-trochanter|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-head|articulates_with|hip-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|greater-trochanter|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|calcar|part_of|femoral-neck",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-neck|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|intertrochanteric-region|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-neck-fracture|has_complication|avascular-necrosis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-neck-fracture|has_complication|femoral-neck-nonunion",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-neck-fracture|has_imaging_finding|displaced-femoral-neck-fracture",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-head|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|hip-joint|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sciatic-nerve|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-neck-fracture|has_classification|garden-classification",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|trauma-femoral-neck-fractures|femoral-neck-fracture",
+      "reason": "bridge exists"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

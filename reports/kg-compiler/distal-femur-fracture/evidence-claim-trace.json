@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-07-05T22:39:09.422Z",
+  "evidencePacketId": "ev-packet-bf6b1472",
+  "traces": [
+    {
+      "draftId": "claim-distal-femur-fracture-fact-articular-involvement",
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-articular-involvement",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-comminution",
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-comminution",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-board_trap-articular-step-off-in-di",
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-board_trap-articular-step-off-in-di",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-imaging_point-ap-lateral-knee-radiogra",
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-imaging_point-ap-lateral-knee-radiogra",
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-cognitive_trap-mention-lateral-plating-",
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-cognitive_trap-mention-lateral-plating-",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-alignment",
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-alignment",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-implant-category",
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-implant-category",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-femur-fracture-fact-distal-femur-fractures-c",
+      "proposalFingerprint": "claim|claim-distal-femur-fracture-fact-distal-femur-fractures-c",
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is a locking plate preferred?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-19559996"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What makes the fracture intra-articular?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Articular displacement, bone quality, patient demand"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Locked plating"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-1958e502"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Retrograde nail in selected patterns"
+    }
+  ]
+}

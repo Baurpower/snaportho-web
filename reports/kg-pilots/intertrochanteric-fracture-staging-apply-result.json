@@ -1,0 +1,164 @@
+{
+  "topicKey": "intertrochanteric-fracture",
+  "pilotKey": "intertrochanteric-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 39,
+  "cumulativeApply": {
+    "entities": 5,
+    "relationships": 10,
+    "bridges": 1,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "applyPasses": 2,
+    "note": "Pass 1 created IT-specific entities; pass 2 linked shared anatomy slugs created by femoral-neck pilot"
+  },
+  "applied": {
+    "entities": 0,
+    "relationships": 7,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 39
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|implant|cephalomedullary-nail",
+      "reason": "entity exists: cephalomedullary-nail"
+    },
+    {
+      "fingerprint": "create|implant|sliding-hip-screw",
+      "reason": "entity exists: sliding-hip-screw"
+    },
+    {
+      "fingerprint": "create|procedure|cephalomedullary-nailing",
+      "reason": "entity exists: cephalomedullary-nailing"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|intertrochanteric-region",
+      "reason": "entity exists: intertrochanteric-region"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|calcar",
+      "reason": "entity exists: calcar"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery",
+      "reason": "entity exists: medial-femoral-circumflex-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-femur-anatomy-hub",
+      "reason": "entity exists: proximal-femur-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lesser-trochanter",
+      "reason": "entity exists: lesser-trochanter"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sciatic-nerve",
+      "reason": "entity exists: sciatic-nerve"
+    },
+    {
+      "fingerprint": "create|imaging_finding|unstable-intertrochanteric-pattern",
+      "reason": "entity exists: unstable-intertrochanteric-pattern"
+    },
+    {
+      "fingerprint": "create|complication|intertrochanteric-implant-failure",
+      "reason": "entity exists: intertrochanteric-implant-failure"
+    },
+    {
+      "fingerprint": "create|condition|intertrochanteric-fracture",
+      "reason": "entity exists: intertrochanteric-fracture"
+    },
+    {
+      "fingerprint": "create|imaging_finding|reverse-obliquity-it-fracture",
+      "reason": "entity exists: reverse-obliquity-it-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|greater-trochanter",
+      "reason": "entity exists: greater-trochanter"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hip-joint",
+      "reason": "entity exists: hip-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-head",
+      "reason": "entity exists: femoral-head"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-neck",
+      "reason": "entity exists: femoral-neck"
+    },
+    {
+      "fingerprint": "rel|sciatic-nerve|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|intertrochanteric-fracture|has_complication|intertrochanteric-implant-failure",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|medial-femoral-circumflex-artery|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lesser-trochanter|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-head|articulates_with|hip-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|greater-trochanter|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|intertrochanteric-fracture|has_imaging_finding|unstable-intertrochanteric-pattern",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|calcar|part_of|femoral-neck",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|intertrochanteric-fracture|has_imaging_finding|reverse-obliquity-it-fracture",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-neck|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|intertrochanteric-region|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-head|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|hip-joint|part_of|proximal-femur-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|trauma-intertrochanteric-fractures|intertrochanteric-fracture",
+      "reason": "bridge exists"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

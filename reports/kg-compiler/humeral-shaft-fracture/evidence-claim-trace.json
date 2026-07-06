@@ -1,0 +1,136 @@
+{
+  "generatedAt": "2026-07-05T21:57:25.244Z",
+  "evidencePacketId": "ev-packet-a6c65ede",
+  "traces": [
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-open-versus-closed",
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-open-versus-closed",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-spiral-distal-third-patt",
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-spiral-distal-third-patt",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-board_trap-holstein-lewis-fractures",
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-board_trap-holstein-lewis-fractures",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-imaging_point-ap-and-lateral-humerus-r",
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-imaging_point-ap-and-lateral-humerus-r",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-cognitive_trap-repeat-wrist-extension-a",
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-cognitive_trap-repeat-wrist-extension-a",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-radial-nerve-palsy",
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-radial-nerve-palsy",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-nonunion",
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-nonunion",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-humeral-shaft-fracture-fact-malunion",
+      "proposalFingerprint": "claim|claim-humeral-shaft-fracture-fact-malunion",
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Alignment, nerve status, open injury, patient factors"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Functional bracing"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "IM nail"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0d592e"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Plate osteosynthesis"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What fracture pattern risks radial nerve injury?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ec0e6fba"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is IM nailing preferred?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ef74c42d"
+      ],
+      "reason": "MANAGEMENT_LOGIC: if/then or treatment pathway — route to Decision Point Builder",
+      "suggestDecisionPoint": true,
+      "textPreview": "Compare nonoperative versus operative stabilization pathways."
+    }
+  ]
+}

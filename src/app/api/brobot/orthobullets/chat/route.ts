@@ -2,9 +2,11 @@ import { createHash } from 'node:crypto';
 import { NextResponse } from 'next/server';
 
 import { authenticateDeviceLinkedRequest } from '@/lib/brobot/device-link';
-import { getRemainingAIUses, type Subject } from '@/lib/brobot/entitlements';
+import { getBroBotAccessGate } from '@/lib/brobot/brobot-entitlement-access';
+import { type Subject } from '@/lib/brobot/entitlements';
 import { getAnswerModelForRoute } from '@/lib/brobot/model-config';
 import { getOpenAI } from '@/lib/brobot/openai-client';
+import { buildCurriculumChatMessages } from '@/lib/brobot/orthobullets/curriculum-prompt-builder';
 import { buildOrthobulletsChatMessages } from '@/lib/brobot/orthobullets/prompt-builder';
 import { lookupOrthobulletsKgContext } from '@/lib/brobot/orthobullets/kg-lookup';
 import { resolveOrthobulletsContext } from '@/lib/brobot/orthobullets/context-resolver';
@@ -71,18 +73,19 @@ export async function POST(request: Request) {
   }
 
   const subject: Subject = { type: 'user', id: auth.userId };
-  const entitlement = await getRemainingAIUses(subject);
+  const gate = await getBroBotAccessGate(subject);
+  const entitlement = gate.normalized.data;
 
-  if (entitlement.source === 'disabled') {
+  if (gate.source === 'disabled') {
     return disabledResponse();
   }
 
-  if (entitlement.isLimitReached) {
+  if (gate.isLimitReached) {
     await recordUsageEvent({
       subject,
       outcome: 'limit_hit',
     });
-    return limitReachedResponse(entitlement.aiAccess.dailyCap);
+    return limitReachedResponse(gate.dailyCap);
   }
 
   const requestId = crypto.randomUUID();
@@ -103,7 +106,11 @@ export async function POST(request: Request) {
     provider: resolvedContext.pageContext.provider,
     questionId: resolvedContext.pageContext.questionId ?? null,
     stemHash: hashText(resolvedContext.pageContext.stem),
-    priorExplanationHash: hashText(parsed.data.explanation.bottomLine + parsed.data.explanation.whyCorrect),
+    priorExplanationHash: hashText(
+      parsed.data.curriculumStudy
+        ? parsed.data.curriculumStudy.oneSentenceTakeaway + parsed.data.curriculumStudy.inThirtySeconds.join(' ')
+        : `${parsed.data.explanation?.bottomLine ?? ''}${parsed.data.explanation?.whyCorrect ?? ''}`
+    ),
     userMessageHash: hashText(parsed.data.userMessage),
     historyTurnCount: parsed.data.history.length,
     kgMatched: Boolean(kgLookup?.matchedQuestionId),
@@ -119,12 +126,20 @@ export async function POST(request: Request) {
       }),
       temperature: 0.25,
       response_format: { type: 'json_object' },
-      messages: buildOrthobulletsChatMessages({
-        context: resolvedContext,
-        explanation: parsed.data.explanation,
-        history: parsed.data.history,
-        userMessage: parsed.data.userMessage,
-      }),
+      messages: parsed.data.curriculumStudy
+        ? buildCurriculumChatMessages({
+            context: resolvedContext,
+            study: parsed.data.curriculumStudy,
+            emphasis: parsed.data.emphasis ?? parsed.data.curriculumStudy.emphasis,
+            history: parsed.data.history,
+            userMessage: parsed.data.userMessage,
+          })
+        : buildOrthobulletsChatMessages({
+            context: resolvedContext,
+            explanation: parsed.data.explanation!,
+            history: parsed.data.history,
+            userMessage: parsed.data.userMessage,
+          }),
     });
 
     const latencyMs = Date.now() - startedAt;

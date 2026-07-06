@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-07-05T21:36:50.488Z",
+  "evidencePacketId": "ev-packet-3fe2e8d1",
+  "traces": [
+    {
+      "draftId": "claim-intertrochanteric-fracture-board_trap-recognize-stable-versus-",
+      "proposalFingerprint": "claim|claim-intertrochanteric-fracture-board_trap-recognize-stable-versus-",
+      "evidenceItemIds": [
+        "ev-static-prepare-48edc282"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-fact-identify-implant-failure",
+      "proposalFingerprint": "claim|claim-intertrochanteric-fracture-fact-identify-implant-failure",
+      "evidenceItemIds": [
+        "ev-static-prepare-48edc282"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-board_trap-stable-versus-unstable-p",
+      "proposalFingerprint": "claim|claim-intertrochanteric-fracture-board_trap-stable-versus-unstable-p",
+      "evidenceItemIds": [
+        "ev-static-prepare-dba16721"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-imaging_point-ap-and-lateral-hip-radio",
+      "proposalFingerprint": "claim|claim-intertrochanteric-fracture-imaging_point-ap-and-lateral-hip-radio",
+      "evidenceItemIds": [
+        "ev-static-prepare-dba16721"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-cognitive_trap-use-tip-apex-distance-la",
+      "proposalFingerprint": "claim|claim-intertrochanteric-fracture-cognitive_trap-use-tip-apex-distance-la",
+      "evidenceItemIds": [
+        "ev-static-prepare-dba04cb5"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-fact-extracapsular-location",
+      "proposalFingerprint": "claim|claim-intertrochanteric-fracture-fact-extracapsular-location",
+      "evidenceItemIds": [
+        "ev-static-prepare-dba04cb5"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-fact-fracture-line-orientatio",
+      "proposalFingerprint": "claim|claim-intertrochanteric-fracture-fact-fracture-line-orientatio",
+      "evidenceItemIds": [
+        "ev-static-prepare-dba04cb5"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-intertrochanteric-fracture-fact-medial-comminution",
+      "proposalFingerprint": "claim|claim-intertrochanteric-fracture-fact-medial-comminution",
+      "evidenceItemIds": [
+        "ev-static-prepare-dba04cb5"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-48edc282"
+      ],
+      "reason": "MANAGEMENT_LOGIC: if/then or treatment pathway — route to Decision Point Builder",
+      "suggestDecisionPoint": true,
+      "textPreview": "Select sliding hip screw versus cephalomedullary nail fixation concepts."
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-dba04cb5"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What makes an intertrochanteric fracture unstable?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-dba04cb5"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is a cephalomedullary nail preferred?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-dba16721"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Pattern stability, bone quality, patient mobility goals"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-dba16721"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Sliding hip screw"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-dba16721"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Cephalomedullary nail"
+    }
+  ]
+}

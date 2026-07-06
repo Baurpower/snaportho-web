@@ -1,0 +1,605 @@
+{
+  "generatedAt": "2026-07-05T21:59:22.725Z",
+  "cluster": "upper-extremity-trauma",
+  "topics": {
+    "clavicle-fracture": {
+      "displayName": "Clavicle Fracture",
+      "pilotKey": "clavicle-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T21:56:47.964Z",
+        "pilotKey": "clavicle-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 71,
+          "approvedProposalCount": 61,
+          "entityProposalCount": 27,
+          "relationshipProposalCount": 36,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 61,
+          "humanReviewCount": 9,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 182,
+          "educationalClaimCount": 12,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8591549295774648,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T21:56:48.164Z",
+        "pilotKey": "clavicle-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "10 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 71,
+          "approvedProposals": 61,
+          "pendingReview": 10,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 61,
+          "humanReviewQueue": 9,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "clavicle-fracture",
+        "pilotKey": "clavicle-fracture-neighborhood",
+        "generatedAt": "2026-07-05T21:56:16.893Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "18 proposals still awaiting human review",
+          "10 items require attending review",
+          "Insufficient relationship metadata on essential edges",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "16 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Clavicle Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[high] Clavicle Fracture neighborhood has 0/1 classification_system entities.",
+          "[critical] Clavicle Fracture missing outbound injured_in (0/1).",
+          "[high] Clavicle Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Clavicle Fracture missing outbound at_risk_structure (0/1).",
+          "[critical] Clavicle Fracture missing outbound has_classification (0/1).",
+          "[high] Clavicle Fracture missing outbound has_grade (0/1).",
+          "[high] Clavicle Fracture missing outbound treated_by (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer",
+          "Run curate step to normalize metadata"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 18,
+          "attendingReviewItems": 10,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 26,
+          "approvedProposals": 16
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-e491f52a"
+    },
+    "proximal-humerus-fracture": {
+      "displayName": "Proximal Humerus Fracture",
+      "pilotKey": "proximal-humerus-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T21:57:21.963Z",
+        "pilotKey": "proximal-humerus-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 75,
+          "approvedProposalCount": 64,
+          "entityProposalCount": 28,
+          "relationshipProposalCount": 38,
+          "claimProposalCount": 6,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 64,
+          "humanReviewCount": 10,
+          "canonicalEntityCount": 7,
+          "canonicalRelationshipCount": 182,
+          "educationalClaimCount": 12,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8533333333333334,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T21:57:22.162Z",
+        "pilotKey": "proximal-humerus-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "11 proposals still awaiting human review",
+          "6 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 75,
+          "approvedProposals": 64,
+          "pendingReview": 11,
+          "claimDrafts": 6,
+          "decisionPointDrafts": 2,
+          "autoApproved": 64,
+          "humanReviewQueue": 10,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "proximal-humerus-fracture",
+        "pilotKey": "proximal-humerus-fracture-neighborhood",
+        "generatedAt": "2026-07-05T21:56:51.262Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "19 proposals still awaiting human review",
+          "13 items require attending review",
+          "Insufficient relationship metadata on essential edges",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "18 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Proximal Humerus Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] Proximal Humerus Fracture missing outbound injured_in (0/1).",
+          "[high] Proximal Humerus Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Proximal Humerus Fracture missing outbound at_risk_structure (0/1).",
+          "[high] Proximal Humerus Fracture missing outbound has_grade (0/1).",
+          "[high] Proximal Humerus Fracture missing outbound treated_by (0/1).",
+          "[high] Proximal Humerus Fracture missing inbound prerequisite_for (0/1).",
+          "[high] Proximal Humerus Fracture has 0/3 L1 claims.",
+          "Route ATTENDING_REVIEW queue to attending reviewer",
+          "Run curate step to normalize metadata"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 26,
+          "humanReviewItems": 19,
+          "attendingReviewItems": 13,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 7,
+          "relationships": 4,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 30,
+          "approvedProposals": 19
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-22f83ba1"
+    },
+    "humeral-shaft-fracture": {
+      "displayName": "Humeral Shaft Fracture",
+      "pilotKey": "humeral-shaft-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T21:57:56.057Z",
+        "pilotKey": "humeral-shaft-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 73,
+          "approvedProposalCount": 59,
+          "entityProposalCount": 27,
+          "relationshipProposalCount": 38,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 59,
+          "humanReviewCount": 13,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 182,
+          "educationalClaimCount": 12,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8082191780821918,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T21:57:56.255Z",
+        "pilotKey": "humeral-shaft-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "14 proposals still awaiting human review",
+          "9 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 73,
+          "approvedProposals": 59,
+          "pendingReview": 14,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 59,
+          "humanReviewQueue": 13,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "humeral-shaft-fracture",
+        "pilotKey": "humeral-shaft-fracture-neighborhood",
+        "generatedAt": "2026-07-05T21:57:25.251Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "22 proposals still awaiting human review",
+          "14 items require attending review",
+          "Insufficient relationship metadata on essential edges",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "19 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Humeral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[high] Humeral Shaft Fracture neighborhood has 0/1 classification_system entities.",
+          "[critical] Humeral Shaft Fracture missing outbound injured_in (0/1).",
+          "[high] Humeral Shaft Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Humeral Shaft Fracture missing outbound at_risk_structure (0/1).",
+          "[critical] Humeral Shaft Fracture missing outbound has_classification (0/1).",
+          "[high] Humeral Shaft Fracture missing outbound has_grade (0/1).",
+          "[high] Humeral Shaft Fracture missing outbound treated_by (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer",
+          "Run curate step to normalize metadata"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 28,
+          "humanReviewItems": 22,
+          "attendingReviewItems": 14,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 28,
+          "approvedProposals": 14
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-a6c65ede"
+    },
+    "distal-humerus-fracture": {
+      "displayName": "Distal Humerus Fracture",
+      "pilotKey": "distal-humerus-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T21:58:30.201Z",
+        "pilotKey": "distal-humerus-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 76,
+          "approvedProposalCount": 64,
+          "entityProposalCount": 27,
+          "relationshipProposalCount": 41,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 64,
+          "humanReviewCount": 11,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 182,
+          "educationalClaimCount": 12,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8421052631578947,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T21:58:30.387Z",
+        "pilotKey": "distal-humerus-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "12 proposals still awaiting human review",
+          "8 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 76,
+          "approvedProposals": 64,
+          "pendingReview": 12,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 64,
+          "humanReviewQueue": 11,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "distal-humerus-fracture",
+        "pilotKey": "distal-humerus-fracture-neighborhood",
+        "generatedAt": "2026-07-05T21:57:59.378Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "20 proposals still awaiting human review",
+          "12 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "19 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Distal Humerus ORIF neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Distal Humerus ORIF missing outbound involves_anatomy (0/1).",
+          "[high] Distal Humerus ORIF missing outbound at_risk_structure (0/1).",
+          "[critical] Total Elbow Arthroplasty for Trauma neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Total Elbow Arthroplasty for Trauma missing outbound involves_anatomy (0/1).",
+          "[high] Total Elbow Arthroplasty for Trauma missing outbound at_risk_structure (0/1).",
+          "[critical] Distal Humerus Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[high] Distal Humerus Fracture neighborhood has 0/1 classification_system entities.",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 28,
+          "humanReviewItems": 20,
+          "attendingReviewItems": 12,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 31,
+          "approvedProposals": 19
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-f09b905a"
+    },
+    "supracondylar-humerus-fracture": {
+      "displayName": "Supracondylar Humerus Fracture",
+      "pilotKey": "supracondylar-humerus-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T21:59:04.690Z",
+        "pilotKey": "supracondylar-humerus-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 78,
+          "approvedProposalCount": 64,
+          "entityProposalCount": 28,
+          "relationshipProposalCount": 41,
+          "claimProposalCount": 6,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 64,
+          "humanReviewCount": 13,
+          "canonicalEntityCount": 27,
+          "canonicalRelationshipCount": 182,
+          "educationalClaimCount": 12,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8205128205128205,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T21:59:04.882Z",
+        "pilotKey": "supracondylar-humerus-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "14 proposals still awaiting human review",
+          "9 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 78,
+          "approvedProposals": 64,
+          "pendingReview": 14,
+          "claimDrafts": 6,
+          "decisionPointDrafts": 2,
+          "autoApproved": 64,
+          "humanReviewQueue": 13,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "supracondylar-humerus-fracture",
+        "pilotKey": "supracondylar-humerus-fracture-neighborhood",
+        "generatedAt": "2026-07-05T21:58:33.989Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "22 proposals still awaiting human review",
+          "14 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "10 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Gartland Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Upper Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+          "[high] Supracondylar Humerus Fracture missing outbound at_risk_structure (0/1).",
+          "[high] Supracondylar Humerus Fracture missing outbound has_grade (0/1).",
+          "[high] Supracondylar Humerus Fracture missing outbound treated_by (0/1).",
+          "[high] Supracondylar Humerus Fracture has 0/3 L1 claims.",
+          "[critical] Supracondylar Humerus Fracture has 0/1 decision points.",
+          "[critical] Supracondylar Humerus Fracture missing decision point pattern: operative_indication.",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 18,
+          "humanReviewItems": 22,
+          "attendingReviewItems": 14,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 27,
+          "relationships": 33,
+          "claims": 4,
+          "decisionPoints": 0,
+          "proposals": 78,
+          "approvedProposals": 64
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-2a9385d8"
+    }
+  },
+  "sharedAnatomySlugs": [
+    "upper-extremity-trauma-anatomy-hub",
+    "clavicle",
+    "ac-joint",
+    "sternoclavicular-joint",
+    "proximal-humerus",
+    "humeral-head",
+    "surgical-neck",
+    "axillary-nerve",
+    "humeral-shaft",
+    "radial-nerve",
+    "brachial-artery",
+    "distal-humerus",
+    "medial-column",
+    "lateral-column",
+    "olecranon-fossa",
+    "capitellum",
+    "trochlea",
+    "anterior-interosseous-nerve",
+    "median-nerve",
+    "ulnar-nerve",
+    "elbow-joint"
+  ],
+  "publicationBlocked": true,
+  "clinicalVerification": false,
+  "stagingOnly": true,
+  "aggregate": {
+    "topicCount": 5,
+    "factoryMaturityLevels": [
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "allDbBackedCompileOk": true,
+    "allCompilerAgentsOk": true
+  }
+}

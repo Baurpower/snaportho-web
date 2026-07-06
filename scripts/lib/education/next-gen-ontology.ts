@@ -35,13 +35,17 @@ export const CANONICAL_ENTITY_TYPES = [
   "procedure",
   "anatomy_structure",
   "classification_system",
+  "classification_grade",
   "complication",
   "diagnostic_test",
   "imaging_finding",
   "implant",
+  "fixation_method",
   "treatment_principle",
   "biomechanics_concept",
   "exam_maneuver",
+  "surgical_approach",
+  "surgical_positioning",
 ] as const satisfies readonly CanonicalEntityType[];
 
 export const CANONICAL_ENTITY_STATUSES = [

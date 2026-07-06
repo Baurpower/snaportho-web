@@ -1,0 +1,223 @@
+{
+  "topicKey": "ankle-fracture",
+  "pilotKey": "ankle-fracture-neighborhood",
+  "primaryEntitySlug": "ankle-fracture",
+  "displayName": "Ankle Fracture",
+  "generatedAt": "2026-07-05T21:09:23.340Z",
+  "nodes": [
+    {
+      "slug": "ankle-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Ankle ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ankle-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Ankle Malunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "deltoid-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deltoid Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "medial-clear-space-widening",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Medial Clear Space Widening",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "weber-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Weber Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "post-traumatic-ankle-arthritis",
+      "entityType": "complication",
+      "preferredLabel": "Post-traumatic Ankle Arthritis",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ankle-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Ankle Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 12
+    },
+    {
+      "slug": "ankle-ring",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ankle Ring",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 5,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "medial-malleolus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Malleolus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "superficial-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Superficial Peroneal Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "mortise-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Mortise Stability",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "weber-b",
+      "entityType": "classification_grade",
+      "preferredLabel": "Weber B",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "weber-c",
+      "entityType": "classification_grade",
+      "preferredLabel": "Weber C",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "weber-a",
+      "entityType": "classification_grade",
+      "preferredLabel": "Weber A",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ankle-orif-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "ORIF",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "syndesmotic-malreduction",
+      "entityType": "complication",
+      "preferredLabel": "Syndesmotic Malreduction",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lateral-malleolus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Malleolus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "syndesmosis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Syndesmosis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    }
+  ],
+  "edgeCount": 21,
+  "claimCount": 1,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "ankle-fracture"
+    ],
+    "neighboring_anatomy": [
+      "deltoid-ligament",
+      "ankle-ring",
+      "medial-malleolus",
+      "superficial-peroneal-nerve",
+      "lateral-malleolus",
+      "talus",
+      "syndesmosis"
+    ],
+    "procedure": [
+      "ankle-orif"
+    ],
+    "classification": [
+      "weber-classification",
+      "weber-b",
+      "weber-c",
+      "weber-a"
+    ],
+    "imaging": [
+      "medial-clear-space-widening"
+    ],
+    "complication": [
+      "ankle-malunion",
+      "post-traumatic-ankle-arthritis",
+      "syndesmotic-malreduction"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "mortise-stability"
+    ],
+    "fixation": [
+      "ankle-orif-fixation"
+    ],
+    "supporting": []
+  }
+}

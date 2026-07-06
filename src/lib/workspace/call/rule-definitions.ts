@@ -51,6 +51,8 @@ export type ProgramCallSlotDefinition = {
 
 export type RuleConfig = {
   requiredCallTypes?: CallTypeOption[];
+  /** Set when an admin explicitly requires Backup via rules UI. */
+  backupRequiredExplicit?: boolean;
 
   minDays?: number;
   excludeAdjacentWeekendPairing?: boolean;
@@ -670,6 +672,9 @@ export function sanitizeRuleConfig(
       source.requiredCallTypes,
       [...(definition.defaultConfig.requiredCallTypes ?? ["Primary"])]
     );
+    if (typeof source.backupRequiredExplicit === "boolean") {
+      next.backupRequiredExplicit = source.backupRequiredExplicit;
+    }
   }
 
   if (type === "min_days_between_assignments") {
@@ -779,7 +784,17 @@ export function sanitizeRuleConfig(
     next.slotCountsTowardWorkload = typeof source.slotCountsTowardWorkload === "boolean" ? source.slotCountsTowardWorkload : true;
     if (typeof source.slotMaxPerMonth === "number") next.slotMaxPerMonth = source.slotMaxPerMonth;
     next.slotSortOrder = typeof source.slotSortOrder === "number" ? source.slotSortOrder : 0;
-    next.slotRequiredWhenVisible = typeof source.slotRequiredWhenVisible === "boolean" ? source.slotRequiredWhenVisible : true;
+    const slotCallType =
+      typeof source.slotCallType === "string" ? source.slotCallType : "Primary";
+    next.slotRequiredWhenVisible =
+      typeof source.slotRequiredWhenVisible === "boolean"
+        ? source.slotRequiredWhenVisible
+        : slotCallType === "Backup"
+        ? false
+        : true;
+    if (typeof source.backupRequiredExplicit === "boolean") {
+      next.backupRequiredExplicit = source.backupRequiredExplicit;
+    }
   }
 
   if (type === "monthly_load_target_by_pgy") {
@@ -1274,7 +1289,12 @@ export function ruleToSlotDefinition(rule: {
     countsTowardWorkload: c.slotCountsTowardWorkload ?? true,
     maxPerMonth: c.slotMaxPerMonth ?? null,
     sortOrder: c.slotSortOrder ?? 0,
-    requiredWhenVisible: typeof c.slotRequiredWhenVisible === "boolean" ? c.slotRequiredWhenVisible : true,
+    requiredWhenVisible:
+      typeof c.slotRequiredWhenVisible === "boolean"
+        ? c.slotRequiredWhenVisible
+        : callType === "Backup"
+        ? false
+        : true,
   };
 }
 
@@ -1309,6 +1329,6 @@ export const DEFAULT_SLOT_DEFINITIONS: ProgramCallSlotDefinition[] = [
     requiredMode: "optional",
     countsTowardWorkload: true,
     sortOrder: 1,
-    requiredWhenVisible: true,
+    requiredWhenVisible: false,
   },
 ];

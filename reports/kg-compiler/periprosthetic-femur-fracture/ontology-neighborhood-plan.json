@@ -1,0 +1,58 @@
+{
+  "topicKey": "periprosthetic-femur-fracture",
+  "pilotKey": "periprosthetic-femur-fracture-neighborhood",
+  "primaryEntitySlug": "periprosthetic-femur-fracture",
+  "displayName": "Periprosthetic Femur Fracture",
+  "generatedAt": "2026-07-05T22:49:07.616Z",
+  "nodes": [
+    {
+      "slug": "periprosthetic-femur-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Periprosthetic Femur Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "stem-loosening",
+      "entityType": "complication",
+      "preferredLabel": "Femoral Stem Loosening",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "vancouver-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Vancouver Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "periprosthetic-femur-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [
+      "vancouver-classification"
+    ],
+    "imaging": [],
+    "complication": [
+      "stem-loosening"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

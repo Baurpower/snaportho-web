@@ -1,0 +1,96 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 61,
+  "deductions": [
+    {
+      "finding": "25 orphan entities with no relationships",
+      "evidence": "Slugs: revision-arthroplasty, periprosthetic-joint-infection, hip-prosthetic-joint-infection, knee-prosthetic-joint-infection, knee-osteoarthritis, bearing-surface-selection, adverse-local-tissue-reaction, unicompartmental-knee-arthroplasty, polyethylene-wear-osteolysis, total-knee-arthroplasty, hip-abductor-mechanics, kellgren-lawrence-hip, calcar, femoral-neck, greater-trochanter, hip-joint, intertrochanteric-region, lesser-trochanter, medial-femoral-circumflex-artery, proximal-femur-anatomy-hub, sciatic-nerve, compartment-syndrome, distal-femur-fracture, femoral-shaft-fracture, tibial-shaft-fracture",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "revision-arthroplasty",
+        "periprosthetic-joint-infection",
+        "hip-prosthetic-joint-infection",
+        "knee-prosthetic-joint-infection",
+        "knee-osteoarthritis",
+        "bearing-surface-selection",
+        "adverse-local-tissue-reaction",
+        "unicompartmental-knee-arthroplasty",
+        "polyethylene-wear-osteolysis",
+        "total-knee-arthroplasty",
+        "hip-abductor-mechanics",
+        "kellgren-lawrence-hip",
+        "calcar",
+        "femoral-neck",
+        "greater-trochanter",
+        "hip-joint",
+        "intertrochanteric-region",
+        "lesser-trochanter",
+        "medial-femoral-circumflex-artery",
+        "proximal-femur-anatomy-hub",
+        "sciatic-nerve",
+        "compartment-syndrome",
+        "distal-femur-fracture",
+        "femoral-shaft-fracture",
+        "tibial-shaft-fracture"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 8
+    },
+    {
+      "finding": "30 dangling edges reference missing entities",
+      "evidence": "acetabulum -[part_of]-> pelvis; adult-reconstruction-anatomy-hub -[prerequisite_for]-> hip-osteoarthritis; collateral-ligaments -[part_of]-> adult-reconstruction-anatomy-hub",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "9 disconnected anatomy structures",
+      "evidence": "Disconnected: calcar, femoral-neck, greater-trochanter, hip-joint, intertrochanteric-region, lesser-trochanter, medial-femoral-circumflex-artery, proximal-femur-anatomy-hub, sciatic-nerve",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "calcar",
+        "femoral-neck",
+        "greater-trochanter",
+        "hip-joint",
+        "intertrochanteric-region",
+        "lesser-trochanter",
+        "medial-femoral-circumflex-artery",
+        "proximal-femur-anatomy-hub",
+        "sciatic-nerve"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Duplicate claim text: claim-hip-osteoarthritis-core vs claim-hip-osteoarthritis-imaging_point-hip-oa-is-a-clinical-plu",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 32,
+    "relationshipCount": 36,
+    "orphanCount": 25,
+    "danglingEdgeCount": 30,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+    "Create missing entities or remove invalid relationship proposals.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

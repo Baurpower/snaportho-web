@@ -24,6 +24,7 @@ import { trackCheckoutStartedConversion } from '@/lib/analytics/googleAds';
 import { appendSafeReturnTo } from '@/lib/auth/redirects';
 import { BROBOT_PRICING } from '@/lib/config/brobot-pricing';
 import { createWebsiteBroBotCheckout } from '@/lib/brobot/checkout-client';
+import { useBroBotEntitlement } from '@/hooks/useBroBotEntitlement';
 
 // Phase 1: All BroBot AI calls now go through our secure server proxy.
 // Direct browser calls to the external CasePrep API have been eliminated.
@@ -122,7 +123,12 @@ export default function BroBotMember() {
   // Error state — replaces the old "data-as-error" hack
   const [brobotError, setBrobotError] = useState<BroBotError | null>(null);
 
-  // Entitlement / usage context for the usage badge
+  const {
+    usageMeta: entitlementUsageMeta,
+    isUnlimited,
+    refresh: refreshEntitlements,
+    loading: entitlementLoading,
+  } = useBroBotEntitlement('brobot_member');
   const [usageMeta, setUsageMeta] = useState<UsageMeta | null>(null);
 
   // Loading state for the Stripe checkout redirect
@@ -140,33 +146,11 @@ export default function BroBotMember() {
 
   const resultRef = useRef<HTMLDivElement>(null);
 
-  // Fetch entitlements on mount so we can display the usage badge immediately
   useEffect(() => {
-    if (!user) return;
-    (async () => {
-      try {
-        const res = await fetch('/api/me/entitlements', {
-          cache: 'no-store',
-          credentials: 'include',
-        });
-        const body = await res.json();
-        if (body.data) {
-          const d = body.data;
-          setUsageMeta({
-            unlimited: d.aiAccess.unlimited,
-            dailyCap: d.aiAccess.dailyCap,
-            remainingToday: d.aiAccess.remainingToday,
-            source: d.source,
-            status: d.status,
-            cancelAtPeriodEnd: d.cancelAtPeriodEnd,
-            expiresAt: d.expiresAt,
-          });
-        }
-      } catch {
-        // Non-critical — quota badge just won't show until first successful call
-      }
-    })();
-  }, [user]);
+    if (entitlementUsageMeta) {
+      setUsageMeta(entitlementUsageMeta);
+    }
+  }, [entitlementUsageMeta]);
 
   // Auto-scroll to result / error card whenever it appears
   useEffect(() => {
@@ -246,12 +230,16 @@ export default function BroBotMember() {
 
         // 429: quota hit — show the premium upgrade card
         if (res.status === 429 || errBody.isLimitReached) {
-          setBrobotError({
-            type: 'quota_limit',
-            dailyCap: errBody.dailyCap ?? usageMeta?.dailyCap ?? null,
-          });
-          // Reflect 0 remaining in the usage badge immediately
-          setUsageMeta(prev => (prev ? { ...prev, remainingToday: 0 } : null));
+          if (!isUnlimited) {
+            setBrobotError({
+              type: 'quota_limit',
+              dailyCap: errBody.dailyCap ?? usageMeta?.dailyCap ?? null,
+            });
+            setUsageMeta((prev) => (prev ? { ...prev, remainingToday: 0 } : null));
+          } else {
+            void refreshEntitlements();
+            setBrobotError({ type: 'generic', message: 'BroBot access is still activating. Please try again.' });
+          }
           return;
         }
 
@@ -433,15 +421,22 @@ export default function BroBotMember() {
             <div className="mt-4 flex flex-wrap items-center gap-4">
               <button
                 type="submit"
-                disabled={loading || !prompt.trim() || usageMeta?.remainingToday === 0 && !usageMeta?.unlimited}
+                disabled={
+                  loading ||
+                  entitlementLoading ||
+                  !prompt.trim() ||
+                  (usageMeta?.remainingToday === 0 && !usageMeta?.unlimited)
+                }
                 className="inline-flex items-center rounded-md bg-teal-600 px-5 py-2 text-white shadow hover:bg-teal-700 disabled:opacity-40 transition-colors"
               >
                 <MagnifyingGlassCircleIcon className="h-5 w-5 mr-2" />
                 Get Prep
               </button>
 
-              {/* Usage badge — shown once entitlements are loaded */}
-              {usageMeta && <UsageBadge meta={usageMeta} />}
+              {entitlementLoading && !usageMeta ? (
+                <span className="text-xs text-gray-400">Checking access...</span>
+              ) : null}
+              {usageMeta ? <UsageBadge meta={usageMeta} /> : null}
             </div>
 
             {/* Persistent BroBot subscription status / action (Phase 1 discoverability) */}

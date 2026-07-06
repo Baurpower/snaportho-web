@@ -1,0 +1,307 @@
+{
+  "topicKey": "knee-prosthetic-joint-infection",
+  "pilotKey": "knee-prosthetic-joint-infection-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 70,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 70
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|anatomy_structure|distal-femur",
+      "reason": "entity exists: distal-femur"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|common-peroneal-nerve",
+      "reason": "entity exists: common-peroneal-nerve"
+    },
+    {
+      "fingerprint": "create|condition|distal-femur-fracture",
+      "reason": "entity exists: distal-femur-fracture"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|bearing-surface-selection",
+      "reason": "entity exists: bearing-surface-selection"
+    },
+    {
+      "fingerprint": "create|condition|knee-prosthetic-joint-infection",
+      "reason": "entity exists: knee-prosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|condition|intertrochanteric-fracture",
+      "reason": "entity exists: intertrochanteric-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibial-plateau",
+      "reason": "entity exists: tibial-plateau"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibia",
+      "reason": "entity exists: tibia"
+    },
+    {
+      "fingerprint": "create|procedure|total-knee-arthroplasty",
+      "reason": "entity exists: total-knee-arthroplasty"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|patella",
+      "reason": "entity exists: patella"
+    },
+    {
+      "fingerprint": "create|procedure|knee-irrigation-debridement",
+      "reason": "entity exists: knee-irrigation-debridement"
+    },
+    {
+      "fingerprint": "create|condition|compartment-syndrome",
+      "reason": "entity exists: compartment-syndrome"
+    },
+    {
+      "fingerprint": "create|condition|hip-prosthetic-joint-infection",
+      "reason": "entity exists: hip-prosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|implant|polyethylene-liner",
+      "reason": "entity exists: polyethylene-liner"
+    },
+    {
+      "fingerprint": "create|implant|acetabular-component",
+      "reason": "entity exists: acetabular-component"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|acetabulum",
+      "reason": "entity exists: acetabulum"
+    },
+    {
+      "fingerprint": "create|implant|tibial-baseplate",
+      "reason": "entity exists: tibial-baseplate"
+    },
+    {
+      "fingerprint": "create|procedure|polyethylene-wear-osteolysis",
+      "reason": "entity exists: polyethylene-wear-osteolysis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|adult-reconstruction-anatomy-hub",
+      "reason": "entity exists: adult-reconstruction-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-femur-anatomy-hub",
+      "reason": "entity exists: proximal-femur-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|gluteus-minimus",
+      "reason": "entity exists: gluteus-minimus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-neck",
+      "reason": "entity exists: femoral-neck"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femur",
+      "reason": "entity exists: femur"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "reason": "entity exists: extensor-mechanism"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|quadriceps-tendon",
+      "reason": "entity exists: quadriceps-tendon"
+    },
+    {
+      "fingerprint": "create|condition|subtrochanteric-fracture",
+      "reason": "entity exists: subtrochanteric-fracture"
+    },
+    {
+      "fingerprint": "create|procedure|total-hip-arthroplasty",
+      "reason": "entity exists: total-hip-arthroplasty"
+    },
+    {
+      "fingerprint": "create|implant|femoral-stem",
+      "reason": "entity exists: femoral-stem"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|collateral-ligaments",
+      "reason": "entity exists: collateral-ligaments"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|patellar-tendon",
+      "reason": "entity exists: patellar-tendon"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|calcar",
+      "reason": "entity exists: calcar"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|medial-femoral-circumflex-artery",
+      "reason": "entity exists: medial-femoral-circumflex-artery"
+    },
+    {
+      "fingerprint": "create|implant|femoral-component",
+      "reason": "entity exists: femoral-component"
+    },
+    {
+      "fingerprint": "create|procedure|unicompartmental-knee-arthroplasty",
+      "reason": "entity exists: unicompartmental-knee-arthroplasty"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sciatic-nerve",
+      "reason": "entity exists: sciatic-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-femur",
+      "reason": "entity exists: proximal-femur"
+    },
+    {
+      "fingerprint": "create|procedure|revision-arthroplasty",
+      "reason": "entity exists: revision-arthroplasty"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pelvis",
+      "reason": "entity exists: pelvis"
+    },
+    {
+      "fingerprint": "create|implant|tibial-insert",
+      "reason": "entity exists: tibial-insert"
+    },
+    {
+      "fingerprint": "create|fixation_method|press-fit-fixation",
+      "reason": "entity exists: press-fit-fixation"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lesser-trochanter",
+      "reason": "entity exists: lesser-trochanter"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hip-joint",
+      "reason": "entity exists: hip-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|short-external-rotators",
+      "reason": "entity exists: short-external-rotators"
+    },
+    {
+      "fingerprint": "create|biomechanics_concept|implant-concepts-hub",
+      "reason": "entity exists: implant-concepts-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-head",
+      "reason": "entity exists: femoral-head"
+    },
+    {
+      "fingerprint": "create|procedure|adverse-local-tissue-reaction",
+      "reason": "entity exists: adverse-local-tissue-reaction"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|cruciate-ligaments",
+      "reason": "entity exists: cruciate-ligaments"
+    },
+    {
+      "fingerprint": "create|implant|patellar-component",
+      "reason": "entity exists: patellar-component"
+    },
+    {
+      "fingerprint": "create|condition|femoral-neck-fracture",
+      "reason": "entity exists: femoral-neck-fracture"
+    },
+    {
+      "fingerprint": "create|condition|tibial-shaft-fracture",
+      "reason": "entity exists: tibial-shaft-fracture"
+    },
+    {
+      "fingerprint": "create|fixation_method|cement-mantle",
+      "reason": "entity exists: cement-mantle"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|greater-trochanter",
+      "reason": "entity exists: greater-trochanter"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-diaphysis",
+      "reason": "entity exists: femoral-diaphysis"
+    },
+    {
+      "fingerprint": "create|condition|femoral-shaft-fracture",
+      "reason": "entity exists: femoral-shaft-fracture"
+    },
+    {
+      "fingerprint": "create|fixation_method|cemented-fixation",
+      "reason": "entity exists: cemented-fixation"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hip-capsule",
+      "reason": "entity exists: hip-capsule"
+    },
+    {
+      "fingerprint": "create|condition|periprosthetic-joint-infection",
+      "reason": "entity exists: periprosthetic-joint-infection"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-nerve",
+      "reason": "entity exists: femoral-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|popliteal-artery",
+      "reason": "entity exists: popliteal-artery"
+    },
+    {
+      "fingerprint": "create|condition|knee-osteoarthritis",
+      "reason": "entity exists: knee-osteoarthritis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|intertrochanteric-region",
+      "reason": "entity exists: intertrochanteric-region"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|gluteus-medius",
+      "reason": "entity exists: gluteus-medius"
+    },
+    {
+      "fingerprint": "rel|adult-reconstruction-anatomy-hub|prerequisite_for|knee-prosthetic-joint-infection",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|implant-concepts-hub|prerequisite_for|knee-prosthetic-joint-infection",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|periprosthetic-joint-infection|prerequisite_for|knee-prosthetic-joint-infection",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|compartment-syndrome|prerequisite_for|knee-prosthetic-joint-infection",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tibial-baseplate|prerequisite_for|knee-prosthetic-joint-infection",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|knee-prosthetic-joint-infection|involves_anatomy|adult-reconstruction-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|adult-recon-knee-pji|knee-prosthetic-joint-infection",
+      "reason": "curriculum node not found"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

@@ -1,0 +1,12 @@
+# Publication Readiness — Compartment Syndrome
+
+Ready: **false**
+Maturity: **Level 5**
+
+## Blockers
+- 10 proposals still awaiting human review
+- 3 items require attending review
+
+## Recommended actions
+- Route ATTENDING_REVIEW queue to attending reviewer
+

@@ -1,0 +1,624 @@
+[
+  {
+    "proposal_fingerprint": "rel|rotator-cuff-tear|tested_by|rotator-cuff-tear-exam-maneuver",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "rotator-cuff-tear -[tested_by]-> rotator-cuff-tear-exam-maneuver",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rotator-cuff-tear|tested_by|rotator-cuff-tear-exam-maneuver",
+    "alternatives": [],
+    "evidence_summary": "Relationship tested_by",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rotator-cuff-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "rotator-cuff-tear-exam-maneuver",
+      "object_entity_type": "exam_maneuver",
+      "relationship_metadata": {
+        "educational_importance": "high",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rotator-cuff-tear-mri-finding|indicates_treatment|rotator-cuff-tear-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "rotator-cuff-tear-mri-finding -[indicates_treatment]-> rotator-cuff-tear-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: rotator-cuff-tear-mri-finding -[indicates_treatment]-> rotator-cuff-tear-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rotator-cuff-tear-mri-finding",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "rotator-cuff-tear-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "note": "operative indication attending-dependent"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rotator-cuff-tear|treated_by|rotator-cuff-tear-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "rotator-cuff-tear -[treated_by]-> rotator-cuff-tear-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rotator-cuff-tear|treated_by|rotator-cuff-tear-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rotator-cuff-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "rotator-cuff-tear-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rotator-cuff-tear|treated_by|rotator-cuff-tear-rehab-protocol",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "rotator-cuff-tear -[treated_by]-> rotator-cuff-tear-rehab-protocol",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rotator-cuff-tear|treated_by|rotator-cuff-tear-rehab-protocol",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rotator-cuff-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "rotator-cuff-tear-rehab-protocol",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rotator-cuff-tear|differential_for|anterior-shoulder-instability",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "rotator-cuff-tear -[differential_for]-> anterior-shoulder-instability",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rotator-cuff-tear|differential_for|anterior-shoulder-instability",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rotator-cuff-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "anterior-shoulder-instability",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rotator-cuff-tear|differential_for|proximal-biceps-tendon-pathology",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "rotator-cuff-tear -[differential_for]-> proximal-biceps-tendon-pathology",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rotator-cuff-tear|differential_for|proximal-biceps-tendon-pathology",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rotator-cuff-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "proximal-biceps-tendon-pathology",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|rotator-cuff-tear|differential_for|proximal-humerus-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "rotator-cuff-tear -[differential_for]-> proximal-humerus-fracture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|rotator-cuff-tear|differential_for|proximal-humerus-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "rotator-cuff-tear",
+      "subject_entity_type": "condition",
+      "object_slug": "proximal-humerus-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_cluster": true,
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "trauma_overlap",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rotatorcufftear-oneliner",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rotatorcufftear-oneliner",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts rotator-cuff-tear",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rotatorcufftear-oneliner",
+      "claim_type": "fact",
+      "claim_text": "Rotator cuff tears are shoulder dysfunction problems where age, acuity, and functional loss shape urgency.",
+      "primary_entity_slug": "rotator-cuff-tear",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rotatorcufftear-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rotatorcufftear-board-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts rotator-cuff-tear boardPearls",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rotatorcufftear-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating rotator cuff tear.",
+      "primary_entity_slug": "rotator-cuff-tear",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rotatorcufftear-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rotatorcufftear-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts rotator-cuff-tear pimpQuestions",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rotatorcufftear-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Do not anchor on a single exam maneuver for rotator cuff tear — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primary_entity_slug": "rotator-cuff-tear",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rotatorcufftear-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rotatorcufftear-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts rotator-cuff-tear caseSteps",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rotatorcufftear-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for rotator cuff tear.",
+      "primary_entity_slug": "rotator-cuff-tear",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-rotatorcufftear-pseudoparalysis",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-rotatorcufftear-pseudoparalysis",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts rotator-cuff-tear",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-rotatorcufftear-pseudoparalysis",
+      "claim_type": "fact",
+      "claim_text": "Weak active elevation with preserved passive ROM suggests cuff tear rather than adhesive capsulitis.",
+      "primary_entity_slug": "rotator-cuff-tear",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-rotatorcufftear-operative-indication",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-rotatorcufftear-operative-indication",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts rotator-cuff-tear decisionMaking",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-rotatorcufftear-operative-indication",
+      "subject_entity_slug": "rotator-cuff-tear",
+      "pattern_type": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from rotator cuff tear despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-rotatorcufftear-return-to-play",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-rotatorcufftear-return-to-play",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts rotator-cuff-tear treatmentOptions",
+    "metadata": {
+      "pilot": "rotator-cuff-tear-neighborhood",
+      "review_packet_key": "pilot:rotator-cuff-tear-neighborhood",
+      "review_packet_label": "Rotator Cuff Tear Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-rotatorcufftear-return-to-play",
+      "subject_entity_slug": "rotator-cuff-tear",
+      "pattern_type": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after rotator cuff tear treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.9199999999999999,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:55:11.006Z"
+    }
+  }
+]

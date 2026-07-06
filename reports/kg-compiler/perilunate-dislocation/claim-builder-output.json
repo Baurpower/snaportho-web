@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-07-05T23:21:42.603Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-0ff843bb",
+  "gapsAddressed": 1,
+  "gapsScheduled": 2,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-perilunate-dislocation-cognitive-trap",
+      "draftId": "claim-perilunate-dislocation-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-6d963ebe",
+        "ev-quality-signal-34f96581",
+        "ev-quality-signal-55eefa38"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-perilunate-dislocation-imaging",
+      "draftId": "claim-perilunate-dislocation-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-6d963ebe",
+        "ev-quality-signal-34f96581",
+        "ev-quality-signal-55eefa38"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-perilunate-dislocation-mechanism",
+      "draftId": "claim-perilunate-dislocation-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-6d963ebe",
+        "ev-quality-signal-34f96581",
+        "ev-quality-signal-55eefa38"
+      ],
+      "verified": false
+    }
+  ]
+}

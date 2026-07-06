@@ -1,0 +1,100 @@
+{
+  "topicKey": "chronic-lateral-ankle-instability",
+  "pilotKey": "chronic-lateral-ankle-instability-neighborhood",
+  "primaryEntitySlug": "chronic-lateral-ankle-instability",
+  "displayName": "Chronic Lateral Ankle Instability",
+  "generatedAt": "2026-07-05T23:16:20.287Z",
+  "nodes": [
+    {
+      "slug": "chronic-lateral-ankle-instability-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Chronic Lateral Ankle Instability Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "chronic-lateral-ankle-instability-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Chronic Lateral Ankle Instability MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "chronic-lateral-ankle-instability-complication",
+      "entityType": "complication",
+      "preferredLabel": "Chronic Lateral Ankle Instability Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "chronic-lateral-ankle-instability-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Chronic Lateral Ankle Instability Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "chronic-lateral-ankle-instability-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Chronic Lateral Ankle Instability Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "chronic-lateral-ankle-instability-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Chronic Lateral Ankle Instability Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "syndesmotic-sprain",
+      "entityType": "condition",
+      "preferredLabel": "Syndesmotic Sprain",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "chronic-lateral-ankle-instability-reconstruction"
+    ],
+    "classification": [
+      "chronic-lateral-ankle-instability-classification"
+    ],
+    "imaging": [
+      "chronic-lateral-ankle-instability-mri-finding"
+    ],
+    "complication": [
+      "chronic-lateral-ankle-instability-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "chronic-lateral-ankle-instability-rehab-protocol",
+      "chronic-lateral-ankle-instability-exam-maneuver",
+      "syndesmotic-sprain"
+    ]
+  }
+}

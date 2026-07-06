@@ -1,0 +1,816 @@
+{
+  "generatedAt": "2026-07-05T21:36:15.789Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-7ca86001",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 7,
+  "redirectedToDecisionPoint": 5,
+  "candidates": [
+    {
+      "draftId": "claim-femoral-neck-fracture-anatomy_pearl-explain-intracapsular-an",
+      "claimText": "Explain intracapsular anatomy and blood supply risk after femoral neck fracture.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-33dad5d2"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-differentiate-fixation-v",
+      "claimText": "Differentiate fixation versus arthroplasty pathways by age, displacement, and function.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-33dad5d2"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-communicate-avn-and-nonu",
+      "claimText": "Communicate AVN and nonunion risks with appropriate urgency.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-33dad5d2"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-anatomy_pearl-retinacular-blood-supply",
+      "claimText": "Retinacular blood supply.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-anatomy_pearl-mfca-vulnerability",
+      "claimText": "MFCA vulnerability.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-anatomy_pearl-calcar-buttress",
+      "claimText": "Calcar buttress.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-garden-displacement-conc",
+      "claimText": "Garden displacement concepts.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-imaging_point-pelvis-and-hip-radiograp",
+      "claimText": "Pelvis and hip radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-imaging_point-mri-for-occult-fracture",
+      "claimText": "MRI for occult fracture.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-board_trap-displaced-femoral-neck-f",
+      "claimText": "Displaced femoral neck fractures in older adults are often arthroplasty problems.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-avascular-necrosis",
+      "claimText": "Avascular necrosis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-nonunion",
+      "claimText": "Nonunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-delirium",
+      "claimText": "Delirium.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-intracapsular-location",
+      "claimText": "Intracapsular location.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-displacement",
+      "claimText": "Displacement.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-head-viability-language",
+      "claimText": "Head viability language.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-medical-optimization",
+      "claimText": "Medical optimization.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-anatomy_pearl-femoral-neck",
+      "claimText": "Femoral neck.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-anatomy_pearl-femoral-head-blood-suppl",
+      "claimText": "Femoral head blood supply.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-anatomy_pearl-mfca-retinacular-vessels",
+      "claimText": "MFCA / retinacular vessels.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-anatomy_pearl-calcar",
+      "claimText": "Calcar.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-fact-femoral-neck-fracture-is",
+      "claimText": "Femoral neck fracture is an intracapsular injury where displacement and blood supply determine fixation versus arthroplasty.",
+      "claimType": "fact",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-cognitive_trap-use-intracapsular-langua",
+      "claimText": "Use intracapsular language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-cognitive_trap-mention-dvt-prophylaxis-",
+      "claimText": "Mention DVT prophylaxis and AVN surveillance when relevant.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-8",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-clinical_script-confirm-intracapsular-lo",
+      "claimText": "Confirm intracapsular location.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-clinical_script-state-displacement",
+      "claimText": "State displacement.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-clinical_script-describe-optimization-ne",
+      "claimText": "Describe optimization need.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-femoral-neck-fracture-clinical_script-outline-fixation-vs-arth",
+      "claimText": "Outline fixation vs arthroplasty pathway.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "femoral-neck-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Age, baseline function, displacement, head viability, medical risk",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ]
+    },
+    {
+      "text": "Cannulated screws",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ]
+    },
+    {
+      "text": "Femoral neck ORIF",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ]
+    },
+    {
+      "text": "Hemiarthroplasty",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ]
+    },
+    {
+      "text": "Total hip arthroplasty",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ]
+    },
+    {
+      "text": "Why are displaced femoral neck fractures different?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ]
+    },
+    {
+      "text": "What changes management in younger patients?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-fact-differentiate-fixation-v",
+      "draftId": "claim-femoral-neck-fracture-fact-differentiate-fixation-v",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-33dad5d2"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-fact-communicate-avn-and-nonu",
+      "draftId": "claim-femoral-neck-fracture-fact-communicate-avn-and-nonu",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-33dad5d2"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-board_trap-displaced-femoral-neck-f",
+      "draftId": "claim-femoral-neck-fracture-board_trap-displaced-femoral-neck-f",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-imaging_point-pelvis-and-hip-radiograp",
+      "draftId": "claim-femoral-neck-fracture-imaging_point-pelvis-and-hip-radiograp",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-cognitive_trap-use-intracapsular-langua",
+      "draftId": "claim-femoral-neck-fracture-cognitive_trap-use-intracapsular-langua",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3546cc65"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-fact-garden-displacement-conc",
+      "draftId": "claim-femoral-neck-fracture-fact-garden-displacement-conc",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-imaging_point-mri-for-occult-fracture",
+      "draftId": "claim-femoral-neck-fracture-imaging_point-mri-for-occult-fracture",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-femoral-neck-fracture-fact-avascular-necrosis",
+      "draftId": "claim-femoral-neck-fracture-fact-avascular-necrosis",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-3543a1f1"
+      ],
+      "verified": false
+    }
+  ]
+}

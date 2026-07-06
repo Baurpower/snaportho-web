@@ -1,0 +1,47 @@
+{
+  "topicKey": "extensor-mechanism-failure",
+  "pilotKey": "extensor-mechanism-failure-neighborhood",
+  "primaryEntitySlug": "extensor-mechanism-failure",
+  "displayName": "Extensor Mechanism Failure",
+  "generatedAt": "2026-07-05T23:15:39.243Z",
+  "nodes": [
+    {
+      "slug": "extensor-mechanism-failure",
+      "entityType": "condition",
+      "preferredLabel": "Extensor Mechanism Failure",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "patellar-tendon-rupture-tka",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Patellar Tendon Rupture After TKA",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 1,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "extensor-mechanism-failure"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "patellar-tendon-rupture-tka"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

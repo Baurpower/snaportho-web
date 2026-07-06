@@ -10,6 +10,7 @@ import {
   type CallValidationTimeOff,
 } from "@/lib/workspace/call/validation";
 import { getEffectiveRules } from "@/lib/workspace/call/rule-definitions";
+import { migratePersistedCallRules } from "@/lib/workspace/call/persisted-rule-migration";
 import {
   buildResidentIdentityMaps,
 } from "@/lib/workspace/call/resident-identity";
@@ -251,8 +252,11 @@ async function loadValidationRulesForResolvedRuleSet(params: {
     throw new Error(`Failed to load program call validation rules: ${error.message}`);
   }
 
+  const migrated = migratePersistedCallRules((data ?? []) as ProgramCallRuleRow[]);
   // Belt-and-suspenders: run through the canonical effective filter (Phase 9 alignment)
-  const effective = getEffectiveRules((data ?? []) as ProgramCallRuleRow[], { includeDisabled: false });
+  const effective = getEffectiveRules(migrated.rules as ProgramCallRuleRow[], {
+    includeDisabled: false,
+  });
   return (effective as ProgramCallRuleRow[]).map(toValidationRule);
 }
 

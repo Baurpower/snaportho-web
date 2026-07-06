@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-07-05T23:48:45.267Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-40b1eba1",
+  "gapsAddressed": 4,
+  "gapsScheduled": 5,
+  "claimsGenerated": 3,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-metacarpal-fracture-cognitive-trap",
+      "draftId": "claim-metacarpal-fracture-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-c74373e4",
+        "ev-quality-signal-4b14dbe2"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-metacarpal-fracture-imaging",
+      "draftId": "claim-metacarpal-fracture-imaging",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-c74373e4",
+        "ev-quality-signal-4b14dbe2"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-metacarpal-fracture-mechanism",
+      "draftId": "claim-metacarpal-fracture-mechanism",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-c74373e4",
+        "ev-quality-signal-4b14dbe2"
+      ],
+      "verified": false
+    }
+  ]
+}

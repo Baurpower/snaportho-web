@@ -7,8 +7,10 @@ import type { CaseReadinessBrobotAction } from "@/lib/student-curriculum";
 
 export function CaseReadinessActions({
   actions,
+  onLaunch,
 }: {
   actions: CaseReadinessBrobotAction[];
+  onLaunch?: () => void;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -20,6 +22,7 @@ export function CaseReadinessActions({
           key={`${action.actionKind}-${action.label}`}
           type="button"
           onClick={() => {
+            onLaunch?.();
             savePendingBroBotRequest({
               prompt: action.prompt,
               mode: action.brobotMode,

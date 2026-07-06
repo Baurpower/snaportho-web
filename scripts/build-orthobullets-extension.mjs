@@ -24,6 +24,7 @@ const configuredAppOrigin =
 
 function buildClassicContentScriptBundle() {
   const selectorsPath = path.join(distDir, 'content', 'selectors.js');
+  const pageClassificationPath = path.join(distDir, 'shared', 'page-classification.js');
   const extractorPath = path.join(distDir, 'content', 'extractor.js');
   const contentScriptPath = path.join(distDir, 'content', 'content-script.js');
 
@@ -31,8 +32,15 @@ function buildClassicContentScriptBundle() {
     .replace(/^export const SELECTOR_SET_VERSION =/m, 'const SELECTOR_SET_VERSION =')
     .replace(/^export const SELECTORS =/m, 'const SELECTORS =');
 
+  const pageClassificationSource = readFileSync(pageClassificationPath, 'utf8')
+    .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"][^'"]+['"];\r?\n?/gm, '')
+    .replace(/^export const /gm, 'const ')
+    .replace(/^export function /gm, 'function ');
+
   const extractorSource = readFileSync(extractorPath, 'utf8')
     .replace(/^import\s+\{\s*SELECTOR_SET_VERSION,\s*SELECTORS\s*\}\s+from\s+['"]\.\/selectors\.js['"];\r?\n?/m, '')
+    .replace(/^import\s+\{\s*classifyPage\s*\}\s+from\s+['"]\.\.\/shared\/page-classification\.js['"];\r?\n?/m, '')
+    .replace(/^import\s+type\s+\{[^}]+\}\s+from\s+['"]\.\.\/shared\/types\.js['"];\r?\n?/m, '')
     .replace(/^export const EXTRACTOR_VERSION =/m, 'const EXTRACTOR_VERSION =')
     .replace(/^export \{ SELECTOR_SET_VERSION \};\r?\n?/m, '')
     .replace(/^export function detectQuestionProvider\(/m, 'function detectQuestionProvider(')
@@ -46,6 +54,8 @@ function buildClassicContentScriptBundle() {
   const bundledSource = [
     '(() => {',
     selectorsSource.trim(),
+    '',
+    pageClassificationSource.trim(),
     '',
     extractorSource.trim(),
     '',

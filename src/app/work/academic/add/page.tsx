@@ -78,39 +78,6 @@ type DescriptionMetadata = {
   meetingUrl: string;
 };
 
-const DEFAULT_EVENT_TYPE_OPTIONS: EventTypeOption[] = [
-  {
-    id: "fallback:academic",
-    name: "Academic",
-    default_required: false,
-  },
-  {
-    id: "fallback:lab",
-    name: "Lab",
-    default_required: false,
-  },
-  {
-    id: "fallback:journal-club",
-    name: "Journal Club",
-    default_required: false,
-  },
-  {
-    id: "fallback:grand-rounds",
-    name: "Grand Rounds",
-    default_required: false,
-  },
-  {
-    id: "fallback:research",
-    name: "Research",
-    default_required: false,
-  },
-  {
-    id: "fallback:other",
-    name: "Other",
-    default_required: false,
-  },
-];
-
 const DESCRIPTION_METADATA_HEADER = "[Academic Event Metadata]";
 const DESCRIPTION_LOCATION_PREFIX = "Location: ";
 const DESCRIPTION_MEETING_LINK_PREFIX = "Meeting Link: ";
@@ -365,12 +332,12 @@ function AcademicAddEditEventPageContent() {
 
   const [loading, setLoading] = useState(Boolean(isEditMode));
   const [loadingOptions, setLoadingOptions] = useState(false);
+  const [optionsLoaded, setOptionsLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const pageTitle = isEditMode ? "Edit Academic Event" : "Add Academic Event";
-  const displayedEventTypes =
-    eventTypes.length > 0 ? eventTypes : DEFAULT_EVENT_TYPE_OPTIONS;
+  const hasConfiguredEventTypes = eventTypes.length > 0;
 
   useEffect(() => {
     if (permissionsLoading) return;
@@ -381,8 +348,22 @@ function AcademicAddEditEventPageContent() {
   }, [permissions?.canCreateAcademicEvents, permissionsLoading, router]);
 
   const canSave = useMemo(() => {
-    return !!programId && title.trim().length > 0 && !saving;
-  }, [programId, title, saving]);
+    return (
+      !!programId &&
+      optionsLoaded &&
+      hasConfiguredEventTypes &&
+      !!eventTypeId &&
+      title.trim().length > 0 &&
+      !saving
+    );
+  }, [
+    programId,
+    optionsLoaded,
+    hasConfiguredEventTypes,
+    eventTypeId,
+    title,
+    saving,
+  ]);
 
   const [rosterOptions, setRosterOptions] = useState<RosterOption[]>([]);
   const timeRangeError = useMemo(
@@ -394,9 +375,8 @@ function AcademicAddEditEventPageContent() {
     [locationId, locations]
   );
   const selectedEventType = useMemo(
-    () =>
-      displayedEventTypes.find((type) => type.id === eventTypeId) ?? null,
-    [displayedEventTypes, eventTypeId]
+    () => eventTypes.find((type) => type.id === eventTypeId) ?? null,
+    [eventTypes, eventTypeId]
   );
   const hasLocationValue = Boolean(locationId || manualLocation.trim());
   const hasMeetingLinkValue = Boolean(meetingUrl.trim());
@@ -416,6 +396,7 @@ function AcademicAddEditEventPageContent() {
 
     async function loadOptions() {
   setLoadingOptions(true);
+  setOptionsLoaded(false);
 
   try {
     const [typesResponse, locationsResponse, rosterResponse] =
@@ -452,12 +433,29 @@ function AcademicAddEditEventPageContent() {
     }
 
     if (!cancelled) {
-      setEventTypes(typesJson.data ?? []);
+      const loadedEventTypes = (typesJson.data ?? []) as EventTypeOption[];
+      setEventTypes(loadedEventTypes);
       setLocations(locationsJson.data ?? []);
       setRosterOptions(rosterJson.roster ?? []);
+      setOptionsLoaded(true);
+
+      setEventTypeId((current) => {
+        if (loadedEventTypes.length === 0) {
+          return "";
+        }
+
+        if (current && loadedEventTypes.some((type) => type.id === current)) {
+          return current;
+        }
+
+        return "";
+      });
     }
   } catch (err) {
     if (!cancelled) {
+      setEventTypes([]);
+      setOptionsLoaded(false);
+      setEventTypeId("");
       setError(err instanceof Error ? err.message : "Failed to load options");
     }
   } finally {
@@ -647,69 +645,29 @@ function removeSessionPerson(sessionLocalId: string, personLocalId: string) {
   );
 }
 
-  async function ensureEventTypeId() {
-    if (!programId || !eventTypeId) {
-      return null;
+  function resolveEventTypeId() {
+    if (!optionsLoaded) {
+      throw new Error("Event type options are still loading");
     }
 
-    if (!eventTypeId.startsWith("fallback:")) {
-      return eventTypeId;
+    if (eventTypes.length === 0) {
+      throw new Error("No event types configured for this program");
     }
 
-    const selectedFallbackType = DEFAULT_EVENT_TYPE_OPTIONS.find(
-      (type) => type.id === eventTypeId
-    );
-
-    if (!selectedFallbackType) {
-      return null;
+    if (!eventTypeId) {
+      throw new Error("Select an event type before saving");
     }
 
-    const createResponse = await fetch("/api/program/academic-calendar/event-types", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        program_id: programId,
-        name: selectedFallbackType.name,
-        default_required: Boolean(selectedFallbackType.default_required),
-      }),
-    });
-
-    const createJson = await createResponse.json().catch(() => null);
-
-    if (createResponse.ok) {
-      const createdType = createJson?.data as EventTypeOption;
-      setEventTypes((current) => [...current, createdType]);
-      setEventTypeId(createdType.id);
-      return createdType.id;
+    if (eventTypeId.startsWith("fallback:")) {
+      throw new Error("Select a configured event type before saving");
     }
 
-    if (createResponse.status !== 409) {
-      throw new Error(createJson?.error ?? "Failed to create event type");
-    }
-
-    const typesResponse = await fetch(
-      `/api/program/academic-calendar/event-types?programId=${programId}`,
-      { cache: "no-store" }
-    );
-    const typesJson = await typesResponse.json().catch(() => null);
-
-    if (!typesResponse.ok) {
-      throw new Error(typesJson?.error ?? "Failed to reload event types");
-    }
-
-    const reloadedTypes = (typesJson?.data ?? []) as EventTypeOption[];
-    const matchedType =
-      reloadedTypes.find((type) => type.name === selectedFallbackType.name) ??
-      null;
+    const matchedType = eventTypes.find((type) => type.id === eventTypeId);
 
     if (!matchedType) {
-      throw new Error("Selected event type could not be resolved");
+      throw new Error("Select a valid event type before saving");
     }
 
-    setEventTypes(reloadedTypes);
-    setEventTypeId(matchedType.id);
     return matchedType.id;
   }
 
@@ -744,7 +702,7 @@ try {
     setError(null);
 
     try {
-      const resolvedEventTypeId = await ensureEventTypeId();
+      const resolvedEventTypeId = resolveEventTypeId();
       const url = isEditMode
         ? `/api/program/academic-calendar/events/${eventId}`
         : "/api/program/academic-calendar/events";
@@ -980,25 +938,39 @@ router.push("/work/academic");
                     </label>
                     <select
                       value={eventTypeId}
+                      disabled={loadingOptions || !hasConfiguredEventTypes}
                       onChange={(event) => {
-  const nextId = event.target.value;
-  setEventTypeId(nextId);
+                        const nextId = event.target.value;
+                        setEventTypeId(nextId);
 
-  const selectedType = displayedEventTypes.find((type) => type.id === nextId);
+                        const selectedType = eventTypes.find(
+                          (type) => type.id === nextId
+                        );
 
-  if (selectedType?.default_required != null) {
-    setIsRequired(Boolean(selectedType.default_required));
-  }
-}}
-                      className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-900"
+                        if (selectedType?.default_required != null) {
+                          setIsRequired(Boolean(selectedType.default_required));
+                        }
+                      }}
+                      className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-900 disabled:cursor-not-allowed disabled:bg-slate-100"
                     >
-                      <option value="">Select event type</option>
-                      {displayedEventTypes.map((type) => (
+                      <option value="">
+                        {loadingOptions
+                          ? "Loading event types..."
+                          : hasConfiguredEventTypes
+                            ? "Select event type"
+                            : "No event types configured for this program"}
+                      </option>
+                      {eventTypes.map((type) => (
                         <option key={type.id} value={type.id}>
                           {type.name}
                         </option>
                       ))}
                     </select>
+                    {optionsLoaded && !hasConfiguredEventTypes ? (
+                      <p className="mt-2 text-sm font-medium text-red-600">
+                        No event types configured for this program.
+                      </p>
+                    ) : null}
                   </div>
 
                   <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:col-span-2">

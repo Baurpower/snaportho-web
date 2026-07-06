@@ -29,14 +29,28 @@ import type { ProgramCallItem } from "./callmonthcalendar";
 import type { ProgramCallSlotDefinition } from "@/lib/workspace/call/rule-definitions";
 import {
   DEFAULT_SLOT_DEFINITIONS,
-  getVisibleCallSlotsForDay,
 } from "@/lib/workspace/call/rule-definitions";
+import type { ProgramRule } from "@/components/workspace/call/programcalltypes";
+import {
+  buildBuddyDateStateByDate,
+  buildBulkPublishRowsFromSlotMap,
+  buildCallHubValidationInput,
+  formatPublishValidationError,
+  getCallHubVisibleSlotDefinitions,
+  getDropValidationMessage,
+  getEligibleResidentsForSlotPicker,
+  getTouchedDatesFromPendingChanges,
+  slotMapToCallDraftAssignments,
+  slotMapToDraftDayAssignments,
+  type CallHubResident,
+  type CallHubRotationAssignment,
+  type CallHubTimeOffItem,
+  type CallHubValidationContext,
+} from "@/lib/workspace/call/call-hub-scheduling";
 import type { DraftDayAssignment } from "@/components/workspace/call/programcalltypes";
 import {
-  type CallValidationResident,
   type CallValidationIssue,
   type CallValidationResult,
-  type CallDraftAssignment,
   deserializeSlotId,
   isEditableQuickCall,
   normalizeCallType,
@@ -70,6 +84,7 @@ type ResidentOption = {
   trainingLevel: string | null;
   /** Explicit PGY year from the API. Used for conditional buddy-slot visibility. */
   pgyYear?: number | null;
+  gradYear?: number | null;
   currentRotationLabel?: string | null;
 };
 
@@ -196,17 +211,14 @@ function reconstructFromDraft(
   return { slotMap: nextSlotMap, pendingChanges: nextPendingChanges };
 }
 
-function buildValidationResidents(
-  residents: ResidentOption[]
-): CallValidationResident[] {
+function toCallHubResidents(residents: ResidentOption[]): CallHubResident[] {
   return residents.map((resident) => ({
-    residentId: resident.rosterId,
-    membershipId: resident.rosterId,
     rosterId: resident.rosterId,
     programMembershipId: resident.programMembershipId,
     residentName: resident.residentName,
-    displayName: resident.residentName,
     trainingLevel: resident.trainingLevel,
+    pgyYear: resident.pgyYear ?? null,
+    gradYear: resident.gradYear ?? null,
   }));
 }
 
@@ -575,32 +587,6 @@ function getResidentCountMap(slotMap: Map<string, ProgramCallItem | null>) {
   }
 
   return counts;
-}
-
-function buildDraftAssignmentsFromSlotMap(
-  slotMap: Map<string, ProgramCallItem | null>
-): CallDraftAssignment[] {
-  const assignments: CallDraftAssignment[] = [];
-
-  for (const [slotId, call] of slotMap.entries()) {
-    if (!call) continue;
-
-    assignments.push({
-      id: call.id,
-      callId: call.id,
-      rosterId: call.rosterId ?? call.membershipId ?? null,
-      programMembershipId: call.programMembershipId ?? null,
-      residentName: call.residentName,
-      trainingLevel: call.trainingLevel,
-      callDate: call.callDate,
-      callType: call.callType,
-      startDatetime: call.startDatetime,
-      endDatetime: call.endDatetime,
-      slotId,
-    });
-  }
-
-  return assignments;
 }
 
 function getAssignmentEditState(params: {
@@ -994,8 +980,12 @@ export default function EditCallMonthCalendar({
   onCreate,
   callSlots,
   slotDefinitions,
+  programRules = [],
+  rotationAssignments = [],
+  timeOffItems = [],
   initialDraftAssignments,
   onDraftChange,
+  onBulkPublish,
   draftSaveStatus = "idle",
   draftLastSavedAt,
   attendingCoverageByDate,
@@ -1025,6 +1015,13 @@ export default function EditCallMonthCalendar({
   }) => Promise<void> | void;
   callSlots?: ProgramCallSlot[];
   slotDefinitions?: ProgramCallSlotDefinition[];
+  programRules?: ProgramRule[];
+  rotationAssignments?: CallHubRotationAssignment[];
+  timeOffItems?: CallHubTimeOffItem[];
+  onBulkPublish?: (payload: {
+    rows: ReturnType<typeof buildBulkPublishRowsFromSlotMap>;
+    replaceExistingForDates: string[];
+  }) => Promise<void>;
   /**
    * Pre-populated draft assignments restored from the backend draft API.
    * When provided, the calendar reconstructs its pending-change state so the
@@ -1205,23 +1202,115 @@ export default function EditCallMonthCalendar({
   );
 
   const residentCounts = useMemo(() => getResidentCountMap(slotMap), [slotMap]);
-  const draftAssignments = useMemo(
-    () => buildDraftAssignmentsFromSlotMap(slotMap),
+  const draftDayAssignments = useMemo(
+    () => slotMapToDraftDayAssignments(slotMap),
     [slotMap]
   );
-  const validationResidents = useMemo(
-    () => buildValidationResidents(residents),
-    [residents]
+  const draftAssignments = useMemo(
+    () => slotMapToCallDraftAssignments(slotMap),
+    [slotMap]
+  );
+  const effectiveSlotDefinitions = useMemo(
+    () =>
+      slotDefinitions && slotDefinitions.length > 0
+        ? slotDefinitions
+        : DEFAULT_SLOT_DEFINITIONS,
+    [slotDefinitions]
+  );
+  const validationContext = useMemo(
+    (): CallHubValidationContext => ({
+      rules: programRules,
+      slotDefinitions: effectiveSlotDefinitions,
+      residents: toCallHubResidents(residents),
+      rotations: rotationAssignments,
+      timeOff: timeOffItems,
+    }),
+    [
+      programRules,
+      effectiveSlotDefinitions,
+      residents,
+      rotationAssignments,
+      timeOffItems,
+    ]
+  );
+  const modalPickerEligibility = useMemo(() => {
+    if (!activeSlotAction) return null;
+
+    const targetSlotId =
+      activeSlotAction.type === "create"
+        ? serializeSlotId({
+            dateKey: activeSlotAction.dateKey,
+            callType: activeSlotAction.callType,
+          })
+        : serializeSlotId({
+            dateKey: activeSlotAction.call.callDate ?? selectedDateKey ?? "",
+            callType: activeSlotAction.call.callType ?? "Primary",
+          });
+
+    const excludeRosterIds =
+      activeSlotAction.type === "replace"
+        ? [
+            activeSlotAction.call.rosterId ??
+              activeSlotAction.call.membershipId ??
+              "",
+          ].filter(Boolean)
+        : [];
+
+    return getEligibleResidentsForSlotPicker({
+      slotMap,
+      targetSlotId,
+      context: validationContext,
+      existingCall:
+        activeSlotAction.type === "replace" ? activeSlotAction.call : null,
+      ignoreCallId:
+        activeSlotAction.type === "replace" ? activeSlotAction.call.id : null,
+      excludeRosterIds,
+    });
+  }, [activeSlotAction, selectedDateKey, slotMap, validationContext]);
+  const buddyDateStateByDate = useMemo(
+    () =>
+      buildBuddyDateStateByDate({
+        year,
+        monthIndex,
+        residents: toCallHubResidents(residents),
+        rotations: rotationAssignments,
+        rules: programRules,
+        slotDefinitions: effectiveSlotDefinitions,
+        draftAssignments: draftDayAssignments,
+      }),
+    [
+      year,
+      monthIndex,
+      residents,
+      rotationAssignments,
+      programRules,
+      effectiveSlotDefinitions,
+      draftDayAssignments,
+    ]
+  );
+  const touchedValidationDates = useMemo(
+    () => getTouchedDatesFromPendingChanges(pendingChanges),
+    [pendingChanges]
   );
   const draftValidation = useMemo(
     () =>
-      validateCallMonthDraft({
-        assignments: draftAssignments,
-        residents: validationResidents,
-      }),
-    [draftAssignments, validationResidents]
+      validateCallMonthDraft(
+        buildCallHubValidationInput({
+          assignments: draftAssignments,
+          context: validationContext,
+          touchedDates:
+            touchedValidationDates.length > 0
+              ? touchedValidationDates
+              : Object.keys(draftDayAssignments),
+        })
+      ),
+    [
+      draftAssignments,
+      validationContext,
+      touchedValidationDates,
+      draftDayAssignments,
+    ]
   );
-
   const displayValidation = serverValidationResult ?? draftValidation;
   const validationSummary = getValidationSummary(displayValidation);
   const displayValidationSource = serverValidationResult ? "server" : "client";
@@ -1292,11 +1381,13 @@ export default function EditCallMonthCalendar({
         // Determine which slots are visible on this specific day.
         const visibleSlotKeys = new Set<string>();
         if (slotDefinitions && slotDefinitions.length > 0) {
-          const visibleDefs = getVisibleCallSlotsForDay({
+          const visibleDefs = getCallHubVisibleSlotDefinitions({
             dayOfWeek,
             primaryCallPgyYear,
             assignedCallTypeKeys,
-            slotDefinitions,
+            slotDefinitions: effectiveSlotDefinitions,
+            buddyDateState: buddyDateStateByDate.get(dateKey) ?? null,
+            draftDayAssignment: draftDayAssignments[dateKey] ?? null,
           });
           for (const def of visibleDefs) {
             visibleSlotKeys.add(def.callType.toLowerCase());
@@ -1334,7 +1425,19 @@ export default function EditCallMonthCalendar({
     }
 
     return map;
-  }, [monthIndex, resolvedCallSlots, slotMap, todayKey, weeks, year, slotDefinitions, slotDefByCallType]);
+  }, [
+    monthIndex,
+    resolvedCallSlots,
+    slotMap,
+    todayKey,
+    weeks,
+    year,
+    slotDefinitions,
+    slotDefByCallType,
+    effectiveSlotDefinitions,
+    buddyDateStateByDate,
+    draftDayAssignments,
+  ]);
 
   function closeModal() {
     setActiveSlotAction(null);
@@ -1788,79 +1891,95 @@ export default function EditCallMonthCalendar({
   async function handlePublishChanges() {
     if (!hasPendingChanges) return;
     if (draftValidation.hasErrors) {
-      setLocalError("Fix blocking schedule errors before publishing.");
+      setLocalError(formatPublishValidationError(draftValidation));
       return;
     }
 
     const slotMapSnapshot = new Map(slotMap);
     const pendingSnapshot = [...pendingChanges];
+    const touchedDates = getTouchedDatesFromPendingChanges(pendingSnapshot);
 
     try {
       setWorking(true);
       setLocalError(null);
 
-      for (const change of pendingSnapshot) {
-        if (change.kind === "create") {
-          if (!onCreate) {
-            throw new Error("Creating assignments is not available yet for this calendar.");
+      if (onBulkPublish) {
+        const rows = buildBulkPublishRowsFromSlotMap({
+          slotMap: slotMapSnapshot,
+          touchedDateKeys: touchedDates,
+          residentsByRosterId: new Map(
+            toCallHubResidents(residents).map((resident) => [resident.rosterId, resident])
+          ),
+        });
+
+        await onBulkPublish({
+          rows,
+          replaceExistingForDates: touchedDates,
+        });
+      } else {
+        for (const change of pendingSnapshot) {
+          if (change.kind === "create") {
+            if (!onCreate) {
+              throw new Error("Creating assignments is not available yet for this calendar.");
+            }
+
+            await onCreate({
+              rosterId: change.resident.rosterId,
+              callDate: change.slot.dateKey,
+              callType: change.slot.callType,
+              programMembershipId: change.resident.programMembershipId,
+            });
+            continue;
           }
 
-          await onCreate({
-            rosterId: change.resident.rosterId,
-            callDate: change.slot.dateKey,
-            callType: change.slot.callType,
-            programMembershipId: change.resident.programMembershipId,
-          });
-          continue;
-        }
+          if (change.kind === "replace") {
+            if (!onSwitch) {
+              throw new Error("Replacing assignments is not available yet for this calendar.");
+            }
 
-        if (change.kind === "replace") {
-          if (!onSwitch) {
-            throw new Error("Replacing assignments is not available yet for this calendar.");
+            await onSwitch({
+              callId: change.callId,
+              fromRosterId: change.fromRosterId,
+              toRosterId: change.resident.rosterId,
+              toProgramMembershipId: change.resident.programMembershipId,
+            });
+            continue;
           }
 
-          await onSwitch({
-            callId: change.callId,
-            fromRosterId: change.fromRosterId,
-            toRosterId: change.resident.rosterId,
-            toProgramMembershipId: change.resident.programMembershipId,
-          });
-          continue;
-        }
+          if (change.kind === "move") {
+            if (!onCreate || !onDelete) {
+              throw new Error("Moving assignments is not available yet for this calendar.");
+            }
 
-        if (change.kind === "move") {
-          if (!onCreate || !onDelete) {
-            throw new Error("Moving assignments is not available yet for this calendar.");
+            const targetSlot = deserializeSlotId(change.targetSlotId);
+            await onCreate({
+              rosterId: change.resident.rosterId,
+              callDate: targetSlot.dateKey,
+              callType: targetSlot.callType,
+              programMembershipId: change.resident.programMembershipId,
+            });
+            await onDelete({ callId: change.sourceCallId });
+            continue;
           }
 
-          const targetSlot = deserializeSlotId(change.targetSlotId);
-          await onCreate({
-            rosterId: change.resident.rosterId,
-            callDate: targetSlot.dateKey,
-            callType: targetSlot.callType,
-            programMembershipId: change.resident.programMembershipId,
-          });
-          await onDelete({ callId: change.sourceCallId });
-          continue;
-        }
+          if (change.kind === "swap") {
+            if (!onSwap) {
+              throw new Error("Swapping assignments is not available yet for this calendar.");
+            }
 
-        if (change.kind === "swap") {
-          if (!onSwap) {
-            throw new Error("Swapping assignments is not available yet for this calendar.");
+            await onSwap({
+              firstCallId: change.firstCallId,
+              secondCallId: change.secondCallId,
+            });
+            continue;
           }
 
-          await onSwap({
-            firstCallId: change.firstCallId,
-            secondCallId: change.secondCallId,
-          });
-          continue;
-        }
+          if (!onDelete) {
+            throw new Error("Deleting assignments is not available yet for this calendar.");
+          }
 
-        if (!onDelete) {
-          throw new Error("Deleting assignments is not available yet for this calendar.");
+          await onDelete({ callId: change.callId });
         }
-
-        await onDelete({ callId: change.callId });
       }
 
       const committedBaseline = new Map(slotMapSnapshot);
@@ -1870,16 +1989,13 @@ export default function EditCallMonthCalendar({
       setDeleteSelectedCallIds([]);
       setDeleteMode(false);
       setShowDeleteConfirm(false);
-      // Draft has been promoted to the live schedule — clear it from the backend.
       onDraftChangeRef.current?.(null);
     } catch (err) {
       const serverValidation = getCallMutationValidation(err);
 
       if (serverValidation) {
         setServerValidationResult(serverValidation);
-        setLocalError(
-          "Server rejected this schedule. Review the highlighted conflicts below."
-        );
+        setLocalError(formatPublishValidationError(serverValidation));
       } else {
         setLocalError(
           err instanceof Error ? err.message : "Failed to save pending changes."
@@ -1943,6 +2059,18 @@ export default function EditCallMonthCalendar({
           callType: selectedCall.callType ?? "Primary",
         });
 
+        const replaceRejection = getDropValidationMessage({
+          slotMap,
+          targetSlotId: slotId,
+          resident: toCallHubResidents([resident])[0],
+          context: validationContext,
+          existingCall: selectedCall,
+          ignoreCallId: selectedCall.id,
+        });
+        if (replaceRejection) {
+          throw new Error(replaceRejection);
+        }
+
         queueReplace(selectedCall, slotId, resident);
       }
 
@@ -1969,6 +2097,16 @@ export default function EditCallMonthCalendar({
           dateKey: activeSlotAction.dateKey,
           callType: activeSlotAction.callType,
         });
+
+        const createRejection = getDropValidationMessage({
+          slotMap,
+          targetSlotId: slotId,
+          resident: toCallHubResidents([resident])[0],
+          context: validationContext,
+        });
+        if (createRejection) {
+          throw new Error(createRejection);
+        }
 
         queueCreate(slotId, {
           dateKey: activeSlotAction.dateKey,
@@ -2028,7 +2166,10 @@ export default function EditCallMonthCalendar({
   ) {
     const targetSlot = deserializeSlotId(overData.slotId);
 
-    if (!overData.canDrop) return;
+    if (!overData.canDrop) {
+      setLocalError("This slot is locked and cannot accept assignments.");
+      return;
+    }
 
     if (sourceData.kind === "assignment") {
       const sourceCall = sourceData.call;
@@ -2077,6 +2218,25 @@ export default function EditCallMonthCalendar({
         return;
       }
 
+      const moveResident = findResidentByRosterId(sourceRosterId);
+      if (!moveResident) {
+        setLocalError("This call cannot be moved because the resident could not be found.");
+        return;
+      }
+
+      const moveRejection = getDropValidationMessage({
+        slotMap,
+        targetSlotId: overData.slotId,
+        resident: toCallHubResidents([moveResident])[0],
+        context: validationContext,
+        existingCall: sourceCall,
+        ignoreCallId: sourceCall.id,
+      });
+      if (moveRejection) {
+        setLocalError(moveRejection);
+        return;
+      }
+
       setLocalError(null);
       queueMove(sourceCall, sourceSlotId, overData.slotId);
       return;
@@ -2093,6 +2253,19 @@ export default function EditCallMonthCalendar({
       )
     ) {
       setLocalError("That resident is already assigned to this slot on the same date.");
+      return;
+    }
+
+    const residentRejection = getDropValidationMessage({
+      slotMap,
+      targetSlotId: overData.slotId,
+      resident: toCallHubResidents([resident])[0],
+      context: validationContext,
+      existingCall: overData.call,
+      ignoreCallId: overData.call?.id,
+    });
+    if (residentRejection) {
+      setLocalError(residentRejection);
       return;
     }
 
@@ -2737,19 +2910,75 @@ export default function EditCallMonthCalendar({
                   ? "Assign resident"
                   : "Replace with resident"}
               </label>
-              <select
-                value={targetRosterId}
-                onChange={(e) => setTargetRosterId(e.target.value)}
-                className="w-full rounded-[1rem] border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-amber-300"
-              >
-                <option value="">Select resident</option>
-                {residents.map((resident) => (
-                  <option key={resident.rosterId} value={resident.rosterId}>
-                    {resident.residentName}
-                    {resident.trainingLevel ? ` • ${resident.trainingLevel}` : ""}
-                  </option>
-                ))}
-              </select>
+
+              {modalPickerEligibility?.groups.length ? (
+                <div className="max-h-72 space-y-4 overflow-y-auto rounded-[1rem] border border-slate-200 bg-slate-50 p-3">
+                  {modalPickerEligibility.groups.map((group) => (
+                    <div key={group.label}>
+                      <p className="mb-2 px-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                        {group.label}
+                      </p>
+                      <div className="space-y-2">
+                        {group.residents.map(({ resident, warnings }) => {
+                          const isSelected = targetRosterId === resident.rosterId;
+                          const warningMessage = warnings[0]?.message ?? null;
+
+                          return (
+                            <button
+                              key={resident.rosterId}
+                              type="button"
+                              onClick={() => setTargetRosterId(resident.rosterId)}
+                              title={warningMessage ?? undefined}
+                              className={`flex w-full items-center justify-between gap-3 rounded-[0.9rem] border px-3 py-2.5 text-left transition ${
+                                isSelected
+                                  ? "border-amber-300 bg-amber-50"
+                                  : warnings.length > 0
+                                  ? "border-amber-200 bg-amber-50/70 hover:bg-amber-50"
+                                  : "border-slate-200 bg-white hover:border-amber-200 hover:bg-white"
+                              }`}
+                            >
+                              <div className="min-w-0">
+                                <p className="truncate text-sm font-semibold text-slate-900">
+                                  {resident.residentName}
+                                </p>
+                                {warningMessage ? (
+                                  <p className="mt-0.5 text-xs text-amber-700">
+                                    {warningMessage}
+                                  </p>
+                                ) : null}
+                              </div>
+                              <div className="flex shrink-0 items-center gap-2">
+                                {warnings.length > 0 ? (
+                                  <span className="rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-semibold text-white">
+                                    Warning
+                                  </span>
+                                ) : null}
+                                {isSelected ? (
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-600 px-2 py-0.5 text-[10px] font-semibold text-white">
+                                    <Check className="h-3 w-3" />
+                                    Selected
+                                  </span>
+                                ) : null}
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-[1rem] border border-dashed border-slate-200 bg-slate-50 px-4 py-8 text-center">
+                  <UserRound className="mx-auto h-7 w-7 text-slate-400" />
+                  <p className="mt-3 text-sm font-semibold text-slate-800">
+                    No eligible residents
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    {modalPickerEligibility?.emptyStateMessage ??
+                      "No residents can be assigned to this slot with the current schedule and rules."}
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className="mt-5 flex items-center justify-end gap-3">

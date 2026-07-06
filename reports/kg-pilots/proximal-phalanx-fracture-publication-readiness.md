@@ -1,0 +1,12 @@
+# Publication Readiness — Proximal Phalanx Fracture
+
+Ready: **false**
+Maturity: **Level 5**
+
+## Blockers
+- 10 proposals still awaiting human review
+- 2 items require attending review
+
+## Recommended actions
+- Route ATTENDING_REVIEW queue to attending reviewer
+

@@ -1,0 +1,47 @@
+{
+  "topicKey": "periprosthetic-knee-fracture",
+  "pilotKey": "periprosthetic-knee-fracture-neighborhood",
+  "primaryEntitySlug": "periprosthetic-knee-fracture",
+  "displayName": "Periprosthetic Knee Fracture",
+  "generatedAt": "2026-07-05T23:04:58.169Z",
+  "nodes": [
+    {
+      "slug": "periprosthetic-knee-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Periprosthetic Knee Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "rorabeck-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Rorabeck Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "periprosthetic-knee-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [
+      "rorabeck-classification"
+    ],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

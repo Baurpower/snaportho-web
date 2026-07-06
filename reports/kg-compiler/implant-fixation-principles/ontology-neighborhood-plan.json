@@ -1,0 +1,57 @@
+{
+  "topicKey": "implant-fixation-principles",
+  "pilotKey": "implant-fixation-principles-neighborhood",
+  "primaryEntitySlug": "implant-fixation-principles",
+  "displayName": "Implant Fixation Principles",
+  "generatedAt": "2026-07-05T23:29:15.191Z",
+  "nodes": [
+    {
+      "slug": "implant-fixation-principles",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Implant Fixation Principles",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "primary-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Primary Stability",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "bone-ingrowth",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Bone Ingrowth",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "implant-fixation-principles"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "primary-stability",
+      "bone-ingrowth"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

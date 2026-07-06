@@ -1,0 +1,55 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 73,
+  "deductions": [
+    {
+      "finding": "2 orphan entities with no relationships",
+      "evidence": "Slugs: lateral-malleolus, medial-malleolus",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "lateral-malleolus",
+        "medial-malleolus"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
+    },
+    {
+      "finding": "1 dangling edges reference missing entities",
+      "evidence": "femoral-condyles -[part_of]-> sports-knee-anatomy-hub",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "2 disconnected anatomy structures",
+      "evidence": "Disconnected: lateral-malleolus, medial-malleolus",
+      "reason": "Anatomy must connect to the condition graph for educational traversal.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "lateral-malleolus",
+        "medial-malleolus"
+      ],
+      "suggestedFix": "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 41,
+    "relationshipCount": 43,
+    "orphanCount": 2,
+    "danglingEdgeCount": 1,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals.",
+    "Add involves_anatomy, injured_in, or part_of edges from condition/procedure anchors."
+  ]
+}

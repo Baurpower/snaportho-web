@@ -1,0 +1,52 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 69,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from clavicle-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "clavicle-fracture"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from clavicle-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "clavicle-fracture"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "3 high-risk relationships lack approved review status",
+      "evidence": "Predicates: treated_by, indicates_treatment",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 12,
+    "relationshipDensity": 2,
+    "missingClinicalEdgeCount": 2,
+    "highRiskUnreviewedCount": 3,
+    "predicateCorrectness": 0.5
+  },
+  "recommendations": [
+    "Add has_classification relationship via relationship-builder agent.",
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

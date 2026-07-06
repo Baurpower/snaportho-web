@@ -1,0 +1,534 @@
+[
+  {
+    "proposal_fingerprint": "rel|lunate-dislocation|differential_for|perilunate-dislocation",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "lunate-dislocation -[differential_for]-> perilunate-dislocation",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lunate-dislocation|differential_for|perilunate-dislocation",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lunate-dislocation",
+      "subject_entity_type": "condition",
+      "object_slug": "perilunate-dislocation",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.64,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|lunate-dislocation|differential_for|carpal-instability",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "lunate-dislocation -[differential_for]-> carpal-instability",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lunate-dislocation|differential_for|carpal-instability",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lunate-dislocation",
+      "subject_entity_type": "condition",
+      "object_slug": "carpal-instability",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.64,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|lunate-dislocation|differential_for|carpal-tunnel-syndrome",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "lunate-dislocation -[differential_for]-> carpal-tunnel-syndrome",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lunate-dislocation|differential_for|carpal-tunnel-syndrome",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lunate-dislocation",
+      "subject_entity_type": "condition",
+      "object_slug": "carpal-tunnel-syndrome",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "cluster": "hand-wrist",
+        "relevance_reason": "clinical_association",
+        "educational_importance": "high",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.64,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|lunate-dislocation|treated_by|lunate-dislocation-operative-treatment",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "lunate-dislocation -[treated_by]-> lunate-dislocation-operative-treatment",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|lunate-dislocation|treated_by|lunate-dislocation-operative-treatment",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "lunate-dislocation",
+      "subject_entity_type": "condition",
+      "object_slug": "lunate-dislocation-operative-treatment",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.64,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lunate-dislocation-mechanism",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lunate-dislocation-mechanism",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist-cluster-definitions.ts / carpal-trauma",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lunate-dislocation-mechanism",
+      "claim_type": "fact",
+      "claim_text": "Lunate Dislocation evaluation should anchor on mechanism, focused exam, and the anatomic structures most at risk (lunate, capitate, median-nerve).",
+      "primary_entity_slug": "lunate-dislocation",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.64,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lunate-dislocation-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lunate-dislocation-board-trap",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lunate-dislocation-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Missing lunate assessment in lunate dislocation is a common board and OITE trap.",
+      "primary_entity_slug": "lunate",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.64,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lunate-dislocation-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lunate-dislocation-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "cross-neighborhood connectivity requirement",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lunate-dislocation-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Treating lunate dislocation in isolation without checking related wrist, tendon, or nerve neighborhoods in the cluster.",
+      "primary_entity_slug": "lunate-dislocation",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.64,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lunate-dislocation-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lunate-dislocation-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rotation script",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lunate-dislocation-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Document neurovascular status, key anatomic structures (lunate, capitate, median-nerve), stability assessment, and escalation plan for lunate dislocation.",
+      "primary_entity_slug": "lunate-dislocation",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.64,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lunate-dislocation-imaging",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lunate-dislocation-imaging",
+    "alternatives": [],
+    "evidence_summary": "hand-wrist manufacturing seed",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lunate-dislocation-imaging",
+      "claim_type": "imaging_point",
+      "claim_text": "Obtain appropriate hand/wrist imaging for lunate dislocation and explicitly comment on articular alignment and adjacent joint stability.",
+      "primary_entity_slug": "lunate-dislocation",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.64,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-lunate-dislocation-rehab",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-lunate-dislocation-rehab",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand rehabilitation concept",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-lunate-dislocation-rehab",
+      "claim_type": "rehab_pearl",
+      "claim_text": "Early protected motion and therapy goals for lunate dislocation should align with tendon, ligament, and joint stability constraints.",
+      "primary_entity_slug": "lunate-dislocation",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.64,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-lunate-dislocation-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-lunate-dislocation-operative",
+    "alternatives": [],
+    "evidence_summary": "operative routing → ATTENDING_REVIEW",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-lunate-dislocation-operative",
+      "subject_entity_slug": "lunate-dislocation",
+      "pattern_type": "operative_indication",
+      "trigger": "Unstable pattern, displacement, failed closed treatment, or functional deficit in lunate dislocation",
+      "action": "Proceed with operative pathway when indicated; document fixation strategy, tendon/nerve protection, and postoperative plan",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.64,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-lunate-dislocation-nonoperative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-lunate-dislocation-nonoperative",
+    "alternatives": [],
+    "evidence_summary": "Prepare Hand nonoperative pathway",
+    "metadata": {
+      "pilot": "lunate-dislocation-neighborhood",
+      "review_packet_key": "pilot:lunate-dislocation-neighborhood",
+      "review_packet_label": "Lunate Dislocation Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-lunate-dislocation-nonoperative",
+      "subject_entity_slug": "lunate-dislocation",
+      "pattern_type": "nonoperative_eligible",
+      "trigger": "Stable pattern with acceptable alignment and intact neurovascular exam for lunate dislocation",
+      "action": "Splint/immobilize with therapy plan, repeat exam and imaging, and clear return precautions",
+      "urgency": "routine",
+      "safety_criticality": "none",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.64,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:27:57.679Z"
+    }
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 77,
+  "deductions": [
+    {
+      "finding": "8 dangling edges reference missing entities",
+      "evidence": "femoral-neck-fracture -[at_risk_structure]-> medial-femoral-circumflex-artery; femoral-neck-fracture -[injured_in]-> femoral-neck; femoral-neck-fracture -[involves_anatomy]-> calcar",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    },
+    {
+      "finding": "1 merge conflicts detected",
+      "evidence": "conflict-report.json: Conflicting DP pattern femoral-neck-fracture|operative_indication: dp-fnf-arthroplasty-pathway vs dp-fnf-head-preservation-orif",
+      "reason": "Unresolved merge conflicts indicate inconsistent agent outputs.",
+      "severity": "high",
+      "category": "graph_integrity",
+      "suggestedFix": "Run conflict-resolver agent and reconcile metadata/text conflicts.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "entityCount": 8,
+    "relationshipCount": 16,
+    "orphanCount": 0,
+    "danglingEdgeCount": 8,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals.",
+    "Run conflict-resolver agent and reconcile metadata/text conflicts."
+  ]
+}

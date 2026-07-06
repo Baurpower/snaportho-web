@@ -1,0 +1,863 @@
+{
+  "generatedAt": "2026-07-05T22:30:51.094Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-c91ef138",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 6,
+  "redirectedToDecisionPoint": 4,
+  "candidates": [
+    {
+      "draftId": "claim-pelvic-ring-injury-board_trap-recognize-unstable-pelvi",
+      "claimText": "Recognize unstable pelvic ring patterns and hemorrhage risk.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "changes_management",
+        "board_trap",
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-apply-young-burgess-mech",
+      "claimText": "Apply Young-Burgess mechanism language to injury severity.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-prioritize-binder-resusc",
+      "claimText": "Prioritize binder, resuscitation, and stabilization before definitive fixation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-anatomy_pearl-anterior-and-posterior-r",
+      "claimText": "Anterior and posterior ring.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-anatomy_pearl-venous-plexus",
+      "claimText": "Venous plexus.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-anatomy_pearl-sacroiliac-stability",
+      "claimText": "Sacroiliac stability.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-young-burgess-apc-lc-vs-",
+      "claimText": "Young-Burgess APC, LC, VS patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-imaging_point-ap-pelvis",
+      "claimText": "AP pelvis.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-imaging_point-inlet-outlet-views",
+      "claimText": "Inlet/outlet views.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-imaging_point-ct-for-posterior-ring-de",
+      "claimText": "CT for posterior ring detail.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision",
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-board_trap-unstable-pelvic-ring-wit",
+      "claimText": "Unstable pelvic ring with hypotension is a hemorrhage emergency.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "changes_management",
+        "board_trap",
+        "patient_safety",
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7815000000000001,
+      "reviewRoute": "ATTENDING_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-pelvic-hemorrhage",
+      "claimText": "Pelvic hemorrhage.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-retroperitoneal-bleeding",
+      "claimText": "Retroperitoneal bleeding.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-late-instability",
+      "claimText": "Late instability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-mechanism",
+      "claimText": "Mechanism.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-ring-stability",
+      "claimText": "ring stability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-binder",
+      "claimText": "binder.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-hemorrhage-language",
+      "claimText": "hemorrhage language.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-resuscitation-priority",
+      "claimText": "resuscitation priority.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-anatomy_pearl-pelvis",
+      "claimText": "Pelvis.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-anatomy_pearl-sacroiliac-joint",
+      "claimText": "Sacroiliac joint.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-anatomy_pearl-pubic-symphysis",
+      "claimText": "Pubic symphysis.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-anatomy_pearl-sacrum",
+      "claimText": "Sacrum.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-fact-pelvic-ring-injury-is-a-",
+      "claimText": "Pelvic ring injury is a resuscitation problem first — instability and hemorrhage drive urgency before definitive fixation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "changes_management",
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-cognitive_trap-use-young-burgess-apc-lc",
+      "claimText": "Use Young-Burgess APC/LC/VS language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-cognitive_trap-mention-binder-and-ex-fi",
+      "claimText": "Mention binder and ex-fix as temporizing tools.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-11",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-clinical_script-state-mechanism",
+      "claimText": "State mechanism.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-clinical_script-assess-ring-stability",
+      "claimText": "Assess ring stability.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-clinical_script-apply-binder-if-indicate",
+      "claimText": "Apply binder if indicated.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-pelvic-ring-injury-clinical_script-escalate-hemorrhage-cont",
+      "claimText": "Escalate hemorrhage control.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "pelvic-ring-injury",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Hemodynamic status, ring instability, associated injuries",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ]
+    },
+    {
+      "text": "Pelvic binder",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ]
+    },
+    {
+      "text": "Pelvic external fixation",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ]
+    },
+    {
+      "text": "Definitive ORIF when stable",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ]
+    },
+    {
+      "text": "What makes a pelvic ring unstable?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ]
+    },
+    {
+      "text": "When is a pelvic binder indicated?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-board_trap-recognize-unstable-pelvi",
+      "draftId": "claim-pelvic-ring-injury-board_trap-recognize-unstable-pelvi",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-fact-apply-young-burgess-mech",
+      "draftId": "claim-pelvic-ring-injury-fact-apply-young-burgess-mech",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-board_trap-unstable-pelvic-ring-wit",
+      "draftId": "claim-pelvic-ring-injury-board_trap-unstable-pelvic-ring-wit",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "ATTENDING_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-imaging_point-ap-pelvis",
+      "draftId": "claim-pelvic-ring-injury-imaging_point-ap-pelvis",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-cognitive_trap-use-young-burgess-apc-lc",
+      "draftId": "claim-pelvic-ring-injury-cognitive_trap-use-young-burgess-apc-lc",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-99b2aedc"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-fact-prioritize-binder-resusc",
+      "draftId": "claim-pelvic-ring-injury-fact-prioritize-binder-resusc",
+      "claimType": "fact",
+      "importanceLevel": "L3",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-0ae75f0b"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-fact-young-burgess-apc-lc-vs-",
+      "draftId": "claim-pelvic-ring-injury-fact-young-burgess-apc-lc-vs-",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pelvic-ring-injury-imaging_point-inlet-outlet-views",
+      "draftId": "claim-pelvic-ring-injury-imaging_point-inlet-outlet-views",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-99af8848"
+      ],
+      "verified": false
+    }
+  ]
+}

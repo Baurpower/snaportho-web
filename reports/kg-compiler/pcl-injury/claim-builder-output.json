@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-07-05T22:41:56.092Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-c4cd5fdd",
+  "gapsAddressed": 4,
+  "gapsScheduled": 5,
+  "claimsGenerated": 4,
+  "claimsRejected": 0,
+  "redirectedToDecisionPoint": 0,
+  "candidates": [],
+  "rejected": [],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-pclinjury-board-trap",
+      "draftId": "claim-pclinjury-board-trap",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-30eeddf8",
+        "ev-quality-signal-6c275a1e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pclinjury-cognitive-trap",
+      "draftId": "claim-pclinjury-cognitive-trap",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L2",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-30eeddf8",
+        "ev-quality-signal-6c275a1e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pclinjury-oneliner",
+      "draftId": "claim-pclinjury-oneliner",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-30eeddf8",
+        "ev-quality-signal-6c275a1e"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-pclinjury-sag-sign",
+      "draftId": "claim-pclinjury-sag-sign",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "",
+      "evidenceItemIds": [
+        "ev-proposal-history-30eeddf8",
+        "ev-quality-signal-6c275a1e"
+      ],
+      "verified": false
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "topicKey": "unicompartmental-knee-arthritis",
+  "pilotKey": "unicompartmental-knee-arthritis-neighborhood",
+  "primaryEntitySlug": "unicompartmental-knee-arthritis",
+  "displayName": "Unicompartmental Knee Arthritis",
+  "generatedAt": "2026-07-05T23:20:51.662Z",
+  "nodes": [
+    {
+      "slug": "unicompartmental-knee-arthritis",
+      "entityType": "condition",
+      "preferredLabel": "Unicompartmental Knee Arthritis",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "unicompartmental-knee-arthritis"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

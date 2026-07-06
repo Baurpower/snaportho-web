@@ -9,11 +9,8 @@ import { z } from 'zod';
 
 import { getCasePrepInternalBaseUrl } from '@/lib/config/brobot';
 import { createGuestSession, getGuestSessionFromRequest } from '@/lib/brobot/guest-session';
-import {
-  getRemainingAIUses,
-  getMobileBroBotEntitlement,
-  type Subject,
-} from '@/lib/brobot/entitlements';
+import { getBroBotAccessGate } from '@/lib/brobot/brobot-entitlement-access';
+import { type Subject } from '@/lib/brobot/entitlements';
 import { recordSuccessfulAIUse, recordUsageEvent } from '@/lib/brobot/usage';
 import { createClient } from '@/utils/supabase/server';
 import type { BroBotPayload } from '@/types/caseprep';
@@ -197,16 +194,7 @@ export async function POST(request: Request) {
     const user = await getOptionalUser(request);
 
     if (user) {
-      const mobileEntitlement = await getMobileBroBotEntitlement(user.id);
       subject = { type: 'user', id: user.id };
-
-      if (!mobileEntitlement.hasBroBotAccess) {
-        if (mobileEntitlement.reasonIfBlocked === 'disabled' || mobileEntitlement.source === 'disabled') {
-          return disabledResponse();
-        }
-        const response = limitReachedResponse(mobileEntitlement.dailyLimit);
-        return response;
-      }
     } else {
       let guestSession = getGuestSessionFromRequest(request);
 
@@ -228,12 +216,13 @@ export async function POST(request: Request) {
       hasPrompt: true,
     });
 
-    const entitlement = await getRemainingAIUses(subject);
-    const limit = entitlement.aiAccess.dailyCap;
-    const remainingBefore = entitlement.aiAccess.remainingToday;
+    const gate = await getBroBotAccessGate(subject);
+    const entitlement = gate.normalized.data;
+    const limit = gate.dailyCap;
+    const remainingBefore = gate.remainingToday;
     const usedBefore =
       limit != null && remainingBefore != null ? Math.max(0, limit - remainingBefore) : null;
-    const allowed = !entitlement.isLimitReached;
+    const allowed = !gate.isLimitReached;
 
     logBroBot('[BROBOT-QUOTA-CHECK]', {
       requestId,

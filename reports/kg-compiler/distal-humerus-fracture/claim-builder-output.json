@@ -1,0 +1,731 @@
+{
+  "generatedAt": "2026-07-05T21:57:59.371Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-f09b905a",
+  "gapsAddressed": 5,
+  "gapsScheduled": 5,
+  "claimsGenerated": 8,
+  "claimsRejected": 5,
+  "redirectedToDecisionPoint": 3,
+  "candidates": [
+    {
+      "draftId": "claim-distal-humerus-fracture-anatomy_pearl-medial-and-lateral-colum",
+      "claimText": "Medial and lateral columns.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-anatomy_pearl-olecranon-fossa",
+      "claimText": "Olecranon fossa.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-anatomy_pearl-trochlea-and-capitellum",
+      "claimText": "Trochlea and capitellum.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.anatomy",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-extra-articular-versus-i",
+      "claimText": "Extra-articular versus intra-articular patterns.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-imaging_point-ap-and-lateral-elbow-rad",
+      "claimText": "AP and lateral elbow radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-imaging_point-ct-for-complex-articular",
+      "claimText": "CT for complex articular planning.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.imaging",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-board_trap-ulnar-nerve-protection-i",
+      "claimText": "Ulnar nerve protection is essential in posterior exposure.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.boardPearls",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-elbow-stiffness",
+      "claimText": "Elbow stiffness.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-nonunion",
+      "claimText": "Nonunion.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-ulnar-neuropathy",
+      "claimText": "Ulnar neuropathy.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-articular-involvement",
+      "claimText": "Articular involvement.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-column-comminution",
+      "claimText": "column comminution.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-nerve-exam",
+      "claimText": "nerve exam.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-splint-position",
+      "claimText": "splint position.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-anatomy_pearl-capitellum-and-trochlea",
+      "claimText": "Capitellum and trochlea.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-anatomy_pearl-ulnar-nerve",
+      "claimText": "Ulnar nerve.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.anatomyFocus",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-distal-humerus-fractures",
+      "claimText": "Distal humerus fractures are elbow injuries where articular restoration and nerve protection drive operative planning.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-cognitive_trap-use-dual-column-fixation",
+      "claimText": "Use dual-column fixation language.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-cognitive_trap-mention-ulnar-nerve-tran",
+      "claimText": "Mention ulnar nerve transposition/protection.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.orSurvivalTips",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7915,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-clinical_script-describe-articular-step-",
+      "claimText": "Describe articular step-off.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-clinical_script-check-ulnar-nerve",
+      "claimText": "Check ulnar nerve.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-clinical_script-state-orif-versus-arthro",
+      "claimText": "State ORIF versus arthroplasty pathway.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-use-column-and-articular",
+      "claimText": "Use column and articular concepts for distal humerus fractures.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-e29a70a9"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-identify-ulnar-and-media",
+      "claimText": "Identify ulnar and median nerve risks during fixation.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-e29a70a9"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-distal-humerus-fracture-fact-discuss-orif-versus-arth",
+      "claimText": "Discuss ORIF versus arthroplasty in elderly patients.",
+      "claimType": "fact",
+      "primaryEntitySlug": "distal-humerus-fracture",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-e29a70a9"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-16",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "Articular involvement, bone quality, patient demand",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ]
+    },
+    {
+      "text": "ORIF",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ]
+    },
+    {
+      "text": "Total elbow arthroplasty in selected elderly patients",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ]
+    },
+    {
+      "text": "Why do columns matter?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ]
+    },
+    {
+      "text": "When is total elbow arthroplasty considered?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-fact-extra-articular-versus-i",
+      "draftId": "claim-distal-humerus-fracture-fact-extra-articular-versus-i",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-fact-elbow-stiffness",
+      "draftId": "claim-distal-humerus-fracture-fact-elbow-stiffness",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-board_trap-ulnar-nerve-protection-i",
+      "draftId": "claim-distal-humerus-fracture-board_trap-ulnar-nerve-protection-i",
+      "claimType": "board_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-imaging_point-ap-and-lateral-elbow-rad",
+      "draftId": "claim-distal-humerus-fracture-imaging_point-ap-and-lateral-elbow-rad",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-cognitive_trap-use-dual-column-fixation",
+      "draftId": "claim-distal-humerus-fracture-cognitive_trap-use-dual-column-fixation",
+      "claimType": "cognitive_trap",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c6cbbe"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-imaging_point-ct-for-complex-articular",
+      "draftId": "claim-distal-humerus-fracture-imaging_point-ct-for-complex-articular",
+      "claimType": "imaging_point",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-fact-nonunion",
+      "draftId": "claim-distal-humerus-fracture-fact-nonunion",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-distal-humerus-fracture-fact-ulnar-neuropathy",
+      "draftId": "claim-distal-humerus-fracture-fact-ulnar-neuropathy",
+      "claimType": "fact",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-a1c5d62a"
+      ],
+      "verified": false
+    }
+  ]
+}

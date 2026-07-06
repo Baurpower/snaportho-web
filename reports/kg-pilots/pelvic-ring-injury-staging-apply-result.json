@@ -1,0 +1,203 @@
+{
+  "topicKey": "pelvic-ring-injury",
+  "pilotKey": "pelvic-ring-injury-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 43,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 0,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 43
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|procedure|pelvic-binder-application",
+      "reason": "entity exists: pelvic-binder-application"
+    },
+    {
+      "fingerprint": "create|condition|pelvic-ring-injury",
+      "reason": "entity exists: pelvic-ring-injury"
+    },
+    {
+      "fingerprint": "create|classification_system|young-burgess-classification",
+      "reason": "entity exists: young-burgess-classification"
+    },
+    {
+      "fingerprint": "create|procedure|pelvic-external-fixation",
+      "reason": "entity exists: pelvic-external-fixation"
+    },
+    {
+      "fingerprint": "create|complication|pelvic-hemorrhage",
+      "reason": "entity exists: pelvic-hemorrhage"
+    },
+    {
+      "fingerprint": "create|imaging_finding|unstable-pelvic-ring-pattern",
+      "reason": "entity exists: unstable-pelvic-ring-pattern"
+    },
+    {
+      "fingerprint": "rel|pelvic-ring-injury|injured_in|sacroiliac-joint",
+      "reason": "missing slug resolution pelvic-ring-injury -> sacroiliac-joint"
+    },
+    {
+      "fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution pelvis -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|sacrum|part_of|pelvis",
+      "reason": "missing slug resolution sacrum -> pelvis"
+    },
+    {
+      "fingerprint": "rel|acetabulum|part_of|iliac-wing",
+      "reason": "missing slug resolution acetabulum -> iliac-wing"
+    },
+    {
+      "fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution femoral-diaphysis -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution extensor-mechanism -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution pcl -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution acl -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution common-peroneal-nerve -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution subtalar-joint -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|talus|articulates_with|calcaneus",
+      "reason": "missing slug resolution talus -> calcaneus"
+    },
+    {
+      "fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|pelvic-ring-injury",
+      "reason": "missing slug resolution lower-extremity-trauma-anatomy-hub -> pelvic-ring-injury"
+    },
+    {
+      "fingerprint": "rel|pelvic-ring-injury|injured_in|pelvis",
+      "reason": "missing slug resolution pelvic-ring-injury -> pelvis"
+    },
+    {
+      "fingerprint": "rel|distal-femur|articulates_with|tibial-plateau",
+      "reason": "missing slug resolution distal-femur -> tibial-plateau"
+    },
+    {
+      "fingerprint": "rel|pelvic-ring-injury|injured_in|sacrum",
+      "reason": "missing slug resolution pelvic-ring-injury -> sacrum"
+    },
+    {
+      "fingerprint": "rel|pelvic-ring-injury|has_imaging_finding|unstable-pelvic-ring-pattern",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lisfranc-joint|part_of|midfoot",
+      "reason": "missing slug resolution lisfranc-joint -> midfoot"
+    },
+    {
+      "fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution midfoot -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|iliac-wing|part_of|pelvis",
+      "reason": "missing slug resolution iliac-wing -> pelvis"
+    },
+    {
+      "fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution tibial-plateau -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|patella|articulates_with|distal-femur",
+      "reason": "missing slug resolution patella -> distal-femur"
+    },
+    {
+      "fingerprint": "rel|pelvic-ring-injury|involves_anatomy|pubic-symphysis",
+      "reason": "missing slug resolution pelvic-ring-injury -> pubic-symphysis"
+    },
+    {
+      "fingerprint": "rel|pelvic-ring-injury|involves_anatomy|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution pelvic-ring-injury -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|pelvic-external-fixation|involves_anatomy|pelvis",
+      "reason": "missing slug resolution pelvic-external-fixation -> pelvis"
+    },
+    {
+      "fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus",
+      "reason": "missing slug resolution plantar-soft-tissues -> calcaneus"
+    },
+    {
+      "fingerprint": "rel|pelvic-ring-injury|has_classification|young-burgess-classification",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pelvic-ring-injury|has_complication|pelvic-hemorrhage",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pubic-symphysis|part_of|pelvis",
+      "reason": "missing slug resolution pubic-symphysis -> pelvis"
+    },
+    {
+      "fingerprint": "rel|patella|part_of|extensor-mechanism",
+      "reason": "missing slug resolution patella -> extensor-mechanism"
+    },
+    {
+      "fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution distal-femur -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution popliteal-artery -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution calcaneus -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|sacroiliac-joint|part_of|pelvis",
+      "reason": "missing slug resolution sacroiliac-joint -> pelvis"
+    },
+    {
+      "fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "missing slug resolution talus -> lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|calcaneus|articulates_with|subtalar-joint",
+      "reason": "missing slug resolution calcaneus -> subtalar-joint"
+    },
+    {
+      "fingerprint": "bridge|trauma-pelvic-ring-fractures|pelvic-ring-injury",
+      "reason": "bridge exists"
+    },
+    {
+      "fingerprint": "claim|claim-pri-si-joint-stability",
+      "reason": "claim entity missing"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 0,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

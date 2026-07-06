@@ -1,0 +1,463 @@
+{
+  "topicKey": "distal-radius-fracture",
+  "pilotKey": "distal-radius-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 109,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 109
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|fixation_method|distal-radius-orif-fixation",
+      "reason": "entity exists: distal-radius-orif-fixation"
+    },
+    {
+      "fingerprint": "create|complication|loss-of-reduction",
+      "reason": "entity exists: loss-of-reduction"
+    },
+    {
+      "fingerprint": "create|complication|tendon-irritation",
+      "reason": "entity exists: tendon-irritation"
+    },
+    {
+      "fingerprint": "create|condition|carpal-instability",
+      "reason": "entity exists: carpal-instability"
+    },
+    {
+      "fingerprint": "create|procedure|distal-radius-orif",
+      "reason": "entity exists: distal-radius-orif"
+    },
+    {
+      "fingerprint": "create|complication|crps",
+      "reason": "entity exists: crps"
+    },
+    {
+      "fingerprint": "create|complication|median-neuropathy",
+      "reason": "entity exists: median-neuropathy"
+    },
+    {
+      "fingerprint": "create|imaging_finding|dorsal-comminution",
+      "reason": "entity exists: dorsal-comminution"
+    },
+    {
+      "fingerprint": "create|condition|distal-radius-fracture",
+      "reason": "entity exists: distal-radius-fracture"
+    },
+    {
+      "fingerprint": "create|condition|druj-instability",
+      "reason": "entity exists: druj-instability"
+    },
+    {
+      "fingerprint": "create|imaging_finding|radial-height-loss",
+      "reason": "entity exists: radial-height-loss"
+    },
+    {
+      "fingerprint": "create|condition|galeazzi-fracture",
+      "reason": "entity exists: galeazzi-fracture"
+    },
+    {
+      "fingerprint": "create|surgical_approach|volar-approach",
+      "reason": "entity exists: volar-approach"
+    },
+    {
+      "fingerprint": "create|condition|essex-lopresti-injury",
+      "reason": "entity exists: essex-lopresti-injury"
+    },
+    {
+      "fingerprint": "rel|a1-pulley|part_of|flexor-pulley-system",
+      "reason": "missing slug resolution a1-pulley -> flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|median-nerve|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution median-nerve -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|radial-artery|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution radial-artery -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|deep-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution deep-palmar-arch -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|fdp",
+      "reason": "missing slug resolution carpal-tunnel -> fdp"
+    },
+    {
+      "fingerprint": "rel|guyon-canal|contains|ulnar-nerve",
+      "reason": "missing slug resolution guyon-canal -> ulnar-nerve"
+    },
+    {
+      "fingerprint": "rel|guyon-canal|contains|ulnar-artery",
+      "reason": "missing slug resolution guyon-canal -> ulnar-artery"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|has_imaging_finding|radial-height-loss",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|third-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution third-metacarpal -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|pip-joint|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution pip-joint -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|first-metacarpal|articulates_with|trapezium",
+      "reason": "missing slug resolution first-metacarpal -> trapezium"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|has_imaging_finding|dorsal-comminution",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|apl|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution apl -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|c3-pulley|part_of|flexor-pulley-system",
+      "reason": "missing slug resolution c3-pulley -> flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|involves_anatomy|tfcc",
+      "reason": "missing slug resolution distal-radius-fracture -> tfcc"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|involves_anatomy|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution distal-radius-fracture -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|first-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution first-metacarpal -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|scaphoid",
+      "reason": "missing slug resolution scapholunate-ligament -> scaphoid"
+    },
+    {
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|lunate",
+      "reason": "missing slug resolution lunotriquetral-ligament -> lunate"
+    },
+    {
+      "fingerprint": "rel|distal-radius|part_of|radius",
+      "reason": "missing slug resolution distal-radius -> radius"
+    },
+    {
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|triquetrum",
+      "reason": "missing slug resolution lunotriquetral-ligament -> triquetrum"
+    },
+    {
+      "fingerprint": "rel|distal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution distal-phalanx -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|has_complication|loss-of-reduction",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tfcc|inserts_on|triquetrum",
+      "reason": "missing slug resolution tfcc -> triquetrum"
+    },
+    {
+      "fingerprint": "rel|second-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution second-metacarpal -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|triquetrum|articulates_with|druj",
+      "reason": "missing slug resolution triquetrum -> druj"
+    },
+    {
+      "fingerprint": "rel|fourth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution fourth-metacarpal -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fifth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution fifth-metacarpal -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|thumb-ucl|inserts_on|proximal-phalanx",
+      "reason": "missing slug resolution thumb-ucl -> proximal-phalanx"
+    },
+    {
+      "fingerprint": "rel|proximal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution proximal-phalanx -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|volar-plate|inserts_on|proximal-phalanx",
+      "reason": "missing slug resolution volar-plate -> proximal-phalanx"
+    },
+    {
+      "fingerprint": "rel|edc|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution edc -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|mcp-joint|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution mcp-joint -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|a2-pulley|part_of|flexor-pulley-system",
+      "reason": "missing slug resolution a2-pulley -> flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|dip-joint|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution dip-joint -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|epl|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution epl -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|cmc-joint|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution cmc-joint -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fpl|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution fpl -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|ecu|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution ecu -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|a3-pulley|part_of|flexor-pulley-system",
+      "reason": "missing slug resolution a3-pulley -> flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|fcr|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution fcr -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fds|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution fds -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fcu|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution fcu -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution flexor-pulley-system -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution extensor-tendon-zones -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|contains|fdp",
+      "reason": "missing slug resolution flexor-pulley-system -> fdp"
+    },
+    {
+      "fingerprint": "rel|digital-nerves|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution digital-nerves -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|a4-pulley|part_of|flexor-pulley-system",
+      "reason": "missing slug resolution a4-pulley -> flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|a5-pulley|part_of|flexor-pulley-system",
+      "reason": "missing slug resolution a5-pulley -> flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|c1-pulley|part_of|flexor-pulley-system",
+      "reason": "missing slug resolution c1-pulley -> flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|radius|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution radius -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|lunate|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution lunate -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|druj|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution druj -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|c2-pulley|part_of|flexor-pulley-system",
+      "reason": "missing slug resolution c2-pulley -> flexor-pulley-system"
+    },
+    {
+      "fingerprint": "rel|distal-ulna|part_of|ulna",
+      "reason": "missing slug resolution distal-ulna -> ulna"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|contains|fds",
+      "reason": "missing slug resolution flexor-pulley-system -> fds"
+    },
+    {
+      "fingerprint": "rel|hamate|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution hamate -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|ulnar-nerve|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution ulnar-nerve -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution superficial-palmar-arch -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|capitate|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution capitate -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|radial-nerve|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution radial-nerve -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|ulnar-artery|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution ulnar-artery -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|trapezium|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution trapezium -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|ain|part_of|median-nerve",
+      "reason": "missing slug resolution ain -> median-nerve"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|median-nerve",
+      "reason": "missing slug resolution carpal-tunnel -> median-nerve"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|scaphoid",
+      "reason": "missing slug resolution distal-radius -> scaphoid"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|druj",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pin|part_of|radial-nerve",
+      "reason": "missing slug resolution pin -> radial-nerve"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|fds",
+      "reason": "missing slug resolution carpal-tunnel -> fds"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|lunate",
+      "reason": "missing slug resolution distal-radius -> lunate"
+    },
+    {
+      "fingerprint": "rel|distal-ulna|articulates_with|druj",
+      "reason": "missing slug resolution distal-ulna -> druj"
+    },
+    {
+      "fingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|distal-radius-fracture",
+      "reason": "missing slug resolution hand-wrist-anatomy-hub -> distal-radius-fracture"
+    },
+    {
+      "fingerprint": "rel|distal-radius-orif|involves_anatomy|distal-radius",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|injured_in|distal-radius",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|has_complication|median-neuropathy",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pisiform|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution pisiform -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|involves_anatomy|druj",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|has_complication|crps",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid|articulates_with|lunate",
+      "reason": "missing slug resolution scaphoid -> lunate"
+    },
+    {
+      "fingerprint": "rel|distal-radius-fracture|has_complication|tendon-irritation",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ulna|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution ulna -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|pruj|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution pruj -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|lunate|articulates_with|triquetrum",
+      "reason": "missing slug resolution lunate -> triquetrum"
+    },
+    {
+      "fingerprint": "rel|middle-phalanx|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution middle-phalanx -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|interosseous-membrane|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution interosseous-membrane -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|scaphoid|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution scaphoid -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution flexor-tendon-zones -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|triquetrum|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution triquetrum -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|lunate",
+      "reason": "missing slug resolution scapholunate-ligament -> lunate"
+    },
+    {
+      "fingerprint": "rel|epb|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution epb -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|trapezoid|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution trapezoid -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|fdp|part_of|hand-wrist-anatomy-hub",
+      "reason": "missing slug resolution fdp -> hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "bridge|trauma-distal-radius-fractures|distal-radius-fracture",
+      "reason": "bridge exists"
+    },
+    {
+      "fingerprint": "claim|claim-dr-shared-anatomy",
+      "reason": "claim entity missing"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

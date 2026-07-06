@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-05T22:50:59.845Z",
+  "gaps": [
+    {
+      "id": "gap-asset-question-1",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "8 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "ulnar-styloid-fracture"
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "byKind": {
+      "missing_asset_link": 1
+    },
+    "byPriority": {
+      "medium": 1
+    }
+  }
+}

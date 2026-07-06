@@ -1,0 +1,28 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 85,
+  "deductions": [
+    {
+      "finding": "5 dangling edges reference missing entities",
+      "evidence": "acl-tear-exam-maneuver -[examines]-> acl; acl-tear -[involves_anatomy]-> acl; acl -[part_of]-> sports-knee-anatomy-hub",
+      "reason": "Relationships must resolve to entities in the neighborhood graph.",
+      "severity": "critical",
+      "category": "graph_integrity",
+      "suggestedFix": "Create missing entities or remove invalid relationship proposals.",
+      "impact": 15
+    }
+  ],
+  "metrics": {
+    "entityCount": 37,
+    "relationshipCount": 46,
+    "orphanCount": 0,
+    "danglingEdgeCount": 5,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": [
+    "Create missing entities or remove invalid relationship proposals."
+  ]
+}

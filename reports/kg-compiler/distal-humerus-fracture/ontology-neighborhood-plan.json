@@ -1,0 +1,89 @@
+{
+  "topicKey": "distal-humerus-fracture",
+  "pilotKey": "distal-humerus-fracture-neighborhood",
+  "primaryEntitySlug": "distal-humerus-fracture",
+  "displayName": "Distal Humerus Fracture",
+  "generatedAt": "2026-07-05T21:57:59.348Z",
+  "nodes": [
+    {
+      "slug": "distal-humerus-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Distal Humerus ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "total-elbow-arthroplasty-trauma",
+      "entityType": "procedure",
+      "preferredLabel": "Total Elbow Arthroplasty for Trauma",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "elbow-stiffness",
+      "entityType": "complication",
+      "preferredLabel": "Elbow Stiffness",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "distal-humerus-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Distal Humerus Fracture",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "distal-humerus-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Distal Humerus Nonunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "intra-articular-distal-humerus-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Intra-articular Distal Humerus Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "distal-humerus-fracture"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "distal-humerus-orif",
+      "total-elbow-arthroplasty-trauma"
+    ],
+    "classification": [],
+    "imaging": [
+      "intra-articular-distal-humerus-fracture"
+    ],
+    "complication": [
+      "elbow-stiffness",
+      "distal-humerus-nonunion"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

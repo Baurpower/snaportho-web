@@ -1,0 +1,49 @@
+{
+  "topicKey": "subtrochanteric-fracture",
+  "pilotKey": "subtrochanteric-fracture-neighborhood",
+  "generatedAt": "2026-07-05T21:38:14.700Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "19 proposals still awaiting human review",
+    "11 items require attending review",
+    "Insufficient relationship metadata on essential edges",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "13 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[critical] Subtrochanteric Plate Osteosynthesis neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Subtrochanteric Plate Osteosynthesis missing outbound involves_anatomy (0/1).",
+    "[high] Subtrochanteric Plate Osteosynthesis missing outbound at_risk_structure (0/1).",
+    "[high] Proximal Femur Anatomy Hub missing outbound part_of (0/1).",
+    "[high] Cephalomedullary Nailing missing outbound at_risk_structure (0/1).",
+    "[high] Seinsheimer Classification neighborhood has 0/2 classification_grade entities.",
+    "[high] Subtrochanteric Fracture missing outbound at_risk_structure (0/1).",
+    "[high] Subtrochanteric Fracture missing outbound has_grade (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer",
+    "Run curate step to normalize metadata"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 23,
+    "humanReviewItems": 19,
+    "attendingReviewItems": 11,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

@@ -1,0 +1,219 @@
+[
+  {
+    "proposal_fingerprint": "rel|unicompartmental-knee-arthritis|indicates_treatment|unicompartmental-knee-arthroplasty",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "unicompartmental-knee-arthritis -[indicates_treatment]-> unicompartmental-knee-arthroplasty",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: unicompartmental-knee-arthritis -[indicates_treatment]-> unicompartmental-knee-arthroplasty",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_key": "pilot:unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_label": "Unicompartmental Knee Arthritis Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "unicompartmental-knee-arthritis",
+      "subject_entity_type": "condition",
+      "object_slug": "unicompartmental-knee-arthroplasty",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.72,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:19:40.488Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-unicompartmental-knee-arthritis-core",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-unicompartmental-knee-arthritis-core",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+    "metadata": {
+      "pilot": "unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_key": "pilot:unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_label": "Unicompartmental Knee Arthritis Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-unicompartmental-knee-arthritis-core",
+      "claim_type": "fact",
+      "claim_text": "UKA candidacy requires isolated compartment disease, intact ligaments, and correctable deformity.",
+      "primary_entity_slug": "unicompartmental-knee-arthritis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.72,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:19:40.488Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-unicompartmental-knee-arthritis-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-unicompartmental-knee-arthritis-board-trap",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_key": "pilot:unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_label": "Unicompartmental Knee Arthritis Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-unicompartmental-knee-arthritis-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Board trap: oversimplifying unicompartmental knee arthritis without attending-level implant, fixation, or infection context.",
+      "primary_entity_slug": "unicompartmental-knee-arthritis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.72,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:19:40.488Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-unicompartmental-knee-arthritis-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-unicompartmental-knee-arthritis-script",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_key": "pilot:unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_label": "Unicompartmental Knee Arthritis Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-unicompartmental-knee-arthritis-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for unicompartmental knee arthritis.",
+      "primary_entity_slug": "unicompartmental-knee-arthritis",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.72,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:19:40.488Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-unicompartmental-knee-arthritis-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-unicompartmental-knee-arthritis-operative",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_key": "pilot:unicompartmental-knee-arthritis-neighborhood",
+      "review_packet_label": "Unicompartmental Knee Arthritis Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-unicompartmental-knee-arthritis-operative",
+      "subject_entity_slug": "unicompartmental-knee-arthritis",
+      "pattern_type": "operative_indication",
+      "trigger": "Medial compartment OA with intact ACL and correctable varus",
+      "action": "Discuss UKA versus TKA with attending using compartment-specific criteria",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.72,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:19:40.488Z"
+    }
+  }
+]

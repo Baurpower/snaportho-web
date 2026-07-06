@@ -1,0 +1,624 @@
+[
+  {
+    "proposal_fingerprint": "rel|proximal-biceps-tendon-pathology|tested_by|proximal-biceps-tendon-pathology-exam-maneuver",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "proximal-biceps-tendon-pathology -[tested_by]-> proximal-biceps-tendon-pathology-exam-maneuver",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|proximal-biceps-tendon-pathology|tested_by|proximal-biceps-tendon-pathology-exam-maneuver",
+    "alternatives": [],
+    "evidence_summary": "Relationship tested_by",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "proximal-biceps-tendon-pathology",
+      "subject_entity_type": "condition",
+      "object_slug": "proximal-biceps-tendon-pathology-exam-maneuver",
+      "object_entity_type": "exam_maneuver",
+      "relationship_metadata": {
+        "educational_importance": "high",
+        "context_relevance": [
+          "clinic",
+          "call"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|proximal-biceps-tendon-pathology-mri-finding|indicates_treatment|proximal-biceps-tendon-pathology-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "proximal-biceps-tendon-pathology-mri-finding -[indicates_treatment]-> proximal-biceps-tendon-pathology-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: proximal-biceps-tendon-pathology-mri-finding -[indicates_treatment]-> proximal-biceps-tendon-pathology-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "proximal-biceps-tendon-pathology-mri-finding",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "proximal-biceps-tendon-pathology-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.75,
+        "review_status": "needs_review",
+        "note": "operative indication attending-dependent"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|proximal-biceps-tendon-pathology|treated_by|proximal-biceps-tendon-pathology-reconstruction",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "proximal-biceps-tendon-pathology -[treated_by]-> proximal-biceps-tendon-pathology-reconstruction",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|proximal-biceps-tendon-pathology|treated_by|proximal-biceps-tendon-pathology-reconstruction",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "proximal-biceps-tendon-pathology",
+      "subject_entity_type": "condition",
+      "object_slug": "proximal-biceps-tendon-pathology-reconstruction",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|proximal-biceps-tendon-pathology|treated_by|proximal-biceps-tendon-pathology-rehab-protocol",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "proximal-biceps-tendon-pathology -[treated_by]-> proximal-biceps-tendon-pathology-rehab-protocol",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|proximal-biceps-tendon-pathology|treated_by|proximal-biceps-tendon-pathology-rehab-protocol",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "proximal-biceps-tendon-pathology",
+      "subject_entity_type": "condition",
+      "object_slug": "proximal-biceps-tendon-pathology-rehab-protocol",
+      "object_entity_type": "treatment_principle",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "clinic"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|proximal-biceps-tendon-pathology|differential_for|rotator-cuff-tear",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "proximal-biceps-tendon-pathology -[differential_for]-> rotator-cuff-tear",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|proximal-biceps-tendon-pathology|differential_for|rotator-cuff-tear",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "proximal-biceps-tendon-pathology",
+      "subject_entity_type": "condition",
+      "object_slug": "rotator-cuff-tear",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|proximal-biceps-tendon-pathology|differential_for|slap-tear",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "proximal-biceps-tendon-pathology -[differential_for]-> slap-tear",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|proximal-biceps-tendon-pathology|differential_for|slap-tear",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "proximal-biceps-tendon-pathology",
+      "subject_entity_type": "condition",
+      "object_slug": "slap-tear",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "associated_injury",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|proximal-biceps-tendon-pathology|differential_for|proximal-humerus-fracture",
+    "proposal_type": "add_canonical_relationship",
+    "route": "HUMAN_REVIEW",
+    "target": "proximal-biceps-tendon-pathology -[differential_for]-> proximal-humerus-fracture",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.92,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: default_human_review"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|proximal-biceps-tendon-pathology|differential_for|proximal-humerus-fracture",
+    "alternatives": [],
+    "evidence_summary": "Relationship differential_for",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "proximal-biceps-tendon-pathology",
+      "subject_entity_type": "condition",
+      "object_slug": "proximal-humerus-fracture",
+      "object_entity_type": "condition",
+      "relationship_metadata": {
+        "cross_cluster": true,
+        "cross_neighborhood": true,
+        "educational_importance": "high",
+        "relevance_reason": "trauma_overlap",
+        "review_status": "unreviewed"
+      },
+      "high_risk": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "default_human_review"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-proximalbicepstendonpathology-oneliner",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-proximalbicepstendonpathology-oneliner",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts proximal-biceps-tendon-pathology",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-proximalbicepstendonpathology-oneliner",
+      "claim_type": "fact",
+      "claim_text": "Proximal biceps pathology presents with anterior shoulder pain and Popeye deformity after rupture.",
+      "primary_entity_slug": "proximal-biceps-tendon-pathology",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-proximalbicepstendonpathology-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-proximalbicepstendonpathology-board-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts proximal-biceps-tendon-pathology boardPearls",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-proximalbicepstendonpathology-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Students often underweight exam findings and over-rely on imaging when evaluating proximal biceps tendon pathology.",
+      "primary_entity_slug": "proximal-biceps-tendon-pathology",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-proximalbicepstendonpathology-cognitive-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-proximalbicepstendonpathology-cognitive-trap",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts proximal-biceps-tendon-pathology pimpQuestions",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-proximalbicepstendonpathology-cognitive-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Do not anchor on a single exam maneuver for proximal biceps tendon pathology — integrate mechanism, instability symptoms, and imaging pattern.",
+      "primary_entity_slug": "proximal-biceps-tendon-pathology",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-proximalbicepstendonpathology-clinical-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-proximalbicepstendonpathology-clinical-script",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts proximal-biceps-tendon-pathology caseSteps",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-proximalbicepstendonpathology-clinical-script",
+      "claim_type": "clinical_script",
+      "claim_text": "State mechanism, key exam findings, imaging role, treatment concept, and return-to-play framework for proximal biceps tendon pathology.",
+      "primary_entity_slug": "proximal-biceps-tendon-pathology",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-proximalbicepstendonpathology-popeye",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-proximalbicepstendonpathology-popeye",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts proximal-biceps-tendon-pathology",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-proximalbicepstendonpathology-popeye",
+      "claim_type": "fact",
+      "claim_text": "Distal migration of the biceps muscle belly suggests long head rupture (Popeye sign).",
+      "primary_entity_slug": "proximal-biceps-tendon-pathology",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-proximalbicepstendonpathology-operative-indication",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-proximalbicepstendonpathology-operative-indication",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts proximal-biceps-tendon-pathology decisionMaking",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-proximalbicepstendonpathology-operative-indication",
+      "subject_entity_slug": "proximal-biceps-tendon-pathology",
+      "pattern_type": "operative_indication",
+      "trigger": "Active athlete with functional instability or mechanical symptoms from proximal biceps tendon pathology despite appropriate initial management",
+      "action": "Discuss operative reconstruction versus continued rehabilitation; graft selection and fixation are attending decisions",
+      "urgency": "urgent",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-proximalbicepstendonpathology-return-to-play",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-proximalbicepstendonpathology-return-to-play",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts proximal-biceps-tendon-pathology treatmentOptions",
+    "metadata": {
+      "pilot": "proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_key": "pilot:proximal-biceps-tendon-pathology-neighborhood",
+      "review_packet_label": "Proximal Biceps Tendon Pathology Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-proximalbicepstendonpathology-return-to-play",
+      "subject_entity_slug": "proximal-biceps-tendon-pathology",
+      "pattern_type": "return_to_play",
+      "trigger": "Athlete approaching return-to-sport after proximal biceps tendon pathology treatment",
+      "action": "Apply sport-specific return-to-play criteria with strength, stability, and functional testing milestones",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:03:26.999Z"
+    }
+  }
+]

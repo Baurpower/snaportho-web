@@ -1,0 +1,36 @@
+{
+  "topicKey": "boxer-fracture",
+  "pilotKey": "boxer-fracture-neighborhood",
+  "primaryEntitySlug": "boxer-fracture",
+  "displayName": "Boxer Fracture",
+  "generatedAt": "2026-07-06T00:01:43.950Z",
+  "nodes": [
+    {
+      "slug": "boxer-fracture-nonoperative-principle",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Boxer Fracture Nonoperative Principle",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "boxer-fracture-nonoperative-principle"
+    ]
+  }
+}

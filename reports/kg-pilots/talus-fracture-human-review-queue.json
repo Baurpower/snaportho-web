@@ -1,0 +1,398 @@
+[
+  {
+    "proposal_fingerprint": "rel|talar-neck-fracture|indicates_treatment|talus-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "talar-neck-fracture -[indicates_treatment]-> talus-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: talar-neck-fracture -[indicates_treatment]-> talus-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "talar-neck-fracture",
+      "subject_entity_type": "imaging_finding",
+      "object_slug": "talus-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "confidence": 0.8,
+        "review_status": "needs_review",
+        "note": "displacement and Hawkins grade drive fixation urgency"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.86,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "rel|talus-fracture|treated_by|talus-orif",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "talus-fracture -[treated_by]-> talus-orif",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Review add_canonical_relationship for rel|talus-fracture|treated_by|talus-orif",
+    "alternatives": [],
+    "evidence_summary": "Relationship treated_by",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "talus-fracture",
+      "subject_entity_type": "condition",
+      "object_slug": "talus-orif",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "context_relevance": [
+          "or"
+        ],
+        "review_status": "unreviewed"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.86,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-talus-avn-risk",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-talus-avn-risk",
+    "alternatives": [],
+    "evidence_summary": "orthobullets trauma-talar-neck-fractures curriculum node",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-talus-avn-risk",
+      "claim_type": "fact",
+      "claim_text": "Talus fractures carry avascular necrosis risk because talar neck displacement compromises limited retrograde blood supply.",
+      "primary_entity_slug": "talus-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.86,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-talus-hawkins-language",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-talus-hawkins-language",
+    "alternatives": [],
+    "evidence_summary": "orthobullets trauma-talar-neck-fractures classification",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-talus-hawkins-language",
+      "claim_type": "fact",
+      "claim_text": "Hawkins classification links talar neck displacement to subtalar and ankle subluxation and rising AVN risk.",
+      "primary_entity_slug": "hawkins-classification",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.86,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-talus-urgent-reduction-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-talus-urgent-reduction-trap",
+    "alternatives": [],
+    "evidence_summary": "orthobullets trauma-talar-neck-fractures board pearls",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-talus-urgent-reduction-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Delayed reduction of displaced talar neck fractures increases AVN risk — treat as urgent anatomic restoration problem.",
+      "primary_entity_slug": "talar-neck-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite",
+        "or"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.86,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-talus-missed-fracture-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-talus-missed-fracture-trap",
+    "alternatives": [],
+    "evidence_summary": "orthobullets trauma-talar-neck-fractures imaging",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-talus-missed-fracture-trap",
+      "claim_type": "cognitive_trap",
+      "claim_text": "Clearing ankle trauma without scrutinizing talar neck lines on radiographs when mechanism suggests talar injury.",
+      "primary_entity_slug": "talar-neck-fracture",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.86,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-talus-case-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-talus-case-script",
+    "alternatives": [],
+    "evidence_summary": "orthobullets trauma-talar-neck-fractures case presentation",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-talus-case-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Document mechanism, Hawkins grade language, reduction quality, fixation plan, and AVN surveillance strategy.",
+      "primary_entity_slug": "talus-fracture",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.86,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-talus-urgent-orif",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-talus-urgent-orif",
+    "alternatives": [],
+    "evidence_summary": "orthobullets trauma-talar-neck-fractures treatment pathways",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-talus-urgent-orif",
+      "subject_entity_slug": "talus-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Displaced talar neck fracture (Hawkins II-IV pattern) with subtalar or ankle subluxation",
+      "action": "Urgent anatomic reduction and talus ORIF with attending; plan serial imaging for AVN surveillance",
+      "urgency": "urgent",
+      "safety_criticality": "high",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.86,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-talus-avn-surveillance",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-talus-avn-surveillance",
+    "alternatives": [],
+    "evidence_summary": "orthobullets trauma-talar-neck-fractures complications",
+    "metadata": {
+      "pilot": "talus-fracture-neighborhood",
+      "review_packet_key": "pilot:talus-fracture-neighborhood",
+      "review_packet_label": "Talus Fracture Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-talus-avn-surveillance",
+      "subject_entity_slug": "talus-fracture",
+      "pattern_type": "operative_indication",
+      "trigger": "Talar neck fracture treated operatively or nonoperatively with Hawkins displacement history",
+      "action": "Establish AVN surveillance with serial clinical exam and advanced imaging per attending protocol",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.86,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:48:38.549Z"
+    }
+  }
+]

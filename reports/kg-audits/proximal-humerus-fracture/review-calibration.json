@@ -1,0 +1,34 @@
+{
+  "category": "review_calibration",
+  "label": "Review Calibration",
+  "score": 92,
+  "deductions": [
+    {
+      "finding": "Review burden too high — excessive human routing",
+      "evidence": "50% human review rate (19 items)",
+      "reason": "Well-calibrated auto-review should auto-approve low-risk proposals.",
+      "severity": "medium",
+      "category": "review_calibration",
+      "suggestedFix": "Tune confidence thresholds; improve evidence quality to raise auto-approve rate.",
+      "impact": 4
+    },
+    {
+      "finding": "High attending review burden",
+      "evidence": "34% EXPERT_REVIEW (13 items)",
+      "reason": "Excessive attending review slows publication velocity.",
+      "severity": "medium",
+      "category": "review_calibration",
+      "suggestedFix": "Improve claim atomicity and decision point specificity to reduce EXPERT_REVIEW routing.",
+      "impact": 4
+    }
+  ],
+  "metrics": {
+    "autoReviewLoaded": true,
+    "humanReviewPercent": 50,
+    "autoApprovedPercent": 50,
+    "estimatedFalsePositiveRate": 0,
+    "estimatedFalseNegativeRate": 0,
+    "expertReviewCount": 13
+  },
+  "recommendations": []
+}

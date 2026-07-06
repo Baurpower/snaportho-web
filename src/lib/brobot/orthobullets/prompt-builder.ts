@@ -131,7 +131,7 @@ STYLE
 - Use only the provided stem, choices, visible explanation state, and KG metadata. Never imply you saw hidden content.
 - If key review-only fields are missing, that is expected; use the visible clue pattern and add a warning only if the missing information materially limits the hint.`;
 
-const CURRICULUM_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending explaining a ROCK curriculum page to a resident.
+const CURRICULUM_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending explaining a ROCK curriculum or educational page to a resident.
 
 Return valid JSON only, matching exactly this shape:
 {
@@ -146,24 +146,44 @@ Return valid JSON only, matching exactly this shape:
 }
 
 GOAL
-- Explain and organize the visible curriculum page content in a resident-friendly way.
-- Focus on what matters for cases, OITE/boards, and clinical use.
+- Teach the page, not just summarize it.
+- Focus on what matters clinically, on OITE/boards, and on the wards.
 - Convert long sections into high-yield teaching points rather than repeating the page.
 
 FIELD MEANING
-- bottomLine: 2-3 sentence summary of what this page is teaching and why it matters.
+- bottomLine: one-sentence takeaway, then one more sentence on why this matters clinically.
 - testedConcept: the page topic as one concise phrase.
-- whyCorrect: organized teaching explanation of the page content. Use short paragraphs separated by semicolons if needed, but no markdown bullets.
+- whyCorrect: organized teaching explanation covering high-yield facts, decision points/algorithms if present, common exam traps, and common attending pimp questions. Use short paragraphs separated by semicolons if needed, but no markdown bullets.
 - whyWrong: always return an empty array for curriculum pages.
-- boardTrap: optional high-yield pitfall or misconception from the topic.
+- boardTrap: what students usually miss on this topic.
 - boardPearl: one memorable clinical/OITE takeaway.
 - studyNext: 2-5 adjacent topics to review next.
-- warnings: include a brief warning if the extracted content was sparse or lacked key sections.
+- warnings: include a brief warning if the extracted content was sparse, references-heavy, or lacked key sections.
 
 RULES
 - Use only the provided normalized visible content. Do not claim you saw hidden content, full HTML, or unprovided images.
 - Do not quote long passages. Teach from the extracted content.
 - Write for orthopaedic residents using precise clinical language.`;
+
+const CURRICULUM_CHAT_SYSTEM_PROMPT = `You are BroBot, an orthopaedic surgery teaching attending answering a resident's follow-up question about ONE ROCK curriculum or educational page.
+
+Return valid JSON only, matching exactly this shape:
+{
+  "answer": string,
+  "suggestedPrompts": string[],
+  "warnings": string[]
+}
+
+GOAL
+- Answer the follow-up using the supplied page context and prior BroBot explanation.
+- Teach at the resident level: concise, specific, and clinically useful.
+- Support follow-ups like "What is most testable here?", "Explain this like I'm an MS3", "Give me pimp questions", "What should I memorize?", and "Turn this into a study guide".
+
+RULES
+- Use only the provided page context, prior explanation, and follow-up chat history.
+- Do not claim you saw hidden content or unprovided images.
+- No markdown bullets or headers inside "answer".
+- "suggestedPrompts" should contain 0-3 short, useful next follow-ups only when there is an obvious next step.`;
 
 export function buildOrthobulletsExplainMessages(
   context: ResolvedOrthobulletsContext
@@ -190,7 +210,9 @@ export function buildOrthobulletsExplainMessages(
           `Date: ${context.pageContext.date ?? '(missing)'}`,
           `Section headings: ${(context.pageContext.sectionHeadings ?? []).join(' | ') || '(missing)'}`,
           `Extracted sections:\n${sections || '(none)'}`,
-          `Extracted content:\n${context.pageContext.contentText ?? '(missing)'}`,
+          `Extracted markdown:\n${context.pageContext.contentMarkdown ?? context.pageContext.contentText ?? '(missing)'}`,
+          `References count: ${context.pageContext.referencesCount ?? context.pageContext.references?.length ?? 0}`,
+          `Tables count: ${context.pageContext.tablesCount ?? 0}`,
           `Image count: ${context.pageContext.images.length}`,
           `Extraction warnings: ${context.warnings.join(' | ') || '(none)'}`,
         ].join('\n\n'),
@@ -276,27 +298,43 @@ export function buildOrthobulletsChatMessages(input: {
   history: OrthobulletsChatTurn[];
   userMessage: string;
 }): ChatCompletionMessage[] {
+  const isCurriculum = input.context.pageContext.mode === 'curriculum_content';
+
   return [
     {
       role: 'system',
-      content: CHAT_SYSTEM_PROMPT,
+      content: isCurriculum ? CURRICULUM_CHAT_SYSTEM_PROMPT : CHAT_SYSTEM_PROMPT,
     },
     {
       role: 'user',
-      content: [
-        `Provider/source: ${input.context.pageContext.provider ?? input.context.pageContext.source}`,
-        `Page URL: ${input.context.pageContext.sourceUrl ?? input.context.pageContext.pageUrl}`,
-        `Question ID: ${input.context.pageContext.questionId ?? '(missing)'}`,
-        `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
-        `Stem:\n${input.context.pageContext.stem ?? '(missing)'}`,
-        `Answer choices:\n${renderChoices(input.context)}`,
-        `Selected answer: ${input.context.pageContext.selectedAnswerKey ?? input.context.pageContext.selectedAnswer ?? '(unknown)'}`,
-        `Correct answer: ${input.context.pageContext.correctAnswerKey ?? input.context.pageContext.correctAnswer ?? '(unknown)'}`,
-        `Prior BroBot explanation:\n${renderPriorExplanation(input.explanation)}`,
-        `Recent follow-up chat:\n${renderChatHistory(input.history)}`,
-        `Resident follow-up: ${input.userMessage}`,
-        `Extraction warnings: ${input.context.warnings.join(' | ') || '(none)'}`,
-      ].join('\n\n'),
+      content: isCurriculum
+        ? [
+            `Provider/source: ${input.context.pageContext.provider ?? input.context.pageContext.source}`,
+            `Mode: ${input.context.pageContext.mode}`,
+            `Page URL: ${input.context.pageContext.sourceUrl ?? input.context.pageContext.pageUrl}`,
+            `Title: ${input.context.pageContext.title ?? '(missing)'}`,
+            `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
+            `Section headings: ${(input.context.pageContext.sectionHeadings ?? []).join(' | ') || '(missing)'}`,
+            `Extracted markdown:\n${input.context.pageContext.contentMarkdown ?? input.context.pageContext.contentText ?? '(missing)'}`,
+            `Prior BroBot explanation:\n${renderPriorExplanation(input.explanation)}`,
+            `Recent follow-up chat:\n${renderChatHistory(input.history)}`,
+            `Resident follow-up: ${input.userMessage}`,
+            `Extraction warnings: ${input.context.warnings.join(' | ') || '(none)'}`,
+          ].join('\n\n')
+        : [
+            `Provider/source: ${input.context.pageContext.provider ?? input.context.pageContext.source}`,
+            `Page URL: ${input.context.pageContext.sourceUrl ?? input.context.pageContext.pageUrl}`,
+            `Question ID: ${input.context.pageContext.questionId ?? '(missing)'}`,
+            `Breadcrumbs: ${input.context.pageContext.breadcrumbs.join(' > ') || '(missing)'}`,
+            `Stem:\n${input.context.pageContext.stem ?? '(missing)'}`,
+            `Answer choices:\n${renderChoices(input.context)}`,
+            `Selected answer: ${input.context.pageContext.selectedAnswerKey ?? input.context.pageContext.selectedAnswer ?? '(unknown)'}`,
+            `Correct answer: ${input.context.pageContext.correctAnswerKey ?? input.context.pageContext.correctAnswer ?? '(unknown)'}`,
+            `Prior BroBot explanation:\n${renderPriorExplanation(input.explanation)}`,
+            `Recent follow-up chat:\n${renderChatHistory(input.history)}`,
+            `Resident follow-up: ${input.userMessage}`,
+            `Extraction warnings: ${input.context.warnings.join(' | ') || '(none)'}`,
+          ].join('\n\n'),
     },
   ];
 }

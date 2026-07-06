@@ -1,4 +1,5 @@
 import { SELECTOR_SET_VERSION, SELECTORS } from './selectors.js';
+import { classifyPage } from '../shared/page-classification.js';
 import type {
   OrthobulletsChoice,
   OrthobulletsImageMetadata,
@@ -8,11 +9,12 @@ import type {
   QuestionProvider,
 } from '../shared/types.js';
 
-export const EXTRACTOR_VERSION = '2026-07-03-provider-rock-v1';
+export const EXTRACTOR_VERSION = '2026-07-05-rock-explain-study-panel-v2';
 export { SELECTOR_SET_VERSION };
 
 const MAX_CURRICULUM_CONTENT_CHARS = 14000;
 const MIN_CURRICULUM_CONTENT_CHARS = 500;
+const MIN_REFERENCES_HEAVY_CONTENT_CHARS = 180;
 
 type DomElementLike = {
   nodeName?: string;
@@ -421,7 +423,7 @@ export function extractOrthobulletsPageContext(input: {
     extractionWarnings.push('explanation_not_visible');
   }
 
-  return {
+  const draftContext: OrthobulletsPageContext = {
     source: 'orthobullets',
     provider: 'orthobullets',
     mode: 'question',
@@ -459,6 +461,11 @@ export function extractOrthobulletsPageContext(input: {
       matchedSelectors,
       extractorVersion: EXTRACTOR_VERSION,
     },
+  };
+
+  return {
+    ...draftContext,
+    classification: classifyPage(draftContext),
   };
 }
 
@@ -503,6 +510,14 @@ const ROCK_SELECTORS = {
     'article [class*="stem" i]',
     'article [class*="prompt" i]',
   ],
+  questionContainers: [
+    '[data-testid="question-page"]',
+    'section[aria-label*="question" i]',
+    'fieldset[aria-label*="answer" i]',
+    '[class*="question-container" i]',
+    '[class*="assessment-item" i]',
+    '[data-rock-question]',
+  ],
   choices: [
     '[data-testid="answer-choice"]',
     '[data-testid*="answer-choice" i]',
@@ -527,7 +542,6 @@ const ROCK_SELECTORS = {
     'li[class*="answer" i]',
     'li[class*="choice" i]',
     'fieldset label',
-    'ol li',
   ],
   explanation: [
     '[data-testid="explanation"]',
@@ -574,8 +588,44 @@ const ROCK_SELECTORS = {
     'h4',
     'p',
     'li',
+    'blockquote',
+    'figcaption',
+    'caption',
     '[data-testid*="learning-objective" i]',
     '[class*="learning-objective" i]',
+    '[class*="reference" i]',
+    '[class*="references" i]',
+    '[id*="reference" i]',
+    '[id*="references" i]',
+  ],
+  references: [
+    '[data-testid*="reference" i] li',
+    '[data-testid*="reference" i] p',
+    '[class*="reference" i] li',
+    '[class*="references" i] li',
+    '[id*="reference" i] li',
+    '[id*="references" i] li',
+    'section[aria-label*="reference" i] li',
+    'section[aria-label*="reference" i] p',
+  ],
+  tables: ['table'],
+  chrome: [
+    'header',
+    'footer',
+    'nav',
+    'aside',
+    '[role="navigation"]',
+    '[role="banner"]',
+    '[role="contentinfo"]',
+    '[aria-label*="cookie" i]',
+    '[class*="cookie" i]',
+    '[class*="feedback" i]',
+    '[data-testid*="feedback" i]',
+    '[class*="sidebar" i]',
+    '[class*="menu" i]',
+    'script',
+    'style',
+    'noscript',
   ],
   authors: [
     '[data-testid*="author" i]',
@@ -653,6 +703,14 @@ function firstTextWithStrategy(root: DocumentLike, selectors: readonly string[],
       return { text, strategy: selector };
     }
   }
+
+  const directText = textOf(root);
+  if (directText && selectors.some((selector) => /stem|prompt|question-stem/i.test(selector))) {
+    matched[debugKey] = [...(matched[debugKey] ?? []), 'self_text'];
+    matched[strategyKey] = ['self_text'];
+    return { text: directText, strategy: 'self_text' };
+  }
+
   matched[strategyKey] = ['not_found'];
   return { text: undefined, strategy: 'not_found' };
 }
@@ -668,6 +726,14 @@ function collectChoiceNodesWithStrategy(root: DocumentLike, selectors: readonly 
   }
   matched.choicesStrategy = ['not_found'];
   return { nodes: [], strategy: 'not_found' };
+}
+
+function findRockQuestionContainer(root: DocumentLike, matched: Record<string, string[]>) {
+  return firstElement(root, ROCK_SELECTORS.questionContainers, 'questionContainer', matched);
+}
+
+function isLikelyRockQuestionUrl(url: string) {
+  return /\/(?:questions?|items?|assessment|quiz|test|review)\b/i.test(url) || /[?&](?:questionId|question_id|qid)=/i.test(url);
 }
 
 function nodeHasMarker(node: DomElementLike, selectors: readonly string[]) {
@@ -723,10 +789,22 @@ function detectRockAnswerState(node: DomElementLike) {
   };
 }
 
-function extractRockChoices(root: DocumentLike, matched: Record<string, string[]>) {
+function extractRockChoices(root: DocumentLike, pageUrl: string, matched: Record<string, string[]>) {
   const seen = new Set<string>();
   const choices: OrthobulletsChoice[] = [];
-  const { nodes, strategy } = collectChoiceNodesWithStrategy(root, ROCK_SELECTORS.choices, matched);
+  const questionContainer = findRockQuestionContainer(root, matched);
+  const choiceRoot = (questionContainer ?? (isLikelyRockQuestionUrl(pageUrl) ? root : null)) as DocumentLike | null;
+  if (!choiceRoot) {
+    matched.choicesStrategy = ['skipped_non_question_page'];
+    matched.answerStateStrategy = ['not_found'];
+    return {
+      choices,
+      choicesStrategy: 'skipped_non_question_page',
+      answerStateStrategy: 'not_found',
+    };
+  }
+
+  const { nodes, strategy } = collectChoiceNodesWithStrategy(choiceRoot, ROCK_SELECTORS.choices, matched);
   const answerStateStrategies = new Set<string>();
 
   nodes.forEach((node, index) => {
@@ -799,14 +877,170 @@ function cleanCurriculumText(value: string) {
 function isUiChromeText(value: string) {
   const normalized = value.toLowerCase();
   if (normalized.length < 12) return true;
-  if (/^(search|menu|home|profile|logout|send feedback|previous|next|bookmark|highlight)$/i.test(value)) return true;
+  if (/^(search|menu|home|profile|logout|send feedback|previous|next|bookmark|highlight|cookie settings|privacy settings)$/i.test(value)) return true;
   return false;
+}
+
+function tableToMarkdown(table: DomElementLike) {
+  const rows = Array.from(table.querySelectorAll('tr'));
+  if (!rows.length) return '';
+
+  const parsedRows = rows
+    .map((row) =>
+      Array.from(row.querySelectorAll('th, td'))
+        .map((cell) => cleanCurriculumText(textOf(cell)))
+        .filter(Boolean)
+    )
+    .filter((cells) => cells.length > 0);
+
+  if (!parsedRows.length) return '';
+
+  const header = parsedRows[0];
+  const body = parsedRows.slice(1);
+  const separator = header.map(() => '---');
+  const lines = [
+    `| ${header.join(' | ')} |`,
+    `| ${separator.join(' | ')} |`,
+    ...body.map((row) => `| ${row.join(' | ')} |`),
+  ];
+  return lines.join('\n');
+}
+
+function extractLearningObjectives(
+  root: DocumentLike,
+  contentSections: Array<{ heading: string; text: string }>,
+  matched: Record<string, string[]>
+) {
+  const objectives: string[] = [];
+  const seen = new Set<string>();
+
+  const objectiveSection = contentSections.find((section) =>
+    /learning\s+objectives?/i.test(section.heading)
+  );
+  if (objectiveSection) {
+    objectiveSection.text
+      .split('\n')
+      .map((line) => line.replace(/^[-•*]\s*/, '').trim())
+      .filter((line) => line.length >= 12)
+      .forEach((line) => {
+        const key = line.toLowerCase();
+        if (seen.has(key)) return;
+        seen.add(key);
+        objectives.push(line);
+      });
+  }
+
+  for (const selector of [
+    '[data-testid*="learning-objective" i] li',
+    '[class*="learning-objective" i] li',
+    'section[aria-label*="learning objective" i] li',
+  ]) {
+    const nodes = Array.from(root.querySelectorAll(selector));
+    if (!nodes.length) continue;
+    matched.learningObjectives = [...(matched.learningObjectives ?? []), selector];
+    nodes.forEach((node) => {
+      const text = cleanCurriculumText(textOf(node));
+      if (!text || text.length < 12) return;
+      const key = text.toLowerCase();
+      if (seen.has(key)) return;
+      seen.add(key);
+      objectives.push(text);
+    });
+  }
+
+  return objectives.slice(0, 20);
+}
+
+function extractRockReferences(root: DocumentLike, matched: Record<string, string[]>) {
+  const references: string[] = [];
+  const seen = new Set<string>();
+
+  for (const selector of ROCK_SELECTORS.references) {
+    const nodes = Array.from(root.querySelectorAll(selector));
+    if (!nodes.length) continue;
+    matched.references = [...(matched.references ?? []), selector];
+    nodes.forEach((node) => {
+      const text = cleanCurriculumText(textOf(node));
+      if (!text || text.length < 20 || isUiChromeText(text)) return;
+      const key = text.toLowerCase();
+      if (seen.has(key)) return;
+      seen.add(key);
+      references.push(text);
+    });
+  }
+
+  return references.slice(0, 40);
+}
+
+function extractRockTablesMarkdown(root: DocumentLike, matched: Record<string, string[]>) {
+  const tables: string[] = [];
+  const seen = new Set<string>();
+
+  for (const selector of ROCK_SELECTORS.tables) {
+    const nodes = Array.from(root.querySelectorAll(selector));
+    if (!nodes.length) continue;
+    matched.tables = [...(matched.tables ?? []), selector];
+    nodes.forEach((node) => {
+      const markdown = tableToMarkdown(node);
+      if (!markdown || markdown.length < 20) return;
+      const key = markdown.toLowerCase();
+      if (seen.has(key)) return;
+      seen.add(key);
+      tables.push(markdown);
+    });
+  }
+
+  return {
+    tablesMarkdown: tables.slice(0, 8),
+    tablesCount: tables.length,
+  };
+}
+
+function buildContentMarkdown(input: {
+  title?: string | null;
+  breadcrumbs: string[];
+  sectionHeadings: string[];
+  contentSections: Array<{ heading: string; text: string }>;
+  references: string[];
+  tablesMarkdown: string[];
+  contentText: string | null;
+}) {
+  const parts: string[] = [];
+  if (input.title) parts.push(`# ${input.title}`);
+  if (input.breadcrumbs.length) parts.push(`Breadcrumbs: ${input.breadcrumbs.join(' > ')}`);
+
+  if (input.contentSections.length) {
+    input.contentSections.forEach((section) => {
+      parts.push(`## ${section.heading}\n${section.text}`);
+    });
+  } else if (input.contentText) {
+    parts.push(input.contentText);
+  }
+
+  if (input.tablesMarkdown.length) {
+    parts.push('## Tables');
+    input.tablesMarkdown.forEach((table, index) => {
+      parts.push(`### Table ${index + 1}\n${table}`);
+    });
+  }
+
+  if (input.references.length) {
+    parts.push('## References');
+    input.references.forEach((reference, index) => {
+      parts.push(`${index + 1}. ${reference}`);
+    });
+  }
+
+  return parts.join('\n\n').slice(0, MAX_CURRICULUM_CONTENT_CHARS) || null;
 }
 
 function extractRockCurriculumContent(root: DocumentLike, matched: Record<string, string[]>) {
   const contentRoot = firstElement(root, ROCK_SELECTORS.contentRoot, 'contentRoot', matched) as DocumentLike | null;
   const scanRoot = contentRoot ?? root;
-  const blocks = Array.from(scanRoot.querySelectorAll(ROCK_SELECTORS.contentBlocks.join(', ')));
+  const blockSelector = ROCK_SELECTORS.contentBlocks.join(', ');
+  const blocks = Array.from(scanRoot.querySelectorAll(blockSelector)).filter((node) => {
+    return !ROCK_SELECTORS.chrome.some((selector) => node.querySelector(selector) != null);
+  });
   if (blocks.length) matched.contentBlocks = ['semantic_content_blocks'];
 
   const sectionHeadings: string[] = [];
@@ -836,31 +1070,51 @@ function extractRockCurriculumContent(root: DocumentLike, matched: Record<string
       flushSection();
       currentHeading = rawText;
       sectionHeadings.push(rawText);
-      allTexts.push(rawText);
+      allTexts.push(`## ${rawText}`);
       return;
     }
 
-    currentTexts.push(rawText);
-    allTexts.push(rawText);
+    const prefix = nodeName === 'li' ? '- ' : '';
+    currentTexts.push(`${prefix}${rawText}`);
+    allTexts.push(`${prefix}${rawText}`);
   });
   flushSection();
 
+  const references = extractRockReferences(scanRoot, matched);
+  const { tablesMarkdown, tablesCount } = extractRockTablesMarkdown(scanRoot, matched);
   const contentText = dedupeTexts(allTexts).join('\n\n').slice(0, MAX_CURRICULUM_CONTENT_CHARS);
   const authors = collectRockTexts(root, ROCK_SELECTORS.authors, 'authors', matched).slice(0, 8);
   const date = firstText(root, ROCK_SELECTORS.date, 'date', matched) ?? null;
-  const extractionStrategy = blocks.length ? 'semantic_content_blocks' : 'not_found';
+  const extractionStrategy = blocks.length ? 'semantic_content_blocks' : references.length ? 'references_blocks' : 'not_found';
+  const normalizedSections = contentSections.slice(0, 20).map((section) => ({
+    heading: section.heading,
+    text: section.text.slice(0, 3000),
+  }));
+  const learningObjectives = extractLearningObjectives(scanRoot, normalizedSections, matched);
+  const contentMarkdown = buildContentMarkdown({
+    title: firstText(root, ROCK_SELECTORS.title, 'title', matched) ?? null,
+    breadcrumbs: collectRockTexts(root, ROCK_SELECTORS.breadcrumbs, 'breadcrumbs', matched),
+    sectionHeadings: dedupeTexts(sectionHeadings).slice(0, 30),
+    contentSections: normalizedSections,
+    references,
+    tablesMarkdown,
+    contentText: contentText || null,
+  });
 
   return {
     contentText: contentText || null,
-    contentSections: contentSections.slice(0, 20).map((section) => ({
-      heading: section.heading,
-      text: section.text.slice(0, 3000),
-    })),
+    contentMarkdown,
+    contentSections: normalizedSections,
     sectionHeadings: dedupeTexts(sectionHeadings).slice(0, 30),
+    learningObjectives,
+    tablesMarkdown,
+    references,
+    referencesCount: references.length,
+    tablesCount,
     authors,
     date,
     extractionStrategy,
-    contentCharCount: contentText.length,
+    contentCharCount: contentMarkdown?.length ?? contentText.length,
   };
 }
 
@@ -887,11 +1141,15 @@ export function extractRockPageContext(input: {
     firstText(input.document, ROCK_SELECTORS.title, 'title', matchedSelectors) ||
     normalizeWhitespace(input.document.title) ||
     null;
-  const stemResult = firstTextWithStrategy(root, ROCK_SELECTORS.stem, 'stem', 'stemStrategy', matchedSelectors);
+  const questionContainer = findRockQuestionContainer(root, matchedSelectors);
+  const stemRoot = (questionContainer ?? (isLikelyRockQuestionUrl(pageUrl) ? root : null)) as DocumentLike | null;
+  const stemResult = stemRoot
+    ? firstTextWithStrategy(stemRoot, ROCK_SELECTORS.stem, 'stem', 'stemStrategy', matchedSelectors)
+    : { text: undefined, strategy: 'skipped_non_question_page' as const };
   const explanationResult = firstTextWithStrategy(root, ROCK_SELECTORS.explanation, 'explanation', 'explanationStrategy', matchedSelectors);
   const stem = stemResult.text;
   const explanationText = explanationResult.text || null;
-  const choicesResult = extractRockChoices(root, matchedSelectors);
+  const choicesResult = extractRockChoices(root, pageUrl, matchedSelectors);
   const answerChoices = choicesResult.choices;
   const selectedChoice = answerChoices.find((choice) => choice.isSelected);
   const correctChoice = answerChoices.find((choice) => choice.isCorrect);
@@ -902,7 +1160,11 @@ export function extractRockPageContext(input: {
   const curriculum = hasQuestion
     ? null
     : extractRockCurriculumContent(input.document, matchedSelectors);
-  const hasCurriculumContent = Boolean(curriculum?.contentText && curriculum.contentCharCount >= MIN_CURRICULUM_CONTENT_CHARS);
+  const hasCurriculumContent = Boolean(
+    curriculum &&
+      (curriculum.contentCharCount >= MIN_CURRICULUM_CONTENT_CHARS ||
+        (curriculum.referencesCount >= 3 && curriculum.contentCharCount >= MIN_REFERENCES_HEAVY_CONTENT_CHARS))
+  );
   const mode = hasQuestion ? 'question' : 'curriculum_content';
   const pageKind = hasQuestion ? detectRockPageKind({
     url: pageUrl,
@@ -920,7 +1182,7 @@ export function extractRockPageContext(input: {
   if (hasQuestion && !explanationText) extractionWarnings.push('explanation_not_visible');
   if (!hasQuestion && !hasCurriculumContent) extractionWarnings.push('curriculum_content_not_visible');
 
-  return {
+  const draftContext: OrthobulletsPageContext = {
     source: 'rock',
     provider: 'rock',
     mode,
@@ -935,7 +1197,13 @@ export function extractRockPageContext(input: {
     date: curriculum?.date ?? null,
     sectionHeadings: curriculum?.sectionHeadings ?? [],
     contentText: curriculum?.contentText ?? null,
+    contentMarkdown: curriculum?.contentMarkdown ?? null,
     contentSections: curriculum?.contentSections ?? [],
+    learningObjectives: curriculum?.learningObjectives ?? [],
+    tablesMarkdown: curriculum?.tablesMarkdown ?? [],
+    references: curriculum?.references ?? [],
+    referencesCount: curriculum?.referencesCount ?? 0,
+    tablesCount: curriculum?.tablesCount ?? 0,
     stem: stem || undefined,
     answerChoices,
     selectedAnswerKey: selectedChoice?.key ?? null,
@@ -960,6 +1228,8 @@ export function extractRockPageContext(input: {
         contentCharCount: curriculum?.contentCharCount ?? 0,
         sectionCount: curriculum?.contentSections.length ?? 0,
         headingCount: curriculum?.sectionHeadings.length ?? 0,
+        referencesCount: curriculum?.referencesCount ?? 0,
+        tablesCount: curriculum?.tablesCount ?? 0,
         extractionStrategy: hasQuestion ? 'question' : curriculum?.extractionStrategy ?? 'not_found',
       },
     },
@@ -968,6 +1238,11 @@ export function extractRockPageContext(input: {
       matchedSelectors,
       extractorVersion: EXTRACTOR_VERSION,
     },
+  };
+
+  return {
+    ...draftContext,
+    classification: classifyPage(draftContext),
   };
 }
 

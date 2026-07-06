@@ -1,0 +1,381 @@
+{
+  "topicKey": "acl-tear",
+  "pilotKey": "acl-tear-neighborhood",
+  "primaryEntitySlug": "acl-tear",
+  "displayName": "ACL Tear",
+  "generatedAt": "2026-07-05T22:39:31.310Z",
+  "nodes": [
+    {
+      "slug": "subscapularis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subscapularis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "teres-minor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Teres Minor",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "biceps-anchor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Biceps Anchor",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sports-elbow-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Elbow Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Collateral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneofibular Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "multiligament-knee-injury",
+      "entityType": "condition",
+      "preferredLabel": "Multiligament Knee Injury",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibial-plateau-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Tibial Plateau Fracture",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Collateral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lateral-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Meniscus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radial-collateral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Collateral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-biceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Biceps Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acl-tear-complication",
+      "entityType": "complication",
+      "preferredLabel": "ACL Tear Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "sports-foot-ankle-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Foot & Ankle Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "atfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Talofibular Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "medial-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Meniscus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "labrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid Labrum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acl-tear-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "ACL Tear Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "acl-tear-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "ACL Tear Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "acl-tear-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "ACL Tear Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "meniscus-tear",
+      "entityType": "condition",
+      "preferredLabel": "Meniscus Tear",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "achilles-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Achilles Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acl-tear-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "ACL Tear Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "sports-medicine-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Medicine Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "sports-shoulder-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Shoulder Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterolateral-corner",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterolateral Corner",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "supraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Supraspinatus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "rotator-cuff",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Rotator Cuff",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "articular-cartilage",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Articular Cartilage",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "mcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Collateral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sports-knee-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Knee Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "glenoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acl-tear-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "ACL Tear MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "infraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Infraspinatus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-condyles",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Condyles",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    }
+  ],
+  "edgeCount": 25,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [
+      "subscapularis",
+      "teres-minor",
+      "biceps-anchor",
+      "sports-elbow-anatomy-hub",
+      "ucl",
+      "cfl",
+      "lcl",
+      "lateral-meniscus",
+      "radial-collateral-ligament",
+      "distal-biceps-tendon",
+      "sports-foot-ankle-anatomy-hub",
+      "atfl",
+      "medial-meniscus",
+      "labrum",
+      "achilles-tendon",
+      "sports-medicine-anatomy-hub",
+      "sports-shoulder-anatomy-hub",
+      "posterolateral-corner",
+      "supraspinatus",
+      "rotator-cuff",
+      "articular-cartilage",
+      "mcl",
+      "sports-knee-anatomy-hub",
+      "glenoid",
+      "infraspinatus",
+      "femoral-condyles"
+    ],
+    "procedure": [
+      "acl-tear-reconstruction"
+    ],
+    "classification": [
+      "acl-tear-classification"
+    ],
+    "imaging": [
+      "acl-tear-mri-finding"
+    ],
+    "complication": [
+      "acl-tear-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "multiligament-knee-injury",
+      "tibial-plateau-fracture",
+      "acl-tear-rehab-protocol",
+      "acl-tear-exam-maneuver",
+      "meniscus-tear"
+    ]
+  }
+}

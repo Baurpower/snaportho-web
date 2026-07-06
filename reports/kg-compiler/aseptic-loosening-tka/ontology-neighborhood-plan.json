@@ -1,0 +1,47 @@
+{
+  "topicKey": "aseptic-loosening-tka",
+  "pilotKey": "aseptic-loosening-tka-neighborhood",
+  "primaryEntitySlug": "aseptic-loosening-tka",
+  "displayName": "Aseptic Loosening of TKA",
+  "generatedAt": "2026-07-05T23:09:48.667Z",
+  "nodes": [
+    {
+      "slug": "tibial-component-subsidence",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Tibial Component Subsidence",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "aseptic-loosening-tka",
+      "entityType": "condition",
+      "preferredLabel": "Aseptic Loosening of TKA",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    }
+  ],
+  "edgeCount": 1,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "aseptic-loosening-tka"
+    ],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "tibial-component-subsidence"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

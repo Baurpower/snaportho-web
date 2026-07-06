@@ -1,0 +1,39 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 84,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from subtrochanteric-fracture",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "subtrochanteric-fracture"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "4 high-risk relationships lack approved review status",
+      "evidence": "Predicates: explains_instability, treated_by, at_risk_structure",
+      "reason": "High-risk predicates require human review before publication.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "suggestedFix": "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 24,
+    "relationshipDensity": 1.411764705882353,
+    "missingClinicalEdgeCount": 1,
+    "highRiskUnreviewedCount": 4,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Route at_risk_structure, treated_by, and indicates_treatment edges to attending review."
+  ]
+}

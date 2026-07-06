@@ -1,0 +1,90 @@
+{
+  "topicKey": "patellar-instability",
+  "pilotKey": "patellar-instability-neighborhood",
+  "primaryEntitySlug": "patellar-instability",
+  "displayName": "Patellar Instability",
+  "generatedAt": "2026-07-05T22:46:37.898Z",
+  "nodes": [
+    {
+      "slug": "patellar-instability-exam-maneuver",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Patellar Instability Physical Exam",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellar-instability-rehab-protocol",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Patellar Instability Rehabilitation",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellar-instability-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Patellar Instability Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellar-instability-reconstruction",
+      "entityType": "procedure",
+      "preferredLabel": "Patellar Instability Reconstruction",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellar-instability-mri-finding",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Patellar Instability MRI Pattern",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellar-instability-complication",
+      "entityType": "complication",
+      "preferredLabel": "Patellar Instability Complication",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "patellar-instability-reconstruction"
+    ],
+    "classification": [
+      "patellar-instability-classification"
+    ],
+    "imaging": [
+      "patellar-instability-mri-finding"
+    ],
+    "complication": [
+      "patellar-instability-complication"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "patellar-instability-exam-maneuver",
+      "patellar-instability-rehab-protocol"
+    ]
+  }
+}

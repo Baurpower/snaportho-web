@@ -1,0 +1,176 @@
+[
+  {
+    "proposal_fingerprint": "claim|claim-extensor-mechanism-failure-core",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-extensor-mechanism-failure-core",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+    "metadata": {
+      "pilot": "extensor-mechanism-failure-neighborhood",
+      "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+      "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-extensor-mechanism-failure-core",
+      "claim_type": "fact",
+      "claim_text": "Extensor lag after TKA demands extensor mechanism integrity assessment, not passive rehab alone.",
+      "primary_entity_slug": "extensor-mechanism-failure",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T23:14:03.770Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-extensor-mechanism-failure-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-extensor-mechanism-failure-board-trap",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "extensor-mechanism-failure-neighborhood",
+      "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+      "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-extensor-mechanism-failure-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Board trap: oversimplifying extensor mechanism failure without attending-level implant, fixation, or infection context.",
+      "primary_entity_slug": "extensor-mechanism-failure",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:14:03.770Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-extensor-mechanism-failure-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-extensor-mechanism-failure-script",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "extensor-mechanism-failure-neighborhood",
+      "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+      "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-extensor-mechanism-failure-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for extensor mechanism failure.",
+      "primary_entity_slug": "extensor-mechanism-failure",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T23:14:03.770Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-extensor-mechanism-failure-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-extensor-mechanism-failure-operative",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "extensor-mechanism-failure-neighborhood",
+      "review_packet_key": "pilot:extensor-mechanism-failure-neighborhood",
+      "review_packet_label": "Extensor Mechanism Failure Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-extensor-mechanism-failure-operative",
+      "subject_entity_slug": "extensor-mechanism-failure",
+      "pattern_type": "operative_indication",
+      "trigger": "Extensor lag after TKA with suspected tendon disruption",
+      "action": "Urgent surgical consultation for extensor mechanism repair or reconstruction",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.6799999999999999,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T23:14:03.770Z"
+    }
+  }
+]

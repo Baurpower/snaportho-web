@@ -13,48 +13,60 @@ function isMarkReadResponse(
   return Boolean(payload && "item" in payload);
 }
 
-export function useMarkNotificationRead() {
+export function useMarkNotificationRead(params?: {
+  programId?: string | null;
+}) {
   const [loadingNotificationId, setLoadingNotificationId] = useState<string | null>(
     null
   );
   const [error, setError] = useState<string | null>(null);
 
-  const markRead = useCallback(async (notificationId: string) => {
-    setLoadingNotificationId(notificationId);
-    setError(null);
-
-    try {
-      const response = await fetch(
-        `/api/workspace/notifications/${notificationId}/read`,
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
-
-      const payload = (await response.json().catch(() => null)) as
-        | MarkReadResponse
-        | { error?: string }
-        | null;
-
-      if (!response.ok || !isMarkReadResponse(payload)) {
-        const errorMessage =
-          payload && "error" in payload ? payload.error : undefined;
-        throw new Error(errorMessage ?? "Failed to mark notification as read.");
+  const markRead = useCallback(
+    async (notificationId: string) => {
+      if (!params?.programId) {
+        throw new Error("A program context is required to mark notifications read.");
       }
 
-      return payload.item;
-    } catch (err) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "Failed to mark notification as read.";
-      setError(message);
-      throw err;
-    } finally {
-      setLoadingNotificationId(null);
-    }
-  }, []);
+      setLoadingNotificationId(notificationId);
+      setError(null);
+
+      try {
+        const searchParams = new URLSearchParams();
+        searchParams.set("programId", params.programId);
+
+        const response = await fetch(
+          `/api/workspace/notifications/${notificationId}/read?${searchParams.toString()}`,
+          {
+            method: "POST",
+            credentials: "include",
+          }
+        );
+
+        const payload = (await response.json().catch(() => null)) as
+          | MarkReadResponse
+          | { error?: string }
+          | null;
+
+        if (!response.ok || !isMarkReadResponse(payload)) {
+          const errorMessage =
+            payload && "error" in payload ? payload.error : undefined;
+          throw new Error(errorMessage ?? "Failed to mark notification as read.");
+        }
+
+        return payload.item;
+      } catch (err) {
+        const message =
+          err instanceof Error
+            ? err.message
+            : "Failed to mark notification as read.";
+        setError(message);
+        throw err;
+      } finally {
+        setLoadingNotificationId(null);
+      }
+    },
+    [params?.programId]
+  );
 
   return {
     markRead,

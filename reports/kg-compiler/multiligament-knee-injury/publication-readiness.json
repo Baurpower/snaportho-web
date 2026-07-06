@@ -1,0 +1,44 @@
+{
+  "topicKey": "multiligament-knee-injury",
+  "pilotKey": "multiligament-knee-injury-neighborhood",
+  "generatedAt": "2026-07-05T22:49:03.429Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "19 proposals still awaiting human review",
+    "12 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "5 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[high] Multiligament Knee Injury Classification neighborhood has 0/2 classification_grade entities.",
+    "[high] Multiligament Knee Injury Classification missing inbound has_classification (0/1).",
+    "[critical] Multiligament Knee Injury Reconstruction neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Multiligament Knee Injury Reconstruction missing outbound involves_anatomy (0/1).",
+    "[high] Multiligament Knee Injury Reconstruction missing outbound at_risk_structure (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 8,
+    "humanReviewItems": 19,
+    "attendingReviewItems": 12,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

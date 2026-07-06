@@ -1,0 +1,99 @@
+{
+  "generatedAt": "2026-07-05T22:57:46.739Z",
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.92,
+      "reason": "Particulate Debris missing inbound involves_anatomy (0/1).",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.inbound",
+      "anchorEntitySlug": "particulate-debris",
+      "predicate": "involves_anatomy",
+      "objectSlug": "particulate-debris"
+    },
+    {
+      "id": "gap-claim-2",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.88,
+      "reason": "Particulate Debris has 0/1 L1 claims.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "particulate-debris",
+      "claimType": "fact|anatomy_pearl"
+    },
+    {
+      "id": "gap-claim-type-3",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Particulate Debris missing claim type: fact.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.fact",
+      "anchorEntitySlug": "particulate-debris",
+      "claimType": "fact"
+    },
+    {
+      "id": "gap-claim-type-4",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.75,
+      "reason": "Particulate Debris missing claim type: anatomy_pearl.",
+      "requiredReviewer": "none",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims.anatomy_pearl",
+      "anchorEntitySlug": "particulate-debris",
+      "claimType": "anatomy_pearl"
+    },
+    {
+      "id": "gap-asset-card-5",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "4 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "polyethylene-wear-osteolysis"
+    },
+    {
+      "id": "gap-asset-question-6",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "18 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "polyethylene-wear-osteolysis"
+    },
+    {
+      "id": "gap-biomech-claim-7",
+      "kind": "missing_claim",
+      "priority": "medium",
+      "confidence": 0.82,
+      "reason": "Biomechanics concept Particulate Debris has no teaching claim (e.g., mortise instability).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "biomechanics.claims",
+      "anchorEntitySlug": "particulate-debris",
+      "claimType": "fact"
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "byKind": {
+      "missing_relationship": 1,
+      "missing_claim": 4,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "medium": 7
+    }
+  }
+}

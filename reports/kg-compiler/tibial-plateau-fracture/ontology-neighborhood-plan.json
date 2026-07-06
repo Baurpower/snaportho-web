@@ -1,0 +1,69 @@
+{
+  "topicKey": "tibial-plateau-fracture",
+  "pilotKey": "tibial-plateau-fracture-neighborhood",
+  "primaryEntitySlug": "tibial-plateau-fracture",
+  "displayName": "Tibial Plateau Fracture",
+  "generatedAt": "2026-07-05T22:43:24.604Z",
+  "nodes": [
+    {
+      "slug": "tibial-plateau-stiffness",
+      "entityType": "complication",
+      "preferredLabel": "Tibial Plateau Stiffness",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "bicondylar-tibial-plateau-fracture",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Bicondylar Tibial Plateau Fracture",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibial-plateau-orif",
+      "entityType": "procedure",
+      "preferredLabel": "Tibial Plateau ORIF",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "schatzker-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Schatzker Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [
+      "tibial-plateau-orif"
+    ],
+    "classification": [
+      "schatzker-classification"
+    ],
+    "imaging": [
+      "bicondylar-tibial-plateau-fracture"
+    ],
+    "complication": [
+      "tibial-plateau-stiffness"
+    ],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

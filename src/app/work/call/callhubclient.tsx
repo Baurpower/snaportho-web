@@ -38,6 +38,11 @@ import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 import type { SwapRequestListItem } from "@/lib/workspace/call-swaps/types";
 import type { ProgramCallSlotDefinition } from "@/lib/workspace/call/rule-definitions";
 import { extractSlotDefinitions, DEFAULT_SLOT_DEFINITIONS } from "@/lib/workspace/call/rule-definitions";
+import type { ProgramRule } from "@/components/workspace/call/programcalltypes";
+import type {
+  CallHubRotationAssignment,
+  CallHubTimeOffItem,
+} from "@/lib/workspace/call/call-hub-scheduling";
 import type { DraftDayAssignment } from "@/components/workspace/call/programcalltypes";
 import { PROGRAM_CALL_DRAFT_SCHEMA_VERSION } from "@/lib/workspace/call/drafts";
 import { useAuth } from "@/context/AuthContext";
@@ -325,6 +330,9 @@ export default function CallHubPage() {
   const [loading, setLoading] = useState(true);
   const [editingCalendar, setEditingCalendar] = useState(false);
   const [slotDefinitions, setSlotDefinitions] = useState<ProgramCallSlotDefinition[]>(DEFAULT_SLOT_DEFINITIONS);
+  const [programRules, setProgramRules] = useState<ProgramRule[]>([]);
+  const [rotationAssignments, setRotationAssignments] = useState<CallHubRotationAssignment[]>([]);
+  const [timeOffItems, setTimeOffItems] = useState<CallHubTimeOffItem[]>([]);
   // ─── Draft state ─────────────────────────────────────────────────────────────
   // Backend draft assignments for the edit calendar.
   const [calendarDraft, setCalendarDraft] = useState<Record<string, DraftDayAssignment> | null>(null);
@@ -418,6 +426,7 @@ export default function CallHubPage() {
         const defs = extractSlotDefinitions(rules);
 
         if (!cancelled) {
+          setProgramRules(rules);
           setSlotDefinitions(defs.length > 0 ? defs : DEFAULT_SLOT_DEFINITIONS);
         }
       } catch {
@@ -675,6 +684,7 @@ export default function CallHubPage() {
           ? payload.rotationAssignments
           : [];
         if (!cancelled) {
+          setRotationAssignments(items);
           setRotationLabelsByRosterId(buildRotationLabelsByRosterId(items, monthStart));
         }
       } catch {
@@ -683,6 +693,35 @@ export default function CallHubPage() {
     }
 
     loadRotations();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [monthStart, monthEnd]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadTimeOff() {
+      try {
+        const response = await fetch(
+          `/api/program/time-off/month?monthStart=${encodeURIComponent(monthStart)}&monthEnd=${encodeURIComponent(monthEnd)}`,
+          { credentials: "include", cache: "no-store" }
+        );
+        if (!response.ok) return;
+        const payload = await response.json().catch(() => null);
+        const items = Array.isArray(payload?.items) ? payload.items : [];
+        if (!cancelled) {
+          setTimeOffItems(items);
+        }
+      } catch {
+        if (!cancelled) {
+          setTimeOffItems([]);
+        }
+      }
+    }
+
+    loadTimeOff();
 
     return () => {
       cancelled = true;
@@ -1026,6 +1065,35 @@ useEffect(() => {
     });
 
     return parseCallMutationResponse(response, "Failed to swap calls");
+  }
+
+  async function handleBulkPublish(payload: {
+    rows: Array<{
+      residentName: string;
+      callDate: string;
+      callType: "Primary" | "Backup" | "Buddy";
+      site?: string | null;
+      isHomeCall?: boolean;
+      notes?: string | null;
+      matchedRosterId: string;
+      matchedMembershipId?: string | null;
+    }>;
+    replaceExistingForDates: string[];
+  }) {
+    const response = await fetch("/api/program/calls/bulk", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        rows: payload.rows,
+        replaceExistingForDates: payload.replaceExistingForDates,
+      }),
+    });
+
+    await parseCallMutationResponse(response, "Failed to publish schedule changes");
+    await refreshMonth();
   }
 
   async function createProgramCall(payload: {
@@ -1918,7 +1986,11 @@ async function stopGoogleSync() {
                         onSwap={handleSwap}
                         onDelete={handleDelete}
                         onCreate={handleCreate}
+                        onBulkPublish={handleBulkPublish}
                         slotDefinitions={slotDefinitions}
+                        programRules={programRules}
+                        rotationAssignments={rotationAssignments}
+                        timeOffItems={timeOffItems}
                         initialDraftAssignments={calendarDraft}
                         onDraftChange={handleCalendarDraftChange}
                         draftSaveStatus={draftSaveStatus}

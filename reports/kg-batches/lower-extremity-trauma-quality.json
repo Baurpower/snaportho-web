@@ -1,0 +1,1157 @@
+{
+  "generatedAt": "2026-07-05T22:52:03.900Z",
+  "cluster": "lower-extremity-trauma",
+  "topics": {
+    "pelvic-ring-injury": {
+      "displayName": "Pelvic Ring Injury",
+      "pilotKey": "pelvic-ring-injury-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:31:21.808Z",
+        "pilotKey": "pelvic-ring-injury-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 77,
+          "approvedProposalCount": 65,
+          "entityProposalCount": 28,
+          "relationshipProposalCount": 41,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 65,
+          "humanReviewCount": 12,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 185,
+          "educationalClaimCount": 12,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8441558441558441,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:31:22.019Z",
+        "pilotKey": "pelvic-ring-injury-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "12 proposals still awaiting human review",
+          "8 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 77,
+          "approvedProposals": 65,
+          "pendingReview": 12,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 65,
+          "humanReviewQueue": 12,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "pelvic-ring-injury",
+        "pilotKey": "pelvic-ring-injury-neighborhood",
+        "generatedAt": "2026-07-05T22:30:51.099Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "20 proposals still awaiting human review",
+          "14 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "18 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Pelvic Binder Application neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Pelvic Binder Application missing outbound involves_anatomy (0/1).",
+          "[high] Pelvic Binder Application missing outbound at_risk_structure (0/1).",
+          "[critical] Pelvic Ring Injury neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] Pelvic Ring Injury missing outbound injured_in (0/1).",
+          "[high] Pelvic Ring Injury missing outbound involves_anatomy (0/1).",
+          "[high] Pelvic Ring Injury missing outbound at_risk_structure (0/1).",
+          "[high] Pelvic Ring Injury missing outbound has_grade (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 27,
+          "humanReviewItems": 20,
+          "attendingReviewItems": 14,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 55,
+          "approvedProposals": 43
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-c91ef138"
+    },
+    "acetabular-fracture": {
+      "displayName": "Acetabular Fracture",
+      "pilotKey": "acetabular-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:33:50.518Z",
+        "pilotKey": "acetabular-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 93,
+          "approvedProposalCount": 84,
+          "entityProposalCount": 37,
+          "relationshipProposalCount": 48,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 84,
+          "humanReviewCount": 9,
+          "canonicalEntityCount": 26,
+          "canonicalRelationshipCount": 220,
+          "educationalClaimCount": 14,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.9032258064516129,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 7
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:33:50.703Z",
+        "pilotKey": "acetabular-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "9 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 93,
+          "approvedProposals": 84,
+          "pendingReview": 9,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 84,
+          "humanReviewQueue": 9,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "acetabular-fracture",
+        "pilotKey": "acetabular-fracture-neighborhood",
+        "generatedAt": "2026-07-05T22:33:19.276Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "17 proposals still awaiting human review",
+          "10 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "10 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[high] Lower Extremity Trauma Anatomy Hub missing outbound part_of (0/1).",
+          "[high] Acetabular Fracture missing outbound at_risk_structure (0/1).",
+          "[high] Acetabular Fracture missing outbound has_grade (0/1).",
+          "[high] Acetabular Fracture missing outbound treated_by (0/1).",
+          "[high] Acetabular Fracture has 0/3 L1 claims.",
+          "[critical] Acetabular Fracture has 0/1 decision points.",
+          "[critical] Acetabular Fracture missing decision point pattern: operative_indication.",
+          "[critical] Acetabular Fracture missing decision point pattern: nonoperative_eligible.",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 19,
+          "humanReviewItems": 17,
+          "attendingReviewItems": 10,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 26,
+          "relationships": 31,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 93,
+          "approvedProposals": 84
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-05a7be6b"
+    },
+    "femoral-shaft-fracture": {
+      "displayName": "Femoral Shaft Fracture",
+      "pilotKey": "femoral-shaft-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:36:14.754Z",
+        "pilotKey": "femoral-shaft-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 92,
+          "approvedProposalCount": 82,
+          "entityProposalCount": 38,
+          "relationshipProposalCount": 46,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 82,
+          "humanReviewCount": 10,
+          "canonicalEntityCount": 6,
+          "canonicalRelationshipCount": 227,
+          "educationalClaimCount": 16,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8913043478260869,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:36:14.959Z",
+        "pilotKey": "femoral-shaft-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "10 proposals still awaiting human review",
+          "6 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 92,
+          "approvedProposals": 82,
+          "pendingReview": 10,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 82,
+          "humanReviewQueue": 10,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "femoral-shaft-fracture",
+        "pilotKey": "femoral-shaft-fracture-neighborhood",
+        "generatedAt": "2026-07-05T22:35:44.004Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "18 proposals still awaiting human review",
+          "14 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "16 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Femoral Shaft Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[high] Femoral Shaft Fracture neighborhood has 0/1 classification_system entities.",
+          "[critical] Femoral Shaft Fracture missing outbound injured_in (0/1).",
+          "[high] Femoral Shaft Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Femoral Shaft Fracture missing outbound at_risk_structure (0/1).",
+          "[critical] Femoral Shaft Fracture missing outbound has_classification (0/1).",
+          "[high] Femoral Shaft Fracture missing outbound has_grade (0/1).",
+          "[high] Femoral Shaft Fracture missing outbound treated_by (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 24,
+          "humanReviewItems": 18,
+          "attendingReviewItems": 14,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 6,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 92,
+          "approvedProposals": 82
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-f6f79f8a"
+    },
+    "distal-femur-fracture": {
+      "displayName": "Distal Femur Fracture",
+      "pilotKey": "distal-femur-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:39:40.118Z",
+        "pilotKey": "distal-femur-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 69,
+          "approvedProposalCount": 60,
+          "entityProposalCount": 26,
+          "relationshipProposalCount": 35,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 60,
+          "humanReviewCount": 9,
+          "canonicalEntityCount": 4,
+          "canonicalRelationshipCount": 270,
+          "educationalClaimCount": 21,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8695652173913043,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:39:40.319Z",
+        "pilotKey": "distal-femur-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "9 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 69,
+          "approvedProposals": 60,
+          "pendingReview": 9,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 60,
+          "humanReviewQueue": 9,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "distal-femur-fracture",
+        "pilotKey": "distal-femur-fracture-neighborhood",
+        "generatedAt": "2026-07-05T22:39:09.426Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "17 proposals still awaiting human review",
+          "15 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "16 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Distal Femur Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[high] Distal Femur Fracture neighborhood has 0/1 classification_system entities.",
+          "[critical] Distal Femur Fracture missing outbound injured_in (0/1).",
+          "[high] Distal Femur Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Distal Femur Fracture missing outbound at_risk_structure (0/1).",
+          "[critical] Distal Femur Fracture missing outbound has_classification (0/1).",
+          "[high] Distal Femur Fracture missing outbound has_grade (0/1).",
+          "[high] Distal Femur Fracture missing outbound treated_by (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 24,
+          "humanReviewItems": 17,
+          "attendingReviewItems": 15,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 4,
+          "relationships": 2,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 68,
+          "approvedProposals": 59
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-bf6b1472"
+    },
+    "patella-fracture": {
+      "displayName": "Patella Fracture",
+      "pilotKey": "patella-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:41:47.295Z",
+        "pilotKey": "patella-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 70,
+          "approvedProposalCount": 62,
+          "entityProposalCount": 27,
+          "relationshipProposalCount": 35,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 62,
+          "humanReviewCount": 8,
+          "canonicalEntityCount": 5,
+          "canonicalRelationshipCount": 286,
+          "educationalClaimCount": 25,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8857142857142857,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:41:47.510Z",
+        "pilotKey": "patella-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "8 proposals still awaiting human review",
+          "4 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 70,
+          "approvedProposals": 62,
+          "pendingReview": 8,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 62,
+          "humanReviewQueue": 8,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "patella-fracture",
+        "pilotKey": "patella-fracture-neighborhood",
+        "generatedAt": "2026-07-05T22:41:16.486Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "11 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "18 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Patella Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[high] Patella Fracture neighborhood has 0/1 classification_system entities.",
+          "[high] Patella Fracture neighborhood has 0/1 imaging_finding entities.",
+          "[critical] Patella Fracture missing outbound injured_in (0/1).",
+          "[high] Patella Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Patella Fracture missing outbound at_risk_structure (0/1).",
+          "[critical] Patella Fracture missing outbound has_classification (0/1).",
+          "[high] Patella Fracture missing outbound has_grade (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 25,
+          "humanReviewItems": 16,
+          "attendingReviewItems": 11,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 5,
+          "relationships": 2,
+          "claims": 2,
+          "decisionPoints": 0,
+          "proposals": 69,
+          "approvedProposals": 61
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-2b934510"
+    },
+    "tibial-plateau-fracture": {
+      "displayName": "Tibial Plateau Fracture",
+      "pilotKey": "tibial-plateau-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:43:55.373Z",
+        "pilotKey": "tibial-plateau-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 80,
+          "approvedProposalCount": 70,
+          "entityProposalCount": 31,
+          "relationshipProposalCount": 41,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 70,
+          "humanReviewCount": 10,
+          "canonicalEntityCount": 4,
+          "canonicalRelationshipCount": 305,
+          "educationalClaimCount": 30,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.875,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:43:55.591Z",
+        "pilotKey": "tibial-plateau-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "10 proposals still awaiting human review",
+          "6 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 80,
+          "approvedProposals": 70,
+          "pendingReview": 10,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 70,
+          "humanReviewQueue": 10,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "tibial-plateau-fracture",
+        "pilotKey": "tibial-plateau-fracture-neighborhood",
+        "generatedAt": "2026-07-05T22:43:24.632Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "10 proposals still awaiting human review",
+          "9 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "5 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Tibial Plateau ORIF neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Tibial Plateau ORIF missing outbound involves_anatomy (0/1).",
+          "[high] Tibial Plateau ORIF missing outbound at_risk_structure (0/1).",
+          "[high] Schatzker Classification neighborhood has 0/2 classification_grade entities.",
+          "[high] Schatzker Classification missing inbound has_classification (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 8,
+          "humanReviewItems": 10,
+          "attendingReviewItems": 9,
+          "effortBand": "medium"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 4,
+          "relationships": 0,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 70,
+          "approvedProposals": 60
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-7c14f9ff"
+    },
+    "pilon-fracture": {
+      "displayName": "Pilon Fracture",
+      "pilotKey": "pilon-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:46:05.102Z",
+        "pilotKey": "pilon-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 79,
+          "approvedProposalCount": 70,
+          "entityProposalCount": 31,
+          "relationshipProposalCount": 40,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 70,
+          "humanReviewCount": 9,
+          "canonicalEntityCount": 5,
+          "canonicalRelationshipCount": 403,
+          "educationalClaimCount": 36,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8860759493670886,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:46:05.321Z",
+        "pilotKey": "pilon-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "9 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 79,
+          "approvedProposals": 70,
+          "pendingReview": 9,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 70,
+          "humanReviewQueue": 9,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "pilon-fracture",
+        "pilotKey": "pilon-fracture-neighborhood",
+        "generatedAt": "2026-07-05T22:45:34.424Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "17 proposals still awaiting human review",
+          "12 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "16 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Pilon ORIF neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Pilon ORIF missing outbound involves_anatomy (0/1).",
+          "[high] Pilon ORIF missing outbound at_risk_structure (0/1).",
+          "[critical] Pilon Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[high] Pilon Fracture neighborhood has 0/1 classification_system entities.",
+          "[critical] Pilon Fracture missing outbound injured_in (0/1).",
+          "[high] Pilon Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Pilon Fracture missing outbound at_risk_structure (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 24,
+          "humanReviewItems": 17,
+          "attendingReviewItems": 12,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 5,
+          "relationships": 2,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 75,
+          "approvedProposals": 66
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-07c359c5"
+    },
+    "calcaneus-fracture": {
+      "displayName": "Calcaneus Fracture",
+      "pilotKey": "calcaneus-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:48:07.482Z",
+        "pilotKey": "calcaneus-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 71,
+          "approvedProposalCount": 63,
+          "entityProposalCount": 27,
+          "relationshipProposalCount": 36,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 63,
+          "humanReviewCount": 8,
+          "canonicalEntityCount": 5,
+          "canonicalRelationshipCount": 431,
+          "educationalClaimCount": 43,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8873239436619719,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:48:07.684Z",
+        "pilotKey": "calcaneus-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "8 proposals still awaiting human review",
+          "4 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 71,
+          "approvedProposals": 63,
+          "pendingReview": 8,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 63,
+          "humanReviewQueue": 8,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "calcaneus-fracture",
+        "pilotKey": "calcaneus-fracture-neighborhood",
+        "generatedAt": "2026-07-05T22:47:36.615Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "16 proposals still awaiting human review",
+          "12 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "15 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Calcaneus ORIF neighborhood has 0/1 anatomy_structure entities.",
+          "[critical] Calcaneus ORIF missing outbound involves_anatomy (0/1).",
+          "[high] Calcaneus ORIF missing outbound at_risk_structure (0/1).",
+          "[critical] Calcaneus Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] Calcaneus Fracture missing outbound injured_in (0/1).",
+          "[high] Calcaneus Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Calcaneus Fracture missing outbound at_risk_structure (0/1).",
+          "[high] Calcaneus Fracture missing outbound has_grade (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 16,
+          "attendingReviewItems": 12,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 5,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 71,
+          "approvedProposals": 63
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-6955c970"
+    },
+    "talus-fracture": {
+      "displayName": "Talus Fracture",
+      "pilotKey": "talus-fracture-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:50:07.052Z",
+        "pilotKey": "talus-fracture-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 70,
+          "approvedProposalCount": 61,
+          "entityProposalCount": 27,
+          "relationshipProposalCount": 35,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 61,
+          "humanReviewCount": 9,
+          "canonicalEntityCount": 5,
+          "canonicalRelationshipCount": 467,
+          "educationalClaimCount": 48,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8714285714285714,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:50:07.274Z",
+        "pilotKey": "talus-fracture-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "9 proposals still awaiting human review",
+          "4 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 70,
+          "approvedProposals": 61,
+          "pendingReview": 9,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 61,
+          "humanReviewQueue": 9,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "talus-fracture",
+        "pilotKey": "talus-fracture-neighborhood",
+        "generatedAt": "2026-07-05T22:49:36.357Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "17 proposals still awaiting human review",
+          "13 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "15 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Talus Fracture neighborhood has 0/3 anatomy_structure entities.",
+          "[critical] Talus Fracture missing outbound injured_in (0/1).",
+          "[high] Talus Fracture missing outbound involves_anatomy (0/1).",
+          "[high] Talus Fracture missing outbound at_risk_structure (0/1).",
+          "[high] Talus Fracture missing outbound has_grade (0/1).",
+          "[high] Talus Fracture missing outbound treated_by (0/1).",
+          "[high] Talus Fracture missing inbound prerequisite_for (0/1).",
+          "[high] Talus Fracture has 0/3 L1 claims.",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 17,
+          "attendingReviewItems": 13,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 5,
+          "relationships": 3,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 70,
+          "approvedProposals": 61
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-6066860e"
+    },
+    "lisfranc-injury": {
+      "displayName": "Lisfranc Injury",
+      "pilotKey": "lisfranc-injury-neighborhood",
+      "factoryQuality": {
+        "generatedAt": "2026-07-05T22:52:03.544Z",
+        "pilotKey": "lisfranc-injury-neighborhood",
+        "source": "database",
+        "metrics": {
+          "proposalCount": 70,
+          "approvedProposalCount": 61,
+          "entityProposalCount": 27,
+          "relationshipProposalCount": 35,
+          "claimProposalCount": 5,
+          "dpProposalCount": 2,
+          "autoApprovedCount": 61,
+          "humanReviewCount": 9,
+          "canonicalEntityCount": 5,
+          "canonicalRelationshipCount": 489,
+          "educationalClaimCount": 55,
+          "decisionPointCount": 0,
+          "provenanceCompleteness": 1,
+          "reviewCompleteness": 0.8714285714285714,
+          "publicationReadiness": false
+        },
+        "estimatedMaturityLevel": 6
+      },
+      "factoryPublication": {
+        "generatedAt": "2026-07-05T22:52:03.753Z",
+        "pilotKey": "lisfranc-injury-neighborhood",
+        "ready": false,
+        "estimatedMaturityLevel": 5,
+        "blockers": [
+          "9 proposals still awaiting human review",
+          "5 items require attending review"
+        ],
+        "recommendedActions": [
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "metrics": {
+          "totalProposals": 70,
+          "approvedProposals": 61,
+          "pendingReview": 9,
+          "claimDrafts": 5,
+          "decisionPointDrafts": 2,
+          "autoApproved": 61,
+          "humanReviewQueue": 9,
+          "validationErrors": 0
+        }
+      },
+      "compilerPublication": {
+        "topicKey": "lisfranc-injury",
+        "pilotKey": "lisfranc-injury-neighborhood",
+        "generatedAt": "2026-07-05T22:51:32.852Z",
+        "currentLevel": 5,
+        "requiredLevel": 7,
+        "ready": false,
+        "blockers": [
+          "17 proposals still awaiting human review",
+          "14 items require attending review",
+          "Claims and DPs are draft-only — publication gate must block verified consumption.",
+          "No approved canonical entities in database yet — proposals remain offline/spec.",
+          "16 critical/high ontology gaps remain unresolved"
+        ],
+        "remainingWork": [
+          "[critical] Lisfranc Injury neighborhood has 0/3 anatomy_structure entities.",
+          "[high] Lisfranc Injury neighborhood has 0/1 classification_system entities.",
+          "[critical] Lisfranc Injury missing outbound injured_in (0/1).",
+          "[high] Lisfranc Injury missing outbound involves_anatomy (0/1).",
+          "[high] Lisfranc Injury missing outbound at_risk_structure (0/1).",
+          "[critical] Lisfranc Injury missing outbound has_classification (0/1).",
+          "[high] Lisfranc Injury missing outbound has_grade (0/1).",
+          "[high] Lisfranc Injury missing outbound treated_by (0/1).",
+          "Route ATTENDING_REVIEW queue to attending reviewer"
+        ],
+        "productReadiness": {
+          "traversalSmokeTest": true,
+          "prepareReady": false,
+          "brobotReady": false
+        },
+        "estimatedEffort": {
+          "gapsRemaining": 23,
+          "humanReviewItems": 17,
+          "attendingReviewItems": 14,
+          "effortBand": "high"
+        },
+        "dimensionScores": {
+          "clinical": 1,
+          "relationship": 1,
+          "educational": 1,
+          "reasoning": 1,
+          "anatomical": 1,
+          "review": 0,
+          "graph": 1,
+          "asset": 1
+        }
+      },
+      "dataSource": {
+        "neighborhood": "database",
+        "proposals": "database",
+        "dbCounts": {
+          "entities": 5,
+          "relationships": 2,
+          "claims": 0,
+          "decisionPoints": 0,
+          "proposals": 59,
+          "approvedProposals": 50
+        },
+        "dbLoaded": true
+      },
+      "evidencePacketId": "ev-packet-4738c88c"
+    }
+  },
+  "sharedAnatomySlugs": [
+    "lower-extremity-trauma-anatomy-hub",
+    "pelvis",
+    "sacrum",
+    "sacroiliac-joint",
+    "pubic-symphysis",
+    "iliac-wing",
+    "acetabulum",
+    "femoral-diaphysis",
+    "distal-femur",
+    "tibial-plateau",
+    "patella",
+    "extensor-mechanism",
+    "acl",
+    "pcl",
+    "popliteal-artery",
+    "common-peroneal-nerve",
+    "talus",
+    "calcaneus",
+    "subtalar-joint",
+    "lisfranc-joint",
+    "midfoot",
+    "plantar-soft-tissues"
+  ],
+  "publicationBlocked": true,
+  "clinicalVerification": false,
+  "stagingOnly": true,
+  "aggregate": {
+    "topicCount": 10,
+    "factoryMaturityLevels": [
+      6,
+      7,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ],
+    "allDbBackedCompileOk": true,
+    "allCompilerAgentsOk": true
+  }
+}

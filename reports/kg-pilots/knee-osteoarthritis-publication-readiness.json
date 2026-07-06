@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-07-05T23:03:17.444Z",
+  "pilotKey": "knee-osteoarthritis-neighborhood",
+  "ready": false,
+  "estimatedMaturityLevel": 5,
+  "blockers": [
+    "Validation failures must be resolved",
+    "6 proposals still awaiting human review",
+    "3 items require attending review",
+    "Insufficient relationship metadata on essential edges"
+  ],
+  "recommendedActions": [
+    "Run validation engine and fix errors",
+    "Route ATTENDING_REVIEW queue to attending reviewer",
+    "Run curate step to normalize metadata"
+  ],
+  "metrics": {
+    "totalProposals": 80,
+    "approvedProposals": 74,
+    "pendingReview": 6,
+    "claimDrafts": 4,
+    "decisionPointDrafts": 1,
+    "autoApproved": 74,
+    "humanReviewQueue": 6,
+    "validationErrors": 1
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-07-05T21:58:33.981Z",
+  "evidencePacketId": "ev-packet-2a9385d8",
+  "traces": [
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-displacement-based-supra",
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-displacement-based-supra",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-nerve-palsy",
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-nerve-palsy",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-imaging_point-anterior-humeral-line",
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-imaging_point-anterior-humeral-line",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-cognitive_trap-always-mention-ain-exam",
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-cognitive_trap-always-mention-ain-exam",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-imaging_point-baumann-angle-at-a-conce",
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-imaging_point-baumann-angle-at-a-conce",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-vascular-compromise",
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-vascular-compromise",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-cubitus-varus",
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-cubitus-varus",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-supracondylar-humerus-fracture-fact-child-elbow-injury",
+      "proposalFingerprint": "claim|claim-supracondylar-humerus-fracture-fact-child-elbow-injury",
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Nondisplaced casting versus urgent pinning for displaced injuries"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Long-arm cast"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-15c5e628"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Closed reduction and percutaneous pinning"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What nerve is most commonly injured?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-15c90cbc"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why is the vascular exam so important?"
+    }
+  ]
+}

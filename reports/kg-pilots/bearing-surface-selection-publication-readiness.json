@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-05T23:31:57.989Z",
+  "pilotKey": "bearing-surface-selection-neighborhood",
+  "ready": false,
+  "estimatedMaturityLevel": 5,
+  "blockers": [
+    "Validation failures must be resolved",
+    "4 proposals still awaiting human review",
+    "1 items require attending review"
+  ],
+  "recommendedActions": [
+    "Run validation engine and fix errors",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "metrics": {
+    "totalProposals": 80,
+    "approvedProposals": 76,
+    "pendingReview": 4,
+    "claimDrafts": 4,
+    "decisionPointDrafts": 1,
+    "autoApproved": 76,
+    "humanReviewQueue": 4,
+    "validationErrors": 1
+  }
+}

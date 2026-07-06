@@ -1,0 +1,269 @@
+{
+  "topicKey": "femoral-neck-fracture-adult-recon",
+  "pilotKey": "femoral-neck-fracture-adult-recon-neighborhood",
+  "primaryEntitySlug": "femoral-neck-fracture-adult-recon",
+  "displayName": "Femoral Neck Fracture (Adult Recon Perspective)",
+  "generatedAt": "2026-07-05T22:46:59.327Z",
+  "nodes": [
+    {
+      "slug": "tibial-insert",
+      "entityType": "implant",
+      "preferredLabel": "Tibial Insert",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cemented-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cemented Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "acetabular-component",
+      "entityType": "implant",
+      "preferredLabel": "Acetabular Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellar-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patellar Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "gluteus-minimus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Gluteus Minimus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "polyethylene-liner",
+      "entityType": "implant",
+      "preferredLabel": "Polyethylene Liner",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "patellar-component",
+      "entityType": "implant",
+      "preferredLabel": "Patellar Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femur",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibial-baseplate",
+      "entityType": "implant",
+      "preferredLabel": "Tibial Baseplate",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "implant-concepts-hub",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Arthroplasty Implant Concepts Hub",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "proximal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Femur",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hip-capsule",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Capsule",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-component",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Component",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-stem",
+      "entityType": "implant",
+      "preferredLabel": "Femoral Stem",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cement-mantle",
+      "entityType": "fixation_method",
+      "preferredLabel": "Cement Mantle",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-neck-fracture-adult-recon",
+      "entityType": "condition",
+      "preferredLabel": "Femoral Neck Fracture (Adult Recon)",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "adult-reconstruction-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Adult Reconstruction Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "press-fit-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Press-Fit Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "quadriceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Quadriceps Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cruciate-ligaments",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Cruciate Ligaments",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "short-external-rotators",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Short External Rotators",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tibia",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibia",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "gluteus-medius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Gluteus Medius",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 3,
+  "claimCount": 2,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [
+      "femoral-neck-fracture-adult-recon"
+    ],
+    "neighboring_anatomy": [
+      "patellar-tendon",
+      "gluteus-minimus",
+      "femoral-nerve",
+      "femur",
+      "proximal-femur",
+      "hip-capsule",
+      "adult-reconstruction-anatomy-hub",
+      "quadriceps-tendon",
+      "cruciate-ligaments",
+      "short-external-rotators",
+      "tibia",
+      "gluteus-medius"
+    ],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "implant-concepts-hub"
+    ],
+    "fixation": [
+      "tibial-insert",
+      "cemented-fixation",
+      "acetabular-component",
+      "polyethylene-liner",
+      "patellar-component",
+      "tibial-baseplate",
+      "femoral-component",
+      "femoral-stem",
+      "cement-mantle",
+      "press-fit-fixation"
+    ],
+    "supporting": []
+  }
+}

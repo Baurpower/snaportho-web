@@ -28,6 +28,7 @@ export function resolveOrthobulletsContext(input: {
     breadcrumbs: dedupe(input.pageContext.breadcrumbs),
     authors: dedupe(input.pageContext.authors ?? []),
     sectionHeadings: dedupe(input.pageContext.sectionHeadings ?? []),
+    references: dedupe(input.pageContext.references ?? []).slice(0, 40),
     contentSections: (input.pageContext.contentSections ?? []).slice(0, 20),
     linkedConcepts: input.pageContext.linkedConcepts.slice(0, 10),
     images: input.pageContext.images.slice(0, 8),

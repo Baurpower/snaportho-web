@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-07-05T22:40:02.412Z",
+  "pilotKey": "acl-tear-neighborhood",
+  "ready": false,
+  "estimatedMaturityLevel": 5,
+  "blockers": [
+    "Validation failures must be resolved",
+    "19 proposals still awaiting human review",
+    "6 items require attending review"
+  ],
+  "recommendedActions": [
+    "Run validation engine and fix errors",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "metrics": {
+    "totalProposals": 105,
+    "approvedProposals": 86,
+    "pendingReview": 19,
+    "claimDrafts": 8,
+    "decisionPointDrafts": 3,
+    "autoApproved": 86,
+    "humanReviewQueue": 18,
+    "validationErrors": 2
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "generatedAt": "2026-07-05T22:42:27.487Z",
+  "evidencePacketId": "ev-packet-fd0f062a",
+  "traces": [
+    {
+      "draftId": "claim-meniscus-tear-imaging_point-mri-tear-patterns-and-ex",
+      "proposalFingerprint": "claim|claim-meniscus-tear-imaging_point-mri-tear-patterns-and-ex",
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "reason": "LIST_ASSERTION: multiple assertions in one claim",
+      "suggestDecisionPoint": false,
+      "textPreview": "Radial, vertical, horizontal, root, bucket-handle tears"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Age, symptoms, tear pattern, ACL status, repairability"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "PT and activity modification"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Repair"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Partial meniscectomy"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-51a6345a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Root repair concepts"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why do some tears get repaired?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-51a72dce"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What symptoms favor surgery?"
+    }
+  ]
+}

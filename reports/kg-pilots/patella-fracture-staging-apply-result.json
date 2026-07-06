@@ -1,0 +1,271 @@
+{
+  "topicKey": "patella-fracture",
+  "pilotKey": "patella-fracture-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 61,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 61
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|anatomy_structure|common-peroneal-nerve",
+      "reason": "entity exists: common-peroneal-nerve"
+    },
+    {
+      "fingerprint": "create|complication|patella-baja",
+      "reason": "entity exists: patella-baja"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|subtalar-joint",
+      "reason": "entity exists: subtalar-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|talus",
+      "reason": "entity exists: talus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pelvis",
+      "reason": "entity exists: pelvis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|calcaneus",
+      "reason": "entity exists: calcaneus"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sacrum",
+      "reason": "entity exists: sacrum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|iliac-wing",
+      "reason": "entity exists: iliac-wing"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|plantar-soft-tissues",
+      "reason": "entity exists: plantar-soft-tissues"
+    },
+    {
+      "fingerprint": "create|complication|extensor-mechanism-disruption",
+      "reason": "entity exists: extensor-mechanism-disruption"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|femoral-diaphysis",
+      "reason": "entity exists: femoral-diaphysis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|patella",
+      "reason": "entity exists: patella"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|sacroiliac-joint",
+      "reason": "entity exists: sacroiliac-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tibial-plateau",
+      "reason": "entity exists: tibial-plateau"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|acl",
+      "reason": "entity exists: acl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pubic-symphysis",
+      "reason": "entity exists: pubic-symphysis"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-mechanism",
+      "reason": "entity exists: extensor-mechanism"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pcl",
+      "reason": "entity exists: pcl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lisfranc-joint",
+      "reason": "entity exists: lisfranc-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|popliteal-artery",
+      "reason": "entity exists: popliteal-artery"
+    },
+    {
+      "fingerprint": "create|condition|patella-fracture",
+      "reason": "entity exists: patella-fracture"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|midfoot",
+      "reason": "entity exists: midfoot"
+    },
+    {
+      "fingerprint": "create|procedure|patella-orif",
+      "reason": "entity exists: patella-orif"
+    },
+    {
+      "fingerprint": "create|fixation_method|tension-band-fixation",
+      "reason": "entity exists: tension-band-fixation"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|acetabulum",
+      "reason": "entity exists: acetabulum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-femur",
+      "reason": "entity exists: distal-femur"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lower-extremity-trauma-anatomy-hub",
+      "reason": "entity exists: lower-extremity-trauma-anatomy-hub"
+    },
+    {
+      "fingerprint": "rel|patella-fracture|involves_anatomy|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella-fracture|injured_in|patella",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella-fracture|involves_anatomy|extensor-mechanism",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|common-peroneal-nerve|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella-fracture|involves_anatomy|distal-femur",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella-fracture|has_complication|patella-baja",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pcl|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pelvis|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-femur|articulates_with|tibial-plateau",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|calcaneus|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lisfranc-joint|part_of|midfoot",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|talus|articulates_with|calcaneus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-femur|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sacroiliac-joint|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|midfoot|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|popliteal-artery|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella|articulates_with|distal-femur",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pubic-symphysis|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tibial-plateau|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|iliac-wing|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|sacrum|part_of|pelvis",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|talus|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|calcaneus|articulates_with|subtalar-joint",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|subtalar-joint|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|plantar-soft-tissues|part_of|calcaneus",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lower-extremity-trauma-anatomy-hub|prerequisite_for|patella-fracture",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|femoral-diaphysis|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|acl|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|extensor-mechanism|part_of|lower-extremity-trauma-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|acetabulum|part_of|iliac-wing",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella-orif|involves_anatomy|patella",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|patella-fracture|has_complication|extensor-mechanism-disruption",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|trauma-patella-fracture|patella-fracture",
+      "reason": "bridge exists"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "generatedAt": "2026-07-05T23:16:30.509Z",
+  "gaps": [
+    {
+      "id": "gap-entity-neighbor-1",
+      "kind": "missing_entity",
+      "priority": "critical",
+      "confidence": 0.95,
+      "reason": "Scaphoid Nonunion Operative Treatment neighborhood has 0/1 anatomy_structure entities.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.anatomy",
+      "anchorEntitySlug": "scaphoid-nonunion-operative-treatment",
+      "entityType": "anatomy_structure"
+    },
+    {
+      "id": "gap-rel-2",
+      "kind": "missing_relationship",
+      "priority": "critical",
+      "confidence": 0.92,
+      "reason": "Scaphoid Nonunion Operative Treatment missing outbound involves_anatomy (0/1).",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.15,
+      "ontologyRule": "procedure.pred.involves_anatomy",
+      "anchorEntitySlug": "scaphoid-nonunion-operative-treatment",
+      "subjectSlug": "scaphoid-nonunion-operative-treatment",
+      "predicate": "involves_anatomy"
+    },
+    {
+      "id": "gap-rel-3",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Scaphoid Nonunion Operative Treatment missing outbound at_risk_structure (0/1).",
+      "requiredReviewer": "attending",
+      "maturityImpact": 0.1,
+      "ontologyRule": "procedure.pred.at_risk_structure",
+      "anchorEntitySlug": "scaphoid-nonunion-operative-treatment",
+      "subjectSlug": "scaphoid-nonunion-operative-treatment",
+      "predicate": "at_risk_structure"
+    },
+    {
+      "id": "gap-asset-card-4",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "4 Anki mappings exist but no card link proposals in neighborhood.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.cards",
+      "anchorEntitySlug": "scaphoid-nonunion"
+    },
+    {
+      "id": "gap-asset-question-5",
+      "kind": "missing_asset_link",
+      "priority": "medium",
+      "confidence": 0.8,
+      "reason": "22 question mappings exist but no question link proposals.",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.05,
+      "ontologyRule": "neighborhood.assets.questions",
+      "anchorEntitySlug": "scaphoid-nonunion"
+    },
+    {
+      "id": "gap-proc-approach-6",
+      "kind": "missing_relationship",
+      "priority": "medium",
+      "confidence": 0.78,
+      "reason": "Procedure Scaphoid Nonunion Operative Treatment missing uses_approach edge.",
+      "requiredReviewer": "clinical_expert",
+      "maturityImpact": 0.05,
+      "ontologyRule": "procedure.pred.uses_approach",
+      "anchorEntitySlug": "scaphoid-nonunion-operative-treatment",
+      "subjectSlug": "scaphoid-nonunion-operative-treatment",
+      "predicate": "uses_approach"
+    }
+  ],
+  "summary": {
+    "total": 6,
+    "byKind": {
+      "missing_entity": 1,
+      "missing_relationship": 3,
+      "missing_asset_link": 2
+    },
+    "byPriority": {
+      "critical": 2,
+      "high": 1,
+      "medium": 3
+    }
+  }
+}

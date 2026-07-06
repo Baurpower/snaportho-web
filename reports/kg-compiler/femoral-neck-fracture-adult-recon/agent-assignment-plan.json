@@ -1,0 +1,160 @@
+{
+  "generatedAt": "2026-07-05T22:46:59.363Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "femoral-neck-fracture-adult-recon",
+  "pilotKey": "femoral-neck-fracture-adult-recon-neighborhood",
+  "assignments": [
+    {
+      "workItemId": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "agentName": "Relationship Builder",
+      "type": "gap_resolution",
+      "gapCount": 20,
+      "gapIds": [
+        "gap-rel-1",
+        "gap-rel-2",
+        "gap-rel-3",
+        "gap-rel-4",
+        "gap-rel-5",
+        "gap-rel-9",
+        "gap-rel-10",
+        "gap-rel-15",
+        "gap-rel-16",
+        "gap-rel-17",
+        "gap-rel-18",
+        "gap-rel-19",
+        "gap-rel-20",
+        "gap-rel-21",
+        "gap-rel-30",
+        "gap-rel-31",
+        "gap-rel-32",
+        "gap-rel-33",
+        "gap-rel-34",
+        "gap-rel-35"
+      ],
+      "gapKinds": [
+        "missing_relationship"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder",
+        "work-anatomy-builder"
+      ],
+      "estimatedConfidence": 0.9200000000000003,
+      "requiredReviewer": "attending",
+      "matchReasons": [
+        "handles_gap_kind:missing_relationship"
+      ]
+    },
+    {
+      "workItemId": "work-claim-builder",
+      "agentId": "claim-builder",
+      "agentName": "Claim Builder",
+      "type": "gap_resolution",
+      "gapCount": 9,
+      "gapIds": [
+        "gap-claim-6",
+        "gap-claim-type-7",
+        "gap-claim-type-8",
+        "gap-claim-22",
+        "gap-claim-type-23",
+        "gap-claim-type-24",
+        "gap-claim-type-25",
+        "gap-claim-type-26",
+        "gap-biomech-claim-38"
+      ],
+      "gapKinds": [
+        "missing_claim"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.7866666666666666,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_claim"
+      ]
+    },
+    {
+      "workItemId": "work-clinical-entity-builder",
+      "agentId": "clinical-entity-builder",
+      "agentName": "Clinical Entity Builder",
+      "type": "gap_resolution",
+      "gapCount": 4,
+      "gapIds": [
+        "gap-entity-neighbor-11",
+        "gap-entity-neighbor-12",
+        "gap-entity-neighbor-13",
+        "gap-entity-neighbor-14"
+      ],
+      "gapKinds": [
+        "missing_entity"
+      ],
+      "dependencies": [],
+      "estimatedConfidence": 0.95,
+      "requiredReviewer": "clinical_expert",
+      "matchReasons": [
+        "handles_gap_kind:missing_entity",
+        "generic_fallback"
+      ]
+    },
+    {
+      "workItemId": "work-decision-point-builder",
+      "agentId": "decision-point-builder",
+      "agentName": "Decision Point Builder",
+      "type": "gap_resolution",
+      "gapCount": 3,
+      "gapIds": [
+        "gap-dp-27",
+        "gap-dp-pattern-28",
+        "gap-dp-pattern-29"
+      ],
+      "gapKinds": [
+        "missing_decision_point"
+      ],
+      "dependencies": [
+        "work-relationship-builder"
+      ],
+      "estimatedConfidence": 0.8666666666666667,
+      "requiredReviewer": "attending",
+      "matchReasons": [
+        "handles_gap_kind:missing_decision_point"
+      ]
+    },
+    {
+      "workItemId": "work-asset-linker",
+      "agentId": "asset-linker",
+      "agentName": "Asset Linker",
+      "type": "gap_resolution",
+      "gapCount": 2,
+      "gapIds": [
+        "gap-asset-card-36",
+        "gap-asset-question-37"
+      ],
+      "gapKinds": [
+        "missing_asset_link"
+      ],
+      "dependencies": [
+        "work-clinical-entity-builder"
+      ],
+      "estimatedConfidence": 0.8,
+      "requiredReviewer": "none",
+      "matchReasons": [
+        "handles_gap_kind:missing_asset_link"
+      ]
+    }
+  ],
+  "executionOrder": [
+    "work-clinical-entity-builder",
+    "work-anatomy-builder",
+    "work-relationship-builder",
+    "work-decision-point-builder",
+    "work-claim-builder",
+    "work-asset-linker",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "registryAgentCount": 13
+}

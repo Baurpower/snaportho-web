@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-07-05T22:41:16.483Z",
+  "evidencePacketId": "ev-packet-2b934510",
+  "traces": [
+    {
+      "draftId": "claim-patella-fracture-fact-assess-extensor-mechanis",
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-assess-extensor-mechanis",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-differentiate-nondisplac",
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-differentiate-nondisplac",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-imaging_point-merchant-sunrise-views-w",
+      "proposalFingerprint": "claim|claim-patella-fracture-imaging_point-merchant-sunrise-views-w",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-cognitive_trap-perform-active-extension",
+      "proposalFingerprint": "claim|claim-patella-fracture-cognitive_trap-perform-active-extension",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-recognize-patella-baja-a",
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-recognize-patella-baja-a",
+      "evidenceItemIds": [
+        "ev-static-prepare-4fc8bc23"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-extensor-mechanism-exam",
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-extensor-mechanism-exam",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-fracture-displacement",
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-fracture-displacement",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-patella-fracture-fact-articular-step-off",
+      "proposalFingerprint": "claim|claim-patella-fracture-fact-articular-step-off",
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "How do you test extensor mechanism?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-db5be2f4"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is ORIF indicated?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Extensor lag, displacement, articular involvement"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Cylinder cast"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Patella ORIF with tension band"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-db5cfd60"
+      ],
+      "reason": "MANAGEMENT_LOGIC: if/then or treatment pathway — route to Decision Point Builder",
+      "suggestDecisionPoint": true,
+      "textPreview": "Loss of active extension is an operative indication"
+    }
+  ]
+}

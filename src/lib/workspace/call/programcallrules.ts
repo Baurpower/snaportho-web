@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { getDefaultRuleScope } from "./rule-definitions";
+import { migratePersistedCallRules } from "./persisted-rule-migration";
 
 export type ProgramCallRuleSet = {
   id: string;
@@ -124,7 +125,8 @@ export async function getProgramRules(programId: string, ruleSetId?: string) {
     throw new Error(`Failed to fetch rules: ${error.message}`);
   }
 
-  return (data ?? []) as ProgramCallRule[];
+  const rows = (data ?? []) as ProgramCallRule[];
+  return migratePersistedCallRules(rows).rules;
 }
 
 export async function replaceProgramRulesForRuleSet(input: {

@@ -1,0 +1,47 @@
+{
+  "topicKey": "adverse-local-tissue-reaction",
+  "pilotKey": "adverse-local-tissue-reaction-neighborhood",
+  "primaryEntitySlug": "adverse-local-tissue-reaction",
+  "displayName": "Adverse Local Tissue Reaction (Metal Reaction)",
+  "generatedAt": "2026-07-05T23:00:26.055Z",
+  "nodes": [
+    {
+      "slug": "metal-ion-elevation",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Metal Ion Elevation",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pseudotumor-mom",
+      "entityType": "imaging_finding",
+      "preferredLabel": "Pseudotumor (MoM)",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 0,
+  "claimCount": 0,
+  "decisionPointCount": 0,
+  "roles": {
+    "primary_condition": [],
+    "neighboring_anatomy": [],
+    "procedure": [],
+    "classification": [],
+    "imaging": [
+      "pseudotumor-mom"
+    ],
+    "complication": [],
+    "decision_point_anchor": [],
+    "claim_anchor": [],
+    "biomechanics": [
+      "metal-ion-elevation"
+    ],
+    "fixation": [],
+    "supporting": []
+  }
+}

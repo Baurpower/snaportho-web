@@ -1,0 +1,129 @@
+{
+  "generatedAt": "2026-07-05T21:07:49.554Z",
+  "evidencePacketId": "ev-packet-860a01c0",
+  "traces": [
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-explain-why-delayed-trea",
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-fact-explain-why-delayed-trea",
+      "evidenceItemIds": [
+        "ev-static-prepare-9add0773"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-describe-emergent-manage",
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-fact-describe-emergent-manage",
+      "evidenceItemIds": [
+        "ev-static-prepare-9add0773"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-compartments-at-risk",
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-anatomy_pearl-compartments-at-risk",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "claimType": "anatomy_pearl",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-imaging_point-no-imaging-should-delay-",
+      "proposalFingerprint": "claim|claim-compartment-syndrome-imaging_point-no-imaging-should-delay-",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-board_trap-pulselessness-is-late-pa",
+      "proposalFingerprint": "claim|claim-compartment-syndrome-board_trap-pulselessness-is-late-pa",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-imaging_point-pressure-checks-as-adjun",
+      "proposalFingerprint": "claim|claim-compartment-syndrome-imaging_point-pressure-checks-as-adjun",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-compartment-syndrome-cognitive_trap-never-reassure-solely-fr",
+      "proposalFingerprint": "claim|claim-compartment-syndrome-cognitive_trap-never-reassure-solely-fr",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-fact-acute-traumatic-versus-e",
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-fact-acute-traumatic-versus-e",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-perfusion-pressure-concept-anatomy_pearl-perfusion-pressure-conce",
+      "proposalFingerprint": "claim|claim-perfusion-pressure-concept-anatomy_pearl-perfusion-pressure-conce",
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "claimType": "anatomy_pearl",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "High suspicion and evolving exam findings favor fasciotomy"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Emergent fasciotomy"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ac7d7030"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Return trips for debridement and closure"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "Why are pulses unreliable?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-ac809aa4"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When do pressure measurements help?"
+    }
+  ]
+}

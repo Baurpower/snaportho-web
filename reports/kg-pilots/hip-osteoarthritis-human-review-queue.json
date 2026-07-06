@@ -1,0 +1,219 @@
+[
+  {
+    "proposal_fingerprint": "rel|hip-osteoarthritis|indicates_treatment|total-hip-arthroplasty",
+    "proposal_type": "add_canonical_relationship",
+    "route": "ATTENDING_REVIEW",
+    "target": "hip-osteoarthritis -[indicates_treatment]-> total-hip-arthroplasty",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.75,
+    "rationale": [
+      "Rule: high_risk_predicate"
+    ],
+    "reviewer_decision_required": "Confirm management implication: hip-osteoarthritis -[indicates_treatment]-> total-hip-arthroplasty",
+    "alternatives": [],
+    "evidence_summary": "Relationship indicates_treatment",
+    "metadata": {
+      "pilot": "hip-osteoarthritis-neighborhood",
+      "review_packet_key": "pilot:hip-osteoarthritis-neighborhood",
+      "review_packet_label": "Hip Osteoarthritis Neighborhood",
+      "factory_version": "kf-016",
+      "subject_slug": "hip-osteoarthritis",
+      "subject_entity_type": "condition",
+      "object_slug": "total-hip-arthroplasty",
+      "object_entity_type": "procedure",
+      "relationship_metadata": {
+        "management_importance": "high",
+        "review_status": "needs_review"
+      },
+      "high_risk": true,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.96,
+        "ambiguity": 0.2,
+        "safety": 0.75,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "high_risk_predicate"
+      ],
+      "curated_at": "2026-07-05T22:43:36.105Z",
+      "verified": false
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-hip-osteoarthritis-core",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: l1_management_fact"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-hip-osteoarthritis-core",
+    "alternatives": [],
+    "evidence_summary": "curriculum-data.ts + adult-reconstruction cluster seed",
+    "metadata": {
+      "pilot": "hip-osteoarthritis-neighborhood",
+      "review_packet_key": "pilot:hip-osteoarthritis-neighborhood",
+      "review_packet_label": "Hip Osteoarthritis Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-hip-osteoarthritis-core",
+      "claim_type": "fact",
+      "claim_text": "Hip OA is a clinical-plus-radiographic diagnosis where loss of function matters as much as imaging.",
+      "primary_entity_slug": "hip-osteoarthritis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "clinic",
+        "call"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.96,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "l1_management_fact"
+      ],
+      "curated_at": "2026-07-05T22:43:36.105Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-hip-osteoarthritis-board-trap",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.55,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-hip-osteoarthritis-board-trap",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "hip-osteoarthritis-neighborhood",
+      "review_packet_key": "pilot:hip-osteoarthritis-neighborhood",
+      "review_packet_label": "Hip Osteoarthritis Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-hip-osteoarthritis-board-trap",
+      "claim_type": "board_trap",
+      "claim_text": "Board trap: oversimplifying hip osteoarthritis without attending-level implant, fixation, or infection context.",
+      "primary_entity_slug": "hip-osteoarthritis",
+      "importance_level": "L1",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "oite"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.96,
+        "ambiguity": 0.35,
+        "safety": 0.55,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:43:36.105Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "claim|claim-hip-osteoarthritis-script",
+    "proposal_type": "propose_educational_claim",
+    "route": "HUMAN_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Curator review required",
+    "confidence": 0.75,
+    "safety_score": 0.1,
+    "rationale": [
+      "Rule: educational_judgment_claim"
+    ],
+    "reviewer_decision_required": "Confirm clinical accuracy and atomicity of claim: claim-hip-osteoarthritis-script",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "hip-osteoarthritis-neighborhood",
+      "review_packet_key": "pilot:hip-osteoarthritis-neighborhood",
+      "review_packet_label": "Hip Osteoarthritis Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "claim-hip-osteoarthritis-script",
+      "claim_type": "clinical_script",
+      "claim_text": "Present indication, relevant imaging, implant/fixation concepts, and escalation pathway for hip osteoarthritis.",
+      "primary_entity_slug": "hip-osteoarthritis",
+      "importance_level": "L2",
+      "content_source": "generated_draft",
+      "context_relevance": [
+        "call",
+        "clinic"
+      ],
+      "verified": false,
+      "curation_route": "HUMAN_REVIEW",
+      "curation_scores": {
+        "confidence": 0.75,
+        "evidence": 0.96,
+        "ambiguity": 0.2,
+        "safety": 0.1,
+        "completeness": 0.8
+      },
+      "curation_rules": [
+        "educational_judgment_claim"
+      ],
+      "curated_at": "2026-07-05T22:43:36.105Z"
+    }
+  },
+  {
+    "proposal_fingerprint": "dp|dp-hip-osteoarthritis-operative",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Attending review required",
+    "confidence": 0.92,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending"
+    ],
+    "reviewer_decision_required": "Approve operative/management pathway: dp-hip-osteoarthritis-operative",
+    "alternatives": [],
+    "evidence_summary": "adult-reconstruction cluster manufacturing seed",
+    "metadata": {
+      "pilot": "hip-osteoarthritis-neighborhood",
+      "review_packet_key": "pilot:hip-osteoarthritis-neighborhood",
+      "review_packet_label": "Hip Osteoarthritis Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "dp-hip-osteoarthritis-operative",
+      "subject_entity_slug": "hip-osteoarthritis",
+      "pattern_type": "operative_indication",
+      "trigger": "End-stage hip OA with failed conservative care and acceptable surgical risk",
+      "action": "Discuss primary THA candidacy with attending; review acetabular bone and abductor status",
+      "urgency": "routine",
+      "safety_criticality": "moderate",
+      "content_source": "generated_draft",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.96,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-05T22:43:36.105Z"
+    }
+  }
+]

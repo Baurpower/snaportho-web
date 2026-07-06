@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-07-05T21:56:16.888Z",
+  "evidencePacketId": "ev-packet-e491f52a",
+  "traces": [
+    {
+      "draftId": "claim-clavicle-fracture-fact-recognize-common-midshaf",
+      "proposalFingerprint": "claim|claim-clavicle-fracture-fact-recognize-common-midshaf",
+      "evidenceItemIds": [
+        "ev-static-prepare-455e7259"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-identify-medial-clavicle",
+      "proposalFingerprint": "claim|claim-clavicle-fracture-fact-identify-medial-clavicle",
+      "evidenceItemIds": [
+        "ev-static-prepare-455e7259"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-board_trap-posterior-sternoclavicul",
+      "proposalFingerprint": "claim|claim-clavicle-fracture-board_trap-posterior-sternoclavicul",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "claimType": "board_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-imaging_point-ap-clavicle-radiographs",
+      "proposalFingerprint": "claim|claim-clavicle-fracture-imaging_point-ap-clavicle-radiographs",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-cognitive_trap-screen-for-sc-joint-post",
+      "proposalFingerprint": "claim|claim-clavicle-fracture-cognitive_trap-screen-for-sc-joint-post",
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "claimType": "cognitive_trap",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-midshaft-versus-lateral-",
+      "proposalFingerprint": "claim|claim-clavicle-fracture-fact-midshaft-versus-lateral-",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-imaging_point-serendipity-view-for-med",
+      "proposalFingerprint": "claim|claim-clavicle-fracture-imaging_point-serendipity-view-for-med",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "claimType": "imaging_point",
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-clavicle-fracture-fact-malunion",
+      "proposalFingerprint": "claim|claim-clavicle-fracture-fact-malunion",
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "claimType": "fact",
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejectedTraces": [
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-455e7259"
+      ],
+      "reason": "MANAGEMENT_LOGIC: if/then or treatment pathway — route to Decision Point Builder",
+      "suggestDecisionPoint": true,
+      "textPreview": "Compare nonoperative sling versus operative fixation indications."
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Displacement, shortening, comminution, activity demands"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Sling immobilization"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-f037d55a"
+      ],
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "textPreview": "Open reduction internal fixation"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "When is operative fixation considered?"
+    },
+    {
+      "evidenceItemIds": [
+        "ev-static-prepare-f038cece"
+      ],
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "textPreview": "What makes medial clavicle injuries dangerous?"
+    }
+  ]
+}

@@ -1,0 +1,675 @@
+{
+  "topicKey": "scaphoid-nonunion",
+  "pilotKey": "scaphoid-nonunion-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": false,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 162,
+  "applied": {
+    "entities": 0,
+    "relationships": 0,
+    "bridges": 0,
+    "claims_draft": 1,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 162
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-nerve",
+      "reason": "entity exists: ulnar-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|triquetrum",
+      "reason": "entity exists: triquetrum"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|middle-phalanx",
+      "reason": "entity exists: middle-phalanx"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a3-pulley",
+      "reason": "entity exists: a3-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|capitate",
+      "reason": "entity exists: capitate"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|extensor-tendon-zones",
+      "reason": "entity exists: extensor-tendon-zones"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pruj",
+      "reason": "entity exists: pruj"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|second-metacarpal",
+      "reason": "entity exists: second-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|third-metacarpal",
+      "reason": "entity exists: third-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|epl",
+      "reason": "entity exists: epl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-radius",
+      "reason": "entity exists: distal-radius"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fcr",
+      "reason": "entity exists: fcr"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fifth-metacarpal",
+      "reason": "entity exists: fifth-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|trapezium",
+      "reason": "entity exists: trapezium"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lunotriquetral-ligament",
+      "reason": "entity exists: lunotriquetral-ligament"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c2-pulley",
+      "reason": "entity exists: c2-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|superficial-palmar-arch",
+      "reason": "entity exists: superficial-palmar-arch"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ain",
+      "reason": "entity exists: ain"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c3-pulley",
+      "reason": "entity exists: c3-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pin",
+      "reason": "entity exists: pin"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|digital-nerves",
+      "reason": "entity exists: digital-nerves"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulna",
+      "reason": "entity exists: ulna"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|mcp-joint",
+      "reason": "entity exists: mcp-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hand-wrist-anatomy-hub",
+      "reason": "entity exists: hand-wrist-anatomy-hub"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|trapezoid",
+      "reason": "entity exists: trapezoid"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|guyon-canal",
+      "reason": "entity exists: guyon-canal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-ulna",
+      "reason": "entity exists: distal-ulna"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|cmc-joint",
+      "reason": "entity exists: cmc-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ulnar-artery",
+      "reason": "entity exists: ulnar-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|apl",
+      "reason": "entity exists: apl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|distal-phalanx",
+      "reason": "entity exists: distal-phalanx"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|first-metacarpal",
+      "reason": "entity exists: first-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|deep-palmar-arch",
+      "reason": "entity exists: deep-palmar-arch"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|druj",
+      "reason": "entity exists: druj"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fpl",
+      "reason": "entity exists: fpl"
+    },
+    {
+      "fingerprint": "create|condition|scaphoid-nonunion",
+      "reason": "entity exists: scaphoid-nonunion"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a5-pulley",
+      "reason": "entity exists: a5-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|flexor-tendon-zones",
+      "reason": "entity exists: flexor-tendon-zones"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radius",
+      "reason": "entity exists: radius"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|lunate",
+      "reason": "entity exists: lunate"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|interosseous-membrane",
+      "reason": "entity exists: interosseous-membrane"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pisiform",
+      "reason": "entity exists: pisiform"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|scaphoid",
+      "reason": "entity exists: scaphoid"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|median-nerve",
+      "reason": "entity exists: median-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|hamate",
+      "reason": "entity exists: hamate"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fourth-metacarpal",
+      "reason": "entity exists: fourth-metacarpal"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|tfcc",
+      "reason": "entity exists: tfcc"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|pip-joint",
+      "reason": "entity exists: pip-joint"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|dip-joint",
+      "reason": "entity exists: dip-joint"
+    },
+    {
+      "fingerprint": "create|condition|sl-ligament-injury",
+      "reason": "entity exists: sl-ligament-injury"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|scapholunate-ligament",
+      "reason": "entity exists: scapholunate-ligament"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|thumb-ucl",
+      "reason": "entity exists: thumb-ucl"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|volar-plate",
+      "reason": "entity exists: volar-plate"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fdp",
+      "reason": "entity exists: fdp"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|edc",
+      "reason": "entity exists: edc"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fds",
+      "reason": "entity exists: fds"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|ecu",
+      "reason": "entity exists: ecu"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|epb",
+      "reason": "entity exists: epb"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a2-pulley",
+      "reason": "entity exists: a2-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|fcu",
+      "reason": "entity exists: fcu"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a1-pulley",
+      "reason": "entity exists: a1-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|a4-pulley",
+      "reason": "entity exists: a4-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|c1-pulley",
+      "reason": "entity exists: c1-pulley"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|flexor-pulley-system",
+      "reason": "entity exists: flexor-pulley-system"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-nerve",
+      "reason": "entity exists: radial-nerve"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|radial-artery",
+      "reason": "entity exists: radial-artery"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|carpal-tunnel",
+      "reason": "entity exists: carpal-tunnel"
+    },
+    {
+      "fingerprint": "create|procedure|scaphoid-nonunion-operative-treatment",
+      "reason": "entity exists: scaphoid-nonunion-operative-treatment"
+    },
+    {
+      "fingerprint": "create|complication|scaphoid-nonunion-key-complication",
+      "reason": "entity exists: scaphoid-nonunion-key-complication"
+    },
+    {
+      "fingerprint": "create|condition|scaphoid-fracture",
+      "reason": "entity exists: scaphoid-fracture"
+    },
+    {
+      "fingerprint": "create|condition|carpal-instability",
+      "reason": "entity exists: carpal-instability"
+    },
+    {
+      "fingerprint": "create|anatomy_structure|proximal-phalanx",
+      "reason": "entity exists: proximal-phalanx"
+    },
+    {
+      "fingerprint": "create|imaging_finding|scaphoid-nonunion-key-imaging-finding",
+      "reason": "entity exists: scaphoid-nonunion-key-imaging-finding"
+    },
+    {
+      "fingerprint": "rel|capitate|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fourth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|proximal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|mcp-joint|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|volar-plate|inserts_on|proximal-phalanx",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|edc|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|lunate",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|extensor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|a2-pulley|part_of|flexor-pulley-system",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-phalanx|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fpl|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|a4-pulley|part_of|flexor-pulley-system",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|hand-wrist-anatomy-hub|prerequisite_for|scaphoid-nonunion",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid-nonunion|involves_anatomy|scaphoid",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fcr|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|a5-pulley|part_of|flexor-pulley-system",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pin|part_of|radial-nerve",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid-nonunion|injured_in|scaphoid",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid-nonunion|involves_anatomy|scapholunate-ligament",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid-nonunion|injured_in|scapholunate-ligament",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid-nonunion|has_imaging_finding|scaphoid-nonunion-key-imaging-finding",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|druj",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|contains|fds",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid-nonunion|has_complication|scaphoid-nonunion-key-complication",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scaphoid|articulates_with|lunate",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pip-joint|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|first-metacarpal|articulates_with|trapezium",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-ulna|articulates_with|druj",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|median-nerve|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|digital-nerves|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|radial-artery|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|fds",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|guyon-canal|contains|ulnar-artery",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|epl|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|a1-pulley|part_of|flexor-pulley-system",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|lunate",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|a3-pulley|part_of|flexor-pulley-system",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ulnar-artery|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|c2-pulley|part_of|flexor-pulley-system",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|tfcc|inserts_on|triquetrum",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|third-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|triquetrum|articulates_with|druj",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|triquetrum",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|middle-phalanx|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|fdp",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|flexor-pulley-system|contains|fdp",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fcu|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fds|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|first-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|cmc-joint|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|superficial-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|interosseous-membrane|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ulnar-nerve|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|radial-nerve|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fdp|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ecu|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|c3-pulley|part_of|flexor-pulley-system",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ulna|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|radius|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pruj|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|fifth-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-radius|part_of|radius",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|hamate|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|second-metacarpal|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|thumb-ucl|inserts_on|proximal-phalanx",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|epb|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|c1-pulley|part_of|flexor-pulley-system",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|dip-joint|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|apl|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|flexor-tendon-zones|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|guyon-canal|contains|ulnar-nerve",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|ain|part_of|median-nerve",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-radius|articulates_with|scaphoid",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|deep-palmar-arch|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|carpal-tunnel|contains|median-nerve",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|druj|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|triquetrum|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|pisiform|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|trapezium|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|distal-ulna|part_of|ulna",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lunate|articulates_with|triquetrum",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lunate|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|trapezoid|part_of|hand-wrist-anatomy-hub",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|lunotriquetral-ligament|inserts_on|lunate",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "rel|scapholunate-ligament|inserts_on|scaphoid",
+      "reason": "relationship exists"
+    },
+    {
+      "fingerprint": "bridge|hand-scaphoid-nonunion|scaphoid-nonunion",
+      "reason": "curriculum node not found"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 1,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

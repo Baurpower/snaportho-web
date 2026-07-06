@@ -32,6 +32,11 @@ export const STUDENT_WORKSPACE_NAV_ITEMS: StudentWorkspaceNavItem[] = [
   },
 ];
 
+const PREPARE_ACTIVE_PREFIXES = [
+  "/student-workspace/prepare",
+  "/student-workspace/case-readiness",
+] as const;
+
 export function isStudentWorkspacePathActive(
   pathname: string | null,
   href: string
@@ -39,6 +44,12 @@ export function isStudentWorkspacePathActive(
   if (!pathname) return false;
   if (href === "/student-workspace") {
     return pathname === href;
+  }
+
+  if (href === "/student-workspace/prepare") {
+    return PREPARE_ACTIVE_PREFIXES.some(
+      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+    );
   }
 
   return pathname === href || pathname.startsWith(`${href}/`);

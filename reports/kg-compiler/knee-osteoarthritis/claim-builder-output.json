@@ -1,0 +1,786 @@
+{
+  "generatedAt": "2026-07-05T23:02:35.980Z",
+  "agentId": "claim-builder",
+  "agentVersion": "2.0.0",
+  "evidencePacketId": "ev-packet-6984faec",
+  "gapsAddressed": 4,
+  "gapsScheduled": 4,
+  "claimsGenerated": 8,
+  "claimsRejected": 6,
+  "redirectedToDecisionPoint": 4,
+  "candidates": [
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-knee-osteoarthritis-indi",
+      "claimText": "Knee Osteoarthritis indication language.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-implant-and-fixation-voc",
+      "claimText": "Implant and fixation vocabulary.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-cross-neighborhood-traum",
+      "claimText": "Cross-neighborhood trauma links.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.mustKnow",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.mustKnow); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-shared-adult-reconstruct",
+      "claimText": "Shared adult reconstruction anatomy hub.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-implant-concepts-hub",
+      "claimText": "Implant concepts hub.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-trauma-neighborhood-brid",
+      "claimText": "Trauma neighborhood bridges.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.anatomyFocus",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.anatomyFocus); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-knee-oa-is-compartmental",
+      "claimText": "Knee OA is compartmental wear that becomes a TKA problem when pain and function fail conservative treatment.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.oneLiner",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.oneLiner); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-cognitive_trap-use-implant-component-vo",
+      "claimText": "Use implant component vocabulary.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7414999999999999,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-cognitive_trap-mention-infection-workup",
+      "claimText": "Mention infection workup when pain is unexplained.",
+      "claimType": "cognitive_trap",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "oite",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.orSurvivalTips",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.orSurvivalTips); requires human verification before learner consumption.",
+      "confidence": 0.7414999999999999,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-clinical_script-state-indication",
+      "claimText": "State indication.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-imaging_point-review-imaging",
+      "claimText": "Review imaging.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "imaging_decision"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-clinical_script-name-implant-fixation-co",
+      "claimText": "Name implant/fixation concepts.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-clinical_script-outline-escalation-pathw",
+      "claimText": "Outline escalation pathway.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call",
+        "or"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "section": "fast.caseSteps",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (fast.caseSteps); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimText": "Hip and knee joint surfaces.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-extensor-mechanism",
+      "claimText": "Extensor mechanism.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-implant-bone-interfaces",
+      "claimText": "Implant-bone interfaces.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.anatomy",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.anatomy); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-knee-reconstruction-clas",
+      "claimText": "Knee Reconstruction classification frameworks.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.classification",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.classification); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-imaging_point-weight-bearing-radiograp",
+      "claimText": "Weight-bearing radiographs.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.imaging",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-imaging_point-periprosthetic-lucency-a",
+      "claimText": "Periprosthetic lucency and osteolysis patterns.",
+      "claimType": "imaging_point",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.imaging",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.imaging); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-board_trap-knee-oa-is-compartmental",
+      "claimText": "Knee OA is compartmental wear that becomes a TKA problem when pain and function fail conservative treatment.",
+      "claimType": "board_trap",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L1",
+      "whyItMatters": [
+        "board_trap"
+      ],
+      "contextRelevance": [
+        "oite"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.boardPearls",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.boardPearls); requires human verification before learner consumption.",
+      "confidence": 0.7414999999999999,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-infection",
+      "claimText": "Infection.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-loosening",
+      "claimText": "Loosening.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-instability",
+      "claimText": "Instability.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "changes_management"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-periprosthetic-fracture",
+      "claimText": "Periprosthetic fracture.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "section": "deep.complications",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (deep.complications); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-fact-recognize-core-concepts-",
+      "claimText": "Recognize core concepts in Knee Osteoarthritis.",
+      "claimType": "fact",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-eb1f955f"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-connect-knee-osteoarthri",
+      "claimText": "Connect Knee Osteoarthritis to shared anatomy, implant concepts, and trauma neighborhoods.",
+      "claimType": "anatomy_pearl",
+      "primaryEntitySlug": "mechanical-axis-knee",
+      "importanceLevel": "L2",
+      "whyItMatters": [
+        "anatomical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-eb1f955f"
+      ],
+      "section": "learning_objectives",
+      "gapId": "gap-claim-2",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.8365,
+      "reviewRoute": "HUMAN_REVIEW"
+    },
+    {
+      "draftId": "claim-knee-osteoarthritis-clinical_script-outline-attending-level-",
+      "claimText": "Outline attending-level review priorities for Knee Osteoarthritis.",
+      "claimType": "clinical_script",
+      "primaryEntitySlug": "knee-osteoarthritis",
+      "importanceLevel": "L3",
+      "whyItMatters": [
+        "clinical_reasoning"
+      ],
+      "contextRelevance": [
+        "clinic",
+        "call"
+      ],
+      "learnerStage": "clerkship",
+      "evidenceItemIds": [
+        "ev-static-prepare-eb1f955f"
+      ],
+      "section": "learning_objectives",
+      "atomicityScore": 1,
+      "uncertaintyNote": "Single-source internal draft (learning_objectives); requires human verification before learner consumption.",
+      "confidence": 0.7865,
+      "reviewRoute": "HUMAN_REVIEW"
+    }
+  ],
+  "rejected": [
+    {
+      "text": "What drives management in Knee Osteoarthritis?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ]
+    },
+    {
+      "text": "When does this become a revision problem?",
+      "reason": "QUESTION_FORM",
+      "suggestDecisionPoint": false,
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ]
+    },
+    {
+      "text": "Symptoms, implant stability, bone quality, infection exclusion",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ]
+    },
+    {
+      "text": "Nonoperative care",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ]
+    },
+    {
+      "text": "Primary arthroplasty",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ]
+    },
+    {
+      "text": "Revision and staged strategies",
+      "reason": "MANAGEMENT_LOGIC",
+      "suggestDecisionPoint": true,
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "proposalFingerprint": "claim|claim-mechanical-axis-knee-fact-knee-osteoarthritis-indi",
+      "draftId": "claim-mechanical-axis-knee-fact-knee-osteoarthritis-indi",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-mechanical-axis-knee-fact-implant-and-fixation-voc",
+      "draftId": "claim-mechanical-axis-knee-fact-implant-and-fixation-voc",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-mechanical-axis-knee-anatomy_pearl-shared-adult-reconstruct",
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-shared-adult-reconstruct",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-mechanical-axis-knee-fact-cross-neighborhood-traum",
+      "draftId": "claim-mechanical-axis-knee-fact-cross-neighborhood-traum",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-mechanical-axis-knee-anatomy_pearl-implant-concepts-hub",
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-implant-concepts-hub",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-mechanical-axis-knee-anatomy_pearl-trauma-neighborhood-brid",
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-trauma-neighborhood-brid",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-mechanical-axis-knee-fact-knee-oa-is-compartmental",
+      "draftId": "claim-mechanical-axis-knee-fact-knee-oa-is-compartmental",
+      "claimType": "fact",
+      "importanceLevel": "L1",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aee1208"
+      ],
+      "verified": false
+    },
+    {
+      "proposalFingerprint": "claim|claim-mechanical-axis-knee-anatomy_pearl-hip-and-knee-joint-surfa",
+      "draftId": "claim-mechanical-axis-knee-anatomy_pearl-hip-and-knee-joint-surfa",
+      "claimType": "anatomy_pearl",
+      "importanceLevel": "L2",
+      "reviewRoute": "HUMAN_REVIEW",
+      "evidenceItemIds": [
+        "ev-static-prepare-9aef079c"
+      ],
+      "verified": false
+    }
+  ]
+}
