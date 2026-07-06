@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import {
   BACKUP_REQUIRED_EXPLICIT_KEY,
   findBackupRequirementSources,
-  migratePersistedCallRule,
   migratePersistedCallRules,
 } from "@/lib/workspace/call/persisted-rule-migration";
 import { buildCallHubValidationInput } from "@/lib/workspace/call/call-hub-scheduling";

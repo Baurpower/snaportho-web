@@ -162,6 +162,7 @@ export function shouldShowCheckoutBenefitCards(phase: CheckoutSuccessPhase): boo
   return phase === 'active';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- phase kept for stable call signature
 export function shouldShowCheckoutFreeQuota(_phase: CheckoutSuccessPhase): boolean {
   return false;
 }

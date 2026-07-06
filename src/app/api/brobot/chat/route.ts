@@ -1729,7 +1729,6 @@ async function handleGuestChat(params: {
   const persistence = createAdminClient();
 
   const gate = await getBroBotAccessGate(subject);
-  const entitlement = gate.normalized.data;
   const limit = gate.dailyCap;
   const remainingBefore = gate.remainingToday;
   const usedBefore =
@@ -1989,7 +1988,6 @@ export async function POST(request: Request) {
 
     step = 'quota_check';
     const gate = await getBroBotAccessGate(subject);
-    const entitlement = gate.normalized.data;
     const limit = gate.dailyCap;
     const remainingBefore = gate.remainingToday;
     const usedBefore =

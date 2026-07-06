@@ -257,7 +257,6 @@ function BillingContent() {
   const remaining = billingView?.remainingToday ?? 0;
   const dailyCap = billingView?.dailyCap ?? null;
   const cancelAtPeriodEnd = billingView?.cancelAtPeriodEnd === true;
-  const subStatus = billingView?.status;
   const isCanceledAtPeriodEnd = isPaid && cancelAtPeriodEnd;
 
   return (
