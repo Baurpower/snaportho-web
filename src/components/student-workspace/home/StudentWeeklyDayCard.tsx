@@ -52,7 +52,7 @@ export function StudentWeeklyDayCard({
     <button
       type="button"
       onClick={onClick}
-      className={`flex min-h-[220px] w-full min-w-0 flex-col rounded-[1.25rem] border p-2.5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md lg:p-3 xl:min-h-[250px] xl:p-4 ${
+      className={`flex min-h-[180px] w-full min-w-0 flex-col rounded-[1.25rem] border p-2.5 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md lg:p-3 xl:min-h-[210px] ${
         isSelected
           ? "border-slate-900 bg-white"
           : isToday
@@ -65,7 +65,7 @@ export function StudentWeeklyDayCard({
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500/80">
             {getWeekdayLabel(weekday)}
           </p>
-          <p className="mt-1.5 text-lg font-bold tracking-tight text-slate-950">
+          <p className="mt-1 text-base font-bold tracking-tight text-slate-950">
             {formatDateOnly(dateKey)}
           </p>
         </div>
@@ -77,9 +77,9 @@ export function StudentWeeklyDayCard({
         ) : null}
       </div>
 
-      <div className="mt-5 flex-1 space-y-2.5">
+      <div className="mt-3 flex-1 space-y-2">
         {entries.length === 0 ? (
-          <div className="flex h-full min-h-28 flex-col justify-between rounded-2xl border border-dashed border-slate-200/80 bg-white px-3.5 py-3.5">
+          <div className="flex h-full min-h-24 flex-col justify-between rounded-2xl border border-dashed border-slate-200/80 bg-white px-3 py-3">
             <p className="text-sm font-semibold text-slate-900">No plans yet</p>
             <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500">
               <CalendarDays className="h-3.5 w-3.5" />
@@ -90,7 +90,7 @@ export function StudentWeeklyDayCard({
           entries.slice(0, 3).map((entry) => (
             <div
               key={`${entry.id}-${entry.occurs_on}`}
-              className={`rounded-2xl border px-3 py-3.5 ${getEntryTone(entry)}`}
+              className={`rounded-2xl border px-3 py-2.5 ${getEntryTone(entry)}`}
             >
               <p className="line-clamp-2 text-sm font-semibold leading-5">{entry.title}</p>
               <div className="mt-2 flex flex-wrap items-center gap-2 text-[11px] opacity-80">

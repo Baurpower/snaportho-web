@@ -6,9 +6,9 @@ import {
   getTrackById,
 } from "@/lib/student-curriculum/curriculum-recommendations";
 import {
-  buildProcedurePrepModules,
-  type ProcedurePrepModule,
-} from "@/lib/student-curriculum/procedure-prep-modules";
+  buildSurvivalSections,
+  type SurvivalSection,
+} from "@/lib/student-curriculum/survival-sections";
 import { buildTopicBrobotActions } from "@/lib/student-curriculum/topic-brobot-actions";
 import type { StudentCasePrepContext } from "@/lib/student-curriculum/student-caseprep-context";
 import type {
@@ -107,7 +107,7 @@ export type CaseReadinessSession = {
   title: string;
   subtitle: string;
   objectives: CaseReadinessObjective[];
-  prepModules: ProcedurePrepModule[];
+  survivalSections: SurvivalSection[];
   topicBrobotActions: CaseReadinessBrobotAction[];
   casePrepContext: StudentCasePrepContext;
   relatedTopics: CurriculumTopic[];
@@ -687,12 +687,17 @@ export function buildCaseReadinessSession(
     deepTemplate,
   };
 
-  const prepModules = buildProcedurePrepModules({
+  const relatedTopicTitles = new Map(
+    relatedTopics.map((t) => [t.id, t.title])
+  );
+
+  const survivalSections = buildSurvivalSections({
     topic,
     fastTemplate,
     deepTemplate,
     certifiedSections: casePrepContext.sections,
-  }).filter((module) => module.hasContent);
+    relatedTopicTitles,
+  });
 
   return {
     topic,
@@ -709,7 +714,7 @@ export function buildCaseReadinessSession(
       mode === "deep"
         ? buildDeepObjectives(context)
         : buildFastObjectives(context),
-    prepModules,
+    survivalSections,
     topicBrobotActions: buildTopicBrobotActions({
       topic,
       track,

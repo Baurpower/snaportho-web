@@ -27,6 +27,19 @@ export { buildTodaysPreparationCards } from '@/lib/student-curriculum/prep-recom
 export { buildRotationPrepProfile } from '@/lib/student-curriculum/rotation-prep-profile';
 export { getCasePrepSlugForTopic } from '@/lib/student-curriculum/caseprep-topic-mapping';
 export { buildProcedurePrepModules } from '@/lib/student-curriculum/procedure-prep-modules';
+export {
+  buildSurvivalSections,
+  detectTopicType,
+  SURVIVAL_SECTION_IDS,
+  SURVIVAL_SECTION_GROUPS,
+  TOPIC_TYPES,
+} from '@/lib/student-curriculum/survival-sections';
+export type {
+  SurvivalSection,
+  SurvivalSectionId,
+  SurvivalSectionGroup,
+  TopicType,
+} from '@/lib/student-curriculum/survival-sections';
 export { getStudentCasePrepContext } from '@/lib/student-curriculum/student-caseprep-context';
 export type {
   CurriculumCommonStudentCase,

@@ -11,9 +11,13 @@ import type { BroBotModelMessage } from './types';
 export type OrthoEntity = {
   region?: string;
   bone?: string;
+  joint?: string;
+  diagnosis?: string;
   procedure?: string;
   fracturePattern?: string;
   laterality?: 'left' | 'right';
+  implant?: string;
+  classification?: string;
   raw: string;
 };
 
@@ -21,6 +25,9 @@ type BonePattern = { re: RegExp; bone: string; region: string };
 type RegionPattern = { re: RegExp; region: string };
 type ProcedurePattern = { re: RegExp; procedure: string };
 type FracturePattern = { re: RegExp; pattern: string };
+type DiagnosisPattern = { re: RegExp; diagnosis: string; region?: string; joint?: string };
+type ImplantPattern = { re: RegExp; implant: string };
+type ClassificationPattern = { re: RegExp; classification: string };
 
 // Most specific (multi-word, named) bones first so they win over generic regions.
 const BONE_PATTERNS: BonePattern[] = [
@@ -64,6 +71,16 @@ const REGION_PATTERNS: RegionPattern[] = [
   { re: /\b(spine|lumbar|cervical|thoracic)\b/, region: 'spine' },
 ];
 
+const JOINT_PATTERNS: RegionPattern[] = [
+  { re: /\bglenohumeral\b|\bshoulder joint\b/, region: 'shoulder' },
+  { re: /\belbow joint\b/, region: 'elbow' },
+  { re: /\bradiocarpal\b|\bwrist joint\b/, region: 'wrist' },
+  { re: /\bhip joint\b/, region: 'hip' },
+  { re: /\btibiofemoral\b|\bpatellofemoral\b|\bknee joint\b/, region: 'knee' },
+  { re: /\btibiotalar\b|\bankle joint\b/, region: 'ankle' },
+  { re: /\bsubtalar\b/, region: 'subtalar' },
+];
+
 const PROCEDURE_PATTERNS: ProcedurePattern[] = [
   { re: /\breverse (tsa|total shoulder( arthroplasty)?|shoulder arthroplasty)\b/, procedure: 'reverse total shoulder arthroplasty' },
   { re: /\b(anatomic )?(tsa|total shoulder arthroplasty)\b/, procedure: 'total shoulder arthroplasty' },
@@ -77,6 +94,43 @@ const PROCEDURE_PATTERNS: ProcedurePattern[] = [
   { re: /\b(laminectomy|spinal fusion|decompression)\b/, procedure: 'spinal decompression/fusion' },
   { re: /\b(arthroscopy|arthroscopic|scope)\b/, procedure: 'arthroscopy' },
   { re: /\borif\b/, procedure: 'ORIF' },
+];
+
+const DIAGNOSIS_PATTERNS: DiagnosisPattern[] = [
+  { re: /\bscfe\b|\bslipped capital femoral epiphysis\b/, diagnosis: 'SCFE', region: 'hip', joint: 'hip' },
+  { re: /\bperthes\b|\blegg[- ]calv[eé][- ]perthes\b/, diagnosis: 'Perthes disease', region: 'hip', joint: 'hip' },
+  { re: /\bseptic (arthritis|joint)\b/, diagnosis: 'septic arthritis' },
+  { re: /\bcompartment syndrome\b/, diagnosis: 'compartment syndrome' },
+  { re: /\bprosthetic joint infection\b|\bpji\b/, diagnosis: 'prosthetic joint infection' },
+  { re: /\bpainful (tka|total knee)\b/, diagnosis: 'painful total knee arthroplasty', region: 'knee', joint: 'knee' },
+  { re: /\bpainful (tha|total hip)\b/, diagnosis: 'painful total hip arthroplasty', region: 'hip', joint: 'hip' },
+  { re: /\bachilles tendon rupture\b/, diagnosis: 'Achilles tendon rupture', region: 'ankle' },
+  { re: /\bcarpal tunnel syndrome\b/, diagnosis: 'carpal tunnel syndrome', region: 'wrist' },
+  { re: /\btrigger finger\b/, diagnosis: 'trigger finger', region: 'hand' },
+  { re: /\bhand infection\b|\bflexor tenosynovitis\b/, diagnosis: 'hand infection', region: 'hand' },
+  { re: /\bshoulder pain\b/, diagnosis: 'shoulder pain', region: 'shoulder', joint: 'shoulder' },
+];
+
+const IMPLANT_PATTERNS: ImplantPattern[] = [
+  { re: /\bvolar locking plate\b/, implant: 'volar locking plate' },
+  { re: /\bneutralization plate\b/, implant: 'neutralization plate' },
+  { re: /\bbridge plate\b/, implant: 'bridge plate' },
+  { re: /\bcephalomedullary nail\b|\bcmn\b/, implant: 'cephalomedullary nail' },
+  { re: /\bintramedullary nail\b|\bim nail\b/, implant: 'intramedullary nail' },
+  { re: /\bsliding hip screw\b|\bdhs\b/, implant: 'sliding hip screw' },
+  { re: /\bglenosphere\b/, implant: 'glenosphere' },
+  { re: /\bbaseplate\b/, implant: 'baseplate' },
+  { re: /\bpolyethylene\b|\bpoly\b/, implant: 'polyethylene insert' },
+];
+
+const CLASSIFICATION_PATTERNS: ClassificationPattern[] = [
+  { re: /\bgarden\b/, classification: 'Garden classification' },
+  { re: /\bpauwels\b/, classification: 'Pauwels classification' },
+  { re: /\bweber\b/, classification: 'Weber classification' },
+  { re: /\blauge[- ]hansen\b/, classification: 'Lauge-Hansen classification' },
+  { re: /\bschatzker\b/, classification: 'Schatzker classification' },
+  { re: /\bsalter[- ]harris\b/, classification: 'Salter-Harris classification' },
+  { re: /\bneer\b/, classification: 'Neer classification' },
 ];
 
 const FRACTURE_PATTERNS: FracturePattern[] = [
@@ -147,9 +201,40 @@ export function extractOrthoEntity(text: string): OrthoEntity {
     }
   }
 
+  for (const { re, region } of JOINT_PATTERNS) {
+    if (re.test(lower)) {
+      entity.joint = region;
+      if (!entity.region) entity.region = region;
+      break;
+    }
+  }
+
+  for (const { re, diagnosis, region, joint } of DIAGNOSIS_PATTERNS) {
+    if (re.test(lower)) {
+      entity.diagnosis = diagnosis;
+      if (region && !entity.region) entity.region = region;
+      if (joint && !entity.joint) entity.joint = joint;
+      break;
+    }
+  }
+
   for (const { re, procedure } of PROCEDURE_PATTERNS) {
     if (re.test(lower)) {
       entity.procedure = procedure;
+      break;
+    }
+  }
+
+  for (const { re, implant } of IMPLANT_PATTERNS) {
+    if (re.test(lower)) {
+      entity.implant = implant;
+      break;
+    }
+  }
+
+  for (const { re, classification } of CLASSIFICATION_PATTERNS) {
+    if (re.test(lower)) {
+      entity.classification = classification;
       break;
     }
   }
@@ -184,7 +269,7 @@ export function extractOrthoEntity(text: string): OrthoEntity {
 
 /** The most salient anatomic/procedure anchor for this entity, or null. */
 export function entityToTopic(entity: OrthoEntity): string | null {
-  return entity.bone ?? entity.procedure ?? entity.region ?? null;
+  return entity.bone ?? entity.diagnosis ?? entity.procedure ?? entity.joint ?? entity.region ?? null;
 }
 
 /** True when the text contains a recognizable ortho bone/region/procedure. */

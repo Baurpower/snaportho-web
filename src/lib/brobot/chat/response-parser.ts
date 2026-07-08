@@ -7,7 +7,7 @@ import {
   type BroBotBranchOption,
   type BroBotMetadataOutput,
 } from './types';
-import { getModeBranchOptions } from './intent-expander';
+import { getModeBranchOptions } from './branch-templates';
 import { normalizeResearchSubmode } from '@/lib/brobot/research/types';
 
 const MODE_SET = new Set<string>(BROBOT_CHAT_MODES);
@@ -246,14 +246,6 @@ function normalizeConsultConfidence(value: unknown): BroBotChatOutput['consultCo
     : undefined;
 }
 
-function normalizeBoolean(value: unknown): boolean {
-  if (typeof value === 'boolean') return value;
-  if (typeof value === 'string') {
-    return /^(true|yes|1)$/i.test(value.trim());
-  }
-  return false;
-}
-
 function synthesizeAnswerFromStructured(input: {
   priorityPoints: string[];
   knowledgeGaps: string[];
@@ -354,10 +346,7 @@ export function parseBroBotChatResponse(raw: unknown, options: ParseOptions = {}
   const goal = normalizeString(parsed.goal);
   const clarifyingQuestions = normalizeArray(parsed.clarifyingQuestions, 3);
   const assumedContext = normalizeString(parsed.assumedContext);
-  const needsClarification =
-    normalizeBoolean(parsed.needsClarification) ||
-    clarifyingQuestions.length > 0 ||
-    Boolean(assumedContext);
+  const needsClarification = clarifyingQuestions.length > 0;
 
   const normalized: BroBotChatOutput = {
     goal,

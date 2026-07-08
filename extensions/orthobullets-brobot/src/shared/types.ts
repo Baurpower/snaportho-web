@@ -26,10 +26,22 @@ export interface OrthobulletsImageMetadata {
   height?: number;
 }
 
-export type OrthobulletsPageKind = 'review' | 'current_test' | 'unknown';
+export interface TopicBullet {
+  text: string;
+  depth: number;
+  path: string[];
+}
+
+export interface TopicSection {
+  id: string;
+  title: string;
+  bullets: TopicBullet[];
+}
+
+export type OrthobulletsPageKind = 'review' | 'current_test' | 'topic' | 'unknown';
 export type QuestionProvider = 'orthobullets' | 'rock';
-export type ExtractedPageMode = 'question' | 'curriculum_content';
-export type ClassifiedPageKind = 'question' | 'educational_content' | 'mixed' | 'unreadable';
+export type ExtractedPageMode = 'question' | 'curriculum_content' | 'topic_page';
+export type ClassifiedPageKind = 'question' | 'educational_content' | 'mixed' | 'topic_page' | 'unreadable';
 export type ProviderDetectionStatus = QuestionProvider | 'unsupported' | 'readable_unrecognized';
 
 export interface PageClassification {
@@ -111,11 +123,16 @@ export interface OrthobulletsPageContext {
     heading: string;
     text: string;
   }>;
+  topicSections?: TopicSection[];
+  topicBulletCount?: number;
   learningObjectives?: string[];
   tablesMarkdown?: string[];
   references?: string[];
   tablesCount?: number;
   referencesCount?: number;
+  questionCount?: number;
+  cardCount?: number;
+  videoCount?: number;
   classification?: PageClassification;
   stem?: string;
   answerChoices: OrthobulletsChoice[];
@@ -256,5 +273,95 @@ export interface OrthobulletsChatResponse {
     remainingToday: number | null;
     dailyCap: number | null;
     unlimited: boolean;
+  };
+}
+
+/**
+ * Orthobullets Page Mode — active-reading tutor for topic pages. Distinct
+ * from ROCK's curriculum_content mode: the tutor asks page-grounded
+ * questions and judges answers rather than teaching/expanding the page.
+ */
+export type OrthobulletsTopicAction =
+  | 'quiz_me'
+  | 'find_answer'
+  | 'explain_section'
+  | 'what_tested'
+  | 'attending_question'
+  | 'explain_images'
+  | 'board_traps'
+  | 'rapid_review'
+  | 'grade_answer'
+  | 'save_missed';
+
+export interface OrthobulletsTopicAskedQuestion {
+  id: string;
+  sourceSectionId?: string;
+  question: string;
+  expectedAnswer: string;
+  explanation: string;
+  pageEvidence: string[];
+  status: 'unanswered' | 'correct' | 'partial' | 'missed';
+}
+
+export interface OrthobulletsTopicProgress {
+  sectionsCompleted: string[];
+  conceptsMastered: string[];
+  conceptsMissed: string[];
+  savedPearls: string[];
+  tier: 1 | 2 | 3 | 4 | 5;
+  askedQuestions: OrthobulletsTopicAskedQuestion[];
+  currentMode?: OrthobulletsTopicAction | null;
+}
+
+export interface OrthobulletsTopicTutorTurn {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface OrthobulletsRapidReview {
+  mustKnow: string[];
+  commonConfusion: string[];
+  redFlags: string[];
+  managementAlgorithm: string[];
+  recallPrompts: string[];
+}
+
+export interface OrthobulletsTopicTutorResponse {
+  responseId: string;
+  message: string;
+  citedHeading?: string | null;
+  citedQuote?: string | null;
+  verdict?: 'correct' | 'partial' | 'incorrect' | null;
+  clinicalWhyItMatters?: string | null;
+  followUpQuestion?: string | null;
+  conceptTag?: string | null;
+  conceptStatus?: 'missed' | 'mastered' | null;
+  sectionCompleted?: string | null;
+  trackedQuestionId?: string | null;
+  trackedQuestion?: string | null;
+  trackedExpectedAnswer?: string | null;
+  trackedExplanation?: string | null;
+  trackedPageEvidence?: string[] | null;
+  rapidReview?: OrthobulletsRapidReview | null;
+  tier: 1 | 2 | 3 | 4 | 5;
+  insufficientContent: boolean;
+  suggestedChips: string[];
+  warnings: string[];
+  usage?: {
+    remainingToday: number | null;
+    dailyCap: number | null;
+    unlimited: boolean;
+  };
+}
+
+export function createEmptyTopicProgress(): OrthobulletsTopicProgress {
+  return {
+    sectionsCompleted: [],
+    conceptsMastered: [],
+    conceptsMissed: [],
+    savedPearls: [],
+    tier: 1,
+    askedQuestions: [],
+    currentMode: null,
   };
 }

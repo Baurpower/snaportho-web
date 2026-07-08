@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import AddIndividualTimeOffView from "@/components/workspace/time-off/addindividualtimeoffview";
-import ProgramTimeOffAddView from "@/components/workspace/call/programtimeoffaddview";
+import AdminTimeOffEntryTable from "@/components/workspace/call/AdminTimeOffEntryTable";
 import { useWorkspacePermissions } from "@/hooks/useWorkspacePermissions";
 
 const fadeUp = {
@@ -19,7 +19,7 @@ const fadeUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
 };
 
-type AddMode = "individual" | "program";
+type AddMode = "individual" | "admin";
 
 function toDateKey(date: Date) {
   const year = date.getFullYear();
@@ -56,8 +56,8 @@ function ModeToggle({
 }
 
 export default function TimeOffAddPage() {
-  const [mode, setMode] = useState<AddMode>("individual");
   const router = useRouter();
+  const [mode, setMode] = useState<AddMode>("individual");
   const defaultStartDate = useMemo(() => toDateKey(new Date()), []);
   const { loading, permissions, isRosterLinked } = useWorkspacePermissions();
   const canRequestTimeOff = permissions?.canRequestTimeOff ?? false;
@@ -78,10 +78,26 @@ export default function TimeOffAddPage() {
   }, [canRequestTimeOff, canUploadTimeOff, isRosterLinked, loading, router]);
 
   useEffect(() => {
-    if (!canUploadTimeOff && mode === "program") {
+    if (!canUploadTimeOff && mode === "admin") {
       setMode("individual");
     }
   }, [canUploadTimeOff, mode]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || loading) return;
+
+    const requestedMode = new URLSearchParams(window.location.search).get("mode");
+    if (requestedMode === "admin" && canUploadTimeOff) {
+      setMode("admin");
+    }
+  }, [canUploadTimeOff, loading]);
+
+  function selectMode(nextMode: AddMode) {
+    setMode(nextMode);
+    router.replace(
+      nextMode === "admin" ? "/work/time-off/add?mode=admin" : "/work/time-off/add"
+    );
+  }
 
   if (loading) {
     return (
@@ -119,7 +135,7 @@ export default function TimeOffAddPage() {
 
                 <p className="mt-3 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
                   {isAdminMode
-                    ? "Use the current admin workflow to enter personal requests or import and manage time-off across the program."
+                    ? "Enter resident time off one request at a time or use admin entry to add many approved rows quickly."
                     : "Submit your own time-off request without opening the program management workflow."}
                 </p>
 
@@ -141,7 +157,7 @@ export default function TimeOffAddPage() {
                     </p>
                     <p className="mt-1 text-sm text-slate-400">
                       {isAdminMode
-                        ? "Switch between resident requests and program-wide import tools."
+                        ? "Switch between individual requests and multi-row admin entry."
                         : "Personal requests are available here. Program import tools remain admin-only."}
                     </p>
                   </div>
@@ -151,14 +167,14 @@ export default function TimeOffAddPage() {
                       active={mode === "individual"}
                       label={isAdminMode ? "Request Entry" : "Individual Add"}
                       icon={<UserRound className="h-4 w-4" />}
-                      onClick={() => setMode("individual")}
+                      onClick={() => selectMode("individual")}
                     />
                     {canUploadTimeOff ? (
                       <ModeToggle
-                        active={mode === "program"}
-                        label="Import Requests"
+                        active={mode === "admin"}
+                        label="Admin Entry"
                         icon={<Users className="h-4 w-4" />}
-                        onClick={() => setMode("program")}
+                        onClick={() => selectMode("admin")}
                       />
                     ) : null}
                   </div>
@@ -175,7 +191,7 @@ export default function TimeOffAddPage() {
             {mode === "individual" ? (
               <AddIndividualTimeOffView defaultStartDate={defaultStartDate} />
             ) : (
-              <ProgramTimeOffAddView defaultStartDate={defaultStartDate} />
+              <AdminTimeOffEntryTable defaultStartDate={defaultStartDate} />
             )}
           </motion.div>
         </div>

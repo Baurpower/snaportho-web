@@ -14,6 +14,7 @@ import {
   buildBroBotMetadataMessages,
   buildBroBotRevisionMessages,
   buildBroBotAnswerContext,
+  buildUncoveredFacetChips,
   buildBroBotIntentExpansionMessages,
   fallbackBroBotIntentExpansion,
   getBranchOptionsForCategory,
@@ -23,6 +24,10 @@ import {
   parseBroBotChatResponse,
   parseBroBotMetadataResponse,
   runBroBotQualityGate,
+  buildBroBotRouteClarifyingQuestions,
+  routeBroBotAnswer,
+  enforceClarificationAnswerBrevity,
+  type BroBotAnswerRoute,
   type BroBotChatIntent,
   type BroBotChatMode,
   type BroBotChatRequest,
@@ -111,6 +116,15 @@ type ChatAnalyticsEvent =
   | 'brobot_chat_suggested_question_click'
   | 'first_brobot_message'
   | 'brobot_chat_clarification_suggested'
+  | 'visible_clarification_shown'
+  | 'answer_with_assumption'
+  | 'focus_options_shown'
+  | 'focus_option_clicked'
+  | 'branch_impression'
+  | 'branch_click'
+  | 'continued_after_branch_click'
+  | 'quality_revision_triggered'
+  | 'quality_revision_reason'
   | 'branch_selected'
   | 'branch_skipped'
   | 'answer_now_clicked'
@@ -1442,6 +1456,7 @@ const REVISION_BLOCKED_SUBINTENTS = new Set<BroBotChatIntent['subintent']>(['urg
 
 type BroBotPipelineResult = {
   answerContext: BroBotAnswerContext;
+  answerRoute: BroBotAnswerRoute;
   brobotOutput: ReturnType<typeof parseBroBotChatResponse> & {
     selectedFocus?: string;
     detectedMode: BroBotChatMode;
@@ -1507,12 +1522,22 @@ async function generateBroBotPipelineResult(params: {
   const answerContext =
     params.answerContext ??
     (await buildBroBotAnswerContext({
+      message: params.body.message,
       intent: params.intent,
       selectedBranch,
       responseDepth: params.body.responseDepth,
       trainingLevel: params.body.trainingLevel,
       history: params.history,
     }));
+  const answerRoute = routeBroBotAnswer({
+    message: params.body.message,
+    intent: params.intent,
+    selectedMode: params.body.mode,
+    history: params.history,
+    answerNow: params.body.answerNow,
+    selectedBranchId: params.body.selectedBranchId,
+    selectedBranchLabel: params.body.selectedBranchLabel,
+  });
 
   const answerMessages = buildBroBotChatMessages({
     message: params.body.message,
@@ -1524,6 +1549,7 @@ async function generateBroBotPipelineResult(params: {
     selectedBranch,
     answerContext,
     answerNow: Boolean(params.body.answerNow),
+    answerRoute,
     includeProductMetadata: !BROBOT_SEPARATE_METADATA_PASS,
   });
   const answerModel = getAnswerModelForRoute({
@@ -1551,6 +1577,8 @@ async function generateBroBotPipelineResult(params: {
     subintent: params.intent.subintent,
     trainingLevel: params.body.trainingLevel,
     procedureOrTopic: params.intent.procedureOrTopic,
+    answerRoute,
+    clinicalContext: answerContext.clinicalContext,
   });
   const qualityGateWarningsBeforeRevision = [...qualityGate.warnings];
   let revisionTriggered = false;
@@ -1604,6 +1632,8 @@ async function generateBroBotPipelineResult(params: {
       subintent: params.intent.subintent,
       trainingLevel: params.body.trainingLevel,
       procedureOrTopic: params.intent.procedureOrTopic,
+      answerRoute,
+      clinicalContext: answerContext.clinicalContext,
     });
     logBroBot('[BROBOT-CHAT-REVISION]', {
       mode: params.intent.mode,
@@ -1618,6 +1648,18 @@ async function generateBroBotPipelineResult(params: {
     });
   }
 
+  // Convert unmet quality facets into targeted follow-up chip suggestions.
+  // These are prioritized over generic branchOptions in the metadata seed so
+  // the model surfaces the most relevant next learning step for this answer.
+  const uncoveredFacetChips = buildUncoveredFacetChips({
+    qualityWarnings: qualityGate.warnings,
+    procedureOrTopic: params.intent.procedureOrTopic,
+  });
+  const metadataFallbackBranches = [
+    ...uncoveredFacetChips,
+    ...(params.intent.branchOptions ?? params.databaseBranchOptions ?? []),
+  ];
+
   let metadataOutput = {
     suggestedQuestions: parsedOutput.suggestedQuestions,
     nextLearningBranches: parsedOutput.nextLearningBranches ?? [],
@@ -1628,40 +1670,61 @@ async function generateBroBotPipelineResult(params: {
 
   if (BROBOT_SEPARATE_METADATA_PASS) {
     metadataModel = getMetadataModel();
-    const metadataCompletion = await runJsonCompletion({
-      openai: params.openai,
-      model: metadataModel,
-      messages: buildBroBotMetadataMessages({
-        message: params.body.message,
+    // The metadata pass only augments suggestedQuestions/nextLearningBranches/tags.
+    // It must never take down an already-generated answer: on any failure
+    // (network error, timeout, bad completion), keep the safe fallback
+    // metadataOutput initialized above, which is itself derived from the
+    // answer pass, and move on.
+    try {
+      const metadataCompletion = await runJsonCompletion({
+        openai: params.openai,
+        model: metadataModel,
+        messages: buildBroBotMetadataMessages({
+          message: params.body.message,
+          mode: params.intent.mode,
+          responseDepth: params.body.responseDepth,
+          trainingLevel: params.body.trainingLevel,
+          intent: params.intent,
+          answerContext,
+          finalAnswer: parsedOutput.answer,
+          priorityPoints: parsedOutput.priorityPoints,
+          knowledgeGaps: parsedOutput.knowledgeGaps,
+          whatMostResidentsMiss: parsedOutput.whatMostResidentsMiss,
+          selectedBranch,
+          fallbackBranches: metadataFallbackBranches,
+        }),
+      });
+      metadataOutput = parseBroBotMetadataResponse({
+        raw: metadataCompletion.rawContent,
+        fallbackMode: params.intent.mode,
+        fallbackSuggestedQuestions: parsedOutput.suggestedQuestions,
+        fallbackNextLearningBranches: metadataFallbackBranches,
+        fallbackTags: parsedOutput.tags,
+      });
+      metadataUsage = metadataCompletion.usage;
+    } catch (error) {
+      logBroBot('[BROBOT-CHAT-METADATA-FALLBACK]', {
         mode: params.intent.mode,
-        responseDepth: params.body.responseDepth,
-        trainingLevel: params.body.trainingLevel,
-        intent: params.intent,
-        answerContext,
-        finalAnswer: parsedOutput.answer,
-        priorityPoints: parsedOutput.priorityPoints,
-        knowledgeGaps: parsedOutput.knowledgeGaps,
-        whatMostResidentsMiss: parsedOutput.whatMostResidentsMiss,
-        selectedBranch,
-        fallbackBranches: params.intent.branchOptions ?? params.databaseBranchOptions,
-      }),
-    });
-    metadataOutput = parseBroBotMetadataResponse({
-      raw: metadataCompletion.rawContent,
-      fallbackMode: params.intent.mode,
-      fallbackSuggestedQuestions: parsedOutput.suggestedQuestions,
-      fallbackNextLearningBranches:
-        params.intent.branchOptions ?? params.databaseBranchOptions,
-      fallbackTags: parsedOutput.tags,
-    });
-    metadataUsage = metadataCompletion.usage;
+        metadataModel,
+        ...safeErrorPayload(error),
+      });
+      metadataModel = null;
+    }
   }
 
-  const classifierNeedsClarification = params.intent.ambiguity !== 'low';
+  const routeNeedsClarification = answerRoute === 'ask_clarification';
   const clarifyingQuestions = mergeQuestions(
-    parsedOutput.clarifyingQuestions?.length
-      ? parsedOutput.clarifyingQuestions
-      : params.intent.clarifyingQuestions,
+    routeNeedsClarification
+      ? parsedOutput.clarifyingQuestions?.length
+        ? parsedOutput.clarifyingQuestions
+        : params.intent.clarifyingQuestions.length
+          ? params.intent.clarifyingQuestions
+          : buildBroBotRouteClarifyingQuestions({
+              message: params.body.message,
+              intent: params.intent,
+              answerRoute,
+            })
+      : [],
     []
   ).slice(0, 3);
   const nextLearningBranches = mergeBranchOptions(
@@ -1674,15 +1737,15 @@ async function generateBroBotPipelineResult(params: {
   );
   const brobotOutput = {
     ...parsedOutput,
+    answer: routeNeedsClarification
+      ? enforceClarificationAnswerBrevity(parsedOutput.answer)
+      : parsedOutput.answer,
     selectedFocus:
       params.body.selectedBranchLabel ||
       params.body.selectedBranchId ||
       (params.body.answerNow ? 'General framework' : undefined),
     detectedMode: params.intent.mode,
-    needsClarification:
-      parsedOutput.needsClarification ||
-      classifierNeedsClarification ||
-      clarifyingQuestions.length > 0,
+    needsClarification: routeNeedsClarification && clarifyingQuestions.length > 0,
     clarifyingQuestions,
     assumedContext: parsedOutput.assumedContext || params.intent.assumedContext,
     researchSubmode: params.intent.mode === 'research' ? params.intent.researchSubmode : undefined,
@@ -1702,6 +1765,7 @@ async function generateBroBotPipelineResult(params: {
 
   return {
     answerContext,
+    answerRoute,
     brobotOutput,
     answerModel,
     answerUsage: answerCompletion.usage,
@@ -1875,6 +1939,7 @@ async function handleGuestChat(params: {
     revisionTriggered: pipelineResult.revisionTriggered,
     revisionModel: pipelineResult.revisionModel,
     metadataModel: pipelineResult.metadataModel,
+    answerRoute: pipelineResult.answerRoute,
     persistence: 'guest_ephemeral',
     intentSource,
   });
@@ -2125,6 +2190,45 @@ export async function POST(request: Request) {
           sourceMessageIdPresent: Boolean(body.sourceMessageId),
         },
       });
+      if (body.source === 'branch_selection') {
+        await recordChatAnalyticsEvent({
+          userId,
+          conversationId: persistedConversationId,
+          messageId: body.sourceMessageId ?? null,
+          eventType: 'focus_option_clicked',
+          outcome: 'success',
+          metadata: {
+            mode: body.mode,
+            responseDepth: body.responseDepth,
+            trainingLevel: body.trainingLevel,
+            branch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
+            branch_label: body.selectedBranchLabel ?? null,
+            rank_position: body.selectedBranchRankPosition ?? null,
+          },
+        });
+        await recordChatAnalyticsEvent({
+          userId,
+          conversationId: persistedConversationId,
+          messageId: body.sourceMessageId ?? null,
+          eventType: 'branch_click',
+          outcome: 'success',
+          metadata: {
+            branch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
+            rank_position: body.selectedBranchRankPosition ?? null,
+          },
+        });
+        await recordChatAnalyticsEvent({
+          userId,
+          conversationId: persistedConversationId,
+          messageId: body.sourceMessageId ?? null,
+          eventType: 'continued_after_branch_click',
+          outcome: 'success',
+          metadata: {
+            nextQuestionHash: hashForLogging(body.message),
+            branch: body.selectedBranchLabel ?? body.selectedBranchId ?? null,
+          },
+        });
+      }
     }
 
     step = 'create_user_message';
@@ -2323,6 +2427,7 @@ export async function POST(request: Request) {
     });
 
     const answerContext = await buildBroBotAnswerContext({
+      message: body.message,
       intent,
       selectedBranch:
         body.selectedBranchId || body.selectedBranchLabel
@@ -2431,12 +2536,12 @@ export async function POST(request: Request) {
       });
     }
 
-    if (brobotOutput.needsClarification) {
+    if (brobotOutput.needsClarification && (brobotOutput.clarifyingQuestions?.length ?? 0) > 0) {
       await recordChatAnalyticsEvent({
         userId,
         conversationId: persistedConversationId,
         messageId: userMessageId,
-        eventType: 'brobot_chat_clarification_suggested',
+        eventType: 'visible_clarification_shown',
         outcome: 'success',
         latencyMs,
         metadata: {
@@ -2457,7 +2562,91 @@ export async function POST(request: Request) {
           missingInformationCount: brobotOutput.missingInformation?.length ?? 0,
           consultSubtype: brobotOutput.detectedMode === 'consult' ? intent.subintent : null,
           confidence: brobotOutput.confidence,
+          answerRoute: pipelineResult.answerRoute,
           ...researchSubmodeMetadata(researchSubmodeRoute),
+        },
+      });
+    }
+
+    if (pipelineResult.answerRoute === 'answer_with_assumption') {
+      await recordChatAnalyticsEvent({
+        userId,
+        conversationId: persistedConversationId,
+        messageId: userMessageId,
+        eventType: 'answer_with_assumption',
+        outcome: 'success',
+        latencyMs,
+        metadata: {
+          mode: body.mode,
+          detectedMode: brobotOutput.detectedMode,
+          assumedContext: brobotOutput.assumedContext || intent.assumedContext || null,
+          intent_subintent: intent.subintent,
+          intent_procedure_category: intent.procedureCategory,
+          ambiguity_level: intent.ambiguity,
+          answerRoute: pipelineResult.answerRoute,
+        },
+      });
+    }
+
+    if ((brobotOutput.nextLearningBranches?.length ?? 0) > 0) {
+      await recordChatAnalyticsEvent({
+        userId,
+        conversationId: persistedConversationId,
+        messageId: userMessageId,
+        eventType: 'focus_options_shown',
+        outcome: 'success',
+        latencyMs,
+        metadata: {
+          mode: body.mode,
+          detectedMode: brobotOutput.detectedMode,
+          branchCount: brobotOutput.nextLearningBranches?.length ?? 0,
+          answerRoute: pipelineResult.answerRoute,
+          intent_subintent: intent.subintent,
+          intent_procedure_category: intent.procedureCategory,
+        },
+      });
+      await recordChatAnalyticsEvent({
+        userId,
+        conversationId: persistedConversationId,
+        messageId: userMessageId,
+        eventType: 'branch_impression',
+        outcome: 'success',
+        latencyMs,
+        metadata: {
+          branchCount: brobotOutput.nextLearningBranches?.length ?? 0,
+          branchLabels: brobotOutput.nextLearningBranches?.map((branch) => branch.label) ?? [],
+          answerRoute: pipelineResult.answerRoute,
+        },
+      });
+    }
+
+    if (pipelineResult.revisionTriggered) {
+      await recordChatAnalyticsEvent({
+        userId,
+        conversationId: persistedConversationId,
+        messageId: userMessageId,
+        eventType: 'quality_revision_triggered',
+        outcome: 'success',
+        latencyMs,
+        metadata: {
+          mode: body.mode,
+          detectedMode: brobotOutput.detectedMode,
+          answerRoute: pipelineResult.answerRoute,
+          warnings: pipelineResult.qualityGateWarningsBeforeRevision,
+          revisionModel: pipelineResult.revisionModel,
+        },
+      });
+      await recordChatAnalyticsEvent({
+        userId,
+        conversationId: persistedConversationId,
+        messageId: userMessageId,
+        eventType: 'quality_revision_reason',
+        outcome: 'success',
+        latencyMs,
+        metadata: {
+          reasons: pipelineResult.qualityGateWarningsBeforeRevision,
+          intent_subintent: intent.subintent,
+          intent_procedure_category: intent.procedureCategory,
         },
       });
     }
@@ -2470,7 +2659,7 @@ export async function POST(request: Request) {
         user_id: userId,
         role: 'assistant',
         content: brobotOutput.answer,
-        structured_json: brobotOutput,
+        structured_json: { ...brobotOutput, answerRoute: pipelineResult.answerRoute },
         mode: brobotOutput.detectedMode,
         response_depth: body.responseDepth,
       })
@@ -2525,6 +2714,7 @@ export async function POST(request: Request) {
         oiteLearningMetadata: answerContext.oiteLearningMetadata,
         qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
         revisionTriggered: pipelineResult.revisionTriggered,
+        answerRoute: pipelineResult.answerRoute,
         originalAnswerBeforeRevision: pipelineResult.originalAnswerBeforeRevision,
         finalAnswer: brobotOutput.answer,
       },
@@ -2679,6 +2869,7 @@ export async function POST(request: Request) {
         revisionTriggered: pipelineResult.revisionTriggered,
         revisionModel: pipelineResult.revisionModel,
         metadataModel: pipelineResult.metadataModel,
+        answerRoute: pipelineResult.answerRoute,
         consultConfidence: brobotOutput.consultConfidence ?? null,
         missingInformationCount: brobotOutput.missingInformation?.length ?? 0,
         consultSubtype: brobotOutput.detectedMode === 'consult' ? intent.subintent : null,
@@ -2723,6 +2914,7 @@ export async function POST(request: Request) {
       qualityGateWarnings: qualityGate.warnings,
       qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
       revisionTriggered: pipelineResult.revisionTriggered,
+      answerRoute: pipelineResult.answerRoute,
       intentSource,
     });
 
@@ -2823,6 +3015,7 @@ async function persistCompletedBroBotOutput(params: {
   metadataUsage?: unknown;
   qualityGateWarningsBeforeRevision?: string[];
   revisionTriggered?: boolean;
+  answerRoute?: BroBotAnswerRoute;
   originalAnswerBeforeRevision?: string | null;
 }) {
   const qualityGate = runBroBotQualityGate({
@@ -2834,6 +3027,8 @@ async function persistCompletedBroBotOutput(params: {
     subintent: params.intent.subintent,
     trainingLevel: params.body.trainingLevel,
     procedureOrTopic: params.intent.procedureOrTopic,
+    answerRoute: params.answerRoute,
+    clinicalContext: params.answerContext.clinicalContext,
   });
 
   if (!qualityGate.passed) {
@@ -2855,12 +3050,12 @@ async function persistCompletedBroBotOutput(params: {
     });
   }
 
-  if (params.brobotOutput.needsClarification) {
+  if (params.brobotOutput.needsClarification && (params.brobotOutput.clarifyingQuestions?.length ?? 0) > 0) {
     await recordChatAnalyticsEvent({
       userId: params.userId,
       conversationId: params.conversationId,
       messageId: params.userMessageId,
-      eventType: 'brobot_chat_clarification_suggested',
+      eventType: 'visible_clarification_shown',
       outcome: 'success',
       latencyMs: params.latencyMs,
       metadata: {
@@ -2881,6 +3076,90 @@ async function persistCompletedBroBotOutput(params: {
         missingInformationCount: params.brobotOutput.missingInformation?.length ?? 0,
         consultSubtype: params.brobotOutput.detectedMode === 'consult' ? params.intent.subintent : null,
         confidence: params.brobotOutput.confidence,
+        answerRoute: params.answerRoute ?? null,
+      },
+    });
+  }
+
+  if (params.answerRoute === 'answer_with_assumption') {
+    await recordChatAnalyticsEvent({
+      userId: params.userId,
+      conversationId: params.conversationId,
+      messageId: params.userMessageId,
+      eventType: 'answer_with_assumption',
+      outcome: 'success',
+      latencyMs: params.latencyMs,
+      metadata: {
+        mode: params.body.mode,
+        detectedMode: params.brobotOutput.detectedMode,
+        assumedContext: params.brobotOutput.assumedContext || params.intent.assumedContext || null,
+        intent_subintent: params.intent.subintent,
+        intent_procedure_category: params.intent.procedureCategory,
+        ambiguity_level: params.intent.ambiguity,
+        answerRoute: params.answerRoute,
+      },
+    });
+  }
+
+  if ((params.brobotOutput.nextLearningBranches?.length ?? 0) > 0) {
+    await recordChatAnalyticsEvent({
+      userId: params.userId,
+      conversationId: params.conversationId,
+      messageId: params.userMessageId,
+      eventType: 'focus_options_shown',
+      outcome: 'success',
+      latencyMs: params.latencyMs,
+      metadata: {
+        mode: params.body.mode,
+        detectedMode: params.brobotOutput.detectedMode,
+        branchCount: params.brobotOutput.nextLearningBranches?.length ?? 0,
+        answerRoute: params.answerRoute ?? null,
+        intent_subintent: params.intent.subintent,
+        intent_procedure_category: params.intent.procedureCategory,
+      },
+    });
+    await recordChatAnalyticsEvent({
+      userId: params.userId,
+      conversationId: params.conversationId,
+      messageId: params.userMessageId,
+      eventType: 'branch_impression',
+      outcome: 'success',
+      latencyMs: params.latencyMs,
+      metadata: {
+        branchCount: params.brobotOutput.nextLearningBranches?.length ?? 0,
+        branchLabels: params.brobotOutput.nextLearningBranches?.map((branch) => branch.label) ?? [],
+        answerRoute: params.answerRoute ?? null,
+      },
+    });
+  }
+
+  if (params.revisionTriggered) {
+    await recordChatAnalyticsEvent({
+      userId: params.userId,
+      conversationId: params.conversationId,
+      messageId: params.userMessageId,
+      eventType: 'quality_revision_triggered',
+      outcome: 'success',
+      latencyMs: params.latencyMs,
+      metadata: {
+        mode: params.body.mode,
+        detectedMode: params.brobotOutput.detectedMode,
+        answerRoute: params.answerRoute ?? null,
+        warnings: params.qualityGateWarningsBeforeRevision ?? [],
+        revisionModel: params.revisionModel ?? null,
+      },
+    });
+    await recordChatAnalyticsEvent({
+      userId: params.userId,
+      conversationId: params.conversationId,
+      messageId: params.userMessageId,
+      eventType: 'quality_revision_reason',
+      outcome: 'success',
+      latencyMs: params.latencyMs,
+      metadata: {
+        reasons: params.qualityGateWarningsBeforeRevision ?? [],
+        intent_subintent: params.intent.subintent,
+        intent_procedure_category: params.intent.procedureCategory,
       },
     });
   }
@@ -2893,7 +3172,7 @@ async function persistCompletedBroBotOutput(params: {
       user_id: params.userId,
       role: 'assistant',
       content: params.brobotOutput.answer,
-      structured_json: params.brobotOutput,
+      structured_json: { ...params.brobotOutput, answerRoute: params.answerRoute ?? null },
       mode: params.brobotOutput.detectedMode,
       response_depth: params.body.responseDepth,
     })
@@ -3228,6 +3507,7 @@ function createStreamingChatResponse(params: {
           metadataUsage: pipelineResult.metadataUsage,
           qualityGateWarningsBeforeRevision: pipelineResult.qualityGateWarningsBeforeRevision,
           revisionTriggered: pipelineResult.revisionTriggered,
+          answerRoute: pipelineResult.answerRoute,
           originalAnswerBeforeRevision: pipelineResult.originalAnswerBeforeRevision,
         });
 

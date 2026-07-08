@@ -32,8 +32,15 @@ const CURATED_TOPICS: CuratedTopic[] = [
     id: 'distal_radius',
     match: /\bdistal radius\b/i,
     chips: {
+      overview: [
+        { id: 'volar_fcr_approach_anatomy', label: 'Volar FCR approach anatomy', description: 'FCR interval, radial artery, PQ, and median nerve relevance.', category: 'Surgical Approach' },
+        { id: 'avoid_dorsal_screw_penetration', label: 'Avoid dorsal screw penetration', description: 'Views and tactics to prevent extensor tendon injury.', category: 'OR Technique' },
+        { id: 'ct_changes_plan', label: 'When CT changes the plan', description: 'Articular fragments and fixation strategy changes.', category: 'Imaging' },
+        { id: 'unstable_fracture_features', label: 'What makes it unstable', description: 'Radiographic and patient factors that change treatment.', category: 'Clinical Decision Making' },
+        { id: 'volar_plate_position_pitfalls', label: 'Volar plate positioning pitfalls', description: 'Watershed line, plate prominence, and tendon risk.', category: 'Complications' },
+      ],
       surgical_approach: [
-        { id: 'volar_approach_flexor_carpi_radialis', label: 'Volar FCR interval', description: 'Volar Henry approach via the FCR interval.', category: 'Surgical Approach' },
+        { id: 'volar_approach_flexor_carpi_radialis', label: 'Volar FCR approach anatomy', description: 'Volar Henry approach via the FCR interval.', category: 'Surgical Approach' },
         { id: 'pronator_quadratus_management', label: 'Pronator quadratus elevation', description: 'How to elevate and repair pronator quadratus.', category: 'Surgical Approach' },
         { id: 'radial_artery_risk', label: 'Radial artery risk', description: 'Where the radial artery is at risk during exposure.', category: 'Anatomy' },
         { id: 'dorsal_approach_alternative', label: 'Dorsal approach alternative', description: 'When a dorsal approach is preferred instead.', category: 'Surgical Approach' },
@@ -41,11 +48,11 @@ const CURATED_TOPICS: CuratedTopic[] = [
         { id: 'oite_traps', label: 'OITE traps', description: 'Board-style traps for distal radius approach.', category: 'Board Review' },
       ],
       surgical_steps: [
-        { id: 'general_or_flow', label: 'Case flow start to finish', description: 'Positioning, setup, reduction, fixation, closure.', category: 'OR Technique' },
+        { id: 'volar_fcr_approach_anatomy', label: 'Volar FCR approach anatomy', description: 'FCR interval, radial artery, PQ, and median nerve relevance.', category: 'Surgical Approach' },
         { id: 'fragment_specific_fixation', label: 'Fragment-specific fixation', description: 'How fixation choice changes by fracture fragment.', category: 'Implant Selection' },
         { id: 'reduction_maneuvers', label: 'Reduction maneuvers', description: 'Traction, manipulation, and provisional fixation.', category: 'Reduction Pearls' },
-        { id: 'fluoro_checks', label: 'Fluoro checks', description: 'Required intraoperative views and what they confirm.', category: 'OR Technique' },
-        { id: 'common_mistakes', label: 'Common mistakes', description: 'Frequent technical errors in distal radius ORIF.', category: 'Complications' },
+        { id: 'avoid_dorsal_screw_penetration', label: 'Avoid dorsal screw penetration', description: 'Required intraoperative views and what they confirm.', category: 'OR Technique' },
+        { id: 'volar_plate_position_pitfalls', label: 'Volar plate positioning pitfalls', description: 'Frequent technical errors in distal radius ORIF.', category: 'Complications' },
       ],
       implant_options: [
         { id: 'volar_locking_plate', label: 'Volar locking plate', description: 'Indications and pitfalls of volar locking plates.', category: 'Implant Selection' },
@@ -59,12 +66,19 @@ const CURATED_TOPICS: CuratedTopic[] = [
     id: 'ankle_fracture',
     match: /\bankle fracture(s)?\b/i,
     chips: {
+      overview: [
+        { id: 'stable_vs_unstable_mortise', label: 'Stable vs unstable mortise', description: 'Medial clear space, talar shift, and operative relevance.', category: 'Clinical Decision Making' },
+        { id: 'weber_vs_lauge_hansen', label: 'Weber vs Lauge-Hansen', description: 'How the two classification systems differ and when each is used.', category: 'Classification Systems' },
+        { id: 'syndesmosis_instability', label: 'When syndesmosis is unstable', description: 'Imaging, stress tests, and fixation implications.', category: 'Clinical Decision Making' },
+        { id: 'posterior_malleolus_decision', label: 'Posterior malleolus decision-making', description: 'Fragment size, incisura involvement, and fixation decisions.', category: 'Clinical Decision Making' },
+        { id: 'intraop_stress_views', label: 'Intra-op stress views', description: 'Stress imaging and syndesmotic assessment in the OR.', category: 'OR Technique' },
+      ],
       classification: [
+        { id: 'stable_vs_unstable_mortise', label: 'Stable vs unstable mortise', description: 'Medial clear space, talar shift, and operative relevance.', category: 'Clinical Decision Making' },
         { id: 'weber_vs_lauge_hansen', label: 'Weber vs Lauge-Hansen', description: 'How the two classification systems differ and when each is used.', category: 'Classification Systems' },
         { id: 'stress_views', label: 'Stress views', description: 'When and how to get stress radiographs.', category: 'Clinical Decision Making' },
-        { id: 'syndesmosis_clues', label: 'Syndesmosis clues', description: 'Imaging and exam clues for syndesmotic injury.', category: 'Anatomy' },
-        { id: 'treatment_implications', label: 'Treatment implications', description: 'How classification changes operative vs nonoperative management.', category: 'Clinical Decision Making' },
-        { id: 'common_traps', label: 'Common traps', description: 'Frequent classification mistakes.', category: 'Complications' },
+        { id: 'syndesmosis_instability', label: 'When syndesmosis is unstable', description: 'Imaging and exam clues for syndesmotic injury.', category: 'Anatomy' },
+        { id: 'posterior_malleolus_decision', label: 'Posterior malleolus decision-making', description: 'How posterior malleolus morphology changes treatment.', category: 'Clinical Decision Making' },
         { id: 'oite_questions', label: 'OITE questions', description: 'Board-style questions on ankle fracture classification.', category: 'Board Review' },
       ],
     },
@@ -94,13 +108,44 @@ const CURATED_TOPICS: CuratedTopic[] = [
     id: 'femoral_neck',
     match: /\bfemoral neck\b/i,
     chips: {
+      overview: [
+        { id: 'young_patient_reduction_algorithm', label: 'Young patient reduction algorithm', description: 'Urgent reduction/fixation priorities and why they matter.', category: 'Clinical Decision Making' },
+        { id: 'garden_vs_pauwels', label: 'Garden vs Pauwels', description: 'Displacement vs vertical shear and fixation risk.', category: 'Classification Systems' },
+        { id: 'blood_supply_avn_risk', label: 'Blood supply and AVN risk', description: 'Retinacular vessel anatomy and AVN risk.', category: 'Anatomy' },
+        { id: 'fixation_vs_hemi_vs_tha', label: 'Fixation vs hemi vs THA', description: 'Age, displacement, activity, and arthroplasty choice.', category: 'Clinical Decision Making' },
+        { id: 'oite_complications_traps', label: 'OITE complications and traps', description: 'AVN, nonunion, and board-style treatment traps.', category: 'Board Review' },
+      ],
+      classification: [
+        { id: 'garden_vs_pauwels', label: 'Garden vs Pauwels', description: 'Displacement vs vertical shear and fixation risk.', category: 'Classification Systems' },
+        { id: 'blood_supply_avn_risk', label: 'Blood supply and AVN risk', description: 'Retinacular vessel anatomy and AVN risk.', category: 'Anatomy' },
+        { id: 'fixation_vs_hemi_vs_tha', label: 'Fixation vs hemi vs THA', description: 'Age, displacement, activity, and arthroplasty choice.', category: 'Clinical Decision Making' },
+        { id: 'oite_complications_traps', label: 'OITE complications and traps', description: 'AVN, nonunion, and board-style treatment traps.', category: 'Board Review' },
+      ],
       treatment_algorithm: [
-        { id: 'garden_classification', label: 'Garden classification', description: 'How Garden grade drives fixation vs arthroplasty.', category: 'Classification Systems' },
-        { id: 'pauwels_classification', label: 'Pauwels classification', description: 'Shear angle and its effect on fixation failure risk.', category: 'Classification Systems' },
-        { id: 'blood_supply_avn_risk', label: 'Blood supply / AVN risk', description: 'Retinacular vessel anatomy and AVN risk.', category: 'Anatomy' },
-        { id: 'fixation_vs_arthroplasty', label: 'Fixation vs arthroplasty', description: 'Age and displacement thresholds for each option.', category: 'Clinical Decision Making' },
-        { id: 'implant_options', label: 'Implant options', description: 'Screws, sliding hip screw, hemi vs total arthroplasty.', category: 'Implant Selection' },
-        { id: 'oite_traps', label: 'OITE traps', description: 'Board-style traps for femoral neck fracture management.', category: 'Board Review' },
+        { id: 'young_patient_reduction_algorithm', label: 'Young patient reduction algorithm', description: 'Urgent reduction/fixation priorities and why they matter.', category: 'Clinical Decision Making' },
+        { id: 'garden_vs_pauwels', label: 'Garden vs Pauwels', description: 'Displacement vs vertical shear and fixation risk.', category: 'Classification Systems' },
+        { id: 'blood_supply_avn_risk', label: 'Blood supply and AVN risk', description: 'Retinacular vessel anatomy and AVN risk.', category: 'Anatomy' },
+        { id: 'fixation_vs_hemi_vs_tha', label: 'Fixation vs hemi vs THA', description: 'Age and displacement thresholds for each option.', category: 'Clinical Decision Making' },
+        { id: 'oite_complications_traps', label: 'OITE complications and traps', description: 'Board-style traps for femoral neck fracture management.', category: 'Board Review' },
+      ],
+    },
+  },
+  {
+    id: 'total_hip_arthroplasty',
+    match: /\b(tha|total hip arthroplasty)\b/i,
+    chips: {
+      overview: [
+        { id: 'cup_position_instability', label: 'Cup position and instability', description: 'Inclination, anteversion, and impingement/stability risk.', category: 'OR Technique' },
+        { id: 'femoral_exposure_mistakes', label: 'Femoral exposure mistakes', description: 'How poor exposure causes fracture, varus, or undersizing.', category: 'Surgical Approach' },
+        { id: 'leg_length_offset_checks', label: 'Leg length and offset checks', description: 'Intraoperative checks and what changes the plan.', category: 'OR Technique' },
+        { id: 'combined_anteversion', label: 'Combined anteversion', description: 'How cup and stem version interact.', category: 'Clinical Decision Making' },
+        { id: 'approach_specific_anatomy', label: 'Approach-specific anatomy', description: 'Structures at risk by posterior, anterior, and lateral approaches.', category: 'Anatomy' },
+      ],
+      surgical_steps: [
+        { id: 'cup_position_instability', label: 'Cup position and instability', description: 'Inclination, anteversion, and impingement/stability risk.', category: 'OR Technique' },
+        { id: 'femoral_exposure_mistakes', label: 'Femoral exposure mistakes', description: 'How poor exposure causes fracture, varus, or undersizing.', category: 'Surgical Approach' },
+        { id: 'leg_length_offset_checks', label: 'Leg length and offset checks', description: 'Intraoperative checks and what changes the plan.', category: 'OR Technique' },
+        { id: 'combined_anteversion', label: 'Combined anteversion', description: 'How cup and stem version interact.', category: 'Clinical Decision Making' },
       ],
     },
   },
@@ -122,6 +167,20 @@ const CURATED_TOPICS: CuratedTopic[] = [
     id: 'acl_tear',
     match: /\bacl\b/i,
     chips: {
+      overview: [
+        { id: 'femoral_tunnel_pitfalls', label: 'Femoral tunnel placement pitfalls', description: 'Avoid vertical/anterior tunnel errors and rotational instability.', category: 'OR Technique' },
+        { id: 'graft_choice_tradeoffs', label: 'BTB vs quad vs hamstring graft', description: 'Graft choice tradeoffs by age, sport, morbidity, and failure risk.', category: 'Implant Selection' },
+        { id: 'pivot_shift_rotational_instability', label: 'Pivot shift and rotational instability', description: 'What pivot shift tells you and why it changes planning.', category: 'Clinical Decision Making' },
+        { id: 'meniscus_root_plan_changers', label: 'Meniscus/root lesions that change the plan', description: 'Associated pathology that changes reconstruction strategy.', category: 'Clinical Decision Making' },
+        { id: 'oite_graft_choice_traps', label: 'OITE graft-choice traps', description: 'Board-style graft selection and failure-risk traps.', category: 'Board Review' },
+      ],
+      surgical_steps: [
+        { id: 'femoral_tunnel_pitfalls', label: 'Femoral tunnel placement pitfalls', description: 'Avoid vertical/anterior tunnel errors and rotational instability.', category: 'OR Technique' },
+        { id: 'graft_choice_tradeoffs', label: 'BTB vs quad vs hamstring graft', description: 'Graft choice tradeoffs by age, sport, morbidity, and failure risk.', category: 'Implant Selection' },
+        { id: 'pivot_shift_rotational_instability', label: 'Pivot shift and rotational instability', description: 'What pivot shift tells you and why it changes planning.', category: 'Clinical Decision Making' },
+        { id: 'meniscus_root_plan_changers', label: 'Meniscus/root lesions that change the plan', description: 'Associated pathology that changes reconstruction strategy.', category: 'Clinical Decision Making' },
+        { id: 'oite_graft_choice_traps', label: 'OITE graft-choice traps', description: 'Board-style graft selection and failure-risk traps.', category: 'Board Review' },
+      ],
       workup: [
         { id: 'lachman_vs_pivot_shift', label: 'Lachman vs pivot shift', description: 'Exam maneuvers and what each suggests.', category: 'Anatomy' },
         { id: 'imaging_to_order', label: 'Imaging to order', description: 'When MRI is needed vs clinical diagnosis alone.', category: 'Clinical Decision Making' },
@@ -133,6 +192,32 @@ const CURATED_TOPICS: CuratedTopic[] = [
         { id: 'lachman_vs_pivot_shift', label: 'Lachman vs pivot shift', description: 'Exam maneuvers and what each suggests.', category: 'Anatomy' },
         { id: 'associated_injuries', label: 'Associated injuries', description: 'Meniscus, MCL, and bone bruise patterns to check.', category: 'Clinical Decision Making' },
         { id: 'imaging_to_order', label: 'Imaging to order', description: 'When MRI is needed vs clinical diagnosis alone.', category: 'Clinical Decision Making' },
+      ],
+    },
+  },
+  {
+    id: 'hand_infections',
+    match: /\b(hand infection|hand infections|flexor tenosynovitis|deep space infection)\b/i,
+    chips: {
+      overview: [
+        { id: 'flexor_tenosynovitis_algorithm', label: 'Flexor tenosynovitis algorithm', description: 'Kanavel signs, urgency, antibiotics, and operative drainage.', category: 'Clinical Decision Making' },
+        { id: 'deep_space_infection_anatomy', label: 'Deep space infection anatomy', description: 'Thenar, midpalmar, web space, and Parona space relevance.', category: 'Anatomy' },
+        { id: 'when_to_go_to_or', label: 'When to go to the OR', description: 'Clinical triggers for urgent operative management.', category: 'Indications' },
+        { id: 'antibiotics_vs_drainage', label: 'Antibiotics vs drainage', description: 'When antibiotics alone are insufficient.', category: 'Clinical Decision Making' },
+        { id: 'oite_red_flags', label: 'OITE red flags', description: 'Board traps and red flags for hand infections.', category: 'Board Review' },
+      ],
+      differential: [
+        { id: 'flexor_tenosynovitis_algorithm', label: 'Flexor tenosynovitis algorithm', description: 'Kanavel signs, urgency, antibiotics, and operative drainage.', category: 'Clinical Decision Making' },
+        { id: 'deep_space_infection_anatomy', label: 'Deep space infection anatomy', description: 'Thenar, midpalmar, web space, and Parona space relevance.', category: 'Anatomy' },
+        { id: 'when_to_go_to_or', label: 'When to go to the OR', description: 'Clinical triggers for urgent operative management.', category: 'Indications' },
+        { id: 'antibiotics_vs_drainage', label: 'Antibiotics vs drainage', description: 'When antibiotics alone are insufficient.', category: 'Clinical Decision Making' },
+        { id: 'oite_red_flags', label: 'OITE red flags', description: 'Board traps and red flags for hand infections.', category: 'Board Review' },
+      ],
+      infection: [
+        { id: 'flexor_tenosynovitis_algorithm', label: 'Flexor tenosynovitis algorithm', description: 'Kanavel signs, urgency, antibiotics, and operative drainage.', category: 'Clinical Decision Making' },
+        { id: 'deep_space_infection_anatomy', label: 'Deep space infection anatomy', description: 'Thenar, midpalmar, web space, and Parona space relevance.', category: 'Anatomy' },
+        { id: 'when_to_go_to_or', label: 'When to go to the OR', description: 'Clinical triggers for urgent operative management.', category: 'Indications' },
+        { id: 'antibiotics_vs_drainage', label: 'Antibiotics vs drainage', description: 'When antibiotics alone are insufficient.', category: 'Clinical Decision Making' },
       ],
     },
   },
@@ -197,7 +282,7 @@ export function getCuratedChips(
   const lower = message.toLowerCase();
   for (const topic of CURATED_TOPICS) {
     if (topic.match.test(lower)) {
-      const chips = topic.chips[subintent];
+      const chips = topic.chips[subintent] ?? topic.chips.overview;
       if (chips?.length) return chips;
     }
   }

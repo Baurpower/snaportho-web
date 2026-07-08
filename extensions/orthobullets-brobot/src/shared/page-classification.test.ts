@@ -179,4 +179,21 @@ assert.ok(curriculumChips.includes('Compare the drugs'));
 assert.ok(curriculumChips.length <= 8);
 assert.equal(preferredBrobotMode(unansweredCurrentTest), 'question_tutor');
 
+const orthobulletsTopicPage = createContext({
+  mode: 'topic_page',
+  pageUrl: 'https://www.orthobullets.com/trauma/1042/femoral-neck-fractures',
+  sourceUrl: 'https://www.orthobullets.com/trauma/1042/femoral-neck-fractures',
+  pageKind: 'topic',
+  answerChoices: [],
+  sectionHeadings: ['Introduction', 'Treatment', 'Classification'],
+  contentText: 'Nondisplaced femoral neck fractures in young patients require urgent fixation.',
+});
+
+const classifiedTopicPage = classifyPage(orthobulletsTopicPage);
+assert.equal(classifiedTopicPage.pageKind, 'topic_page');
+assert.equal(isPageUsable(orthobulletsTopicPage), true);
+assert.equal(preferredBrobotMode(orthobulletsTopicPage), 'topic_tutor');
+// A topic page must never fall through to ROCK's curriculum_content prompt path.
+assert.notEqual(preferredBrobotMode(orthobulletsTopicPage), 'explain_page');
+
 console.log('Orthobullets page classification tests passed.');

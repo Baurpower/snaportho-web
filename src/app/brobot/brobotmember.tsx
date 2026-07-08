@@ -103,6 +103,18 @@ type UsageMeta = {
   expiresAt?: string | null;
 };
 
+function isSameUsageMeta(left: UsageMeta | null, right: UsageMeta | null) {
+  return (
+    left?.unlimited === right?.unlimited &&
+    left?.dailyCap === right?.dailyCap &&
+    left?.remainingToday === right?.remainingToday &&
+    left?.source === right?.source &&
+    left?.status === right?.status &&
+    left?.cancelAtPeriodEnd === right?.cancelAtPeriodEnd &&
+    left?.expiresAt === right?.expiresAt
+  );
+}
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function BroBotMember() {
@@ -148,7 +160,9 @@ export default function BroBotMember() {
 
   useEffect(() => {
     if (entitlementUsageMeta) {
-      setUsageMeta(entitlementUsageMeta);
+      setUsageMeta((current) =>
+        isSameUsageMeta(current, entitlementUsageMeta) ? current : entitlementUsageMeta
+      );
     }
   }, [entitlementUsageMeta]);
 

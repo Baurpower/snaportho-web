@@ -133,6 +133,14 @@ type UsageSnapshot = {
   remainingToday: number | null;
 };
 
+function isSameUsageSnapshot(left: UsageSnapshot | null, right: UsageSnapshot | null) {
+  return (
+    left?.unlimited === right?.unlimited &&
+    left?.dailyCap === right?.dailyCap &&
+    left?.remainingToday === right?.remainingToday
+  );
+}
+
 type PendingIntent = {
   message: string;
   userMessageId: string;
@@ -546,7 +554,7 @@ export default function BroBotChatPage() {
     }
 
     if (authStatus === 'authenticated') {
-      setUsage(memberUsage);
+      setUsage((current) => (isSameUsageSnapshot(current, memberUsage) ? current : memberUsage));
       return;
     }
 
@@ -1838,20 +1846,25 @@ function BroBotNextLearningBranches({
 }) {
   const loggedExposureKeyRef = useRef<string | null>(null);
   const [showReadingPanel, setShowReadingPanel] = useState(false);
-  const branchChips: BranchOption[] =
-    branches.length > 0
-      ? branches.slice(0, 7).map((branch, index) => ({
-          ...branch,
-          rankPosition: branch.rankPosition ?? index + 1,
-        }))
-      : buildSuggestedChips(fallbackQuestions, mode).map((question) => ({
-          id: question.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''),
-          label: question,
-          category: inferChipCategory(question),
-        })).map((branch, index) => ({
-          ...branch,
-          rankPosition: index + 1,
-        }));
+  const branchChips: BranchOption[] = useMemo(
+    () =>
+      branches.length > 0
+        ? branches.slice(0, 7).map((branch, index) => ({
+            ...branch,
+            rankPosition: branch.rankPosition ?? index + 1,
+          }))
+        : buildSuggestedChips(fallbackQuestions, mode)
+            .map((question) => ({
+              id: question.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, ''),
+              label: question,
+              category: inferChipCategory(question),
+            }))
+            .map((branch, index) => ({
+              ...branch,
+              rankPosition: index + 1,
+            })),
+    [branches, fallbackQuestions, mode]
+  );
 
   useEffect(() => {
     if (!conversationId || !sourceMessageId || branchChips.length === 0) return;

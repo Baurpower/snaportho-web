@@ -164,6 +164,7 @@ export function shouldShowCheckoutBenefitCards(phase: CheckoutSuccessPhase): boo
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- phase kept for stable call signature
 export function shouldShowCheckoutFreeQuota(_phase: CheckoutSuccessPhase): boolean {
+  void _phase;
   return false;
 }
 

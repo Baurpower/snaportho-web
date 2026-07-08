@@ -1,0 +1,1633 @@
+{
+  "corpus": {
+    "conversations": 76,
+    "messages": 354,
+    "assistantTurns": 176,
+    "dateRange": {
+      "firstConversation": "2026-06-16T04:07:31.968Z",
+      "lastConversation": "2026-07-06T19:41:14.215Z"
+    }
+  },
+  "scores": {
+    "educationalQuality": 6.1,
+    "specificity": 7.19,
+    "depth": 3.81,
+    "actionability": 5.93,
+    "conversationQuality": 6.99
+  },
+  "distributions": {
+    "byMode": [
+      {
+        "key": "or_prep",
+        "count": 79
+      },
+      {
+        "key": "general",
+        "count": 34
+      },
+      {
+        "key": "oite",
+        "count": 29
+      },
+      {
+        "key": "research",
+        "count": 12
+      },
+      {
+        "key": "clinic",
+        "count": 11
+      },
+      {
+        "key": "consult",
+        "count": 10
+      },
+      {
+        "key": "fracture_call",
+        "count": 1
+      }
+    ],
+    "byPromptCategory": [
+      {
+        "key": "general",
+        "count": 73
+      },
+      {
+        "key": "surgical/attending-prep",
+        "count": 31
+      },
+      {
+        "key": "fracture",
+        "count": 28
+      },
+      {
+        "key": "beginner",
+        "count": 14
+      },
+      {
+        "key": "OITE",
+        "count": 13
+      },
+      {
+        "key": "anatomy",
+        "count": 9
+      },
+      {
+        "key": "clinic",
+        "count": 7
+      },
+      {
+        "key": "research",
+        "count": 1
+      }
+    ],
+    "orthopaedicAccuracy": [
+      {
+        "key": "approve",
+        "count": 167
+      },
+      {
+        "key": "concerns",
+        "count": 9
+      }
+    ],
+    "hallucinationRisk": [
+      {
+        "key": "low",
+        "count": 164
+      },
+      {
+        "key": "moderate",
+        "count": 12
+      }
+    ],
+    "rewritePriority": [
+      {
+        "key": "P1",
+        "count": 76
+      },
+      {
+        "key": "P2",
+        "count": 62
+      },
+      {
+        "key": "P0",
+        "count": 28
+      },
+      {
+        "key": "none",
+        "count": 10
+      }
+    ],
+    "failureLabels": [
+      {
+        "label": "weak_decision_making",
+        "count": 145
+      },
+      {
+        "label": "missing_attending_pearls",
+        "count": 103
+      },
+      {
+        "label": "too_shallow",
+        "count": 71
+      },
+      {
+        "label": "low_specificity",
+        "count": 40
+      },
+      {
+        "label": "over_clarification",
+        "count": 37
+      },
+      {
+        "label": "weak_oite_explanation",
+        "count": 9
+      },
+      {
+        "label": "weak_surgical_teaching",
+        "count": 7
+      },
+      {
+        "label": "generic_filler",
+        "count": 6
+      },
+      {
+        "label": "weak_clinic_algorithm",
+        "count": 5
+      },
+      {
+        "label": "weak_fracture_framework",
+        "count": 2
+      }
+    ]
+  },
+  "focusMode": {
+    "turnsWithClarifyingQuestions": 146,
+    "usefulClarificationTurns": 0,
+    "overClarifiedTurns": 0,
+    "structuredClarificationRate": 0.83,
+    "overClarificationRate": 0,
+    "usageEvents": {
+      "clarifications_suggested": 146,
+      "branch_prompts": 0,
+      "chat_messages": 0,
+      "chat_completed": 0
+    },
+    "branchEvents": {
+      "events": 544,
+      "clicks": 47,
+      "conversations": 49,
+      "generated_followups": 47
+    },
+    "branchCtr": 0.086
+  },
+  "topBranchQuestions": [
+    {
+      "question_text": "(unknown)",
+      "category": "(unknown)",
+      "impressions": 24,
+      "clicks": 24
+    },
+    {
+      "question_text": "What complications should I anticipate?",
+      "category": "complications",
+      "impressions": 14,
+      "clicks": 0
+    },
+    {
+      "question_text": "What will the attending ask?",
+      "category": "attending",
+      "impressions": 11,
+      "clicks": 1
+    },
+    {
+      "question_text": "What landmarks should I find first?",
+      "category": "Surgical Approach",
+      "impressions": 9,
+      "clicks": 0
+    },
+    {
+      "question_text": "What implants should I know?",
+      "category": "Implant Selection",
+      "impressions": 9,
+      "clicks": 0
+    },
+    {
+      "question_text": "What anatomy is most at risk?",
+      "category": "Anatomy",
+      "impressions": 9,
+      "clicks": 0
+    },
+    {
+      "question_text": "How do I choose the right implants?",
+      "category": "implant",
+      "impressions": 9,
+      "clicks": 0
+    },
+    {
+      "question_text": "What will the attending ask?",
+      "category": "Pimp Questions",
+      "impressions": 8,
+      "clicks": 0
+    },
+    {
+      "question_text": "What are the key operative steps?",
+      "category": "OR Technique",
+      "impressions": 8,
+      "clicks": 0
+    },
+    {
+      "question_text": "Study common TKA complications?",
+      "category": "Complications",
+      "impressions": 8,
+      "clicks": 0
+    },
+    {
+      "question_text": "What anatomy is most at risk?",
+      "category": "anatomy",
+      "impressions": 5,
+      "clicks": 1
+    },
+    {
+      "question_text": "Compare implant designs?",
+      "category": "Implant Design",
+      "impressions": 5,
+      "clicks": 0
+    },
+    {
+      "question_text": "Explore implant types and indications?",
+      "category": "Implants",
+      "impressions": 5,
+      "clicks": 0
+    },
+    {
+      "question_text": "Indications for each fixation type?",
+      "category": "fixation",
+      "impressions": 4,
+      "clicks": 1
+    },
+    {
+      "question_text": "What complications should I watch for?",
+      "category": "complications",
+      "impressions": 4,
+      "clicks": 1
+    },
+    {
+      "question_text": "How do I assess balance and stability?",
+      "category": "surgical_steps",
+      "impressions": 4,
+      "clicks": 0
+    },
+    {
+      "question_text": "How to assess anatomy for reverse TSA?",
+      "category": "anatomy",
+      "impressions": 4,
+      "clicks": 0
+    },
+    {
+      "question_text": "What are the treatment options for PJI?",
+      "category": "infection",
+      "impressions": 3,
+      "clicks": 1
+    },
+    {
+      "question_text": "Key anatomical landmarks for entry?",
+      "category": "anatomy",
+      "impressions": 3,
+      "clicks": 1
+    },
+    {
+      "question_text": "Imaging clues for Lauge-Hansen types?",
+      "category": "imaging",
+      "impressions": 3,
+      "clicks": 1
+    },
+    {
+      "question_text": "Fluoroscopy checks during nail insertion?",
+      "category": "imaging",
+      "impressions": 3,
+      "clicks": 1
+    },
+    {
+      "question_text": "Anatomy at risk during reverse TSA?",
+      "category": "Anatomy",
+      "impressions": 3,
+      "clicks": 1
+    },
+    {
+      "question_text": "Soft Tissue Balancing in Reverse TSA?",
+      "category": "surgical technique",
+      "impressions": 3,
+      "clicks": 1
+    },
+    {
+      "question_text": "Detailed fracture patterns for each type?",
+      "category": "classification",
+      "impressions": 3,
+      "clicks": 1
+    },
+    {
+      "question_text": "Indications for Reverse TSA?",
+      "category": "surgical indications",
+      "impressions": 3,
+      "clicks": 1
+    },
+    {
+      "question_text": "Study patient selection criteria?",
+      "category": "Decision Making",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "How does this change management?",
+      "category": "Clinical Decision Making",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Why choose this incision?",
+      "category": "technique",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "What should I compare this with?",
+      "category": "Controversies",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Optimal patient positioning techniques?",
+      "category": "technique",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Learn about implant selection?",
+      "category": "implant",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Common complications to avoid?",
+      "category": "complications",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Common complications of reverse TSA?",
+      "category": "Complications",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "How do I ensure proper alignment?",
+      "category": "technique",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Can you quiz me on this?",
+      "category": "Board Review",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Study TKA alignment strategies?",
+      "category": "technique",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Common complications with fixation?",
+      "category": "complications",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "What implants should I know?",
+      "category": "implant",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "Why does this matter in the OR?",
+      "category": "OR Technique",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "How should I understand this?",
+      "category": "Clinical Decision Making",
+      "impressions": 3,
+      "clicks": 0
+    },
+    {
+      "question_text": "What fixation options should I know?",
+      "category": "implant",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "Limitations of AI in TJA?",
+      "category": "technology",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "Indications for reconstructive nails?",
+      "category": "nail fixation",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "Access practice questions?",
+      "category": "study_materials",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "What classification systems are used?",
+      "category": "classification",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "Imaging clues for SER fractures?",
+      "category": "Imaging",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "How do I confirm the release?",
+      "category": "surgical_steps",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "What are the key surgical techniques for reverse TSA?",
+      "category": "surgical technique",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "Effective Consultation Skills?",
+      "category": "clinical",
+      "impressions": 2,
+      "clicks": 1
+    },
+    {
+      "question_text": "Differential diagnosis of hand infections?",
+      "category": "diagnosis",
+      "impressions": 2,
+      "clicks": 1
+    }
+  ],
+  "topFailures": [
+    {
+      "auditId": "C063:T1",
+      "mode": "research",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "My study is on TJA and using AI cameras to recognize surgical steps",
+      "answerSnippet": "AI cameras in TJA are being explored for their potential to enhance surgical precision and efficiency by recognizing and analyzing surgical steps in real-time. Current studies suggest that these technologies can improve workflow and reduce errors, but they also face challenges such as integration into existing systems and the need for extensive validation in clinical settings.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 7,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "concerns",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_surgical_teaching"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C033:T1",
+      "mode": "oite",
+      "promptCategory": "OITE",
+      "userPrompt": "Give me the OITE question for femoral shaft fractures",
+      "answerSnippet": "A 25-year-old male presents after a motorcycle accident with a mid-shaft femoral fracture. On examination, he has significant thigh swelling and tenderness. Which of the following is the most appropriate initial management step? A) Immediate surgical fixation B) Intravenous antibiotics C) Application of a long leg splint D) Observation and follow-up in 1 week Correct Answer: C) Application of a long leg splint Rationale: Initial management of femoral shaft fractures typically includes stabilizat...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 7,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_oite_explanation"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C066:T3",
+      "mode": "general",
+      "promptCategory": "anatomy",
+      "userPrompt": "what are anatomy facts I need to know about FDP and FDS?",
+      "answerSnippet": "- **Origins**: - **FDS**: Arises from the medial epicondyle of the humerus and the anterior surface of the radius. - **FDP**: Arises from the anterior surface of the ulna and interosseous membrane. - **Insertions**: - **FDS**: Inserts on the middle phalanges of digits 2-5. - **FDP**: Inserts on the distal phalanges of digits 2-5. - **Functions**: - **FDS**: Flexes the proximal interphalangeal joints. - **FDP**: Flexes the distal interphalangeal joints and assists in flexing the metacarpophalange...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 4,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, over_clarification."
+    },
+    {
+      "auditId": "C030:T2",
+      "mode": "clinic",
+      "promptCategory": "clinic",
+      "userPrompt": "Differential diagnosis of hand infections?",
+      "answerSnippet": "**Cellulitis**: Diffuse skin infection; presents with erythema, warmth, and swelling without a defined abscess.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_clinic_algorithm"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C030:T3",
+      "mode": "oite",
+      "promptCategory": "general",
+      "userPrompt": "Give me the common pitfalls for hand infection questions",
+      "answerSnippet": "1. **Misdiagnosing Cellulitis**: Confusing cellulitis with abscess; cellulitis lacks a well-defined fluctuant area. 2. **Ignoring Kanavel's Signs**: Overlooking signs of flexor tenosynovitis, leading to delayed surgical intervention. 3. **Underestimating Systemic Symptoms**: Failing to recognize systemic signs of infection (fever, chills) that may indicate a more severe condition. 4. **Over-reliance on Imaging**: Using imaging (like ultrasound) as a primary diagnostic tool instead of clinical ev...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C065:T2",
+      "mode": "general",
+      "promptCategory": "general",
+      "userPrompt": "Is an IM used for a primary bone construct or a secondary bone construct",
+      "answerSnippet": "Intramedullary nails are primarily used for **primary bone constructs**. They provide immediate stability and support for the fracture site, allowing for early mobilization and healing. In contrast, secondary constructs typically involve additional stabilization methods, such as plates or external fixators, after initial healing or in cases of nonunion.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C065:T5",
+      "mode": "general",
+      "promptCategory": "general",
+      "userPrompt": "Types of Secondary Constructs?",
+      "answerSnippet": "1. **Plates**: Used for additional stabilization, especially in cases of malunion or complex fractures. 2. **External Fixators**: Employed in cases of severe soft tissue injury or infection, providing stabilization while allowing for access to the fracture site. 3. **Bone Grafts**: Used to promote healing in nonunions or delayed unions, often combined with other constructs. 4. **Intramedullary Nails**: Sometimes used as a secondary construct if initial fixation fails, providing additional stabil...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C071:T1",
+      "mode": "research",
+      "promptCategory": "anatomy",
+      "userPrompt": "What percent of Holstein Lewis fractures have radial nerve neuropraxia",
+      "answerSnippet": "- **Incidence Range**: Radial nerve neuropraxia occurs in approximately 15-30% of Holstein Lewis fractures. - **Study Variability**: The exact percentage can vary based on study design, population, and definitions used. - **Clinical Relevance**: High suspicion for nerve injury is warranted in these fractures due to the proximity of the radial nerve. - **Management**: Initial observation is common, as many neuropraxias resolve spontaneously. - **Surgical Consideration**: Persistent deficits may r...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "moderate",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C071:T2",
+      "mode": "general",
+      "promptCategory": "general",
+      "userPrompt": "Is the neuropraxia reversible",
+      "answerSnippet": "Yes, radial nerve neuropraxia is often reversible. It is a type of nerve injury where the nerve remains intact but its conduction is temporarily blocked. Most cases resolve spontaneously within weeks to months. Regular monitoring of motor and sensory function is crucial. If there is no improvement after 3-6 months, surgical intervention may be considered. Early recognition and appropriate management can improve outcomes.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C050:T1",
+      "mode": "clinic",
+      "promptCategory": "general",
+      "userPrompt": "what are the indications for achilles tendon rupture?",
+      "answerSnippet": "Indications for surgery in Achilles tendon rupture include: - **Complete rupture**: Typically indicated for full-thickness tears, especially in active individuals. - **Young, active patients**: Surgery is preferred for those under 40 years old who engage in sports. - **Recreational athletes**: Surgical repair is often recommended for those who wish to return to high-level activities. - **Acute presentation**: Surgery is generally more effective if performed within 2-3 weeks of injury. - **Functi...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 4,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "missing_attending_pearls",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: low_specificity, missing_attending_pearls, too_shallow, over_clarification."
+    },
+    {
+      "auditId": "C013:T2",
+      "mode": "general",
+      "promptCategory": "beginner",
+      "userPrompt": "what is the constraint type for Zimmer Persona?",
+      "answerSnippet": "The Zimmer Persona knee system primarily utilizes a **cruciate-retaining (CR)** design, but it also offers a **posterior-stabilized (PS)** option for patients with compromised ligaments. The constraint type can be selected based on the patient's specific anatomy and stability needs. Key points include: - **CR design**: Preserves the posterior cruciate ligament, allowing for more natural motion. - **PS design**: Provides additional stability by substituting a cam mechanism for the PCL, useful in ...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 3,
+        "depth": 4,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "generic_filler"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, generic_filler."
+    },
+    {
+      "auditId": "C013:T3",
+      "mode": "general",
+      "promptCategory": "beginner",
+      "userPrompt": "what is the Stryker system for TKA?",
+      "answerSnippet": "The Stryker TKA system, known as the **Stryker Triathlon**, is designed for total knee arthroplasty with a focus on stability and range of motion. Key features include: - **Cruciate-retaining and posterior-stabilized options**: Allows for tailored approaches based on patient anatomy and ligament status. - **Anatomic design**: Mimics natural knee kinematics to enhance function. - **Modular components**: Offers flexibility in sizing and alignment to accommodate various patient needs. - **Advanced ...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 4,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C014:T2",
+      "mode": "clinic",
+      "promptCategory": "clinic",
+      "userPrompt": "What are the differential diagnoses for wrist pain?",
+      "answerSnippet": "- **Wrist Sprain/Strain**: Common after trauma; pain with movement. - **Fractures**: Distal radius (Colles' fracture), scaphoid fracture; consider in trauma. - **Carpal Tunnel Syndrome**: Nerve compression; presents with numbness/tingling. - **Tendonitis**: De Quervain's tenosynovitis (radial side); pain with gripping or thumb motion. - **Arthritis**: Osteoarthritis or rheumatoid arthritis; morning stiffness and swelling. - **Ganglion Cyst**: Soft tissue mass; can cause pain or discomfort depend...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 7,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_clinic_algorithm"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow, weak_clinic_algorithm."
+    },
+    {
+      "auditId": "C043:T3",
+      "mode": "oite",
+      "promptCategory": "OITE",
+      "userPrompt": "how should I prepare for OITE",
+      "answerSnippet": "1. **Study Materials**: Use high-yield review books, online question banks, and past OITE questions. 2. **Focused Topics**: Prioritize core orthopaedic topics like trauma, joint pathology, and pediatric conditions. 3. **Practice Questions**: Regularly complete practice questions to familiarize yourself with the exam format and question style. 4. **Study Schedule**: Create a structured study plan, allocating time for review, practice, and self-assessment. 5. **Group Study**: Consider group study ...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "moderate",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_oite_explanation"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C043:T4",
+      "mode": "oite",
+      "promptCategory": "general",
+      "userPrompt": "Access practice questions?",
+      "answerSnippet": "1. **Question Banks**: Utilize platforms like Orthobullets, AMO, or BoardVitals for comprehensive question banks. 2. **Past OITE Questions**: Check if your institution has archives of previous OITE questions for practice. 3. **Review Books**: Look for OITE review books that include practice questions at the end of each chapter. 4. **Online Forums**: Engage in online forums or social media groups where residents share practice questions and resources.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 7,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C027:T2",
+      "mode": "or_prep",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "How do I confirm the release?",
+      "answerSnippet": "Assess finger motion: Ask the patient to actively flex and extend the finger post-release.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 7,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "concerns",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_surgical_teaching"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C027:T3",
+      "mode": "or_prep",
+      "promptCategory": "general",
+      "userPrompt": "What complications should I watch for?",
+      "answerSnippet": "1. **Nerve Injury**: Risk to the digital nerves, leading to sensory loss or dysesthesia. 2. **Stiffness**: Postoperative stiffness can occur, especially if the finger is immobilized too long. 3. **Infection**: Monitor for signs of infection at the incision site. 4. **Scar Formation**: Excessive scarring can lead to decreased range of motion. 5. **Recurrence**: Symptoms may recur if the underlying condition is not fully addressed.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C009:T2",
+      "mode": "clinic",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "What are the indications for surgical intervention in trigger finger?",
+      "answerSnippet": "1. **Persistent Symptoms**: Symptoms lasting more than 6 months despite conservative treatment (e.g., splinting, corticosteroid injections). 2. **Severe Pain**: Significant pain that interferes with daily activities. 3. **Functional Impairment**: Inability to fully extend the finger or perform tasks requiring grip strength. 4. **Recurrent Episodes**: Frequent episodes of locking or catching despite prior treatments.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 4,
+        "depth": 4,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "concerns",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_surgical_teaching"
+      ],
+      "assessment": "Local audit flags: low_specificity, missing_attending_pearls, too_shallow, weak_surgical_teaching."
+    },
+    {
+      "auditId": "C039:T3",
+      "mode": "or_prep",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "What are the key surgical techniques for reverse TSA?",
+      "answerSnippet": "- Glenoid retroversion: Aim for 30-40 degrees to optimize deltoid function. - Humeral offset: Ensure proper placement to maintain deltoid tension. - Soft tissue assessment: Evaluate deltoid and rotator cuff integrity preoperatively.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "concerns",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_surgical_teaching",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C045:T1",
+      "mode": "general",
+      "promptCategory": "general",
+      "userPrompt": "What are common questions on cosmetic limb lengthening?",
+      "answerSnippet": "Common questions include: - What are the indications for cosmetic limb lengthening? - What techniques are used for limb lengthening? - What are the potential complications and risks? - How long is the recovery process, and what rehabilitation is needed? - What are the psychological impacts on patients undergoing this procedure?",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 4,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "generic_filler",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, generic_filler."
+    },
+    {
+      "auditId": "C047:T4",
+      "mode": "oite",
+      "promptCategory": "general",
+      "userPrompt": "Complications Related to Gap Imbalance?",
+      "answerSnippet": "1. **Instability**: Imbalance can lead to anterior or posterior instability, affecting range of motion. 2. **Patellar Tracking Issues**: Improper gap balance may cause maltracking, leading to pain and wear. 3. **Component Wear**: Uneven loading can accelerate wear of the polyethylene insert. 4. **Increased Risk of Revision**: Persistent imbalance may necessitate revision surgery due to failure. 5. **Soft Tissue Complications**: Over-tightening can lead to soft tissue irritation or pain.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C047:T5",
+      "mode": "oite",
+      "promptCategory": "general",
+      "userPrompt": "What cut impacts the flexion gap?",
+      "answerSnippet": "The **distal femoral cut** significantly impacts the flexion gap by determining the overall alignment and position of the femoral component. A cut that is too high can lead to a tight flexion gap, while a cut that is too low can create excessive laxity. Proper alignment is crucial for achieving balanced flexion and extension gaps.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C044:T2",
+      "mode": "consult",
+      "promptCategory": "general",
+      "userPrompt": "Indications for reconstructive nails?",
+      "answerSnippet": "Reconstructive nails are indicated for: - **Complex fractures**: Particularly in the femur or tibia where anatomical restoration is crucial. - **Non-union or malunion**: To facilitate healing and restore alignment. - **Fractures with significant bone loss**: Where traditional fixation may not provide adequate stability. - **Pathologic fractures**: In cases of underlying malignancy or metabolic bone disease. - **Fractures requiring additional stabilization**: Such as in polytrauma patients or tho...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C062:T2",
+      "mode": "consult",
+      "promptCategory": "clinic",
+      "userPrompt": "What are the treatment options for PJI?",
+      "answerSnippet": "1. **Antibiotic Therapy**: Initiate broad-spectrum IV antibiotics based on culture results; consider prolonged oral therapy for chronic cases. 2. **Surgical Intervention**: - **Debridement and Retention**: For acute infections with stable implants. - **Two-Stage Exchange**: Remove the infected implant, treat with antibiotics, and later re-implant a new prosthesis. - **One-Stage Exchange**: Remove and replace the implant in a single procedure, typically for select cases. 3. **Antibiotic-Loaded Ce...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 7,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "generic_filler",
+        "too_shallow",
+        "weak_clinic_algorithm",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, generic_filler, too_shallow."
+    },
+    {
+      "auditId": "C048:T2",
+      "mode": "clinic",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "Indications for non-operative management?",
+      "answerSnippet": "- Assess fracture stability: Non-displaced or minimally displaced fractures are candidates. - Evaluate patient comorbidities: High surgical risk may favor non-operative management. - Monitor for complications: Regular follow-up to assess for changes in fracture alignment or healing.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 4,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "concerns",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_surgical_teaching"
+      ],
+      "assessment": "Local audit flags: low_specificity, missing_attending_pearls, too_shallow, weak_surgical_teaching."
+    },
+    {
+      "auditId": "C048:T3",
+      "mode": "or_prep",
+      "promptCategory": "general",
+      "userPrompt": "Periacetabular osteotomy in 21yo",
+      "answerSnippet": "1. **Infection**: Risk increases with extensive soft tissue dissection; maintain sterile technique and consider prophylactic antibiotics. 2. **Nerve injury**: Particularly to the superior gluteal nerve; be cautious during exposure and retraction. 3. **Vascular compromise**: Potential injury to the medial femoral circumflex artery; ensure proper identification and protection during dissection. 4. **Nonunion or malunion**: Ensure proper fixation and alignment; consider bone grafting if necessary. ...",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C060:T3",
+      "mode": "or_prep",
+      "promptCategory": "general",
+      "userPrompt": "How do I ensure proper alignment?",
+      "answerSnippet": "- Intramedullary alignment: ensures accurate femoral cuts aligned with the mechanical axis. - Tibial cut: maintain 90-degree alignment to the mechanical axis; adjust for deformities. - Trial components: assess alignment and function before final fixation.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "moderate",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C020:T2",
+      "mode": "consult",
+      "promptCategory": "general",
+      "userPrompt": "Indications for BEAR",
+      "answerSnippet": "The BEAR procedure is indicated for: 1. **Acute ACL tears**: Particularly in young, active patients who desire to return to sports. 2. **Partial ACL tears**: Where preservation of native tissue is possible. 3. **High-grade tears**: Where traditional repair may not suffice. 4. **Patients with good biological healing potential**: Such as those without significant comorbidities affecting healing. 5. **Patients with a preference for biological repair**: Over traditional reconstruction methods.",
+      "scores": {
+        "educationalQuality": 4,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C034:T1",
+      "mode": "oite",
+      "promptCategory": "OITE",
+      "userPrompt": "What are the femoral neck fracture OITE questions",
+      "answerSnippet": "1. **Classification**: Understand the Garden classification (I-IV) for femoral neck fractures, focusing on displacement and stability. 2. **Management**: Know the treatment algorithms based on age, displacement, and patient factors—surgical options for displaced fractures and non-operative for non-displaced. 3. **Complications**: Be aware of complications like avascular necrosis (AVN) and nonunion, especially in displaced fractures. 4. **Indications for Surgery**: Recognize when surgery is indic...",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_oite_explanation",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow, weak_oite_explanation."
+    },
+    {
+      "auditId": "C065:T4",
+      "mode": "or_prep",
+      "promptCategory": "general",
+      "userPrompt": "Indications for secondary construct",
+      "answerSnippet": "1. **Nonunion**: When a fracture fails to heal adequately with primary fixation, secondary constructs provide additional stability to promote healing. 2. **Malunion**: If a fracture heals in an incorrect position, secondary constructs can help realign and stabilize the bone. 3. **Complex Fractures**: In cases of multifragmentary or unstable fractures where initial fixation is insufficient, secondary constructs can enhance support. 4. **Infection**: In cases of infection or compromised soft tissu...",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls."
+    },
+    {
+      "auditId": "C031:T1",
+      "mode": "clinic",
+      "promptCategory": "clinic",
+      "userPrompt": "what are the treatment options for a femoral neck fx?",
+      "answerSnippet": "1. **Nonoperative**: Consider in non-displaced fractures, especially in elderly patients with low activity levels. 2. **Internal fixation**: Use cannulated screws or dynamic hip screws for stable or non-displaced fractures. 3. **Hemiarthroplasty**: Indicated for displaced fractures in elderly patients or those with poor bone quality. 4. **Total hip arthroplasty**: Consider in active patients or those with pre-existing hip arthritis. 5. **Open reduction and internal fixation (ORIF)**: For certain...",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "weak_clinic_algorithm",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow, weak_clinic_algorithm."
+    },
+    {
+      "auditId": "C028:T3",
+      "mode": "or_prep",
+      "promptCategory": "fracture",
+      "userPrompt": "Indications for each fixation type?",
+      "answerSnippet": "1. **Locking Plates**: Indicated for complex proximal humerus fractures (e.g., 3- or 4-part fractures) where stability is crucial for healing. 2. **Intramedullary Nails**: Best for diaphyseal or certain surgical neck fractures, especially in older patients with osteoporotic bone. 3. **Tension Band Wiring**: Used for lesser tuberosity fractures or when tension forces are present; effective in younger patients with good bone quality. 4. **Screws**: Indicated for fixation of specific fragments like...",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 5,
+        "depth": 2,
+        "actionability": 7,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "missing_attending_pearls"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, missing_attending_pearls."
+    },
+    {
+      "auditId": "C056:T2",
+      "mode": "oite",
+      "promptCategory": "fracture",
+      "userPrompt": "What is the Garden classification?",
+      "answerSnippet": "1. **Garden I**: Incomplete fracture (valgus impacted) with no displacement. 2. **Garden II**: Complete fracture without displacement. 3. **Garden III**: Complete fracture with partial displacement. 4. **Garden IV**: Complete fracture with full displacement. **Clinical Relevance**: The classification helps guide treatment decisions, with non-displaced fractures (I-II) often treated with fixation and displaced fractures (III-IV) typically requiring arthroplasty.",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow, over_clarification."
+    },
+    {
+      "auditId": "C013:T1",
+      "mode": "general",
+      "promptCategory": "beginner",
+      "userPrompt": "what is the most common Zimmer TKA system?",
+      "answerSnippet": "The most common Zimmer TKA system is the **Zimmer Persona** knee system. It features a personalized approach to knee arthroplasty, allowing for customized implant selection based on patient anatomy and needs. Key components include: - **Anatomic design**: Mimics natural knee kinematics. - **Modular options**: Provides flexibility in sizing and alignment. - **Instrumentation**: Advanced tools for precise placement and alignment. - **Proven outcomes**: Established track record in clinical use.",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 7,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C027:T1",
+      "mode": "or_prep",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "What are the critical steps of a trigger finger release?",
+      "answerSnippet": "Position the patient supine with the hand extended and the wrist in neutral.",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 5,
+        "depth": 3,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, too_shallow, over_clarification."
+    },
+    {
+      "auditId": "C027:T4",
+      "mode": "or_prep",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "what is the location of the incision?",
+      "answerSnippet": "1. **Incision Site**: Make a 1-2 cm incision over the A1 pulley, typically at the distal palmar crease. 2. **Orientation**: Incision should be made parallel to the skin lines to minimize scarring. 3. **Landmarks**: Identify the metacarpophalangeal joint (MCP) and the proximal interphalangeal joint (PIP) for reference. 4. **Depth**: Incise through the skin and subcutaneous tissue to reach the A1 pulley. 5. **Avoidance**: Be cautious of the digital neurovascular bundles located on either side of t...",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 5,
+        "depth": 3,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, too_shallow, over_clarification."
+    },
+    {
+      "auditId": "C009:T1",
+      "mode": "or_prep",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "What are the steps for a trigger finger release?",
+      "answerSnippet": "1. **Anesthesia**: Use local anesthesia at the base of the affected finger. 2. **Incision**: Make a small incision over the A1 pulley at the base of the finger. 3. **Identify and Release**: Carefully identify the A1 pulley and release it to allow smooth gliding of the tendon. 4. **Closure**: Close the incision with sutures, ensuring no tension on the skin. 5. **Post-op Care**: Apply a dressing and provide instructions for finger mobilization and pain management.",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 4,
+        "depth": 3,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "weak_decision_making",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: low_specificity, weak_decision_making, too_shallow."
+    },
+    {
+      "auditId": "C046:T1",
+      "mode": "clinic",
+      "promptCategory": "surgical/attending-prep",
+      "userPrompt": "what are the indications for ACL reconstruction?",
+      "answerSnippet": "Indications for ACL reconstruction include: - **Instability**: Persistent knee instability during activities, especially in athletes or active individuals. - **Associated Injuries**: Presence of meniscal tears or cartilage damage that may require surgical intervention. - **Age and Activity Level**: Younger, more active patients are more likely to benefit from reconstruction compared to older, sedentary individuals. - **Failed Conservative Management**: Lack of improvement with non-operative trea...",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 5,
+        "depth": 6,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "concerns",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "missing_attending_pearls",
+        "weak_surgical_teaching",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: low_specificity, missing_attending_pearls, weak_surgical_teaching, over_clarification."
+    },
+    {
+      "auditId": "C029:T1",
+      "mode": "or_prep",
+      "promptCategory": "beginner",
+      "userPrompt": "What is the start point for femoral intertroch nail?",
+      "answerSnippet": "The starting point for femoral intertrochanteric nailing is typically located in the **greater trochanter** region. You will want to aim for the **posteromedial aspect** of the greater trochanter, approximately 1-2 cm posterior to the tip of the greater trochanter. This location allows for optimal entry into the femoral canal while minimizing the risk of damaging surrounding structures. Ensure proper **fluoroscopy** is used to confirm the entry point before proceeding with the nail insertion.",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 7,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow, over_clarification."
+    },
+    {
+      "auditId": "C032:T1",
+      "mode": "clinic",
+      "promptCategory": "fracture",
+      "userPrompt": "What are the treatment options for intertroch fracture?",
+      "answerSnippet": "1. **Nonoperative**: Consider in stable, non-displaced fractures; use analgesics and physical therapy. 2. **Surgical**: Indicated for displaced fractures or unstable patterns. - **Options**: - Intramedullary nailing (IMN) - Dynamic hip screw (DHS) - Sliding hip screw (SHS) 3. **Postoperative care**: Early mobilization and weight-bearing as tolerated, monitor for complications.",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow, over_clarification."
+    },
+    {
+      "auditId": "C047:T3",
+      "mode": "oite",
+      "promptCategory": "general",
+      "userPrompt": "What are common flexion extension gap questions?",
+      "answerSnippet": "1. **Gap Measurement**: How do you measure flexion and extension gaps intraoperatively? 2. **Balancing**: What techniques are used to balance flexion and extension gaps? 3. **Implications of Imbalance**: What are the consequences of unequal gaps on implant function? 4. **Soft Tissue Management**: How does soft tissue release or tightening affect gap balance? 5. **Trial Components**: When should you reassess gaps after trialing components?",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 7,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "moderate",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow, over_clarification."
+    },
+    {
+      "auditId": "C044:T1",
+      "mode": "clinic",
+      "promptCategory": "general",
+      "userPrompt": "what are the indications for reconstructive, cephomedullary, or hip screw nail?",
+      "answerSnippet": "Indications for nail fixation types: - **Reconstructive Nails**: Used for complex fractures, particularly in the femur or tibia, where anatomical restoration is critical; often in cases of non-union or malunion. - **Cephomedullary Nails**: Indicated for intertrochanteric and subtrochanteric femur fractures; provides stability and allows for early mobilization; useful in elderly patients with osteoporotic bone. - **Hip Screw Nails**: Primarily for stable intertrochanteric fractures; offers good f...",
+      "scores": {
+        "educationalQuality": 5,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow",
+        "over_clarification"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow, over_clarification."
+    },
+    {
+      "auditId": "C063:T2",
+      "mode": "research",
+      "promptCategory": "general",
+      "userPrompt": "Limitations of AI in TJA?",
+      "answerSnippet": "AI in TJA faces several limitations: - **Data Quality**: AI systems require high-quality, diverse datasets for training. Poor data can lead to inaccurate predictions. - **Integration Challenges**: Incorporating AI into existing surgical workflows and systems can be complex and may disrupt established practices. - **Real-Time Processing**: Ensuring AI can analyze data in real-time during surgery without lag is critical but technically challenging. - **Ethical Concerns**: Issues around accountabil...",
+      "scores": {
+        "educationalQuality": 6,
+        "specificity": 5,
+        "depth": 6,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "low_specificity",
+        "missing_attending_pearls"
+      ],
+      "assessment": "Local audit flags: low_specificity, missing_attending_pearls."
+    },
+    {
+      "auditId": "C063:T3",
+      "mode": "research",
+      "promptCategory": "general",
+      "userPrompt": "Can you name all the steps that would be good for this project. Start with TKA\\",
+      "answerSnippet": "Key steps in TKA include: 1. **Patient Positioning**: Supine with a tourniquet applied. 2. **Incision**: Midline or medial parapatellar approach. 3. **Exposure**: Dissection through the subcutaneous tissue and fascia to expose the knee joint. 4. **Patellar Mobilization**: Evert the patella to access the femoral and tibial surfaces. 5. **Bone Resection**: Perform femoral and tibial cuts using guides for alignment. 6. **Trial Components**: Insert trial implants to assess fit and alignment. 7. **Fi...",
+      "scores": {
+        "educationalQuality": 6,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 7,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "moderate",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls."
+    },
+    {
+      "auditId": "C066:T2",
+      "mode": "general",
+      "promptCategory": "general",
+      "userPrompt": "tell me about the palmar cutaneous branch",
+      "answerSnippet": "The palmar cutaneous branch of the median nerve arises approximately 5 cm proximal to the wrist and provides sensory innervation to the central palm and lateral aspect of the hand, excluding the fingers. It is crucial to identify and preserve this branch during carpal tunnel release to prevent sensory loss in the palm. Although it does not contribute to motor function, its preservation is essential for maintaining palm sensation.",
+      "scores": {
+        "educationalQuality": 6,
+        "specificity": 8,
+        "depth": 3,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, too_shallow."
+    },
+    {
+      "auditId": "C059:T1",
+      "mode": "oite",
+      "promptCategory": "OITE",
+      "userPrompt": "Quiz me on \"Know the must-see anatomy\" for Total Hip Arthroplasty. Ask short med-student-level questions first, then give the answers after I respond.",
+      "answerSnippet": "What is the primary muscle at risk during a posterior approach to total hip arthroplasty?",
+      "scores": {
+        "educationalQuality": 6,
+        "specificity": 8,
+        "depth": 3,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "too_shallow",
+        "weak_oite_explanation"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, too_shallow, weak_oite_explanation."
+    },
+    {
+      "auditId": "C049:T2",
+      "mode": "oite",
+      "promptCategory": "general",
+      "userPrompt": "how do you treat it?",
+      "answerSnippet": "1. **Stable SCFE**: Treat with in situ fixation using a single cannulated screw; aim for stabilization without reduction unless necessary. 2. **Unstable SCFE**: Requires surgical intervention; consider reduction and fixation, but be cautious of the risk of avascular necrosis (AVN). 3. **Timing**: Early intervention is crucial, especially for unstable cases, to minimize complications. 4. **Postoperative Care**: Weight-bearing restrictions and follow-up imaging to monitor for complications like AV...",
+      "scores": {
+        "educationalQuality": 6,
+        "specificity": 8,
+        "depth": 2,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls",
+        "too_shallow"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls, too_shallow."
+    },
+    {
+      "auditId": "C065:T1",
+      "mode": "or_prep",
+      "promptCategory": "fracture",
+      "userPrompt": "Why would you use a intermeduallary nail over a plate for a distal femur fixation",
+      "answerSnippet": "1. **Biomechanics**: Intramedullary nails provide better load distribution and stability in the femur, particularly in the diaphyseal region, reducing the risk of failure under axial loading compared to plates. 2. **Soft Tissue Preservation**: Nailing typically involves less soft tissue disruption, which can lead to lower rates of infection and quicker recovery. 3. **Alignment**: Nails can help maintain alignment of the fracture fragments more effectively, especially in complex or comminuted fra...",
+      "scores": {
+        "educationalQuality": 6,
+        "specificity": 8,
+        "depth": 4,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls."
+    },
+    {
+      "auditId": "C065:T3",
+      "mode": "or_prep",
+      "promptCategory": "general",
+      "userPrompt": "Indications for Secondary Constructs?",
+      "answerSnippet": "1. **Nonunion**: When a fracture fails to heal adequately with primary fixation, secondary constructs can provide additional stability and promote healing. 2. **Malunion**: If a fracture heals in an incorrect position, secondary constructs can help realign and stabilize the bone. 3. **Complex Fractures**: In cases of multifragmentary or unstable fractures where initial fixation is insufficient, secondary constructs can provide enhanced support. 4. **Infection**: In cases of infection or compromi...",
+      "scores": {
+        "educationalQuality": 6,
+        "specificity": 8,
+        "depth": 4,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls."
+    },
+    {
+      "auditId": "C065:T6",
+      "mode": "research",
+      "promptCategory": "research",
+      "userPrompt": "Research for secondary constructs",
+      "answerSnippet": "1. **Efficacy of Plates**: Studies show that plate fixation can improve outcomes in malunion cases, but the risk of complications like infection increases with extensive soft tissue disruption. 2. **External Fixators**: Research indicates that external fixators are effective in managing fractures with significant soft tissue injury, but they may lead to higher rates of pin site infections. 3. **Bone Grafting**: Evidence supports the use of bone grafts in nonunions, with autografts generally prov...",
+      "scores": {
+        "educationalQuality": 6,
+        "specificity": 8,
+        "depth": 4,
+        "actionability": 5,
+        "conversationQuality": 7
+      },
+      "orthopaedicAccuracy": "approve",
+      "hallucinationRisk": "low",
+      "failureLabels": [
+        "weak_decision_making",
+        "missing_attending_pearls"
+      ],
+      "assessment": "Local audit flags: weak_decision_making, missing_attending_pearls."
+    }
+  ]
+}

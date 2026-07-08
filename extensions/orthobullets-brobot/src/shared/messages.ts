@@ -9,6 +9,10 @@ import type {
   ExtensionFetchDiagnostics,
   OrthobulletsHintResponse,
   OrthobulletsPageContext,
+  OrthobulletsTopicAction,
+  OrthobulletsTopicProgress,
+  OrthobulletsTopicTutorResponse,
+  OrthobulletsTopicTutorTurn,
   ProviderDetectionStatus,
   QuestionProvider,
 } from './types.js';
@@ -55,6 +59,14 @@ export type ExtensionMessage =
       emphasis?: CurriculumExplainEmphasis;
       history: OrthobulletsChatTurn[];
       userMessage: string;
+    }
+  | {
+      type: 'ob:topic-tutor-turn';
+      pageContext: OrthobulletsPageContext;
+      action?: OrthobulletsTopicAction;
+      progress: OrthobulletsTopicProgress;
+      history: OrthobulletsTopicTutorTurn[];
+      userMessage?: string;
     };
 
 // Stable error codes surfaced to the side panel so it can render a specific
@@ -80,5 +92,6 @@ export type ExtensionMessageResponse =
   | { ok: true; hint: OrthobulletsHintResponse }
   | { ok: true; explanation: BrobotExplainResult }
   | { ok: true; chat: OrthobulletsChatResponse }
+  | { ok: true; topicTurn: OrthobulletsTopicTutorResponse }
   | { ok: true; cleared: true }
   | { ok: false; error: string; code?: ExtensionErrorCode; diagnostics?: OrthobulletsExtractionDiagnostics; fetchDiagnostics?: ExtensionFetchDiagnostics };

@@ -6,8 +6,11 @@ import type {
   BroBotResponseDepth,
   BroBotTrainingLevel,
 } from './types';
+import type { BroBotAnswerRoute } from './answer-router';
 import { formatRubricForPrompt, getAnswerRubric } from './answer-rubrics';
+import { buildAnswerPlanningBlock, buildQuizInstructions } from './answer-planner';
 import { entityToTopic, extractOrthoEntity, hasOrthoEntity } from './entity-extractor';
+import { formatModeContractForPrompt } from './mode-contracts';
 import {
   formatAnswerContextForPrompt,
   formatRecentConversationForPrompt,
@@ -28,6 +31,7 @@ type PromptBuilderInput = {
   };
   answerContext?: BroBotAnswerContext;
   answerNow?: boolean;
+  answerRoute?: BroBotAnswerRoute;
   includeProductMetadata?: boolean;
 };
 
@@ -259,6 +263,24 @@ const oiteLevelInstructions: Record<BroBotTrainingLevel, string> = {
     'OITE learner level: attending. Be concise and collegial; focus on board-relevant nuance, evidence-sensitive uncertainty, controversial thresholds, and teaching points.',
 };
 
+const adaptiveAnswerFrameworks = [
+  'Adaptive answer frameworks:',
+  '- Anatomy: include course/origin/insertion/attachments when relevant, key relationships, danger zones, surgical relevance, injury pattern, and a memory hook.',
+  '- Fracture: include classification, stability, imaging, operative indications, fixation choices, complications, and attending questions.',
+  '- OR Prep / Procedure: include objective, setup/positioning, approach/exposure/interval, anatomy at risk, key technical steps, intraoperative checks, pitfalls, bailout moves, and attending asks.',
+  '- Clinic: include key history, physical exam, imaging sequence, initial treatment, escalation, red flags, and counseling.',
+  '- Consult: include urgency, missing critical data, immediate actions, imaging/labs, temporizing care, senior call triggers, and a presentation script.',
+  '- OITE: include direct answer, tested concept, stem clues, why wrong answers are wrong, memory hook, and active recall follow-up.',
+  '- Research: include PICO, design, endpoints, bias, statistics issue, clinical relevance, and next evidence need.',
+  '- Do not force every heading into every answer. Use the framework to choose the high-yield elements that fit the user question.',
+].join('\n');
+
+const emptyCaveatBan = [
+  'Empty caveat ban:',
+  '- Avoid phrases like "depends on patient factors", "consider patient-specific factors", "management varies", or "use clinical judgment" unless the same sentence or next bullet names the actual factors and how they change management.',
+  '- Prefer concrete pivots: age, displacement, stability, soft tissue envelope, neurovascular exam, imaging pattern, bone quality, activity level, infection markers, implant constraint, approach, reduction quality, and complication risk.',
+].join('\n');
+
 const orPrepDepthInstructions: Record<BroBotResponseDepth, string> = {
   quick:
     'OR Prep depth: quick. Return 3-4 answer bullets, 3-4 Important OR Concepts, 3 What to Clarify items, and 4-5 Ask Next chips.',
@@ -342,6 +364,33 @@ function normalizeModeForPrompt(mode: BroBotChatMode): BroBotChatMode {
   return mode === 'fracture_call' ? 'consult' : mode;
 }
 
+function shouldIncludePlanningBlock(input: {
+  mode: BroBotChatMode;
+  responseDepth: BroBotResponseDepth;
+  subintent?: string;
+}) {
+  const mode = normalizeModeForPrompt(input.mode);
+  if (mode === 'or_prep' || mode === 'oite' || mode === 'consult') return true;
+  if (input.subintent === 'quiz' || input.subintent === 'oite_traps') return true;
+  return input.responseDepth !== 'quick' && (mode === 'clinic' || mode === 'research');
+}
+
+function shouldIncludeQuizInstructions(input: {
+  mode: BroBotChatMode;
+  subintent?: string;
+  selectedBranch?: {
+    id?: string;
+    label?: string;
+  };
+}) {
+  const branchText = `${input.selectedBranch?.id ?? ''} ${input.selectedBranch?.label ?? ''}`;
+  return (
+    input.subintent === 'quiz' ||
+    /\bquiz\b/i.test(branchText) ||
+    (normalizeModeForPrompt(input.mode) === 'oite' && /\bquiz\b/i.test(branchText))
+  );
+}
+
 export function buildBroBotChatSystemPrompt(input: {
   mode: BroBotChatMode;
   responseDepth: BroBotResponseDepth;
@@ -353,6 +402,7 @@ export function buildBroBotChatSystemPrompt(input: {
   };
   answerContext?: BroBotAnswerContext;
   answerNow?: boolean;
+  answerRoute?: BroBotAnswerRoute;
   includeProductMetadata?: boolean;
 }) {
   const includeProductMetadata = input.includeProductMetadata ?? true;
@@ -455,6 +505,38 @@ export function buildBroBotChatSystemPrompt(input: {
       ].filter(Boolean).join('\n');
       })()
     : '';
+  const routeInstructions = input.answerRoute
+    ? [
+        `Answer route: ${input.answerRoute}.`,
+        input.answerRoute === 'answer_now'
+          ? '- Route behavior: answer directly. Do not ask clarification unless a real safety issue appears.'
+          : '',
+        input.answerRoute === 'answer_with_assumption'
+          ? '- Route behavior: answer immediately using a brief explicit assumption. Set needsClarification false and clarifyingQuestions [].'
+          : '',
+        input.answerRoute === 'ask_clarification'
+          ? '- Route behavior: ask 1-3 specific clarifying questions or focus choices first. Do NOT write a full generic answer. The answer field must be either empty or a single 1-2 sentence framing line (no headings, no bullets, no "here are the key points"); everything else belongs in clarifyingQuestions.'
+          : '',
+        input.answerRoute === 'offer_branches'
+          ? '- Route behavior: give a short useful orientation, then offer specific branch options. Do not produce generic category labels.'
+          : '',
+      ].filter(Boolean).join('\n')
+    : '';
+  const planningBlock = shouldIncludePlanningBlock({
+    mode: effectiveMode,
+    responseDepth: input.responseDepth,
+    subintent: input.intent?.subintent,
+  })
+    ? buildAnswerPlanningBlock(effectiveMode, input.intent?.subintent)
+    : '';
+  const modeContractBlock = formatModeContractForPrompt(effectiveMode, input.intent?.subintent);
+  const quizInstructions = shouldIncludeQuizInstructions({
+    mode: effectiveMode,
+    subintent: input.intent?.subintent,
+    selectedBranch: input.selectedBranch,
+  })
+    ? buildQuizInstructions()
+    : '';
 
   return `
 You are BroBot, an orthopaedic AI chat assistant for medical students and residents.
@@ -478,16 +560,22 @@ ${entityAnchor}
 
 ${selectedMode}
 ${intentInstructions}
+${routeInstructions}
+${planningBlock}
+${modeContractBlock}
+${quizInstructions}
 ${selectedDepth}
 ${selectedLevel}
 ${formatModeExemplars(effectiveMode, includeProductMetadata)}
+${adaptiveAnswerFrameworks}
+${emptyCaveatBan}
 
 Output rules:
 - Return valid JSON only. No prose outside JSON. No markdown code fence.
 - The product response structure is: Your Goal, Direct Answer, Important Concepts, What Most Residents Miss, and Next Learning Branch.
 - If a selected focus exists, start the answer field with "Focus: [selectedBranchLabel]" or "Focus: General framework" followed by the branch-specific answer.
-- Before answering, assess ambiguity. If the prompt is meaningfully ambiguous or underspecified, set needsClarification true. Do not over-ask; clarify only when it would materially improve precision.
-- If ambiguity is high: ask 1-3 clarifyingQuestions and give only a very brief safe best-guess answer if useful. If ambiguity is moderate: state assumedContext, answer concisely using that assumption, and add redirect chips. If ambiguity is low: set needsClarification false, clarifyingQuestions [], assumedContext "".
+- Before answering, assess ambiguity. If the prompt is narrow and answerable, answer directly. If broad but answerable, state a useful assumption and answer. Clarify only when missing information would materially change the answer or a default answer would be generic.
+- If ambiguity is high: ask 1-3 clarifyingQuestions and give only a very brief safe best-guess answer if useful. If ambiguity is moderate: state assumedContext, answer using that assumption, set needsClarification false, and add follow-up chips. If ambiguity is low: set needsClarification false, clarifyingQuestions [], assumedContext "".
 - clarifyingQuestions: 1-3 concise questions or user-style branch options. Make them clickable and specific. Also include these branches in suggestedQuestions without duplicating.
 - assumedContext: one short sentence describing the interpretation used, such as "I am assuming you mean OITE-style high-yield points."
 - answer: 3-6 concise high-yield bullets max unless OR Prep depth asks for more, or a very short polished mini-outline if bullets would be awkward. Default to bullets. Directly answer the user. Use markdown sparingly: bold key terms and short bullets. Do NOT write paragraph-form answers unless the user explicitly asks for a narrative explanation. Do NOT include a generic intro such as "Here are the key points" or "Here is a concise overview." Do NOT include large headings. Do NOT include an "Ask Next" section. Do NOT include suggested questions. Do NOT duplicate content from priorityPoints or knowledgeGaps.
@@ -501,6 +589,7 @@ Output rules:
 - For Research mode with a researchSubmode, follow that submode's required output structure inside the answer field while still returning the product JSON contract.
 - Do not repeat the same concept verbatim across answer, priorityPoints, and knowledgeGaps.
 - Do not use generic filler such as "this is high-yield" unless you say why it changes decisions or testing.
+- Every answer should teach at least one decision pivot, why it matters, one practical next step, and one pitfall/attending pearl unless the user asked for a pure definition.
 - For OR-prep prompts, prioritize operative objective, exposure, named anatomy at risk, attending questions, complications, decision points, and bailout over broad fracture/procedure encyclopedias.
 - For broad ORIF Answer Now prompts, give a useful general framework based on procedureCategory: positioning/imaging setup, exposure, reduction, fixation sequence, key adjuncts/components, final fluoroscopy or intraop checks, closure/splint, and "what would change this plan." Tailor details to procedureOrTopic without creating a procedure-specific encyclopedia.
 - For OITE prompts, prioritize direct answer, core framework, high-yield distinction, exam pearl, common trap, differentiating diagnoses, treatment threshold, and active recall over generic fact lists.
@@ -537,6 +626,7 @@ export function buildBroBotChatMessages(input: PromptBuilderInput): BroBotModelM
         selectedBranch: input.selectedBranch,
         answerContext: input.answerContext,
         answerNow: input.answerNow,
+        answerRoute: input.answerRoute,
         includeProductMetadata: input.includeProductMetadata,
       }),
     },
@@ -565,8 +655,10 @@ Generate:
 Quality rules:
 - Stay anchored to the actual topic and mode.
 - Prefer follow-up prompts that deepen the answer rather than repeating it.
+- Generate topic-specific options from the detected topic, mode, training level, current answer, and educational intent. Do not use static category labels alone.
+- Good labels name the actual concept: "Femoral tunnel placement pitfalls", "BTB vs quad vs hamstring graft", "How to avoid dorsal screw penetration", "Garden vs Pauwels", "Stable vs unstable mortise".
 - Keep most branch labels under 12 words.
-- Avoid generic labels like "Complications" or "Anatomy" by themselves.
+- Avoid generic labels like "Complications", "Anatomy", "Implants", "Surgical Technique", "Would you like more detail?", or "What should we focus on?".
 - Tags should be compact and useful, such as "procedure:distal_radius_orif", "anatomy:median_nerve", or "concept:operative_indications".
 
 Return exactly this JSON shape:

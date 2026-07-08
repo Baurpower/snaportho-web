@@ -111,7 +111,7 @@ export function StudentWorkspaceChrome({
 
         <div className="min-w-0 flex-1 overflow-x-clip pb-[calc(56px+env(safe-area-inset-bottom))] md:pb-0">
           <div className="border-b border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
-            <div className="mx-auto flex max-w-7xl items-start justify-between gap-4 px-4 py-5 sm:px-6 md:px-8">
+            <div className="mx-auto flex max-w-7xl items-start justify-between gap-4 px-4 py-4 sm:px-6 md:px-8">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   {badge ? (
@@ -124,10 +124,10 @@ export function StudentWorkspaceChrome({
                     Student Edition
                   </span>
                 </div>
-                <h1 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-[2rem]">
+                <h1 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-[2rem]">
                   {title}
                 </h1>
-                <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base">
+                <p className="mt-1.5 max-w-3xl text-sm leading-6 text-slate-600 sm:text-base">
                   {description}
                 </p>
               </div>
@@ -136,7 +136,7 @@ export function StudentWorkspaceChrome({
             </div>
           </div>
 
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 md:px-8 md:py-8">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 md:px-8">
             <div className="mb-4 flex items-center justify-between gap-3 md:hidden">
               <button
                 type="button"

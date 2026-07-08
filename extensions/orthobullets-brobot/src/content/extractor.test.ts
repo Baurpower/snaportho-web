@@ -4,7 +4,13 @@ import * as path from 'node:path';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { parseHTML } = require('linkedom');
 
-import { detectQuestionProvider, extractOrthobulletsPageContext, extractQuestionContext } from './extractor.js';
+import {
+  detectQuestionProvider,
+  extractOrthobulletsPageContext,
+  extractOrthobulletsTopicPageContext,
+  extractQuestionContext,
+  isLikelyOrthobulletsTopicUrl,
+} from './extractor.js';
 
 const FIXTURES_DIR = path.join(process.cwd(), 'extensions/orthobullets-brobot/fixtures');
 
@@ -600,6 +606,41 @@ const unsupportedDocument = {
 assert.equal(detectQuestionProvider({ document: unsupportedDocument as any }), null);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 assert.equal(extractQuestionContext({ document: unsupportedDocument as any }), null);
+
+// --- Orthobullets topic page (Orthobullets Page Mode) --------------------
+
+assert.equal(isLikelyOrthobulletsTopicUrl('https://www.orthobullets.com/trauma/1042/femoral-neck-fractures'), true);
+assert.equal(isLikelyOrthobulletsTopicUrl('https://www.orthobullets.com/topic/1042/femoral-neck-fractures'), true);
+assert.equal(isLikelyOrthobulletsTopicUrl('https://www.orthobullets.com/question/1096'), false);
+assert.equal(isLikelyOrthobulletsTopicUrl('https://www.orthobullets.com/currenttest/55'), false);
+
+const topicHtml = readFileSync(path.join(FIXTURES_DIR, 'synthetic-orthobullets-topic-page.html'), 'utf8');
+const { document: topicDocument } = parseHTML(topicHtml);
+const topicPageUrl = 'https://www.orthobullets.com/trauma/1042/femoral-neck-fractures';
+
+const topicContext = extractOrthobulletsTopicPageContext({ document: topicDocument, pageUrl: topicPageUrl });
+assert.equal(topicContext.source, 'orthobullets');
+assert.equal(topicContext.provider, 'orthobullets');
+assert.equal(topicContext.mode, 'topic_page');
+assert.equal(topicContext.pageKind, 'topic');
+assert.equal(topicContext.title, 'Femoral Neck Fractures');
+assert.equal(topicContext.topicId, '1042');
+assert.ok(topicContext.breadcrumbs.length >= 1, 'expected at least one breadcrumb');
+assert.ok((topicContext.sectionHeadings ?? []).includes('Treatment'), 'expected a Treatment section heading');
+assert.ok((topicContext.sectionHeadings ?? []).includes('Classification'), 'expected a Classification section heading');
+assert.match(topicContext.contentText ?? '', /avascular necrosis/i);
+assert.ok((topicContext.tablesMarkdown ?? []).length >= 1, 'expected the Garden classification table to be extracted');
+assert.equal(topicContext.images.length, 1);
+assert.equal(topicContext.questionCount, 42);
+assert.equal(topicContext.cardCount, 11);
+assert.equal(topicContext.videoCount, 5);
+assert.equal(topicContext.answerChoices.length, 0);
+assert.equal(topicContext.classification?.pageKind, 'topic_page');
+
+// The top-level dispatcher should route a topic URL straight to the topic
+// extractor rather than the question-only Orthobullets extractor.
+const dispatchedTopicContext = extractQuestionContext({ document: topicDocument, pageUrl: topicPageUrl });
+assert.equal(dispatchedTopicContext?.mode, 'topic_page');
 
 const ranRealFixtures = REAL_FIXTURES.length - skippedRealFixtures;
 console.log(

@@ -16,9 +16,13 @@ import type {
   OrthobulletsExtractionDiagnostics,
   OrthobulletsHintResponse,
   OrthobulletsPageContext,
+  OrthobulletsTopicAction,
+  OrthobulletsTopicProgress,
+  OrthobulletsTopicTutorTurn,
 } from '../shared/types.js';
-import { isCurriculumStudyResponse } from '../shared/types.js';
+import { createEmptyTopicProgress, isCurriculumStudyResponse } from '../shared/types.js';
 import { isClinicallyImportantWarning, resolveCurriculumChatChips } from '../shared/curriculum-chips.js';
+import { resolveTopicTutorChips } from '../shared/topic-tutor-chips.js';
 import {
   classifyPage,
   hasReviewData,
@@ -30,6 +34,7 @@ import {
 } from '../shared/page-classification.js';
 import type { PageClassification } from '../shared/types.js';
 import { renderCurriculumChatChips, renderCurriculumStudyPanel } from './explain-study-panel.js';
+import { renderTopicTutorPanel } from './topic-tutor-panel.js';
 
 const BROBOT_ICON_URL = chrome.runtime.getURL('icons/brobot-32.png');
 const DEFAULT_FOLLOW_UP_PROMPTS = ['Why not the trap answer?', 'Make this simpler', 'Give me an Anki-style card'];
@@ -360,6 +365,12 @@ function getStatusCopy(input: {
   }
   if (input.pageContext) {
     const classification = getPageClassification(input.pageContext);
+    if (classification?.pageKind === 'topic_page') {
+      return {
+        label: 'Orthobullets topic page detected',
+        detail: 'Pick an action below — BroBot will quiz you on this page instead of summarizing it.',
+      };
+    }
     if (classification?.pageKind === 'educational_content') {
       return { label: 'Learning page detected', detail: 'BroBot can explain this curriculum or article content without forcing Question Tutor mode.' };
     }
@@ -396,8 +407,13 @@ export function mountSidePanelApp(root: HTMLElement) {
     chatDraft: string;
     chatPrompts: string[];
     usage: UsageState;
-    brobotMode: 'question_tutor' | 'explain_page';
+    brobotMode: 'question_tutor' | 'explain_page' | 'topic_tutor';
     forceQuestionMode: boolean;
+    topicProgress: OrthobulletsTopicProgress;
+    topicHistory: OrthobulletsTopicTutorTurn[];
+    topicChatDraft: string;
+    topicChips: string[];
+    topicInsufficientContent: boolean;
   } = {
     activePage: null,
     auth: null,
@@ -419,6 +435,11 @@ export function mountSidePanelApp(root: HTMLElement) {
     usage: null,
     brobotMode: 'question_tutor',
     forceQuestionMode: false,
+    topicProgress: createEmptyTopicProgress(),
+    topicHistory: [],
+    topicChatDraft: '',
+    topicChips: [],
+    topicInsufficientContent: false,
   };
 
   async function refreshBaseState() {
@@ -712,6 +733,70 @@ export function mountSidePanelApp(root: HTMLElement) {
     render();
   }
 
+  async function runTopicTutorTurn(input: { action?: OrthobulletsTopicAction; userMessage?: string } = {}) {
+    if (!state.pageContext) return;
+
+    const userMessage = input.userMessage?.trim() || undefined;
+    state.error = null;
+    state.operation = 'chatting';
+    if (userMessage) {
+      state.topicHistory = [...state.topicHistory, { role: 'user', content: userMessage }];
+    }
+    render();
+
+    const result = await sendMessage({
+      type: 'ob:topic-tutor-turn',
+      pageContext: state.pageContext,
+      action: input.action,
+      progress: state.topicProgress,
+      history: state.topicHistory,
+      userMessage,
+    });
+
+    state.operation = 'idle';
+
+    if (!result.ok || !('topicTurn' in result)) {
+      state.error = result.ok
+        ? { message: 'Failed to get a tutoring response.', code: 'unknown' }
+        : { message: result.error, code: result.code ?? 'unknown' };
+      state.fetchDiagnostics = !result.ok && 'fetchDiagnostics' in result ? result.fetchDiagnostics ?? null : null;
+      if (userMessage) state.topicChatDraft = userMessage;
+      render();
+      return;
+    }
+
+    const turn = result.topicTurn;
+    state.topicHistory = [...state.topicHistory, { role: 'assistant', content: turn.message }];
+    state.topicChips = resolveTopicTutorChips(turn.suggestedChips);
+    state.topicInsufficientContent = turn.insufficientContent;
+    state.topicChatDraft = '';
+    state.usage = turn.usage ?? state.usage;
+
+    const progress: OrthobulletsTopicProgress = { ...state.topicProgress, tier: turn.tier };
+    if (turn.sectionCompleted && !progress.sectionsCompleted.includes(turn.sectionCompleted)) {
+      progress.sectionsCompleted = [...progress.sectionsCompleted, turn.sectionCompleted];
+    }
+    if (turn.conceptTag && turn.conceptStatus === 'missed' && !progress.conceptsMissed.includes(turn.conceptTag)) {
+      progress.conceptsMissed = [...progress.conceptsMissed, turn.conceptTag];
+    }
+    if (turn.conceptTag && turn.conceptStatus === 'mastered' && !progress.conceptsMastered.includes(turn.conceptTag)) {
+      progress.conceptsMastered = [...progress.conceptsMastered, turn.conceptTag];
+    }
+    state.topicProgress = progress;
+
+    render();
+  }
+
+  function saveTopicPearl(quote: string) {
+    const trimmed = quote.trim();
+    if (!trimmed || state.topicProgress.savedPearls.includes(trimmed)) return;
+    state.topicProgress = {
+      ...state.topicProgress,
+      savedPearls: [...state.topicProgress.savedPearls, trimmed],
+    };
+    render();
+  }
+
   async function unlink() {
     await sendMessage({ type: 'ob:clear-link' });
     state.explanation = null;
@@ -724,6 +809,11 @@ export function mountSidePanelApp(root: HTMLElement) {
     state.extractionDiagnostics = null;
     state.fetchDiagnostics = null;
     state.usage = null;
+    state.topicProgress = createEmptyTopicProgress();
+    state.topicHistory = [];
+    state.topicChatDraft = '';
+    state.topicChips = [];
+    state.topicInsufficientContent = false;
     await refreshBaseState();
   }
 
@@ -745,6 +835,7 @@ export function mountSidePanelApp(root: HTMLElement) {
     const isEducationalPage = classification?.pageKind === 'educational_content';
     const isMixedPage = classification?.pageKind === 'mixed';
     const isUnreadablePage = classification?.pageKind === 'unreadable';
+    const isTopicPage = classification?.pageKind === 'topic_page' || state.brobotMode === 'topic_tutor';
     const isCurriculumPage = state.pageContext?.mode === 'curriculum_content' || isEducationalPage;
     const pageLooksHintEligible =
       state.brobotMode === 'question_tutor' &&
@@ -753,7 +844,12 @@ export function mountSidePanelApp(root: HTMLElement) {
       ? isExplainEligible(state.pageContext) || isEducationalPage || isMixedPage
       : false;
     const hintNextLevel = state.hints.length === 0 ? 1 : state.hints.length === 1 ? 2 : 3;
-    const panelTitle = state.brobotMode === 'explain_page' ? 'Explain with BroBot' : 'Question Tutor';
+    const panelTitle =
+      state.brobotMode === 'topic_tutor'
+        ? 'Orthobullets Page Mode'
+        : state.brobotMode === 'explain_page'
+          ? 'Explain with BroBot'
+          : 'Question Tutor';
 
     const container = createElement('div', {
       html: `
@@ -813,6 +909,16 @@ export function mountSidePanelApp(root: HTMLElement) {
       content.appendChild(card);
       card.querySelector('#start-link')?.addEventListener('click', () => {
         void startLinkFlow();
+      });
+    } else if (isTopicPage) {
+      renderTopicTutorPanel(content, state, {
+        runTopicTutorTurn: (input) => void runTopicTutorTurn(input),
+        saveTopicPearl,
+        setDraft: (value) => {
+          state.topicChatDraft = value;
+        },
+        unlink: () => void unlink(),
+        isBusy: state.operation !== 'idle',
       });
     } else {
       const isBusy = state.operation !== 'idle';
@@ -983,7 +1089,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       }
     }
 
-    if (state.pageContext && !state.explanation && !state.error && hasReviewData(state.pageContext) && state.pageContext.mode !== 'curriculum_content') {
+    if (state.pageContext && !state.explanation && !state.error && !isTopicPage && hasReviewData(state.pageContext) && state.pageContext.mode !== 'curriculum_content') {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
@@ -994,7 +1100,7 @@ export function mountSidePanelApp(root: HTMLElement) {
       );
     }
 
-    if (state.pageContext && !state.explanation && !state.error && !hasReviewData(state.pageContext) && !pageLooksHintEligible && state.pageContext.mode !== 'curriculum_content') {
+    if (state.pageContext && !state.explanation && !state.error && !isTopicPage && !hasReviewData(state.pageContext) && !pageLooksHintEligible && state.pageContext.mode !== 'curriculum_content') {
       content.appendChild(
         createElement('div', {
           html: `<div style="padding:14px;border-radius:16px;background:white;border:1px solid #ded7c8;display:grid;gap:8px;">
@@ -1019,7 +1125,14 @@ export function mountSidePanelApp(root: HTMLElement) {
           });
         });
       } else {
-        content.appendChild(createElement('div', { html: renderExplanation(state.explanation as OrthobulletsExplainResponse, state.brobotMode) }));
+        content.appendChild(
+          createElement('div', {
+            html: renderExplanation(
+              state.explanation as OrthobulletsExplainResponse,
+              state.brobotMode === 'explain_page' ? 'explain_page' : 'question_tutor'
+            ),
+          })
+        );
       }
 
       const questionWarnings = state.explanation.warnings.filter(isClinicallyImportantWarning);

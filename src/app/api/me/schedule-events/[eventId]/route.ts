@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import {
+  toHHMM,
+  validateScheduleEventTimes,
+} from "@/lib/workspace/call/schedule-event-time";
 
 type RouteContext = {
   params: Promise<{
@@ -9,10 +13,6 @@ type RouteContext = {
 
 function isValidDateString(value: unknown): value is string {
   return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
-}
-
-function isValidTimeString(value: unknown): value is string {
-  return typeof value === "string" && /^\d{2}:\d{2}$/.test(value);
 }
 
 export async function PATCH(request: NextRequest, context: RouteContext) {
@@ -29,8 +29,8 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     const category = body?.category;
     const eventDate = body?.eventDate;
     const isAllDay = Boolean(body?.isAllDay);
-    const startTime = body?.startTime;
-    const endTime = body?.endTime;
+    const startTime: string | null = isAllDay ? null : (body?.startTime ?? null);
+    const endTime: string | null = isAllDay ? null : (body?.endTime ?? null);
     const location =
       typeof body?.location === "string" && body.location.trim().length > 0
         ? body.location.trim()
@@ -56,10 +56,14 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: "Invalid event date" }, { status: 400 });
     }
 
-    if (!isAllDay) {
-      if (!isValidTimeString(startTime) || !isValidTimeString(endTime)) {
-        return NextResponse.json({ error: "Invalid start or end time" }, { status: 400 });
-      }
+    const timeValidation = validateScheduleEventTimes({
+      isAllDay,
+      startTime,
+      endTime,
+    });
+
+    if (!timeValidation.valid) {
+      return NextResponse.json({ error: timeValidation.error }, { status: 400 });
     }
 
     const supabase = await createClient();
@@ -105,7 +109,16 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       );
     }
 
-    return NextResponse.json({ event: data }, { status: 200 });
+    return NextResponse.json(
+      {
+        event: {
+          ...data,
+          start_time: toHHMM(data?.start_time ?? null),
+          end_time: toHHMM(data?.end_time ?? null),
+        },
+      },
+      { status: 200 }
+    );
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Unexpected server error";

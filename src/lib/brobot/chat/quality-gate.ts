@@ -1,10 +1,13 @@
 import { getAnswerRubric } from './answer-rubrics';
 import { entityToTopic, extractOrthoEntity } from './entity-extractor';
+import { CLARIFICATION_ANSWER_MAX_LENGTH } from './answer-router';
 import type {
+  BroBotClinicalContext,
   BroBotChatMode,
   BroBotResponseDepth,
   BroBotTrainingLevel,
 } from './types';
+import type { BroBotAnswerRoute } from './answer-router';
 
 export type BroBotQualityGateResult = {
   passed: boolean;
@@ -92,6 +95,90 @@ function lineCountMatching(answer: string, patterns: RegExp[]) {
     .filter((line) => patterns.some((pattern) => pattern.test(line))).length;
 }
 
+function hasEmptyCaveat(answer: string) {
+  return /depends on (patient|clinical|individual) factors|patient-specific factors|management varies|use clinical judgment/i.test(answer);
+}
+
+function hasDecisionSignal(answer: string) {
+  return tokenHits(answer, [
+    'because',
+    'why',
+    'therefore',
+    'threshold',
+    'pivot',
+    'changes management',
+    'changes treatment',
+    'indication',
+    'operative',
+    'nonoperative',
+    'stability',
+    'unstable',
+    'if',
+    'when',
+  ]) >= 1;
+}
+
+function hasPearlSignal(answer: string) {
+  return tokenHits(answer, [
+    'attending',
+    'pitfall',
+    'mistake',
+    'trap',
+    'pearl',
+    'miss',
+    'avoid',
+    'bailout',
+    'classic',
+  ]) >= 1;
+}
+
+function hasKnownTopic(context?: BroBotClinicalContext) {
+  if (!context) return false;
+  return Object.values(context.entities).some(Boolean);
+}
+
+function genericTopicSignal(answer: string) {
+  return tokenHits(answer, [
+    'patient factors',
+    'patient-specific',
+    'understand the anatomy',
+    'know the complications',
+    'appropriate imaging',
+    'treatment options',
+    'clinical judgment',
+    'depends',
+    'general principles',
+  ]);
+}
+
+function entitySpecificHits(answer: string, context?: BroBotClinicalContext) {
+  if (!context) return 0;
+  const terms = Object.values(context.entities)
+    .filter((value): value is string => typeof value === 'string' && value.length > 2)
+    .flatMap((value) => value.split(/\s+|-/).filter((part) => part.length >= 4));
+  return tokenHits(answer, terms);
+}
+
+// Subintents where OITE board-specific language checks are inappropriate.
+// Quiz format uses Q&A pairs that don't naturally contain trap/comparison/pearl language.
+// Anatomy-at-risk is a factual recall task, not a board strategy task.
+const OITE_BOARD_CHECKS_EXEMPT = new Set([
+  'quiz',
+  'oite_traps',
+  'anatomy_at_risk',
+  'patient_explanation',
+]);
+
+// Subintents where clinic framework check should not fire.
+// Indications and classification answers don't need history/exam/imaging mentions.
+const CLINIC_FRAMEWORK_EXEMPT = new Set([
+  'indications',
+  'operative_indications',
+  'classification',
+  'treatment_algorithm',
+  'treatment_plan',
+]);
+
 export function runBroBotQualityGate(input: {
   answer: string;
   mode: BroBotChatMode;
@@ -101,10 +188,27 @@ export function runBroBotQualityGate(input: {
   subintent?: string;
   trainingLevel?: BroBotTrainingLevel;
   procedureOrTopic?: string;
+  answerRoute?: BroBotAnswerRoute;
+  clinicalContext?: BroBotClinicalContext;
 }): BroBotQualityGateResult {
   const warnings: string[] = [];
   const answer = input.answer.trim();
   const selectedBranchLabel = input.selectedBranchLabel?.trim();
+
+  // ask_clarification answers are supposed to be a brief framing line (or
+  // empty) with the clarifying questions/focus options carrying the rest.
+  // None of the "richness" checks below make sense against a short
+  // clarification framing line, so gate on brevity only.
+  if (input.answerRoute === 'ask_clarification') {
+    const clarificationWarnings: string[] = [];
+    if (answer.length > CLARIFICATION_ANSWER_MAX_LENGTH) {
+      clarificationWarnings.push('ask_clarification_answer_too_long');
+    }
+    return {
+      passed: clarificationWarnings.length === 0,
+      warnings: clarificationWarnings,
+    };
+  }
 
   if (selectedBranchLabel) {
     const hits = tokenHits(answer, branchTerms(selectedBranchLabel));
@@ -115,6 +219,30 @@ export function runBroBotQualityGate(input: {
 
   if (input.responseDepth !== 'quick' && answer.length < 450) {
     warnings.push('answer_short_for_depth');
+  }
+
+  if (hasEmptyCaveat(answer)) {
+    warnings.push('empty_caveat_without_concrete_pivots');
+  }
+
+  if (!hasDecisionSignal(answer) && input.responseDepth !== 'quick') {
+    warnings.push('decision_making_missing');
+  }
+
+  if (
+    input.responseDepth !== 'quick' &&
+    !OITE_BOARD_CHECKS_EXEMPT.has(input.subintent ?? '') &&
+    (input.mode === 'or_prep' ||
+      input.mode === 'oite' ||
+      input.mode === 'consult' ||
+      input.subintent === 'fracture' ||
+      input.subintent === 'classification' ||
+      input.subintent === 'treatment_algorithm' ||
+      input.subintent === 'workup')
+  ) {
+    if (!hasPearlSignal(answer)) {
+      warnings.push('attending_or_exam_pearl_missing');
+    }
   }
 
   if (
@@ -255,16 +383,205 @@ export function runBroBotQualityGate(input: {
     }
   }
 
-  if (input.mode === 'consult' && tokenHits(answer, ['missing', 'red flag', 'exam', 'imaging', 'urgent', 'present']) < 2) {
+  if (input.clinicalContext) {
+    const requirements = input.clinicalContext.coverageRequirements;
+
+    if (requirements.includes('exposure_or_approach') && tokenHits(answer, [
+      'approach',
+      'exposure',
+      'incision',
+      'portal',
+      'interval',
+      'landmark',
+      'corridor',
+    ]) < 1) {
+      warnings.push('facet_or_prep_exposure_missing');
+    }
+
+    if (requirements.includes('named_anatomy') && tokenHits(answer, [
+      'nerve',
+      'vessel',
+      'artery',
+      'vein',
+      'tendon',
+      'cartilage',
+      'radial',
+      'ulnar',
+      'median',
+      'axillary',
+      'peroneal',
+      'femoral',
+      'saphenous',
+      'sciatic',
+    ]) < 1) {
+      warnings.push('facet_named_anatomy_missing');
+    }
+
+    if (requirements.includes('pitfalls_or_bailout') && tokenHits(answer, [
+      'pitfall',
+      'bailout',
+      'avoid',
+      'mistake',
+      'failure',
+      'complication',
+      'trap',
+    ]) < 1) {
+      warnings.push('facet_pitfall_layer_missing');
+    }
+
+    if (requirements.includes('trap_or_distractor') && tokenHits(answer, [
+      'trap',
+      'distractor',
+      'wrong answer',
+      'except',
+      'confuse',
+      'tempting',
+    ]) < 1) {
+      warnings.push('facet_oite_trap_distractor_missing');
+    }
+
+    if (requirements.includes('algorithm_or_threshold') && tokenHits(answer, [
+      'algorithm',
+      'threshold',
+      'classification',
+      'stable',
+      'unstable',
+      'operative',
+      'nonoperative',
+      'indication',
+      'treatment',
+    ]) < 1) {
+      warnings.push('facet_algorithm_threshold_missing');
+    }
+
+    if (requirements.includes('red_flags') && tokenHits(answer, [
+      'red flag',
+      'urgent',
+      'emergent',
+      'open',
+      'neurovascular',
+      'compartment',
+      'septic',
+      'fever',
+    ]) < 1) {
+      warnings.push('facet_consult_red_flags_missing');
+    }
+
+    if (
+      requirements.includes('definitive_management_or_disposition') &&
+      tokenHits(answer, [
+        'disposition',
+        'admit',
+        'follow-up',
+        'follow up',
+        'operative',
+        'nonoperative',
+        'definitive',
+        'clinic',
+        'management',
+        'plan',
+        'treatment',
+        'recommend',
+        'refer',
+        'discharge',
+        'splint',
+        'reduction',
+      ]) < 1
+    ) {
+      warnings.push('facet_consult_disposition_missing');
+    }
+
+    if (requirements.includes('differential') && tokenHits(answer, [
+      'differential',
+      'diagnosis',
+      'consider',
+      'mimic',
+      'versus',
+      'vs',
+    ]) < 1) {
+      warnings.push('facet_clinic_differential_missing');
+    }
+
+    if (hasKnownTopic(input.clinicalContext) && genericTopicSignal(answer) >= 2 && entitySpecificHits(answer, input.clinicalContext) === 0) {
+      warnings.push('answer_too_generic_for_known_topic');
+    }
+  }
+
+  // Consult framework check: any one of these signals is sufficient to avoid the warning.
+  // The old threshold of 2 was too strict and fired even for good disposition-focused answers.
+  if (
+    input.mode === 'consult' &&
+    tokenHits(answer, [
+      'missing',
+      'red flag',
+      'exam',
+      'imaging',
+      'urgent',
+      'present',
+      'assessment',
+      'management',
+      'treatment',
+      'plan',
+      'disposition',
+      'escalate',
+      'attending',
+    ]) < 1
+  ) {
     warnings.push('consult_framework_weak');
   }
 
-  if (input.mode === 'oite') {
+  if (
+    (input.subintent === 'fracture' || input.procedureOrTopic?.toLowerCase().includes('fracture')) &&
+    tokenHits(answer, ['classification', 'stability', 'unstable', 'imaging', 'operative', 'fixation', 'complication']) < 3
+  ) {
+    warnings.push('fracture_framework_weak');
+  }
+
+  // Indications, classification, treatment algorithm, and treatment plan are structured
+  // answers that don't need history/exam/imaging terms to be high-quality. Only fire
+  // clinic_framework_weak for workup-shaped prompts (workup, overview, differential).
+  if (
+    (input.mode === 'clinic' || input.subintent === 'workup') &&
+    !CLINIC_FRAMEWORK_EXEMPT.has(input.subintent ?? '') &&
+    tokenHits(answer, [
+      'history',
+      'exam',
+      'imaging',
+      'x-ray',
+      'xray',
+      'mri',
+      'treatment',
+      'red flag',
+      'counsel',
+      'differential',
+      'diagnosis',
+      'diagnos',
+      'physical',
+      'conservative',
+      'surgery',
+      'consider',
+    ]) < 3
+  ) {
+    warnings.push('clinic_framework_weak');
+  }
+
+  if (
+    input.subintent === 'anatomy_at_risk' &&
+    tokenHits(answer, ['course', 'origin', 'insertion', 'branch', 'danger', 'surgical', 'injury', 'at risk']) < 2
+  ) {
+    warnings.push('anatomy_surgical_relevance_weak');
+  }
+
+  if (input.mode === 'oite' && !OITE_BOARD_CHECKS_EXEMPT.has(input.subintent ?? '')) {
     if (tokenHits(answer, ['trap', 'distractor', 'wrong answer', 'commonly miss', 'except']) < 1) {
       warnings.push('oite_trap_missing');
     }
 
+    // classification answers (e.g. "What is the Garden classification?") don't need
+    // explicit comparison language — the categories themselves distinguish entities.
     if (
+      input.subintent !== 'classification' &&
+      input.subintent !== 'overview' &&
       tokenHits(answer, [
         'differentiate',
         'distinguish',
@@ -301,11 +618,16 @@ export function runBroBotQualityGate(input: {
         'pearl',
         'stem',
         'high yield',
+        'high-yield',
+        'key',
+        'important',
       ]) < 1
     ) {
       warnings.push('oite_board_pearl_missing');
     }
 
+    // Definition-style prompts (classification, overview) use explanation language,
+    // not test-taking language, so broaden the signal vocabulary accordingly.
     if (
       tokenHits(answer, [
         'stem',
@@ -315,9 +637,17 @@ export function runBroBotQualityGate(input: {
         'recognize',
         'buzzword',
         'test',
+        'question',
+        'answer',
+        'choose',
+        'pick',
       ]) < 1
     ) {
       warnings.push('oite_test_taking_signal_missing');
+    }
+
+    if (tokenHits(answer, ['memory', 'mnemonic', 'remember', 'hook', 'classic', 'think', 'note']) < 1) {
+      warnings.push('oite_memory_hook_missing');
     }
   }
 

@@ -34,7 +34,7 @@ const OrthobulletsDebugSchema = zod_1.z.object({
 exports.OrthobulletsPageContextSchema = zod_1.z.object({
     source: zod_1.z.enum(['orthobullets', 'rock']).default('orthobullets'),
     provider: zod_1.z.enum(['orthobullets', 'rock']).default('orthobullets'),
-    mode: zod_1.z.enum(['question', 'curriculum_content']).default('question'),
+    mode: zod_1.z.enum(['question', 'curriculum_content', 'topic_page']).default('question'),
     pageUrl: zod_1.z.string().trim().url(),
     sourceUrl: zod_1.z.string().trim().url().optional(),
     pageKind: zod_1.z.string().trim().min(1).max(80).default('unknown'),
@@ -50,6 +50,9 @@ exports.OrthobulletsPageContextSchema = zod_1.z.object({
     references: zod_1.z.array(zod_1.z.string().trim().min(1).max(1200)).max(40).default([]).optional(),
     referencesCount: zod_1.z.number().int().min(0).max(100).optional(),
     tablesCount: zod_1.z.number().int().min(0).max(50).optional(),
+    questionCount: zod_1.z.number().int().min(0).max(9999).optional(),
+    cardCount: zod_1.z.number().int().min(0).max(9999).optional(),
+    videoCount: zod_1.z.number().int().min(0).max(9999).optional(),
     contentSections: zod_1.z.array(zod_1.z.object({
         heading: zod_1.z.string().trim().min(1).max(240),
         text: zod_1.z.string().trim().min(1).max(4000),

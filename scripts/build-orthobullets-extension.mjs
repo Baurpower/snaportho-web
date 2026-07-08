@@ -45,6 +45,8 @@ function buildClassicContentScriptBundle() {
     .replace(/^export \{ SELECTOR_SET_VERSION \};\r?\n?/m, '')
     .replace(/^export function detectQuestionProvider\(/m, 'function detectQuestionProvider(')
     .replace(/^export function extractOrthobulletsPageContext\(/m, 'function extractOrthobulletsPageContext(')
+    .replace(/^export function extractOrthobulletsTopicPageContext\(/m, 'function extractOrthobulletsTopicPageContext(')
+    .replace(/^export function isLikelyOrthobulletsTopicUrl\(/m, 'function isLikelyOrthobulletsTopicUrl(')
     .replace(/^export function extractRockPageContext\(/m, 'function extractRockPageContext(')
     .replace(/^export function extractQuestionContext\(/m, 'function extractQuestionContext(');
 

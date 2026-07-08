@@ -4,7 +4,6 @@ import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/Stu
 import { StudentWorkspaceDailySuccessChecklist } from "@/components/student-workspace/home/StudentWorkspaceDailySuccessChecklist";
 import { StudentWorkspaceProgressOverview } from "@/components/student-workspace/home/StudentWorkspaceProgressOverview";
 import { StudentWorkspaceWeeklyCalendar } from "@/components/student-workspace/home/StudentWorkspaceWeeklyCalendar";
-import { TaskList } from "@/components/student-workspace/tasks/TaskList";
 import { formatDateOnly } from "@/lib/student-workspace/date";
 import type {
   FourthYearProgressState,
@@ -13,7 +12,6 @@ import type {
   StudentWorkspaceProfile,
   StudentWorkspaceRotation,
   StudentWorkspaceScheduleEntry,
-  StudentWorkspaceTask,
 } from "@/lib/student-workspace/types";
 
 export function StudentWorkspaceHomePage({
@@ -23,7 +21,6 @@ export function StudentWorkspaceHomePage({
   scheduleEntries,
   successChecklistItems,
   successChecklistState,
-  tasks,
   today,
   weekStart,
 }: {
@@ -33,7 +30,6 @@ export function StudentWorkspaceHomePage({
   scheduleEntries: StudentWorkspaceScheduleEntry[];
   successChecklistItems: StudentWorkspaceChecklistItem[];
   successChecklistState: StudentWorkspaceChecklistState[];
-  tasks: StudentWorkspaceTask[];
   today: string;
   weekStart: string;
 }) {
@@ -60,19 +56,17 @@ export function StudentWorkspaceHomePage({
           today={today}
         />
 
-        <StudentWorkspaceDailySuccessChecklist
-          items={successChecklistItems}
-          initialState={successChecklistState}
-          today={today}
-        />
-
         <StudentWorkspaceWeeklyCalendar
           initialEntries={scheduleEntries}
           today={today}
           initialWeekStart={weekStart}
         />
 
-        <TaskList initialTasks={tasks} rotations={rotations} today={today} />
+        <StudentWorkspaceDailySuccessChecklist
+          items={successChecklistItems}
+          initialState={successChecklistState}
+          today={today}
+        />
 
         <section className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
           <div className="border-b border-slate-200 bg-gradient-to-r from-slate-950 via-slate-900 to-sky-950 px-5 py-5 text-white sm:px-6">

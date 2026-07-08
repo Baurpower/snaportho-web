@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import {
+  Clock3,
   GraduationCap,
   MapPin,
   Phone,
@@ -114,6 +115,13 @@ export function MobileWeekScheduleView({
                     </div>
                   )}
 
+                  {day.timeLabel && (
+                    <div className="inline-flex items-center gap-1.5 rounded-xl bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                      <Clock3 className="h-3.5 w-3.5 shrink-0" />
+                      <span className="truncate">{day.timeLabel}</span>
+                    </div>
+                  )}
+
                   {day.academicEvents && day.academicEvents.length > 0 && (
                     <div className="flex items-center gap-1.5 rounded-xl bg-indigo-100 px-2.5 py-1 text-[11px] font-semibold text-indigo-700">
                       <GraduationCap className="h-3.5 w-3.5 shrink-0" />
@@ -169,6 +177,15 @@ export function MobileWeekScheduleView({
               <div className={`rounded-xl border p-3 ${getRotationBorderClass(selectedDay.rotationColor)}`}>
                 <div className="font-semibold">Rotation</div>
                 <div className="mt-1">{selectedDay.rotationPill}</div>
+              </div>
+            )}
+
+            {selectedDay.dayCategory && (
+              <div className="rounded-xl border border-slate-200 bg-white p-3">
+                <div className="flex items-center gap-2 font-semibold text-slate-700">
+                  <Clock3 className="h-4 w-4" /> Time
+                </div>
+                <div className="mt-1">{selectedDay.timeLabel ?? "Full day"}</div>
               </div>
             )}
 

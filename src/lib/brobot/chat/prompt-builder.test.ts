@@ -10,13 +10,21 @@ import { buildOiteLearningMetadata } from './oite-context';
 import { buildOrPrepProcedureMetadata } from './or-prep-context';
 import { runBroBotQualityGate } from './quality-gate';
 import { buildBroBotAnswerContext } from './context-builder';
+import { buildBroBotClinicalContext } from './clinical-context';
 import { buildBroBotIntentExpansionMessages } from './intent-expander';
 import {
   buildBroBotIntentClassifierMessages,
   fallbackBroBotIntent,
   parseBroBotIntentClassifierResponse,
 } from './intent-classifier';
-import { parseBroBotChatResponse } from './response-parser';
+import { parseBroBotChatResponse, parseBroBotMetadataResponse } from './response-parser';
+import {
+  routeBroBotAnswer,
+  buildBroBotRouteClarifyingQuestions,
+  enforceClarificationAnswerBrevity,
+  CLARIFICATION_ANSWER_MAX_LENGTH,
+} from './answer-router';
+import { selectSmartChips } from './chip-registry';
 import type { BroBotChatIntent, BroBotChatMode } from './types';
 
 const samplePrompts: Array<{ prompt: string; mode: BroBotChatMode; expectedText: string }> = [
@@ -61,6 +69,84 @@ for (const sample of samplePrompts) {
   assert.match(messages[0]?.content ?? '', new RegExp(sample.expectedText));
   assert.equal(messages.at(-1)?.content, sample.prompt);
 }
+
+const distalRadiusClinicalContext = buildBroBotClinicalContext({
+  message: 'Distal radius ORIF tomorrow. What do I need to know?',
+  mode: 'or_prep',
+  subintent: 'surgical_steps',
+  procedureCategory: 'fracture_orif',
+  procedureOrTopic: 'distal radius ORIF',
+});
+
+assert.equal(distalRadiusClinicalContext.entities.bone, 'distal radius');
+assert.equal(distalRadiusClinicalContext.entities.procedure, 'ORIF');
+assert.ok(distalRadiusClinicalContext.taskFacets.includes('exposure'));
+assert.ok(distalRadiusClinicalContext.taskFacets.includes('anatomy'));
+assert.ok(distalRadiusClinicalContext.coverageRequirements.includes('exposure_or_approach'));
+assert.ok(distalRadiusClinicalContext.coverageRequirements.includes('named_anatomy'));
+
+const scfeClinicalContext = buildBroBotClinicalContext({
+  message: 'SCFE OITE points',
+  mode: 'oite',
+  subintent: 'overview',
+  procedureCategory: 'pediatric_fracture',
+  procedureOrTopic: 'SCFE',
+});
+
+assert.equal(scfeClinicalContext.entities.diagnosis, 'SCFE');
+assert.ok(scfeClinicalContext.taskFacets.includes('testTraps'));
+assert.ok(scfeClinicalContext.taskFacets.includes('distractors'));
+assert.ok(scfeClinicalContext.coverageRequirements.includes('trap_or_distractor'));
+
+const ankleConsultClinicalContext = buildBroBotClinicalContext({
+  message: 'Ankle fracture consult. How should I think about it?',
+  mode: 'consult',
+  subintent: 'fracture',
+  procedureCategory: 'unknown',
+  procedureOrTopic: 'ankle fracture',
+});
+
+assert.equal(ankleConsultClinicalContext.entities.bone, 'ankle');
+assert.ok(ankleConsultClinicalContext.missingCriticalSlots.includes('age'));
+assert.ok(ankleConsultClinicalContext.missingCriticalSlots.includes('neurovascular exam'));
+assert.ok(ankleConsultClinicalContext.coverageRequirements.includes('red_flags'));
+assert.ok(ankleConsultClinicalContext.coverageRequirements.includes('definitive_management_or_disposition'));
+
+const painfulTkaClinicalContext = buildBroBotClinicalContext({
+  message: 'Painful TKA consult with fever',
+  mode: 'consult',
+  subintent: 'postop_problem',
+  procedureCategory: 'arthroplasty_consult',
+  procedureOrTopic: 'painful TKA',
+});
+
+assert.equal(painfulTkaClinicalContext.entities.diagnosis, 'painful total knee arthroplasty');
+assert.ok(painfulTkaClinicalContext.caseSlots.priorSurgery);
+assert.ok(painfulTkaClinicalContext.missingCriticalSlots.includes('ESR/CRP/WBC and aspiration status'));
+
+const shoulderClinicClinicalContext = buildBroBotClinicalContext({
+  message: 'Shoulder pain workup',
+  mode: 'clinic',
+  subintent: 'workup',
+  procedureCategory: 'general_topic',
+  procedureOrTopic: 'shoulder pain',
+});
+
+assert.equal(shoulderClinicClinicalContext.entities.region, 'shoulder');
+assert.ok(shoulderClinicClinicalContext.taskFacets.includes('workup'));
+assert.ok(shoulderClinicClinicalContext.coverageRequirements.includes('differential'));
+assert.ok(shoulderClinicClinicalContext.coverageRequirements.includes('history_exam'));
+
+const neutralizationPlateClinicalContext = buildBroBotClinicalContext({
+  message: 'What is a neutralization plate?',
+  mode: 'general',
+  subintent: 'implant_options',
+  procedureCategory: 'general_topic',
+  procedureOrTopic: 'neutralization plate',
+});
+
+assert.equal(neutralizationPlateClinicalContext.entities.implant, 'neutralization plate');
+assert.ok(neutralizationPlateClinicalContext.taskFacets.includes('implants'));
 
 const referenceFinderPrompt = buildBroBotChatSystemPrompt({
   mode: 'research',
@@ -123,6 +209,9 @@ assert.match(orPrepSystemPrompt, /Exposure Engine/);
 assert.match(orPrepSystemPrompt, /prioritize exposure over chronology/);
 assert.match(orPrepSystemPrompt, /decision points/);
 assert.match(orPrepSystemPrompt, /Pitfalls\/Bailout/);
+assert.match(orPrepSystemPrompt, /HIDDEN ANSWER PLAN/);
+assert.match(orPrepSystemPrompt, /OR Prep mode response contract/);
+assert.match(orPrepSystemPrompt, /Required elements/);
 
 const answerOnlyPrompt = buildBroBotChatSystemPrompt({
   mode: 'or_prep',
@@ -245,12 +334,21 @@ const orPrepContextPrompt = buildBroBotChatSystemPrompt({
       ],
     },
     oiteLearningMetadata: null,
+    clinicalContext: buildBroBotClinicalContext({
+      message: 'tibial plateau ORIF',
+      mode: 'or_prep',
+      subintent: 'surgical_steps',
+      procedureCategory: 'fracture_orif',
+      procedureOrTopic: 'tibial plateau ORIF',
+    }),
   },
 });
 
 assert.match(orPrepContextPrompt, /Hidden OR Prep procedure metadata/);
 assert.match(orPrepContextPrompt, /family: trauma/);
 assert.match(orPrepContextPrompt, /primaryObjective: reduction, fixation/);
+assert.match(orPrepContextPrompt, /Structured clinical context/);
+assert.match(orPrepContextPrompt, /coverageRequirements: exposure_or_approach, named_anatomy/);
 assert.match(orPrepContextPrompt, /exposureComplexity: high/);
 
 const broadOitePrompt = buildBroBotChatSystemPrompt({
@@ -304,6 +402,13 @@ const oiteContextPrompt = buildBroBotChatSystemPrompt({
       learnerRisk: ['misses_thresholds', 'weak_algorithm'],
       yieldTier: 'classic',
     },
+    clinicalContext: buildBroBotClinicalContext({
+      message: 'SCFE OITE',
+      mode: 'oite',
+      subintent: 'treatment_algorithm',
+      procedureCategory: 'pediatric_fracture',
+      procedureOrTopic: 'SCFE OITE',
+    }),
   },
 });
 
@@ -311,6 +416,8 @@ assert.match(oiteContextPrompt, /Hidden OITE learning metadata/);
 assert.match(oiteContextPrompt, /topicFamily: pediatrics/);
 assert.match(oiteContextPrompt, /conceptType: classification, treatment_algorithm/);
 assert.match(oiteContextPrompt, /yieldTier: classic/);
+assert.match(oiteContextPrompt, /OITE mode response contract/);
+assert.match(oiteContextPrompt, /coverageRequirements: tested_concept, stem_clues, trap_or_distractor/);
 
 const researchPrompt = buildBroBotChatSystemPrompt({
   mode: 'research',
@@ -503,6 +610,24 @@ assert.equal(parsed.needsClarification, false);
 assert.deepEqual(parsed.clarifyingQuestions, []);
 assert.equal(parsed.assumedContext, '');
 
+const assumptionOnlyParsed = parseBroBotChatResponse(
+  JSON.stringify({
+    answer: '- I will frame this as adult ankle fractures for OITE and clinical decision-making.',
+    priorityPoints: ['Stable versus unstable mortise drives treatment.'],
+    knowledgeGaps: ['Review syndesmotic instability.'],
+    suggestedQuestions: ['Stable vs unstable mortise'],
+    tags: ['fracture:ankle'],
+    detectedMode: 'oite',
+    confidence: 0.84,
+    needsClarification: true,
+    clarifyingQuestions: [],
+    assumedContext: 'I am assuming adult ankle fractures.',
+  })
+);
+
+assert.equal(assumptionOnlyParsed.needsClarification, false);
+assert.equal(assumptionOnlyParsed.assumedContext, 'I am assuming adult ankle fractures.');
+
 const consultParsed = parseBroBotChatResponse(
   JSON.stringify({
     answer: '- **Assessment:** likely closed ankle fracture, but key context is missing.',
@@ -568,6 +693,289 @@ assert.equal(
 );
 assert.ok(
   clarificationParsed.suggestedQuestions.includes('Walk me through portal placement.')
+);
+
+const gardenIntent: BroBotChatIntent = {
+  mode: 'oite',
+  subintent: 'classification',
+  procedureCategory: 'general_topic',
+  procedureOrTopic: 'Garden classification',
+  ambiguity: 'moderate',
+  assumedContext: 'I am assuming femoral neck fractures.',
+  missingContext: [],
+  clarifyingQuestions: [],
+  confidence: 0.8,
+};
+
+assert.equal(
+  routeBroBotAnswer({
+    message: 'What is the Garden classification?',
+    intent: gardenIntent,
+  }),
+  'answer_now'
+);
+
+assert.equal(
+  routeBroBotAnswer({
+    message: 'What is a neutralization plate?',
+    intent: {
+      ...gardenIntent,
+      mode: 'general',
+      subintent: 'implant_options',
+      procedureOrTopic: 'neutralization plate',
+    },
+  }),
+  'answer_now'
+);
+
+assert.equal(
+  routeBroBotAnswer({
+    message: 'Teach me ankle fractures',
+    intent: {
+      ...gardenIntent,
+      mode: 'oite',
+      subintent: 'overview',
+      procedureOrTopic: 'ankle fractures',
+      ambiguity: 'moderate',
+    },
+  }),
+  'answer_with_assumption'
+);
+
+assert.equal(
+  routeBroBotAnswer({
+    message: 'What should I study tonight?',
+    intent: {
+      ...gardenIntent,
+      mode: 'general',
+      subintent: 'overview',
+      procedureOrTopic: '',
+      ambiguity: 'high',
+      branchOptions: [{ id: 'oite', label: 'OITE trauma review' }],
+    },
+  }),
+  'ask_clarification'
+);
+
+assert.equal(
+  routeBroBotAnswer({
+    message: 'How do I treat this fracture?',
+    intent: {
+      ...gardenIntent,
+      mode: 'consult',
+      subintent: 'fracture',
+      procedureOrTopic: 'fracture',
+      ambiguity: 'moderate',
+      missingContext: ['age', 'mechanism', 'open/closed status', 'neurovascular exam', 'imaging'],
+    },
+  }),
+  'ask_clarification'
+);
+
+// Regression: "What should I study tonight?" must not fall through to a
+// generic answer route just because the intent classifier guessed a filler
+// topic instead of returning an empty string.
+const studyTonightGenericGuesses = [
+  '',
+  'orthopaedic study',
+  'orthopedic study',
+  'orthopaedics',
+  'general orthopedics',
+  'study plan',
+  'studying',
+];
+
+for (const guessedTopic of studyTonightGenericGuesses) {
+  const route = routeBroBotAnswer({
+    message: 'What should I study tonight?',
+    intent: {
+      ...gardenIntent,
+      mode: 'general',
+      subintent: 'overview',
+      procedureOrTopic: guessedTopic,
+      ambiguity: 'high',
+    },
+  });
+  assert.ok(
+    route === 'ask_clarification' || route === 'offer_branches',
+    `expected ask_clarification or offer_branches for guessed topic "${guessedTopic}", got ${route}`
+  );
+  assert.notEqual(route, 'answer_with_assumption');
+  assert.notEqual(route, 'answer_now');
+}
+
+// A genuinely actionable topic on the same study-planning phrasing should
+// still be allowed to offer branches instead of asking to clarify.
+assert.equal(
+  routeBroBotAnswer({
+    message: 'What should I study tonight?',
+    intent: {
+      ...gardenIntent,
+      mode: 'general',
+      subintent: 'overview',
+      procedureOrTopic: 'distal radius ORIF',
+      ambiguity: 'high',
+    },
+  }),
+  'offer_branches'
+);
+
+const studyTonightQuestions = buildBroBotRouteClarifyingQuestions({
+  message: 'What should I study tonight?',
+  intent: {
+    ...gardenIntent,
+    mode: 'general',
+    subintent: 'overview',
+    procedureOrTopic: 'orthopaedic study',
+    ambiguity: 'high',
+  },
+  answerRoute: 'ask_clarification',
+});
+assert.ok(studyTonightQuestions.length >= 2);
+assert.ok(studyTonightQuestions.some((q) => /rotation|case list/i.test(q)));
+assert.ok(studyTonightQuestions.some((q) => /oite|clinic prep|consult prep|or prep/i.test(q)));
+
+// Regression: ask_clarification answers must be short, both via the
+// prompt-instructed contract and the deterministic server-side backstop.
+const longGenericAnswer =
+  'To determine the appropriate treatment for a fracture, consider the following factors. ' +
+  'Fracture type and classification guide treatment options, and location and displacement ' +
+  'affect surgical versus non-surgical decisions. Patient age and health status can alter the ' +
+  'management approach, and the presence of complications like an open fracture or ' +
+  'neurovascular injury requires urgent attention. For example, a displaced femoral neck ' +
+  'fracture in an elderly patient may require surgical intervention, while a non-displaced ' +
+  'distal radius fracture in a young patient might be managed conservatively.';
+
+assert.ok(longGenericAnswer.length > CLARIFICATION_ANSWER_MAX_LENGTH);
+
+const shortenedAnswer = enforceClarificationAnswerBrevity(longGenericAnswer);
+assert.ok(shortenedAnswer.length <= CLARIFICATION_ANSWER_MAX_LENGTH);
+assert.notEqual(shortenedAnswer, longGenericAnswer);
+
+const briefFramingLine = 'I need a bit more detail before giving a full answer.';
+assert.equal(enforceClarificationAnswerBrevity(briefFramingLine), briefFramingLine);
+
+const tooLongClarificationGate = runBroBotQualityGate({
+  answer: longGenericAnswer,
+  mode: 'consult',
+  responseDepth: 'standard',
+  subintent: 'fracture',
+  answerRoute: 'ask_clarification',
+});
+assert.ok(tooLongClarificationGate.warnings.includes('ask_clarification_answer_too_long'));
+
+const shortClarificationGate = runBroBotQualityGate({
+  answer: briefFramingLine,
+  mode: 'consult',
+  responseDepth: 'standard',
+  subintent: 'fracture',
+  answerRoute: 'ask_clarification',
+});
+assert.deepEqual(shortClarificationGate.warnings, []);
+
+// The clarification-route quality gate should only ever check brevity, not
+// the richness heuristics (pearls, decision signals, etc.) that apply to a
+// full answer — those would misfire against an intentionally short framing
+// line.
+const veryShallowClarificationAnswer = 'Quick clarifying question first.';
+const shallowClarificationGate = runBroBotQualityGate({
+  answer: veryShallowClarificationAnswer,
+  mode: 'oite',
+  responseDepth: 'standard',
+  subintent: 'treatment_algorithm',
+  procedureOrTopic: 'femoral shaft fracture',
+  answerRoute: 'ask_clarification',
+});
+assert.deepEqual(shallowClarificationGate.warnings, []);
+
+// Regression: if the separate metadata pass fails (network error, bad
+// completion, etc.), route.ts keeps a metadataOutput fallback built purely
+// from the already-generated answer pass, then still calls
+// parseBroBotMetadataResponse-shaped fallbacks when parsing garbage. Both
+// paths must yield a well-formed, non-empty-where-possible result so the
+// user's answer is never blocked by a metadata failure.
+const answerPassDerivedFallback = {
+  suggestedQuestions: ['What imaging findings and reduction status do you have?'],
+  nextLearningBranches: [{ id: 'garden_classification', label: 'Garden classification' }],
+  tags: ['procedure:femoral_neck_fracture'],
+};
+assert.ok(Array.isArray(answerPassDerivedFallback.suggestedQuestions));
+assert.ok(Array.isArray(answerPassDerivedFallback.nextLearningBranches));
+assert.ok(Array.isArray(answerPassDerivedFallback.tags));
+assert.ok(answerPassDerivedFallback.suggestedQuestions.length > 0);
+
+const metadataFromGarbageRaw = parseBroBotMetadataResponse({
+  raw: 'not valid json at all',
+  fallbackMode: 'general',
+  fallbackSuggestedQuestions: answerPassDerivedFallback.suggestedQuestions,
+  fallbackNextLearningBranches: answerPassDerivedFallback.nextLearningBranches,
+  fallbackTags: answerPassDerivedFallback.tags,
+});
+assert.deepEqual(metadataFromGarbageRaw.suggestedQuestions, answerPassDerivedFallback.suggestedQuestions);
+assert.deepEqual(metadataFromGarbageRaw.tags, answerPassDerivedFallback.tags);
+assert.ok(metadataFromGarbageRaw.nextLearningBranches.length > 0);
+
+const routeFixtures: Array<{ message: string; intent: BroBotChatIntent }> = [
+  { message: 'What is the Garden classification?', intent: gardenIntent },
+  {
+    message: 'What is a neutralization plate?',
+    intent: { ...gardenIntent, mode: 'general', subintent: 'implant_options', procedureOrTopic: 'neutralization plate' },
+  },
+  {
+    message: 'What is the blood supply of the talus?',
+    intent: { ...gardenIntent, mode: 'general', subintent: 'anatomy_at_risk', procedureOrTopic: 'talus blood supply' },
+  },
+  {
+    message: 'Teach me ankle fractures',
+    intent: { ...gardenIntent, subintent: 'overview', procedureOrTopic: 'ankle fractures', ambiguity: 'moderate' },
+  },
+  {
+    message: 'Distal radius ORIF pearls',
+    intent: { ...gardenIntent, mode: 'or_prep', subintent: 'overview', procedureOrTopic: 'distal radius ORIF', ambiguity: 'moderate' },
+  },
+  {
+    message: 'What should I study tonight?',
+    intent: { ...gardenIntent, mode: 'general', subintent: 'overview', procedureOrTopic: '', ambiguity: 'high' },
+  },
+];
+
+const clarificationRate =
+  routeFixtures.filter((fixture) =>
+    routeBroBotAnswer({ message: fixture.message, intent: fixture.intent }) === 'ask_clarification'
+  ).length / routeFixtures.length;
+
+assert.ok(clarificationRate < 0.5);
+
+const aclChips = selectSmartChips({
+  message: 'Explain ACL reconstruction',
+  subintent: 'surgical_steps',
+  procedureOrTopic: 'ACL reconstruction',
+});
+assert.deepEqual(
+  aclChips?.slice(0, 5).map((chip) => chip.label),
+  [
+    'Femoral tunnel placement pitfalls',
+    'BTB vs quad vs hamstring graft',
+    'Pivot shift and rotational instability',
+    'Meniscus/root lesions that change the plan',
+    'OITE graft-choice traps',
+  ]
+);
+
+const distalRadiusChips = selectSmartChips({
+  message: 'Distal radius ORIF pearls',
+  subintent: 'overview',
+  procedureOrTopic: 'distal radius ORIF',
+});
+assert.deepEqual(
+  distalRadiusChips?.slice(0, 5).map((chip) => chip.label),
+  [
+    'Volar FCR approach anatomy',
+    'Avoid dorsal screw penetration',
+    'When CT changes the plan',
+    'What makes it unstable',
+    'Volar plate positioning pitfalls',
+  ]
 );
 
 const fenced = parseBroBotChatResponse(
@@ -720,6 +1128,7 @@ assert.ok(genericOiteGate.warnings.includes('oite_comparison_missing'));
 assert.ok(genericOiteGate.warnings.includes('oite_algorithm_missing'));
 assert.ok(genericOiteGate.warnings.includes('oite_board_pearl_missing'));
 assert.ok(genericOiteGate.warnings.includes('oite_test_taking_signal_missing'));
+assert.ok(genericOiteGate.warnings.includes('oite_memory_hook_missing'));
 
 const strongOiteGate = runBroBotQualityGate({
   mode: 'oite',
@@ -730,13 +1139,88 @@ const strongOiteGate = runBroBotQualityGate({
     '- Compare: distinguish SCFE versus Perthes by age, body habitus, and radiograph pattern.',
     '- Exam pearl: boards test AVN risk and in-situ pinning as the management pivot.',
     '- Common trap: do not choose forced reduction; eliminate that wrong answer choice.',
+    '- Memory hook: stable can stand, unstable cannot walk.',
   ].join('\n'),
 });
 
 assert.doesNotMatch(
   strongOiteGate.warnings.join(','),
-  /oite_(trap|comparison|algorithm|board_pearl|test_taking)/
+  /oite_(trap|comparison|algorithm|board_pearl|test_taking|memory_hook)/
 );
+
+const facetGenericOrPrepGate = runBroBotQualityGate({
+  answer:
+    '- Understand the anatomy and patient-specific factors.\n- Know the complications and use appropriate imaging.\n- Discuss the plan with the attending.',
+  mode: 'or_prep',
+  responseDepth: 'standard',
+  subintent: 'surgical_steps',
+  procedureOrTopic: 'distal radius ORIF',
+  clinicalContext: distalRadiusClinicalContext,
+});
+
+assert.ok(facetGenericOrPrepGate.warnings.includes('facet_or_prep_exposure_missing'));
+assert.ok(facetGenericOrPrepGate.warnings.includes('facet_named_anatomy_missing'));
+assert.ok(facetGenericOrPrepGate.warnings.includes('answer_too_generic_for_known_topic'));
+
+const facetGenericOiteGate = runBroBotQualityGate({
+  answer:
+    '- Review the classification and treatment options.\n- This is a common board topic.\n- Remember the key facts.',
+  mode: 'oite',
+  responseDepth: 'standard',
+  subintent: 'overview',
+  procedureOrTopic: 'SCFE',
+  clinicalContext: scfeClinicalContext,
+});
+
+assert.ok(facetGenericOiteGate.warnings.includes('facet_oite_trap_distractor_missing'));
+
+const facetGenericConsultGate = runBroBotQualityGate({
+  answer:
+    '- Get imaging and examine the patient.\n- Consider treatment based on patient factors.\n- Discuss with the senior.',
+  mode: 'consult',
+  responseDepth: 'standard',
+  subintent: 'fracture',
+  procedureOrTopic: 'ankle fracture',
+  clinicalContext: ankleConsultClinicalContext,
+});
+
+assert.ok(facetGenericConsultGate.warnings.includes('facet_consult_red_flags_missing'));
+assert.ok(facetGenericConsultGate.warnings.includes('facet_consult_disposition_missing'));
+
+const facetGenericClinicGate = runBroBotQualityGate({
+  answer:
+    '- Start with history and imaging.\n- Try treatment based on patient factors.\n- Escalate if symptoms persist.',
+  mode: 'clinic',
+  responseDepth: 'standard',
+  subintent: 'workup',
+  procedureOrTopic: 'shoulder pain',
+  clinicalContext: shoulderClinicClinicalContext,
+});
+
+assert.ok(facetGenericClinicGate.warnings.includes('facet_clinic_differential_missing'));
+
+const weakAnatomyGate = runBroBotQualityGate({
+  mode: 'general',
+  responseDepth: 'standard',
+  subintent: 'anatomy_at_risk',
+  answer: '- The nerve is important and should be protected.',
+});
+
+assert.ok(weakAnatomyGate.warnings.includes('anatomy_surgical_relevance_weak'));
+
+const strongAnatomyGate = runBroBotQualityGate({
+  mode: 'general',
+  responseDepth: 'standard',
+  subintent: 'anatomy_at_risk',
+  answer: [
+    '- Course: the palmar cutaneous branch leaves the median nerve proximal to the wrist crease.',
+    '- Danger zone: it crosses superficial to the transverse carpal ligament region and can be injured with ulnar/radial incision drift.',
+    '- Surgical relevance: injury causes painful palmar numbness after carpal tunnel release.',
+    '- Memory hook: palm sensation is spared in carpal tunnel syndrome but at risk during the incision.',
+  ].join('\n'),
+});
+
+assert.doesNotMatch(strongAnatomyGate.warnings.join(','), /anatomy_surgical_relevance_weak/);
 
 const cleaned = parseBroBotChatResponse(
   JSON.stringify({

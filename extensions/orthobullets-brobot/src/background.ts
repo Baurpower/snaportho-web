@@ -426,6 +426,31 @@ chrome.runtime.onMessage.addListener((message: ExtensionMessage, _sender: unknow
         return;
       }
 
+      if (message.type === 'ob:topic-tutor-turn') {
+        const deviceToken = await getStoredDeviceToken();
+        if (!deviceToken) {
+          throw new CodedError('Extension is not linked to a SnapOrtho account.', 'not_linked');
+        }
+
+        const topicTurn = await fetchJson('/api/brobot/orthobullets/topic-tutor', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            [EXTENSION_TOKEN_HEADER]: deviceToken,
+          },
+          body: JSON.stringify({
+            pageContext: message.pageContext,
+            action: message.action,
+            progress: message.progress,
+            history: message.history,
+            userMessage: message.userMessage,
+          }),
+        });
+
+        sendResponse({ ok: true, topicTurn });
+        return;
+      }
+
       sendResponse({ ok: false, error: 'Unsupported message.', code: 'unknown' });
     } catch (error) {
       const code = error instanceof CodedError ? error.code : 'unknown';

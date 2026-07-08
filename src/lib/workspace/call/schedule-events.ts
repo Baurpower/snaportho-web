@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/server'
+import { toHHMM } from './schedule-event-time'
 
 export type ScheduleEventCategory = 'or' | 'clinic' | 'custom'
 
@@ -45,9 +46,68 @@ export type UpdateScheduleEventInput = {
   attending?: string | null
 }
 
-function normalizeTimeForStorage(value?: string | null): string | null {
-  if (!value) return null
-  return value.length === 5 ? `${value}:00` : value
+export function mapScheduleEventRow(row: ScheduleEventSummary): ScheduleEventSummary {
+  return {
+    ...row,
+    start_time: toHHMM(row.start_time),
+    end_time: toHHMM(row.end_time),
+  }
+}
+
+export function buildCreateScheduleEventRows(
+  input: CreateScheduleEventsInput
+): Record<string, unknown>[] {
+  const isAllDay = input.isAllDay ?? true
+
+  if (!isAllDay && (!input.startTime || !input.endTime)) {
+    throw new Error('Timed events require both a startTime and an endTime')
+  }
+
+  return input.dates.map((date) => ({
+    user_id: input.userId,
+    title: input.title,
+    category: input.category,
+    event_date: date,
+    is_all_day: isAllDay,
+    start_time: isAllDay ? null : input.startTime,
+    end_time: isAllDay ? null : input.endTime,
+    location: input.location ?? null,
+    description: input.description ?? null,
+    attending: input.attending ?? null,
+  }))
+}
+
+export function buildUpdateScheduleEventPayload(
+  input: UpdateScheduleEventInput
+): Record<string, unknown> {
+  const updatePayload: Record<string, unknown> = {}
+
+  if (input.title !== undefined) updatePayload.title = input.title
+  if (input.category !== undefined) updatePayload.category = input.category
+  if (input.location !== undefined) updatePayload.location = input.location
+  if (input.description !== undefined) updatePayload.description = input.description
+  if (input.attending !== undefined) updatePayload.attending = input.attending
+  if (input.date !== undefined) updatePayload.event_date = input.date
+
+  if (input.isAllDay !== undefined) {
+    updatePayload.is_all_day = input.isAllDay
+
+    if (input.isAllDay) {
+      updatePayload.start_time = null
+      updatePayload.end_time = null
+    }
+  }
+
+  if (input.isAllDay !== true) {
+    if (input.startTime !== undefined) {
+      updatePayload.start_time = input.startTime
+    }
+    if (input.endTime !== undefined) {
+      updatePayload.end_time = input.endTime
+    }
+  }
+
+  return updatePayload
 }
 
 export async function getScheduleEventsForUserInRange(
@@ -84,7 +144,7 @@ export async function getScheduleEventsForUserInRange(
     throw new Error(`Failed to fetch schedule events in range: ${error.message}`)
   }
 
-  return (data ?? []) as ScheduleEventSummary[]
+  return ((data ?? []) as ScheduleEventSummary[]).map(mapScheduleEventRow)
 }
 
 export async function createScheduleEvents(
@@ -92,20 +152,7 @@ export async function createScheduleEvents(
 ): Promise<ScheduleEventSummary[]> {
   const supabase = await createClient()
 
-  const isAllDay = input.isAllDay ?? true
-
-  const rows = input.dates.map((date) => ({
-    user_id: input.userId,
-    title: input.title,
-    category: input.category,
-    event_date: date,
-    is_all_day: isAllDay,
-    start_time: isAllDay ? null : normalizeTimeForStorage(input.startTime ?? '08:00'),
-    end_time: isAllDay ? null : normalizeTimeForStorage(input.endTime ?? '17:00'),
-    location: input.location ?? null,
-    description: input.description ?? null,
-    attending: input.attending ?? null,
-  }))
+  const rows = buildCreateScheduleEventRows(input)
 
   const { data, error } = await supabase
     .from('schedule_events')
@@ -130,7 +177,7 @@ export async function createScheduleEvents(
     throw new Error(`Failed to create schedule events: ${error.message}`)
   }
 
-  return (data ?? []) as ScheduleEventSummary[]
+  return ((data ?? []) as ScheduleEventSummary[]).map(mapScheduleEventRow)
 }
 
 export async function updateScheduleEvent(
@@ -138,40 +185,7 @@ export async function updateScheduleEvent(
 ): Promise<ScheduleEventSummary> {
   const supabase = await createClient()
 
-  const updatePayload: Record<string, unknown> = {}
-
-  if (input.title !== undefined) updatePayload.title = input.title
-  if (input.category !== undefined) updatePayload.category = input.category
-  if (input.location !== undefined) updatePayload.location = input.location
-  if (input.description !== undefined) updatePayload.description = input.description
-  if (input.attending !== undefined) updatePayload.attending = input.attending
-  if (input.date !== undefined) updatePayload.event_date = input.date
-
-  if (input.isAllDay !== undefined) {
-    updatePayload.is_all_day = input.isAllDay
-
-    if (input.isAllDay) {
-      updatePayload.start_time = null
-      updatePayload.end_time = null
-    }
-  }
-
-  if (input.isAllDay === false) {
-    if (input.startTime !== undefined) {
-      updatePayload.start_time = normalizeTimeForStorage(input.startTime)
-    }
-    if (input.endTime !== undefined) {
-      updatePayload.end_time = normalizeTimeForStorage(input.endTime)
-    }
-  } else if (input.isAllDay === undefined) {
-    if (input.startTime !== undefined) {
-      updatePayload.start_time = normalizeTimeForStorage(input.startTime)
-    }
-    if (input.endTime !== undefined) {
-      updatePayload.end_time = normalizeTimeForStorage(input.endTime)
-    }
-  }
-
+  const updatePayload = buildUpdateScheduleEventPayload(input)
   updatePayload.updated_at = new Date().toISOString()
 
   const { data, error } = await supabase
@@ -200,7 +214,7 @@ export async function updateScheduleEvent(
     throw new Error(`Failed to update schedule event: ${error.message}`)
   }
 
-  return data as ScheduleEventSummary
+  return mapScheduleEventRow(data as ScheduleEventSummary)
 }
 
 export async function deleteScheduleEvent(

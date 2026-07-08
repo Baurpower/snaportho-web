@@ -6,7 +6,8 @@ import { buildCaseReadinessHref } from "@/components/student-workspace/prepare/p
 import { CasePrepStatusBanner } from "@/components/student-workspace/case-readiness/CasePrepStatusBanner";
 import { CaseReadinessHeader } from "@/components/student-workspace/case-readiness/CaseReadinessHeader";
 import { CaseReadinessProgress } from "@/components/student-workspace/case-readiness/CaseReadinessProgress";
-import { ProcedurePrepModulesPanel } from "@/components/student-workspace/case-readiness/ProcedurePrepModulesPanel";
+import { SurvivalSectionsPanel } from "@/components/student-workspace/case-readiness/SurvivalSectionsPanel";
+import { ReadinessConfidenceWidget } from "@/components/student-workspace/case-readiness/ReadinessConfidenceWidget";
 import { ReadinessObjectiveCard } from "@/components/student-workspace/case-readiness/ReadinessObjectiveCard";
 import { TopicBrobotActionsPanel } from "@/components/student-workspace/case-readiness/TopicBrobotActionsPanel";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
@@ -56,6 +57,9 @@ export function CaseReadinessPage({
   );
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [readinessConfidence, setReadinessConfidence] = useState<
+    "comfortable" | "maybe" | "not-ready" | null
+  >(null);
   const completedSet = new Set(completedIds);
   const expandedSet = new Set(expandedIds);
 
@@ -135,7 +139,7 @@ export function CaseReadinessPage({
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="grid gap-4">
-            <ProcedurePrepModulesPanel modules={session.prepModules} />
+            <SurvivalSectionsPanel sections={session.survivalSections} />
 
             {session.objectives.map((objective) => (
               <ReadinessObjectiveCard
@@ -165,6 +169,10 @@ export function CaseReadinessPage({
           </div>
 
           <div className="grid content-start gap-4">
+            <ReadinessConfidenceWidget
+              confidence={readinessConfidence}
+              onChange={setReadinessConfidence}
+            />
             <CaseReadinessProgress
               completedCount={completedIds.length}
               totalCount={session.objectives.length}

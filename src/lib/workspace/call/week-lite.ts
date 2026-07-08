@@ -1,4 +1,9 @@
 import { createClient } from '@/utils/supabase/server'
+import {
+  formatScheduleEventTimeLabel,
+  toHHMM,
+  type ScheduleEventCategory,
+} from './schedule-event-time'
 
 type LiteRotationRow = {
   id: string
@@ -36,6 +41,7 @@ type LiteScheduleEventRow = {
   title: string | null
   category: string | null
   event_date: string | null
+  is_all_day: boolean | null
   start_time: string | null
   end_time: string | null
   location: string | null
@@ -54,6 +60,10 @@ export type WeekLiteDay = {
   rotationColor: string | null
   hasCall: boolean
   callLabel: string | null
+  isAllDay: boolean | null
+  startTime: string | null
+  endTime: string | null
+  timeLabel: string | null
 }
 
 export type WeekLiteResponse = {
@@ -260,6 +270,7 @@ export async function getWeekLiteForMembership(
         title,
         category,
         event_date,
+        is_all_day,
         start_time,
         end_time,
         location,
@@ -314,6 +325,17 @@ export async function getWeekLiteForMembership(
       rotationAssignment?.site_label ??
       null
 
+    const isAllDay = selectedEvent?.is_all_day ?? null
+    const startTime = toHHMM(selectedEvent?.start_time ?? null)
+    const endTime = toHHMM(selectedEvent?.end_time ?? null)
+    const timeLabel = formatScheduleEventTimeLabel({
+      isAllDay,
+      startTime,
+      endTime,
+      category: (selectedEvent?.category?.trim().toLowerCase() ??
+        null) as ScheduleEventCategory | null,
+    })
+
     return {
       date,
       dayKey: weekdayKey(date),
@@ -326,6 +348,10 @@ export async function getWeekLiteForMembership(
       rotationColor: rotationRow?.color ?? null,
       hasCall,
       callLabel: firstCall?.call_type ?? firstCall?.site ?? null,
+      isAllDay,
+      startTime,
+      endTime,
+      timeLabel,
     }
   })
 

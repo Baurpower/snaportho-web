@@ -71,7 +71,7 @@ export const BROBOT_FALLBACK_MODEL = readModelEnv('BROBOT_FALLBACK_MODEL', 'gpt-
 /** Feature flag: run a second metadata-only pass after answer generation. */
 export const BROBOT_SEPARATE_METADATA_PASS = readBooleanEnv(
   'BROBOT_SEPARATE_METADATA_PASS',
-  false
+  true
 );
 
 /** Feature flag: revise answers once when the heuristic quality gate flags issues. */

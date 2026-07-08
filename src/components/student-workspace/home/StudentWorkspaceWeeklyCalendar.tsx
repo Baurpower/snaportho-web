@@ -85,15 +85,15 @@ export function StudentWorkspaceWeeklyCalendar({
   }
 
   return (
-    <section className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm md:p-5 xl:p-6">
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
+    <section className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm md:p-5">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => void loadWeek(addDaysToDateKey(weekStart, -7))}
               disabled={loadingWeek}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:opacity-60"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:opacity-60"
               aria-label="Previous week"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -103,7 +103,7 @@ export function StudentWorkspaceWeeklyCalendar({
               type="button"
               onClick={() => void loadWeek(addDaysToDateKey(weekStart, 7))}
               disabled={loadingWeek}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:opacity-60"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:opacity-60"
               aria-label="Next week"
             >
               <ChevronRight className="h-5 w-5" />
@@ -114,9 +114,9 @@ export function StudentWorkspaceWeeklyCalendar({
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
               Schedule
             </p>
-            <div className="mt-2 flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
+            <div className="mt-1.5 flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-4">
               <div className="min-w-0">
-                <h2 className="text-2xl font-bold tracking-tight text-slate-950 md:text-3xl">
+                <h2 className="text-2xl font-bold tracking-tight text-slate-950 md:text-[1.65rem]">
                   This Week
                 </h2>
                 <p className="mt-1 text-sm text-slate-500">
@@ -153,8 +153,8 @@ export function StudentWorkspaceWeeklyCalendar({
         </div>
       ) : null}
 
-      <div className="mt-6 hidden md:block">
-        <div className="grid grid-cols-7 gap-2 lg:gap-3 xl:gap-4">
+      <div className="mt-4 hidden md:block">
+        <div className="grid grid-cols-7 gap-2 lg:gap-3">
           {weekDates.map((dateKey) => (
             <StudentWeeklyDayCard
               key={dateKey}
@@ -172,7 +172,7 @@ export function StudentWorkspaceWeeklyCalendar({
         </div>
       </div>
 
-      <div className="mt-6 md:hidden">
+      <div className="mt-4 md:hidden">
         <div className="-mx-4 overflow-x-auto px-4 pb-2">
           <div className="flex gap-3">
             {weekDates.map((dateKey) => (

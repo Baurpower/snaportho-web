@@ -7,6 +7,8 @@ import type {
   OrthobulletsPageContext,
   OrthobulletsPercentDistribution,
   QuestionProvider,
+  TopicBullet,
+  TopicSection,
 } from '../shared/types.js';
 
 export const EXTRACTOR_VERSION = '2026-07-05-rock-explain-study-panel-v2';
@@ -78,6 +80,18 @@ function parseQuestionIdFromUrl(url: string) {
 function parseTopicIdFromUrl(url: string) {
   const match = url.match(/orthobullets\.com\/[^/]+\/(\d{3,6})\//i);
   return match?.[1];
+}
+
+// Orthobullets question/review pages live under /question/ or /currenttest/;
+// everything else that carries a numeric topic segment
+// (/topic/<id>/<slug> or /<specialty>/<id>/<slug>) is a topic reference page.
+function isLikelyOrthobulletsQuestionUrl(url: string) {
+  return /orthobullets\.com\/(question|currenttest|testview)\b/i.test(url);
+}
+
+export function isLikelyOrthobulletsTopicUrl(url: string) {
+  if (!url || isLikelyOrthobulletsQuestionUrl(url)) return false;
+  return /orthobullets\.com\/(topic|[a-z-]+)\/\d{3,6}\b/i.test(url);
 }
 
 function detectPageKind(input: {
@@ -577,6 +591,11 @@ const ROCK_SELECTORS = {
     '[class*="curriculum-content" i]',
     '[class*="article-content" i]',
     '[class*="main-content" i]',
+    // Orthobullets topic page wrapper classes
+    '.mainSection',
+    '.innerPageContent',
+    '.topic__content',
+    '.topic-content',
     'article',
     '[role="main"]',
     'main',
@@ -874,11 +893,19 @@ function cleanCurriculumText(value: string) {
   );
 }
 
+const CHROME_PHRASES =
+  /^(search|menu|home|profile|logout|send feedback|previous|next|bookmark|highlight|cookie settings|privacy settings)$/i;
+
 function isUiChromeText(value: string) {
-  const normalized = value.toLowerCase();
-  if (normalized.length < 12) return true;
-  if (/^(search|menu|home|profile|logout|send feedback|previous|next|bookmark|highlight|cookie settings|privacy settings)$/i.test(value)) return true;
-  return false;
+  if (value.length < 12) return true;
+  return CHROME_PHRASES.test(value);
+}
+
+// Headings must never be dropped just for being short ("Overview",
+// "Treatment", "Exam" are common section titles under 12 chars) — only
+// literal nav/button chrome text that happens to be a heading tag.
+function isChromeHeading(value: string) {
+  return CHROME_PHRASES.test(value);
 }
 
 function tableToMarkdown(table: DomElementLike) {
@@ -1060,13 +1087,15 @@ function extractRockCurriculumContent(root: DocumentLike, matched: Record<string
 
   blocks.forEach((node) => {
     const rawText = cleanCurriculumText(textOf(node));
-    if (!rawText || isUiChromeText(rawText)) return;
+    if (!rawText) return;
+    const nodeName = (node.nodeName ?? node.tagName ?? '').toLowerCase();
+    const isHeading = /^h[1-4]$/.test(nodeName);
+    if (isHeading ? isChromeHeading(rawText) : isUiChromeText(rawText)) return;
     const key = rawText.toLowerCase();
     if (seen.has(key)) return;
     seen.add(key);
 
-    const nodeName = (node.nodeName ?? node.tagName ?? '').toLowerCase();
-    if (/^h[1-4]$/.test(nodeName)) {
+    if (isHeading) {
       flushSection();
       currentHeading = rawText;
       sectionHeadings.push(rawText);
@@ -1246,12 +1275,170 @@ export function extractRockPageContext(input: {
   };
 }
 
+const MIN_TOPIC_CONTENT_CHARS = 80;
+
+// Build TopicSection[] from already-extracted contentSections. The existing
+// semantic block scanner flattens nested list structure, so bullets get depth 0
+// for Phase 1. Lines prefixed with "- " (added by extractRockCurriculumContent)
+// become bullets; other lines are treated as depth-0 prose bullets.
+function buildTopicStructuredSections(
+  contentSections: Array<{ heading: string; text: string }>
+): TopicSection[] {
+  return contentSections.map((section, i) => {
+    const id = `s${i}-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40)}`;
+    const bullets: TopicBullet[] = [];
+    for (const line of section.text.split('\n')) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      const isDash = trimmed.startsWith('- ');
+      bullets.push({ text: isDash ? trimmed.slice(2) : trimmed, depth: 0, path: [] });
+    }
+    return { id, title: section.heading, bullets };
+  });
+}
+
+const TOPIC_BREADCRUMB_SELECTORS = [...SELECTORS.breadcrumbs, ...ROCK_SELECTORS.breadcrumbs] as const;
+const TOPIC_TITLE_SELECTORS = ['[data-testid="topic-title"]', '.trending-title', 'h1'] as const;
+
+// "12 Questions", "8 Cards", "3 Videos" style counters shown on Orthobullets
+// topic pages (Study/Quiz/Cards/Video tabs). Read from visible page text
+// only — no AJAX-loaded counts are fetched.
+function extractTopicCount(bodyText: string, label: string) {
+  const match = bodyText.match(new RegExp(`(\\d{1,4})\\s*\\+?\\s*${label}`, 'i'));
+  if (!match) return undefined;
+  const value = Number(match[1]);
+  return Number.isFinite(value) ? value : undefined;
+}
+
+// Orthobullets topic pages ("Trauma > 1042 > Femoral Shaft Fractures") are
+// concise bullet-based references rather than question pages. This reuses
+// the same generic semantic-tag scanner as ROCK's curriculum extraction
+// (headings/bullets/tables/images), since that scanner is DOM-structure
+// agnostic and not actually ROCK-specific.
+export function extractOrthobulletsTopicPageContext(input: {
+  document: DocumentLike;
+  pageUrl?: string;
+}): OrthobulletsPageContext {
+  const pageUrl = input.pageUrl ?? input.document.locationHref ?? '';
+  const matchedSelectors: Record<string, string[]> = {};
+  const breadcrumbs = collectTexts(input.document, TOPIC_BREADCRUMB_SELECTORS, 'breadcrumbs', matchedSelectors);
+  const title =
+    firstText(input.document, TOPIC_TITLE_SELECTORS, 'title', matchedSelectors) ||
+    normalizeWhitespace(input.document.title) ||
+    null;
+  const topicId = extractTopicId(input.document, pageUrl, matchedSelectors);
+  const curriculum = extractRockCurriculumContent(input.document, matchedSelectors);
+  const images = extractRockImages(input.document, matchedSelectors);
+  // Document.textContent is null per DOM spec (only Element/Text nodes have
+  // it) — read from <body> (or the document itself as a last resort, e.g.
+  // in tests that pass a body-less stub).
+  const bodyText = normalizeWhitespace((input.document.querySelector('body') ?? input.document).textContent);
+  const questionCount = extractTopicCount(bodyText, 'questions?');
+  const cardCount = extractTopicCount(bodyText, 'cards?');
+  const videoCount = extractTopicCount(bodyText, 'videos?');
+
+  const hasContent = Boolean(curriculum.contentText && curriculum.contentText.length >= MIN_TOPIC_CONTENT_CHARS);
+
+  // When the semantic block scanner found no headings (Orthobullets uses
+  // .trending-title divs and .panel-title divs rather than <h1>–<h4>), seed
+  // sectionHeadings from the page title so classification doesn't treat a
+  // readable topic page as "unreadable" due to an empty headings array.
+  const effectiveSectionHeadings =
+    curriculum.sectionHeadings.length > 0
+      ? curriculum.sectionHeadings
+      : title
+        ? [title]
+        : [];
+
+  // If the semantic scanner returned insufficient content (e.g. Orthobullets
+  // uses non-standard class names that don't match contentRoot selectors, or
+  // accordion content loads after document_idle), fall back to body text so
+  // the Topic Tutor can still receive some material to work with.
+  let effectiveContentText = curriculum.contentText;
+  let effectiveContentMarkdown = curriculum.contentMarkdown;
+  if (!hasContent) {
+    const cleanBody = bodyText
+      .replace(
+        /\b(send feedback|search|cookie settings|privacy policy|terms of service|previous|next|home|logout|login|register|sign in|site map|menu|navigation)\b/gi,
+        ' '
+      )
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+    if (cleanBody.length >= MIN_TOPIC_CONTENT_CHARS) {
+      effectiveContentText = cleanBody.slice(0, MAX_CURRICULUM_CONTENT_CHARS);
+      const mdTitle = title ? `# ${title}\n\n` : '';
+      effectiveContentMarkdown = `${mdTitle}${effectiveContentText}`.slice(0, MAX_CURRICULUM_CONTENT_CHARS);
+      matchedSelectors.contentRoot = [...(matchedSelectors.contentRoot ?? []), 'body_text_fallback'];
+    }
+  }
+
+  const extractionWarnings: string[] = [];
+  if (!hasContent) extractionWarnings.push('topic_content_not_visible');
+  if (breadcrumbs.length === 0 && !topicId) extractionWarnings.push('topic_not_visible');
+  if (!title) extractionWarnings.push('title_not_visible');
+
+  const draftContext: OrthobulletsPageContext = {
+    source: 'orthobullets',
+    provider: 'orthobullets',
+    mode: 'topic_page',
+    pageUrl,
+    sourceUrl: pageUrl,
+    pageKind: 'topic',
+    topicId,
+    title,
+    breadcrumbs,
+    sectionHeadings: effectiveSectionHeadings,
+    contentText: effectiveContentText,
+    contentMarkdown: effectiveContentMarkdown,
+    contentSections: curriculum.contentSections,
+    tablesMarkdown: curriculum.tablesMarkdown,
+    references: curriculum.references,
+    referencesCount: curriculum.referencesCount,
+    tablesCount: curriculum.tablesCount,
+    answerChoices: [],
+    percentDistribution: [],
+    linkedConcepts: [],
+    images,
+    questionCount,
+    cardCount,
+    videoCount,
+    extractionWarnings,
+    raw: {
+      providerSpecific: {
+        adapter: 'orthobullets-topic',
+        extractionStrategy: curriculum.extractionStrategy,
+        contentCharCount: curriculum.contentCharCount,
+        usedBodyTextFallback: !hasContent && Boolean(effectiveContentText),
+      },
+    },
+    debug: {
+      matchedSelectors,
+      extractorVersion: EXTRACTOR_VERSION,
+    },
+  };
+
+  return {
+    ...draftContext,
+    classification: classifyPage(draftContext),
+  };
+}
+
 export function extractQuestionContext(input: {
   document: DocumentLike;
   pageUrl?: string;
 }): OrthobulletsPageContext | null {
   const provider = detectQuestionProvider(input);
-  if (provider === 'orthobullets') return extractOrthobulletsPageContext(input);
+  if (provider === 'orthobullets') {
+    const pageUrl = input.pageUrl ?? input.document.locationHref ?? '';
+    if (isLikelyOrthobulletsTopicUrl(pageUrl)) {
+      return extractOrthobulletsTopicPageContext(input);
+    }
+    const questionContext = extractOrthobulletsPageContext(input);
+    if (!questionContext.stem && questionContext.answerChoices.length === 0) {
+      return extractOrthobulletsTopicPageContext(input);
+    }
+    return questionContext;
+  }
   if (provider === 'rock') return extractRockPageContext(input);
   return null;
 }

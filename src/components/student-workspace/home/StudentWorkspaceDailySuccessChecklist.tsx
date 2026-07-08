@@ -67,7 +67,7 @@ export function StudentWorkspaceDailySuccessChecklist({
   return (
     <section
       id="daily-success-checklist"
-      className={`rounded-[2rem] border p-5 shadow-sm transition-all sm:p-6 ${
+      className={`rounded-[2rem] border p-4 shadow-sm transition-all sm:p-5 ${
         allComplete
           ? "border-emerald-200 bg-[linear-gradient(135deg,#ecfdf5_0%,#ffffff_45%,#eff6ff_100%)]"
           : "border-slate-200 bg-white"
@@ -79,15 +79,15 @@ export function StudentWorkspaceDailySuccessChecklist({
             <Sparkles className="h-3.5 w-3.5" />
             Daily Success Checklist
           </div>
-          <h2 className="mt-3 text-2xl font-bold tracking-tight text-slate-950 sm:text-[1.75rem]">
+          <h2 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
             The four habits that make teams want you back.
           </h2>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
+          <p className="mt-1.5 text-sm leading-6 text-slate-600">
             Check these off before the day gets away from you.
           </p>
         </div>
 
-        <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 px-4 py-3 text-right">
+        <div className="rounded-[1.25rem] border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-right">
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
             Today
           </p>
@@ -116,7 +116,7 @@ export function StudentWorkspaceDailySuccessChecklist({
         </div>
       ) : null}
 
-      <div className="mt-5 grid gap-3">
+      <div className="mt-4 grid gap-2.5">
         {items.map((item, index) => {
           const isComplete = !!stateByItemId.get(item.id)?.is_completed;
           const isSaving = savingId === item.id;
@@ -127,13 +127,13 @@ export function StudentWorkspaceDailySuccessChecklist({
               type="button"
               onClick={() => void toggleItem(item)}
               disabled={!!savingId}
-              className={`flex min-h-16 items-center gap-4 rounded-[1.5rem] border px-4 py-4 text-left transition ${
+              className={`flex min-h-14 items-center gap-3 rounded-[1.25rem] border px-3.5 py-3 text-left transition ${
                 isComplete
                   ? "border-emerald-200 bg-emerald-50 text-emerald-950"
                   : "border-slate-200 bg-slate-50 text-slate-900 hover:border-slate-300 hover:bg-white"
               } disabled:opacity-70`}
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white shadow-sm">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white shadow-sm">
                 {isSaving ? (
                   <Loader2 className="h-4 w-4 animate-spin text-slate-500" />
                 ) : isComplete ? (

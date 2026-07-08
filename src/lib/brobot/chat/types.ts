@@ -206,3 +206,72 @@ export type BroBotModelMessage = {
   role: 'system' | 'user' | 'assistant';
   content: string;
 };
+
+export type BroBotClinicalEntities = {
+  region?: string;
+  bone?: string;
+  joint?: string;
+  diagnosis?: string;
+  procedure?: string;
+  fracturePattern?: string;
+  laterality?: 'left' | 'right';
+  implant?: string;
+  classification?: string;
+};
+
+export type BroBotClinicalCaseSlots = {
+  age?: string;
+  mechanism?: string;
+  acuity?: string;
+  openClosed?: 'open' | 'closed';
+  neurovascularStatus?: string;
+  imaging?: string[];
+  labs?: string[];
+  reduction?: string;
+  priorSurgery?: string;
+  woundStatus?: string;
+};
+
+export type BroBotClinicalTaskFacet =
+  | 'anatomy'
+  | 'classification'
+  | 'workup'
+  | 'imaging'
+  | 'indications'
+  | 'treatmentAlgorithm'
+  | 'exposure'
+  | 'steps'
+  | 'implants'
+  | 'complications'
+  | 'pitfalls'
+  | 'testTraps'
+  | 'distractors'
+  | 'disposition';
+
+export type BroBotClinicalCoverageRequirement =
+  | 'named_anatomy'
+  | 'exposure_or_approach'
+  | 'key_steps_or_checks'
+  | 'decision_points'
+  | 'pitfalls_or_bailout'
+  | 'tested_concept'
+  | 'stem_clues'
+  | 'trap_or_distractor'
+  | 'algorithm_or_threshold'
+  | 'red_flags'
+  | 'missing_information'
+  | 'workup'
+  | 'temporizing_care'
+  | 'definitive_management_or_disposition'
+  | 'differential'
+  | 'history_exam'
+  | 'first_line_management'
+  | 'escalation';
+
+export type BroBotClinicalContext = {
+  entities: BroBotClinicalEntities;
+  caseSlots: BroBotClinicalCaseSlots;
+  taskFacets: BroBotClinicalTaskFacet[];
+  missingCriticalSlots: string[];
+  coverageRequirements: BroBotClinicalCoverageRequirement[];
+};

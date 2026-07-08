@@ -1,41 +1,34 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
-const tabs = [
-  {
-    label: 'CasePrep',
-    href: '/brobot',
-    description: 'Structured case prep',
-  },
-  {
-    label: 'Chat',
-    href: '/brobot/chat',
-    description: 'Open-ended ortho help',
-  },
-];
+import { usePathname, useRouter } from 'next/navigation';
+import { broBotProductTabs, isBroBotProductTabActive } from './BroBotProductTabs.config';
 
 export default function BroBotProductTabs({ compact = false }: { compact?: boolean }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <div
+      role="group"
+      aria-label="BroBot mode"
       className={`inline-flex rounded-full border border-slate-200 bg-white shadow-sm ${
         compact ? 'p-0.5' : 'p-1'
       }`}
     >
-      {tabs.map((tab) => {
-        const isActive =
-          tab.href === '/brobot'
-            ? pathname === '/brobot'
-            : pathname?.startsWith(tab.href);
+      {broBotProductTabs.map((tab) => {
+        const isActive = isBroBotProductTabActive(pathname, tab);
 
         return (
-          <Link
+          <button
             key={tab.href}
-            href={tab.href}
+            type="button"
+            onClick={() => {
+              if (!isActive) {
+                router.push(tab.href);
+              }
+            }}
             aria-current={isActive ? 'page' : undefined}
+            aria-pressed={isActive}
             className={[
               compact
                 ? 'rounded-full px-3 py-1.5 text-xs font-semibold transition'
@@ -47,7 +40,7 @@ export default function BroBotProductTabs({ compact = false }: { compact?: boole
             title={tab.description}
           >
             {tab.label}
-          </Link>
+          </button>
         );
       })}
     </div>

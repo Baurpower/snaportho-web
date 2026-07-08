@@ -15,8 +15,22 @@ import {
   X,
 } from "lucide-react";
 import { SharedPlanWeekButton } from "@/components/shared/planner/PlanWeekButton";
+import {
+  detectPreset,
+  formatScheduleEventTimeLabel,
+  getPresetTimes,
+  isValidHHMM,
+  type DurationPreset,
+} from "@/lib/workspace/call/schedule-event-time";
 
 export type PlannerCategory = "or" | "clinic" | "custom";
+
+const DURATION_PRESETS: { value: DurationPreset; label: string }[] = [
+  { value: "full_day", label: "Full day" },
+  { value: "am_half", label: "AM half" },
+  { value: "pm_half", label: "PM half" },
+  { value: "custom", label: "Custom" },
+];
 
 export type PlannerDay = {
   date: string;
@@ -29,7 +43,7 @@ type WeekPlannerPanelProps = {
   onCreated?: () => Promise<void> | void;
 };
 
-type ExistingScheduleEvent = {
+export type ExistingScheduleEvent = {
   id: string;
   title: string;
   category: PlannerCategory;
@@ -42,12 +56,13 @@ type ExistingScheduleEvent = {
   description: string | null;
 };
 
-type DayDraft = {
+export type DayDraft = {
   eventId: string | null;
   selected: boolean;
   category: PlannerCategory;
   title: string;
   isAllDay: boolean;
+  preset: DurationPreset;
   startTime: string;
   endTime: string;
   location: string;
@@ -73,10 +88,6 @@ function isDefaultPlannerTitle(value: string) {
   return ["OR", "Clinic", "Custom"].includes(value.trim());
 }
 
-function isValidTimeString(value: string) {
-  return /^\d{2}:\d{2}$/.test(value);
-}
-
 function formatPlannerDate(date: string) {
   return new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {
     weekday: "short",
@@ -99,15 +110,16 @@ function formatDayNumber(date: string) {
   });
 }
 
-function createDefaultDraft(category: PlannerCategory): DayDraft {
+export function createDefaultDraft(category: PlannerCategory): DayDraft {
   return {
     eventId: null,
     selected: false,
     category,
     title: defaultTitleForCategory(category),
     isAllDay: true,
-    startTime: "07:00",
-    endTime: "17:00",
+    preset: "full_day",
+    startTime: "",
+    endTime: "",
     location: "",
     attending: "",
     description: "",
@@ -116,21 +128,72 @@ function createDefaultDraft(category: PlannerCategory): DayDraft {
   };
 }
 
-function createDraftFromExistingEvent(event: ExistingScheduleEvent): DayDraft {
+export function createDraftFromExistingEvent(event: ExistingScheduleEvent): DayDraft {
+  const isAllDay = event.is_all_day ?? true;
+  const startTime = event.start_time ?? "";
+  const endTime = event.end_time ?? "";
+
   return {
     eventId: event.id,
     selected: true,
     category: event.category,
     title: event.title ?? defaultTitleForCategory(event.category),
-    isAllDay: event.is_all_day ?? true,
-    startTime: event.start_time ?? "07:00",
-    endTime: event.end_time ?? "17:00",
+    isAllDay,
+    preset: detectPreset(event.category, isAllDay, startTime || null, endTime || null),
+    startTime,
+    endTime,
     location: event.location ?? "",
     attending: event.attending ?? "",
     description: event.description ?? "",
     loadedFromServer: true,
     dirty: false,
   };
+}
+
+export function applyPreset(draft: DayDraft, preset: DurationPreset): DayDraft {
+  const timing = getPresetTimes(draft.category, preset);
+
+  return {
+    ...draft,
+    preset,
+    isAllDay: timing.isAllDay,
+    startTime: preset === "custom" ? draft.startTime : timing.startTime ?? "",
+    endTime: preset === "custom" ? draft.endTime : timing.endTime ?? "",
+  };
+}
+
+export function copyDraftToDates(
+  drafts: Record<string, DayDraft>,
+  sourceDate: string,
+  targetDates: string[]
+): Record<string, DayDraft> {
+  const source = drafts[sourceDate];
+  if (!source) return drafts;
+
+  const next = { ...drafts };
+
+  for (const date of targetDates) {
+    if (date === sourceDate) continue;
+
+    const current = next[date] ?? createDefaultDraft(source.category);
+
+    next[date] = {
+      ...current,
+      selected: true,
+      category: source.category,
+      title: source.title,
+      isAllDay: source.isAllDay,
+      preset: source.preset,
+      startTime: source.startTime,
+      endTime: source.endTime,
+      location: source.location,
+      attending: source.attending,
+      description: source.description,
+      dirty: true,
+    };
+  }
+
+  return next;
 }
 
 function getCategoryTheme(category: PlannerCategory, active = false) {
@@ -442,15 +505,25 @@ export function WeekPlannerPanel({
         isDefaultPlannerTitle(current.title) ||
         current.title.trim() === defaultTitleForCategory(current.category);
 
+      const recategorized: DayDraft = {
+        ...current,
+        selected: true,
+        category,
+        title: shouldResetTitle ? defaultTitleForCategory(category) : current.title,
+        dirty: true,
+      };
+
+      // AM/PM half presets resolve to different clock times per category
+      // (e.g. Clinic AM starts at 08:00, OR AM starts at 07:00), so re-apply
+      // the preset under the new category instead of carrying stale times.
+      const shouldReapplyPreset =
+        recategorized.preset === "am_half" || recategorized.preset === "pm_half";
+
       return {
         ...prev,
-        [date]: {
-          ...current,
-          selected: true,
-          category,
-          title: shouldResetTitle ? defaultTitleForCategory(category) : current.title,
-          dirty: true,
-        },
+        [date]: shouldReapplyPreset
+          ? applyPreset(recategorized, recategorized.preset)
+          : recategorized,
       };
     });
 
@@ -498,31 +571,7 @@ export function WeekPlannerPanel({
   function copyActiveToSelectedInCategory() {
     if (!activeDate || !activeDraft) return;
 
-    setDrafts((prev) => {
-      const next = { ...prev };
-
-      for (const date of selectedDatesForCategory) {
-        if (date === activeDate) continue;
-
-        const current = next[date] ?? createDefaultDraft(activeDraft.category);
-
-        next[date] = {
-          ...current,
-          selected: true,
-          category: activeDraft.category,
-          title: activeDraft.title,
-          isAllDay: activeDraft.isAllDay,
-          startTime: activeDraft.startTime,
-          endTime: activeDraft.endTime,
-          location: activeDraft.location,
-          attending: activeDraft.attending,
-          description: activeDraft.description,
-          dirty: true,
-        };
-      }
-
-      return next;
-    });
+    setDrafts((prev) => copyDraftToDates(prev, activeDate, selectedDatesForCategory));
 
     setSuccessMessage(
       `Copied this ${activeDraft.category.toUpperCase()} day to the other ${activeDraft.category.toUpperCase()} days.`
@@ -628,8 +677,12 @@ export function WeekPlannerPanel({
         }
 
         if (draft.selected && !draft.isAllDay) {
-          if (!isValidTimeString(draft.startTime) || !isValidTimeString(draft.endTime)) {
-            setLocalError(`Use valid times for ${formatPlannerDate(date)}.`);
+          if (
+            !isValidHHMM(draft.startTime) ||
+            !isValidHHMM(draft.endTime) ||
+            draft.endTime <= draft.startTime
+          ) {
+            setLocalError(`Use a valid start/end time for ${formatPlannerDate(date)}.`);
             return;
           }
         }
@@ -1036,7 +1089,7 @@ export function WeekPlannerPanel({
                   ) : null}
                 </div>
 
-                <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   <label className="block">
                     <span className="mb-2 inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
                       <PencilLine className="h-4 w-4" />
@@ -1076,36 +1129,60 @@ export function WeekPlannerPanel({
                     />
                   </label>
 
-                  <div className="rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3">
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
-                          <Clock3 className="h-4 w-4" />
-                          All day
-                        </p>
-                        <p className="mt-1 text-xs text-slate-500">
-                          Toggle off to enter times
-                        </p>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() => updateActiveDraft("isAllDay", !activeDraft.isAllDay)}
-                        className={`relative inline-flex h-7 w-12 items-center rounded-full transition ${
-                          activeDraft.isAllDay ? categoryTheme.chip.split(" ")[0] : "bg-slate-200"
-                        }`}
-                      >
-                        <span
-                          className={`inline-block h-5 w-5 transform rounded-full bg-white transition ${
-                            activeDraft.isAllDay ? "translate-x-6" : "translate-x-1"
-                          }`}
-                        />
-                      </button>
-                    </div>
-                  </div>
                 </div>
 
-                {!activeDraft.isAllDay ? (
+                <div className="mt-4 rounded-[1rem] border border-slate-200 bg-slate-50 px-4 py-3">
+                  <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
+                    <Clock3 className="h-4 w-4" />
+                    Duration
+                  </p>
+
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {DURATION_PRESETS.map((option) => {
+                      const active = activeDraft.preset === option.value;
+
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() =>
+                            setDrafts((prev) => {
+                              const current = prev[activeDate] ?? createDefaultDraft(category);
+                              return {
+                                ...prev,
+                                [activeDate]: {
+                                  ...applyPreset(current, option.value),
+                                  selected: true,
+                                  dirty: true,
+                                },
+                              };
+                            })
+                          }
+                          className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                            active
+                              ? categoryTheme.tabActive
+                              : "border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {activeDraft.preset !== "custom" ? (
+                    <p className="mt-3 text-sm font-semibold text-slate-600">
+                      {formatScheduleEventTimeLabel({
+                        isAllDay: activeDraft.isAllDay,
+                        startTime: activeDraft.startTime,
+                        endTime: activeDraft.endTime,
+                        category: activeDraft.category,
+                      }) ?? "Full day"}
+                    </p>
+                  ) : null}
+                </div>
+
+                {activeDraft.preset === "custom" ? (
                   <div className="mt-4 grid gap-4 md:grid-cols-2">
                     <label className="block">
                       <span className="mb-2 inline-flex items-center gap-2 text-sm font-semibold text-slate-700">

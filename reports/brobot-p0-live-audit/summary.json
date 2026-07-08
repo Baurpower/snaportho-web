@@ -1,0 +1,1575 @@
+{
+  "generatedAt": "2026-07-08T02:24:36.725Z",
+  "fixtureCount": 20,
+  "averages": {
+    "specificity": 3.65,
+    "modeFit": 4.25,
+    "testRelevance": 3.05,
+    "surgicalUsefulness": 3.25,
+    "lengthControl": 4,
+    "followUpChipQuality": 3.7
+  },
+  "revisionTriggeredCount": 18,
+  "sourceContextFoundCount": 0,
+  "qualityGateWarningCount": 18,
+  "results": [
+    {
+      "id": "or-01",
+      "prompt": "Distal radius ORIF tomorrow. What do I need to know?",
+      "mode": "or_prep",
+      "detectedMode": "or_prep",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "region": "wrist",
+          "bone": "distal radius",
+          "procedure": "ORIF"
+        },
+        "caseSlots": {
+          "acuity": "acute"
+        },
+        "taskFacets": [
+          "exposure",
+          "anatomy",
+          "steps",
+          "implants",
+          "complications",
+          "pitfalls"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "exposure_or_approach",
+          "named_anatomy",
+          "key_steps_or_checks",
+          "decision_points",
+          "pitfalls_or_bailout"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "offer_branches",
+      "answerLength": 1013,
+      "finalAnswerQuality": {
+        "specificity": 5,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 4,
+        "lengthControl": 4,
+        "followUpChipQuality": 3
+      },
+      "answerSummary": "- **Objective:** Restore length, radial inclination, volar tilt, and articular congruity without losing reduction during plate placement. - **Exposure:** Use the standard volar FCR approach. Stay radial to the FCR tendon...",
+      "qualityGateWarningsBeforeRevision": [
+        "branch_rubric_coverage_low"
+      ],
+      "qualityGateWarnings": [
+        "branch_rubric_coverage_low"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Volar FCR approach anatomy",
+          "category": "Surgical Approach"
+        },
+        {
+          "label": "Reduction maneuvers for distal radius fractures",
+          "category": "Reduction Pearls"
+        },
+        {
+          "label": "Volar plate positioning pitfalls",
+          "category": "Complications"
+        },
+        {
+          "label": "Avoid dorsal screw penetration",
+          "category": "OR Technique"
+        },
+        {
+          "label": "Fragment-specific fixation strategies",
+          "category": "Implant Selection"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:branch_rubric_coverage_low"
+      ]
+    },
+    {
+      "id": "or-02",
+      "prompt": "Trigger finger release steps",
+      "mode": "or_prep",
+      "detectedMode": "or_prep",
+      "level": "pgy1",
+      "depth": "quick",
+      "clinicalContext": {
+        "entities": {
+          "region": "hand",
+          "diagnosis": "trigger finger"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "exposure",
+          "anatomy",
+          "steps",
+          "implants",
+          "complications",
+          "pitfalls"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "exposure_or_approach",
+          "named_anatomy",
+          "key_steps_or_checks",
+          "decision_points",
+          "pitfalls_or_bailout"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "offer_branches",
+      "answerLength": 695,
+      "finalAnswerQuality": {
+        "specificity": 4,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 4,
+        "lengthControl": 4,
+        "followUpChipQuality": 3
+      },
+      "answerSummary": "- **Objective:** Relieve constriction of the flexor tendon at the A1 pulley to restore smooth tendon gliding. - **Exposure:** Use the distal palmar crease as a landmark; make a small transverse or longitudinal incision o...",
+      "qualityGateWarningsBeforeRevision": [
+        "or_prep_learner_level_signal_missing",
+        "branch_rubric_coverage_low"
+      ],
+      "qualityGateWarnings": [
+        "or_prep_learner_level_signal_missing",
+        "branch_rubric_coverage_low"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Flexor tendon sheath anatomy",
+          "category": "anatomy"
+        },
+        {
+          "label": "A1 pulley and neurovascular bundle relationship",
+          "category": "anatomy"
+        },
+        {
+          "label": "Signs of incomplete release",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Checking tendon gliding post-release",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Common pitfalls in trigger finger release",
+          "category": "complications"
+        },
+        {
+          "label": "Postoperative management considerations",
+          "category": "postoperative management"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:or_prep_learner_level_signal_missing|branch_rubric_coverage_low"
+      ]
+    },
+    {
+      "id": "or-03",
+      "prompt": "Reverse TSA key surgical techniques",
+      "mode": "or_prep",
+      "detectedMode": "or_prep",
+      "level": "pgy4",
+      "depth": "deep",
+      "clinicalContext": {
+        "entities": {
+          "region": "shoulder",
+          "procedure": "reverse total shoulder arthroplasty"
+        },
+        "caseSlots": {
+          "priorSurgery": "mentioned"
+        },
+        "taskFacets": [
+          "exposure",
+          "anatomy",
+          "steps",
+          "implants",
+          "complications",
+          "pitfalls"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "exposure_or_approach",
+          "named_anatomy",
+          "key_steps_or_checks",
+          "decision_points",
+          "pitfalls_or_bailout"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "offer_branches",
+      "answerLength": 991,
+      "finalAnswerQuality": {
+        "specificity": 5,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 4,
+        "lengthControl": 4,
+        "followUpChipQuality": 3
+      },
+      "answerSummary": "- **Objective:** Achieve stable shoulder function by reversing the ball-and-socket configuration to improve deltoid mechanics, especially in cuff-deficient shoulders. - **Exposure:** Use a deltopectoral approach; identif...",
+      "qualityGateWarningsBeforeRevision": [],
+      "qualityGateWarnings": [],
+      "revisionTriggered": false,
+      "followUpChips": [
+        {
+          "label": "Biomechanics of reverse TSA",
+          "category": "Biomechanics"
+        },
+        {
+          "label": "Specific implant systems for reverse TSA",
+          "category": "Implant Selection"
+        },
+        {
+          "label": "Management of intraoperative complications",
+          "category": "Complications"
+        },
+        {
+          "label": "Importance of glenoid version",
+          "category": "Surgical Technique"
+        },
+        {
+          "label": "Deltoid tensioning techniques",
+          "category": "Surgical Technique"
+        }
+      ],
+      "specificFailureMode": [
+        "none_obvious"
+      ]
+    },
+    {
+      "id": "or-04",
+      "prompt": "How do I confirm carpal tunnel release is complete?",
+      "mode": "or_prep",
+      "detectedMode": "or_prep",
+      "level": "pgy1",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "procedure": "carpal tunnel release"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "exposure",
+          "anatomy",
+          "steps",
+          "implants",
+          "complications",
+          "pitfalls"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "exposure_or_approach",
+          "named_anatomy",
+          "key_steps_or_checks",
+          "decision_points",
+          "pitfalls_or_bailout"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "offer_branches",
+      "answerLength": 920,
+      "finalAnswerQuality": {
+        "specificity": 4,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 4,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "- **Objective:** Ensure complete decompression of the median nerve by releasing the transverse carpal ligament. - **Exposure:** Adequate exposure of the transverse carpal ligament is crucial. Ensure you have a clear view...",
+      "qualityGateWarningsBeforeRevision": [
+        "level_junior_orientation_missing"
+      ],
+      "qualityGateWarnings": [
+        "level_junior_orientation_missing"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Course of the median nerve and branches",
+          "category": "anatomy"
+        },
+        {
+          "label": "Anatomy of the transverse carpal ligament",
+          "category": "anatomy"
+        },
+        {
+          "label": "Techniques for safe exposure extension",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Effective palpation techniques for ligament release",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Common complications of carpal tunnel release",
+          "category": "complications"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:level_junior_orientation_missing"
+      ]
+    },
+    {
+      "id": "or-05",
+      "prompt": "Intertroch nail start point",
+      "mode": "or_prep",
+      "detectedMode": "or_prep",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "region": "hip",
+          "bone": "intertrochanteric femur"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "exposure",
+          "anatomy",
+          "steps",
+          "implants",
+          "complications",
+          "pitfalls"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "exposure_or_approach",
+          "named_anatomy",
+          "key_steps_or_checks",
+          "decision_points",
+          "pitfalls_or_bailout"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_now",
+      "answerLength": 981,
+      "finalAnswerQuality": {
+        "specificity": 5,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 4,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "**Objective:** Achieve proper entry point for nail insertion to ensure alignment and avoid iatrogenic fracture. **Exposure:** Use a lateral approach with the patient in a supine position on a fracture table. Ensure the C...",
+      "qualityGateWarningsBeforeRevision": [
+        "branch_rubric_coverage_low",
+        "entity_not_named"
+      ],
+      "qualityGateWarnings": [
+        "branch_rubric_coverage_low",
+        "entity_not_named"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Greater trochanter anatomy review",
+          "category": "anatomy"
+        },
+        {
+          "label": "Implications of incorrect starting points",
+          "category": "concept"
+        },
+        {
+          "label": "Using fluoroscopy for entry point adjustment",
+          "category": "technique"
+        },
+        {
+          "label": "Preventing varus malalignment",
+          "category": "complications"
+        },
+        {
+          "label": "Importance of nail trajectory",
+          "category": "concept"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:branch_rubric_coverage_low|entity_not_named"
+      ]
+    },
+    {
+      "id": "oite-01",
+      "prompt": "SCFE OITE points",
+      "mode": "oite",
+      "detectedMode": "oite",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "region": "hip",
+          "joint": "hip",
+          "diagnosis": "SCFE"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "classification",
+          "treatmentAlgorithm",
+          "testTraps",
+          "distractors"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "tested_concept",
+          "stem_clues",
+          "trap_or_distractor",
+          "algorithm_or_threshold"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "offer_branches",
+      "answerLength": 862,
+      "finalAnswerQuality": {
+        "specificity": 4,
+        "modeFit": 4,
+        "testRelevance": 4,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "- **Direct answer:** Unstable SCFE carries the highest risk of avascular necrosis (AVN); management urgency and pinning strategy are primarily determined by stability rather than slip angle alone. - **Core framework:** C...",
+      "qualityGateWarningsBeforeRevision": [
+        "oite_memory_hook_missing"
+      ],
+      "qualityGateWarnings": [
+        "oite_test_taking_signal_missing",
+        "oite_memory_hook_missing"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Classification of SCFE: Stable vs Unstable",
+          "category": "Classification Systems"
+        },
+        {
+          "label": "Imaging Findings in SCFE",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Endocrine Risk Factors in SCFE",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Management of Unstable SCFE",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Differential Diagnosis: SCFE vs Perthes",
+          "category": "Controversies"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:oite_test_taking_signal_missing|oite_memory_hook_missing"
+      ]
+    },
+    {
+      "id": "oite-02",
+      "prompt": "What is the Garden classification?",
+      "mode": "oite",
+      "detectedMode": "oite",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "classification": "Garden classification"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "classification",
+          "treatmentAlgorithm",
+          "testTraps",
+          "distractors"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "tested_concept",
+          "stem_clues",
+          "trap_or_distractor",
+          "algorithm_or_threshold"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_now",
+      "answerLength": 751,
+      "finalAnswerQuality": {
+        "specificity": 3,
+        "modeFit": 4,
+        "testRelevance": 2,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "- **Garden Classification Purpose:** Used to classify femoral neck fractures based on displacement, which guides treatment decisions. - **Type I:** Incomplete fracture or valgus impacted; often stable and treated non-ope...",
+      "qualityGateWarningsBeforeRevision": [
+        "attending_or_exam_pearl_missing",
+        "facet_oite_trap_distractor_missing",
+        "oite_trap_missing",
+        "oite_comparison_missing",
+        "oite_test_taking_signal_missing",
+        "oite_memory_hook_missing",
+        "branch_rubric_coverage_low"
+      ],
+      "qualityGateWarnings": [
+        "attending_or_exam_pearl_missing",
+        "facet_oite_trap_distractor_missing",
+        "oite_trap_missing",
+        "oite_comparison_missing",
+        "oite_test_taking_signal_missing",
+        "oite_memory_hook_missing",
+        "branch_rubric_coverage_low"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Differentiate Garden from Pauwels classification",
+          "category": "classification"
+        },
+        {
+          "label": "Understand surgical options for Garden III/IV",
+          "category": "treatment"
+        },
+        {
+          "label": "Recognize imaging features of Garden types",
+          "category": "imaging"
+        },
+        {
+          "label": "Learn complications associated with displaced fractures",
+          "category": "complications"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:attending_or_exam_pearl_missing|facet_oite_trap_distractor_missing|oite_trap_missing|oite_comparison_missing|oite_test_taking_signal_missing|oite_memory_hook_missing|branch_rubric_coverage_low",
+        "weak_oite_trap_layer"
+      ]
+    },
+    {
+      "id": "oite-03",
+      "prompt": "Femoral shaft fracture OITE traps",
+      "mode": "oite",
+      "detectedMode": "oite",
+      "level": "pgy3",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "region": "thigh",
+          "bone": "femoral shaft"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "classification",
+          "treatmentAlgorithm",
+          "testTraps",
+          "distractors",
+          "imaging"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "tested_concept",
+          "stem_clues",
+          "trap_or_distractor",
+          "algorithm_or_threshold"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_with_assumption",
+      "answerLength": 866,
+      "finalAnswerQuality": {
+        "specificity": 4,
+        "modeFit": 4,
+        "testRelevance": 4,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "- **Classic trap:** Confusing femoral shaft fractures with femoral neck fractures, especially in stems emphasizing mechanism and patient age. Pay attention to the location of the fracture on imaging. - **Distractor:** Op...",
+      "qualityGateWarningsBeforeRevision": [
+        "oite_comparison_missing",
+        "branch_rubric_coverage_low"
+      ],
+      "qualityGateWarnings": [
+        "oite_comparison_missing",
+        "branch_rubric_coverage_low"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Differentiating femoral neck from shaft fractures",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Indications for intramedullary nailing",
+          "category": "Surgical Technique"
+        },
+        {
+          "label": "Recognizing fat embolism syndrome",
+          "category": "Complications"
+        },
+        {
+          "label": "High-energy vs low-energy trauma in fractures",
+          "category": "Trauma Management"
+        },
+        {
+          "label": "Criteria for surgical intervention in fractures",
+          "category": "Clinical Decision Making"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:oite_comparison_missing|branch_rubric_coverage_low"
+      ]
+    },
+    {
+      "id": "oite-04",
+      "prompt": "Flexion extension gap imbalance questions",
+      "mode": "oite",
+      "detectedMode": "oite",
+      "level": "pgy3",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {},
+        "caseSlots": {},
+        "taskFacets": [
+          "classification",
+          "treatmentAlgorithm",
+          "testTraps",
+          "distractors"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "tested_concept",
+          "stem_clues",
+          "trap_or_distractor",
+          "algorithm_or_threshold"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "offer_branches",
+      "answerLength": 648,
+      "finalAnswerQuality": {
+        "specificity": 3,
+        "modeFit": 4,
+        "testRelevance": 4,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 3
+      },
+      "answerSummary": "- **Direct answer:** Flexion-extension gap imbalance in knee arthroplasty often requires adjusting femoral component position or soft tissue balancing. - **Core framework:** Evaluate the flexion gap (posterior condyles)...",
+      "qualityGateWarningsBeforeRevision": [
+        "facet_algorithm_threshold_missing",
+        "oite_comparison_missing",
+        "oite_algorithm_missing",
+        "oite_test_taking_signal_missing",
+        "oite_memory_hook_missing"
+      ],
+      "qualityGateWarnings": [
+        "facet_algorithm_threshold_missing",
+        "oite_comparison_missing",
+        "oite_algorithm_missing",
+        "oite_test_taking_signal_missing",
+        "oite_memory_hook_missing"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "How femoral component rotation affects gap balance",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Role of tibial slope in gap balancing",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Surgical techniques for gap imbalances",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Common misconceptions about gap imbalances",
+          "category": "clinical decision making"
+        },
+        {
+          "label": "Assessing flexion and extension gaps",
+          "category": "clinical decision making"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:facet_algorithm_threshold_missing|oite_comparison_missing|oite_algorithm_missing|oite_test_taking_signal_missing|oite_memory_hook_missing"
+      ]
+    },
+    {
+      "id": "oite-05",
+      "prompt": "Quiz me on THA must-see anatomy",
+      "mode": "oite",
+      "detectedMode": "oite",
+      "level": "med_student",
+      "depth": "quick",
+      "clinicalContext": {
+        "entities": {
+          "region": "hip",
+          "procedure": "total hip arthroplasty"
+        },
+        "caseSlots": {
+          "priorSurgery": "mentioned"
+        },
+        "taskFacets": [
+          "classification",
+          "treatmentAlgorithm",
+          "testTraps",
+          "distractors",
+          "anatomy"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "tested_concept",
+          "stem_clues",
+          "trap_or_distractor",
+          "algorithm_or_threshold"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_with_assumption",
+      "answerLength": 739,
+      "finalAnswerQuality": {
+        "specificity": 3,
+        "modeFit": 4,
+        "testRelevance": 2,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "**Question:** During a posterior approach to total hip arthroplasty, which structure is most at risk of injury when dislocating the hip? A) Sciatic nerve B) Femoral artery C) Obturator nerve D) Superior gluteal artery **...",
+      "qualityGateWarningsBeforeRevision": [
+        "facet_oite_trap_distractor_missing",
+        "facet_algorithm_threshold_missing",
+        "oite_trap_missing",
+        "oite_comparison_missing",
+        "oite_algorithm_missing",
+        "oite_board_pearl_missing",
+        "oite_test_taking_signal_missing",
+        "branch_rubric_coverage_low",
+        "level_junior_orientation_missing"
+      ],
+      "qualityGateWarnings": [
+        "facet_oite_trap_distractor_missing",
+        "facet_algorithm_threshold_missing",
+        "oite_trap_missing",
+        "oite_comparison_missing",
+        "oite_algorithm_missing",
+        "oite_board_pearl_missing",
+        "oite_test_taking_signal_missing",
+        "oite_memory_hook_missing",
+        "branch_rubric_coverage_low",
+        "level_junior_orientation_missing"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Structures at risk in posterior approach",
+          "category": "anatomy"
+        },
+        {
+          "label": "Structures at risk in lateral approach",
+          "category": "anatomy"
+        },
+        {
+          "label": "Preventing nerve injuries in THA",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Comparing surgical approaches for THA",
+          "category": "surgical technique"
+        },
+        {
+          "label": "Common pitfalls in total hip arthroplasty",
+          "category": "surgical technique"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:facet_oite_trap_distractor_missing|facet_algorithm_threshold_missing|oite_trap_missing|oite_comparison_missing|oite_algorithm_missing|oite_board_pearl_missing|oite_test_taking_signal_missing|oite_memory_hook_missing|branch_rubric_coverage_low|level_junior_orientation_missing",
+        "weak_oite_trap_layer"
+      ]
+    },
+    {
+      "id": "consult-01",
+      "prompt": "Ankle fracture consult. How should I think about it?",
+      "mode": "consult",
+      "detectedMode": "consult",
+      "level": "pgy1",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "region": "ankle",
+          "bone": "ankle"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "workup",
+          "imaging",
+          "classification",
+          "treatmentAlgorithm",
+          "complications",
+          "disposition"
+        ],
+        "missingCriticalSlots": [
+          "age",
+          "mechanism",
+          "open/closed status",
+          "neurovascular exam",
+          "imaging findings"
+        ],
+        "coverageRequirements": [
+          "red_flags",
+          "missing_information",
+          "workup",
+          "temporizing_care",
+          "definitive_management_or_disposition"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "ask_clarification",
+      "answerLength": 780,
+      "finalAnswerQuality": {
+        "specificity": 3,
+        "modeFit": 5,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "When evaluating an ankle fracture, start by determining if the fracture is open or closed, and assess for any neurovascular compromise or dislocation. Conduct a thorough neurovascular exam, check for open wounds, assess...",
+      "qualityGateWarningsBeforeRevision": [
+        "ask_clarification_answer_too_long"
+      ],
+      "qualityGateWarnings": [
+        "ask_clarification_answer_too_long"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Weber vs Lauge-Hansen classifications",
+          "category": "Classification Systems"
+        },
+        {
+          "label": "When syndesmosis is unstable",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Posterior malleolus decision-making",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Intra-op stress views for ankle stability",
+          "category": "OR Technique"
+        },
+        {
+          "label": "Ankle fracture treatment algorithms",
+          "category": "Treatment Algorithms"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:ask_clarification_answer_too_long",
+        "weak_consult_disposition"
+      ]
+    },
+    {
+      "id": "consult-02",
+      "prompt": "Treatment options for PJI",
+      "mode": "consult",
+      "detectedMode": "consult",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "diagnosis": "prosthetic joint infection"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "workup",
+          "imaging",
+          "classification",
+          "treatmentAlgorithm",
+          "complications",
+          "disposition"
+        ],
+        "missingCriticalSlots": [
+          "age",
+          "imaging findings",
+          "ESR/CRP/WBC and aspiration status",
+          "wound status"
+        ],
+        "coverageRequirements": [
+          "red_flags",
+          "missing_information",
+          "workup",
+          "temporizing_care",
+          "definitive_management_or_disposition"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "ask_clarification",
+      "answerLength": 1169,
+      "finalAnswerQuality": {
+        "specificity": 5,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "- **Assessment:** Determine if the infection is acute or chronic, as this influences treatment strategy. - **Immediate priorities:** Obtain cultures, assess the patient's systemic status, and evaluate the stability of th...",
+      "qualityGateWarningsBeforeRevision": [
+        "ask_clarification_answer_too_long"
+      ],
+      "qualityGateWarnings": [
+        "ask_clarification_answer_too_long"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "DAIR eligibility criteria",
+          "category": "Treatment Algorithm"
+        },
+        {
+          "label": "One-stage vs. two-stage exchange indications",
+          "category": "Treatment Algorithm"
+        },
+        {
+          "label": "Role of biofilm in PJI management",
+          "category": "Complications"
+        },
+        {
+          "label": "Importance of culture-directed antibiotics",
+          "category": "Treatment Algorithm"
+        },
+        {
+          "label": "Differentiating acute and chronic PJI",
+          "category": "Classification Systems"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:ask_clarification_answer_too_long",
+        "weak_consult_disposition"
+      ]
+    },
+    {
+      "id": "consult-03",
+      "prompt": "Open tibia in ED",
+      "mode": "consult",
+      "detectedMode": "consult",
+      "level": "pgy1",
+      "depth": "quick",
+      "clinicalContext": {
+        "entities": {},
+        "caseSlots": {
+          "acuity": "acute",
+          "openClosed": "open"
+        },
+        "taskFacets": [
+          "workup",
+          "imaging",
+          "classification",
+          "treatmentAlgorithm",
+          "complications",
+          "disposition"
+        ],
+        "missingCriticalSlots": [
+          "age",
+          "wound status"
+        ],
+        "coverageRequirements": [
+          "red_flags",
+          "missing_information",
+          "workup",
+          "temporizing_care",
+          "definitive_management_or_disposition"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_now",
+      "answerLength": 704,
+      "finalAnswerQuality": {
+        "specificity": 3,
+        "modeFit": 5,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "- **Urgency:** This is an emergent situation due to the high risk of infection and potential for neurovascular compromise. - **Immediate priorities:** Assess and document the neurovascular status, evaluate the wound for...",
+      "qualityGateWarningsBeforeRevision": [
+        "facet_consult_disposition_missing",
+        "level_junior_orientation_missing"
+      ],
+      "qualityGateWarnings": [
+        "facet_consult_disposition_missing",
+        "level_junior_orientation_missing"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Gustilo-Anderson classification for open fractures",
+          "category": "Classification Systems"
+        },
+        {
+          "label": "Principles of initial antibiotic therapy",
+          "category": "Treatment Protocols"
+        },
+        {
+          "label": "Steps for surgical debridement and fixation",
+          "category": "Surgical Techniques"
+        },
+        {
+          "label": "Conducting a thorough neurovascular exam",
+          "category": "Clinical Skills"
+        },
+        {
+          "label": "Tetanus prophylaxis in open fractures",
+          "category": "Preventive Care"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:facet_consult_disposition_missing|level_junior_orientation_missing",
+        "weak_consult_disposition"
+      ]
+    },
+    {
+      "id": "consult-04",
+      "prompt": "Painful TKA consult",
+      "mode": "consult",
+      "detectedMode": "consult",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "region": "knee",
+          "joint": "knee",
+          "diagnosis": "painful total knee arthroplasty",
+          "procedure": "total knee arthroplasty"
+        },
+        "caseSlots": {
+          "priorSurgery": "mentioned"
+        },
+        "taskFacets": [
+          "workup",
+          "imaging",
+          "classification",
+          "treatmentAlgorithm",
+          "complications",
+          "disposition"
+        ],
+        "missingCriticalSlots": [
+          "age",
+          "imaging findings"
+        ],
+        "coverageRequirements": [
+          "red_flags",
+          "missing_information",
+          "workup",
+          "temporizing_care",
+          "definitive_management_or_disposition"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "ask_clarification",
+      "answerLength": 46,
+      "finalAnswerQuality": {
+        "specificity": 3,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "BroBot could not format a structured response.",
+      "qualityGateWarningsBeforeRevision": [],
+      "qualityGateWarnings": [],
+      "revisionTriggered": false,
+      "followUpChips": [
+        {
+          "label": "Workup for painful total knee arthroplasty",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Imaging strategies for TKA pain",
+          "category": "Classification Systems"
+        },
+        {
+          "label": "Differential diagnosis for TKA pain",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Treatment options for painful TKA",
+          "category": "Indications"
+        },
+        {
+          "label": "Red flags in painful TKA cases",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Questions seniors might ask about TKA",
+          "category": "Pimp Questions"
+        }
+      ],
+      "specificFailureMode": [
+        "weak_consult_disposition"
+      ]
+    },
+    {
+      "id": "consult-05",
+      "prompt": "How should I present a distal radius fracture consult?",
+      "mode": "consult",
+      "detectedMode": "consult",
+      "level": "pgy1",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "region": "wrist",
+          "bone": "distal radius"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "workup",
+          "imaging",
+          "classification",
+          "treatmentAlgorithm",
+          "complications",
+          "disposition"
+        ],
+        "missingCriticalSlots": [
+          "age",
+          "mechanism",
+          "open/closed status",
+          "neurovascular exam",
+          "imaging findings"
+        ],
+        "coverageRequirements": [
+          "red_flags",
+          "missing_information",
+          "workup",
+          "temporizing_care",
+          "definitive_management_or_disposition"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "ask_clarification",
+      "answerLength": 641,
+      "finalAnswerQuality": {
+        "specificity": 5,
+        "modeFit": 5,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "- **Assessment:** Confirm if the fracture is open or closed and evaluate for neurovascular compromise. - **Immediate priorities:** Conduct and document a thorough neurovascular exam, ascertain open fracture status, and e...",
+      "qualityGateWarningsBeforeRevision": [
+        "ask_clarification_answer_too_long"
+      ],
+      "qualityGateWarnings": [
+        "ask_clarification_answer_too_long"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Classification of distal radius fractures",
+          "category": "Fracture Classification"
+        },
+        {
+          "label": "Indications for operative vs non-operative management",
+          "category": "Management Strategies"
+        },
+        {
+          "label": "Anatomy relevant to distal radius fractures",
+          "category": "Anatomy"
+        },
+        {
+          "label": "Common complications and their management",
+          "category": "Complications"
+        },
+        {
+          "label": "Importance of neurovascular exam in wrist injuries",
+          "category": "Clinical Skills"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:ask_clarification_answer_too_long",
+        "weak_consult_disposition"
+      ]
+    },
+    {
+      "id": "clinic-01",
+      "prompt": "Shoulder pain workup",
+      "mode": "clinic",
+      "detectedMode": "clinic",
+      "level": "med_student",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "region": "shoulder",
+          "joint": "shoulder",
+          "diagnosis": "shoulder pain"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "workup",
+          "imaging",
+          "indications",
+          "treatmentAlgorithm",
+          "complications"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "differential",
+          "history_exam",
+          "workup",
+          "first_line_management",
+          "escalation"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_with_assumption",
+      "answerLength": 1161,
+      "finalAnswerQuality": {
+        "specificity": 3,
+        "modeFit": 5,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "1. **Differential Diagnoses**: Consider conditions such as rotator cuff tear, impingement syndrome, adhesive capsulitis, glenohumeral arthritis, and referred pain from the cervical spine. Differentiate based on patient a...",
+      "qualityGateWarningsBeforeRevision": [
+        "attending_or_exam_pearl_missing"
+      ],
+      "qualityGateWarnings": [
+        "attending_or_exam_pearl_missing"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Specific tests for shoulder pathology",
+          "category": "Clinical Skills"
+        },
+        {
+          "label": "Indications for MRI vs. X-ray",
+          "category": "Imaging"
+        },
+        {
+          "label": "Differentiating acute and chronic shoulder pain",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Identifying red flags in shoulder pain",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Importance of mechanism of injury",
+          "category": "Clinical Skills"
+        },
+        {
+          "label": "Nonoperative management options for shoulder pain",
+          "category": "Rehabilitation"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:attending_or_exam_pearl_missing"
+      ]
+    },
+    {
+      "id": "clinic-02",
+      "prompt": "Indications for ACL reconstruction",
+      "mode": "clinic",
+      "detectedMode": "clinic",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "procedure": "ACL reconstruction"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "workup",
+          "imaging",
+          "indications",
+          "treatmentAlgorithm",
+          "complications"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "differential",
+          "history_exam",
+          "workup",
+          "first_line_management",
+          "escalation"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_now",
+      "answerLength": 728,
+      "finalAnswerQuality": {
+        "specificity": 3,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 3
+      },
+      "answerSummary": "1. **Acute ACL tear in active individuals**: Indicated for patients, especially athletes, with a complete tear and instability during activities involving pivoting or cutting. 2. **Chronic knee instability**: Patients ex...",
+      "qualityGateWarningsBeforeRevision": [
+        "facet_clinic_differential_missing",
+        "clinic_framework_weak",
+        "branch_rubric_coverage_low"
+      ],
+      "qualityGateWarnings": [
+        "facet_clinic_differential_missing",
+        "clinic_framework_weak",
+        "branch_rubric_coverage_low"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Non-operative management for partial ACL tears",
+          "category": "treatmentAlgorithm"
+        },
+        {
+          "label": "Timing of ACL surgery after injury",
+          "category": "treatmentAlgorithm"
+        },
+        {
+          "label": "Impact of age and activity on ACL surgery decisions",
+          "category": "clinicalDecisionMaking"
+        },
+        {
+          "label": "Assessing functional demands for ACL surgery",
+          "category": "clinicalDecisionMaking"
+        },
+        {
+          "label": "Influence of associated injuries on ACL reconstruction",
+          "category": "clinicalDecisionMaking"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:facet_clinic_differential_missing|clinic_framework_weak|branch_rubric_coverage_low",
+        "weak_clinic_workup_shape"
+      ]
+    },
+    {
+      "id": "clinic-03",
+      "prompt": "Differential diagnosis of hand infections",
+      "mode": "clinic",
+      "detectedMode": "clinic",
+      "level": "pgy1",
+      "depth": "quick",
+      "clinicalContext": {
+        "entities": {
+          "region": "hand"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "workup",
+          "imaging",
+          "indications",
+          "treatmentAlgorithm",
+          "complications"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "differential",
+          "history_exam",
+          "workup",
+          "first_line_management",
+          "escalation"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_with_assumption",
+      "answerLength": 626,
+      "finalAnswerQuality": {
+        "specificity": 2,
+        "modeFit": 5,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "1. **Cellulitis**: Look for diffuse erythema and swelling; typically managed with antibiotics. 2. **Abscess**: Presents with localized fluctuance; requires drainage and antibiotics. 3. **Flexor Tenosynovitis**: Character...",
+      "qualityGateWarningsBeforeRevision": [
+        "facet_clinic_differential_missing",
+        "clinic_framework_weak",
+        "level_junior_orientation_missing"
+      ],
+      "qualityGateWarnings": [
+        "facet_clinic_differential_missing",
+        "level_junior_orientation_missing"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Signs of flexor tenosynovitis",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Imaging indications for osteomyelitis",
+          "category": "Imaging"
+        },
+        {
+          "label": "Management protocol for abscesses",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Management of deep space infections",
+          "category": "Clinical Decision Making"
+        },
+        {
+          "label": "Differential diagnosis of hand infections",
+          "category": "Clinical Knowledge"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:facet_clinic_differential_missing|level_junior_orientation_missing",
+        "weak_clinic_workup_shape"
+      ]
+    },
+    {
+      "id": "general-01",
+      "prompt": "What is a neutralization plate?",
+      "mode": "general",
+      "detectedMode": "general",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {
+          "implant": "neutralization plate"
+        },
+        "caseSlots": {},
+        "taskFacets": [
+          "implants"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": []
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_now",
+      "answerLength": 806,
+      "finalAnswerQuality": {
+        "specificity": 4,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 3
+      },
+      "answerSummary": "A neutralization plate is an orthopaedic implant used to stabilize fractures by neutralizing forces at the fracture site without providing compression. It is particularly indicated for unstable fractures, often in the di...",
+      "qualityGateWarningsBeforeRevision": [
+        "branch_rubric_coverage_low"
+      ],
+      "qualityGateWarnings": [
+        "branch_rubric_coverage_low"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Neutralization vs Compression Plates",
+          "category": "implant_options"
+        },
+        {
+          "label": "Surgical Techniques for Neutralization Plates",
+          "category": "surgical_technique"
+        },
+        {
+          "label": "Biomechanical Principles of Plate Fixation",
+          "category": "concepts"
+        },
+        {
+          "label": "Load Sharing vs Load Bearing in Plate Selection",
+          "category": "concepts"
+        },
+        {
+          "label": "Role of Soft Tissue Management in Plate Fixation",
+          "category": "clinical_application"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:branch_rubric_coverage_low"
+      ]
+    },
+    {
+      "id": "general-02",
+      "prompt": "FDP and FDS anatomy facts I need to know",
+      "mode": "general",
+      "detectedMode": "general",
+      "level": "pgy2",
+      "depth": "standard",
+      "clinicalContext": {
+        "entities": {},
+        "caseSlots": {
+          "acuity": "acute"
+        },
+        "taskFacets": [
+          "anatomy",
+          "imaging"
+        ],
+        "missingCriticalSlots": [],
+        "coverageRequirements": [
+          "named_anatomy"
+        ]
+      },
+      "sourceContextFound": null,
+      "answerRoute": "answer_now",
+      "answerLength": 808,
+      "finalAnswerQuality": {
+        "specificity": 2,
+        "modeFit": 4,
+        "testRelevance": 3,
+        "surgicalUsefulness": 3,
+        "lengthControl": 4,
+        "followUpChipQuality": 4
+      },
+      "answerSummary": "The flexor digitorum superficialis (FDS) and flexor digitorum profundus (FDP) are essential for finger flexion. - **FDS**: Originates from the medial epicondyle of the humerus and inserts on the middle phalanx of digits...",
+      "qualityGateWarningsBeforeRevision": [
+        "decision_making_missing",
+        "branch_rubric_coverage_low"
+      ],
+      "qualityGateWarnings": [
+        "decision_making_missing",
+        "branch_rubric_coverage_low"
+      ],
+      "revisionTriggered": true,
+      "followUpChips": [
+        {
+          "label": "Common surgical approaches affecting FDS and FDP",
+          "category": "anatomy_at_risk"
+        },
+        {
+          "label": "Assessing FDP and FDS function clinically",
+          "category": "anatomy_at_risk"
+        },
+        {
+          "label": "Rehabilitation implications of tendon injuries",
+          "category": "anatomy_at_risk"
+        },
+        {
+          "label": "Differentiating between FDP and FDS injuries",
+          "category": "anatomy_at_risk"
+        },
+        {
+          "label": "Role of the flexor sheath in tendon healing",
+          "category": "anatomy_at_risk"
+        },
+        {
+          "label": "Potential complications of FDS and FDP injuries",
+          "category": "anatomy_at_risk"
+        }
+      ],
+      "specificFailureMode": [
+        "quality_gate:decision_making_missing|branch_rubric_coverage_low"
+      ]
+    }
+  ]
+}

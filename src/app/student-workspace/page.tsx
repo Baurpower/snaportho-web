@@ -11,7 +11,6 @@ import {
 } from "@/lib/student-workspace/checklists";
 import { getStudentWorkspaceEntryState } from "@/lib/student-workspace/page-state";
 import { getStudentWorkspaceScheduleEntriesForWeek } from "@/lib/student-workspace/schedule";
-import { getStudentWorkspaceTasks } from "@/lib/student-workspace/tasks";
 
 export default async function StudentWorkspacePage() {
   const state = await getStudentWorkspaceEntryState({ touchLastOpenedAt: true });
@@ -73,12 +72,11 @@ export default async function StudentWorkspacePage() {
     );
   }
 
-  const [scheduleEntries, successChecklist, checklistState, tasks] =
+  const [scheduleEntries, successChecklist, checklistState] =
     await Promise.all([
       getStudentWorkspaceScheduleEntriesForWeek(state.userId, state.weekStart),
       ensureStudentWorkspaceDailySuccessChecklist(state.userId),
       getStudentWorkspaceChecklistStateForDate(state.userId, state.today),
-      getStudentWorkspaceTasks(state.userId),
     ]);
 
   return (
@@ -93,7 +91,6 @@ export default async function StudentWorkspacePage() {
         successChecklistState={checklistState.filter((entry) =>
           successChecklist.items.some((item) => item.id === entry.checklist_item_id)
         )}
-        tasks={tasks}
         today={state.today}
         weekStart={state.weekStart}
       />

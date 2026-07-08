@@ -42,6 +42,8 @@ export function resolveOrthobulletsContext(input: {
 
   if (pageContext.mode === 'curriculum_content') {
     if (!pageContext.contentText) warnings.push('curriculum_content_not_visible');
+  } else if (pageContext.mode === 'topic_page') {
+    if (!pageContext.contentText) warnings.push('topic_content_not_visible');
   } else {
     if (!pageContext.stem) warnings.push('stem_not_visible');
     if (pageContext.answerChoices.length === 0) warnings.push('answer_choices_not_visible');

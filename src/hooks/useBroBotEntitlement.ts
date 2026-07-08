@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   fetchMeEntitlementsView,
@@ -91,6 +91,18 @@ export function useBroBotEntitlement(source: string): UseBroBotEntitlementResult
   }, [refresh, user]);
 
   const resolvedView = user ? view : null;
+  const usage = useMemo(
+    () => (resolvedView ? toWebUsageSnapshot(resolvedView) : null),
+    [resolvedView]
+  );
+  const menuStatus = useMemo(
+    () => (resolvedView ? toWebEntitlementMenuStatus(resolvedView) : null),
+    [resolvedView]
+  );
+  const usageMeta = useMemo(
+    () => (resolvedView ? toWebBroBotUsageMeta(resolvedView) : null),
+    [resolvedView]
+  );
 
   return {
     view: resolvedView,
@@ -98,8 +110,8 @@ export function useBroBotEntitlement(source: string): UseBroBotEntitlementResult
     error,
     isUnlimited: resolvedView?.isUnlimited === true,
     refresh,
-    usage: resolvedView ? toWebUsageSnapshot(resolvedView) : null,
-    menuStatus: resolvedView ? toWebEntitlementMenuStatus(resolvedView) : null,
-    usageMeta: resolvedView ? toWebBroBotUsageMeta(resolvedView) : null,
+    usage,
+    menuStatus,
+    usageMeta,
   };
 }

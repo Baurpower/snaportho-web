@@ -25,6 +25,26 @@ if (!window.__snapOrthoBroBotContentScriptLoaded) {
         pageUrl: window.location.href,
       });
 
+      const debugEnabled = (() => { try { return localStorage.getItem('snaportho_brobot_debug') === '1'; } catch { return false; } })();
+      if (debugEnabled && pageContext) {
+        const textLen = pageContext.contentMarkdown?.trim().length ?? pageContext.contentText?.trim().length ?? 0;
+        const textPreview = (pageContext.contentMarkdown ?? pageContext.contentText ?? '').trim().slice(0, 200);
+        console.debug('[BroBot] extraction result', {
+          url: window.location.href,
+          mode: pageContext.mode,
+          pageKind: (pageContext as unknown as Record<string, unknown>).pageKind,
+          title: pageContext.title,
+          headingCount: pageContext.sectionHeadings?.length ?? 0,
+          contentCharCount: textLen,
+          textPreview,
+          matchedSelectors: (pageContext.debug as Record<string, unknown> | undefined)?.matchedSelectors,
+          extractionWarnings: (pageContext as unknown as Record<string, unknown>).extractionWarnings,
+          usedBodyTextFallback: (pageContext.raw as Record<string, unknown> | undefined)?.providerSpecific,
+        });
+      } else if (debugEnabled) {
+        console.debug('[BroBot] extraction returned null', { url: window.location.href, provider });
+      }
+
       if (!pageContext) {
         sendResponse({
           ok: false,

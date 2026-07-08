@@ -35,6 +35,10 @@ export type WeekDayCard = {
   rotationColor: string | null;
   hasCall: boolean;
   callLabel: string | null;
+  isAllDay?: boolean | null;
+  startTime?: string | null;
+  endTime?: string | null;
+  timeLabel?: string | null;
   academicEvents?: WeekAcademicEvent[];
 };
 
@@ -366,6 +370,13 @@ export function WeekScheduleView({
       {tone.icon}
     </div>
   ) : null}
+
+  {day.timeLabel ? (
+    <div className="mt-1.5 flex w-fit min-w-0 max-w-full items-center gap-1.5 overflow-hidden rounded-xl bg-black/10 px-2 py-1 text-[11px] font-semibold xl:text-xs">
+      <Clock3 className="h-3 w-3 shrink-0" />
+      <span className="truncate">{day.timeLabel}</span>
+    </div>
+  ) : null}
 </div>
 
 <div className="mt-5 space-y-1.5 text-[11px] xl:text-xs">
@@ -572,6 +583,14 @@ export function WeekScheduleView({
               )
             }
           />
+
+          {draftDay.dayCategory ? (
+            <DetailField
+              label="Time"
+              icon={<Clock3 className="h-4 w-4" />}
+              value={draftDay.timeLabel ?? "Full day"}
+            />
+          ) : null}
 
           {draftDay.dayCategory === "Custom" ? (
             <DetailField

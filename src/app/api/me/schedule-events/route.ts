@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 import { createScheduleEvents } from '@/lib/workspace/call/schedule-events'
+import { validateScheduleEventTimes } from '@/lib/workspace/call/schedule-event-time'
 
 type CreateBody = {
   title?: string
@@ -16,10 +17,6 @@ type CreateBody = {
 
 function isValidDateString(value: unknown): value is string {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)
-}
-
-function isValidTimeString(value: unknown): value is string {
-  return typeof value === 'string' && /^\d{2}:\d{2}$/.test(value)
 }
 
 export async function POST(request: NextRequest) {
@@ -68,20 +65,14 @@ export async function POST(request: NextRequest) {
 
     const isAllDay = body.isAllDay ?? true
 
-    if (!isAllDay) {
-      if (body.startTime && !isValidTimeString(body.startTime)) {
-        return NextResponse.json(
-          { error: 'startTime must be HH:MM' },
-          { status: 400 }
-        )
-      }
+    const timeValidation = validateScheduleEventTimes({
+      isAllDay,
+      startTime: body.startTime,
+      endTime: body.endTime,
+    })
 
-      if (body.endTime && !isValidTimeString(body.endTime)) {
-        return NextResponse.json(
-          { error: 'endTime must be HH:MM' },
-          { status: 400 }
-        )
-      }
+    if (!timeValidation.valid) {
+      return NextResponse.json({ error: timeValidation.error }, { status: 400 })
     }
 
     const created = await createScheduleEvents({

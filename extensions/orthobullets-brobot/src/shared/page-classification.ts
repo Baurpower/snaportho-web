@@ -47,6 +47,8 @@ export function hasEducationalContent(context: OrthobulletsPageContext) {
   return readableTextLength >= MIN_EDUCATIONAL_TEXT_CHARS || referencesHeavy;
 }
 
+const MIN_TOPIC_TEXT_CHARS = 80;
+
 export function classifyPage(context: OrthobulletsPageContext): PageClassification {
   const hasStem = Boolean(context.stem?.trim());
   const answerChoiceCount = context.answerChoices.length;
@@ -64,6 +66,43 @@ export function classifyPage(context: OrthobulletsPageContext): PageClassificati
   let pageKind: PageClassification['pageKind'];
   let confidence: number;
   let reason: string;
+
+  if (context.provider === 'orthobullets' && context.mode === 'topic_page') {
+    // Classify as topic_page whenever we have solid content OR a title/heading —
+    // even if the text threshold isn't met yet (e.g. content still loading,
+    // accordion sections collapsed, or Orthobullets div-based headings not
+    // picked up by the semantic block scanner).
+    const titlePresent = Boolean(title?.trim());
+    if (readableTextLength >= MIN_TOPIC_TEXT_CHARS || headings.length > 0) {
+      pageKind = 'topic_page';
+      confidence = readableTextLength >= 300 ? 0.9 : 0.75;
+      reason = 'Detected an Orthobullets topic page with visible headings/bullets.';
+    } else if (titlePresent || readableTextLength > 0) {
+      pageKind = 'topic_page';
+      confidence = 0.6;
+      reason = 'Detected an Orthobullets topic page by URL; content may still be loading.';
+    } else {
+      pageKind = 'unreadable';
+      confidence = 0.6;
+      reason = 'This looks like an Orthobullets topic page, but no content was visible yet.';
+    }
+    return {
+      pageKind,
+      confidence,
+      reason,
+      detected: {
+        hasStem,
+        answerChoiceCount,
+        readableTextLength,
+        headings: headings.slice(0, 12),
+        referencesCount,
+        tablesCount,
+        imagesCount,
+        activeUrl,
+        title,
+      },
+    };
+  }
 
   if (validQuestion && educational) {
     pageKind = 'mixed';
@@ -132,8 +171,11 @@ export function isPageUsable(context: OrthobulletsPageContext, options: { forceQ
   return classification.pageKind !== 'unreadable';
 }
 
-export function preferredBrobotMode(context: OrthobulletsPageContext): 'question_tutor' | 'explain_page' {
+export function preferredBrobotMode(
+  context: OrthobulletsPageContext
+): 'question_tutor' | 'explain_page' | 'topic_tutor' {
   const classification = context.classification ?? classifyPage(context);
+  if (classification.pageKind === 'topic_page') return 'topic_tutor';
   if (classification.pageKind === 'educational_content') return 'explain_page';
   if (classification.pageKind === 'mixed') return 'question_tutor';
   if (classification.pageKind === 'question') return 'question_tutor';
