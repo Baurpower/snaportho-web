@@ -4,14 +4,14 @@ import { preRouteBroBotIntent } from './pre-router';
 import { getAnswerRubric } from './answer-rubrics';
 
 const broadPrompts = [
-  ['What are the steps for ankle ORIF?', 'fracture_orif', /fluoroscopy|intraoperative checks/i],
-  ['What are the steps for distal radius ORIF?', 'fracture_orif', /reduction strategy/i],
-  ['Walk me through tibial plateau ORIF.', 'fracture_orif', /classification-specific pathway/i],
-  ['What are the steps for olecranon ORIF?', 'fracture_orif', /implant\/fixation/i],
-  ['Diagnostic shoulder scope.', 'arthroscopy', /portal placement/i],
-  ['What are the steps for reverse TSA?', 'arthroplasty', /trialing \/ balancing/i],
-  ['How do you do trigger finger release?', 'soft_tissue_release', /release endpoint/i],
-  ['ACL reconstruction steps.', 'tendon_ligament_repair', /graft\/repair choice/i],
+  ['What are the steps for ankle ORIF?', 'fracture_orif', /fluoro|intraoperative checks/i],
+  ['What are the steps for distal radius ORIF?', 'fracture_orif', /reduction maneuvers/i],
+  ['Walk me through tibial plateau ORIF.', 'fracture_orif', /fracture pattern/i],
+  ['What are the steps for olecranon ORIF?', 'fracture_orif', /fixation options/i],
+  ['Diagnostic shoulder scope.', 'arthroscopy', /portals/i],
+  ['What are the steps for reverse TSA?', 'arthroplasty', /balance and stability/i],
+  ['How do you do trigger finger release?', 'soft_tissue_release', /release is complete/i],
+  ['ACL reconstruction steps.', 'tendon_ligament_repair', /graft/i],
 ] as const;
 
 for (const [message, expectedCategory, expectedBranch] of broadPrompts) {
@@ -19,12 +19,18 @@ for (const [message, expectedCategory, expectedBranch] of broadPrompts) {
   assert.equal(intent.source, 'local', message);
   assert.equal(intent.mode, 'or_prep', message);
   assert.equal(intent.procedureCategory, expectedCategory, message);
-  assert.equal(intent.requiresBranchSelection, true, message);
-  assert.equal(intent.answerImmediately, false, message);
+  assert.equal(intent.requiresBranchSelection, false, message);
+  assert.equal(intent.answerImmediately, true, message);
   assert.ok(
     intent.branchOptions.some((branch) => expectedBranch.test(branch.label)),
     `${message} should include ${expectedBranch}`
   );
+}
+
+for (const message of ['fracture', 'hip', 'compare approaches']) {
+  const intent = preRouteBroBotIntent({ message, selectedMode: 'auto' });
+  assert.equal(intent.requiresBranchSelection, true, message);
+  assert.equal(intent.answerImmediately, false, message);
 }
 
 const fcr = preRouteBroBotIntent({
@@ -107,11 +113,11 @@ const ankleFractureClassification = preRouteBroBotIntent({
 assert.deepEqual(
   ankleFractureClassification.branchOptions.map((option) => option.label),
   [
+    'Stable vs unstable mortise',
     'Weber vs Lauge-Hansen',
     'Stress views',
-    'Syndesmosis clues',
-    'Treatment implications',
-    'Common traps',
+    'When syndesmosis is unstable',
+    'Posterior malleolus decision-making',
     'OITE questions',
   ]
 );

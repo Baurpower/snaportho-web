@@ -1,0 +1,40 @@
+{
+  "topicKey": "surgical-approaches",
+  "pilotKey": "surgical-approaches-neighborhood",
+  "generatedAt": "2026-07-08T21:22:54.589Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "70 proposals still awaiting human review",
+    "70 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "1 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 1,
+    "humanReviewItems": 70,
+    "attendingReviewItems": 70,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

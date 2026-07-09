@@ -1,0 +1,20 @@
+[
+  {
+    "code": "PREPARE_SLICE_MISSING",
+    "message": "No static Prepare slice registered for topic orthopaedic-anatomy",
+    "collectorId": "static-prepare-collector",
+    "severity": "warning"
+  },
+  {
+    "code": "ANKI_SIGNALS_UNAVAILABLE",
+    "message": "No Anki mapping count registered for topic orthopaedic-anatomy",
+    "collectorId": "anki-signal-collector",
+    "severity": "info"
+  },
+  {
+    "code": "OB_MAPPINGS_ZERO",
+    "message": "No Orthobullets mapping count available for topic orthopaedic-anatomy",
+    "collectorId": "orthobullets-metadata-collector",
+    "severity": "info"
+  }
+]

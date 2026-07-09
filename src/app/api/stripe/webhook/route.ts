@@ -16,7 +16,7 @@ import {
   upsertSubscriptionEvent,
 } from '@/lib/subscriptions/events';
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+export const runtime = 'nodejs';
 
 function summarizeId(value: string | null | undefined) {
   if (!value) return null;
@@ -35,6 +35,25 @@ function logStripeWebhookAction(details: Record<string, unknown>) {
     provider: 'stripe',
     ...details,
   });
+}
+
+function getEventObjectIds(event: Stripe.Event) {
+  const object = event.data.object as {
+    id?: string;
+    customer?: string | { id?: string } | null;
+    subscription?: string | { id?: string } | null;
+  };
+
+  return {
+    stripe_customer_id: getStripeCustomerId(
+      object.customer as string | Stripe.Customer | Stripe.DeletedCustomer | null | undefined
+    ),
+    stripe_subscription_id:
+      typeof object.subscription === 'string'
+        ? object.subscription
+        : object.subscription?.id ?? (event.type.startsWith('customer.subscription.') ? object.id : null),
+    checkout_session_id: event.type.startsWith('checkout.session.') ? object.id ?? null : null,
+  };
 }
 
 async function runStripeSubscriptionSync(params: {
@@ -73,9 +92,15 @@ async function runStripeSubscriptionSync(params: {
 export async function POST(request: Request) {
   const body = await request.text();
   const signature = request.headers.get('stripe-signature');
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
 
   if (!signature) {
     return NextResponse.json({ error: 'Missing signature' }, { status: 400 });
+  }
+
+  if (!webhookSecret) {
+    console.error('[stripe/webhook] STRIPE_WEBHOOK_SECRET is not configured');
+    return NextResponse.json({ error: 'Webhook is not configured' }, { status: 500 });
   }
 
   let event: Stripe.Event;
@@ -93,27 +118,35 @@ export async function POST(request: Request) {
     action: 'event_received',
     event_type: event.type,
     created: event.created,
+    livemode: event.livemode,
+    mode: event.livemode ? 'live' : 'test',
+    ...getEventObjectIds(event),
   });
-
-  const existing = await getExistingSubscriptionEvent({
-    provider: 'stripe',
-    providerEventId: event.id,
-  });
-
-  if (existing?.processed_at) {
-    return NextResponse.json({ received: true, duplicate: true });
-  }
-
-  if (!existing) {
-    await upsertSubscriptionEvent({
-      provider: 'stripe',
-      providerEventId: event.id,
-      eventType: event.type,
-      rawPayload: event as unknown as Record<string, unknown>,
-    });
-  }
 
   try {
+    const existing = await getExistingSubscriptionEvent({
+      provider: 'stripe',
+      providerEventId: event.id,
+    });
+
+    if (existing?.processed_at) {
+      logStripeWebhookAction({
+        stripe_event_id: event.id,
+        event_type: event.type,
+        action: 'duplicate_event_skipped',
+      });
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+
+    if (!existing) {
+      await upsertSubscriptionEvent({
+        provider: 'stripe',
+        providerEventId: event.id,
+        eventType: event.type,
+        rawPayload: event as unknown as Record<string, unknown>,
+      });
+    }
+
     const stripe = getStripe();
     switch (event.type) {
       case 'checkout.session.completed': {
@@ -330,6 +363,11 @@ export async function POST(request: Request) {
         break;
 
       default:
+        logStripeWebhookAction({
+          stripe_event_id: event.id,
+          event_type: event.type,
+          action: 'unhandled_event_ignored',
+        });
         break;
     }
 
@@ -342,6 +380,15 @@ export async function POST(request: Request) {
       processingResult: { received: true, success: true },
     });
 
+    logStripeWebhookAction({
+      stripe_event_id: event.id,
+      event_type: event.type,
+      action: 'event_processed',
+      livemode: event.livemode,
+      mode: event.livemode ? 'live' : 'test',
+      ...getEventObjectIds(event),
+    });
+
     return NextResponse.json({ received: true });
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
@@ -350,17 +397,27 @@ export async function POST(request: Request) {
       event_type: event.type,
       error: errorMessage,
     });
-    await upsertSubscriptionEvent({
-      provider: 'stripe',
-      providerEventId: event.id,
-      eventType: event.type,
-      rawPayload: event as unknown as Record<string, unknown>,
-      processingResult: {
-        received: true,
-        success: false,
-        error: errorMessage,
-      },
-    });
+    try {
+      await upsertSubscriptionEvent({
+        provider: 'stripe',
+        providerEventId: event.id,
+        eventType: event.type,
+        rawPayload: event as unknown as Record<string, unknown>,
+        processingResult: {
+          received: true,
+          success: false,
+          error: errorMessage,
+        },
+      });
+    } catch (auditError) {
+      console.error('[stripe/webhook] failed to record processing error', {
+        stripe_event_id: event.id,
+        event_type: event.type,
+        error: auditError instanceof Error ? auditError.message : String(auditError),
+      });
+    }
+
+    // Return 500 deliberately so Stripe retries events whose entitlement sync did not finish.
     return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 });
   }
 }

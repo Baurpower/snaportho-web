@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-07-08T21:22:54.599Z",
+  "gaps": [
+    {
+      "id": "gap-rel-1",
+      "kind": "missing_relationship",
+      "priority": "high",
+      "confidence": 0.92,
+      "reason": "Operative Anatomy Backbone missing outbound part_of (0/1).",
+      "requiredReviewer": "curator",
+      "maturityImpact": 0.1,
+      "ontologyRule": "anatomy.pred.hierarchy",
+      "anchorEntitySlug": "operative-anatomy-backbone",
+      "subjectSlug": "operative-anatomy-backbone",
+      "predicate": "part_of"
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "byKind": {
+      "missing_relationship": 1
+    },
+    "byPriority": {
+      "high": 1
+    }
+  }
+}

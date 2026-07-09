@@ -1,0 +1,109 @@
+{
+  "generatedAt": "2026-07-08T21:22:54.589Z",
+  "frameworkVersion": "1.0.0",
+  "topicKey": "surgical-approaches",
+  "pilotKey": "surgical-approaches-neighborhood",
+  "executionOrder": [
+    "work-relationship-builder",
+    "work-duplicate-detector",
+    "work-quality-scorer",
+    "work-conflict-resolver",
+    "work-review-assistant",
+    "work-publication-validator"
+  ],
+  "parallelLayers": [
+    [
+      "work-relationship-builder"
+    ],
+    [
+      "work-duplicate-detector"
+    ],
+    [
+      "work-quality-scorer"
+    ],
+    [
+      "work-conflict-resolver"
+    ],
+    [
+      "work-review-assistant"
+    ],
+    [
+      "work-publication-validator"
+    ]
+  ],
+  "entries": [
+    {
+      "assignmentId": "work-relationship-builder",
+      "agentId": "relationship-builder",
+      "status": "completed",
+      "proposalCount": 1,
+      "executionTimeMs": 10,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-duplicate-detector",
+      "agentId": "duplicate-detector",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 1,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-quality-scorer",
+      "agentId": "quality-scorer",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-conflict-resolver",
+      "agentId": "conflict-resolver",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 0,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-review-assistant",
+      "agentId": "review-assistant",
+      "status": "completed",
+      "proposalCount": 1248,
+      "executionTimeMs": 23,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    },
+    {
+      "assignmentId": "work-publication-validator",
+      "agentId": "publication-validator",
+      "status": "completed",
+      "proposalCount": 0,
+      "executionTimeMs": 3,
+      "errors": [],
+      "warnings": [],
+      "skipped": false,
+      "timedOut": false
+    }
+  ],
+  "totalProposalsEmitted": 1249,
+  "uniqueProposals": 1248,
+  "completedAgents": 6,
+  "failedAgents": 0,
+  "partialAgents": 0,
+  "skippedAgents": 0,
+  "databaseModified": false
+}

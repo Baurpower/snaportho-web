@@ -211,26 +211,19 @@ export function useChatScrollController({
       return;
     }
 
-    // A new assistant response just started: anchor the viewport to the top of
-    // that message once, then stop pinning to bottom so streamed tokens can grow
-    // the message in place without repeatedly forcing the scroll position.
+    // A new assistant response starts pinned to the newest content. Explicit
+    // wheel/touch/keyboard scrolling above unpins it via the handlers above.
     if (activeAssistantId && lastAnchoredAssistantIdRef.current !== activeAssistantId) {
       lastAnchoredAssistantIdRef.current = activeAssistantId;
-      const element = viewport.querySelector<HTMLElement>(
-        `[data-chat-scroll-id="${CSS.escape(activeAssistantId)}"]`
-      );
-
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        userPinnedRef.current = false;
-        isPinnedToBottomRef.current = false;
-        setIsNearBottom(false);
-        setUserHasScrolledUp(false);
-        setShowNewMessagesButton(false);
-        previousAnchorRef.current = getFirstVisibleAnchor(viewport);
-        previousScrollTopRef.current = viewport.scrollTop;
-        return;
-      }
+      userPinnedRef.current = true;
+      isPinnedToBottomRef.current = true;
+      viewport.scrollTop = viewport.scrollHeight;
+      setIsNearBottom(true);
+      setUserHasScrolledUp(false);
+      setShowNewMessagesButton(false);
+      previousAnchorRef.current = getFirstVisibleAnchor(viewport);
+      previousScrollTopRef.current = viewport.scrollTop;
+      return;
     }
 
     if (isPinnedToBottomRef.current) {

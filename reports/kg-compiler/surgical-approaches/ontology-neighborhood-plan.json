@@ -1,0 +1,971 @@
+{
+  "topicKey": "surgical-approaches",
+  "pilotKey": "surgical-approaches-neighborhood",
+  "primaryEntitySlug": "surgical-approaches",
+  "displayName": "Surgical Approaches",
+  "generatedAt": "2026-07-08T21:22:54.541Z",
+  "nodes": [
+    {
+      "slug": "operative-anatomy-backbone",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Operative Anatomy Backbone",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "surgical-approaches",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Surgical Approaches",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 92,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "approach-region-shoulder",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Shoulder",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 5
+    },
+    {
+      "slug": "approach-region-humerus-elbow",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Humerus Elbow",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 8
+    },
+    {
+      "slug": "approach-region-forearm-wrist",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Forearm Wrist",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 7
+    },
+    {
+      "slug": "approach-region-hand",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hand",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 5
+    },
+    {
+      "slug": "approach-region-pelvis-acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis Acetabulum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 6
+    },
+    {
+      "slug": "approach-region-hip",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 6
+    },
+    {
+      "slug": "approach-region-femur-knee",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femur Knee",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 7
+    },
+    {
+      "slug": "approach-region-tibia-ankle",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibia Ankle",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 8
+    },
+    {
+      "slug": "approach-region-foot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Foot",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 5
+    },
+    {
+      "slug": "approach-region-spine",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Spine",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 8
+    },
+    {
+      "slug": "operative-patient-positioning",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Patient Positioning",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-room-setup-principles",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Room Setup Principles",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-fluoroscopy-positioning",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Fluoroscopy Positioning",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-c-arm-strategies",
+      "entityType": "treatment_principle",
+      "preferredLabel": "C Arm Strategies",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-prep-and-drape-regions",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Prep And Drape Regions",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-tourniquet-principles",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Tourniquet Principles",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-extensile-exposure-principles",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Extensile Exposure Principles",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-surgical-windows",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Surgical Windows",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-safe-dissection-zones",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Safe Dissection Zones",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "operative-closure-principles",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Closure Principles",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "approach-component-indications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Indications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-contraindications",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Contraindications",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-surface-landmarks",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Surface Landmarks",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-skin-incision-landmarks",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Skin Incision Landmarks",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-superficial-interval",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Superficial Interval",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-deep-interval",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Deep Interval",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-internervous-plane",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Internervous Plane",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-intermuscular-plane",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Intermuscular Plane",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-muscles-encountered",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Muscles Encountered",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-structures-requiring-release",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Structures Requiring Release",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-structures-requiring-protection",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Structures Requiring Protection",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-neurovascular-structures-at-risk",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Neurovascular Structures At Risk",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-exposure-limits",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Exposure Limits",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-extensile-options",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Extensile Options",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-bailout-options",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Bailout Options",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-closure-layers",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Closure Layers",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "approach-component-postoperative-restrictions",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Postoperative Restrictions",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 56
+    },
+    {
+      "slug": "deltopectoral-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Deltopectoral Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "anterosuperior-shoulder-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anterosuperior Shoulder Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "superior-shoulder-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Superior Shoulder Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-shoulder-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterior Shoulder Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "anterior-humerus-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anterior Humerus Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "anterolateral-humerus-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anterolateral Humerus Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-humerus-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterior Humerus Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "kocher-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Kocher Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "kaplan-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Kaplan Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "bryan-morrey-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Bryan-Morrey Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "olecranon-osteotomy-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Olecranon Osteotomy Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "volar-henry-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Volar Henry Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "dorsal-wrist-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Dorsal Wrist Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "extended-fcr-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Extended FCR Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "dorsal-spanning-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Dorsal Spanning Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radius-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Radius Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ulna-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Ulna Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "carpal-tunnel-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Carpal Tunnel Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "trigger-finger-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Trigger Finger Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "thumb-ucl-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Thumb UCL Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "finger-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Finger Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pfannenstiel-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Pfannenstiel Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "stoppa-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Stoppa Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ilioinguinal-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Ilioinguinal Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "kocher-langenbeck-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Kocher-Langenbeck Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "smith-petersen-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Smith-Petersen Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-hip-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterior Hip Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "direct-anterior-hip-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Direct Anterior Hip Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "direct-lateral-hip-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Direct Lateral Hip Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "anterolateral-hip-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anterolateral Hip Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "surgical-hip-dislocation-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Surgical Hip Dislocation",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lateral-femur-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Lateral Femur Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-femur-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Distal Femur Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "medial-parapatellar-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Medial Parapatellar Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "subvastus-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Subvastus Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "midvastus-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Midvastus Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-knee-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterior Knee Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "anteromedial-tibia-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anteromedial Tibia Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "anterolateral-tibia-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anterolateral Tibia Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterolateral-tibia-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterolateral Tibia Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posteromedial-tibia-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posteromedial Tibia Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "anterior-ankle-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anterior Ankle Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lateral-ankle-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Lateral Ankle Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-ankle-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterior Ankle Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "dorsal-foot-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Dorsal Foot Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "medial-foot-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Medial Foot Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lateral-foot-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Lateral Foot Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "plantar-foot-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Plantar Foot Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-cervical-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterior Cervical Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acdf-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anterior Cervical Discectomy and Fusion Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-thoracic-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterior Thoracic Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterior-lumbar-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Posterior Lumbar Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "tlif-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Transforaminal Lumbar Interbody Fusion Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "alif-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Anterior Lumbar Interbody Fusion Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "xlif-approach",
+      "entityType": "surgical_approach",
+      "preferredLabel": "Lateral Lumbar Interbody Fusion Approach",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 18,
+      "outboundEdgeCount": 1
+    }
+  ],
+  "edgeCount": 1083,
+  "claimCount": 65,
+  "decisionPointCount": 5,
+  "roles": {
+    "primary_condition": [
+      "surgical-approaches"
+    ],
+    "neighboring_anatomy": [
+      "operative-anatomy-backbone",
+      "approach-region-shoulder",
+      "approach-region-humerus-elbow",
+      "approach-region-forearm-wrist",
+      "approach-region-hand",
+      "approach-region-pelvis-acetabulum",
+      "approach-region-hip",
+      "approach-region-femur-knee",
+      "approach-region-tibia-ankle",
+      "approach-region-foot",
+      "approach-region-spine"
+    ],
+    "procedure": [
+      "deltopectoral-approach",
+      "anterosuperior-shoulder-approach",
+      "superior-shoulder-approach",
+      "posterior-shoulder-approach",
+      "anterior-humerus-approach",
+      "anterolateral-humerus-approach",
+      "posterior-humerus-approach",
+      "kocher-approach",
+      "kaplan-approach",
+      "bryan-morrey-approach",
+      "olecranon-osteotomy-approach",
+      "volar-henry-approach",
+      "dorsal-wrist-approach",
+      "extended-fcr-approach",
+      "dorsal-spanning-approach",
+      "radius-approach",
+      "ulna-approach",
+      "carpal-tunnel-approach",
+      "trigger-finger-approach",
+      "thumb-ucl-approach",
+      "finger-approach",
+      "pfannenstiel-approach",
+      "stoppa-approach",
+      "ilioinguinal-approach",
+      "kocher-langenbeck-approach",
+      "smith-petersen-approach",
+      "posterior-hip-approach",
+      "direct-anterior-hip-approach",
+      "direct-lateral-hip-approach",
+      "anterolateral-hip-approach",
+      "surgical-hip-dislocation-approach",
+      "lateral-femur-approach",
+      "distal-femur-approach",
+      "medial-parapatellar-approach",
+      "subvastus-approach",
+      "midvastus-approach",
+      "posterior-knee-approach",
+      "anteromedial-tibia-approach",
+      "anterolateral-tibia-approach",
+      "posterolateral-tibia-approach",
+      "posteromedial-tibia-approach",
+      "anterior-ankle-approach",
+      "lateral-ankle-approach",
+      "posterior-ankle-approach",
+      "dorsal-foot-approach",
+      "medial-foot-approach",
+      "lateral-foot-approach",
+      "plantar-foot-approach",
+      "posterior-cervical-approach",
+      "acdf-approach",
+      "posterior-thoracic-approach",
+      "posterior-lumbar-approach",
+      "tlif-approach",
+      "alif-approach",
+      "xlif-approach"
+    ],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [
+      "operative-patient-positioning",
+      "operative-surgical-windows",
+      "operative-closure-principles",
+      "approach-component-neurovascular-structures-at-risk"
+    ],
+    "claim_anchor": [
+      "operative-fluoroscopy-positioning",
+      "operative-c-arm-strategies",
+      "operative-tourniquet-principles",
+      "operative-extensile-exposure-principles"
+    ],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": [
+      "operative-room-setup-principles",
+      "operative-prep-and-drape-regions",
+      "operative-safe-dissection-zones",
+      "approach-component-indications",
+      "approach-component-contraindications",
+      "approach-component-surface-landmarks",
+      "approach-component-skin-incision-landmarks",
+      "approach-component-superficial-interval",
+      "approach-component-deep-interval",
+      "approach-component-internervous-plane",
+      "approach-component-intermuscular-plane",
+      "approach-component-muscles-encountered",
+      "approach-component-structures-requiring-release",
+      "approach-component-structures-requiring-protection",
+      "approach-component-exposure-limits",
+      "approach-component-extensile-options",
+      "approach-component-bailout-options",
+      "approach-component-closure-layers",
+      "approach-component-postoperative-restrictions"
+    ]
+  }
+}

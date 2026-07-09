@@ -1,0 +1,2482 @@
+{
+  "topicKey": "trauma-fundamentals",
+  "pilotKey": "trauma-fundamentals-neighborhood",
+  "generatedAt": "2026-07-08T21:19:54.025Z",
+  "entities": [
+    {
+      "slug": "trauma-fundamentals",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Trauma Fundamentals",
+      "description": "Reusable principles for safe initial evaluation and management of orthopaedic trauma.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "clinical_kind": "foundational_backbone",
+        "maturity_target": 7,
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "trauma-fundamentals",
+        "description": "Reusable principles for safe initial evaluation and management of orthopaedic trauma.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|trauma-fundamentals"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "trauma-primary-survey",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Trauma Primary Survey",
+      "description": "Structured identification and treatment of immediate life threats before limb-focused care.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "trauma-primary-survey",
+        "description": "Structured identification and treatment of immediate life threats before limb-focused care.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|trauma-primary-survey"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "secondary-survey",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Trauma Secondary Survey",
+      "description": "Head-to-toe evaluation after immediate life threats have been addressed.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "secondary-survey",
+        "description": "Head-to-toe evaluation after immediate life threats have been addressed.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|secondary-survey"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "orthopaedic-trauma-resuscitation",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Orthopaedic Trauma Resuscitation",
+      "description": "Coordination of fracture care with physiologic stabilization and resuscitation.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "orthopaedic-trauma-resuscitation",
+        "description": "Coordination of fracture care with physiologic stabilization and resuscitation.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|orthopaedic-trauma-resuscitation"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "neurovascular-examination",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Neurovascular Examination",
+      "description": "Documented motor, sensory, pulse, perfusion, and vascular assessment distal to an injury.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "neurovascular-examination",
+        "description": "Documented motor, sensory, pulse, perfusion, and vascular assessment distal to an injury.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|neurovascular-examination"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "serial-neurovascular-examinations",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Serial Neurovascular Examinations",
+      "description": "Repeated neurovascular examinations used to detect interval deterioration.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "serial-neurovascular-examinations",
+        "description": "Repeated neurovascular examinations used to detect interval deterioration.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|serial-neurovascular-examinations"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "vascular-injury",
+      "entityType": "condition",
+      "preferredLabel": "Traumatic Vascular Injury",
+      "description": "Arterial or venous injury associated with musculoskeletal trauma.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "vascular-injury",
+        "description": "Arterial or venous injury associated with musculoskeletal trauma.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|vascular-injury"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "peripheral-nerve-injury",
+      "entityType": "condition",
+      "preferredLabel": "Traumatic Peripheral Nerve Injury",
+      "description": "Peripheral nerve dysfunction caused by trauma, traction, compression, or laceration.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "peripheral-nerve-injury",
+        "description": "Peripheral nerve dysfunction caused by trauma, traction, compression, or laceration.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|peripheral-nerve-injury"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "open-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Open Fracture",
+      "description": "A fracture communicating with the external environment through a traumatic wound.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "open-fracture",
+        "description": "A fracture communicating with the external environment through a traumatic wound.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|open-fracture"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "gustilo-anderson-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Gustilo-Anderson Classification",
+      "description": "Classification system for open fractures based on wound, contamination, and soft-tissue injury.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "gustilo-anderson-classification",
+        "description": "Classification system for open fractures based on wound, contamination, and soft-tissue injury.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|classification_system|gustilo-anderson-classification"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "open-fracture-antibiotic-prophylaxis",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Open Fracture Antibiotic Prophylaxis",
+      "description": "Prompt antimicrobial prophylaxis selected for the open-fracture injury pattern and contamination context.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "open-fracture-antibiotic-prophylaxis",
+        "description": "Prompt antimicrobial prophylaxis selected for the open-fracture injury pattern and contamination context.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|open-fracture-antibiotic-prophylaxis"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "tetanus-prophylaxis",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Tetanus Prophylaxis",
+      "description": "Assessment and treatment of tetanus immunization needs after traumatic wounds.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "tetanus-prophylaxis",
+        "description": "Assessment and treatment of tetanus immunization needs after traumatic wounds.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|tetanus-prophylaxis"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "irrigation-and-debridement-open-fracture",
+      "entityType": "procedure",
+      "preferredLabel": "Open Fracture Irrigation and Debridement",
+      "description": "Operative removal of contamination and devitalized tissue with irrigation of an open fracture wound.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "irrigation-and-debridement-open-fracture",
+        "description": "Operative removal of contamination and devitalized tissue with irrigation of an open fracture wound.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|procedure|irrigation-and-debridement-open-fracture"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fracture-related-infection",
+      "entityType": "complication",
+      "preferredLabel": "Fracture-Related Infection",
+      "description": "Infection occurring in the setting of a fracture and its treatment.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fracture-related-infection",
+        "description": "Infection occurring in the setting of a fracture and its treatment.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|complication|fracture-related-infection"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "acute-compartment-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Acute Compartment Syndrome",
+      "description": "Pathologic elevation of compartment pressure threatening tissue perfusion and viability.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "acute-compartment-syndrome",
+        "description": "Pathologic elevation of compartment pressure threatening tissue perfusion and viability.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|condition|acute-compartment-syndrome"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "compartment-examination",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Compartment Examination",
+      "description": "Serial clinical assessment for pain, passive-stretch pain, swelling, tension, and neurologic change.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "compartment-examination",
+        "description": "Serial clinical assessment for pain, passive-stretch pain, swelling, tension, and neurologic change.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|compartment-examination"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "compartment-pressure-measurement",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Compartment Pressure Measurement",
+      "description": "Adjunctive invasive pressure measurement when the clinical examination is unreliable or equivocal.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "compartment-pressure-measurement",
+        "description": "Adjunctive invasive pressure measurement when the clinical examination is unreliable or equivocal.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|diagnostic_test|compartment-pressure-measurement"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "emergent-fasciotomy",
+      "entityType": "procedure",
+      "preferredLabel": "Emergent Fasciotomy",
+      "description": "Urgent surgical release of involved osteofascial compartments.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "emergent-fasciotomy",
+        "description": "Urgent surgical release of involved osteofascial compartments.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|procedure|emergent-fasciotomy"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "closed-reduction",
+      "entityType": "procedure",
+      "preferredLabel": "Closed Reduction",
+      "description": "Manipulative restoration of alignment without surgical exposure of the fracture or joint.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "closed-reduction",
+        "description": "Manipulative restoration of alignment without surgical exposure of the fracture or joint.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|procedure|closed-reduction"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "traction-reduction-principle",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Traction and Countertraction",
+      "description": "Controlled force application used during reduction while protecting soft tissues.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "traction-reduction-principle",
+        "description": "Controlled force application used during reduction while protecting soft tissues.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|traction-reduction-principle"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "splint-immobilization",
+      "entityType": "procedure",
+      "preferredLabel": "Splint Immobilization",
+      "description": "Noncircumferential immobilization that maintains alignment while accommodating swelling.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "splint-immobilization",
+        "description": "Noncircumferential immobilization that maintains alignment while accommodating swelling.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|procedure|splint-immobilization"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "post-reduction-assessment",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Post-Reduction Assessment",
+      "description": "Repeat examination and imaging after reduction and immobilization.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "post-reduction-assessment",
+        "description": "Repeat examination and imaging after reduction and immobilization.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|post-reduction-assessment"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "post-reduction-radiographs",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Post-Reduction Radiographs",
+      "description": "Imaging used to document alignment after reduction and immobilization.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "post-reduction-radiographs",
+        "description": "Imaging used to document alignment after reduction and immobilization.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|diagnostic_test|post-reduction-radiographs"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "soft-tissue-envelope",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Soft-Tissue Envelope",
+      "description": "Skin, subcutaneous tissue, fascia, muscle, and neurovascular structures surrounding an injury.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "soft-tissue-envelope",
+        "description": "Skin, subcutaneous tissue, fascia, muscle, and neurovascular structures surrounding an injury.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|anatomy_structure|soft-tissue-envelope"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "soft-tissue-management",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Soft-Tissue Management",
+      "description": "Protection, reassessment, and staged treatment of injured soft tissues.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "soft-tissue-management",
+        "description": "Protection, reassessment, and staged treatment of injured soft tissues.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|soft-tissue-management"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "damage-control-orthopaedics",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Damage Control Orthopaedics",
+      "description": "Temporary stabilization strategy used when physiology or soft tissues make definitive fixation unsafe.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "damage-control-orthopaedics",
+        "description": "Temporary stabilization strategy used when physiology or soft tissues make definitive fixation unsafe.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|damage-control-orthopaedics"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "temporary-external-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Temporary External Fixation",
+      "description": "Percutaneous pin-and-frame stabilization used as a temporary trauma construct.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "temporary-external-fixation",
+        "description": "Percutaneous pin-and-frame stabilization used as a temporary trauma construct.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|fixation_method|temporary-external-fixation"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "early-appropriate-care",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Early Appropriate Care",
+      "description": "Definitive fixation strategy selected after adequate physiologic response to resuscitation.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "early-appropriate-care",
+        "description": "Definitive fixation strategy selected after adequate physiologic response to resuscitation.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|early-appropriate-care"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fracture-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Fracture Stability",
+      "description": "Mechanical environment governing displacement and tissue strain at a fracture site.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fracture-stability",
+        "description": "Mechanical environment governing displacement and tissue strain at a fracture site.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|biomechanics_concept|fracture-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "absolute-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Absolute Stability",
+      "description": "Interfragmentary compression strategy minimizing motion at a simple fracture.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "absolute-stability",
+        "description": "Interfragmentary compression strategy minimizing motion at a simple fracture.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|biomechanics_concept|absolute-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "relative-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Relative Stability",
+      "description": "Construct strategy permitting controlled micromotion and callus formation.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "relative-stability",
+        "description": "Construct strategy permitting controlled micromotion and callus formation.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|biomechanics_concept|relative-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "interfragmentary-strain",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Interfragmentary Strain",
+      "description": "Relative deformation across a fracture gap under load.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "interfragmentary-strain",
+        "description": "Relative deformation across a fracture gap under load.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|biomechanics_concept|interfragmentary-strain"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "primary-bone-healing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Primary Bone Healing",
+      "description": "Direct bone healing under conditions of anatomic reduction and high stability.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "primary-bone-healing",
+        "description": "Direct bone healing under conditions of anatomic reduction and high stability.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|biomechanics_concept|primary-bone-healing"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "secondary-bone-healing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Secondary Bone Healing",
+      "description": "Indirect healing through callus under relative stability.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "secondary-bone-healing",
+        "description": "Indirect healing through callus under relative stability.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|biomechanics_concept|secondary-bone-healing"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "delayed-union",
+      "entityType": "complication",
+      "preferredLabel": "Delayed Union",
+      "description": "Fracture healing that progresses more slowly than expected.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "delayed-union",
+        "description": "Fracture healing that progresses more slowly than expected.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|complication|delayed-union"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fracture-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Fracture Nonunion",
+      "description": "Failure of a fracture to progress to union without further intervention.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fracture-nonunion",
+        "description": "Failure of a fracture to progress to union without further intervention.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|complication|fracture-nonunion"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "fracture-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Fracture Malunion",
+      "description": "Fracture healing in unacceptable alignment.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "fracture-malunion",
+        "description": "Fracture healing in unacceptable alignment.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|complication|fracture-malunion"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "lag-screw-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Lag Screw Fixation",
+      "description": "Interfragmentary compression achieved by screw technique or design.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "lag-screw-fixation",
+        "description": "Interfragmentary compression achieved by screw technique or design.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|fixation_method|lag-screw-fixation"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "plate-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Plate Fixation",
+      "description": "Internal fixation using a plate-and-screw construct.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "plate-fixation",
+        "description": "Internal fixation using a plate-and-screw construct.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|fixation_method|plate-fixation"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "intramedullary-nail-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Intramedullary Nail Fixation",
+      "description": "Load-sharing internal fixation placed within the medullary canal.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "intramedullary-nail-fixation",
+        "description": "Load-sharing internal fixation placed within the medullary canal.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|fixation_method|intramedullary-nail-fixation"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "early-postoperative-trauma-care",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Early Postoperative Trauma Care",
+      "description": "Immediate postoperative surveillance, mobilization, prophylaxis, and restriction planning after trauma surgery.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "early-postoperative-trauma-care",
+        "description": "Immediate postoperative surveillance, mobilization, prophylaxis, and restriction planning after trauma surgery.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|treatment_principle|early-postoperative-trauma-care"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "postoperative-neurovascular-examination",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Postoperative Neurovascular Examination",
+      "description": "Documented limb examination after trauma surgery.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "postoperative-neurovascular-examination",
+        "description": "Documented limb examination after trauma surgery.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_fallback"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|exam_maneuver|postoperative-neurovascular-examination"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "venous-thromboembolism",
+      "entityType": "complication",
+      "preferredLabel": "Venous Thromboembolism",
+      "description": "Deep venous thrombosis or pulmonary embolism associated with injury and recovery.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "venous-thromboembolism",
+        "description": "Deep venous thrombosis or pulmonary embolism associated with injury and recovery.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|complication|venous-thromboembolism"
+      },
+      "source": "spec"
+    },
+    {
+      "slug": "loss-of-reduction",
+      "entityType": "complication",
+      "preferredLabel": "Loss of Reduction",
+      "description": "Failure to maintain achieved fracture or joint alignment.",
+      "metadata": {
+        "pilot": "trauma-fundamentals-neighborhood",
+        "neighborhood": "trauma-fundamentals",
+        "review_packet_key": "pilot:trauma-fundamentals-neighborhood",
+        "review_packet_label": "Trauma Fundamentals Neighborhood",
+        "factory_version": "kf-016",
+        "slug": "loss-of-reduction",
+        "description": "Failure to maintain achieved fracture or joint alignment.",
+        "curation_route": "AUTO_APPROVED_LOW_RISK",
+        "curation_scores": {
+          "confidence": 0.92,
+          "evidence": 0.7,
+          "ambiguity": 0.2,
+          "safety": 0.1,
+          "completeness": 0.85
+        },
+        "curation_rules": [
+          "spec_backed_entity_create"
+        ],
+        "curated_at": "2026-07-08T21:19:54.021Z",
+        "verified": false,
+        "_provenance_fingerprint": "create|complication|loss-of-reduction"
+      },
+      "source": "spec"
+    }
+  ],
+  "relationships": [
+    {
+      "subjectSlug": "trauma-primary-survey",
+      "predicate": "prerequisite_for",
+      "objectSlug": "secondary-survey",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "clinical_importance": "critical",
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|trauma-primary-survey|prerequisite_for|secondary-survey"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "secondary-survey",
+      "predicate": "prerequisite_for",
+      "objectSlug": "neurovascular-examination",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|secondary-survey|prerequisite_for|neurovascular-examination"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "orthopaedic-trauma-resuscitation",
+      "predicate": "prerequisite_for",
+      "objectSlug": "early-appropriate-care",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|orthopaedic-trauma-resuscitation|prerequisite_for|early-appropriate-care"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "neurovascular-examination",
+      "predicate": "examines",
+      "objectSlug": "vascular-injury",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "clinical_importance": "critical",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|neurovascular-examination|examines|vascular-injury"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "neurovascular-examination",
+      "predicate": "examines",
+      "objectSlug": "peripheral-nerve-injury",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "clinical_importance": "critical",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|neurovascular-examination|examines|peripheral-nerve-injury"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "serial-neurovascular-examinations",
+      "predicate": "examines",
+      "objectSlug": "vascular-injury",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|serial-neurovascular-examinations|examines|vascular-injury"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "serial-neurovascular-examinations",
+      "predicate": "examines",
+      "objectSlug": "peripheral-nerve-injury",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|serial-neurovascular-examinations|examines|peripheral-nerve-injury"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-fracture",
+      "predicate": "has_classification",
+      "objectSlug": "gustilo-anderson-classification",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|open-fracture|has_classification|gustilo-anderson-classification"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "open-fracture-antibiotic-prophylaxis",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "management_importance": "critical",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|open-fracture|treated_by|open-fracture-antibiotic-prophylaxis"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "tetanus-prophylaxis",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "management_importance": "high",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|open-fracture|treated_by|tetanus-prophylaxis"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-fracture",
+      "predicate": "treated_by",
+      "objectSlug": "irrigation-and-debridement-open-fracture",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "management_importance": "critical",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|open-fracture|treated_by|irrigation-and-debridement-open-fracture"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "soft-tissue-envelope",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|open-fracture|involves_anatomy|soft-tissue-envelope"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "open-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "fracture-related-infection",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|open-fracture|has_complication|fracture-related-infection"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "irrigation-and-debridement-open-fracture",
+      "predicate": "involves_anatomy",
+      "objectSlug": "soft-tissue-envelope",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|irrigation-and-debridement-open-fracture|involves_anatomy|soft-tissue-envelope"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "acute-compartment-syndrome",
+      "predicate": "tested_by",
+      "objectSlug": "compartment-examination",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "clinical_importance": "critical",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|acute-compartment-syndrome|tested_by|compartment-examination"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "acute-compartment-syndrome",
+      "predicate": "tested_by",
+      "objectSlug": "compartment-pressure-measurement",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|acute-compartment-syndrome|tested_by|compartment-pressure-measurement"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "acute-compartment-syndrome",
+      "predicate": "treated_by",
+      "objectSlug": "emergent-fasciotomy",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "management_importance": "critical",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|acute-compartment-syndrome|treated_by|emergent-fasciotomy"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "closed-reduction",
+      "predicate": "involves_anatomy",
+      "objectSlug": "soft-tissue-envelope",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|closed-reduction|involves_anatomy|soft-tissue-envelope"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "closed-reduction",
+      "predicate": "prerequisite_for",
+      "objectSlug": "splint-immobilization",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|closed-reduction|prerequisite_for|splint-immobilization"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "traction-reduction-principle",
+      "predicate": "prerequisite_for",
+      "objectSlug": "closed-reduction",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|traction-reduction-principle|prerequisite_for|closed-reduction"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "closed-reduction",
+      "predicate": "prerequisite_for",
+      "objectSlug": "post-reduction-assessment",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|closed-reduction|prerequisite_for|post-reduction-assessment"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "closed-reduction",
+      "predicate": "requires_imaging",
+      "objectSlug": "post-reduction-radiographs",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|closed-reduction|requires_imaging|post-reduction-radiographs"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "post-reduction-assessment",
+      "predicate": "examines",
+      "objectSlug": "vascular-injury",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|post-reduction-assessment|examines|vascular-injury"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "post-reduction-assessment",
+      "predicate": "examines",
+      "objectSlug": "peripheral-nerve-injury",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|post-reduction-assessment|examines|peripheral-nerve-injury"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "splint-immobilization",
+      "predicate": "has_complication",
+      "objectSlug": "loss-of-reduction",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|splint-immobilization|has_complication|loss-of-reduction"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "soft-tissue-envelope",
+      "predicate": "prerequisite_for",
+      "objectSlug": "soft-tissue-management",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|soft-tissue-envelope|prerequisite_for|soft-tissue-management"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "soft-tissue-management",
+      "predicate": "prerequisite_for",
+      "objectSlug": "early-appropriate-care",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|soft-tissue-management|prerequisite_for|early-appropriate-care"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "damage-control-orthopaedics",
+      "predicate": "prerequisite_for",
+      "objectSlug": "early-appropriate-care",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|damage-control-orthopaedics|prerequisite_for|early-appropriate-care"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "temporary-external-fixation",
+      "predicate": "prerequisite_for",
+      "objectSlug": "early-appropriate-care",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|temporary-external-fixation|prerequisite_for|early-appropriate-care"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fracture-stability",
+      "predicate": "prerequisite_for",
+      "objectSlug": "absolute-stability",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fracture-stability|prerequisite_for|absolute-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fracture-stability",
+      "predicate": "prerequisite_for",
+      "objectSlug": "relative-stability",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fracture-stability|prerequisite_for|relative-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "interfragmentary-strain",
+      "predicate": "prerequisite_for",
+      "objectSlug": "primary-bone-healing",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|interfragmentary-strain|prerequisite_for|primary-bone-healing"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "interfragmentary-strain",
+      "predicate": "prerequisite_for",
+      "objectSlug": "secondary-bone-healing",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|interfragmentary-strain|prerequisite_for|secondary-bone-healing"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "absolute-stability",
+      "predicate": "prerequisite_for",
+      "objectSlug": "primary-bone-healing",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|absolute-stability|prerequisite_for|primary-bone-healing"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "relative-stability",
+      "predicate": "prerequisite_for",
+      "objectSlug": "secondary-bone-healing",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|relative-stability|prerequisite_for|secondary-bone-healing"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "lag-screw-fixation",
+      "predicate": "prerequisite_for",
+      "objectSlug": "absolute-stability",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|lag-screw-fixation|prerequisite_for|absolute-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "plate-fixation",
+      "predicate": "prerequisite_for",
+      "objectSlug": "absolute-stability",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|plate-fixation|prerequisite_for|absolute-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "intramedullary-nail-fixation",
+      "predicate": "prerequisite_for",
+      "objectSlug": "relative-stability",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|intramedullary-nail-fixation|prerequisite_for|relative-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "temporary-external-fixation",
+      "predicate": "prerequisite_for",
+      "objectSlug": "relative-stability",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|temporary-external-fixation|prerequisite_for|relative-stability"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "fracture-nonunion",
+      "predicate": "commonly_confused_with",
+      "objectSlug": "delayed-union",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|fracture-nonunion|commonly_confused_with|delayed-union"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "delayed-union",
+      "predicate": "commonly_confused_with",
+      "objectSlug": "fracture-nonunion",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|delayed-union|commonly_confused_with|fracture-nonunion"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "postoperative-neurovascular-examination",
+      "predicate": "prerequisite_for",
+      "objectSlug": "early-postoperative-trauma-care",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|postoperative-neurovascular-examination|prerequisite_for|early-postoperative-trauma-care"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "irrigation-and-debridement-open-fracture",
+      "predicate": "has_complication",
+      "objectSlug": "fracture-related-infection",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|irrigation-and-debridement-open-fracture|has_complication|fracture-related-infection"
+      },
+      "source": "spec"
+    },
+    {
+      "subjectSlug": "splint-immobilization",
+      "predicate": "has_complication",
+      "objectSlug": "venous-thromboembolism",
+      "metadata": {
+        "relevance_reason": "trauma_fundamentals",
+        "context_relevance": [
+          "call",
+          "or",
+          "oite"
+        ],
+        "anatomy_role": "supporting",
+        "review_status": "unreviewed",
+        "_provenance_fingerprint": "rel|splint-immobilization|has_complication|venous-thromboembolism"
+      },
+      "source": "spec"
+    }
+  ],
+  "claims": [
+    {
+      "draftId": "claim-tf-life-before-limb",
+      "claimType": "fact",
+      "claimText": "Immediate life threats are addressed before definitive management of an extremity injury.",
+      "primaryEntitySlug": "trauma-primary-survey",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-document-nv",
+      "claimType": "clinical_script",
+      "claimText": "Document motor, sensory, pulse, and perfusion findings before and after reduction, splinting, or surgery.",
+      "primaryEntitySlug": "neurovascular-examination",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "or"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-serial-nv",
+      "claimType": "fact",
+      "claimText": "A single normal neurovascular examination does not replace serial assessment when deterioration remains possible.",
+      "primaryEntitySlug": "serial-neurovascular-examinations",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-open-until-proven",
+      "claimType": "cognitive_trap",
+      "claimText": "A wound near a fracture should be evaluated for communication with the fracture rather than dismissed by wound size.",
+      "primaryEntitySlug": "open-fracture",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-antibiotic-priority",
+      "claimType": "fact",
+      "claimText": "Open-fracture antibiotic prophylaxis is a time-sensitive component of initial management.",
+      "primaryEntitySlug": "open-fracture-antibiotic-prophylaxis",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-tetanus",
+      "claimType": "fact",
+      "claimText": "Traumatic wound care includes assessment of tetanus immunization and prophylaxis needs.",
+      "primaryEntitySlug": "tetanus-prophylaxis",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-compartment-clinical",
+      "claimType": "board_trap",
+      "claimText": "Preserved pulses do not exclude acute compartment syndrome.",
+      "primaryEntitySlug": "acute-compartment-syndrome",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-pressure-adjunct",
+      "claimType": "fact",
+      "claimText": "Compartment pressure measurement is an adjunct when the examination is unreliable or equivocal and should not delay treatment of a clear clinical syndrome.",
+      "primaryEntitySlug": "compartment-pressure-measurement",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-reduction-nv",
+      "claimType": "fact",
+      "claimText": "Urgent reduction of a gross deformity is followed by repeat neurovascular examination and documentation.",
+      "primaryEntitySlug": "closed-reduction",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-splint-swelling",
+      "claimType": "fact",
+      "claimText": "Initial splinting should maintain reduction while accommodating expected swelling and protecting skin.",
+      "primaryEntitySlug": "splint-immobilization",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-post-reduction",
+      "claimType": "fact",
+      "claimText": "Post-reduction assessment includes alignment imaging and repeat skin and neurovascular examination.",
+      "primaryEntitySlug": "post-reduction-assessment",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-soft-tissue-timing",
+      "claimType": "fact",
+      "claimText": "Definitive fixation timing is governed by both patient physiology and the condition of the soft-tissue envelope.",
+      "primaryEntitySlug": "soft-tissue-management",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "or"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-dco",
+      "claimType": "fact",
+      "claimText": "Damage control orthopaedics uses temporary stabilization when physiologic or soft-tissue conditions make definitive fixation unsafe.",
+      "primaryEntitySlug": "damage-control-orthopaedics",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "call",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-absolute",
+      "claimType": "fact",
+      "claimText": "Absolute stability is paired with minimal interfragmentary motion and primary bone healing.",
+      "primaryEntitySlug": "absolute-stability",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "or",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-relative",
+      "claimType": "fact",
+      "claimText": "Relative stability permits controlled motion and commonly produces secondary bone healing with callus.",
+      "primaryEntitySlug": "relative-stability",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "or",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-strain",
+      "claimType": "fact",
+      "claimText": "Interfragmentary strain links fracture-gap mechanics to the tissue that can form during healing.",
+      "primaryEntitySlug": "interfragmentary-strain",
+      "importanceLevel": "L2",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "or",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-nonunion-factors",
+      "claimType": "fact",
+      "claimText": "Evaluation of impaired union considers mechanical stability, biology, infection, host factors, and time course.",
+      "primaryEntitySlug": "fracture-nonunion",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "clinic",
+          "oite"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    },
+    {
+      "draftId": "claim-tf-postop",
+      "claimType": "fact",
+      "claimText": "Early postoperative trauma care includes neurovascular surveillance, wound and compartment assessment, mobilization restrictions, and prophylaxis planning.",
+      "primaryEntitySlug": "early-postoperative-trauma-care",
+      "importanceLevel": "L1",
+      "contentSource": "generated_draft",
+      "reviewStatus": "needs_review",
+      "metadata": {
+        "contextRelevance": [
+          "or",
+          "floor"
+        ],
+        "sourceNote": "Trauma Fundamentals manufacture scope; evidence packet required"
+      }
+    }
+  ],
+  "decisionPoints": [
+    {
+      "draftId": "dp-tf-unstable-patient",
+      "subjectEntitySlug": "orthopaedic-trauma-resuscitation",
+      "patternType": "resuscitation_priority",
+      "trigger": "Hemodynamic instability or unresolved life threat",
+      "action": "Prioritize resuscitation and life-saving intervention before definitive fracture fixation",
+      "urgency": "emergent",
+      "safetyCriticality": "emergency",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-vascular-compromise",
+      "subjectEntitySlug": "vascular-injury",
+      "patternType": "limb_threat",
+      "trigger": "Absent pulse, impaired perfusion, expanding hematoma, or evolving ischemia",
+      "action": "Reduce gross deformity when appropriate and escalate immediately for vascular evaluation and limb-saving management",
+      "urgency": "emergent",
+      "safetyCriticality": "emergency",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-open-fracture",
+      "subjectEntitySlug": "open-fracture",
+      "patternType": "initial_management",
+      "trigger": "Fracture with a communicating wound or high suspicion for communication",
+      "action": "Cover the wound, document neurovascular status, initiate indicated antibiotics and tetanus assessment, and arrange operative debridement",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-compartment",
+      "subjectEntitySlug": "acute-compartment-syndrome",
+      "patternType": "emergent_intervention",
+      "trigger": "Clinical findings concerning for evolving acute compartment syndrome",
+      "action": "Remove constriction, keep the limb appropriately positioned, perform serial examination, and escalate for emergent fasciotomy",
+      "urgency": "emergent",
+      "safetyCriticality": "emergency",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-pressure",
+      "subjectEntitySlug": "compartment-pressure-measurement",
+      "patternType": "diagnostic_adjunct",
+      "trigger": "Unreliable or equivocal examination with ongoing concern for compartment syndrome",
+      "action": "Use pressure measurement as an adjunct while maintaining serial assessment and urgent escalation",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-reduce",
+      "subjectEntitySlug": "closed-reduction",
+      "patternType": "urgent_reduction",
+      "trigger": "Gross deformity, threatened skin, dislocation, or neurovascular compromise",
+      "action": "Perform timely controlled reduction with appropriate analgesia or sedation and document post-reduction status",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-splint",
+      "subjectEntitySlug": "splint-immobilization",
+      "patternType": "immobilization",
+      "trigger": "Reduced or unstable acute injury requiring temporary support",
+      "action": "Apply a well-padded splint that maintains alignment and accommodates swelling, then repeat examination",
+      "urgency": "urgent",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-dco",
+      "subjectEntitySlug": "damage-control-orthopaedics",
+      "patternType": "fixation_timing",
+      "trigger": "Physiologic instability, severe soft-tissue injury, or unsafe definitive operative conditions",
+      "action": "Choose temporary stabilization and defer definitive fixation until physiology and soft tissues permit",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-stability",
+      "subjectEntitySlug": "fracture-stability",
+      "patternType": "construct_selection",
+      "trigger": "Simple reconstructible pattern versus comminuted or biologically vulnerable pattern",
+      "action": "Select absolute or relative stability principles appropriate to fracture morphology and biology",
+      "urgency": "routine",
+      "safetyCriticality": "moderate",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-union",
+      "subjectEntitySlug": "fracture-nonunion",
+      "patternType": "healing_failure",
+      "trigger": "Failure of expected clinical or radiographic progression toward union",
+      "action": "Evaluate mechanical, biologic, infectious, and host contributors before selecting revision treatment",
+      "urgency": "routine",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    },
+    {
+      "draftId": "dp-tf-postop-change",
+      "subjectEntitySlug": "early-postoperative-trauma-care",
+      "patternType": "postoperative_escalation",
+      "trigger": "New pain escalation, neurologic change, perfusion change, wound concern, or loss of alignment",
+      "action": "Repeat focused examination and imaging as indicated and escalate promptly for a limb- or construct-threatening complication",
+      "urgency": "urgent",
+      "safetyCriticality": "high",
+      "requiresAttendingReview": true
+    }
+  ],
+  "conflicts": [],
+  "stats": {
+    "entityCount": 44,
+    "relationshipCount": 44,
+    "claimCount": 18,
+    "decisionPointCount": 11,
+    "bridgeCount": 1,
+    "duplicateEntitiesResolved": 44,
+    "conflictingRelationships": 0,
+    "metadataMerged": 88,
+    "provenanceAttached": 118
+  }
+}

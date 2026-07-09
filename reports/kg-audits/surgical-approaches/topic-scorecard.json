@@ -1,0 +1,325 @@
+{
+  "generatedAt": "2026-07-08T21:23:42.612Z",
+  "auditorVersion": "1.0.0",
+  "topicKey": "surgical-approaches",
+  "pilotKey": "surgical-approaches-neighborhood",
+  "displayName": "Surgical Approaches",
+  "dataSource": {
+    "neighborhood": "merged_draft",
+    "reportsLoaded": [
+      "ontology-compiler-plan.json",
+      "ontology-gap-report.json",
+      "ontology-work-plan.json",
+      "agent-execution-report.json",
+      "merged-neighborhood-draft.json",
+      "publication-readiness.json",
+      "ontology-auto-review.json",
+      "ontology-human-review-queue.json",
+      "conflict-report.json",
+      "agent-assignment-plan.json",
+      "ontology-neighborhood-plan.json",
+      "evidence-packet.json"
+    ],
+    "reportsMissing": []
+  },
+  "overallScore": 84,
+  "categories": {
+    "ontology_completeness": 89,
+    "evidence_quality": 85,
+    "graph_integrity": 100,
+    "shared_knowledge_reuse": 98,
+    "relationship_quality": 36,
+    "claim_quality": 84,
+    "decision_point_quality": 69,
+    "metadata_quality": 90,
+    "provenance_quality": 100,
+    "review_calibration": 100,
+    "agent_performance": 92,
+    "compiler_quality": 94,
+    "educational_quality": 76,
+    "cross_neighborhood_consistency": 100,
+    "publication_readiness": 60
+  },
+  "publication": {
+    "status": "NOT_READY",
+    "ready": false,
+    "blockers": [
+      "70 proposals still awaiting human review",
+      "70 items require attending review",
+      "Claims and DPs are draft-only — publication gate must block verified consumption.",
+      "No approved canonical entities in database yet — proposals remain offline/spec.",
+      "1 critical/high ontology gaps remain unresolved"
+    ],
+    "currentLevel": 5,
+    "requiredLevel": 7,
+    "score": 60,
+    "deductions": [
+      {
+        "finding": "70 proposals still awaiting human review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "70 items require attending review",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "Claims and DPs are draft-only — publication gate must block verified consumption.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "No approved canonical entities in database yet — proposals remain offline/spec.",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "high",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "impact": 8
+      },
+      {
+        "finding": "1 critical/high ontology gaps remain unresolved",
+        "evidence": "publication-readiness.json blockers",
+        "reason": "Publication gate identified blocking condition.",
+        "severity": "critical",
+        "category": "publication_readiness",
+        "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+        "impact": 15
+      }
+    ]
+  },
+  "topFindings": [
+    {
+      "finding": "Low evidence coverage (0% of proposals cite evidence)",
+      "evidence": "0/1248 proposals have evidence_refs",
+      "reason": "Every proposal should cite supporting evidence per factory contract.",
+      "severity": "critical",
+      "category": "evidence_quality",
+      "suggestedFix": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing decision point pattern: emergency_escalation",
+      "evidence": "0 decision points with pattern emergency_escalation",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "critical",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add emergency_escalation decision point with attending-gated review.",
+      "impact": 15
+    },
+    {
+      "finding": "1 critical/high ontology gaps remain unresolved",
+      "evidence": "publication-readiness.json blockers",
+      "reason": "Publication gate identified blocking condition.",
+      "severity": "critical",
+      "category": "publication_readiness",
+      "suggestedFix": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+      "impact": 15
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_imaging_finding",
+      "evidence": "0 outbound has_imaging_finding edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_complication",
+      "evidence": "0 outbound has_complication edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "All claims remain generated_draft",
+      "evidence": "65/65 claims are unreviewed drafts",
+      "reason": "Draft claims cannot be consumed as verified educational content.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Route claims through human review queue before publication.",
+      "impact": 8
+    },
+    {
+      "finding": "Insufficient evidence support on claim proposals",
+      "evidence": "0% of claim proposals cite evidence",
+      "reason": "Every claim should cite supporting evidence.",
+      "severity": "high",
+      "category": "claim_quality",
+      "suggestedFix": "Attach evidence_refs from evidence packet to each claim proposal.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing decision point pattern: operative_indication",
+      "evidence": "0 decision points with pattern operative_indication",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "high",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add operative_indication decision point with attending-gated review.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing decision point pattern: nonoperative_eligible",
+      "evidence": "0 decision points with pattern nonoperative_eligible",
+      "reason": "Fracture neighborhoods require branching operative vs nonoperative pathways.",
+      "severity": "high",
+      "category": "decision_point_quality",
+      "suggestedFix": "Add nonoperative_eligible decision point with attending-gated review.",
+      "impact": 8
+    },
+    {
+      "finding": "Primary entity missing metadata: curriculum_tags, board_relevance",
+      "evidence": "Entity surgical-approaches metadata keys: pilot, neighborhood, clinical_kind, maturity_target, anatomy_kind, hierarchy_level, region, review_packet_key, review_packet_label, factory_version, slug, description, curation_route, curation_scores, curation_rules, curated_at, verified, _provenance_fingerprint",
+      "reason": "Primary condition entities require educational and curriculum metadata.",
+      "severity": "high",
+      "category": "metadata_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Run metadata-builder to populate clinical_kind, curriculum_tags, board_relevance.",
+      "impact": 8
+    }
+  ],
+  "prioritizedRecommendations": [
+    {
+      "priority": 1,
+      "action": "Ensure claim/relationship builders attach evidence_refs from the evidence packet.",
+      "category": "evidence_quality",
+      "impact": "Low evidence coverage (0% of proposals cite evidence)"
+    },
+    {
+      "priority": 2,
+      "action": "Add injured_in relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: injured_in"
+    },
+    {
+      "priority": 3,
+      "action": "Add has_classification relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_classification"
+    },
+    {
+      "priority": 4,
+      "action": "Add emergency_escalation decision point with attending-gated review.",
+      "category": "decision_point_quality",
+      "impact": "Missing decision point pattern: emergency_escalation"
+    },
+    {
+      "priority": 5,
+      "action": "[high] Operative Anatomy Backbone missing outbound part_of (0/1).",
+      "category": "publication_readiness",
+      "impact": "1 critical/high ontology gaps remain unresolved"
+    },
+    {
+      "priority": 6,
+      "action": "Link has_classification and has_grade edges to a classification system.",
+      "category": "ontology_completeness",
+      "impact": "No classification system present"
+    },
+    {
+      "priority": 7,
+      "action": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_imaging_finding"
+    },
+    {
+      "priority": 8,
+      "action": "Add at_risk_structure relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: at_risk_structure"
+    },
+    {
+      "priority": 9,
+      "action": "Add treated_by relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: treated_by"
+    },
+    {
+      "priority": 10,
+      "action": "Add has_complication relationship via relationship-builder agent.",
+      "category": "relationship_quality",
+      "impact": "Missing clinical edge: has_complication"
+    }
+  ],
+  "databaseModified": false
+}

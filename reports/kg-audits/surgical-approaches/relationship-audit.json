@@ -1,0 +1,103 @@
+{
+  "category": "relationship_quality",
+  "label": "Relationship Quality",
+  "score": 36,
+  "deductions": [
+    {
+      "finding": "Missing clinical edge: injured_in",
+      "evidence": "0 outbound injured_in edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add injured_in relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_classification",
+      "evidence": "0 outbound has_classification edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "critical",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add has_classification relationship via relationship-builder agent.",
+      "impact": 15
+    },
+    {
+      "finding": "Missing clinical edge: has_imaging_finding",
+      "evidence": "0 outbound has_imaging_finding edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add has_imaging_finding relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: at_risk_structure",
+      "evidence": "0 outbound at_risk_structure edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add at_risk_structure relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: treated_by",
+      "evidence": "0 outbound treated_by edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add treated_by relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "Missing clinical edge: has_complication",
+      "evidence": "0 outbound has_complication edges from surgical-approaches",
+      "reason": "Core diagnosis neighborhoods require standard clinical relationship patterns.",
+      "severity": "high",
+      "category": "relationship_quality",
+      "affectedSlugs": [
+        "surgical-approaches"
+      ],
+      "suggestedFix": "Add has_complication relationship via relationship-builder agent.",
+      "impact": 8
+    },
+    {
+      "finding": "High relationship density may indicate overlinking",
+      "evidence": "Density 11.52 exceeds recommended threshold of 4.0",
+      "reason": "Unnecessary edges increase review burden without educational gain.",
+      "severity": "low",
+      "category": "relationship_quality",
+      "suggestedFix": "Prune low-importance anatomy edges; tag essential vs supporting in metadata.",
+      "impact": 2
+    }
+  ],
+  "metrics": {
+    "relationshipCount": 1083,
+    "relationshipDensity": 11.52127659574468,
+    "missingClinicalEdgeCount": 6,
+    "highRiskUnreviewedCount": 0,
+    "predicateCorrectness": 1
+  },
+  "recommendations": [
+    "Add injured_in relationship via relationship-builder agent.",
+    "Add has_classification relationship via relationship-builder agent.",
+    "Add has_imaging_finding relationship via relationship-builder agent.",
+    "Add at_risk_structure relationship via relationship-builder agent.",
+    "Add treated_by relationship via relationship-builder agent.",
+    "Add has_complication relationship via relationship-builder agent."
+  ]
+}

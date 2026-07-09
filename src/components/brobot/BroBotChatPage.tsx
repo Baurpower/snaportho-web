@@ -488,6 +488,7 @@ export default function BroBotChatPage() {
   const [restoredPendingPrompt, setRestoredPendingPrompt] = useState(false);
   const messagesViewportRef = useRef<HTMLDivElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const activeRequestControllerRef = useRef<AbortController | null>(null);
   const isRequestActive =
     requestState === 'classifying_intent' ||
     requestState === 'awaiting_first_token' ||
@@ -546,6 +547,13 @@ export default function BroBotChatPage() {
       window.history.scrollRestoration = previousScrollRestoration;
     };
   }, []);
+
+  useEffect(
+    () => () => {
+      activeRequestControllerRef.current?.abort();
+    },
+    []
+  );
 
   useEffect(() => {
     if (authStatus === 'loading') {
@@ -622,6 +630,9 @@ export default function BroBotChatPage() {
   ) {
     const submittedPrompt = (rawMessage ?? input).trim();
     if (!submittedPrompt || isRequestActive) return;
+    const requestController = new AbortController();
+    activeRequestControllerRef.current?.abort();
+    activeRequestControllerRef.current = requestController;
 
     const shouldAppendUserMessage = source !== 'branch_selection' && source !== 'answer_now';
     const optimisticUserMessage: ChatMessage | null = shouldAppendUserMessage
@@ -653,6 +664,7 @@ export default function BroBotChatPage() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
+          signal: requestController.signal,
           body: JSON.stringify({
             prompt: submittedPrompt,
             message: submittedPrompt,
@@ -721,8 +733,7 @@ export default function BroBotChatPage() {
         }
       }
 
-      streamingAssistantId =
-        BROBOT_STREAMING_ENABLED && authStatus === 'authenticated' ? crypto.randomUUID() : null;
+      streamingAssistantId = BROBOT_STREAMING_ENABLED ? crypto.randomUUID() : null;
       if (streamingAssistantId) {
         const assistantId = streamingAssistantId;
         setMessages((current) => [
@@ -778,6 +789,7 @@ export default function BroBotChatPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
+        signal: requestController.signal,
         body: JSON.stringify(chatRequestBody),
       });
 
@@ -789,6 +801,7 @@ export default function BroBotChatPage() {
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let buffer = '';
+        let didReceiveMetadata = false;
 
         while (true) {
           const { value, done } = await reader.read();
@@ -809,7 +822,7 @@ export default function BroBotChatPage() {
                   chatMessage.id === streamingAssistantId && chatMessage.role === 'assistant'
                     ? {
                         ...chatMessage,
-                        status: 'streaming',
+                        status: 'pending',
                         response: {
                           ...chatMessage.response,
                           conversationId:
@@ -852,6 +865,7 @@ export default function BroBotChatPage() {
               setRequestState('finalizing');
               const normalizedMetadata = normalizeChatResponse(streamEvent.data);
               if (!normalizedMetadata) continue;
+              didReceiveMetadata = true;
 
               setConversationId(normalizedMetadata.conversationId);
               const remainingFreeUses = normalizedMetadata.remainingFreeUses;
@@ -914,6 +928,15 @@ export default function BroBotChatPage() {
           }
         }
 
+        if (!didReceiveMetadata) {
+          throw new Error('BroBot stream ended before the response was finalized.');
+        }
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[BROBOT_STREAM_CLIENT]', {
+            transport: didReceiveStreamingContent ? 'streaming' : 'buffered_fallback',
+            finalized: true,
+          });
+        }
         setPendingIntent(null);
         setRequestState((current) => (current === 'error' ? current : 'complete'));
         return;
@@ -1030,7 +1053,10 @@ export default function BroBotChatPage() {
       });
       setPendingIntent(null);
       setRequestState('complete');
-    } catch {
+    } catch (caughtError) {
+      if (caughtError instanceof DOMException && caughtError.name === 'AbortError') {
+        return;
+      }
       setRequestState('error');
       if (streamingAssistantId && didReceiveStreamingContent) {
         setMessages((current) =>
@@ -1063,6 +1089,9 @@ export default function BroBotChatPage() {
         setError({ type: 'network' });
       }
     } finally {
+      if (activeRequestControllerRef.current === requestController) {
+        activeRequestControllerRef.current = null;
+      }
       setRequestState((current) =>
         current === 'classifying_intent' ||
         current === 'awaiting_first_token' ||

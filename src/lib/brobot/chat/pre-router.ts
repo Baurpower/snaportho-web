@@ -31,6 +31,10 @@ const EMERGENCY_PATTERN =
   /\b(compartment syndrome|septic joint|septic arthritis|open fracture|open tibia|cauda equina|pulseless|neurovascular compromise|necrotizing|dislocation with neurovascular|rapidly progressive infection)\b/i;
 const SPECIFIC_OR_PATTERN =
   /\b(isolated\s+\w+|fcr approach|structures? at risk|anatomy at risk|starting point|start point|identify|identification|where is|where do you find)\b/i;
+const VAGUE_TOPIC_PATTERN =
+  /^\s*(fractures?|hip|knee|shoulder|ankle|wrist|elbow|spine|hand|foot|trauma|arthroplasty|sports)\s*[?.!]*\s*$/i;
+const CONTEXT_FREE_COMPARISON_PATTERN =
+  /^\s*(compare|contrast)\s+(the\s+)?(approaches?|implants?|options?|techniques?)\s*[?.!]*\s*$/i;
 export const PATIENT_EXPLANATION_PATTERN =
   /\b(to|for)\s+(a|an|the|my)\s+patient\b|\bexplain[^.]*\bpatient\b|\bin\s+(plain|lay)\s+(language|terms)\b|\bplain language\b|\blay(?:man'?s)?\s+terms?\b|\bpatient[-\s]friendly\b/i;
 
@@ -133,7 +137,7 @@ export function inferLocalSubintent(
   if (/\bsteps?|walk me through|how do you do|flow|tomorrow|prep\b/.test(lower)) return 'surgical_steps';
   if (/\b(implant|plate|nail|screw|fixation option)\b/.test(lower)) return 'implant_options';
   if (/\bpresent|presentation\b/.test(lower)) return 'presentation_help';
-  if (/\bimage|xray|x-ray|radiograph|ct|mri|fluoro|fluoroscopy\b/.test(lower)) return 'imaging_review';
+  if (/\b(?:image|xray|x-ray|radiograph|ct|mri|fluoro|fluoroscopy)\b/.test(lower)) return 'imaging_review';
   if (/\bcritique|rct|paper|study|bias|statistics\b/.test(lower)) return 'evidence_critique';
   if (mode === 'consult' && /\bfracture\b/.test(lower)) return 'fracture';
   if (mode === 'clinic' && /\bworkup\b/.test(lower)) return 'workup';
@@ -172,18 +176,6 @@ function reasonForBranching(input: {
   return 'the learning goal can go in several useful directions';
 }
 
-function hasBroadBranchableCategory(category: BroBotProcedureCategory): boolean {
-  return (
-    category === 'fracture_orif' ||
-    category === 'arthroplasty' ||
-    category === 'arthroscopy' ||
-    category === 'soft_tissue_release' ||
-    category === 'tendon_ligament_repair' ||
-    category === 'spine_procedure' ||
-    category === 'hand_procedure'
-  );
-}
-
 function shouldRequireBranchSelection(input: {
   message: string;
   mode: Exclude<BroBotChatMode, 'auto' | 'fracture_call'>;
@@ -191,14 +183,19 @@ function shouldRequireBranchSelection(input: {
   procedureCategory: BroBotProcedureCategory;
 }) {
   if (EMERGENCY_PATTERN.test(input.message)) return false;
-  if (SPECIFIC_OR_PATTERN.test(input.message)) return false;
-  if (input.mode !== 'or_prep') return input.mode !== 'general' && input.subintent === 'overview';
-  return (
-    hasBroadBranchableCategory(input.procedureCategory) &&
-    (input.subintent === 'surgical_steps' ||
-      input.subintent === 'diagnostic_sequence' ||
-      input.subintent === 'overview')
-  );
+  const trimmed = input.message.trim();
+  if (VAGUE_TOPIC_PATTERN.test(trimmed) || CONTEXT_FREE_COMPARISON_PATTERN.test(trimmed)) {
+    return true;
+  }
+  if (SPECIFIC_OR_PATTERN.test(trimmed)) return false;
+
+  // Branch chips are useful after an answer, but should only block when there
+  // is not enough topic/task context to choose a materially correct path.
+  const words = trimmed.match(/[a-z0-9]+/gi) ?? [];
+  const lacksSpecificTopic =
+    input.procedureCategory === 'unknown' &&
+    !entityToTopic(extractOrthoEntity(trimmed));
+  return words.length <= 2 && input.subintent === 'overview' && lacksSpecificTopic;
 }
 
 function inferConfidence(input: {

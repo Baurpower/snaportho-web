@@ -287,6 +287,18 @@ export async function POST(request: Request) {
     },
   });
 
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[BROBOT-INTENT-ROUTE]', {
+      requestId,
+      requiresFocusSelection: Boolean(intent.requiresBranchSelection),
+      reason: intent.reasonForBranching || 'intent_is_answerable',
+      mode: intent.mode,
+      subintent: intent.subintent,
+      focus: intent.procedureOrTopic,
+      source: intentSource,
+    });
+  }
+
   return withGuestCookie(NextResponse.json({
     mode: intent.mode,
     subintent: intent.subintent,

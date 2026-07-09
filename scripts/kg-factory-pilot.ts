@@ -35,6 +35,9 @@ import {
   buildAdultReconstructionProposalPacket,
   buildHandWristProposalPacket,
   buildSportsMedicineProposalPacket,
+  buildTraumaFundamentalsProposalPacket,
+  buildSurgicalApproachesProposalPacket,
+  buildOrthopaedicAnatomyProposalPacket,
 } from "./lib/education/kg-factory/proposal-builder.ts";
 import { listAdultReconstructionTopicKeys } from "./lib/education/kg-adult-reconstruction-topic-registry.ts";
 import { listHandWristFactoryTopicKeys } from "./lib/education/kg-hand-wrist-pilot-spec.ts";
@@ -77,6 +80,12 @@ function topicPrefix(topicKey: string): string {
 
 function buildProposalPacket(topicKey: string) {
   switch (topicKey) {
+    case "surgical-approaches":
+      return buildSurgicalApproachesProposalPacket();
+    case "orthopaedic-anatomy":
+      return buildOrthopaedicAnatomyProposalPacket();
+    case "trauma-fundamentals":
+      return buildTraumaFundamentalsProposalPacket();
     case "ankle-fracture":
       return buildAnkleProposalPacket();
     case "compartment-syndrome":

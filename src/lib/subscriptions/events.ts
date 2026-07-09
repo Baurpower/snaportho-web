@@ -55,7 +55,13 @@ export async function upsertSubscriptionEvent(record: SubscriptionEventRecord) {
 
   const { data, error } = await supabase
     .from('subscription_events')
-    .upsert(payload, { onConflict: 'provider,provider_event_id' })
+    // stripe_event_id is backed by a real UNIQUE constraint in every deployed
+    // schema version. The provider pair was historically only a partial index,
+    // which PostgreSQL cannot infer as an ON CONFLICT target.
+    .upsert(payload, {
+      onConflict:
+        record.provider === 'stripe' ? 'stripe_event_id' : 'provider,provider_event_id',
+    })
     .select('id, provider, provider_event_id, processed_at, processing_result')
     .maybeSingle();
 

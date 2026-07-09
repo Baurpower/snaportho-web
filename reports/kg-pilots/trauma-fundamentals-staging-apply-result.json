@@ -1,0 +1,39 @@
+{
+  "topicKey": "trauma-fundamentals",
+  "pilotKey": "trauma-fundamentals-neighborhood",
+  "dryRun": false,
+  "stagingReviewMode": true,
+  "guard": {
+    "allowed": true,
+    "projectRef": "geznczcokbgybsseipjg",
+    "host": "geznczcokbgybsseipjg.supabase.co",
+    "kgTargetEnv": "staging",
+    "reason": "Staging target confirmed"
+  },
+  "approvedLoaded": 74,
+  "applied": {
+    "entities": 43,
+    "relationships": 29,
+    "bridges": 0,
+    "claims_draft": 0,
+    "decision_points_draft": 0,
+    "proposals_marked_applied": 74
+  },
+  "skipped": [
+    {
+      "fingerprint": "create|complication|loss-of-reduction",
+      "reason": "entity exists: loss-of-reduction"
+    },
+    {
+      "fingerprint": "bridge|trauma-fundamentals|trauma-fundamentals",
+      "reason": "curriculum node not found"
+    }
+  ],
+  "errors": [],
+  "draftLeakChecks": {
+    "claimsInsertedAsDraft": 0,
+    "claimsInsertedAsVerified": 0,
+    "dpsInsertedAsDraft": 0,
+    "dpsInsertedAsVerified": 0
+  }
+}

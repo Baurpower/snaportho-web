@@ -1,0 +1,49 @@
+{
+  "topicKey": "trauma-fundamentals",
+  "pilotKey": "trauma-fundamentals-neighborhood",
+  "generatedAt": "2026-07-08T21:19:54.024Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "44 proposals still awaiting human review",
+    "30 items require attending review",
+    "Insufficient relationship metadata on essential edges",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "9 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[high] Gustilo-Anderson Classification neighborhood has 0/2 classification_grade entities.",
+    "[high] Open Fracture Irrigation and Debridement missing outbound at_risk_structure (0/1).",
+    "[critical] Emergent Fasciotomy neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Emergent Fasciotomy missing outbound involves_anatomy (0/1).",
+    "[high] Emergent Fasciotomy missing outbound at_risk_structure (0/1).",
+    "[high] Closed Reduction missing outbound at_risk_structure (0/1).",
+    "[critical] Splint Immobilization neighborhood has 0/1 anatomy_structure entities.",
+    "[critical] Splint Immobilization missing outbound involves_anatomy (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer",
+    "Run curate step to normalize metadata"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 35,
+    "humanReviewItems": 44,
+    "attendingReviewItems": 30,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

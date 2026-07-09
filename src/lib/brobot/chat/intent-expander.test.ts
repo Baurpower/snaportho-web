@@ -31,20 +31,19 @@ const ankleOrif = fallbackBroBotIntentExpansion('What are the steps for an ankle
 assert.equal(ankleOrif.mode, 'or_prep');
 assert.equal(ankleOrif.subintent, 'surgical_steps');
 assert.equal(ankleOrif.procedureCategory, 'fracture_orif');
-assert.equal(ankleOrif.answerImmediately, false);
-assert.equal(ankleOrif.requiresBranchSelection, true);
-assert.match(ankleOrif.reasonForBranching ?? '', /fracture pattern/i);
+assert.equal(ankleOrif.answerImmediately, true);
+assert.equal(ankleOrif.requiresBranchSelection, false);
 assert.ok(
-  ankleOrif.branchOptions?.some((branch) => /fracture pattern\/classification/i.test(branch.label))
+  ankleOrif.branchOptions?.some((branch) => /fracture pattern/i.test(branch.label))
 );
 assert.ok(
-  ankleOrif.branchOptions?.some((branch) => /reduction strategy/i.test(branch.label))
+  ankleOrif.branchOptions?.some((branch) => /reduce/i.test(branch.label))
 );
 assert.ok(
-  ankleOrif.branchOptions?.some((branch) => /implant\/fixation options/i.test(branch.label))
+  ankleOrif.branchOptions?.some((branch) => /fixation options/i.test(branch.label))
 );
 assert.ok(
-  ankleOrif.branchOptions?.some((branch) => /fluoro\/intraop checks/i.test(branch.label))
+  ankleOrif.branchOptions?.some((branch) => /fluoro checks/i.test(branch.label))
 );
 
 const isolatedLateral = fallbackBroBotIntentExpansion(
@@ -56,21 +55,21 @@ assert.equal(isolatedLateral.procedureCategory, 'fracture_orif');
 assert.equal(isolatedLateral.requiresBranchSelection, false);
 
 const broadOrPrepPrompts = [
-  ['Distal radius ORIF steps', 'fracture_orif', /reduction strategy/i],
-  ['I have tibial plateau ORIF tomorrow', 'fracture_orif', /fracture pattern\/classification/i],
-  ['Walk me through olecranon ORIF', 'fracture_orif', /implant\/fixation options/i],
-  ['Diagnostic shoulder scope steps', 'arthroscopy', /portal placement/i],
-  ['Reverse TSA steps', 'arthroplasty', /trialing\/balancing|bone preparation/i],
-  ['Trigger finger release', 'soft_tissue_release', /release endpoint/i],
-  ['ACL reconstruction steps', 'tendon_ligament_repair', /graft\/repair choice|fixation construct/i],
+  ['Distal radius ORIF steps', 'fracture_orif', /reduction maneuvers/i],
+  ['I have tibial plateau ORIF tomorrow', 'fracture_orif', /fracture pattern/i],
+  ['Walk me through olecranon ORIF', 'fracture_orif', /fixation options/i],
+  ['Diagnostic shoulder scope steps', 'arthroscopy', /portals/i],
+  ['Reverse TSA steps', 'arthroplasty', /balance and stability|bone prep/i],
+  ['Trigger finger release', 'soft_tissue_release', /release is complete/i],
+  ['ACL reconstruction steps', 'tendon_ligament_repair', /graft/i],
 ] as const;
 
 for (const [message, expectedCategory, expectedBranch] of broadOrPrepPrompts) {
   const intent = fallbackBroBotIntentExpansion(message, 'auto');
   assert.equal(intent.mode, 'or_prep', message);
   assert.equal(intent.procedureCategory, expectedCategory, message);
-  assert.equal(intent.requiresBranchSelection, true, message);
-  assert.equal(intent.answerImmediately, false, message);
+  assert.equal(intent.requiresBranchSelection, false, message);
+  assert.equal(intent.answerImmediately, true, message);
   assert.ok(
     intent.branchOptions?.some((branch) => expectedBranch.test(branch.label)),
     `${message} should include category branch matching ${expectedBranch}`
@@ -83,8 +82,8 @@ const diagnosticShoulderScope = fallbackBroBotIntentExpansion(
 );
 assert.equal(diagnosticShoulderScope.mode, 'or_prep');
 assert.equal(diagnosticShoulderScope.procedureCategory, 'arthroscopy');
-assert.equal(diagnosticShoulderScope.answerImmediately, false);
-assert.equal(diagnosticShoulderScope.requiresBranchSelection, true);
+assert.equal(diagnosticShoulderScope.answerImmediately, true);
+assert.equal(diagnosticShoulderScope.requiresBranchSelection, false);
 
 const fcrApproach = fallbackBroBotIntentExpansion(
   'What structures are at risk in the FCR approach?',
@@ -140,13 +139,17 @@ const parsed = parseBroBotIntentExpansionResponse(
 assert.equal(parsed.mode, 'or_prep');
 assert.equal(parsed.procedureCategory, 'arthroscopy');
 assert.equal(parsed.goal, 'Learn the diagnostic shoulder arthroscopy workflow.');
-assert.equal(parsed.answerImmediately, false);
-assert.equal(parsed.requiresBranchSelection, true);
-assert.ok(parsed.branchOptions?.some((branch) => /portal placement/i.test(branch.label)));
+assert.equal(parsed.answerImmediately, true);
+assert.equal(parsed.requiresBranchSelection, false);
+assert.ok(parsed.branchOptions?.some((branch) => /portal/i.test(branch.label)));
 
 assert.deepEqual(
   getModeBranchOptions('oite').map((branch) => branch.label).slice(0, 3),
-  ['High Yield Review', 'Classification', 'Treatment Algorithm']
+  [
+    'What are the board-style pearls?',
+    'What must I know first?',
+    'What classification should I know?',
+  ]
 );
 
 console.log('BroBot intent expander tests passed');

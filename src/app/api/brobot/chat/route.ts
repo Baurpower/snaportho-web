@@ -1484,18 +1484,82 @@ async function runJsonCompletion(params: {
   model: string;
   messages: BroBotModelMessage[];
   temperature?: number;
+  signal?: AbortSignal;
+  onAnswerText?: (answer: string) => void;
 }) {
+  if (params.onAnswerText) {
+    const completion = await params.openai.chat.completions.create(
+      {
+        model: params.model,
+        temperature: params.temperature ?? 0.2,
+        response_format: { type: 'json_object' },
+        messages: params.messages,
+        stream: true,
+        stream_options: { include_usage: true },
+      },
+      { signal: params.signal }
+    );
+    let rawContent = '';
+    let usage: unknown = null;
+
+    for await (const chunk of completion) {
+      rawContent += chunk.choices[0]?.delta?.content ?? '';
+      usage = chunk.usage ?? usage;
+      params.onAnswerText(extractAnswerFromStreamingJson(rawContent));
+    }
+
+    return { rawContent, usage };
+  }
+
   const completion = await params.openai.chat.completions.create({
     model: params.model,
     temperature: params.temperature ?? 0.2,
     response_format: { type: 'json_object' },
     messages: params.messages,
-  });
+  }, { signal: params.signal });
 
   return {
     rawContent: completion.choices[0]?.message?.content ?? '',
     usage: completion.usage ?? null,
   };
+}
+
+function extractAnswerFromStreamingJson(raw: string): string {
+  const match = /"answer"\s*:\s*"/.exec(raw);
+  if (!match) return '';
+
+  let answer = '';
+  for (let index = match.index + match[0].length; index < raw.length; index += 1) {
+    const character = raw[index];
+    if (character === '"') break;
+    if (character !== '\\') {
+      answer += character;
+      continue;
+    }
+
+    const escaped = raw[index + 1];
+    if (!escaped) break;
+    if (escaped === 'u') {
+      const hex = raw.slice(index + 2, index + 6);
+      if (!/^[0-9a-f]{4}$/i.test(hex)) break;
+      answer += String.fromCharCode(Number.parseInt(hex, 16));
+      index += 5;
+      continue;
+    }
+    const escapes: Record<string, string> = {
+      '"': '"',
+      '\\': '\\',
+      '/': '/',
+      b: '\b',
+      f: '\f',
+      n: '\n',
+      r: '\r',
+      t: '\t',
+    };
+    answer += escapes[escaped] ?? escaped;
+    index += 1;
+  }
+  return answer;
 }
 
 async function generateBroBotPipelineResult(params: {
@@ -1511,6 +1575,9 @@ async function generateBroBotPipelineResult(params: {
   };
   databaseBranchOptions: RankedBranchOption[];
   rankingContext: BranchRankingContext;
+  signal?: AbortSignal;
+  onAnswerText?: (answer: string) => void;
+  preserveStreamedAnswer?: boolean;
 }) : Promise<BroBotPipelineResult> {
   const selectedBranch =
     params.body.selectedBranchId || params.body.selectedBranchLabel
@@ -1562,6 +1629,8 @@ async function generateBroBotPipelineResult(params: {
     openai: params.openai,
     model: answerModel,
     messages: answerMessages,
+    signal: params.signal,
+    onAnswerText: params.onAnswerText,
   });
 
   let parsedOutput = parseBroBotChatResponse(answerCompletion.rawContent, {
@@ -1589,7 +1658,8 @@ async function generateBroBotPipelineResult(params: {
   if (
     BROBOT_ENABLE_REVISION_PASS &&
     qualityGate.warnings.length > 0 &&
-    !shouldBypassRevisionPass(params.intent)
+    !shouldBypassRevisionPass(params.intent) &&
+    !params.preserveStreamedAnswer
   ) {
     originalAnswerBeforeRevision = parsedOutput.answer;
     revisionModel = getRevisionModel(params.intent.mode);
@@ -1610,6 +1680,7 @@ async function generateBroBotPipelineResult(params: {
         whatMostResidentsMiss: parsedOutput.whatMostResidentsMiss,
         warnings: qualityGate.warnings,
       }),
+      signal: params.signal,
     });
     const revisedOutput = parseBroBotChatResponse(revisionCompletion.rawContent, {
       fallbackMode: params.intent.mode,
@@ -1646,6 +1717,20 @@ async function generateBroBotPipelineResult(params: {
       originalAnswer: originalAnswerBeforeRevision,
       revisedAnswer: parsedOutput.answer,
     });
+  }
+
+  if (params.preserveStreamedAnswer && qualityGate.warnings.length > 0) {
+    const qualityNote = buildStreamingQualityNote({
+      mode: params.intent.mode,
+      warnings: qualityGate.warnings,
+    });
+    if (qualityNote) {
+      parsedOutput = {
+        ...parsedOutput,
+        answer: `${parsedOutput.answer.trimEnd()}\n\n${qualityNote}`,
+      };
+      params.onAnswerText?.(parsedOutput.answer);
+    }
   }
 
   // Convert unmet quality facets into targeted follow-up chip suggestions.
@@ -1693,6 +1778,7 @@ async function generateBroBotPipelineResult(params: {
           selectedBranch,
           fallbackBranches: metadataFallbackBranches,
         }),
+        signal: params.signal,
       });
       metadataOutput = parseBroBotMetadataResponse({
         raw: metadataCompletion.rawContent,
@@ -1781,6 +1867,30 @@ async function generateBroBotPipelineResult(params: {
   };
 }
 
+function buildStreamingQualityNote(input: {
+  mode: BroBotChatMode;
+  warnings: string[];
+}): string {
+  if (input.warnings.length === 0) return '';
+
+  if (input.mode === 'consult') {
+    return '**Quality note:** Confirm urgency, open/closed status, neurovascular findings, and imaging before applying this framework to a patient.';
+  }
+  if (input.mode === 'or_prep') {
+    return '**Quality note:** Confirm the case-specific pattern, reduction goal, fixation plan, imaging checks, and attending preferences before scrub.';
+  }
+  if (input.mode === 'oite') {
+    return '**Quality note:** Cross-check the relevant classification, treatment-changing threshold, and common distractor before committing this to memory.';
+  }
+  if (input.mode === 'clinic') {
+    return '**Quality note:** Adapt this framework to the patient’s history, examination, imaging, and treatment goals.';
+  }
+  if (input.mode === 'research') {
+    return '**Quality note:** Verify the source, study design, effect estimate, and limitations before using this conclusion.';
+  }
+  return '**Quality note:** Verify the case-specific details and clinical context before applying this general framework.';
+}
+
 async function handleGuestChat(params: {
   request: Request;
   requestId: string;
@@ -1788,7 +1898,7 @@ async function handleGuestChat(params: {
   body: BroBotChatRequest;
   subject: Subject;
   guestCookieToSet: string | null;
-}): Promise<NextResponse> {
+}): Promise<Response> {
   const { request, requestId, startedAt, body, subject, guestCookieToSet } = params;
   const persistence = createAdminClient();
 
@@ -1899,6 +2009,26 @@ async function handleGuestChat(params: {
   }
 
   intent = anchorIntentTopicToHistory(intent, body.message, history);
+
+  if (body.stream || BROBOT_STREAMING_ENABLED) {
+    return createGuestStreamingChatResponse({
+      request,
+      requestId,
+      openai,
+      persistence,
+      subject,
+      body,
+      intent,
+      history,
+      learningBranches,
+      databaseBranchOptions,
+      rankingContext,
+      startedAt,
+      limit,
+      usedBefore,
+      guestCookieToSet,
+    });
+  }
 
   const pipelineResult = await generateBroBotPipelineResult({
     openai,
@@ -2393,6 +2523,17 @@ export async function POST(request: Request) {
     }
 
     intent = anchorIntentTopicToHistory(intent, body.message, history);
+
+    if (isDevelopment) {
+      console.log('[BROBOT-CHAT-ROUTE]', {
+        requestId,
+        requiresFocusSelection: Boolean(intent.requiresBranchSelection),
+        reason: intent.reasonForBranching || 'intent_is_answerable',
+        mode: intent.mode,
+        subintent: intent.subintent,
+        focus: intent.procedureOrTopic,
+      });
+    }
 
     if (body.source === 'manual' && body.selectedBranchId == null && !body.answerNow) {
       await recordChatAnalyticsEvent({
@@ -3414,6 +3555,122 @@ async function persistCompletedBroBotOutput(params: {
   return responsePayload;
 }
 
+function createGuestStreamingChatResponse(params: {
+  request: Request;
+  requestId: string;
+  openai: OpenAI;
+  persistence: BroBotDbClient;
+  subject: Subject;
+  body: BroBotChatRequest;
+  intent: BroBotChatIntent;
+  history: BroBotModelMessage[];
+  learningBranches: { topic: BranchTopicRow | null; branches: RankedBranchOption[] };
+  databaseBranchOptions: RankedBranchOption[];
+  rankingContext: BranchRankingContext;
+  startedAt: number;
+  limit: number | null;
+  usedBefore: number | null;
+  guestCookieToSet: string | null;
+}) {
+  const encoder = new TextEncoder();
+  const conversationId = params.body.conversationId ?? crypto.randomUUID();
+  const assistantMessageId = crypto.randomUUID();
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      let streamedAnswer = '';
+      const send = (event: StreamEventName, data: Record<string, unknown>) => {
+        controller.enqueue(encoder.encode(encodeStreamEvent(event, data)));
+      };
+      send('start', { assistantMessageId, conversationId });
+
+      try {
+        const pipelineResult = await generateBroBotPipelineResult({
+          openai: params.openai,
+          persistence: params.persistence,
+          body: params.body,
+          intent: params.intent,
+          history: params.history,
+          learningBranches: params.learningBranches,
+          databaseBranchOptions: params.databaseBranchOptions,
+          rankingContext: params.rankingContext,
+          signal: params.request.signal,
+          preserveStreamedAnswer: true,
+          onAnswerText(answer) {
+            if (
+              params.request.signal.aborted ||
+              answer.length <= streamedAnswer.length ||
+              !answer.startsWith(streamedAnswer)
+            ) return;
+            const delta = answer.slice(streamedAnswer.length);
+            streamedAnswer = answer;
+            send('delta', { content: delta });
+          },
+        });
+        const usedAfter = await recordSuccessfulAIUse(
+          params.subject,
+          Date.now() - params.startedAt
+        );
+        const remainingAfter =
+          params.limit != null ? Math.max(0, params.limit - usedAfter) : null;
+        const output = pipelineResult.brobotOutput;
+        if (streamedAnswer) {
+          output.answer = streamedAnswer;
+        }
+        const responsePayload: BroBotChatResponse = {
+          conversationId,
+          messageId: assistantMessageId,
+          goal: output.goal,
+          selectedFocus: output.selectedFocus,
+          answer: output.answer,
+          priorityPoints: output.priorityPoints,
+          knowledgeGaps: output.knowledgeGaps,
+          whatMostResidentsMiss: output.whatMostResidentsMiss,
+          suggestedQuestions: output.suggestedQuestions,
+          nextLearningBranches: withRankPositions(output.nextLearningBranches ?? []),
+          tags: output.tags,
+          detectedMode: output.detectedMode,
+          remainingFreeUses: remainingAfter,
+          confidence: output.confidence,
+          needsClarification: output.needsClarification,
+          clarifyingQuestions: output.clarifyingQuestions,
+          assumedContext: output.assumedContext,
+          consultConfidence: output.consultConfidence,
+          missingInformation: output.missingInformation,
+          researchSubmode: output.researchSubmode,
+        };
+        if (!streamedAnswer) send('delta', { content: responsePayload.answer });
+        send('metadata', responsePayload);
+        send('done', { assistantMessageId, conversationId });
+        if (isDevelopment) {
+          console.log('[BROBOT-STREAM]', {
+            requestId: params.requestId,
+            transport: streamedAnswer ? 'openai_stream' : 'buffered_fallback',
+            answerRoute: pipelineResult.answerRoute,
+            subject: 'guest',
+          });
+        }
+      } catch {
+        if (!params.request.signal.aborted) {
+          send('error', {
+            message: 'BroBot is having trouble responding. Please try again in a moment.',
+          });
+        }
+      } finally {
+        controller.close();
+      }
+    },
+  });
+
+  const headers = new Headers({
+    'Content-Type': 'text/event-stream; charset=utf-8',
+    'Cache-Control': 'no-cache, no-transform',
+    Connection: 'keep-alive',
+    'X-Accel-Buffering': 'no',
+  });
+  if (params.guestCookieToSet) headers.append('Set-Cookie', params.guestCookieToSet);
+  return new Response(stream, { headers });
+}
+
 function createStreamingChatResponse(params: {
   request: Request;
   requestId: string;
@@ -3458,6 +3715,7 @@ function createStreamingChatResponse(params: {
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
+      let streamedAnswer = '';
       const send = (event: StreamEventName, data: Record<string, unknown>) => {
         controller.enqueue(encoder.encode(encodeStreamEvent(event, data)));
       };
@@ -3478,7 +3736,22 @@ function createStreamingChatResponse(params: {
           learningBranches: params.learningBranches,
           databaseBranchOptions: params.databaseBranchOptions,
           rankingContext: params.rankingContext,
+          signal: params.request.signal,
+          preserveStreamedAnswer: true,
+          onAnswerText(answer) {
+            if (
+              params.request.signal.aborted ||
+              answer.length <= streamedAnswer.length ||
+              !answer.startsWith(streamedAnswer)
+            ) return;
+            const delta = answer.slice(streamedAnswer.length);
+            streamedAnswer = answer;
+            send('delta', { content: delta });
+          },
         });
+        if (streamedAnswer) {
+          pipelineResult.brobotOutput.answer = streamedAnswer;
+        }
         const latencyMs = Date.now() - params.startedAt;
         const responsePayload = await persistCompletedBroBotOutput({
           request: params.request,
@@ -3511,15 +3784,27 @@ function createStreamingChatResponse(params: {
           originalAnswerBeforeRevision: pipelineResult.originalAnswerBeforeRevision,
         });
 
-        for (const chunk of chunkAnswer(responsePayload.answer)) {
-          send('delta', { content: chunk });
+        // If the provider did not yield usable answer-field deltas, preserve a
+        // graceful buffered fallback instead of leaving an empty bubble.
+        if (!streamedAnswer) {
+          for (const chunk of chunkAnswer(responsePayload.answer)) {
+            send('delta', { content: chunk });
+          }
         }
         send('metadata', responsePayload);
         send('done', {
           assistantMessageId,
           conversationId: params.conversationId,
         });
+        if (isDevelopment) {
+          console.log('[BROBOT-STREAM]', {
+            requestId: params.requestId,
+            transport: streamedAnswer ? 'openai_stream' : 'buffered_fallback',
+            answerRoute: pipelineResult.answerRoute,
+          });
+        }
       } catch (error) {
+        if (params.request.signal.aborted) return;
         logChatStepError({
           requestId: params.requestId,
           category: 'openai_error',

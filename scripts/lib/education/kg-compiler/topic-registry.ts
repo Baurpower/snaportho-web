@@ -4,6 +4,24 @@
  */
 
 import {
+  TRAUMA_FUNDAMENTALS_ASSET_COUNTS,
+  TRAUMA_FUNDAMENTALS_CLAIM_DRAFTS,
+  TRAUMA_FUNDAMENTALS_DECISION_POINT_DRAFTS,
+  TRAUMA_FUNDAMENTALS_ENTITIES,
+  TRAUMA_FUNDAMENTALS_PILOT_KEY,
+  TRAUMA_FUNDAMENTALS_SOURCE_IDS,
+  activeTraumaFundamentalsRelationships,
+} from "../kg-trauma-fundamentals-pilot-spec.ts";
+import {
+  SURGICAL_APPROACHES_ASSET_COUNTS,
+  SURGICAL_APPROACHES_CLAIM_DRAFTS,
+  SURGICAL_APPROACHES_DECISION_POINT_DRAFTS,
+  SURGICAL_APPROACHES_ENTITIES,
+  SURGICAL_APPROACHES_PILOT_KEY,
+  SURGICAL_APPROACHES_SOURCE_IDS,
+  activeSurgicalApproachesRelationships,
+} from "../kg-surgical-approaches-pilot-spec.ts";
+import {
   CLAVICLE_ASSET_COUNTS,
   CLAVICLE_CLAIM_DRAFTS,
   CLAVICLE_DECISION_POINT_DRAFTS,
@@ -205,6 +223,15 @@ import { buildHandWristTopicDefinitions } from "../kg-hand-wrist-topic-registry.
 import { buildAdultReconstructionTopicDefinitions } from "../kg-adult-reconstruction-topic-registry.ts";
 import { buildSportsMedicineTopicDefinitions } from "../kg-sports-medicine-topic-registry.ts";
 import type { NeighborhoodSnapshot } from "./types.ts";
+import {
+  ORTHOPAEDIC_ANATOMY_ASSET_COUNTS,
+  ORTHOPAEDIC_ANATOMY_CLAIM_DRAFTS,
+  ORTHOPAEDIC_ANATOMY_DECISION_POINT_DRAFTS,
+  ORTHOPAEDIC_ANATOMY_ENTITIES,
+  ORTHOPAEDIC_ANATOMY_PILOT_KEY,
+  ORTHOPAEDIC_ANATOMY_SOURCE_IDS,
+  activeOrthopaedicAnatomyRelationships,
+} from "../kg-orthopaedic-anatomy-pilot-spec.ts";
 
 export type TopicDefinition = {
   topicKey: string;
@@ -290,6 +317,83 @@ function buildSnapshotFromSpec(input: {
 }
 
 const TOPIC_REGISTRY: TopicDefinition[] = [
+  {
+    topicKey: "surgical-approaches",
+    pilotKey: SURGICAL_APPROACHES_PILOT_KEY,
+    displayName: "Surgical Approaches",
+    primaryEntitySlug: "surgical-approaches",
+    targetMaturityLevel: 7,
+    aliases: ["orthopaedic surgical approaches", "operative approaches", "approach backbone"],
+    sources: SURGICAL_APPROACHES_SOURCE_IDS,
+    loadSnapshot: () =>
+      buildSnapshotFromSpec({
+        topicKey: "surgical-approaches", pilotKey: SURGICAL_APPROACHES_PILOT_KEY,
+        displayName: "Surgical Approaches", primaryEntitySlug: "surgical-approaches",
+        targetMaturityLevel: 7, entities: SURGICAL_APPROACHES_ENTITIES,
+        relationships: activeSurgicalApproachesRelationships(),
+        claims: SURGICAL_APPROACHES_CLAIM_DRAFTS,
+        decisionPoints: SURGICAL_APPROACHES_DECISION_POINT_DRAFTS,
+        assetCounts: SURGICAL_APPROACHES_ASSET_COUNTS, sources: SURGICAL_APPROACHES_SOURCE_IDS,
+      }),
+    buildProposals: async () => {
+      const { buildSurgicalApproachesProposalPacket } = await import("../kg-factory/proposal-builder.ts");
+      return buildSurgicalApproachesProposalPacket().proposals;
+    },
+  },
+  {
+    topicKey: "orthopaedic-anatomy",
+    pilotKey: ORTHOPAEDIC_ANATOMY_PILOT_KEY,
+    displayName: "Orthopaedic Anatomy",
+    primaryEntitySlug: "orthopaedic-anatomy",
+    targetMaturityLevel: 7,
+    aliases: ["orthopedic anatomy", "anatomy", "canonical orthopaedic anatomy"],
+    sources: ORTHOPAEDIC_ANATOMY_SOURCE_IDS,
+    loadSnapshot: () =>
+      buildSnapshotFromSpec({
+        topicKey: "orthopaedic-anatomy",
+        pilotKey: ORTHOPAEDIC_ANATOMY_PILOT_KEY,
+        displayName: "Orthopaedic Anatomy",
+        primaryEntitySlug: "orthopaedic-anatomy",
+        targetMaturityLevel: 7,
+        entities: ORTHOPAEDIC_ANATOMY_ENTITIES,
+        relationships: activeOrthopaedicAnatomyRelationships(),
+        claims: ORTHOPAEDIC_ANATOMY_CLAIM_DRAFTS,
+        decisionPoints: ORTHOPAEDIC_ANATOMY_DECISION_POINT_DRAFTS,
+        assetCounts: ORTHOPAEDIC_ANATOMY_ASSET_COUNTS,
+        sources: ORTHOPAEDIC_ANATOMY_SOURCE_IDS,
+      }),
+    buildProposals: async () => {
+      const { buildOrthopaedicAnatomyProposalPacket } = await import("../kg-factory/proposal-builder.ts");
+      return buildOrthopaedicAnatomyProposalPacket().proposals;
+    },
+  },
+  {
+    topicKey: "trauma-fundamentals",
+    pilotKey: TRAUMA_FUNDAMENTALS_PILOT_KEY,
+    displayName: "Trauma Fundamentals",
+    primaryEntitySlug: "trauma-fundamentals",
+    targetMaturityLevel: 7,
+    aliases: ["orthopaedic trauma fundamentals", "fracture fundamentals", "trauma backbone"],
+    sources: TRAUMA_FUNDAMENTALS_SOURCE_IDS,
+    loadSnapshot: () =>
+      buildSnapshotFromSpec({
+        topicKey: "trauma-fundamentals",
+        pilotKey: TRAUMA_FUNDAMENTALS_PILOT_KEY,
+        displayName: "Trauma Fundamentals",
+        primaryEntitySlug: "trauma-fundamentals",
+        targetMaturityLevel: 7,
+        entities: TRAUMA_FUNDAMENTALS_ENTITIES,
+        relationships: activeTraumaFundamentalsRelationships(),
+        claims: TRAUMA_FUNDAMENTALS_CLAIM_DRAFTS,
+        decisionPoints: TRAUMA_FUNDAMENTALS_DECISION_POINT_DRAFTS,
+        assetCounts: TRAUMA_FUNDAMENTALS_ASSET_COUNTS,
+        sources: TRAUMA_FUNDAMENTALS_SOURCE_IDS,
+      }),
+    buildProposals: async () => {
+      const { buildTraumaFundamentalsProposalPacket } = await import("../kg-factory/proposal-builder.ts");
+      return buildTraumaFundamentalsProposalPacket().proposals;
+    },
+  },
   {
     topicKey: "ankle-fracture",
     pilotKey: ANKLE_PILOT_KEY,

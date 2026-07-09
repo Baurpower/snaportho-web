@@ -1,0 +1,29 @@
+{
+  "category": "graph_integrity",
+  "label": "Graph Integrity",
+  "score": 96,
+  "deductions": [
+    {
+      "finding": "1 orphan entities with no relationships",
+      "evidence": "Slugs: fracture-malunion",
+      "reason": "Orphan entities cannot be traversed by products and indicate incomplete graph wiring.",
+      "severity": "medium",
+      "category": "graph_integrity",
+      "affectedSlugs": [
+        "fracture-malunion"
+      ],
+      "suggestedFix": "Add inbound or outbound clinical/anatomy edges, or merge duplicates.",
+      "impact": 4
+    }
+  ],
+  "metrics": {
+    "entityCount": 44,
+    "relationshipCount": 44,
+    "orphanCount": 1,
+    "danglingEdgeCount": 0,
+    "duplicateLabelGroups": 0,
+    "invalidPredicateCount": 0,
+    "validationRate": 1
+  },
+  "recommendations": []
+}

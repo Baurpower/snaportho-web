@@ -1,0 +1,2108 @@
+{
+  "topicKey": "orthopaedic-anatomy",
+  "pilotKey": "orthopaedic-anatomy-neighborhood",
+  "primaryEntitySlug": "orthopaedic-anatomy",
+  "displayName": "Orthopaedic Anatomy",
+  "generatedAt": "2026-07-08T21:20:25.686Z",
+  "nodes": [
+    {
+      "slug": "orthopaedic-anatomy",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Orthopaedic Anatomy",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 11,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "upper-extremity-anatomy",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Upper Extremity Anatomy",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lower-extremity-anatomy",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Anatomy",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "spine-anatomy",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Spine Anatomy",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 8,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pelvis-anatomy",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis Anatomy",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "neurovascular-anatomy",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Neurovascular Anatomy",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "surgical-anatomy",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Surgical Anatomy",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 6,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "developmental-anatomy",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Developmental Anatomy",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cervical-spine",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Cervical Spine",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "thoracic-spine",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Thoracic Spine",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lumbar-spine",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lumbar Spine",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sacrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacrum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "vertebral-body",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Vertebral Body",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pedicle",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pedicle",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lamina",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lamina",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "facet-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Facet Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "intervertebral-disc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Intervertebral Disc",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "annulus-fibrosus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Annulus Fibrosus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "nucleus-pulposus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Nucleus Pulposus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "spinal-canal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Spinal Canal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "spinal-cord",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Spinal Cord",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "conus-medullaris",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Conus Medullaris",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "cauda-equina",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Cauda Equina",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "exiting-nerve-root",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Exiting Nerve Root",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "traversing-nerve-root",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Traversing Nerve Root",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "anterior-longitudinal-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Longitudinal Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "posterior-longitudinal-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterior Longitudinal Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "ligamentum-flavum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ligamentum Flavum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "vertebral-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Vertebral Artery",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "brachial-plexus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Brachial Plexus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lumbosacral-plexus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lumbosacral Plexus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-triangle",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Triangle",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "popliteal-fossa",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Popliteal Fossa",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "carpal-tunnel",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Carpal Tunnel",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "cubital-tunnel",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Cubital Tunnel",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "leg-anterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Compartment of Leg",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "leg-lateral-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Compartment of Leg",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "leg-superficial-posterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Superficial Posterior Compartment of Leg",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "leg-deep-posterior-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deep Posterior Compartment of Leg",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hand-thenar-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Thenar Compartment",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "hand-midpalmar-compartment",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midpalmar Compartment",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "deltopectoral-interval",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deltopectoral Interval",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "henry-interval",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Henry Interval",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "kocher-interval",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Kocher Interval",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "kaplan-interval",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Kaplan Interval",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "smith-petersen-interval",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Smith-Petersen Interval",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "watson-jones-interval",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Watson-Jones Interval",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "knee-medial-parapatellar-interval",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Parapatellar Interval",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "safe-zone-radial-nerve-humerus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Nerve Humeral Safe Zone",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "safe-zone-common-fibular-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Fibular Nerve Safe Zone",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "quadrilateral-space",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Quadrilateral Space",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-head-blood-supply",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Head Blood Supply",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "talus-blood-supply",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus Blood Supply",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "scaphoid-blood-supply",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scaphoid Blood Supply",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "humeral-head-blood-supply",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Humeral Head Blood Supply",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "physis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Physis",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "epiphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Epiphysis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "metaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Metaphysis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "primary-ossification-center",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Primary Ossification Center",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "secondary-ossification-center",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Secondary Ossification Center",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "elbow-ossification-centers",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Elbow Ossification Centers",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "triradiate-cartilage",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Triradiate Cartilage",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "articular-cartilage",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Articular Cartilage",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "subchondral-bone",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subchondral Bone",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "joint-capsule",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Joint Capsule",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "deforming-forces",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deforming Forces",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "surface-anatomy-landmarks",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Surface Anatomy Landmarks",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radiographic-anatomy-landmarks",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Imaging Anatomy Landmarks",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "upper-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Upper Extremity Trauma Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 13,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "clavicle",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Clavicle",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "ac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acromioclavicular Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sternoclavicular-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sternoclavicular Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "proximal-humerus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Humerus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "humeral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Humeral Head",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "surgical-neck",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Surgical Neck",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "axillary-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Axillary Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "humeral-shaft",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Humeral Shaft",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radial-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "brachial-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Brachial Artery",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-humerus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Humerus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "medial-column",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Column Distal Humerus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lateral-column",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Column Distal Humerus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "olecranon-fossa",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Olecranon Fossa",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "capitellum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Capitellum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "trochlea",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trochlea",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "anterior-interosseous-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Interosseous Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "median-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Median Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "ulnar-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "elbow-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Elbow Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lower-extremity-trauma-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lower Extremity Trauma Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 13,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "pelvis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pelvis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sacroiliac-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sacroiliac Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pubic-symphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pubic Symphysis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "iliac-wing",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Iliac Wing",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acetabulum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Acetabulum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-diaphysis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Diaphysis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-femur",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Femur",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "tibial-plateau",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Tibial Plateau",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "patella",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Patella",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "extensor-mechanism",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Knee Extensor Mechanism",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "acl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Cruciate Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterior Cruciate Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "popliteal-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Popliteal Artery",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "common-peroneal-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Common Peroneal Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "talus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Talus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "calcaneus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "subtalar-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subtalar Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lisfranc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lisfranc Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "midfoot",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Midfoot",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "plantar-soft-tissues",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Plantar Soft Tissues",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hand-wrist-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hand & Wrist Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 46,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radius",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ulna",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulna",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "interosseous-membrane",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Interosseous Membrane",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "druj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DRUJ",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pruj",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PRUJ",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-radius",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Radius",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "distal-ulna",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Ulna",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "scaphoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scaphoid",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "lunate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lunate",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "triquetrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Triquetrum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "pisiform",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Pisiform",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "trapezium",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trapezium",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "trapezoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Trapezoid",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "capitate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Capitate",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hamate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hamate",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "first-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "First Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "second-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Second Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "third-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Third Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fourth-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fourth Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fifth-metacarpal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Fifth Metacarpal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "proximal-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Phalanx",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "middle-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Middle Phalanx",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-phalanx",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Phalanx",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "dip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "DIP Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PIP Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "mcp-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "MCP Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cmc-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "CMC Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "scapholunate-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Scapholunate Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "lunotriquetral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lunotriquetral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "tfcc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "TFCC",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "thumb-ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Thumb UCL",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "volar-plate",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Volar Plate",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "collateral-ligaments",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Collateral Ligaments",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fpl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FPL",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fdp",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FDP",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fds",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FDS",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "epl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EPL",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "epb",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EPB",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "apl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "APL",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "edc",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "EDC",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ecu",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "ECU",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fcr",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FCR",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fcu",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "FCU",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a1-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A1 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a2-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A2 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a3-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A3 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a4-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A4 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "a5-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "A5 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "c1-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C1 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "c2-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C2 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "c3-pulley",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "C3 Pulley",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "flexor-pulley-system",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Flexor Pulley System",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 8,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "flexor-tendon-zones",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Flexor Tendon Zones",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "extensor-tendon-zones",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Extensor Tendon Zones",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ain",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "AIN",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "pin",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "PIN",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "digital-nerves",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Digital Nerves",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radial-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Artery",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ulnar-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Artery",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "superficial-palmar-arch",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Superficial Palmar Arch",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "deep-palmar-arch",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Deep Palmar Arch",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "guyon-canal",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Guyon Canal",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "sports-medicine-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Medicine Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "sports-knee-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Knee Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 7,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "mcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Collateral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lcl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Collateral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "posterolateral-corner",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Posterolateral Corner",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "medial-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Meniscus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lateral-meniscus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lateral Meniscus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "femoral-condyles",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Condyles",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sports-shoulder-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Shoulder Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "glenoid",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "labrum",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Glenoid Labrum",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "rotator-cuff",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Rotator Cuff",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "supraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Supraspinatus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "infraspinatus",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Infraspinatus",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "subscapularis",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Subscapularis",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "teres-minor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Teres Minor",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "biceps-anchor",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Biceps Anchor",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sports-elbow-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Elbow Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "ucl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Ulnar Collateral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "radial-collateral-ligament",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Radial Collateral Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "distal-biceps-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Distal Biceps Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sports-foot-ankle-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sports Foot & Ankle Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "atfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Anterior Talofibular Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "cfl",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcaneofibular Ligament",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "achilles-tendon",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Achilles Tendon",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "proximal-femur-anatomy-hub",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Proximal Femur Anatomy Hub",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 8,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "femoral-head",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Head",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "femoral-neck",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Femoral Neck",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "intertrochanteric-region",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Intertrochanteric Region",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "lesser-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Lesser Trochanter",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "greater-trochanter",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Greater Trochanter",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "calcar",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Calcar",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "medial-femoral-circumflex-artery",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Medial Femoral Circumflex Artery",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "sciatic-nerve",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Sciatic Nerve",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "hip-joint",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Hip Joint",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    }
+  ],
+  "edgeCount": 198,
+  "claimCount": 10,
+  "decisionPointCount": 3,
+  "roles": {
+    "primary_condition": [
+      "orthopaedic-anatomy"
+    ],
+    "neighboring_anatomy": [
+      "upper-extremity-anatomy",
+      "lower-extremity-anatomy",
+      "spine-anatomy",
+      "pelvis-anatomy",
+      "neurovascular-anatomy",
+      "surgical-anatomy",
+      "developmental-anatomy",
+      "cervical-spine",
+      "thoracic-spine",
+      "lumbar-spine",
+      "sacrum",
+      "vertebral-body",
+      "pedicle",
+      "lamina",
+      "facet-joint",
+      "intervertebral-disc",
+      "annulus-fibrosus",
+      "nucleus-pulposus",
+      "spinal-canal",
+      "spinal-cord",
+      "conus-medullaris",
+      "cauda-equina",
+      "exiting-nerve-root",
+      "traversing-nerve-root",
+      "anterior-longitudinal-ligament",
+      "posterior-longitudinal-ligament",
+      "ligamentum-flavum",
+      "brachial-plexus",
+      "lumbosacral-plexus",
+      "femoral-triangle",
+      "popliteal-fossa",
+      "carpal-tunnel",
+      "cubital-tunnel",
+      "leg-anterior-compartment",
+      "leg-lateral-compartment",
+      "leg-superficial-posterior-compartment",
+      "leg-deep-posterior-compartment",
+      "hand-thenar-compartment",
+      "hand-midpalmar-compartment",
+      "deltopectoral-interval",
+      "henry-interval",
+      "kocher-interval",
+      "kaplan-interval",
+      "smith-petersen-interval",
+      "watson-jones-interval",
+      "knee-medial-parapatellar-interval",
+      "safe-zone-common-fibular-nerve",
+      "quadrilateral-space",
+      "femoral-head-blood-supply",
+      "talus-blood-supply",
+      "scaphoid-blood-supply",
+      "humeral-head-blood-supply",
+      "epiphysis",
+      "metaphysis",
+      "primary-ossification-center",
+      "secondary-ossification-center",
+      "elbow-ossification-centers",
+      "triradiate-cartilage",
+      "articular-cartilage",
+      "subchondral-bone",
+      "joint-capsule",
+      "deforming-forces",
+      "surface-anatomy-landmarks",
+      "radiographic-anatomy-landmarks",
+      "upper-extremity-trauma-anatomy-hub",
+      "clavicle",
+      "ac-joint",
+      "sternoclavicular-joint",
+      "proximal-humerus",
+      "humeral-head",
+      "surgical-neck",
+      "axillary-nerve",
+      "humeral-shaft",
+      "radial-nerve",
+      "brachial-artery",
+      "distal-humerus",
+      "medial-column",
+      "lateral-column",
+      "olecranon-fossa",
+      "capitellum",
+      "trochlea",
+      "anterior-interosseous-nerve",
+      "median-nerve",
+      "ulnar-nerve",
+      "elbow-joint",
+      "lower-extremity-trauma-anatomy-hub",
+      "pelvis",
+      "sacroiliac-joint",
+      "pubic-symphysis",
+      "iliac-wing",
+      "acetabulum",
+      "femoral-diaphysis",
+      "distal-femur",
+      "tibial-plateau",
+      "patella",
+      "extensor-mechanism",
+      "acl",
+      "pcl",
+      "popliteal-artery",
+      "common-peroneal-nerve",
+      "talus",
+      "calcaneus",
+      "subtalar-joint",
+      "lisfranc-joint",
+      "midfoot",
+      "plantar-soft-tissues",
+      "hand-wrist-anatomy-hub",
+      "radius",
+      "ulna",
+      "interosseous-membrane",
+      "druj",
+      "pruj",
+      "distal-radius",
+      "distal-ulna",
+      "scaphoid",
+      "lunate",
+      "triquetrum",
+      "pisiform",
+      "trapezium",
+      "trapezoid",
+      "capitate",
+      "hamate",
+      "first-metacarpal",
+      "second-metacarpal",
+      "third-metacarpal",
+      "fourth-metacarpal",
+      "fifth-metacarpal",
+      "proximal-phalanx",
+      "middle-phalanx",
+      "distal-phalanx",
+      "dip-joint",
+      "pip-joint",
+      "mcp-joint",
+      "cmc-joint",
+      "scapholunate-ligament",
+      "lunotriquetral-ligament",
+      "tfcc",
+      "thumb-ucl",
+      "volar-plate",
+      "collateral-ligaments",
+      "fpl",
+      "fdp",
+      "fds",
+      "epl",
+      "epb",
+      "apl",
+      "edc",
+      "ecu",
+      "fcr",
+      "fcu",
+      "a1-pulley",
+      "a2-pulley",
+      "a3-pulley",
+      "a4-pulley",
+      "a5-pulley",
+      "c1-pulley",
+      "c2-pulley",
+      "c3-pulley",
+      "flexor-pulley-system",
+      "flexor-tendon-zones",
+      "extensor-tendon-zones",
+      "ain",
+      "pin",
+      "digital-nerves",
+      "radial-artery",
+      "ulnar-artery",
+      "superficial-palmar-arch",
+      "deep-palmar-arch",
+      "guyon-canal",
+      "sports-medicine-anatomy-hub",
+      "sports-knee-anatomy-hub",
+      "mcl",
+      "lcl",
+      "posterolateral-corner",
+      "medial-meniscus",
+      "lateral-meniscus",
+      "femoral-condyles",
+      "sports-shoulder-anatomy-hub",
+      "glenoid",
+      "labrum",
+      "rotator-cuff",
+      "supraspinatus",
+      "infraspinatus",
+      "subscapularis",
+      "teres-minor",
+      "biceps-anchor",
+      "sports-elbow-anatomy-hub",
+      "ucl",
+      "radial-collateral-ligament",
+      "distal-biceps-tendon",
+      "sports-foot-ankle-anatomy-hub",
+      "atfl",
+      "cfl",
+      "achilles-tendon",
+      "proximal-femur-anatomy-hub",
+      "femoral-head",
+      "femoral-neck",
+      "intertrochanteric-region",
+      "lesser-trochanter",
+      "greater-trochanter",
+      "calcar",
+      "medial-femoral-circumflex-artery",
+      "sciatic-nerve",
+      "hip-joint"
+    ],
+    "procedure": [],
+    "classification": [],
+    "imaging": [],
+    "complication": [],
+    "decision_point_anchor": [
+      "vertebral-artery",
+      "safe-zone-radial-nerve-humerus",
+      "physis"
+    ],
+    "claim_anchor": [],
+    "biomechanics": [],
+    "fixation": [],
+    "supporting": []
+  }
+}

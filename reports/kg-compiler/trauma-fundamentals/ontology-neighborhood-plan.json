@@ -1,0 +1,476 @@
+{
+  "topicKey": "trauma-fundamentals",
+  "pilotKey": "trauma-fundamentals-neighborhood",
+  "primaryEntitySlug": "trauma-fundamentals",
+  "displayName": "Trauma Fundamentals",
+  "generatedAt": "2026-07-08T21:19:54.001Z",
+  "nodes": [
+    {
+      "slug": "trauma-fundamentals",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Trauma Fundamentals",
+      "role": "primary_condition",
+      "isPrimary": true,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "trauma-primary-survey",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Trauma Primary Survey",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "secondary-survey",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Trauma Secondary Survey",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "orthopaedic-trauma-resuscitation",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Orthopaedic Trauma Resuscitation",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "neurovascular-examination",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Neurovascular Examination",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "serial-neurovascular-examinations",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Serial Neurovascular Examinations",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "vascular-injury",
+      "entityType": "condition",
+      "preferredLabel": "Traumatic Vascular Injury",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "peripheral-nerve-injury",
+      "entityType": "condition",
+      "preferredLabel": "Traumatic Peripheral Nerve Injury",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "open-fracture",
+      "entityType": "condition",
+      "preferredLabel": "Open Fracture",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 6
+    },
+    {
+      "slug": "gustilo-anderson-classification",
+      "entityType": "classification_system",
+      "preferredLabel": "Gustilo-Anderson Classification",
+      "role": "classification",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "open-fracture-antibiotic-prophylaxis",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Open Fracture Antibiotic Prophylaxis",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "tetanus-prophylaxis",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Tetanus Prophylaxis",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "irrigation-and-debridement-open-fracture",
+      "entityType": "procedure",
+      "preferredLabel": "Open Fracture Irrigation and Debridement",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "fracture-related-infection",
+      "entityType": "complication",
+      "preferredLabel": "Fracture-Related Infection",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "acute-compartment-syndrome",
+      "entityType": "condition",
+      "preferredLabel": "Acute Compartment Syndrome",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 3
+    },
+    {
+      "slug": "compartment-examination",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Compartment Examination",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "compartment-pressure-measurement",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Compartment Pressure Measurement",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "emergent-fasciotomy",
+      "entityType": "procedure",
+      "preferredLabel": "Emergent Fasciotomy",
+      "role": "procedure",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "closed-reduction",
+      "entityType": "procedure",
+      "preferredLabel": "Closed Reduction",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 4
+    },
+    {
+      "slug": "traction-reduction-principle",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Traction and Countertraction",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "splint-immobilization",
+      "entityType": "procedure",
+      "preferredLabel": "Splint Immobilization",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "post-reduction-assessment",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Post-Reduction Assessment",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "post-reduction-radiographs",
+      "entityType": "diagnostic_test",
+      "preferredLabel": "Post-Reduction Radiographs",
+      "role": "imaging",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "soft-tissue-envelope",
+      "entityType": "anatomy_structure",
+      "preferredLabel": "Soft-Tissue Envelope",
+      "role": "neighboring_anatomy",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "soft-tissue-management",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Soft-Tissue Management",
+      "role": "claim_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "damage-control-orthopaedics",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Damage Control Orthopaedics",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "temporary-external-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Temporary External Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "early-appropriate-care",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Early Appropriate Care",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 4,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "fracture-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Fracture Stability",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "absolute-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Absolute Stability",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "relative-stability",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Relative Stability",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 3,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "interfragmentary-strain",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Interfragmentary Strain",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 2
+    },
+    {
+      "slug": "primary-bone-healing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Primary Bone Healing",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "secondary-bone-healing",
+      "entityType": "biomechanics_concept",
+      "preferredLabel": "Secondary Bone Healing",
+      "role": "biomechanics",
+      "isPrimary": false,
+      "inboundEdgeCount": 2,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "delayed-union",
+      "entityType": "complication",
+      "preferredLabel": "Delayed Union",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fracture-nonunion",
+      "entityType": "complication",
+      "preferredLabel": "Fracture Nonunion",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "fracture-malunion",
+      "entityType": "complication",
+      "preferredLabel": "Fracture Malunion",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "lag-screw-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Lag Screw Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "plate-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Plate Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "intramedullary-nail-fixation",
+      "entityType": "fixation_method",
+      "preferredLabel": "Intramedullary Nail Fixation",
+      "role": "fixation",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "early-postoperative-trauma-care",
+      "entityType": "treatment_principle",
+      "preferredLabel": "Early Postoperative Trauma Care",
+      "role": "decision_point_anchor",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "postoperative-neurovascular-examination",
+      "entityType": "exam_maneuver",
+      "preferredLabel": "Postoperative Neurovascular Examination",
+      "role": "supporting",
+      "isPrimary": false,
+      "inboundEdgeCount": 0,
+      "outboundEdgeCount": 1
+    },
+    {
+      "slug": "venous-thromboembolism",
+      "entityType": "complication",
+      "preferredLabel": "Venous Thromboembolism",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    },
+    {
+      "slug": "loss-of-reduction",
+      "entityType": "complication",
+      "preferredLabel": "Loss of Reduction",
+      "role": "complication",
+      "isPrimary": false,
+      "inboundEdgeCount": 1,
+      "outboundEdgeCount": 0
+    }
+  ],
+  "edgeCount": 44,
+  "claimCount": 18,
+  "decisionPointCount": 11,
+  "roles": {
+    "primary_condition": [
+      "trauma-fundamentals"
+    ],
+    "neighboring_anatomy": [
+      "soft-tissue-envelope"
+    ],
+    "procedure": [
+      "irrigation-and-debridement-open-fracture",
+      "emergent-fasciotomy"
+    ],
+    "classification": [
+      "gustilo-anderson-classification"
+    ],
+    "imaging": [
+      "post-reduction-radiographs"
+    ],
+    "complication": [
+      "fracture-related-infection",
+      "delayed-union",
+      "fracture-malunion",
+      "venous-thromboembolism",
+      "loss-of-reduction"
+    ],
+    "decision_point_anchor": [
+      "orthopaedic-trauma-resuscitation",
+      "vascular-injury",
+      "open-fracture",
+      "acute-compartment-syndrome",
+      "compartment-pressure-measurement",
+      "closed-reduction",
+      "splint-immobilization",
+      "damage-control-orthopaedics",
+      "fracture-stability",
+      "fracture-nonunion",
+      "early-postoperative-trauma-care"
+    ],
+    "claim_anchor": [
+      "trauma-primary-survey",
+      "neurovascular-examination",
+      "serial-neurovascular-examinations",
+      "open-fracture-antibiotic-prophylaxis",
+      "tetanus-prophylaxis",
+      "post-reduction-assessment",
+      "soft-tissue-management"
+    ],
+    "biomechanics": [
+      "absolute-stability",
+      "relative-stability",
+      "interfragmentary-strain",
+      "primary-bone-healing",
+      "secondary-bone-healing"
+    ],
+    "fixation": [
+      "temporary-external-fixation",
+      "lag-screw-fixation",
+      "plate-fixation",
+      "intramedullary-nail-fixation"
+    ],
+    "supporting": [
+      "secondary-survey",
+      "peripheral-nerve-injury",
+      "compartment-examination",
+      "traction-reduction-principle",
+      "early-appropriate-care",
+      "postoperative-neurovascular-examination"
+    ]
+  }
+}

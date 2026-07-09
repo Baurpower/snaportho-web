@@ -1,0 +1,134 @@
+[
+  {
+    "proposal_fingerprint": "dp|ortho-anatomy-dp-001",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "metadata": {
+      "pilot": "orthopaedic-anatomy-neighborhood",
+      "review_packet_key": "pilot:orthopaedic-anatomy-neighborhood",
+      "review_packet_label": "Orthopaedic Anatomy Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "ortho-anatomy-dp-001",
+      "subject_entity_slug": "safe-zone-radial-nerve-humerus",
+      "pattern_type": "safety_escalation",
+      "trigger": "Operative exposure or implant placement approaches the posterior humeral cortex.",
+      "action": "Localize and protect the radial nerve using the selected approach and patient-specific anatomy.",
+      "urgency": "immediate",
+      "safety_criticality": "critical",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-08T21:20:25.720Z",
+      "content_source": "generated_draft"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|ortho-anatomy-dp-002",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "metadata": {
+      "pilot": "orthopaedic-anatomy-neighborhood",
+      "review_packet_key": "pilot:orthopaedic-anatomy-neighborhood",
+      "review_packet_label": "Orthopaedic Anatomy Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "ortho-anatomy-dp-002",
+      "subject_entity_slug": "vertebral-artery",
+      "pattern_type": "safety_escalation",
+      "trigger": "Cervical instrumentation or exposure approaches the transverse foramen.",
+      "action": "Confirm level-specific vascular anatomy and maintain the validated safe corridor.",
+      "urgency": "immediate",
+      "safety_criticality": "critical",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-08T21:20:25.720Z",
+      "content_source": "generated_draft"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  },
+  {
+    "proposal_fingerprint": "dp|ortho-anatomy-dp-003",
+    "proposal_type": "propose_decision_point",
+    "route": "ATTENDING_REVIEW",
+    "target": "undefined -[null]-> undefined",
+    "agent_recommendation": "Auto-review: EXPERT_REVIEW",
+    "confidence": 0.78,
+    "safety_score": 0.85,
+    "rationale": [
+      "Rule: decision_point_requires_attending",
+      "Composite confidence 0.780 from explainable dimensions"
+    ],
+    "reviewer_decision_required": "Review propose_decision_point (EXPERT_REVIEW)",
+    "alternatives": [],
+    "metadata": {
+      "pilot": "orthopaedic-anatomy-neighborhood",
+      "review_packet_key": "pilot:orthopaedic-anatomy-neighborhood",
+      "review_packet_label": "Orthopaedic Anatomy Neighborhood",
+      "factory_version": "kf-016",
+      "draft_id": "ortho-anatomy-dp-003",
+      "subject_entity_slug": "physis",
+      "pattern_type": "safety_escalation",
+      "trigger": "Fixation trajectory crosses or approaches an open physis.",
+      "action": "Use age- and physis-specific fixation strategy with attending confirmation.",
+      "urgency": "before_procedure",
+      "safety_criticality": "high",
+      "requires_attending_review": true,
+      "verified": false,
+      "curation_route": "ATTENDING_REVIEW",
+      "curation_scores": {
+        "confidence": 0.92,
+        "evidence": 0.7,
+        "ambiguity": 0.4,
+        "safety": 0.85,
+        "completeness": 0.85
+      },
+      "curation_rules": [
+        "decision_point_requires_attending"
+      ],
+      "curated_at": "2026-07-08T21:20:25.720Z",
+      "content_source": "generated_draft"
+    },
+    "auto_review_category": "EXPERT_REVIEW"
+  }
+]

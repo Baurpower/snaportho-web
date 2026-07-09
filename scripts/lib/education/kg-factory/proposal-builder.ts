@@ -1,5 +1,23 @@
 import type { ProposalRecord } from "../../kg-automation-common.ts";
 import {
+  SURGICAL_APPROACHES_ASSET_COUNTS,
+  SURGICAL_APPROACHES_CLAIM_DRAFTS,
+  SURGICAL_APPROACHES_DECISION_POINT_DRAFTS,
+  SURGICAL_APPROACHES_ENTITIES,
+  SURGICAL_APPROACHES_PILOT_KEY,
+  SURGICAL_APPROACHES_SOURCE_IDS,
+  activeSurgicalApproachesRelationships,
+} from "../kg-surgical-approaches-pilot-spec.ts";
+import {
+  TRAUMA_FUNDAMENTALS_ASSET_COUNTS,
+  TRAUMA_FUNDAMENTALS_CLAIM_DRAFTS,
+  TRAUMA_FUNDAMENTALS_DECISION_POINT_DRAFTS,
+  TRAUMA_FUNDAMENTALS_ENTITIES,
+  TRAUMA_FUNDAMENTALS_PILOT_KEY,
+  TRAUMA_FUNDAMENTALS_SOURCE_IDS,
+  activeTraumaFundamentalsRelationships,
+} from "../kg-trauma-fundamentals-pilot-spec.ts";
+import {
   CLAVICLE_ASSET_COUNTS,
   CLAVICLE_CLAIM_DRAFTS,
   CLAVICLE_DECISION_POINT_DRAFTS,
@@ -202,6 +220,31 @@ import { getSportsPilotSpec, activeSportsRelationships } from "../kg-sports-medi
 import { getAdultReconstructionPilotSpec } from "../kg-adult-reconstruction-pilot-loader.ts";
 import { ADULT_RECONSTRUCTION_TOPIC_CATALOG } from "../kg-adult-reconstruction-topic-catalog.ts";
 import { buildPilotProposalPacket } from "./pilot-proposal-builder.ts";
+import {
+  ORTHOPAEDIC_ANATOMY_ASSET_COUNTS,
+  ORTHOPAEDIC_ANATOMY_CLAIM_DRAFTS,
+  ORTHOPAEDIC_ANATOMY_DECISION_POINT_DRAFTS,
+  ORTHOPAEDIC_ANATOMY_ENTITIES,
+  ORTHOPAEDIC_ANATOMY_PILOT_KEY,
+  ORTHOPAEDIC_ANATOMY_SOURCE_IDS,
+  activeOrthopaedicAnatomyRelationships,
+} from "../kg-orthopaedic-anatomy-pilot-spec.ts";
+
+export function buildOrthopaedicAnatomyProposalPacket() {
+  return buildPilotProposalPacket({
+    pilotKey: ORTHOPAEDIC_ANATOMY_PILOT_KEY,
+    pilotPacketKey: "pilot:orthopaedic-anatomy-neighborhood",
+    pilotPacketLabel: "Orthopaedic Anatomy Neighborhood",
+    specVersion: "orthopaedic_anatomy_spec_v1",
+    primaryEntitySlug: "orthopaedic-anatomy",
+    sourceIds: ORTHOPAEDIC_ANATOMY_SOURCE_IDS,
+    assetCounts: ORTHOPAEDIC_ANATOMY_ASSET_COUNTS,
+    entities: ORTHOPAEDIC_ANATOMY_ENTITIES,
+    relationships: activeOrthopaedicAnatomyRelationships(),
+    claimDrafts: ORTHOPAEDIC_ANATOMY_CLAIM_DRAFTS,
+    decisionPointDrafts: ORTHOPAEDIC_ANATOMY_DECISION_POINT_DRAFTS,
+  });
+}
 
 export function buildAnkleProposalPacket() {
   return buildPilotProposalPacket({
@@ -216,6 +259,38 @@ export function buildAnkleProposalPacket() {
     relationships: activeAnkleRelationships(),
     claimDrafts: ANKLE_CLAIM_DRAFTS,
     decisionPointDrafts: ANKLE_DECISION_POINT_DRAFTS,
+  });
+}
+
+export function buildSurgicalApproachesProposalPacket() {
+  return buildPilotProposalPacket({
+    pilotKey: SURGICAL_APPROACHES_PILOT_KEY,
+    pilotPacketKey: "pilot:surgical-approaches-neighborhood",
+    pilotPacketLabel: "Surgical Approaches Neighborhood",
+    specVersion: "surgical_approaches_pilot_spec_v1",
+    primaryEntitySlug: "surgical-approaches",
+    sourceIds: SURGICAL_APPROACHES_SOURCE_IDS,
+    assetCounts: SURGICAL_APPROACHES_ASSET_COUNTS,
+    entities: SURGICAL_APPROACHES_ENTITIES,
+    relationships: activeSurgicalApproachesRelationships(),
+    claimDrafts: SURGICAL_APPROACHES_CLAIM_DRAFTS,
+    decisionPointDrafts: SURGICAL_APPROACHES_DECISION_POINT_DRAFTS,
+  });
+}
+
+export function buildTraumaFundamentalsProposalPacket() {
+  return buildPilotProposalPacket({
+    pilotKey: TRAUMA_FUNDAMENTALS_PILOT_KEY,
+    pilotPacketKey: "pilot:trauma-fundamentals-neighborhood",
+    pilotPacketLabel: "Trauma Fundamentals Neighborhood",
+    specVersion: "trauma_fundamentals_pilot_spec_v1",
+    primaryEntitySlug: "trauma-fundamentals",
+    sourceIds: TRAUMA_FUNDAMENTALS_SOURCE_IDS,
+    assetCounts: TRAUMA_FUNDAMENTALS_ASSET_COUNTS,
+    entities: TRAUMA_FUNDAMENTALS_ENTITIES,
+    relationships: activeTraumaFundamentalsRelationships(),
+    claimDrafts: TRAUMA_FUNDAMENTALS_CLAIM_DRAFTS,
+    decisionPointDrafts: TRAUMA_FUNDAMENTALS_DECISION_POINT_DRAFTS,
   });
 }
 

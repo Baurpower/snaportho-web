@@ -1,0 +1,23 @@
+{
+  "topicKey": "trauma-fundamentals",
+  "manufacturedAt": "2026-07-08",
+  "assignedAgentsExecuted": 8,
+  "assignedAgentFailures": 0,
+  "agents": [
+    {"agent": "anatomy-builder", "status": "no_applicable_work", "reason": "Seed anatomy covered the assigned scope; gap analysis assigned no anatomy gap."},
+    {"agent": "clinical-entity-builder", "status": "executed", "reason": "Assigned missing-entity gaps."},
+    {"agent": "relationship-builder", "status": "executed", "reason": "Assigned missing-relationship gaps."},
+    {"agent": "claim-builder", "status": "executed", "reason": "Assigned missing-claim gaps."},
+    {"agent": "decision-point-builder", "status": "no_applicable_work", "reason": "Eleven decision-point drafts covered the priority scope; no gap was assigned."},
+    {"agent": "metadata-builder", "status": "no_applicable_work", "reason": "Seed proposals passed metadata validation; no gap was assigned."},
+    {"agent": "asset-linker", "status": "no_applicable_work", "reason": "No registered Anki, Orthobullets, or CasePrep mappings were available."},
+    {"agent": "provenance-builder", "status": "no_applicable_work", "reason": "Evidence and proposal stages attached provenance to all 118 proposals; no gap was assigned."},
+    {"agent": "duplicate-detector", "status": "executed", "reason": "Assigned post-merge duplicate detection."},
+    {"agent": "conflict-resolver", "status": "executed", "reason": "Assigned post-merge conflict resolution."},
+    {"agent": "quality-scorer", "status": "executed", "reason": "Assigned neighborhood quality scoring."},
+    {"agent": "review-assistant", "status": "executed", "reason": "Assigned review routing for all proposals."},
+    {"agent": "publication-validator", "status": "executed", "reason": "Assigned publication validation."},
+    {"agent": "neighborhood-qa", "status": "executed_separately", "reason": "Executed through the independent kg:audit pipeline."}
+  ]
+}
+

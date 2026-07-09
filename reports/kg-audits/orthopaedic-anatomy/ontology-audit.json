@@ -1,0 +1,47 @@
+{
+  "category": "ontology_completeness",
+  "label": "Ontology Completeness",
+  "score": 72,
+  "deductions": [
+    {
+      "finding": "47 high-priority ontology gaps",
+      "evidence": "Gap kinds: missing_relationship, missing_provenance",
+      "reason": "High-priority gaps block maturity level advancement.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 12,
+      "suggestedFix": "Schedule gap-resolution work items from ontology-work-plan.json."
+    },
+    {
+      "finding": "Missing relationship requirements (46)",
+      "evidence": "46 gaps of kind missing_relationship",
+      "reason": "Ontology contract requires complete relationship coverage.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "impact": 8,
+      "suggestedFix": "Run the matching builder agent for missing_relationship."
+    },
+    {
+      "finding": "No classification system present",
+      "evidence": "0 classification entities in merged draft",
+      "reason": "Fracture diagnoses require classification when one exists clinically.",
+      "severity": "high",
+      "category": "ontology_completeness",
+      "suggestedFix": "Link has_classification and has_grade edges to a classification system.",
+      "impact": 8
+    }
+  ],
+  "metrics": {
+    "totalGaps": 47,
+    "criticalGaps": 0,
+    "highGaps": 47,
+    "anatomyStructures": 208,
+    "classificationEntities": 0,
+    "completenessRatio": 0
+  },
+  "recommendations": [
+    "Schedule gap-resolution work items from ontology-work-plan.json.",
+    "Run the matching builder agent for missing_relationship.",
+    "Link has_classification and has_grade edges to a classification system."
+  ]
+}

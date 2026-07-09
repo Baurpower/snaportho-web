@@ -1,0 +1,47 @@
+{
+  "topicKey": "orthopaedic-anatomy",
+  "pilotKey": "orthopaedic-anatomy-neighborhood",
+  "generatedAt": "2026-07-08T21:20:25.727Z",
+  "currentLevel": 5,
+  "requiredLevel": 7,
+  "ready": false,
+  "blockers": [
+    "3 proposals still awaiting human review",
+    "3 items require attending review",
+    "Claims and DPs are draft-only — publication gate must block verified consumption.",
+    "No approved canonical entities in database yet — proposals remain offline/spec.",
+    "47 critical/high ontology gaps remain unresolved"
+  ],
+  "remainingWork": [
+    "[high] Orthopaedic Anatomy missing outbound part_of (0/1).",
+    "[high] Intervertebral Disc missing outbound part_of (0/1).",
+    "[high] Spinal Canal missing outbound part_of (0/1).",
+    "[high] Conus Medullaris missing outbound part_of (0/1).",
+    "[high] Exiting Nerve Root missing outbound part_of (0/1).",
+    "[high] Traversing Nerve Root missing outbound part_of (0/1).",
+    "[high] Anterior Longitudinal Ligament missing outbound part_of (0/1).",
+    "[high] Posterior Longitudinal Ligament missing outbound part_of (0/1).",
+    "Route ATTENDING_REVIEW queue to attending reviewer"
+  ],
+  "productReadiness": {
+    "traversalSmokeTest": true,
+    "prepareReady": false,
+    "brobotReady": false
+  },
+  "estimatedEffort": {
+    "gapsRemaining": 47,
+    "humanReviewItems": 3,
+    "attendingReviewItems": 3,
+    "effortBand": "high"
+  },
+  "dimensionScores": {
+    "clinical": 1,
+    "relationship": 1,
+    "educational": 1,
+    "reasoning": 1,
+    "anatomical": 1,
+    "review": 0,
+    "graph": 1,
+    "asset": 1
+  }
+}

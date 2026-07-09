@@ -44,8 +44,6 @@ const INTENT_EXPANSION_CONTRACT = `{
 
 const EMERGENCY_PATTERN =
   /\b(compartment syndrome|septic joint|septic arthritis|open fracture|open tibia|cauda equina|pulseless|neurovascular compromise|necrotizing|dislocation with neurovascular|rapidly progressive infection)\b/i;
-const BROAD_OR_STEPS_PATTERN =
-  /\b(steps?|walk me through|how do you do|prep|flow|tomorrow)\b.*\b(orif|arthroplasty|tsa|tka|tha|scope|arthroscopy|nail|nailing|plate|fixation|release|reconstruction|repair)\b|\b(orif|arthroplasty|tsa|tka|tha|scope|arthroscopy|nail|nailing|plate|fixation|release|reconstruction|repair)\b.*\b(steps?|walk me through|how do you do|prep|flow|tomorrow)\b/i;
 const SPECIFIC_OR_PATTERN =
   /\b(isolated\s+\w+|fcr approach|structures? at risk|anatomy at risk|starting point|start point|identify|identification|where is|where do you find)\b/i;
 
@@ -192,7 +190,7 @@ export function shouldAnswerImmediately(input: {
 }) {
   if (EMERGENCY_PATTERN.test(input.message)) return true;
   if (input.requiresBranchSelection) return false;
-  return input.ambiguity === 'low';
+  return true;
 }
 
 export function buildBroBotIntentExpansionMessages(input: IntentExpansionInput): BroBotModelMessage[] {
@@ -231,14 +229,14 @@ Decide:
 - ambiguity: low, moderate, or high.
 - missingContext: details that would materially improve the answer; no PHI.
 - branchOptions: 4-7 selectable learning branches. Each label must be a realistic resident-style follow-up question, not a generic focus area. Prefer mode + procedureCategory templates, but tailor labels to the actual prompt.
-- answerImmediately: true for low ambiguity and emergency consults; false for moderate/high ambiguity unless urgent safety info should not wait.
-- requiresBranchSelection: true when a full answer would materially change based on fracture pattern, approach, implant, anatomy, study goal, or consult context.
+- answerImmediately: true whenever the topic and requested task are reasonably inferable, including broad teaching, quiz, implant-choice, and OR-prep requests. Also true for emergency consults.
+- requiresBranchSelection: true only when the prompt is genuinely context-free and multiple materially different interpretations would change the answer (for example "fracture", "hip", or "compare approaches" with no anatomy/procedure context).
 - reasonForBranching: one sentence explaining why the branch choice matters. Avoid generic wording.
 - researchSubmode: only set when mode is research. Use reference_finder for citation support, manuscript_reviewer for manuscript section review, literature_review_builder for lit review outlines, evidence_synthesis for focused evidence questions, journal_scout for must-read/landmark papers, systematic_review_assistant for systematic review planning, statistical_reviewer for statistics review, and research_planning for study design.
 - confidence: 0 to 1.
 
 Emergency consults must answer immediately: compartment syndrome, septic joint, open fracture, cauda equina, neurovascular compromise, pulseless limb, rapidly progressive infection.
-Broad OR-prep procedure prompts should usually require branch selection. Do not answer these immediately unless the user says "just answer" or asks a narrow subtopic.
+Broad OR-prep procedure prompts should be answered directly using the most likely focus. Return branchOptions as optional follow-up guidance after the answer, not as a blocker.
 Do not create one-off procedure-specific branch trees. Classify procedureCategory and generate reusable, procedure-relevant branches from the category.
 
 OR Prep category templates:
@@ -387,20 +385,16 @@ function requiresBranchSelectionForPrompt(input: {
   procedureCategory: BroBotProcedureCategory;
 }): boolean {
   if (EMERGENCY_PATTERN.test(input.message)) return false;
-  if (SPECIFIC_OR_PATTERN.test(input.message)) return false;
-  const broadOrCategory =
-    input.procedureCategory === 'fracture_orif' ||
-    input.procedureCategory === 'arthroplasty' ||
-    input.procedureCategory === 'arthroscopy' ||
-    input.procedureCategory === 'soft_tissue_release' ||
-    input.procedureCategory === 'tendon_ligament_repair' ||
-    input.procedureCategory === 'spine_procedure' ||
-    input.procedureCategory === 'hand_procedure';
-  return normalizeMode(input.mode) === 'or_prep' &&
-    (input.subintent === 'surgical_steps' ||
-      input.subintent === 'diagnostic_sequence' ||
-      input.subintent === 'overview') &&
-    (broadOrCategory || BROAD_OR_STEPS_PATTERN.test(input.message));
+  const trimmed = input.message.trim();
+  if (
+    /^\s*(fractures?|hip|knee|shoulder|ankle|wrist|elbow|spine|hand|foot|trauma|arthroplasty|sports)\s*[?.!]*\s*$/i.test(trimmed) ||
+    /^\s*(compare|contrast)\s+(the\s+)?(approaches?|implants?|options?|techniques?)\s*[?.!]*\s*$/i.test(trimmed)
+  ) {
+    return true;
+  }
+  if (SPECIFIC_OR_PATTERN.test(trimmed)) return false;
+  const words = trimmed.match(/[a-z0-9]+/gi) ?? [];
+  return words.length <= 2 && input.subintent === 'overview' && input.procedureCategory === 'unknown';
 }
 
 function branchOptionsForPrompt(input: {
@@ -479,15 +473,15 @@ export function parseBroBotIntentExpansionResponse(
     normalizeProcedureCategory(parsed.procedureCategory) !== 'unknown'
       ? normalizeProcedureCategory(parsed.procedureCategory)
       : inferFallbackProcedureCategory(fallback.message, mode);
-  const modelRequiresBranchSelection = parsed.requiresBranchSelection === true;
   const heuristicRequiresBranchSelection = requiresBranchSelectionForPrompt({
     message: fallback.message,
     mode,
     subintent,
     procedureCategory,
   });
-  const requiresBranchSelection =
-    modelRequiresBranchSelection || heuristicRequiresBranchSelection;
+  // Deterministic policy wins over an overly clarification-happy model. The
+  // model still supplies inferred mode/subintent/topic and optional chips.
+  const requiresBranchSelection = heuristicRequiresBranchSelection;
   const ambiguity = requiresBranchSelection ? 'moderate' : normalizeAmbiguity(parsed.ambiguity);
   const procedureOrTopic =
     normalizeString(parsed.procedureOrTopic) ||
@@ -708,7 +702,7 @@ function inferFallbackSubintent(message: string, mode: BroBotChatMode): BroBotCh
   if (/\bsteps?|walk me through|how do you do|flow|tomorrow|prep\b/.test(lower)) return 'surgical_steps';
   if (/\b(implant|plate|nail|screw)\b/.test(lower)) return 'implant_options';
   if (/\bpresent|presentation\b/.test(lower)) return 'presentation_help';
-  if (/\bimage|xray|x-ray|radiograph|ct|mri\b/.test(lower)) return 'imaging_review';
+  if (/\b(?:image|xray|x-ray|radiograph|ct|mri)\b/.test(lower)) return 'imaging_review';
   if (/\bcritique|rct|paper|study\b/.test(lower)) return 'evidence_critique';
   if (mode === 'consult' && /\bfracture\b/.test(lower)) return 'fracture';
   if (mode === 'clinic' && /\bworkup\b/.test(lower)) return 'workup';
