@@ -35,6 +35,11 @@ export const BROBOT_CONFIG = {
   /** Daily cap for logged-in users who have no active paid subscription */
   FREE_DAILY_CAP: parseInt(process.env.BROBOT_FREE_DAILY_CAP || '3', 10),
 
+  /** Personal-statement product boundaries (server-owned, not duplicated in clients). */
+  PS_COMPARISON_PAID_ONLY: process.env.BROBOT_PS_COMPARISON_PAID_ONLY !== 'false',
+  PS_FREE_HISTORY_LIMIT: parseInt(process.env.BROBOT_PS_FREE_HISTORY_LIMIT || '5', 10),
+  PS_PAID_HISTORY_LIMIT: parseInt(process.env.BROBOT_PS_PAID_HISTORY_LIMIT || '50', 10),
+
   /** The single feature key used in user_daily_usage for all BroBot AI today.
    *  Future AI surfaces (Anki ortho-context, new tools, etc.) can share this or use their own.
    */

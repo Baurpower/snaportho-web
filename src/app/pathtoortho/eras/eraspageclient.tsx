@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -15,8 +15,16 @@ import {
   ShieldCheck,
   Sparkles,
   Stars,
+  Bot,
 } from "lucide-react";
 import type React from "react";
+import { trackGoogleAdsEvent } from "@/lib/analytics/googleAds";
+import {
+  formatDateOnly,
+  getNextMilestone,
+  localTodayDateOnly,
+} from "@/lib/path-to-ortho/application-cycle";
+import { pathToOrthoApplicationCycle } from "@/lib/path-to-ortho/application-cycle-config";
 
 
 // ---------- Local UI primitives (cream/white rounded cards, no external UI deps) ----------
@@ -209,84 +217,7 @@ function Tabs({
 }
 
 // ---------- Content ----------
-// --- ERAS cycle year (adjust each cycle) ---
-const ERAS_YEAR = 2025;
-
-const MONTH_IDX: Record<string, number> = {
-  january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
-  july: 6, august: 7, september: 8, sept: 8, october: 9, november: 10, december: 11,
-};
-
-function parseHumanDate(input: string): Date | null {
-  const s = input.trim().toLowerCase();
-
-  // e.g. "Sept 3, 2025" / "September 24, 2025" / "Aug 1, 2025"
-  const full = /^([a-z]+)\s+(\d{1,2}),\s*(\d{4})$/.exec(s);
-  if (full) {
-    const [, mon, dayStr, yrStr] = full;
-    const m = MONTH_IDX[mon];
-    if (m == null) return null;
-    const d = Number(dayStr);
-    const y = Number(yrStr);
-    return new Date(y, m, d, 9, 0, 0);
-  }
-
-  // e.g. "Early June" / "Mid June" / "Late June"
-  const approx = /^(early|mid|late)\s+([a-z]+)$/.exec(s);
-  if (approx) {
-    const [, when, mon] = approx;
-    const m = MONTH_IDX[mon];
-    if (m == null) return null;
-    const day = when === "early" ? 5 : when === "mid" ? 15 : 25;
-    return new Date(ERAS_YEAR, m, day, 9, 0, 0);
-  }
-
-  // Fallback: single "Month Year" → use mid-month
-  const monthYear = /^([a-z]+)\s+(\d{4})$/.exec(s);
-  if (monthYear) {
-    const [, mon, yrStr] = monthYear;
-    const m = MONTH_IDX[mon];
-    if (m == null) return null;
-    const y = Number(yrStr);
-    return new Date(y, m, 15, 9, 0, 0);
-  }
-
-  return null;
-}
-
-
-function getNextTimelineItem<T extends { date: string; label: string }>(
-  items: T[],
-  now = new Date()
-): (T & { when: Date }) | null {
-  const withDates = items
-    .map((it) => ({ ...it, when: parseHumanDate(it.date) }))
-    .filter((it): it is T & { when: Date } => it.when instanceof Date);
-
-  const upcoming = withDates.filter((it) => it.when.getTime() >= now.getTime());
-  if (upcoming.length) {
-    upcoming.sort((a, b) => a.when.getTime() - b.when.getTime());
-    return upcoming[0];
-  }
-  // If all have passed, return the last one (or null)
-  if (withDates.length) {
-    withDates.sort((a, b) => a.when.getTime() - b.when.getTime());
-    return withDates[withDates.length - 1];
-  }
-  return null;
-}
-
-const fmtDate = (d: Date) =>
-  new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(d);
-
-
-const TIMELINE = [
-  { date: "Early June", label: "Get one-time access code & register with MyERAS" },
-  { date: "June 4, 2025", label: "ERAS season opens (9:00 AM ET)" },
-  { date: "Aug 1, 2025", label: "Request LORs (eSLOR + personal). Forego right to read." },
-  { date: "Sept 3, 2025", label: "Can submit ERAS application" },
-  { date: "Sept 24, 2025", label: "Programs begin reviewing (9:00 AM ET)" },
-];
+const TIMELINE = pathToOrthoApplicationCycle.milestones;
 
 const ERAS_SECTIONS = [
   {
@@ -388,13 +319,27 @@ export default function ERASPage() {
   const [newItem, setNewItem] = useState("");
   const [tab, setTab] = useState<"md" | "do">("md");
 
+  useEffect(() => {
+    trackGoogleAdsEvent("ps_review_card_viewed", { surface: "eras_guide" });
+    try {
+      const saved = window.localStorage.getItem("snaportho-eras-checklist");
+      if (saved) setItems(JSON.parse(saved));
+      if (window.localStorage.getItem("snaportho-eras-personal-statement-reviewed") === "true") {
+        setItems((current) => current.map((item) => item.text === "Personal Statement v1 → peer/mentor review" ? { ...item, done: true } : item));
+      }
+    } catch { /* Keep defaults when local storage is unavailable or invalid. */ }
+  }, []);
+
+  useEffect(() => {
+    try { window.localStorage.setItem("snaportho-eras-checklist", JSON.stringify(items)); } catch { /* Persistence is best effort. */ }
+  }, [items]);
+
   const progress = useMemo(() => {
     const done = items.filter((i) => i.done).length;
     return Math.round((done / items.length) * 100) || 0;
   }, [items]);
 
-  // ✅ ADDED: compute the next upcoming timeline item
-  const nextItem = useMemo(() => getNextTimelineItem(TIMELINE), []);
+  const nextItem = useMemo(() => getNextMilestone(TIMELINE, localTodayDateOnly()), []);
 
   const addItem = () => {
     if (!newItem.trim()) return;
@@ -492,7 +437,7 @@ export default function ERASPage() {
     <div className="font-medium text-[#333]">Next Date</div>
     {nextItem ? (
       <>
-        <div className="mt-1">{fmtDate(nextItem.when)}</div>
+        <div className="mt-1">{formatDateOnly(nextItem.date, { month: "short", day: "numeric", year: "numeric" })}</div>
         <div className="mt-0.5">{nextItem.label}</div>
       </>
     ) : (
@@ -517,7 +462,7 @@ export default function ERASPage() {
               Timeline
             </div>
             <h2 className="text-3xl font-semibold text-[#444] tracking-tight">
-              Key ERAS Dates
+              Application Cycle Dates
             </h2>
           </div>
           <div className="grid gap-4">
@@ -533,7 +478,7 @@ export default function ERASPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Badge variant="secondary" className="shrink-0">
-                      {t.date}
+                      {formatDateOnly(t.date, { month: "short", day: "numeric", year: "numeric" })}
                     </Badge>
                     <p className="text-sm text-gray-600">{t.label}</p>
                   </div>
@@ -578,6 +523,24 @@ export default function ERASPage() {
                       </li>
                     ))}
                   </ul>
+                  {sec.title === "Personal Statement" && (
+                    <div className="mt-5 rounded-xl border border-[#597498]/20 bg-[#597498]/[0.04] p-4">
+                      <div className="flex items-start gap-3">
+                        <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[#597498] text-white"><Bot className="h-5 w-5" /></div>
+                        <div className="min-w-0">
+                          <h4 className="font-semibold text-[#333]">Personal Statement Review</h4>
+                          <p className="mt-1 text-sm leading-5 text-gray-600">Does your statement sound like you—or like everyone else using AI?</p>
+                        </div>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {['Find AI-like phrasing', 'Protect your voice', 'Compare reviewer lenses'].map((benefit) => <Badge key={benefit}>{benefit}</Badge>)}
+                      </div>
+                      <div className="mt-4 flex flex-wrap items-center gap-3">
+                        <Link href="/pathtoortho/eras/personal-statement" className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#597498] px-4 text-sm font-medium text-white hover:bg-[#4e6886]">Review my statement <ArrowRight className="h-4 w-4" /></Link>
+                        <span className="text-xs text-gray-500">Paste text or upload a document</span>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -722,6 +685,11 @@ export default function ERASPage() {
                         }
                       >
                         {it.text}
+                        {it.text === "Personal Statement v1 → peer/mentor review" && (
+                          <Link href="/pathtoortho/eras/personal-statement" className="mt-1 flex min-h-9 items-center gap-1.5 text-xs font-medium text-[#597498] hover:underline">
+                            <Bot className="h-3.5 w-3.5" /> Review with BroBot
+                          </Link>
+                        )}
                       </div>
                     </li>
                   ))}
@@ -888,7 +856,7 @@ export default function ERASPage() {
       <p className="max-w-3xl text-gray-700 text-sm sm:text-base leading-relaxed">
         Built by{" "}
         <span className="font-semibold text-[#444]">Alexander Baur DO</span>{" "}
-        (Ortho applicant),{" "}
+        (Ortho resident · Valley Hospital Medical Center),{" "}
         <span className="font-semibold text-[#444]">Brandon Gettleman MD</span>{" "}
         (Ortho resident · UCLA), and{" "}
         <span className="font-semibold text-[#444]">Austin Nguyen MD</span>{" "}

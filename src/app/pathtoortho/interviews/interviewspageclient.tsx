@@ -1183,7 +1183,7 @@ export default function InterviewsPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 text-xs text-gray-600">
-                <p>• When? Mid-Nov (11/17 for 2026 cycle)</p>
+                <p>• When? Typically mid-November; confirm the current cycle date with your programs.</p>
                 <p>• 12 PM EST: Invites begin to be released.</p>
                 <p>• Afternoon: You start to realize you may not be getting interviews at some of your programs.</p>
                 <p>• Evening: debrief, let yourself feel things, then refocus on what you have!</p>

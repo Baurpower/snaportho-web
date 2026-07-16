@@ -38,6 +38,18 @@ export const BROBOT_INTENT_MODEL = readModelEnv('BROBOT_INTENT_MODEL', BROBOT_FA
 /** Chat answer generation specifically when the detected/selected mode is "research". */
 export const BROBOT_RESEARCH_MODEL = readModelEnv('BROBOT_RESEARCH_MODEL', BROBOT_STRONG_MODEL);
 
+/** Structured reviewer report for orthopaedic residency personal statements. */
+export const BROBOT_PERSONAL_STATEMENT_MODEL = readModelEnv(
+  'BROBOT_PERSONAL_STATEMENT_MODEL',
+  BROBOT_STRONG_MODEL
+);
+
+/** Two-draft personal-statement comparison. */
+export const BROBOT_PERSONAL_STATEMENT_COMPARISON_MODEL = readModelEnv(
+  'BROBOT_PERSONAL_STATEMENT_COMPARISON_MODEL',
+  BROBOT_STRONG_MODEL
+);
+
 /**
  * Reserved for a future LLM-based quality gate. The current quality gate
  * (src/lib/brobot/chat/quality-gate.ts) is pure heuristic/keyword matching and

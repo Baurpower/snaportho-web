@@ -16,6 +16,14 @@ import {
   Stars,
 } from "lucide-react";
 import type React from "react";
+import {
+  compareDateOnly,
+  formatDateOnly,
+  localTodayDateOnly,
+  parseDateOnly,
+  type DateOnly,
+} from "@/lib/path-to-ortho/application-cycle";
+import { pathToOrthoApplicationCycle } from "@/lib/path-to-ortho/application-cycle-config";
 
 // ---------- Local UI primitives (cream/white rounded cards, no external UI deps) ----------
 function Container({ children }: { children: React.ReactNode }) {
@@ -149,101 +157,93 @@ function Tabs({
 }
 
 // ---------- Content ----------
-// --- Cycle year knobs (adjust as needed) ---
-const VSLO_YEAR = 2025; // 3rd→4th year bridge
+const APPLICATION_YEAR = Number(pathToOrthoApplicationCycle.erasApplicationOpenDate.slice(0, 4));
+const PREPARATION_YEAR = APPLICATION_YEAR - 1;
+const monthYear = (date: DateOnly) => formatDateOnly(date, { month: "long", year: "numeric" });
 
 // VSLO / Away timeline (adaptable per class year)
 const TIMELINE = [
-  { date: "November 2025", label: "Log in to VSLO; research elective requirements" },
-  { date: "December 2025", label: "Draft PS, update CV, secure 1 LOR" },
-  { date: "January 2026", label: "Request VSLO access; confirm titers & paperwork" },
-  { date: "February 2026", label: "VSLO applications open (varies by program)" },
-  { date: "July 2026", label: "Begin away rotations; target 1–2 LORs" },
+  { date: monthYear(`${PREPARATION_YEAR}-11-01` as DateOnly), label: "Log in to VSLO; research elective requirements" },
+  { date: monthYear(`${PREPARATION_YEAR}-12-01` as DateOnly), label: "Draft PS, update CV, secure 1 LOR" },
+  { date: monthYear(`${APPLICATION_YEAR}-01-01` as DateOnly), label: "Request VSLO access; confirm titers & paperwork" },
+  { date: monthYear(`${APPLICATION_YEAR}-02-01` as DateOnly), label: "VSLO applications open (varies by program)" },
+  { date: monthYear(`${APPLICATION_YEAR}-07-01` as DateOnly), label: "Begin away rotations; target 1–2 LORs" },
 ];
 
-// ------- Dynamic hero card: season focus (overrides optional each cycle) -------
+// ------- Dynamic hero card: season focus -------
 type AnchorsOverrides = {
-  /** ISO date "YYYY-MM-DD" or a Date. Example: "2025-11-15" */
-  universalOffer?: string | Date;
-  /** ISO date "YYYY-MM-DD" or a Date. Example: "2026-09-04" */
+  /** Optional test/story override; production uses the centralized ERAS open date. */
   erasSubmit?: string | Date;
 };
 
 type Focus = { title: string; window: string };
 
-// local helper to make a date at 09:00 local time to avoid midnight TZ jitter
-const at9 = (y: number, m: number, d: number) => new Date(y, m, d, 9, 0, 0);
-
-// parse an override if provided; otherwise return undefined
-function parseOverride(v?: string | Date): Date | undefined {
+function parseOverride(v?: string | Date): DateOnly | undefined {
   if (!v) return undefined;
-  const d = v instanceof Date ? v : new Date(`${v}T09:00:00`);
-  return isNaN(d.getTime()) ? undefined : d;
-}
-
-function buildAnchors(year: number, overrides?: AnchorsOverrides) {
-  const UNIVERSAL_OFFER =
-    parseOverride(overrides?.universalOffer) ?? at9(year, 10, 17); // default Nov 17 of VSLO_YEAR
-  const ERAS_SUBMIT =
-    parseOverride(overrides?.erasSubmit) ?? at9(year + 1, 8, 24);   // default Sept 24 of next year
-
-  return {
-    UNIVERSAL_OFFER,
-    JAN: at9(year + 1, 0, 1),
-    FEB: at9(year + 1, 1, 1),
-    APR: at9(year + 1, 3, 1),
-    JUL: at9(year + 1, 6, 1),
-    ERAS_SUBMIT,
-  };
+  if (v instanceof Date) return localTodayDateOnly(v);
+  try {
+    return parseDateOnly(v);
+  } catch {
+    return undefined;
+  }
 }
 
 export function getSeasonFocus(
   now = new Date(),
   overrides?: AnchorsOverrides
 ): Focus {
-  const { UNIVERSAL_OFFER, JAN, FEB, APR, JUL, ERAS_SUBMIT } = buildAnchors(VSLO_YEAR, overrides);
-  const t = now.getTime();
+  const today = localTodayDateOnly(now);
+  const erasOpen = parseOverride(overrides?.erasSubmit) ?? pathToOrthoApplicationCycle.erasApplicationOpenDate;
+  const jan = `${APPLICATION_YEAR}-01-01` as DateOnly;
+  const feb = `${APPLICATION_YEAR}-02-01` as DateOnly;
+  const apr = `${APPLICATION_YEAR}-04-01` as DateOnly;
+  const jul = `${APPLICATION_YEAR}-07-01` as DateOnly;
 
-  if (t < UNIVERSAL_OFFER.getTime()) {
+  if (compareDateOnly(today, jan) < 0) {
     return {
-      title: "Secure an Interview and Set Yourself Up to Match!",
-      window: "ERAS Submission → Universal Offer Day",
+      title: "Build Your Away Rotation Application Early!",
+      window: "Fall Preparation → January",
     };
   }
-  if (t < JAN.getTime()) {
-    return {
-      title: "Finish out Ortho Rotations Strong! You’re almost there!",
-      window: "Universal Offer Day → January",
-    };
-  }
-  if (t < FEB.getTime()) {
+  if (compareDateOnly(today, feb) < 0) {
     return {
       title: "Time to Start Preparing for 4th Year Rotations!",
       window: "January",
     };
   }
-  if (t < APR.getTime()) {
+  if (compareDateOnly(today, apr) < 0) {
     return {
       title: "Be the First to Apply to Away Rotations!",
       window: "February → April",
     };
   }
-  if (t < JUL.getTime()) {
+  if (compareDateOnly(today, jul) < 0) {
     return {
       title: "Make Sure Your Fall Schedule is Setting You Up to Match!",
       window: "April → July",
     };
   }
-  if (t < ERAS_SUBMIT.getTime()) {
+  if (compareDateOnly(today, erasOpen) < 0) {
     return {
       title: "Ortho Rotations are Challenging! Be Yourself and Have Fun!",
-      window: "July → ERAS Submission",
+      window: "July → ERAS Applications Open",
     };
   }
-  // Fallback after ERAS submission
+  if (compareDateOnly(today, pathToOrthoApplicationCycle.erasProgramReviewDate) < 0) {
+    return {
+      title: "Finalize and Submit Your Strongest Application!",
+      window: "ERAS Applications Open → Program Review",
+    };
+  }
+  if (compareDateOnly(today, pathToOrthoApplicationCycle.matchDayDate) <= 0) {
+    return {
+      title: "Finish Strong Through Interviews and Ranking!",
+      window: "Program Review → Match Day",
+    };
+  }
   return {
-    title: "Keep Up the Good Work!",
-    window: "ERAS Submission → Match",
+    title: "Start Building the Next Application Cycle!",
+    window: "After Match Day",
   };
 }
 

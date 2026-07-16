@@ -66,7 +66,7 @@ export default function Nav() {
         </Link>
 
         {/* Mobile toggle button */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           {isWorkspaceRoute ? (
             // On workspace mobile: this hamburger opens the workspace drawer (via custom event)
             // instead of the public menu. Branding above already says "Workspace".
@@ -93,21 +93,21 @@ export default function Nav() {
 
         {/* Nav links */}
         <div
-          className={`md:flex gap-8 font-medium capitalize ${
+          className={`lg:flex gap-8 font-medium capitalize ${
             menuOpen && !isWorkspaceRoute ? 'block mt-4' : 'hidden'
-          } md:mt-0 md:items-center`}
+          } lg:mt-0 lg:items-center`}
         >
-          <Link href="/" className="block hover:text-blue-300 transition py-2 md:py-0" onClick={closeAll}>
+          <Link href="/" className="block hover:text-blue-300 transition py-2 lg:py-0" onClick={closeAll}>
             Home
           </Link>
 
-          <Link href="/brobot" className="block hover:text-blue-300 transition py-2 md:py-0" onClick={closeAll}>
+          <Link href="/brobot" className="block hover:text-blue-300 transition py-2 lg:py-0" onClick={closeAll}>
             BroBot
           </Link>
 
           <Link
             href="/student-workspace"
-            className="block hover:text-blue-300 transition py-2 md:py-0"
+            className="block hover:text-blue-300 transition py-2 lg:py-0"
             onClick={closeAll}
           >
             Student Workspace
@@ -122,7 +122,7 @@ export default function Nav() {
                 setOpenPath(false);
                 setOpenResearch(false);
               }}
-              className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+              className="hover:text-blue-300 transition flex items-center gap-1 py-2 lg:py-0 focus:outline-none"
               aria-haspopup="menu"
               aria-expanded={openLearn}
               aria-controls="learn-menu"
@@ -142,7 +142,7 @@ export default function Nav() {
               <div
                 id="learn-menu"
                 role="menu"
-                className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-44 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10"
+                className="lg:absolute lg:right-0 mt-1 lg:mt-2 w-full lg:w-44 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10"
               >
                 <Link
                   href="/learn"
@@ -177,7 +177,7 @@ export default function Nav() {
                 setOpenPath(false);
                 setOpenResearch(false);
               }}
-              className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+              className="hover:text-blue-300 transition flex items-center gap-1 py-2 lg:py-0 focus:outline-none"
               aria-haspopup="menu"
               aria-expanded={openRef}
               aria-controls="reference-menu"
@@ -197,7 +197,7 @@ export default function Nav() {
               <div
                 id="reference-menu"
                 role="menu"
-                className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-48 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10"
+                className="lg:absolute lg:right-0 mt-1 lg:mt-2 w-full lg:w-48 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10"
               >
                 <Link
                   href="/reference/read-xray"
@@ -220,7 +220,7 @@ export default function Nav() {
                 setOpenRef(false);
                 setOpenResearch(false);
               }}
-              className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+              className="hover:text-blue-300 transition flex items-center gap-1 py-2 lg:py-0 focus:outline-none"
               aria-haspopup="menu"
               aria-expanded={openPath}
               aria-controls="path-to-ortho-menu"
@@ -240,7 +240,7 @@ export default function Nav() {
               <div
                 id="path-to-ortho-menu"
                 role="menu"
-                className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-56 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10 overflow-hidden"
+                className="lg:absolute lg:right-0 mt-1 lg:mt-2 w-full lg:w-56 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10 overflow-hidden"
               >
                 <Link href="/pathtoortho" className="block px-4 py-2 hover:bg-sky-50 font-semibold" role="menuitem" onClick={closeAll}>
                   Path to Ortho Home
@@ -277,7 +277,7 @@ export default function Nav() {
                 setOpenRef(false);
                 setOpenPath(false);
               }}
-              className="hover:text-blue-300 transition flex items-center gap-1 py-2 md:py-0 focus:outline-none"
+              className="hover:text-blue-300 transition flex items-center gap-1 py-2 lg:py-0 focus:outline-none"
               aria-haspopup="menu"
               aria-expanded={openResearch}
               aria-controls="research-101-menu"
@@ -297,7 +297,7 @@ export default function Nav() {
               <div
                 id="research-101-menu"
                 role="menu"
-                className="md:absolute md:right-0 mt-1 md:mt-2 w-full md:w-56 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10 overflow-hidden"
+                className="lg:absolute lg:right-0 mt-1 lg:mt-2 w-full lg:w-56 bg-white text-[#597498] rounded-md border border-gray-200 shadow-lg z-10 overflow-hidden"
               >
                 <Link href="/research" className="block px-4 py-2 hover:bg-sky-50 font-semibold" role="menuitem" onClick={closeAll}>
                   Research 101 Home
