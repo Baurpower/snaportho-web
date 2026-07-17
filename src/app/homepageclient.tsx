@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Nav from "../components/Nav"; // adjust path if needed
 import SmartDeepLink from "../components/smartdeeplink";
+import BroBotHomePopup from "@/components/home/BroBotHomePopup";
+import { APP_ROUTES } from "@/lib/routes";
 
 const APP_STORE_URL = "https://apps.apple.com/app/id6742800145";
 const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.snaportho.app";
@@ -631,36 +633,9 @@ const portfolioSections: PortfolioSection[] = [
 ];
 
 export default function HomePage() {
-  const [showPopup, setShowPopup] = useState(true);
-
   return (
     <div className="font-sans text-midnight flex flex-col min-h-screen bg-cream relative overflow-x-hidden">
-      {/* POPUP */}
-      {showPopup && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
-          <div className="bg-white rounded-3xl shadow-2xl p-8 sm:p-10 max-w-xl w-full text-center relative animate-fade-in-down">
-            <h2 className="text-3xl sm:text-4xl font-bold text-navy mb-4">
-              📣 Contribute to the Countdown to Match Fundraiser!
-            </h2>
-            <p className="text-base sm:text-lg text-midnight/80 mb-6">
-              Support the next generation of orthopaedic surgeons by donating to our fundraiser. Every donation, big or small, makes a difference!
-            </p>
-            <Link
-              href="/fundraising"
-              className="inline-block bg-sky text-white text-lg font-medium px-6 py-3 rounded-full hover:bg-sky/90 transition"
-            >
-              🙏 Donate
-            </Link>
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-2xl leading-none"
-              aria-label="Close"
-            >
-              &times;
-            </button>
-          </div>
-        </div>
-      )}
+      <BroBotHomePopup />
 
       {/* NAVBAR */}
       <Nav />
@@ -691,7 +666,7 @@ export default function HomePage() {
               Learn
             </Link>
             <Link
-  href="/brobot"
+  href={APP_ROUTES.broBot.home}
   className="px-6 md:px-8 py-2 md:py-3 bg-[#0F766E] text-white rounded-full shadow hover:shadow-lg hover:bg-[#0B5E58] transition"
 >
   BroBot

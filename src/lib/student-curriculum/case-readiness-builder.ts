@@ -674,8 +674,15 @@ export function buildCaseReadinessSession(
       status: "unavailable" as const,
       slug: null,
       title: null,
-      message:
-        "Certified CasePrep content is unavailable for this topic. This session uses the student curriculum templates.",
+      message: "Case Prep is not yet available for this topic.",
+      sourceType: "unavailable" as const,
+      entityKind: null,
+      requestedApproach: null,
+      revisionId: null,
+      payloadHash: null,
+      citations: [],
+      alternatives: [],
+      payload: null,
       sections: [],
     };
   const context: ObjectiveBuildContext = {

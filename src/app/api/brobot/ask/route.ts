@@ -191,6 +191,21 @@ export async function POST(request: Request) {
     }
 
     const { prompt } = parsed.data;
+    if (/\b(carpal tunnel (release|surgery)|ctr)\b/i.test(prompt)) {
+      console.warn("[BROBOT-ASK-DEPRECATED-CASEPREP]", {
+        requestId,
+        procedure: "carpal_tunnel_release",
+        replacement: "/api/case-prep/v2",
+      });
+      return NextResponse.json(
+        {
+          error: "case_prep_v2_required",
+          message: "Open this case in Case Readiness to use the curated Case Prep flow.",
+          casePrepEndpoint: "/api/case-prep/v2",
+        },
+        { status: 409 }
+      );
+    }
     const user = await getOptionalUser(request);
 
     if (user) {

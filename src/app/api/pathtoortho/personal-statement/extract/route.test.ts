@@ -9,6 +9,7 @@ async function requestFor(file: File) {
   return POST(new Request('http://localhost/api/pathtoortho/personal-statement/extract', { method: 'POST', body: form }));
 }
 
+async function main() {
 const txtResponse = await requestFor(new File(['First paragraph.\n\nSecond paragraph with useful text.'], 'statement.txt', { type: 'text/plain' }));
 assert.equal(txtResponse.status, 200);
 assert.match((await txtResponse.json()).text, /Second paragraph/);
@@ -34,10 +35,25 @@ const scanned = new jsPDF();
 scanned.rect(20, 20, 100, 50, 'F');
 const scannedResponse = await requestFor(new File([scanned.output('arraybuffer')], 'scan.pdf', { type: 'application/pdf' }));
 assert.equal(scannedResponse.status, 400);
-assert.equal((await scannedResponse.json()).error, 'text_extraction_failed');
+assert.equal((await scannedResponse.json()).error, 'no_extractable_text');
+
+const emptyResponse = await requestFor(new File([], 'empty.txt', { type: 'text/plain' }));
+assert.equal(emptyResponse.status, 400);
+assert.equal((await emptyResponse.json()).error, 'empty_file');
+
+const invalidPdfResponse = await requestFor(new File(['not a pdf'], 'renamed.pdf', { type: 'application/pdf' }));
+assert.equal(invalidPdfResponse.status, 400);
+assert.equal((await invalidPdfResponse.json()).error, 'invalid_file_signature');
+
+const invalidDocxResponse = await requestFor(new File(['not a docx'], 'renamed.docx', { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' }));
+assert.equal(invalidDocxResponse.status, 400);
+assert.equal((await invalidDocxResponse.json()).error, 'invalid_file_signature');
 
 const unsupported = await requestFor(new File(['binary'], 'statement.exe', { type: 'application/octet-stream' }));
 assert.equal(unsupported.status, 400);
 assert.equal((await unsupported.json()).error, 'unsupported_file_type');
 
 console.log('personal statement extraction route tests passed');
+}
+
+void main();

@@ -186,21 +186,24 @@ export async function getCasePrepCertifiedContext(input: {
       procedure.content_status === 'certified' ||
       Boolean(procedure.certified_at);
 
-    // Reject deprecated or non-live procedures entirely. For live procedures without
-    // a certified signal, still return context but label it as 'caseprep_draft' so
-    // callers can weigh it accordingly. This was the main cause of 0/20 source hits.
-    if (!procedure.is_live || procedure.deprecated) {
+    // User-facing BroBot context is certified-only. Draft, partial, deprecated,
+    // and non-runtime-enabled content must never enter the answer packet.
+    if (!procedure.is_live || procedure.deprecated || !hasCertifiedSignal) {
       console.log('[caseprep-context] skipped', {
         slug,
         is_live: procedure.is_live,
         deprecated: procedure.deprecated,
         hasCertifiedSignal,
-        reason: !procedure.is_live ? 'not_live' : 'deprecated',
+        reason: !procedure.is_live
+          ? 'not_live'
+          : procedure.deprecated
+            ? 'deprecated'
+            : 'not_certified',
       });
       return null;
     }
 
-    const source: 'caseprep' | 'caseprep_draft' = hasCertifiedSignal ? 'caseprep' : 'caseprep_draft';
+    const source = 'caseprep' as const;
 
     const sections = procedure.sections
       .filter((section) => !section.is_empty)

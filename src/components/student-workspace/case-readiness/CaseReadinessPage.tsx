@@ -10,6 +10,7 @@ import { SurvivalSectionsPanel } from "@/components/student-workspace/case-readi
 import { ReadinessConfidenceWidget } from "@/components/student-workspace/case-readiness/ReadinessConfidenceWidget";
 import { ReadinessObjectiveCard } from "@/components/student-workspace/case-readiness/ReadinessObjectiveCard";
 import { TopicBrobotActionsPanel } from "@/components/student-workspace/case-readiness/TopicBrobotActionsPanel";
+import { CuratedCasePrepDocument } from "@/components/student-workspace/case-readiness/CuratedCasePrepDocument";
 import { StudentWorkspaceChrome } from "@/components/student-workspace/shell/StudentWorkspaceChrome";
 import type { CaseReadinessSession } from "@/lib/student-curriculum";
 
@@ -137,11 +138,18 @@ export function CaseReadinessPage({
         <CaseReadinessHeader session={session} />
         <CasePrepStatusBanner context={session.casePrepContext} />
 
+        {session.casePrepContext.status === "certified" ? (
+          <CuratedCasePrepDocument context={session.casePrepContext} />
+        ) : null}
+
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="grid gap-4">
-            <SurvivalSectionsPanel sections={session.survivalSections} />
+            {session.casePrepContext.status !== "certified" ? (
+              <SurvivalSectionsPanel sections={session.survivalSections} />
+            ) : null}
 
-            {session.objectives.map((objective) => (
+            {session.casePrepContext.status !== "certified"
+              ? session.objectives.map((objective) => (
               <ReadinessObjectiveCard
                 key={objective.id}
                 objective={objective}
@@ -165,7 +173,8 @@ export function CaseReadinessPage({
                   void syncProgress(completedIds, { incrementBrobotSessions: true })
                 }
               />
-            ))}
+                ))
+              : null}
           </div>
 
           <div className="grid content-start gap-4">

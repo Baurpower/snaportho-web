@@ -1,14 +1,11 @@
-import {
-  CasePrepRegistryNotFoundError,
-  CasePrepRegistryUpstreamError,
-  fetchRegistryProcedure,
-} from "@/lib/caseprep-review/client";
-import type { ClinicalSection, ClinicalSectionItem } from "@/lib/caseprep-review/types";
-import { getCasePrepSlugForTopic } from "@/lib/student-curriculum/caseprep-topic-mapping";
+import { requestCasePrepV2 } from "@/lib/caseprep-v2/client";
+import type { CasePrepV2Normalized } from "@/lib/caseprep-v2/schema";
+import { getTopicById } from "@/lib/student-curriculum/curriculum-recommendations";
 
 export type StudentCasePrepContextStatus =
   | "certified"
-  | "available"
+  | "fallback"
+  | "clarification"
   | "unavailable";
 
 export type StudentCasePrepContext = {
@@ -16,99 +13,128 @@ export type StudentCasePrepContext = {
   slug: string | null;
   title: string | null;
   message: string;
+  sourceType: CasePrepV2Normalized["source_type"];
+  entityKind: "procedure" | "approach" | null;
+  requestedApproach: string | null;
+  revisionId: string | null;
+  payloadHash: string | null;
+  citations: CasePrepV2Normalized["citations"];
+  alternatives: CasePrepV2Normalized["alternatives"];
+  payload: unknown | null;
   sections: Array<{ label: string; content: string }>;
 };
 
-function renderSectionItem(item: ClinicalSectionItem): string {
-  switch (item.kind) {
-    case "bullet":
-    case "text":
-      return item.text.trim();
-    case "pimp_question":
-      return `Q: ${item.question.trim()} A: ${item.answer.trim()}`;
-    case "structure_at_risk":
-      return `${item.structure}: ${item.why_at_risk.trim()}`;
-    case "surgical_layer":
-      return `${item.layer_name}: ${item.what_user_should_know.trim()}`;
-    case "source":
-      return item.title?.trim() || item.url;
-    default:
-      return "";
-  }
-}
-
-function renderClinicalSection(section: ClinicalSection): string {
-  return section.items
-    .map(renderSectionItem)
-    .filter(Boolean)
-    .join("\n");
+function payloadSections(payload: unknown): Array<{ label: string; content: string }> {
+  if (!payload || typeof payload !== "object") return [];
+  const record = payload as Record<string, unknown>;
+  const modules =
+    record.modules && typeof record.modules === "object"
+      ? (record.modules as Record<string, unknown>)
+      : record.sections && typeof record.sections === "object"
+        ? (record.sections as Record<string, unknown>)
+      : record;
+  return Object.entries(modules)
+    .filter(([, value]) =>
+      (Array.isArray(value) && value.length > 0) ||
+      (value !== null && typeof value === "object" && Object.keys(value).length > 0)
+    )
+    .map(([key, value]) => ({
+      label: key.replaceAll("_", " ").replace(/\b\w/g, (character) => character.toUpperCase()),
+      content: (Array.isArray(value) ? value : Object.entries(value as Record<string, unknown>))
+        .map((item) =>
+          typeof item === "string"
+            ? item
+            : Array.isArray(item)
+              ? `${item[0]}: ${
+                  typeof item[1] === "string"
+                    ? item[1]
+                    : JSON.stringify(item[1])
+                }`
+            : item && typeof item === "object"
+              ? Object.values(item as Record<string, unknown>)
+                  .filter((part) => typeof part === "string")
+                  .join(": ")
+              : ""
+        )
+        .filter(Boolean)
+        .join("\n"),
+    }));
 }
 
 export async function getStudentCasePrepContext(
   topicId: string
 ): Promise<StudentCasePrepContext> {
-  const slug = getCasePrepSlugForTopic(topicId);
-  if (!slug) {
+  const topic = getTopicById(topicId);
+  if (!topic) {
     return {
       status: "unavailable",
       slug: null,
       title: null,
-      message:
-        "Certified CasePrep content is not mapped for this topic yet. This session uses the student curriculum templates.",
+      message: "Case Prep is not available for this topic.",
+      sourceType: "unavailable",
+      entityKind: null,
+      requestedApproach: null,
+      revisionId: null,
+      payloadHash: null,
+      citations: [],
+      alternatives: [],
+      payload: null,
       sections: [],
     };
   }
 
   try {
-    const procedure = await fetchRegistryProcedure(slug);
-    const isCertified =
-      procedure.review_status === "certified" ||
-      procedure.content_status === "certified" ||
-      Boolean(procedure.certified_at);
-
-    const sections = procedure.sections
-      .filter((section) => !section.is_empty)
-      .map((section) => ({
-        label: section.label,
-        content: renderClinicalSection(section),
-      }))
-      .filter((section) => section.content.trim().length > 0);
-
-    if (!procedure.is_live || sections.length === 0) {
-      return {
-        status: "unavailable",
-        slug,
-        title: procedure.display_name,
-        message:
-          "CasePrep content exists for this procedure but is not yet live or complete enough for preparation. Using curriculum templates instead.",
-        sections: [],
-      };
-    }
-
+    const result = await requestCasePrepV2({
+      prompt: topic.title,
+      entrySurface: "case_readiness",
+      trainingLevel: "medical_student",
+      casePrepSessionId: `case-readiness:${topicId}`,
+    });
+    const sections = payloadSections(result.payload);
     return {
-      status: isCertified ? "certified" : "available",
-      slug,
-      title: procedure.display_name,
-      message: isCertified
-        ? "Certified CasePrep content is available for this procedure."
-        : "CasePrep registry content is available and will supplement the curriculum session.",
+      status:
+        result.source_type === "curated"
+          ? "certified"
+          : result.requires_clarification
+            ? "clarification"
+            : result.source_type === "rag_fallback"
+              ? "fallback"
+              : "unavailable",
+      slug: result.canonical_slug ?? null,
+      title: result.canonical_name ?? null,
+      message:
+        result.source_type === "curated"
+          ? "Curated Case Prep"
+          : result.requires_clarification
+            ? result.clarification_reason ?? "Choose an approach to continue."
+            : result.source_type === "rag_fallback"
+              ? "AI-assisted fallback"
+              : "Case not yet available",
+      sourceType: result.source_type,
+      entityKind: result.entity_kind ?? null,
+      requestedApproach: result.requested_approach ?? null,
+      revisionId: result.revision_id ?? null,
+      payloadHash: result.payload_hash ?? null,
+      citations: result.citations,
+      alternatives: result.alternatives,
+      payload: result.payload,
       sections,
     };
-  } catch (error) {
-    if (
-      error instanceof CasePrepRegistryNotFoundError ||
-      error instanceof CasePrepRegistryUpstreamError
-    ) {
-      return {
-        status: "unavailable",
-        slug,
-        title: null,
-        message:
-          "Certified CasePrep content is unavailable right now. This session uses the student curriculum templates.",
-        sections: [],
-      };
-    }
-
-    throw error;
+  } catch {
+    return {
+      status: "unavailable",
+      slug: null,
+      title: topic.title,
+      message: "Case Prep is temporarily unavailable.",
+      sourceType: "unavailable",
+      entityKind: null,
+      requestedApproach: null,
+      revisionId: null,
+      payloadHash: null,
+      citations: [],
+      alternatives: [],
+      payload: null,
+      sections: [],
+    };
   }
 }
