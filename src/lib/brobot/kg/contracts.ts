@@ -101,6 +101,21 @@ export type BroBotKgTrace = {
   predicateFamilies: string[];
   cacheStatus: string;
   stageTimingsMs: Record<string, number>;
+  configuredDeadlineMs: number;
+  elapsedLatencyMs: number;
+  timeoutStage?:
+    | "deadline_before_rpc"
+    | "rpc_timeout"
+    | "rpc_completed_after_deadline"
+    | "response_parse_timeout"
+    | "packet_construction_timeout"
+    | "unknown_timeout";
+  rpcStarted: boolean;
+  rpcCompleted: boolean;
+  safeErrorCode?: string;
+  safeErrorStage?: string;
+  answerInfluenced: false;
+  retrievalMode: "shadow";
   packetTokenEstimate: number;
   status: BroBotKgRetrievalStatus;
   failureReason?: string;

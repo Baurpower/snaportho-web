@@ -81,6 +81,12 @@ function emptyResult(input: {
   status: "bypass" | "error" | "timeout";
   failureReason?: string;
   timings?: Record<string, number>;
+  elapsedLatencyMs: number;
+  timeoutStage?: BroBotKgShadowResult["trace"]["timeoutStage"];
+  rpcStarted?: boolean;
+  rpcCompleted?: boolean;
+  safeErrorCode?: string;
+  safeErrorStage?: string;
 }): BroBotKgShadowResult {
   return {
     mode: input.mode,
@@ -96,6 +102,15 @@ function emptyResult(input: {
       predicateFamilies: [],
       cacheStatus: "not_applicable",
       stageTimingsMs: input.timings ?? {},
+      configuredDeadlineMs: BROBOT_KG_RETRIEVAL_DEADLINE_MS,
+      elapsedLatencyMs: input.elapsedLatencyMs,
+      timeoutStage: input.timeoutStage,
+      rpcStarted: input.rpcStarted ?? false,
+      rpcCompleted: input.rpcCompleted ?? false,
+      safeErrorCode: input.safeErrorCode,
+      safeErrorStage: input.safeErrorStage,
+      answerInfluenced: false,
+      retrievalMode: "shadow",
       packetTokenEstimate: 0,
       status: input.status,
       failureReason: input.failureReason,
@@ -111,6 +126,7 @@ export async function retrieveBroBotKgShadow(
     clinicalContext?: BroBotKgRetrievalInput["clinicalContext"];
   }
 ): Promise<BroBotKgShadowResult> {
+  const overallStarted = performance.now();
   const mode = getBroBotKgFeatureMode();
   const retrievalId = crypto.randomUUID();
   const clinicalContext =
@@ -135,7 +151,15 @@ export async function retrieveBroBotKgShadow(
   };
 
   if (mode === "off" || decision.action === "bypass") {
-    return emptyResult({ requestId: input.requestId, retrievalId, mode, decision, status: "bypass", timings: stageTimingsMs });
+    return emptyResult({
+      requestId: input.requestId,
+      retrievalId,
+      mode,
+      decision,
+      status: "bypass",
+      timings: stageTimingsMs,
+      elapsedLatencyMs: Math.round((performance.now() - overallStarted) * 100) / 100,
+    });
   }
 
   const policy = getBroBotKgModePolicy(input.intent.mode);
@@ -154,6 +178,9 @@ export async function retrieveBroBotKgShadow(
   const cached = packetCache.get(cacheKey);
   let payload: RpcPayload;
   let cacheStatus = "hit";
+  let rpcStarted = false;
+  let rpcCompleted = false;
+  let activeStage = "cache_lookup";
 
   try {
     if (cached) {
@@ -162,9 +189,18 @@ export async function retrieveBroBotKgShadow(
       stageTimingsMs.kg_subgraph_retrieval = 0;
     } else {
       cacheStatus = "miss";
+      activeStage = "supabase_client_initialization";
+      const clientStarted = performance.now();
+      const supabase = createAdminClient();
+      stageTimingsMs.kg_supabase_client_initialization =
+        Math.round((performance.now() - clientStarted) * 100) / 100;
       const retrievalStarted = performance.now();
+      const abortController = new AbortController();
+      let deadlineTimer: ReturnType<typeof setTimeout> | undefined;
       try {
-        const rpcPromise = createAdminClient().rpc("retrieve_brobot_kg_shadow", {
+        activeStage = "rpc_network_call";
+        rpcStarted = true;
+        const rpcPromise = supabase.rpc("retrieve_brobot_kg_shadow", {
             p_release_id: BROBOT_KG_PINNED_RELEASE_ID,
             p_query: normalizedQuery,
             p_entity_types: policy.entityTypes,
@@ -176,26 +212,33 @@ export async function retrieveBroBotKgShadow(
               ? 0
               : policy.maxRelationshipsByDepth[input.responseDepth],
             p_max_neighborhoods: policy.maxNeighborhoodsByDepth[input.responseDepth],
-          });
+          }).abortSignal(abortController.signal);
         const timeoutPromise = new Promise<never>((_resolve, reject) => {
-          setTimeout(
-            () => reject(new DOMException("KG retrieval deadline exceeded", "AbortError")),
+          deadlineTimer = setTimeout(
+            () => {
+              abortController.abort();
+              reject(new DOMException("KG retrieval deadline exceeded", "AbortError"));
+            },
             BROBOT_KG_RETRIEVAL_DEADLINE_MS
           );
         });
         const { data, error } = await Promise.race([rpcPromise, timeoutPromise]);
+        rpcCompleted = true;
         if (error) throw new Error(error.message);
+        activeStage = "response_parse";
         payload = data as RpcPayload;
         if (!payload || payload.releaseId !== BROBOT_KG_PINNED_RELEASE_ID) {
           throw new Error("KG release pin mismatch");
         }
       } finally {
+        if (deadlineTimer) clearTimeout(deadlineTimer);
         stageTimingsMs.kg_subgraph_retrieval =
           Math.round((performance.now() - retrievalStarted) * 100) / 100;
       }
       packetCache.set(cacheKey, payload);
     }
 
+    activeStage = "packet_construction";
     const assemblyStarted = performance.now();
     const status =
       payload.candidates.length === 0
@@ -251,6 +294,12 @@ export async function retrieveBroBotKgShadow(
         predicateFamilies: policy.predicateFamilies,
         cacheStatus,
         stageTimingsMs,
+        configuredDeadlineMs: BROBOT_KG_RETRIEVAL_DEADLINE_MS,
+        elapsedLatencyMs: Math.round((performance.now() - overallStarted) * 100) / 100,
+        rpcStarted,
+        rpcCompleted,
+        answerInfluenced: false,
+        retrievalMode: "shadow",
         packetTokenEstimate: bounded.tokenEstimate,
         status,
         policyVersion: BROBOT_KG_POLICY_VERSION,
@@ -260,6 +309,17 @@ export async function retrieveBroBotKgShadow(
     };
   } catch (error) {
     const timedOut = error instanceof DOMException && error.name === "AbortError";
+    const timeoutStage = timedOut
+      ? activeStage === "rpc_network_call"
+        ? "rpc_timeout"
+        : activeStage === "response_parse"
+          ? "response_parse_timeout"
+          : activeStage === "packet_construction"
+            ? "packet_construction_timeout"
+            : activeStage === "supabase_client_initialization"
+              ? "deadline_before_rpc"
+              : "unknown_timeout"
+      : undefined;
     return emptyResult({
       requestId: input.requestId,
       retrievalId,
@@ -268,6 +328,12 @@ export async function retrieveBroBotKgShadow(
       status: timedOut ? "timeout" : "error",
       failureReason: error instanceof Error ? error.message : "Unknown KG retrieval failure",
       timings: stageTimingsMs,
+      elapsedLatencyMs: Math.round((performance.now() - overallStarted) * 100) / 100,
+      timeoutStage,
+      rpcStarted,
+      rpcCompleted,
+      safeErrorCode: timedOut ? "KG_RETRIEVAL_DEADLINE" : "KG_RPC_ERROR",
+      safeErrorStage: activeStage,
     });
   }
 }

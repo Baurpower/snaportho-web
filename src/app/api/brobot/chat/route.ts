@@ -2659,7 +2659,7 @@ export async function POST(request: Request) {
     for (const [name, duration] of Object.entries(kgShadow.trace.stageTimingsMs)) {
       stageTimer.mark(name, duration);
     }
-    void persistBroBotKgShadowTrace({
+    const kgTelemetry = await persistBroBotKgShadowTrace({
       result: kgShadow,
       query: validatedBody.message,
       userId,
@@ -2671,6 +2671,7 @@ export async function POST(request: Request) {
       responseDepth: validatedBody.responseDepth,
       isFollowUp: history.filter((message) => message.role === 'user').length > 1,
     });
+    stageTimer.mark('kg_telemetry_persistence', kgTelemetry.latencyMs);
 
     if (body.stream || BROBOT_STREAMING_ENABLED) {
       return createStreamingChatResponse({
@@ -2752,7 +2753,7 @@ export async function POST(request: Request) {
     stageTimer.mark('total_request', latencyMs);
     const brobotOutput = pipelineResult.brobotOutput;
     const qualityGate = pipelineResult.qualityGate;
-    void attachBroBotKgAnswerOutcome({
+    await attachBroBotKgAnswerOutcome({
       requestId,
       qualityGateWarnings: qualityGate.warnings,
     });
